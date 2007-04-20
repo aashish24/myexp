@@ -1,0 +1,26 @@
+#ifndef _CORBA_TEST_DT_SUBJECT_IDL_
+#define _CORBA_TEST_DT_SUBJECT_IDL_
+
+//: Tweek subject include. 
+#include <tweek/idl/Subject.idl>
+
+//: Just for clearity I am putting this into a namespace. 
+//: TODO: Change the name of the namespace.
+
+module dt
+{
+	typedef string string_var;
+
+	interface DtSubject : tweek::Subject
+	{		
+		void setCommand(in string identifier, 
+			 			in string entity, 
+						in string state_attribute,
+						in string modifier_string,
+						in boolean modifier_boolean, 
+						in long modifier_long);
+	
+	};
+};
+
+#endif 

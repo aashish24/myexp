@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?org-vrjuggler-jccl-settings configuration.version="3.0"?>
+<configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
+   <elements>
+      <cluster_manager name="Cluster Configuration" version="2">
+         <plugin_path>${VJ_BASE_DIR}/lib/gadgeteer/plugins/</plugin_path>
+         <plugin>ApplicationDataManager</plugin>
+         <plugin>RemoteInputManager</plugin>
+         <plugin>StartBarrierPlugin</plugin>
+         <plugin>SwapLockTCPPlugin</plugin>
+         <cluster_node>Node(viz0)</cluster_node>
+         <cluster_node>Node(viz1)</cluster_node>
+         <cluster_node>Node(viz2)</cluster_node>
+         <cluster_node>Node(viz3)</cluster_node>
+         <cluster_node>Node(viz4)</cluster_node>
+         <cluster_node>Node(viz5)</cluster_node>
+         <cluster_node>Node(viz6)</cluster_node>
+      </cluster_manager>
+      <swap_lock_tcp_plugin name="SwapLockTCPPlugin" version="1">
+         <sync_server>Node(viz0)</sync_server>
+         <listen_port>8001</listen_port>
+      </swap_lock_tcp_plugin>
+      <start_barrier_plugin name="StartBarrierPlugin" version="1">
+         <start_master>Node(viz0)</start_master>
+      </start_barrier_plugin>
+      <application_data name="ApplicationDataManager" version="1">
+         <guid>d6be4359-e8cf-41fc-a72b-a5b4f3f29aa2</guid>
+         <hostname>viz0</hostname>
+      </application_data>
+   </elements>
+</configuration>
+
