@@ -118,7 +118,7 @@ const double& Navigation::navigationSpeed() const
 
 void Navigation::navigationSpeed( const double& speed )
 {
-	mNavigationSpeed = speed;		
+mNavigationSpeed = speed;		
 }		
 
 ///////////////////////////////////////////////////////////////////////////////
