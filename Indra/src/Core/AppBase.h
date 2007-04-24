@@ -34,9 +34,9 @@
 
 namespace Core
 {
-	class CORE_EXPORT AppBase 
-	{
-		public:		
+  class CORE_EXPORT AppBase 
+  {
+    public:    
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -53,121 +53,121 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			enum DEVICE 
+      enum DEVICE 
       { 
-        TWEEK	= 0, VJVNC = 1, ALL = 2 
-      };			
-			
-			enum STATE  
+        TWEEK  = 0, VJVNC = 1, ALL = 2 
+      };      
+      
+      enum STATE  
       { 
         OFF = 0, ON = 1 
       };
 
-			AppBase();
+      AppBase();
 
-		  virtual ~AppBase();
-			
+      virtual ~AppBase();
+      
       virtual void                                   init();
 
-      virtual void                                   initDevices();			 
+      virtual void                                   initDevices();       
 
-      virtual void                                   initTweek();			
-			
-      virtual void                                   initMenus(){}			
+      virtual void                                   initTweek();      
+      
+      virtual void                                   initMenus(){}      
 
-      virtual void                                   setDevice( DEVICE device=ALL, STATE state=OFF );			     			 
-			
-			virtual void                                   applicationName( const std::string& name );
+      virtual void                                   setDevice( DEVICE device=ALL, STATE state=OFF );                  
+      
+      virtual void                                   applicationName( const std::string& name );
 
-			virtual void*                                  interaction();
-			virtual void                                   interaction( void* ptr );
-			
-			virtual TweekCommandList                       getReadyCommandList();
-			virtual void                                   clearReadyCommandList();
+      virtual void*                                  interaction();
+      virtual void                                   interaction( void* ptr );
+      
+      virtual TweekCommandList                       getReadyCommandList();
+      virtual void                                   clearReadyCommandList();
 
-			virtual void                                   setNearFar( const long&  near, const long& far ); 			
+      virtual void                                   setNearFar( const long&  near, const long& far );       
 
       virtual void                                   update();
-			virtual void                                   updateDeviceData();
-			virtual void                                   updateTweek();
+      virtual void                                   updateDeviceData();
+      virtual void                                   updateTweek();
 
-		protected:
+    protected:
 
-			/////////////////////////////////////////////////////////////////////////
-			//
-			// Single user. 
-			//
-			/////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // Single user. 
+      //
+      /////////////////////////////////////////////////////////////////////////
       
-      User                                           mUser;			
-			
+      User                                           mUser;      
+      
 
-			/////////////////////////////////////////////////////////////////////////
-			//
-			// Application name that will be used to identify the 
-			// server. 
-			//
-			/////////////////////////////////////////////////////////////////////////
-			 
-			std::string                                    mApplicationName;
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // Application name that will be used to identify the 
+      // server. 
+      //
+      /////////////////////////////////////////////////////////////////////////
+       
+      std::string                                    mApplicationName;
 
 
       /////////////////////////////////////////////////////////////////////////
-			//
       //
-			//
-			/////////////////////////////////////////////////////////////////////////
-			
-      TweekWrapper*                                  mTweekWrapper;		
+      //
+      //
+      /////////////////////////////////////////////////////////////////////////
+      
+      TweekWrapper*                                  mTweekWrapper;    
     
 
       /////////////////////////////////////////////////////////////////////////
-			//
       //
-			//
-			/////////////////////////////////////////////////////////////////////////
-			 
-			TweekCommandList                               mReadyCommandList;
-
-
-			/////////////////////////////////////////////////////////////////////////
-			//
       //
-			//
-			/////////////////////////////////////////////////////////////////////////
-
-			bool                                           mNearFarSet;
-
-
-		private:			 
-			
+      //
       /////////////////////////////////////////////////////////////////////////
-			//
-      // VjVnc state. 
-			//
-			/////////////////////////////////////////////////////////////////////////
-			
-			STATE                                          mVncState;
-			
+       
+      TweekCommandList                               mReadyCommandList;
 
-			/////////////////////////////////////////////////////////////////////////
-			//
-      // VjVnc state. 
-			//
-			/////////////////////////////////////////////////////////////////////////
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      //
+      //
+      /////////////////////////////////////////////////////////////////////////
+
+      bool                                           mNearFarSet;
+
+
+    private:       
       
-      STATE                                          mTweekState;		
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // VjVnc state. 
+      //
+      /////////////////////////////////////////////////////////////////////////
+      
+      STATE                                          mVncState;
+      
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // VjVnc state. 
+      //
+      /////////////////////////////////////////////////////////////////////////
+      
+      STATE                                          mTweekState;    
 
 
-			////////////////////////////////////////////////////////////////////////
-			//
+      ////////////////////////////////////////////////////////////////////////
+      //
       // Shared data. 
-			//
-			/////////////////////////////////////////////////////////////////////////
+      //
+      /////////////////////////////////////////////////////////////////////////
 
-			cluster::UserData< UserData >                  mUserData;
+      cluster::UserData< UserData >                  mUserData;
 
-	};
+  };
 
 }
 
