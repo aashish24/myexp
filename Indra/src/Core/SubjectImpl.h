@@ -35,31 +35,31 @@
 
 namespace dt
 {
-	class CORE_EXPORT SubjectImpl : public POA_dt::DtSubject, public tweek::SubjectImpl
-	{
-		public:
-			SubjectImpl() : tweek::SubjectImpl()
-			{}
+  class CORE_EXPORT SubjectImpl : public POA_dt::DtSubject, public tweek::SubjectImpl
+  {
+    public:
+      SubjectImpl() : tweek::SubjectImpl()
+      {}
 
-			virtual ~SubjectImpl()
-			{}
+      virtual ~SubjectImpl()
+      {}
 
-			void init()
-			{}
+      void init()
+      {}
 
-			
-			virtual void setCommand( const char* identifier, 
-									 const char* entity, 
-									 const char* state_attribute,
-									 const char* modifier_string,
-									 CORBA::Boolean modifier_boolean, 
-									 CORBA::Long modifier_long );
-			
-			dt::DtSubject_ptr _this()
-			{
-				return POA_dt::DtSubject::_this();
-			}
-	};
+      
+      virtual void setCommand( const char* identifier, 
+                   const char* entity, 
+                   const char* state_attribute,
+                   const char* modifier_string,
+                   CORBA::Boolean modifier_boolean, 
+                   CORBA::Long modifier_long );
+      
+      dt::DtSubject_ptr _this()
+      {
+        return POA_dt::DtSubject::_this();
+      }
+  };
 }
 
-#endif	// __DT_SUBJECT_IMPL_H__ 
+#endif  // __DT_SUBJECT_IMPL_H__ 

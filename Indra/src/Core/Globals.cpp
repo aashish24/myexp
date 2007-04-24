@@ -11,10 +11,10 @@ using namespace Core;
 
 void Display::setDisplay( int originx, int originy, int width, int height )
 {
-	mOriginX = originx;
-	mOriginY = originy;
-	mWidth   = width;
-	mHeight  = height;
+  mOriginX = originx;
+  mOriginY = originy;
+  mWidth   = width;
+  mHeight  = height;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -25,7 +25,7 @@ void Display::setDisplay( int originx, int originy, int width, int height )
 
 const int& Display::width() const
 {
-	return mWidth;
+  return mWidth;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ const int& Display::width() const
 
 const int& Display::height() const
 {
-	return mHeight;
+  return mHeight;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,7 +47,7 @@ const int& Display::height() const
 
 const int& Display::originX() const
 {
-	return mOriginX;
+  return mOriginX;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ const int& Display::originX() const
 
 const int& Display::originY() const
 {
-	return mOriginY;
+  return mOriginY;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -69,7 +69,7 @@ const int& Display::originY() const
 
 void RenderGlobals::setDisplay( int originx, int originy, int width, int height )
 {
-	mDisplay.setDisplay( originx, originy, width, height );
+  mDisplay.setDisplay( originx, originy, width, height );
 }
 
 Display RenderGlobals::mDisplay;

@@ -17,7 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #ifndef __CORE_INTERACTION_H__
-#define	__CORE_INTERACTION_H__
+#define  __CORE_INTERACTION_H__
 
 #include <iostream>
 #include <vector>
@@ -45,19 +45,19 @@
 
 namespace Core
 {
-	class CORE_EXPORT Interaction
-	{
-		public:
-			
+  class CORE_EXPORT Interaction
+  {
+    public:
+      
       /////////////////////////////////////////////////////////////////////////
       //
       // Easy to remember names. 
       // 
       /////////////////////////////////////////////////////////////////////////
 
-			typedef std::vector< gadget::DigitalInterface* >  DigitalInterfaces;
-			typedef std::vector< gadget::AnalogInterface* >   AnalogInterfaces;
-      typedef std::vector< ActionState >				        ActionStates;
+      typedef std::vector< gadget::DigitalInterface* >  DigitalInterfaces;
+      typedef std::vector< gadget::AnalogInterface* >   AnalogInterfaces;
+      typedef std::vector< ActionState >                ActionStates;
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -65,20 +65,20 @@ namespace Core
       // 
       /////////////////////////////////////////////////////////////////////////
 
-      Interaction()	: 
-        mDeltaTime		    ( 0.0 ), 
-				mNavigationSpeed	( 0.0 ),
-				mNavigationDelta	( 0.0 ),
-				mRotationSpeed		( 0.0 ),
-				mRotationDelta		( 0.0 ),		
-        mUseAnalog	      ( false ),
-				mAllowPitch		    ( true  ),
-        mAllowYaw		      ( true  ), 
+      Interaction()  : 
+        mDeltaTime        ( 0.0 ), 
+        mNavigationSpeed  ( 0.0 ),
+        mNavigationDelta  ( 0.0 ),
+        mRotationSpeed    ( 0.0 ),
+        mRotationDelta    ( 0.0 ),    
+        mUseAnalog        ( false ),
+        mAllowPitch        ( true  ),
+        mAllowYaw          ( true  ), 
         mInteractionMode  ( WORLD ),
         mControlFunction  ( 0x00 )
-      {	
-				gmtl::identity( mWandMatrix );           
-			}
+      {  
+        gmtl::identity( mWandMatrix );           
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -86,9 +86,9 @@ namespace Core
       // 
       /////////////////////////////////////////////////////////////////////////
 
-			virtual ~Interaction()
-			{
-      }		
+      virtual ~Interaction()
+      {
+      }    
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -96,14 +96,14 @@ namespace Core
       // 
       /////////////////////////////////////////////////////////////////////////
 
-			virtual void init()
-			{
-				mWand.init( "VJWand" );					
+      virtual void init()
+      {
+        mWand.init( "VJWand" );          
 
         #ifdef HAVE_KEYBOARDMOUSE
-				KeyboardMouse::instance()->init();				
+        KeyboardMouse::instance()->init();        
         #endif
-			}
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -111,7 +111,7 @@ namespace Core
       // 
       /////////////////////////////////////////////////////////////////////////
 
-			virtual void defineControls()
+      virtual void defineControls()
       {
       }
 
@@ -132,10 +132,10 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			virtual const gmtl::Matrix44f& currentPosition() const
-			{
-				return mSceneNavigator.currentPosition();			
-			}
+      virtual const gmtl::Matrix44f& currentPosition() const
+      {
+        return mSceneNavigator.currentPosition();      
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -143,10 +143,10 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			virtual void currentPosition( gmtl::Matrix44f& position )
-			{
-				mSceneNavigator.currentPosition( position );
-			}
+      virtual void currentPosition( gmtl::Matrix44f& position )
+      {
+        mSceneNavigator.currentPosition( position );
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -154,10 +154,10 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			virtual const double& navigationSpeed() const
-			{
-				return mNavigationSpeed;
-			}
+      virtual const double& navigationSpeed() const
+      {
+        return mNavigationSpeed;
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -165,10 +165,10 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			virtual void navigationSpeed( const double& speed )
-			{
-				mNavigationSpeed = speed;
-			}
+      virtual void navigationSpeed( const double& speed )
+      {
+        mNavigationSpeed = speed;
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -176,10 +176,10 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////      
 
-			virtual const double& navigationDelta() const
-			{
-				return mNavigationDelta;
-			}
+      virtual const double& navigationDelta() const
+      {
+        return mNavigationDelta;
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -187,10 +187,10 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////      
 
-			virtual void navigationDelta( const double& delta )
-			{
-				mNavigationDelta = delta;				
-			}      
+      virtual void navigationDelta( const double& delta )
+      {
+        mNavigationDelta = delta;        
+      }      
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -199,9 +199,9 @@ namespace Core
       /////////////////////////////////////////////////////////////////////////      
 
       virtual const double& rotationSpeed() const
-			{
-				return mRotationSpeed;
-			}
+      {
+        return mRotationSpeed;
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -209,70 +209,70 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////      
 
-			virtual void rotationSpeed( const double& speed )
-			{
-				mRotationSpeed = speed;				
-			}
+      virtual void rotationSpeed( const double& speed )
+      {
+        mRotationSpeed = speed;        
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
       // Get rotation delta.
       //
-      /////////////////////////////////////////////////////////////////////////			
+      /////////////////////////////////////////////////////////////////////////      
 
-			virtual const double& rotationDelta() const
-			{
-				return mRotationDelta;
+      virtual const double& rotationDelta() const
+      {
+        return mRotationDelta;
 
-			}
+      }
       /////////////////////////////////////////////////////////////////////////
       //
       // Set rotation delta
       //
-      /////////////////////////////////////////////////////////////////////////			
+      /////////////////////////////////////////////////////////////////////////      
 
-			virtual void rotationDelta( const double& delta )
-			{
-				mRotationDelta = delta;
-			}
-			
+      virtual void rotationDelta( const double& delta )
+      {
+        mRotationDelta = delta;
+      }
+      
       /////////////////////////////////////////////////////////////////////////
       //
       // Get wand matrix. 
       //
-      /////////////////////////////////////////////////////////////////////////			
+      /////////////////////////////////////////////////////////////////////////      
 
-			const gmtl::Matrix44f& wandMatrix() const
-			{
-				return mWandMatrix;
-			}
+      const gmtl::Matrix44f& wandMatrix() const
+      {
+        return mWandMatrix;
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
       // Reset.
       //
-      /////////////////////////////////////////////////////////////////////////			
+      /////////////////////////////////////////////////////////////////////////      
 
-			virtual void reset()
-			{
+      virtual void reset()
+      {
         if( !mUseAnalog )
-				{
+        {
           mUseAnalog = !mUseAnalog;
-				}
-				
+        }
+        
         // Reset all three navigations. 
         mSceneNavigator.reset(); mLocalNavigator.reset(); mWandNavigator.reset();
-				
-				resetNavigation();
-			}
+        
+        resetNavigation();
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
       // Derived class CORE_EXPORT has to implement this. 
       //
-      /////////////////////////////////////////////////////////////////////////			
+      /////////////////////////////////////////////////////////////////////////      
 
-			virtual void resetNavigation()
+      virtual void resetNavigation()
       {
       }
 
@@ -280,9 +280,9 @@ namespace Core
       //
       // Derived class CORE_EXPORT has to implement this. 
       //
-      /////////////////////////////////////////////////////////////////////////			
+      /////////////////////////////////////////////////////////////////////////      
 
-			virtual void updateAll()
+      virtual void updateAll()
       {
       }
 
@@ -290,138 +290,138 @@ namespace Core
       //
       // Update data from devices. 
       //
-      /////////////////////////////////////////////////////////////////////////			
+      /////////////////////////////////////////////////////////////////////////      
 
-			virtual void updateDeviceData()
-			{				
-				vpr::Interval curTime   = mWand->getTimeStamp();				
+      virtual void updateDeviceData()
+      {        
+        vpr::Interval curTime   = mWand->getTimeStamp();        
 
-				mWandMatrix             = mWand->getData();
+        mWandMatrix             = mWand->getData();
 
-				vpr::Interval diffTime  = curTime -  mPrevTime;
-				
-        mDeltaTime				      = diffTime.secf();				
-        mPrevTime			          = curTime;			
-			}
-		
+        vpr::Interval diffTime  = curTime -  mPrevTime;
+        
+        mDeltaTime              = diffTime.secf();        
+        mPrevTime                = curTime;      
+      }
+    
       /////////////////////////////////////////////////////////////////////////
       //
       // Get current interaction mode.  
       //
-      /////////////////////////////////////////////////////////////////////////			
+      /////////////////////////////////////////////////////////////////////////      
 
-			const InteractionMode& getInteactionMode() const
-			{
-				return mInteractionMode;
-			}
+      const InteractionMode& getInteactionMode() const
+      {
+        return mInteractionMode;
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
       // Set current interaction mode. 
       //
-      /////////////////////////////////////////////////////////////////////////			
+      /////////////////////////////////////////////////////////////////////////      
 
-			void setInteractionMode( const InteractionMode& mode )
-			{
-					mInteractionMode = mode;
-			}      
+      void setInteractionMode( const InteractionMode& mode )
+      {
+          mInteractionMode = mode;
+      }      
 
       /////////////////////////////////////////////////////////////////////////
       //
       // Set control function that will define how the device data transformed 
       // to the data used for navigation. 
       //
-      /////////////////////////////////////////////////////////////////////////			
+      /////////////////////////////////////////////////////////////////////////      
 
       virtual void  controlFunction( Math::Function* func )
       {
         mControlFunction = func;
       }
 
-		protected:
+    protected:
 
-			/////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////
       //      
-			// Set analog input or analog inputs ( analog axes ).
-			//
-			/////////////////////////////////////////////////////////////////////////
-			
+      // Set analog input or analog inputs ( analog axes ).
+      //
+      /////////////////////////////////////////////////////////////////////////
+      
       void setAnalogActionInputs( const int index, std::vector< std::string > inputs )
-			{
-				// Make sure list is long enough.
-				while ( inputs.size() > mAnalogInputMap[ index ].size() )
-				{
-					mAnalogInputMap[ index ].push_back( new gadget::AnalogInterface() );
-				}
+      {
+        // Make sure list is long enough.
+        while ( inputs.size() > mAnalogInputMap[ index ].size() )
+        {
+          mAnalogInputMap[ index ].push_back( new gadget::AnalogInterface() );
+        }
 
-				// Update all the entries.
-				for ( unsigned int i = 0; i < inputs.size(); ++i )
-				{
-					mAnalogInputMap[ index ][ i ]->init( inputs[ i ] );
-				}
-			}
+        // Update all the entries.
+        for ( unsigned int i = 0; i < inputs.size(); ++i )
+        {
+          mAnalogInputMap[ index ][ i ]->init( inputs[ i ] );
+        }
+      }
 
-			/////////////////////////////////////////////////////////////////////////
-			//
-			// Set  digital or digital inputs ( buttons ) that can be used for
-			// various actions. 
-			//
-			/////////////////////////////////////////////////////////////////////////
-			
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // Set  digital or digital inputs ( buttons ) that can be used for
+      // various actions. 
+      //
+      /////////////////////////////////////////////////////////////////////////
+      
       void setDigitalActionButtons( const int index, std::vector<std::string> inputs )
-			{
-				// Make sure list is long enough.
-				while ( inputs.size() > mDigitalInputMap[ index ].size() )
-				{
-					mDigitalInputMap[ index ].push_back( new gadget::DigitalInterface() );
-				}
+      {
+        // Make sure list is long enough.
+        while ( inputs.size() > mDigitalInputMap[ index ].size() )
+        {
+          mDigitalInputMap[ index ].push_back( new gadget::DigitalInterface() );
+        }
 
-				// Update all the entries.
-				for ( unsigned int i = 0; i < inputs.size(); ++i )
-				{
-					mDigitalInputMap[ index ][ i ]->init( inputs[ i ] );
-				}
-			}	
+        // Update all the entries.
+        for ( unsigned int i = 0; i < inputs.size(); ++i )
+        {
+          mDigitalInputMap[ index ][ i ]->init( inputs[ i ] );
+        }
+      }  
 
-		protected:	
+    protected:  
 
-      std::map< int, DigitalInterfaces >		        mDigitalInputMap;
-			std::map< int, AnalogInterfaces  >		        mAnalogInputMap;
-			std::map< int, bool >					                mAnalogInputStatusMap;
-			std::map< int , ActionStates >			          mAnalogActionMap;
-			std::map< int , ActionStates >			          mDigitalActionMap;
+      std::map< int, DigitalInterfaces >            mDigitalInputMap;
+      std::map< int, AnalogInterfaces  >            mAnalogInputMap;
+      std::map< int, bool >                          mAnalogInputStatusMap;
+      std::map< int , ActionStates >                mAnalogActionMap;
+      std::map< int , ActionStates >                mDigitalActionMap;
 
-			bool									                        mUseAnalog;
-      bool  						                            mAllowPitch;
-			bool							                            mAllowYaw;
-			
-      gadget::PositionInterface				              mWand;
+      bool                                          mUseAnalog;
+      bool                                          mAllowPitch;
+      bool                                          mAllowYaw;
+      
+      gadget::PositionInterface                      mWand;
 
-      vpr::Interval						                      mPrevTime;		
+      vpr::Interval                                  mPrevTime;    
 
-			float									                        mDeltaTime;
+      float                                          mDeltaTime;
 
-			Navigation								                    mSceneNavigator;
-			Navigation							                	    mLocalNavigator;
-      Navigation								                    mWandNavigator;
+      Navigation                                    mSceneNavigator;
+      Navigation                                    mLocalNavigator;
+      Navigation                                    mWandNavigator;
 
-			double									                      mNavigationSpeed; 
-			double									                      mNavigationDelta;
-      double									                      mRotationSpeed;
-			double									                      mRotationDelta;
+      double                                        mNavigationSpeed; 
+      double                                        mNavigationDelta;
+      double                                        mRotationSpeed;
+      double                                        mRotationDelta;
 
-      InteractionMode						                    mInteractionMode;
+      InteractionMode                                mInteractionMode;
 
-			Controller								                    mController;	
+      Controller                                    mController;  
 
-			gmtl::Matrix44f						                    mWandMatrix;
+      gmtl::Matrix44f                                mWandMatrix;
 
-      #if HAVE_KEYBOARDMOUSE			
-      VJKeyboadMouseCallback*		                    mKmCallBack;      
+      #if HAVE_KEYBOARDMOUSE      
+      VJKeyboadMouseCallback*                        mKmCallBack;      
       #endif
 
-			osg::ref_ptr< Math::Function >                mControlFunction;
-	};
+      osg::ref_ptr< Math::Function >                mControlFunction;
+  };
 }
 
 #endif // __CORE_INTERACTION_H__

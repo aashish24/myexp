@@ -24,25 +24,25 @@
 
 namespace Core
 {
-	class CORE_EXPORT SharedData
-	{          
-		public:	
-			static cluster::UserData< Command > mCommand;
-			static bool							            mActive;
+  class CORE_EXPORT SharedData
+  {          
+    public:  
+      static cluster::UserData< Command > mCommand;
+      static bool                          mActive;
 
-			static void init()
-			{
-				vpr::GUID new_guid("291B6290-1BD9-4844-B757-73D5C4BB1690");
-				SharedData::mCommand.init(new_guid, "viz0");
+      static void init()
+      {
+        vpr::GUID new_guid("291B6290-1BD9-4844-B757-73D5C4BB1690");
+        SharedData::mCommand.init(new_guid, "viz0");
 
-				mActive = true;
-			}
+        mActive = true;
+      }
 
-			static bool active()
-			{
-				return mActive;
-			}
-	};
+      static bool active()
+      {
+        return mActive;
+      }
+  };
 }
 
 #endif // __CORE_SHAREDDATA_H__

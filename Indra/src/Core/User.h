@@ -21,9 +21,9 @@
 
 namespace Core 
 {
-	class CORE_EXPORT User
-	{   
-		public:
+  class CORE_EXPORT User
+  {   
+    public:
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -31,10 +31,10 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			User() 
+      User() 
       {
       }
-			
+      
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -42,15 +42,15 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-		 ~User()
-			{
-				for( size_t i=0; i < mInteractions.size(); i++ )
-				{
-					delete mInteractions[ i ];
-					
+     ~User()
+      {
+        for( size_t i=0; i < mInteractions.size(); i++ )
+        {
+          delete mInteractions[ i ];
+          
           mInteractions[ i ] = 0;
-				}
-			}
+        }
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -58,14 +58,14 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			void init()
-			{				
-				for(unsigned int i=0; i < mInteractions.size(); ++i )
-				{
-					mInteractions[ i ]->init();
-				}
-			}		
-			
+      void init()
+      {        
+        for(unsigned int i=0; i < mInteractions.size(); ++i )
+        {
+          mInteractions[ i ]->init();
+        }
+      }    
+      
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -73,17 +73,17 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			void* getInteaction( const unsigned int& pos=0 )
-			{
-				if( !mInteractions.empty() )
-				{
-					return mInteractions.at( pos );
-				}
-				else
-        {				
+      void* getInteaction( const unsigned int& pos=0 )
+      {
+        if( !mInteractions.empty() )
+        {
+          return mInteractions.at( pos );
+        }
+        else
+        {        
           return 0;
         }
-			}
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -91,39 +91,39 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			void setInteraction( void* ptr )
-			{
-				Interaction* in = static_cast< Interaction* >( ptr );									
+      void setInteraction( void* ptr )
+      {
+        Interaction* in = static_cast< Interaction* >( ptr );                  
 
-				if( in ) 
-				{	
-					if( mInteractions.size() >= 1)
-					{
-						std::vector< Interaction* >::iterator itr = mInteractions.begin();
-												
-						for( int i = 0; itr != mInteractions.end(); ++i)
-						{
-							if(i == 0)
-							{
-								delete *itr;
-								itr = mInteractions.erase( itr );																						
-							}	
+        if( in ) 
+        {  
+          if( mInteractions.size() >= 1)
+          {
+            std::vector< Interaction* >::iterator itr = mInteractions.begin();
+                        
+            for( int i = 0; itr != mInteractions.end(); ++i)
+            {
+              if(i == 0)
+              {
+                delete *itr;
+                itr = mInteractions.erase( itr );                                            
+              }  
 
-							// Only swapTexture the iterator if we the list is not empty. 
-							if( mInteractions.size() > 0 )
-							{
-								++itr;
-							}
-						}
-						mInteractions.push_back( in );
-					}
-					else
-					{
-						mInteractions.push_back( in );
-					}
-				}
-			}
-		
+              // Only swapTexture the iterator if we the list is not empty. 
+              if( mInteractions.size() > 0 )
+              {
+                ++itr;
+              }
+            }
+            mInteractions.push_back( in );
+          }
+          else
+          {
+            mInteractions.push_back( in );
+          }
+        }
+      }
+    
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -131,13 +131,13 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			void updateDeviceData()
-			{
-				for( size_t i=0; i < mInteractions.size(); i++ )
-				{
-					( mInteractions[ i ] )->updateDeviceData();				
-				}
-			}
+      void updateDeviceData()
+      {
+        for( size_t i=0; i < mInteractions.size(); i++ )
+        {
+          ( mInteractions[ i ] )->updateDeviceData();        
+        }
+      }
 
 
       /////////////////////////////////////////////////////////////////////////
@@ -146,19 +146,19 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			void update()
-			{
-				for( size_t i=0; i < mInteractions.size(); ++i )
-				{
-					( mInteractions[ i ] )->updateAll();
-				}				
-			}   		
+      void update()
+      {
+        for( size_t i=0; i < mInteractions.size(); ++i )
+        {
+          ( mInteractions[ i ] )->updateAll();
+        }        
+      }       
 
-		private:		
+    private:    
 
-			std::vector< Interaction* >	  mInteractions;
+      std::vector< Interaction* >    mInteractions;
 
-	};
+  };
 }
 
 #endif // __CORE_USER_H__

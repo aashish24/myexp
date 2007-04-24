@@ -100,8 +100,8 @@ namespace Util
 
   // A dashboard will be consit of M x N OsgQuads. 
   class OsgDashboard : public osg::Referenced
-	{
-		public:	
+  {
+    public:  
 
       ///////////////////////////////////////////////////////////////////////
       //
@@ -129,19 +129,19 @@ namespace Util
 
       OsgDashboard( const osg::Vec3f& pos, const osg::Vec3f& width, const osg::Vec3f& height, const unsigned& rows = 1, const unsigned& cols = 1 ) : 
         osg::Referenced()         
-			{
+      {
         // Let try...
         try
         {
           mRoot = new osg::Group();
-				  buildDashboard( pos, width, height, rows, cols );
+          buildDashboard( pos, width, height, rows, cols );
         }
         catch( ... )
         {
           std::cerr << "Error 4138744601: Failed to initialize. " << std::endl;
         }
-			}
-	        
+      }
+          
       /////////////////////////////////////////////////////////////////////////
       //
       // Use user supplied model as geometry for the dashboard. 
@@ -150,9 +150,9 @@ namespace Util
 
       OsgDashboard( const std::string& fileName, const unsigned& rows = 1, const unsigned& cols = 1 ) : 
         osg::Referenced()
-			{
-				buildDashboard( fileName, rows, cols );
-			}    
+      {
+        buildDashboard( fileName, rows, cols );
+      }    
       
       /////////////////////////////////////////////////////////////////////////
       //
@@ -186,16 +186,16 @@ namespace Util
       virtual ~OsgDashboard()
       {
       }
-	
+  
 
-		private:						
+    private:            
 
       Quads                                       mQuads;  
 
-			osg::ref_ptr< osg::Group >                  mRoot;		
+      osg::ref_ptr< osg::Group >                  mRoot;    
 
 
-	};
+  };
 }
 
 #endif // __Util_DASHBOARD_H__
@@ -203,61 +203,61 @@ namespace Util
 #if 0
   void 
   {
-	  // If the geomtry for dd is not null. 
-	  if(!(mGeometryDataFile == ""))
-	  {
-		  osg::ref_ptr<osg::Node> dd_geom_node = osgDB::readNodeFile(mGeometryDataFile);
-  	
-		  if(dd_geom_node.valid())
-		  {
-			  mRoot->addChild(dd_geom_node.get());
+    // If the geomtry for dd is not null. 
+    if(!(mGeometryDataFile == ""))
+    {
+      osg::ref_ptr<osg::Node> dd_geom_node = osgDB::readNodeFile(mGeometryDataFile);
+    
+      if(dd_geom_node.valid())
+      {
+        mRoot->addChild(dd_geom_node.get());
 
-			  mBB.expandBy(dd_geom_node->getBound());
-			  mTopLeft     = osg::Vec3f(mBB.xMin(),mBB.yMax(),mBB.zMin());
-			  mBottomLeft  = osg::Vec3f(mBB.xMin(),mBB.yMin(),mBB.zMin());
-			  mBottomRight = osg::Vec3f(mBB.xMax(),mBB.yMin(),mBB.zMin());
-			  mTopRight    = osg::Vec3f(mBB.xMax(),mBB.yMax(),mBB.zMin());
-			  mCenter      = osg::Vec3((mBB.xMin()  + 
-						     mBB.xMax()) *0.5, (mBB.yMin() +  
-						     mBB.yMax()) * 0.5,mBB.zMin());   				
-  			
-			  if(!isTextPosSet)
-			  {
-				  mTypingTextPos = mCenter;
-			  }
+        mBB.expandBy(dd_geom_node->getBound());
+        mTopLeft     = osg::Vec3f(mBB.xMin(),mBB.yMax(),mBB.zMin());
+        mBottomLeft  = osg::Vec3f(mBB.xMin(),mBB.yMin(),mBB.zMin());
+        mBottomRight = osg::Vec3f(mBB.xMax(),mBB.yMin(),mBB.zMin());
+        mTopRight    = osg::Vec3f(mBB.xMax(),mBB.yMax(),mBB.zMin());
+        mCenter      = osg::Vec3((mBB.xMin()  + 
+                 mBB.xMax()) *0.5, (mBB.yMin() +  
+                 mBB.yMax()) * 0.5,mBB.zMin());           
+        
+        if(!isTextPosSet)
+        {
+          mTypingTextPos = mCenter;
+        }
 
-			  if(!isTextCharHeightSet)
-			  {
-				  mTypingTextCharHeight		 = ((mBB.yMax()-mBB.yMin()) * 0.1);
-			  }
+        if(!isTextCharHeightSet)
+        {
+          mTypingTextCharHeight     = ((mBB.yMax()-mBB.yMin()) * 0.1);
+        }
 
-			  createTextNodes();
-		  }
-  		
-	  }
-	  else
-	  {
-		  mTopLeft     = osg::Vec3f(mBB.xMin(),mBB.yMax(),mBB.zMin());
-		  mBottomLeft  = osg::Vec3f(mBB.xMin(),mBB.yMin(),mBB.zMin());
-		  mBottomRight = osg::Vec3f(mBB.xMax(),mBB.yMin(),mBB.zMin());
-		  mTopRight    = osg::Vec3f(mBB.xMax(),mBB.yMax(),mBB.zMin());
-		  mCenter      = 
-			  osg::Vec3((mBB.xMin() + mBB.xMax()) *0.5, (mBB.yMin() + mBB.yMax()) * 0.5,mBB.zMin());    
-  		
-		  if(!isTextPosSet)
-		  {
-				  mTypingTextPos = mCenter;
-		  }
+        createTextNodes();
+      }
+      
+    }
+    else
+    {
+      mTopLeft     = osg::Vec3f(mBB.xMin(),mBB.yMax(),mBB.zMin());
+      mBottomLeft  = osg::Vec3f(mBB.xMin(),mBB.yMin(),mBB.zMin());
+      mBottomRight = osg::Vec3f(mBB.xMax(),mBB.yMin(),mBB.zMin());
+      mTopRight    = osg::Vec3f(mBB.xMax(),mBB.yMax(),mBB.zMin());
+      mCenter      = 
+        osg::Vec3((mBB.xMin() + mBB.xMax()) *0.5, (mBB.yMin() + mBB.yMax()) * 0.5,mBB.zMin());    
+      
+      if(!isTextPosSet)
+      {
+          mTypingTextPos = mCenter;
+      }
 
-		  if(!isTextCharHeightSet)
-		  {
-			  mTypingTextCharHeight		 = ((mBB.yMax()-mBB.yMin()) * 0.1);
-		  }
+      if(!isTextCharHeightSet)
+      {
+        mTypingTextCharHeight     = ((mBB.yMax()-mBB.yMin()) * 0.1);
+      }
 
-		  mRoot        = createBox();
+      mRoot        = createBox();
 
-		  createTextNodes();				
-	  }
+      createTextNodes();        
+    }
   }
 
   /******************************************************************
@@ -268,24 +268,24 @@ namespace Util
    */
   void createTextNodes()
   {
-	  for(unsigned int i=0; i < mTypingTextNodeCount; ++i)
-	  {	
-		  osg::ref_ptr< osgText::Text> text_drawable = new osgText::Text();
-		  text_drawable->setFont(mFont);
-		  text_drawable->setColor(mTypingTextColor);
-		  mTypingTextPos[1] = mTypingTextPos[1] - 0.2;
-		  text_drawable->setPosition(mTypingTextPos);
-		  text_drawable->setCharacterSize(mTypingTextCharHeight);
-		  text_drawable->setLayout(osgText::Text::LEFT_TO_RIGHT);
-		  text_drawable->setAlignment(osgText::Text::CENTER_CENTER);
-  					
-		  osg::ref_ptr<osg::Geode> textGeode = new osg::Geode();
-		  textGeode->addDrawable(text_drawable.get());
+    for(unsigned int i=0; i < mTypingTextNodeCount; ++i)
+    {  
+      osg::ref_ptr< osgText::Text> text_drawable = new osgText::Text();
+      text_drawable->setFont(mFont);
+      text_drawable->setColor(mTypingTextColor);
+      mTypingTextPos[1] = mTypingTextPos[1] - 0.2;
+      text_drawable->setPosition(mTypingTextPos);
+      text_drawable->setCharacterSize(mTypingTextCharHeight);
+      text_drawable->setLayout(osgText::Text::LEFT_TO_RIGHT);
+      text_drawable->setAlignment(osgText::Text::CENTER_CENTER);
+            
+      osg::ref_ptr<osg::Geode> textGeode = new osg::Geode();
+      textGeode->addDrawable(text_drawable.get());
 
-		  osg::ref_ptr<osg::StateSet> textStateset = textGeode->getOrCreateStateSet();
-		  textStateset->setAttributeAndModes(new osg::PolygonOffset(-1.0f,-1.0f),osg::StateAttribute::ON);	
-		  mRoot->addChild(textGeode.get());
-	  }
+      osg::ref_ptr<osg::StateSet> textStateset = textGeode->getOrCreateStateSet();
+      textStateset->setAttributeAndModes(new osg::PolygonOffset(-1.0f,-1.0f),osg::StateAttribute::ON);  
+      mRoot->addChild(textGeode.get());
+    }
   }
 
   /******************************************************************
@@ -304,26 +304,26 @@ namespace Util
    ******************************************************************
    */
   void setText(unsigned int pos, const std::string& text)
-  {				
-	  if(mRoot->getChild(pos + 1))
-	  {
-		  osg::ref_ptr<osg::Geode> text_geode = 
-			  dynamic_cast<osg::Geode*>(mRoot->getChild(pos + 1));
-		  if(text_geode.valid())
-		  {
-			  osg::ref_ptr<osgText::Text> text_node = 
-				  dynamic_cast<osgText::Text*>(text_geode->getDrawable(0));
-			  if(text_node.valid())
-			  {
-				  text_node->setText(text);
-			  }
-		  }
-	  }
-	  else
-	  {
-		  std::cerr << " [OsgDashboard] No Text node object found at position: " 
-			  << pos << std::endl;
-	  }
+  {        
+    if(mRoot->getChild(pos + 1))
+    {
+      osg::ref_ptr<osg::Geode> text_geode = 
+        dynamic_cast<osg::Geode*>(mRoot->getChild(pos + 1));
+      if(text_geode.valid())
+      {
+        osg::ref_ptr<osgText::Text> text_node = 
+          dynamic_cast<osgText::Text*>(text_geode->getDrawable(0));
+        if(text_node.valid())
+        {
+          text_node->setText(text);
+        }
+      }
+    }
+    else
+    {
+      std::cerr << " [OsgDashboard] No Text node object found at position: " 
+        << pos << std::endl;
+    }
   }
 
   void deleteText(unsigned int pos)

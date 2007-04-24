@@ -15,23 +15,23 @@ using namespace Core;
 
 Navigation::Navigation() : 
   mNavigationSpeed      ( 10.0 ), 
-  mRotationSpeed	      ( gmtl::Math::deg2Rad( 0.1 ) ), 
+  mRotationSpeed        ( gmtl::Math::deg2Rad( 0.1 ) ), 
   mMinNavigationSpeed   ( 0.0 ), 
   mMaxNavigationSpeed   ( 10000000000.0 ),     
   mMinRotationSpeed     ( gmtl::Math::deg2Rad( 0.001 ) ), 
   mMaxRotationSpeed     ( gmtl::Math::deg2Rad( 90.0 ) ), 
-	mNavigationDelta		  ( 1.0 ), 
-  mRotationDelta		    ( gmtl::Math::deg2Rad( 0.05 ) ), 
-	mFrameRenderTime	    ( 1.0 / 30.0 ), 
-	mFramesPerSecond			( 30.0 ), 
-  mUseRange             ( false ), 				
-	mNavigationMode			  ( TRACKBALL ), 
+  mNavigationDelta      ( 1.0 ), 
+  mRotationDelta        ( gmtl::Math::deg2Rad( 0.05 ) ), 
+  mFrameRenderTime      ( 1.0 / 30.0 ), 
+  mFramesPerSecond      ( 30.0 ), 
+  mUseRange             ( false ),         
+  mNavigationMode        ( TRACKBALL ), 
   mAllowPitch           ( true ), 
   mAllowYaw             ( true ), 
   mAllowRoll            ( true )
 {
-	gmtl::identity( mCurrentPosition  ); gmtl::identity( mHomePosition ); 	gmtl::identity( mPitchMatrix  );
-	mNavigationVel.set( 0.0, 0.0, 0.0 ); mRotationVel.set( 0.0, 0.0, 0.0 );       
+  gmtl::identity( mCurrentPosition  ); gmtl::identity( mHomePosition );   gmtl::identity( mPitchMatrix  );
+  mNavigationVel.set( 0.0, 0.0, 0.0 ); mRotationVel.set( 0.0, 0.0, 0.0 );       
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -52,7 +52,7 @@ Navigation::~Navigation()
 
 const gmtl::Matrix44f& Navigation::currentPosition() const
 {
-	return mCurrentPosition;
+  return mCurrentPosition;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ const gmtl::Matrix44f& Navigation::currentPosition() const
 
 void Navigation::currentPosition( const gmtl::Matrix44f& position )
 {
-	mCurrentPosition = position;				
+  mCurrentPosition = position;        
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -74,7 +74,7 @@ void Navigation::currentPosition( const gmtl::Matrix44f& position )
 
 const gmtl::Matrix44f& Navigation::pitchMatrix() const
 {
-	return mPitchMatrix;
+  return mPitchMatrix;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -85,7 +85,7 @@ const gmtl::Matrix44f& Navigation::pitchMatrix() const
 
 void Navigation::pitchMatrix( const gmtl::Matrix44f& matrix )
 {
-	mPitchMatrix = matrix;
+  mPitchMatrix = matrix;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -96,7 +96,7 @@ void Navigation::pitchMatrix( const gmtl::Matrix44f& matrix )
 
 void Navigation::currentRotation( const gmtl::Matrix44f& matrix )
 {
-	mCurrentPosition = matrix * mCurrentPosition;
+  mCurrentPosition = matrix * mCurrentPosition;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -118,8 +118,8 @@ const double& Navigation::navigationSpeed() const
 
 void Navigation::navigationSpeed( const double& speed )
 {
-mNavigationSpeed = speed;		
-}		
+mNavigationSpeed = speed;    
+}    
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -129,7 +129,7 @@ mNavigationSpeed = speed;
 
 const double& Navigation::navigationDelta() const
 {
-	return mNavigationDelta; 
+  return mNavigationDelta; 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -140,7 +140,7 @@ const double& Navigation::navigationDelta() const
 
 void Navigation::navigationDelta( const double& delta )
 {
-	mNavigationDelta = delta;
+  mNavigationDelta = delta;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -151,7 +151,7 @@ void Navigation::navigationDelta( const double& delta )
 
 void Navigation::rotationSpeed( const double& speed )
 {
-	mRotationSpeed = speed;
+  mRotationSpeed = speed;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -162,7 +162,7 @@ void Navigation::rotationSpeed( const double& speed )
 
 const double& Navigation::rotationSpeed() const
 {
-	return mRotationSpeed;
+  return mRotationSpeed;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -173,7 +173,7 @@ const double& Navigation::rotationSpeed() const
 
 const double& Navigation::rotationDelta() const
 {
-	return mRotationDelta;
+  return mRotationDelta;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -184,7 +184,7 @@ const double& Navigation::rotationDelta() const
 
 void Navigation::rotationDelta( const double& delta )
 {
-	mRotationDelta = delta;
+  mRotationDelta = delta;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -195,7 +195,7 @@ void Navigation::rotationDelta( const double& delta )
 
 void Navigation::frameRenderTime( const double& time )
 {
-	mFrameRenderTime = time;
+  mFrameRenderTime = time;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -206,7 +206,7 @@ void Navigation::frameRenderTime( const double& time )
 
 const double& Navigation::frameRenderTime() const
 {
-	return mFrameRenderTime;
+  return mFrameRenderTime;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -217,7 +217,7 @@ const double& Navigation::frameRenderTime() const
 
 void Navigation::setFrameRate( const double& fps )
 {
-	mFramesPerSecond = fps;
+  mFramesPerSecond = fps;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -228,7 +228,7 @@ void Navigation::setFrameRate( const double& fps )
 
 const double& Navigation::getFrameRate() const
 {
-	return mFramesPerSecond;
+  return mFramesPerSecond;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -238,8 +238,8 @@ const double& Navigation::getFrameRate() const
 ///////////////////////////////////////////////////////////////////////////////
 
 void Navigation::allowPitch( const bool& value )
-{			
-	mAllowPitch = value;
+{      
+  mAllowPitch = value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -250,7 +250,7 @@ void Navigation::allowPitch( const bool& value )
 
 void Navigation::allowYaw( const bool& value )
 {
-	mAllowYaw = value;
+  mAllowYaw = value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -261,7 +261,7 @@ void Navigation::allowYaw( const bool& value )
 
 void Navigation::allowRoll( const bool& value )
 {
-	mAllowRoll = value;  
+  mAllowRoll = value;  
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -272,15 +272,15 @@ void Navigation::allowRoll( const bool& value )
 
 void Navigation::reset()
 {
-	mCurrentPosition  = mHomePosition;	
-	
+  mCurrentPosition  = mHomePosition;  
+  
   //mNavigationSpeed  = mInitialNavigationSpeed;
-	//mRotationSpeed    = mInitialRotationSpeed;  
+  //mRotationSpeed    = mInitialRotationSpeed;  
   
   //mNavigationDelta  = mInitialNavigationDelta;  
   //mRotationDelta    = mInitialRotationDelta;
 
-	gmtl::identity( mPitchMatrix );
+  gmtl::identity( mPitchMatrix );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -291,7 +291,7 @@ void Navigation::reset()
 
 void Navigation::navigationMode( const NavigationMode& mode )
 {
-	mNavigationMode = mode;
+  mNavigationMode = mode;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -302,7 +302,7 @@ void Navigation::navigationMode( const NavigationMode& mode )
 
 const NavigationMode& Navigation::navigationMode() const
 {
-	return mNavigationMode;
+  return mNavigationMode;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -313,10 +313,10 @@ const NavigationMode& Navigation::navigationMode() const
 
 void Navigation::accelerate()
 {
-	if(( mNavigationSpeed + mNavigationDelta ) < mMaxNavigationSpeed )
-	{
-		mNavigationSpeed = mNavigationSpeed + mNavigationDelta;		
-	}				
+  if(( mNavigationSpeed + mNavigationDelta ) < mMaxNavigationSpeed )
+  {
+    mNavigationSpeed = mNavigationSpeed + mNavigationDelta;    
+  }        
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -327,10 +327,10 @@ void Navigation::accelerate()
 
 void Navigation::deaccelerate()
 {
-	if(( mNavigationSpeed - mNavigationDelta ) > 0.0 )
-	{
-		mNavigationSpeed = mNavigationSpeed - mNavigationDelta;
-	}	
+  if(( mNavigationSpeed - mNavigationDelta ) > 0.0 )
+  {
+    mNavigationSpeed = mNavigationSpeed - mNavigationDelta;
+  }  
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -341,10 +341,10 @@ void Navigation::deaccelerate()
 
 void Navigation::angulatAccelerate()
 {
-	if( ( mRotationSpeed + mRotationDelta ) < mMaxRotationSpeed )
-	{
-		mRotationSpeed = mRotationSpeed + mRotationDelta;
-	}
+  if( ( mRotationSpeed + mRotationDelta ) < mMaxRotationSpeed )
+  {
+    mRotationSpeed = mRotationSpeed + mRotationDelta;
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -355,10 +355,10 @@ void Navigation::angulatAccelerate()
 
 void Navigation::angulatDeaccelerate()
 {
-	if( ( mRotationSpeed - mRotationDelta ) > 0.0 )
-	{
-		mRotationSpeed = mRotationSpeed - mRotationDelta;
-	}
+  if( ( mRotationSpeed - mRotationDelta ) > 0.0 )
+  {
+    mRotationSpeed = mRotationSpeed - mRotationDelta;
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -369,7 +369,7 @@ void Navigation::angulatDeaccelerate()
 
 void Navigation::translateInZ( const double& value )
 {
-	mNavigationVel[2] =  -( mNavigationSpeed * value );			
+  mNavigationVel[2] =  -( mNavigationSpeed * value );      
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -380,8 +380,8 @@ void Navigation::translateInZ( const double& value )
 
 void Navigation::translateInX( const double& value )
 {
-	mNavigationVel[0] =  -( mNavigationSpeed * value );			
-}	
+  mNavigationVel[0] =  -( mNavigationSpeed * value );      
+}  
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -391,7 +391,7 @@ void Navigation::translateInX( const double& value )
 
 void Navigation::translateInY( const double& value )
 {
-	mNavigationVel[1] = 0.1 * -( mNavigationSpeed * value ) ;			
+  mNavigationVel[1] = 0.1 * -( mNavigationSpeed * value ) ;      
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -402,7 +402,7 @@ void Navigation::translateInY( const double& value )
 
 void Navigation::translateInDir( const gmtl::Vec3f& direction )
 {
-	mNavigationVel = (float) mNavigationSpeed * direction;
+  mNavigationVel = (float) mNavigationSpeed * direction;
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -413,10 +413,10 @@ void Navigation::translateInDir( const gmtl::Vec3f& direction )
 
 void Navigation::rotateInX( const double& value )
 {
-	if( mAllowPitch )
-	{
-		mRotationVel[0] = mRotationSpeed * value;				
-	}
+  if( mAllowPitch )
+  {
+    mRotationVel[0] = mRotationSpeed * value;        
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -427,10 +427,10 @@ void Navigation::rotateInX( const double& value )
 
 void Navigation::rotateInY( const double& value )
 {
-	if( mAllowYaw )
-	{
-		mRotationVel[1] =   mRotationSpeed * value;				
-	}
+  if( mAllowYaw )
+  {
+    mRotationVel[1] =   mRotationSpeed * value;        
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -441,11 +441,11 @@ void Navigation::rotateInY( const double& value )
 
 void Navigation::rotateInZ( const double& value )
 {
-	if( mAllowRoll )
-	{
-		mRotationVel[2] =  -( mRotationSpeed * value );								
-	}
-}		
+  if( mAllowRoll )
+  {
+    mRotationVel[2] =  -( mRotationSpeed * value );                
+  }
+}    
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -455,50 +455,50 @@ void Navigation::rotateInZ( const double& value )
 
 void Navigation::translate( const gmtl::Vec3f& vec, Scope scope )
 {
-	gmtl::Matrix44f transMatrix = gmtl::makeTrans< gmtl::Matrix44f >( vec );
+  gmtl::Matrix44f transMatrix = gmtl::makeTrans< gmtl::Matrix44f >( vec );
 
-	if( scope == GLOBAL )
-	{
-		gmtl::Matrix44f invMatrix;
+  if( scope == GLOBAL )
+  {
+    gmtl::Matrix44f invMatrix;
 
-		switch( mNavigationMode )
-		{
-			case HELICOPTER:
-			{
-				gmtl::invertFull( invMatrix, mPitchMatrix );
+    switch( mNavigationMode )
+    {
+      case HELICOPTER:
+      {
+        gmtl::invertFull( invMatrix, mPitchMatrix );
 
-				gmtl::preMult   ( mCurrentPosition, invMatrix    );
-				gmtl::preMult   ( mCurrentPosition, transMatrix  );
-				gmtl::preMult   ( mCurrentPosition, mPitchMatrix );
-				break;
-			}
-			case FLIGHT:
-			{
-				gmtl::preMult( mCurrentPosition, transMatrix );
-				break;
-			}
-			case TRACKBALL:
-			{
-				gmtl::preMult( mCurrentPosition, transMatrix );
-				break;
-			}
+        gmtl::preMult   ( mCurrentPosition, invMatrix    );
+        gmtl::preMult   ( mCurrentPosition, transMatrix  );
+        gmtl::preMult   ( mCurrentPosition, mPitchMatrix );
+        break;
+      }
+      case FLIGHT:
+      {
+        gmtl::preMult( mCurrentPosition, transMatrix );
+        break;
+      }
+      case TRACKBALL:
+      {
+        gmtl::preMult( mCurrentPosition, transMatrix );
+        break;
+      }
       case OSSIMNAV:
       {
         gmtl::preMult( mCurrentPosition, transMatrix );
-				break;
+        break;
       }
-			default:
-			{
+      default:
+      {
         std::cerr << "Error 3062328389: Navigation mode " <<  mNavigationMode 
                   << " not handled. " << std::endl;
-				break;
-			}
-		};
-	} 
-	else 
-	{
-		gmtl::postMult( mCurrentPosition, transMatrix );
-	}
+        break;
+      }
+    };
+  } 
+  else 
+  {
+    gmtl::postMult( mCurrentPosition, transMatrix );
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -511,41 +511,41 @@ void Navigation::rotate( gmtl::Matrix44f& rotationMatrix, Scope scope )
 {
   slerp( rotationMatrix, 0.4f );
 
-	gmtl::Vec3f tempVector1, tempVector2; tempVector1.set( 0.0, 0.0, 0.0 );
+  gmtl::Vec3f tempVector1, tempVector2; tempVector1.set( 0.0, 0.0, 0.0 );
 
   if( mNavigationMode == TRACKBALL || mNavigationMode == OSSIMNAV )
-	{
-		gmtl::setTrans( tempVector2, mCurrentPosition );
-		gmtl::setTrans( mCurrentPosition, tempVector1 );
-	}
+  {
+    gmtl::setTrans( tempVector2, mCurrentPosition );
+    gmtl::setTrans( mCurrentPosition, tempVector1 );
+  }
 
   if( scope == GLOBAL && mNavigationMode != OSSIMNAV )
-	{	
-		float p = ( gmtl::makeRot< gmtl::EulerAngleXYZf >( rotationMatrix ) )[ 0 ];
-		
-		gmtl::Matrix44f pitchMatrix, invPitchMatrix; 
-		gmtl::setRot( pitchMatrix, gmtl::EulerAngleXYZf( p, 0.0, 0.0 ) );
-		gmtl::invertFull( invPitchMatrix, mPitchMatrix );
+  {  
+    float p = ( gmtl::makeRot< gmtl::EulerAngleXYZf >( rotationMatrix ) )[ 0 ];
+    
+    gmtl::Matrix44f pitchMatrix, invPitchMatrix; 
+    gmtl::setRot( pitchMatrix, gmtl::EulerAngleXYZf( p, 0.0, 0.0 ) );
+    gmtl::invertFull( invPitchMatrix, mPitchMatrix );
 
-		gmtl::preMult( mCurrentPosition, invPitchMatrix );
-		gmtl::preMult( mCurrentPosition, rotationMatrix );
-		gmtl::preMult( mCurrentPosition, mPitchMatrix );
-		
-		mPitchMatrix = mPitchMatrix * pitchMatrix;
-	}
-	else if( mNavigationMode == OSSIMNAV )
-	{
+    gmtl::preMult( mCurrentPosition, invPitchMatrix );
+    gmtl::preMult( mCurrentPosition, rotationMatrix );
+    gmtl::preMult( mCurrentPosition, mPitchMatrix );
+    
+    mPitchMatrix = mPitchMatrix * pitchMatrix;
+  }
+  else if( mNavigationMode == OSSIMNAV )
+  {
     gmtl::preMult( mCurrentPosition, rotationMatrix );
   }
   else 
   {
-		gmtl::postMult( mCurrentPosition, rotationMatrix   );
-	}
-	
+    gmtl::postMult( mCurrentPosition, rotationMatrix   );
+  }
+  
   if( mNavigationMode == TRACKBALL || mNavigationMode == OSSIMNAV )
-	{
-		gmtl::setTrans( mCurrentPosition, tempVector2 );	
-	}
+  {
+    gmtl::setTrans( mCurrentPosition, tempVector2 );  
+  }
 }
 
 
@@ -558,27 +558,27 @@ void Navigation::rotate( gmtl::Matrix44f& rotationMatrix, Scope scope )
 gmtl::Matrix44f& Navigation::slerp( gmtl::Matrix44f& inputMatrix, const float& amount )
 {
   gmtl::Matrix44f transform, identityMatrix;
-	gmtl::Quatf     sourceQuat, goalQuat, slerpQuat;
+  gmtl::Quatf     sourceQuat, goalQuat, slerpQuat;
 
-	// Create an identity quaternion to rotate from.
-	gmtl::identity( identityMatrix );
+  // Create an identity quaternion to rotate from.
+  gmtl::identity( identityMatrix );
 
-	// Create the goal rotation quaternion ( the goal is the input matrix ).
-	gmtl::set( goalQuat, inputMatrix );
+  // Create the goal rotation quaternion ( the goal is the input matrix ).
+  gmtl::set( goalQuat, inputMatrix );
 
-	// If we don't have two identity matrices, then interpolate between them.
-	if( identityMatrix != inputMatrix )
-	{
-		// Transform part way there
-		gmtl::slerp( slerpQuat, amount, sourceQuat, goalQuat );
+  // If we don't have two identity matrices, then interpolate between them.
+  if( identityMatrix != inputMatrix )
+  {
+    // Transform part way there
+    gmtl::slerp( slerpQuat, amount, sourceQuat, goalQuat );
 
-		// Create the transform matrix to use.
-		gmtl::set( inputMatrix, slerpQuat ); 		
-	}
-	else
-	{
-		gmtl::identity( inputMatrix );
-	}
+    // Create the transform matrix to use.
+    gmtl::set( inputMatrix, slerpQuat );     
+  }
+  else
+  {
+    gmtl::identity( inputMatrix );
+  }
 
   return inputMatrix;
 }
@@ -591,16 +591,16 @@ gmtl::Matrix44f& Navigation::slerp( gmtl::Matrix44f& inputMatrix, const float& a
 ///////////////////////////////////////////////////////////////////////////////
 
 void Navigation::update( const float& delta, Scope scope )
-{	
-	static const float fps = 30.0;
-	
-	if( delta > 2.0 )
-	{
+{  
+  static const float fps = 30.0;
+  
+  if( delta > 2.0 )
+  {
     std::cerr << "Warning 2471119497w: Delta too big, returning. " << std::endl;
-		return;
-	}	
-	
-	float fpsFact = mFramesPerSecond * mFrameRenderTime;
+    return;
+  }  
+  
+  float fpsFact = mFramesPerSecond * mFrameRenderTime;
 
   if( mUseRange )
   {
@@ -624,19 +624,19 @@ void Navigation::update( const float& delta, Scope scope )
     }
   }
 
-	mNavigationVel	= fpsFact * mNavigationVel;
-	mRotationVel		= fpsFact * mRotationVel; 
+  mNavigationVel  = fpsFact * mNavigationVel;
+  mRotationVel    = fpsFact * mRotationVel; 
 
-	translate( mNavigationVel, scope );
+  translate( mNavigationVel, scope );
 
-	gmtl::EulerAngleXYZf euler( mRotationVel[ 0 ], mRotationVel[ 1 ], mRotationVel[ 2 ] );
-	
-	gmtl::Matrix44f rotationMatrix = gmtl::makeRot<gmtl::Matrix44f>( euler );
+  gmtl::EulerAngleXYZf euler( mRotationVel[ 0 ], mRotationVel[ 1 ], mRotationVel[ 2 ] );
+  
+  gmtl::Matrix44f rotationMatrix = gmtl::makeRot<gmtl::Matrix44f>( euler );
 
-	rotate( rotationMatrix, scope );
+  rotate( rotationMatrix, scope );
 
-	// Do we still need to do this? 
-	mNavigationVel[1] = 0.0;
+  // Do we still need to do this? 
+  mNavigationVel[1] = 0.0;
 }
 
 
@@ -652,9 +652,9 @@ void Navigation::pitch( const double& value )
   mRotationVel[1] = 0.0;
   mRotationVel[2] = 0.0;
   
-	// Roation matrix calculation.
-	gmtl::EulerAngleXYZf euler( mRotationVel[ 0 ], mRotationVel[ 1 ], mRotationVel[ 2 ] );	
-	gmtl::Matrix44f rotationMatrix = gmtl::makeRot< gmtl::Matrix44f >( euler );
+  // Roation matrix calculation.
+  gmtl::EulerAngleXYZf euler( mRotationVel[ 0 ], mRotationVel[ 1 ], mRotationVel[ 2 ] );  
+  gmtl::Matrix44f rotationMatrix = gmtl::makeRot< gmtl::Matrix44f >( euler );
   
   slerp( rotationMatrix, 0.4f );
 

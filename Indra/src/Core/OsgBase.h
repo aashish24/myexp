@@ -34,93 +34,93 @@
 
 namespace Core
 {
-	class CORE_EXPORT OsgBase : public AppBase, public vrj::OsgApp
-	{
-		public:
-			
+  class CORE_EXPORT OsgBase : public AppBase, public vrj::OsgApp
+  {
+    public:
+      
       OsgBase( vrj::Kernel* kern, int& argc, char** argv );
 
-			virtual ~OsgBase();
-			
+      virtual ~OsgBase();
+      
       /////////////////////////////////////////////////////////////////////////
       //
       // Initialization functions. 
       //
       /////////////////////////////////////////////////////////////////////////
 
-			virtual void                                   setAll();			
-			virtual void                                   setOsg();
-      virtual void                                   setApp();	
-		
-			virtual void                                   init();
-			virtual void                                   contextInit();
-			
-			virtual void                                   initScene();		
-			virtual void                                   initSceneNodes();
-			
-			virtual void                                   wandInit();		
-			
-			virtual OsgInteraction*                        getInteraction();		
-			virtual void                                   setInteraction( Interaction* in );		        
+      virtual void                                   setAll();      
+      virtual void                                   setOsg();
+      virtual void                                   setApp();  
+    
+      virtual void                                   init();
+      virtual void                                   contextInit();
+      
+      virtual void                                   initScene();    
+      virtual void                                   initSceneNodes();
+      
+      virtual void                                   wandInit();    
+      
+      virtual OsgInteraction*                        getInteraction();    
+      virtual void                                   setInteraction( Interaction* in );            
 
-			osg::Group*                                    getScene();
-		  virtual void                                   configSceneView( osgUtil::SceneView* sv );
-		
-			virtual float                                  getDrawScaleFactor();
-			
-			virtual void                                   viewAll( osg::MatrixTransform* tranform, float zScale = 2.0 );	
-	
-		  /////////////////////////////////////////////////////////////////////////
+      osg::Group*                                    getScene();
+      virtual void                                   configSceneView( osgUtil::SceneView* sv );
+    
+      virtual float                                  getDrawScaleFactor();
+      
+      virtual void                                   viewAll( osg::MatrixTransform* tranform, float zScale = 2.0 );  
+  
+      /////////////////////////////////////////////////////////////////////////
       //
       // Per frame functions. 
       //
       /////////////////////////////////////////////////////////////////////////
 
-			virtual void                                   bufferPreDraw ();			 
+      virtual void                                   bufferPreDraw ();       
 
-			virtual void                                   preFrame();
-			
+      virtual void                                   preFrame();
+      
       virtual void                                   latePreFrame();
       
       virtual void                                   draw();
-			
+      
       virtual void                                   intraFrame();
-			
+      
       virtual void                                   postFrame();
 
-			virtual void                                   cleanUp();
+      virtual void                                   cleanUp();
 
-		protected:		
-		
+    protected:    
+    
       /////////////////////////////////////////////////////////////////////////
       //
       // Application specific functions. 
       //
       /////////////////////////////////////////////////////////////////////////
 
-      virtual void                                   appInit(){;}		
+      virtual void                                   appInit(){;}    
 
       virtual void                                   appSceneInit(){;}
 
-      virtual void                                   appContextInit(){;}			
+      virtual void                                   appContextInit(){;}      
       
       virtual void                                   appPostInit(){;}
-			
-			virtual void                                   appBufferPreDraw();
-		
+      
+      virtual void                                   appBufferPreDraw();
+    
       virtual void                                   appPreFrame(){;}
 
       virtual void                                   appLatePreFrame(){;}
-			
-			virtual void                                   appPreOsgDraw(){;}
+      
+      virtual void                                   appPreOsgDraw(){;}
 
-			virtual void                                   appPostOsgDraw(){;}
+      virtual void                                   appPostOsgDraw(){;}
 
-			virtual void                                   appOpenGLDraw(){;}
+      virtual void                                   appOpenGLDraw(){;}
 
-			virtual void                                   appIntraFrame(){;}
-			
-			virtual void                                   appPostFrame(){;}
+      virtual void                                   appIntraFrame(){;}
+      
+      virtual void                                   appPostFrame(){;}
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -128,182 +128,155 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			virtual void                                   setBackgroundColor( float* color );
+      virtual void                                   setBackgroundColor( float* color );
 
-			virtual const osg::Vec3&                       getSceneInitialPosition() const;			
-			virtual void                                   setSceneInitialPosition( const osg::Vec3& position );
-			
-			virtual const                                  osg::Vec3& getScenePivotPoint() const;
-			virtual void                                   setScenePivotPoint( const osg::Vec3& pivot );
+      virtual const osg::Vec3&                       getSceneInitialPosition() const;      
+      virtual void                                   setSceneInitialPosition( const osg::Vec3& position );
+      
+      virtual const                                  osg::Vec3& getScenePivotPoint() const;
+      virtual void                                   setScenePivotPoint( const osg::Vec3& pivot );
 
-			virtual void                                   addSceneLight();
+      virtual void                                   addSceneLight();
 
-			virtual void                                   updateOSG();
+      virtual void                                   updateOSG();
 
-		protected:	
+    protected:  
 
-			/////////////////////////////////////////////////////////////////////////
-			//
-			// 	
-			//								    Root
-			//									   |
-			//				-------------------------
-			//        |            |
-      //	SceneTransform   SceneStatic 		
-			//				|						 |
-			//  ModelTransform		
-			//				|
-			//	  ModelGroup 			  
-			//		  	|
-			//	
-			//
-			/////////////////////////////////////////////////////////////////////////			
-
-
-			/////////////////////////////////////////////////////////////////////////
-			// 
-			// Root node. 
-			//
-			/////////////////////////////////////////////////////////////////////////
-			 
-			osg::ref_ptr< osg::Group >                     mSceneRoot;
+      /////////////////////////////////////////////////////////////////////////
+      //
+      //   
+      //                    Root
+      //                     |
+      //        -------------------------
+      //        |            |
+      //  SceneTransform   SceneStatic     
+      //        |             |
+      //  ModelTransform    
+      //        |
+      //    ModelGroup         
+      //        |
+      //  
+      //
+      /////////////////////////////////////////////////////////////////////////      
 
 
       /////////////////////////////////////////////////////////////////////////
-			// 
-			// Scene transform. 
-			//
-			/////////////////////////////////////////////////////////////////////////
-
-			osg::ref_ptr< osg::MatrixTransform >           mSceneTransformNode;
-
-
-			/////////////////////////////////////////////////////////////////////////
-			// 
-			// Scene static node ( Absolute reference ).
-			//
-			/////////////////////////////////////////////////////////////////////////
-
-			osg::ref_ptr< osg::MatrixTransform >           mSceneStaticNode;
+      // 
+      // Root node. 
+      //
+      /////////////////////////////////////////////////////////////////////////
+       
+      osg::ref_ptr< osg::Group >                     mSceneRoot;
 
 
-			/////////////////////////////////////////////////////////////////////////
-			// 
-			// Model transform node. 
-			//
-			/////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////
+      // 
+      // Scene transform. 
+      //
+      /////////////////////////////////////////////////////////////////////////
 
-			osg::ref_ptr< osg::MatrixTransform >           mModelTransformNode;			
+      osg::ref_ptr< osg::MatrixTransform >           mSceneTransformNode;
 
 
-			/////////////////////////////////////////////////////////////////////////
-			// 
-			// Group for all dynamic data in the scene. 
-			//
-			/////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////
+      // 
+      // Scene static node ( Absolute reference ).
+      //
+      /////////////////////////////////////////////////////////////////////////
 
-			osg::ref_ptr< osg::Group >                     mModelGroupNode;	
+      osg::ref_ptr< osg::MatrixTransform >           mSceneStaticNode;
+
+
+      /////////////////////////////////////////////////////////////////////////
+      // 
+      // Model transform node. 
+      //
+      /////////////////////////////////////////////////////////////////////////
+
+      osg::ref_ptr< osg::MatrixTransform >           mModelTransformNode;      
+
+
+      /////////////////////////////////////////////////////////////////////////
+      // 
+      // Group for all dynamic data in the scene. 
+      //
+      /////////////////////////////////////////////////////////////////////////
+
+      osg::ref_ptr< osg::Group >                     mModelGroupNode;  
 
       
       /////////////////////////////////////////////////////////////////////////
-			// 
-			// All lights in the scene attached to this node. 
-			//
-			/////////////////////////////////////////////////////////////////////////
-			
-			osg::ref_ptr<osg::Group>                       mLightGroup;
-
-			
+      // 
+      // All lights in the scene attached to this node. 
+      //
       /////////////////////////////////////////////////////////////////////////
-		  //
-		  // Light model which will define whether the viewpoint is local 
-		  // of infine. This is very critical to make sure we dont get 
-		  // different specularity across different screens. If we have 
-		  // infinite view point then the view direction will be parallel 
-		  // and towards Z direction. As this makes calculations for 
-		  // specularity easier it also make lighting poor as then hightlight 
-		  // at any vertex is independent of its position relative to eye 
-		  // coordinate. Setting local viewer to true make it look proper 
-		  // but with a performace hit as light has to be calculated at 
-		  // every vertex.
-		  //
-		  ////////////////////////////////////////////////////////////////////////
-			 
-			osg::ref_ptr< osg::LightModel >                mLightModel;
+      
+      osg::ref_ptr<osg::Group>                       mLightGroup;
 
-			
+      
       /////////////////////////////////////////////////////////////////////////
-			//
-			// Scene background color. 
-			//
-			/////////////////////////////////////////////////////////////////////////
-			
-			osg::Vec4f                                    mSceneBackgroundColor;
+      //
+      // Light model which will define whether the viewpoint is local 
+      // of infine. This is very critical to make sure we dont get 
+      // different specularity across different screens. If we have 
+      // infinite view point then the view direction will be parallel 
+      // and towards Z direction. As this makes calculations for 
+      // specularity easier it also make lighting poor as then hightlight 
+      // at any vertex is independent of its position relative to eye 
+      // coordinate. Setting local viewer to true make it look proper 
+      // but with a performace hit as light has to be calculated at 
+      // every vertex.
+      //
+      ////////////////////////////////////////////////////////////////////////
+       
+      osg::ref_ptr< osg::LightModel >                mLightModel;
+
+      
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // Scene background color. 
+      //
+      /////////////////////////////////////////////////////////////////////////
+      
+      osg::Vec4f                                    mSceneBackgroundColor;
 
 
-			/////////////////////////////////////////////////////////////////////////
-			//
-			// Application can set their own initial position which Will be 
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // Application can set their own initial position which Will be 
       // used after the scene bounding sphere center gets translated to 
       // origin.
-			//
-			/////////////////////////////////////////////////////////////////////////
-			
-			osg::Vec3f                                    mSceneInitialPosition;
+      //
+      /////////////////////////////////////////////////////////////////////////
+      
+      osg::Vec3f                                    mSceneInitialPosition;
 
-			
+      
       /////////////////////////////////////////////////////////////////////////
       //
       //
       //
       /////////////////////////////////////////////////////////////////////////
 
-			bool                                          mSceneInitialPositionSet;
+      bool                                          mSceneInitialPositionSet;
 
 
-			/////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////
       //
       //
       //
       /////////////////////////////////////////////////////////////////////////
-			
+      
       osg::Vec3                                      mScenePivotPoint; 
-			
+      
 
-			/////////////////////////////////////////////////////////////////////////
-      //
-      //
-      //
-      /////////////////////////////////////////////////////////////////////////
-
-			bool                                           mScenePivotPointSet;
-
-
-			/////////////////////////////////////////////////////////////////////////
-      //
-      //
-      //
-      /////////////////////////////////////////////////////////////////////////
-
-			bool                                           mInteractionSet;
-
-		
       /////////////////////////////////////////////////////////////////////////
       //
       //
       //
       /////////////////////////////////////////////////////////////////////////
 
-      osg::ref_ptr< osgUtil::SceneView >	           mSceneViewer;
-
-
-			/////////////////////////////////////////////////////////////////////////
-      //
-      //
-      //
-      /////////////////////////////////////////////////////////////////////////
-
-			osg::ref_ptr< osgDB::DatabasePager >           mOsgDatabasePager;
+      bool                                           mScenePivotPointSet;
 
 
       /////////////////////////////////////////////////////////////////////////
@@ -312,19 +285,46 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			long unsigned						                       mFrameNumber;
+      bool                                           mInteractionSet;
 
-		private:
-			
-			osg::ref_ptr< osg::StateSet >                  mRootStateSet;
+    
+      /////////////////////////////////////////////////////////////////////////
+      //
+      //
+      //
+      /////////////////////////////////////////////////////////////////////////
 
-			
-			osg::ref_ptr< osg::FrameStamp >		             mFrameStamp;		
+      osg::ref_ptr< osgUtil::SceneView >             mSceneViewer;
 
-			osg::Timer							                       mTimer;
-			osg::Timer_t						                       mStartTime;
-			osg::Timer_t						                       mLastTime;
-	};	
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      //
+      //
+      /////////////////////////////////////////////////////////////////////////
+
+      osg::ref_ptr< osgDB::DatabasePager >           mOsgDatabasePager;
+
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      //
+      //
+      /////////////////////////////////////////////////////////////////////////
+
+      long unsigned                                   mFrameNumber;
+
+    private:
+      
+      osg::ref_ptr< osg::StateSet >                  mRootStateSet;
+
+      
+      osg::ref_ptr< osg::FrameStamp >                 mFrameStamp;    
+
+      osg::Timer                                     mTimer;
+      osg::Timer_t                                   mStartTime;
+      osg::Timer_t                                   mLastTime;
+  };  
 }
 
 #endif // __CORE_OSGBASE_H__

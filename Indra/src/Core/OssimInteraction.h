@@ -82,16 +82,16 @@ namespace Core
       typedef std::map< unsigned int, EventAdapter >  EventMap;
 
       OssimInteraction() :
-	mPlanet ( 0x0 ),
+  mPlanet ( 0x0 ),
         mNavigator ( 0x0 ),
-	_home (),
-	_homeLook(),
+  _home (),
+  _homeLook(),
         mLeftButtonEvent(),
         mMiddleButtonEvent(),
         mRightButtonEvent(),
         mEventMap()
-	{
-		//mAnalogValX = 0.0;
+  {
+    //mAnalogValX = 0.0;
    //mAnalogValY = 0.0;
    mPlanet = 0x00;
    mNavigator = new ossimPlanetNavigator(new ossimPlanetPrimaryBody("earth_wgs84",
@@ -143,8 +143,8 @@ namespace Core
       ossimPlanetAction(":iac bind left_key          {:navigator flystart .015625 0.0}").execute();
       ossimPlanetAction(":iac bind up_key          {:navigator flystart 0.0 -.015625}").execute();
       ossimPlanetAction(":iac bind down_key         {:navigator flystart 0.0 .015625}").execute();
-      ossimPlanetAction(":iac bind u_key 	    {:navigator resetzoomlook}").execute();
-      ossimPlanetAction(":iac bind p_key     	    {:navigator printlatlonelev}").execute();
+      ossimPlanetAction(":iac bind u_key       {:navigator resetzoomlook}").execute();
+      ossimPlanetAction(":iac bind p_key           {:navigator printlatlonelev}").execute();
       ossimPlanetAction(":iac bind space_key         {:navigator reset}").execute();
       ossimPlanetAction(":iac bind return_key        {:navigator stop}").execute();
       // doing default bindings      
@@ -159,7 +159,7 @@ namespace Core
    mEventMap[2] = mRightButtonEvent;
 
    mControlFunction =  new Math::ExpFunction( 4.0 );
-	}
+  }
 
       ~OssimInteraction(){};
 
@@ -298,12 +298,12 @@ inline void Core::OssimInteraction::joystickAxis2GlobalAction( double data )
 
 inline void Core::OssimInteraction::joystickAxis3GlobalAction( double data )
 {
-  	
+    
 
   //if ( data != 0.0 )
   //{
-	//data = ( 0.025 * data ) / fabs( data ); 
-	data =  0.25 * data;
+  //data = ( 0.025 * data ) / fabs( data ); 
+  data =  0.25 * data;
   //}
   
   //std::cout << "Data after compression is: " << data << std::endl;
@@ -418,7 +418,7 @@ inline void Core::OssimInteraction::updateDeviceData()
             break;
           }
           case EventAdapter::RIGHT_BUTTON:
-          {	
+          {  
             iac->executeBoundAction((modKeyString + "right_mousedown").c_str());
             break;
           }

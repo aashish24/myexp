@@ -12,19 +12,19 @@
 
 class CORE_EXPORT TweekCommand
 {
-	public:
-		TweekCommand()
-		{}
+  public:
+    TweekCommand()
+    {}
 
-		~TweekCommand()
-		{}
+    ~TweekCommand()
+    {}
 
-		std::string mIdentifier;
-		std::string mEntity;
-		std::string mStateAttribute;
-		std::string mModifierString;
-		bool mModifierBoolean;
-		long mModifierLong;
+    std::string mIdentifier;
+    std::string mEntity;
+    std::string mStateAttribute;
+    std::string mModifierString;
+    bool mModifierBoolean;
+    long mModifierLong;
 };
 
 #endif //  __TWEEK_COMMAND_H__

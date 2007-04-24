@@ -12,23 +12,23 @@
 #ifndef __CORE_EXPORT_H__
 #define __CORE_EXPORT_H__
 
-#if defined( _MSC_VER )	
-	#pragma warning( disable : 4251 )
-	#pragma warning( disable : 4273 )
+#if defined( _MSC_VER )  
+  #pragma warning( disable : 4251 )
+  #pragma warning( disable : 4273 )
 #endif 
 
 #if defined( _MSC_VER ) || defined( __CYGWIN__ ) || defined( __MINGW32__ )
-	# if defined( INDRA_STATIC_LIBRARY )
-	#	define CORE_EXPORT	
-	# else
-	#	ifdef INDRA_SHARED_LIBRARY
-	#		define CORE_EXPORT __declspec(dllexport)
-	#	else
-	#		define CORE_EXPORT __declspec(dllimport)
-	#	endif
-	# endif
+  # if defined( INDRA_STATIC_LIBRARY )
+  #  define CORE_EXPORT  
+  # else
+  #  ifdef INDRA_SHARED_LIBRARY
+  #    define CORE_EXPORT __declspec(dllexport)
+  #  else
+  #    define CORE_EXPORT __declspec(dllimport)
+  #  endif
+  # endif
 #else
-	# define CORE_EXPORT
+  # define CORE_EXPORT
 #endif 
 
 #endif // __CORE_EXPORT_H__

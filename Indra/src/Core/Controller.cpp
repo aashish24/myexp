@@ -11,12 +11,12 @@ using namespace Core;
 
 DeviceData Controller::getDeviceInputData( Button btn )
 {
-	Buttons btns;
-	
+  Buttons btns;
+  
   btns.insert( btns.begin(), &btn );
 
-	ActionState btn0[]	= { ON };	
-	
+  ActionState btn0[]  = { ON };  
+  
   return getDeviceInputData( btns, std::vector< ActionState >( btn0, btn0 + 1 ) );
 }
 
@@ -28,41 +28,41 @@ DeviceData Controller::getDeviceInputData( Button btn )
 
 DeviceData Controller::getDeviceInputData( Buttons btns, ActionStates states )
 {
-	DeviceData data( POSITIVE );	
-	
-	for( unsigned int i = 0; i < states.size(); i++ )
-	{
-		if( states[i] == ON )
-		{
-			if( !( *btns[ i ] )->getData() )
-			{	
-				data = ZERO; 
+  DeviceData data( POSITIVE );  
+  
+  for( unsigned int i = 0; i < states.size(); i++ )
+  {
+    if( states[i] == ON )
+    {
+      if( !( *btns[ i ] )->getData() )
+      {  
+        data = ZERO; 
       }
-		}
-		else if( states[ i ] == OFF )
-		{
-			if( ( *btns[ i ] )->getData() )
-			{ 
-				data = ZERO; 
-			}          
-		}
+    }
+    else if( states[ i ] == OFF )
+    {
+      if( ( *btns[ i ] )->getData() )
+      { 
+        data = ZERO; 
+      }          
+    }
     else if( states[ i ] == TOGGLE_ON )
-		{
-			if( !( ( ( *btns[ i ] )->getData()) == gadget::Digital::TOGGLE_ON ) ) 
-			{ 				
-				data = ZERO; 
-			}          
-		}
-		else if( states[i] == TOGGLE_OFF )
-		{
-			if(( *btns[i] )->getData() != 3 )
-			{ 
-				data = ZERO; 
-			}          
-		}
-	}
+    {
+      if( !( ( ( *btns[ i ] )->getData()) == gadget::Digital::TOGGLE_ON ) ) 
+      {         
+        data = ZERO; 
+      }          
+    }
+    else if( states[i] == TOGGLE_OFF )
+    {
+      if(( *btns[i] )->getData() != 3 )
+      { 
+        data = ZERO; 
+      }          
+    }
+  }
 
-	return data;
+  return data;
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -73,30 +73,30 @@ DeviceData Controller::getDeviceInputData( Buttons btns, ActionStates states )
 
 //DeviceData Controller::getDeviceInputData( Analogs analogs, ActionStates states )
 //{
-//	DeviceData data( ZERO );
-//	
-//	for ( unsigned int i = 0; i < states.size(); i++ )
-//	{
-//		if( states[i] == ON )
-//		{
-//			float value = ( *analogs[ i ] )->getData();
+//  DeviceData data( ZERO );
+//  
+//  for ( unsigned int i = 0; i < states.size(); i++ )
+//  {
+//    if( states[i] == ON )
+//    {
+//      float value = ( *analogs[ i ] )->getData();
 //
-//			if( value > mMaxValue )
-//			{
-//				data = POSITIVE;
-//			}
-//			else if ( value < mMinValue )
+//      if( value > mMaxValue )
 //      {
-//				data = NEGATIVE;
-//			}
-//			else 
-//			{	
-//				data = CENTER;
-//			}
-//		}
-//	}
+//        data = POSITIVE;
+//      }
+//      else if ( value < mMinValue )
+//      {
+//        data = NEGATIVE;
+//      }
+//      else 
+//      {  
+//        data = CENTER;
+//      }
+//    }
+//  }
 //
-//	return data;
+//  return data;
 //}
 
 /////////////////////////////////////////////////////////////////////////
@@ -107,28 +107,28 @@ DeviceData Controller::getDeviceInputData( Buttons btns, ActionStates states )
 
 double Controller::getDeviceInputData( Analogs analogs, ActionStates states )
 {
-	double data = 0.0;
-	
-	for ( unsigned int i = 0; i < states.size(); i++ )
-	{
-		if( states[ i ] == ON )
-		{
-			double value = ( *analogs[ i ] )->getData();
-			
+  double data = 0.0;
+  
+  for ( unsigned int i = 0; i < states.size(); i++ )
+  {
+    if( states[ i ] == ON )
+    {
+      double value = ( *analogs[ i ] )->getData();
+      
       if( value > mMaxValue )
-			{
-				data = 2 * ( value - 0.5 );
-			}
-			else if ( value < mMinValue )
       {
-				data = 2 * ( value - 0.5 );
-			}
-			else 
-			{	
-				data = 0.0;
-			}
-		}
-	}	
+        data = 2 * ( value - 0.5 );
+      }
+      else if ( value < mMinValue )
+      {
+        data = 2 * ( value - 0.5 );
+      }
+      else 
+      {  
+        data = 0.0;
+      }
+    }
+  }  
 
-	return data;
+  return data;
 }

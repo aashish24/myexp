@@ -21,8 +21,8 @@
 
 namespace Core
 {
-	class CORE_EXPORT CommandFactory
-	{
+  class CORE_EXPORT CommandFactory
+  {
 
     public: 
 
@@ -33,10 +33,10 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			enum CommandType 
-			{
-				TWEEK_COMMAND = 0
-			};
+      enum CommandType 
+      {
+        TWEEK_COMMAND = 0
+      };
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -44,9 +44,9 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			CommandFactory()
-			{
-			}
+      CommandFactory()
+      {
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -54,9 +54,9 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			~CommandFactory()
-			{
-			}
+      ~CommandFactory()
+      {
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -64,22 +64,22 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			static TweekCommand* create( CommandType type )
-			{
-				switch( type )
-				{
-					case TWEEK_COMMAND:
-					{
-						return new TweekCommand();						
-					}
-					default:
-					{
+      static TweekCommand* create( CommandType type )
+      {
+        switch( type )
+        {
+          case TWEEK_COMMAND:
+          {
+            return new TweekCommand();            
+          }
+          default:
+          {
             return 0x00;
-					}
-				}
-				return 0;
-			}
-	};
+          }
+        }
+        return 0;
+      }
+  };
 }
 
 #endif // __CORE_COMMANDFACTORY_H__

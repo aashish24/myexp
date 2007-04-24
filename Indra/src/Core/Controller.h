@@ -33,9 +33,9 @@
 
 namespace Core
 {
-	class CORE_EXPORT Controller 
-	{
-		public:					
+  class CORE_EXPORT Controller 
+  {
+    public:          
       
       /////////////////////////////////////////////////////////////////////////
       //
@@ -58,37 +58,37 @@ namespace Core
       /////////////////////////////////////////////////////////////////////////
 
       Controller() : 
-			  mIsActive( true ),
-			  mMinValue( 0.45 ), 
-			  mMaxValue( 0.55 ) 					   
-			{
-			}
-			
+        mIsActive( true ),
+        mMinValue( 0.45 ), 
+        mMaxValue( 0.55 )              
+      {
+      }
+      
       /////////////////////////////////////////////////////////////////////////
       //
       // Destructor.
       //
       /////////////////////////////////////////////////////////////////////////
 
-			virtual ~Controller()
+      virtual ~Controller()
       {
       }
-			
-			virtual	DeviceData		getDeviceInputData( Button btn );
+      
+      virtual  DeviceData    getDeviceInputData( Button btn );
 
-			virtual DeviceData		getDeviceInputData( std::vector< gadget::DigitalInterface* > btns, std::vector< ActionState > state );
+      virtual DeviceData    getDeviceInputData( std::vector< gadget::DigitalInterface* > btns, std::vector< ActionState > state );
 
-			//virtual DeviceData	getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );					
-			
-			virtual double			  getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );			
+      //virtual DeviceData  getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );          
+      
+      virtual double        getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );      
 
-		protected:		
+    protected:    
 
-			bool					        mIsActive;	
+      bool                  mIsActive;  
 
-			double					      mMinValue;
-			double					      mMaxValue;
-	};
+      double                mMinValue;
+      double                mMaxValue;
+  };
 }
 
 #endif // __CORE_CONTROLLER_H__

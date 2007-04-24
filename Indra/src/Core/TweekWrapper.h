@@ -15,9 +15,9 @@
 
 namespace Core
 {
-	class CORE_EXPORT TweekWrapper
-	{
-		public:
+  class CORE_EXPORT TweekWrapper
+  {
+    public:
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -27,9 +27,9 @@ namespace Core
 
       TweekWrapper() :
         mTweekInitialized ( false ),
-				mApplicationName  ( "" )
-			{        
-			}
+        mApplicationName  ( "" )
+      {        
+      }
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -37,48 +37,48 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-		 ~TweekWrapper()
-			{				
-			}
-			
+     ~TweekWrapper()
+      {        
+      }
+      
       /////////////////////////////////////////////////////////////////////////
       //
       // Initialization
       //
       /////////////////////////////////////////////////////////////////////////
 
-			bool init()
-			{
-				int    argc = 0;			
-				char** argv = NULL;
+      bool init()
+      {
+        int    argc = 0;      
+        char** argv = NULL;
 
-				std::string namingContext( "TWEEK_INTERFACE" );			
+        std::string namingContext( "TWEEK_INTERFACE" );      
 
-				try
-				{
-					if( ( mCorbaManager.init( namingContext, argc, argv ) ).success() )
-					{	
-						vpr::ReturnStatus status;
-						try 
-						{
-							status = mCorbaManager.createSubjectManager();
+        try
+        {
+          if( ( mCorbaManager.init( namingContext, argc, argv ) ).success() )
+          {  
+            vpr::ReturnStatus status;
+            try 
+            {
+              status = mCorbaManager.createSubjectManager();
 
-							if( status.success() )
-							{
-								mTweekInitialized = true;									
-							}
-						}
-						catch( CORBA::Exception& e )
-						{								
-						}
+              if( status.success() )
+              {
+                mTweekInitialized = true;                  
+              }
+            }
+            catch( CORBA::Exception& e )
+            {                
+            }
           }
-				}
-				catch( ... )
-				{					
-				}
+        }
+        catch( ... )
+        {          
+        }
 
-				return mTweekInitialized;
-			}
+        return mTweekInitialized;
+      }
 
 
       /////////////////////////////////////////////////////////////////////////
@@ -87,25 +87,25 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			void setSubject( tweek::SubjectImpl* subject, const std::string& name )
-			{
-				if( mTweekInitialized )
-				{
-					try
-					{
-						mCorbaManager.getSubjectManager()->registerSubject( subject, name.c_str( ));
+      void setSubject( tweek::SubjectImpl* subject, const std::string& name )
+      {
+        if( mTweekInitialized )
+        {
+          try
+          {
+            mCorbaManager.getSubjectManager()->registerSubject( subject, name.c_str( ));
             mCorbaManager.getSubjectManager()->setApplicationName( mApplicationName );
 
-						mSubject = subject;
-					}			
-					catch( CORBA::Exception& ex )
-					{						
-					}
-				}
-				else
-				{					
-				}
-			}
+            mSubject = subject;
+          }      
+          catch( CORBA::Exception& ex )
+          {            
+          }
+        }
+        else
+        {          
+        }
+      }
 
       
       /////////////////////////////////////////////////////////////////////////
@@ -114,10 +114,10 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			const std::string& applicationName() const
-			{
-				return mApplicationName;
-			}
+      const std::string& applicationName() const
+      {
+        return mApplicationName;
+      }
 
 
       /////////////////////////////////////////////////////////////////////////
@@ -126,21 +126,21 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-			void applicationName( const std::string& applicationName )
-			{
-				mApplicationName = applicationName;
-			}      
+      void applicationName( const std::string& applicationName )
+      {
+        mApplicationName = applicationName;
+      }      
 
-		private:			
+    private:      
       
-			bool                                           mTweekInitialized;		
+      bool                                           mTweekInitialized;    
 
-			std::string                                    mApplicationName;
+      std::string                                    mApplicationName;
 
-			tweek::CorbaManager                            mCorbaManager;
+      tweek::CorbaManager                            mCorbaManager;
 
-			tweek::SubjectImpl*                            mSubject;		
-	};
+      tweek::SubjectImpl*                            mSubject;    
+  };
 }
 
 #endif // __CORE_TWEEKWRAPPER_H__

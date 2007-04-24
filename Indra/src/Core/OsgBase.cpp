@@ -20,16 +20,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 Core::OsgBase::OsgBase( vrj::Kernel* kern, int& argc, char** argv ) :  
-	mSceneBackgroundColor     ( 0.35, 0.35, 0.35, 1.0 ),
-	mSceneInitialPosition     ( 0.0, 0.0, 0.0 ),
-	mSceneInitialPositionSet  ( false ), 
-	mScenePivotPoint          ( 0.0, 0.0, 0.0 ), 
-	mScenePivotPointSet       ( false ), 
-	mInteractionSet           ( false ), 
-	mFrameNumber              ( 0 ), 
+  mSceneBackgroundColor     ( 0.35, 0.35, 0.35, 1.0 ),
+  mSceneInitialPosition     ( 0.0, 0.0, 0.0 ),
+  mSceneInitialPositionSet  ( false ), 
+  mScenePivotPoint          ( 0.0, 0.0, 0.0 ), 
+  mScenePivotPointSet       ( false ), 
+  mInteractionSet           ( false ), 
+  mFrameNumber              ( 0 ), 
   mRootStateSet             ( new osg::StateSet() )
-{	
-}		
+{  
+}    
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ Core::OsgBase::OsgBase( vrj::Kernel* kern, int& argc, char** argv ) :
   
 Core::OsgBase::~OsgBase()
 {
-	cleanUp();
+  cleanUp();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -51,8 +51,8 @@ Core::OsgBase::~OsgBase()
 
 void Core::OsgBase::setAll()
 {  
-	setOsg();
-	setApp();
+  setOsg();
+  setApp();
 }
 
 
@@ -64,13 +64,13 @@ void Core::OsgBase::setAll()
 
 void Core::OsgBase::setOsg()
 {
-	mFrameStamp = new osg::FrameStamp();	
-	
-	mStartTime  = mTimer.tick();
-	mLastTime   = mStartTime;
+  mFrameStamp = new osg::FrameStamp();  
+  
+  mStartTime  = mTimer.tick();
+  mLastTime   = mStartTime;
 
-	mFrameStamp->setReferenceTime( 0.0 );
-	mFrameStamp->setFrameNumber( 0 );
+  mFrameStamp->setReferenceTime( 0.0 );
+  mFrameStamp->setFrameNumber( 0 );
 }
 
 
@@ -81,16 +81,16 @@ void Core::OsgBase::setOsg()
 ///////////////////////////////////////////////////////////////////////////////
 
 void Core::OsgBase::setApp()
-{	
-	Interaction * osgInteraction = new OsgInteraction(); 		
+{  
+  Interaction * osgInteraction = new OsgInteraction();     
 
-	if( osgInteraction )
-	{		
-		setInteraction( osgInteraction );				
-	}
-	else
-	{
-	}
+  if( osgInteraction )
+  {    
+    setInteraction( osgInteraction );        
+  }
+  else
+  {
+  }
 }
 
 
@@ -101,35 +101,35 @@ void Core::OsgBase::setApp()
 ///////////////////////////////////////////////////////////////////////////////
 
 void Core::OsgBase::init()
-{		
-	setAll();	
-	
-	vrj::OsgApp::init();
+{    
+  setAll();  
+  
+  vrj::OsgApp::init();
 
-	
-	vrj::DrawManager* dm = getDrawManager();
-	if( dm )
-	{
-		int originX, originY, width, height;
-		( dm->getDisplayManager()->getActiveDisplays()[0] )->getOriginAndSize
-		  ( originX, originY, width, height );
-		
+  
+  vrj::DrawManager* dm = getDrawManager();
+  if( dm )
+  {
+    int originX, originY, width, height;
+    ( dm->getDisplayManager()->getActiveDisplays()[0] )->getOriginAndSize
+      ( originX, originY, width, height );
+    
     RenderGlobals::setDisplay( originX, originY, width, height );
-	}
+  }
 
- 	appInit();    
+   appInit();    
 
-	viewAll(mModelTransformNode.get());		
+  viewAll(mModelTransformNode.get());    
 
-	appPostInit();
+  appPostInit();
 
-	// This should be the last call as before this application can
-	// change some of the defaults and initializations of those param
-	// will be delayed unless everything is finalized. This also 
-	// removes the necessity of having another function to initialize 
-	// interaction engine. 
+  // This should be the last call as before this application can
+  // change some of the defaults and initializations of those param
+  // will be delayed unless everything is finalized. This also 
+  // removes the necessity of having another function to initialize 
+  // interaction engine. 
 
-	AppBase::init();
+  AppBase::init();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -140,9 +140,9 @@ void Core::OsgBase::init()
 
 void Core::OsgBase::contextInit()
 {
-	vrj::OsgApp::contextInit();									
-	
-	appContextInit();
+  vrj::OsgApp::contextInit();                  
+  
+  appContextInit();
 }
 
 
@@ -153,27 +153,27 @@ void Core::OsgBase::contextInit()
 ///////////////////////////////////////////////////////////////////////////////
 
 void Core::OsgBase::initScene()
-{   	
-	initSceneNodes(); 
-	
-	addSceneLight();
-	
-	appSceneInit();
+{     
+  initSceneNodes(); 
+  
+  addSceneLight();
+  
+  appSceneInit();
 
   if( !mOsgDatabasePager.valid() )
   {
-	  // Register any PagedLOD that needed to be tracked down in 
-	  // the scene graph. 
-	  mOsgDatabasePager = osgDB::Registry::instance()->getOrCreateDatabasePager();
+    // Register any PagedLOD that needed to be tracked down in 
+    // the scene graph. 
+    mOsgDatabasePager = osgDB::Registry::instance()->getOrCreateDatabasePager();
 
-	  mOsgDatabasePager->setUseFrameBlock( false );
+    mOsgDatabasePager->setUseFrameBlock( false );
     mOsgDatabasePager->registerPagedLODs( mSceneRoot.get() );
-	  mOsgDatabasePager->setUnrefImageDataAfterApplyPolicy( true, false );    
+    mOsgDatabasePager->setUnrefImageDataAfterApplyPolicy( true, false );    
   }
 
-	wandInit(); 
+  wandInit(); 
 
-	getInteraction()->root( mSceneRoot.get() );
+  getInteraction()->root( mSceneRoot.get() );
 }
 
 
@@ -184,22 +184,22 @@ void Core::OsgBase::initScene()
 ///////////////////////////////////////////////////////////////////////////////
 
 void Core::OsgBase::initSceneNodes()
-{	
-	mSceneRoot			      = new osg::Group();
-	mSceneTransformNode   = new osg::MatrixTransform();
-	mSceneStaticNode	    = new osg::MatrixTransform();
-	mModelTransformNode   = new osg::MatrixTransform();
-	mModelGroupNode		    = new osg::Group();
-	mLightGroup			      = new osg::Group();
-	mLightModel			      = new osg::LightModel();
+{  
+  mSceneRoot            = new osg::Group();
+  mSceneTransformNode   = new osg::MatrixTransform();
+  mSceneStaticNode      = new osg::MatrixTransform();
+  mModelTransformNode   = new osg::MatrixTransform();
+  mModelGroupNode        = new osg::Group();
+  mLightGroup            = new osg::Group();
+  mLightModel            = new osg::LightModel();
  
-	mSceneRoot.get()->setName   ( "mSceneRoot" );
-	mSceneTransformNode->setName( "mSceneTransformNode" );		
-	mSceneStaticNode->setName   ( "mSceneStaticNode" );
-	mModelTransformNode->setName( "mModelTransformNode" );			
-	mModelGroupNode->setName    ( "mModelGroupNode" );	
-	mLightGroup->setName        ( "mLightGroup" );
-	
+  mSceneRoot.get()->setName   ( "mSceneRoot" );
+  mSceneTransformNode->setName( "mSceneTransformNode" );    
+  mSceneStaticNode->setName   ( "mSceneStaticNode" );
+  mModelTransformNode->setName( "mModelTransformNode" );      
+  mModelGroupNode->setName    ( "mModelGroupNode" );  
+  mLightGroup->setName        ( "mLightGroup" );
+  
 
   if( !mSceneRoot.valid() && !mSceneTransformNode.valid() && !mSceneStaticNode.valid() &&
       !mModelTransformNode.valid() && mModelGroupNode.valid() && mLightGroup.valid(), 
@@ -207,12 +207,12 @@ void Core::OsgBase::initSceneNodes()
   {
     std::cerr << "Error 1289397492e: Out of memory error. " << std::endl;
   }
-	
-  mSceneRoot->addChild          ( mLightGroup.get() ); 	
+  
+  mSceneRoot->addChild          ( mLightGroup.get() );   
   mModelTransformNode->addChild ( mModelGroupNode.get() );
   mSceneTransformNode->addChild ( mModelTransformNode.get() );
-	mSceneRoot->addChild          ( mSceneStaticNode.get() );
-  mSceneRoot->addChild          ( mSceneTransformNode.get() );	
+  mSceneRoot->addChild          ( mSceneStaticNode.get() );
+  mSceneRoot->addChild          ( mSceneTransformNode.get() );  
   
   mSceneRoot->setStateSet( mRootStateSet.get() );
 }
@@ -225,7 +225,7 @@ void Core::OsgBase::initSceneNodes()
 ///////////////////////////////////////////////////////////////////////////////
 
 void Core::OsgBase::wandInit()
-{	
+{  
 }  
 
 
@@ -236,36 +236,36 @@ void Core::OsgBase::wandInit()
 ///////////////////////////////////////////////////////////////////////////////
 
 void Core::OsgBase::viewAll( osg::MatrixTransform* transform, float zScale )
-{				
+{        
 
   if( !transform ) 
   {
     return;
   }
 
-	osg::BoundingSphere bs = mModelGroupNode->getBound();
-	
-  osg::Vec3f center = bs.center();		
-	
-  osg::Matrix::value_type z ( zScale* ( bs.radius() ) );	
+  osg::BoundingSphere bs = mModelGroupNode->getBound();
+  
+  osg::Vec3f center = bs.center();    
+  
+  osg::Matrix::value_type z ( zScale* ( bs.radius() ) );  
 
-	if( !mScenePivotPointSet )
-	{
-		mScenePivotPoint = center;
-	}
-	
-	transform->preMult( osg::Matrix::rotate( gmtl::Math::deg2Rad( -90.0f ), 1.0f, 0.0f, 0.0f ) );	
+  if( !mScenePivotPointSet )
+  {
+    mScenePivotPoint = center;
+  }
+  
+  transform->preMult( osg::Matrix::rotate( gmtl::Math::deg2Rad( -90.0f ), 1.0f, 0.0f, 0.0f ) );  
 
-	transform->preMult( osg::Matrixf::translate( -mScenePivotPoint ) );
+  transform->preMult( osg::Matrixf::translate( -mScenePivotPoint ) );
 
-	// Initial tranlation to the scene. 
-	if( !mSceneInitialPositionSet )
-	{
-		mSceneInitialPosition = osg::Vec3( 0.0, z, 0.0 );
-	}
+  // Initial tranlation to the scene. 
+  if( !mSceneInitialPositionSet )
+  {
+    mSceneInitialPosition = osg::Vec3( 0.0, z, 0.0 );
+  }
 
   osg::ref_ptr< osg::MatrixTransform > parent = dynamic_cast< osg::MatrixTransform* >( transform->getParent( 0 ) );
-  parent->preMult( osg::Matrixf::translate( Util::OsgConv::transformToOpenGL( mSceneInitialPosition ) ) );		
+  parent->preMult( osg::Matrixf::translate( Util::OsgConv::transformToOpenGL( mSceneInitialPosition ) ) );    
 }
 
 
@@ -287,10 +287,10 @@ void Core::OsgBase::addSceneLight()
   std::vector< osg::ref_ptr< osg::Light > >       lights;
   std::vector< osg::ref_ptr< osg::LightSource > > sources;
 
-  // Set local viewer. 	
+  // Set local viewer.   
   if( mLightModel.valid() )
-	{
-		mLightModel->setLocalViewer( true );
+  {
+    mLightModel->setLocalViewer( true );
   }
 
   // Initialize lights and light sources.
@@ -335,7 +335,7 @@ void Core::OsgBase::setInteraction( Interaction* interaction )
 {
   AppBase::interaction( interaction );
 
-	mInteractionSet = true;		
+  mInteractionSet = true;    
 }
 
 
@@ -359,18 +359,18 @@ osg::Group* Core::OsgBase::getScene()
 
 void Core::OsgBase::configSceneView( osgUtil::SceneView* sceneView )
 {   
-  vrj::OsgApp::configSceneView( sceneView );			
+  vrj::OsgApp::configSceneView( sceneView );      
 
   mSceneViewer = sceneView;
   
   mSceneViewer->setDrawBufferValue( GL_NONE );
-  mSceneViewer->setComputeNearFarMode( osg::CullSettings::DO_NOT_COMPUTE_NEAR_FAR );						
+  mSceneViewer->setComputeNearFarMode( osg::CullSettings::DO_NOT_COMPUTE_NEAR_FAR );            
   mSceneViewer->setClearColor( mSceneBackgroundColor );
 
-  mSceneViewer->getCullVisitor()->setDatabaseRequestHandler( mOsgDatabasePager.get() );					
+  mSceneViewer->getCullVisitor()->setDatabaseRequestHandler( mOsgDatabasePager.get() );          
   mSceneViewer->getUpdateVisitor()->setDatabaseRequestHandler( mOsgDatabasePager.get() );
 
-  mSceneViewer->setFrameStamp( mFrameStamp.get() );						
+  mSceneViewer->setFrameStamp( mFrameStamp.get() );            
 }
 
 
@@ -394,7 +394,7 @@ float Core::OsgBase::getDrawScaleFactor()
 
 void Core::OsgBase::bufferPreDraw()
 {
-  appBufferPreDraw();	
+  appBufferPreDraw();  
 }
 
 
@@ -408,20 +408,20 @@ void Core::OsgBase::preFrame()
 {
   if( SharedData::mCommand.isLocal() )
   {
-    osg::Timer_t currTimer	= mTimer.tick();
+    osg::Timer_t currTimer  = mTimer.tick();
     
-    float deltaTime			    = mTimer.delta_s( mLastTime, currTimer ) ;
-    long  refTime			      = static_cast< long >( mTimer.delta_s( mStartTime, currTimer ) );
+    float deltaTime          = mTimer.delta_s( mLastTime, currTimer ) ;
+    long  refTime            = static_cast< long >( mTimer.delta_s( mStartTime, currTimer ) );
 
     mLastTime = currTimer;
 
-    SharedData::mCommand->mSharedLongTypeObjects[ "FRAME_COUNT" ]	= ++mFrameNumber;			
-    SharedData::mCommand->mSharedLongTypeObjects[ "REF_TIME"]	    = refTime;;
+    SharedData::mCommand->mSharedLongTypeObjects[ "FRAME_COUNT" ]  = ++mFrameNumber;      
+    SharedData::mCommand->mSharedLongTypeObjects[ "REF_TIME"]      = refTime;;
 
     getInteraction()->navigator( WORLD ).frameRenderTime( deltaTime );
   }
 
-  updateDeviceData();	
+  updateDeviceData();  
 
   appPreFrame();
 }
@@ -434,8 +434,8 @@ void Core::OsgBase::preFrame()
 ///////////////////////////////////////////////////////////////////////////////
 
 inline void Core::OsgBase::latePreFrame()
-{	
-  updateOSG();	
+{  
+  updateOSG();  
 
   update();
   
@@ -453,21 +453,21 @@ inline void Core::OsgBase::latePreFrame()
 
 void Core::OsgBase::draw()
 {
-  appPreOsgDraw();	
+  appPreOsgDraw();  
 
-  glPushMatrix();		
-  vrj::OsgApp::draw();		
-  glPopMatrix();		
+  glPushMatrix();    
+  vrj::OsgApp::draw();    
+  glPopMatrix();    
   
   appPostOsgDraw();
 
   glPushAttrib( GL_ALL_ATTRIB_BITS );
   glPushMatrix();
 
-  glMatrixMode( GL_MODELVIEW );		
-  glLoadIdentity();		
+  glMatrixMode( GL_MODELVIEW );    
+  glLoadIdentity();    
   
-  glMultMatrix( mSceneTransformNode->getMatrix().ptr() );		
+  glMultMatrix( mSceneTransformNode->getMatrix().ptr() );    
   
   appOpenGLDraw();
 
@@ -528,9 +528,9 @@ void Core::OsgBase::cleanUp()
 void Core::OsgBase::setBackgroundColor( float* backgroundColor )
 {
   mSceneBackgroundColor.set( backgroundColor[ 0 ], 
-				                     backgroundColor[ 1 ],
-				                     backgroundColor[ 2 ],
-				                     backgroundColor[ 3 ] ); 
+                             backgroundColor[ 1 ],
+                             backgroundColor[ 2 ],
+                             backgroundColor[ 3 ] ); 
 }
 
 
@@ -593,8 +593,8 @@ void Core::OsgBase::setScenePivotPoint( const osg::Vec3& pivot )
 void Core::OsgBase::updateOSG()
 {
   if( mFrameStamp.valid() )
-  {	
-    mFrameStamp->setFrameNumber	 ( SharedData::mCommand->mSharedLongTypeObjects[ "FRAME_COUNT" ] );
+  {  
+    mFrameStamp->setFrameNumber   ( SharedData::mCommand->mSharedLongTypeObjects[ "FRAME_COUNT" ] );
     mFrameStamp->setReferenceTime( SharedData::mCommand->mSharedLongTypeObjects[ "REF_TIME" ] );
   }
 
