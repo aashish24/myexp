@@ -1,6 +1,16 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
+//  Copyright (c) 2007, Arizona State University
+//  All rights reserved.
+//  BSD License: http://www.opensource.org/licenses/bsd-license.html
+//  Created by: Aashish Chaudhary
+//
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+//
 // This class CORE_EXPORT provies functionality independent of scenegraph implemenations. 
 // It also provides some advanced level functionality from vrjuggler like 
 // tweek, vjvnc.
