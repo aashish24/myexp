@@ -1,0 +1,14 @@
+1>------ Build started: Project: VrjApp, Configuration: Debug Win32 ------
+1>Compiling...
+1>VrjApp.cpp
+1>c:\aashish\sdk\osg\osg_op_ot-1.2\producer\include\producer\export(35) : warning C4005: 'PR_EXPORT' : macro redefinition
+1>        c:\aashish\sdk\vrjuggler\2.0.3\include\prtypes.h(85) : see previous definition of 'PR_EXPORT'
+1>c:\aashish\src\vrjcinema\src\vrjcore\tweekwrapper.h(61) : warning C4101: 'e' : unreferenced local variable
+1>c:\aashish\src\vrjcinema\src\vrjcore\tweekwrapper.h(93) : warning C4101: 'ex' : unreferenced local variable
+1>Linking...
+1>LINK : warning LNK4076: invalid incremental status file '../bin/VrjAppd.ilk'; linking nonincrementally
+1>   Creating library ../bin/VrjAppd.lib and object ../bin/VrjAppd.exp
+1>Embedding manifest...
+1>Build log was saved at "file://c:\Aashish\src\CourtHouse\msvc\Debug\BuildLog.htm"
+1>VrjApp - 0 error(s), 4 warning(s)
+========== Build: 1 succeeded, 0 failed, 9 up-to-date, 0 skipped ==========
