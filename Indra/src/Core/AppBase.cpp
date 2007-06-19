@@ -219,7 +219,7 @@ void Core::AppBase::updateTweek()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Core::AppBase::update()
+void Core::AppBase::updateAll()
 {
   mUser.update();
 }

@@ -97,7 +97,7 @@ namespace Core
 
       virtual void                                   setNearFar( const long&  near, const long& far );       
 
-      virtual void                                   update();
+      virtual void                                   updateAll();
       virtual void                                   updateDeviceData();
       virtual void                                   updateTweek();
 
