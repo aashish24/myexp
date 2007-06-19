@@ -57,10 +57,10 @@ SRCS=		MyApp.cpp	\
 
 NO_DEPEND=	YES
 		
-EXTRA_INCLUDES=		-I../include -I$(VJCINEMA)/include -I$(OSGHOME)/include -I$(OPENTHREADSHOME)/include -I$(PRODUCERHOME)/include \
+EXTRA_INCLUDES=		-I../include -I$(INDRA_ROOT_DIR)/src -I$(OSGHOME)/include -I$(OPENTHREADSHOME)/include -I$(PRODUCERHOME)/include \
 			-I$(VJ_BASE_DIR)/include/tweek/idl -I$(VJ_BASE_DIR)/include -I$(VJ_BASE_DIR)/include/tweek/CORBA
 
-EXTRA_LIBS=		-L$(VJCINEMA)/lib -L$(OSGHOME)/lib/Linux64 -lVJCinema -losg -losgDB -losgGA -losgUtil -losgText -losgFX 
+EXTRA_LIBS=		-L$(INDRA_ROOT_DIR)/lib -L$(OSGHOME)/lib/Linux64 -lIndra -losg -losgDB -losgGA -losgUtil -losgText -losgFX 
 
 # Advanced options. 
 #---------------------------------------------------------------
