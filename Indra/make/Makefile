@@ -66,9 +66,9 @@ all:
 BUILD_TYPE?=			opt
 
 srcdir=				../src
-EXTRA_PATH_FOR_SOURCES=		../src/VrjCore		\
-				../src/VrjUtil		\
-				../src/VrjDev		\
+EXTRA_PATH_FOR_SOURCES=		../src/Core		\
+				../src/Util		\
+				../src/Dev		\
 				../java/src		\
 				../tweek/dt	
 
@@ -80,7 +80,7 @@ VRJCINEMA_SRCS=			Controller.cpp			\
 				Globals.cpp			\
 				KeyboardMouse.cpp		\
 				Navigation.cpp			\
-				OsgDigitalDashboard.cpp		\
+				OsgDashboard.cpp		\
 				OsgInteraction.cpp 		\
 				OssimInteraction.cpp 		\
 				OsgVJApp.cpp			\
@@ -171,7 +171,7 @@ cxx: $(OBJS)
 java: $(CLASSES)
 
 VrjCinema: 
-	ar rcs libVrjCinema.a *.o
+	ar rcs libIndra.a *.o
 	@rm -rf 		$(INSTALL)
 	@mkdir -p 		$(INSTALL)
 	@mv libVrjCinema.a 	$(INSTALL)
