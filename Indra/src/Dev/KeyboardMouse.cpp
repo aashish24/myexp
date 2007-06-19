@@ -1,9 +1,9 @@
 
-#include "VrjDev/KeyboardMouse.h"
+#include "Dev/KeyboardMouse.h"
 
 #include <cstdlib>
 
-using namespace VrjDev;
+using namespace Dev;
 
 KeyboardMouse::KeyboardMouse()
 {
