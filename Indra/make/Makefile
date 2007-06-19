@@ -46,7 +46,7 @@
 # **********************************************************************
 # */
 
-APP_NAME=	VrjCinema
+APP_NAME=			Indra
 
 c++:
 	$(MAKE) NO_DEPEND=0 cxx
@@ -66,35 +66,33 @@ all:
 BUILD_TYPE?=			opt
 
 srcdir=				../src
-EXTRA_PATH_FOR_SOURCES=		../src/Core		\
-				../src/Util		\
-				../src/Dev		\
-				../java/src		\
+EXTRA_PATH_FOR_SOURCES=		../src/Core			\
+				../src/Dev			\
+				../src/Util			\
+				../java/src			\
 				../tweek/dt	
 
-VRJCINEMA_SRCS=			Controller.cpp			\
+INDRA_SRCS=			Controller.cpp			\
 				Defs.cpp			\
-				DtSharedData.cpp		\
-				DtSubjectImpl.cpp		\
-				DtUserData.cpp			\
+				SharedData.cpp			\
+				SubjectImpl.cpp			\
+				UserData.cpp			\
 				Globals.cpp			\
 				KeyboardMouse.cpp		\
 				Navigation.cpp			\
-				OsgDashboard.cpp		\
 				OsgInteraction.cpp 		\
 				OssimInteraction.cpp 		\
-				OsgVJApp.cpp			\
-				VJApp.cpp			\
-				VJKeyboardMouseCallback.cpp	
+				OsgBase.cpp			\
+				AppBase.cpp			\
 		
 # Advanced options. 
 #---------------------------------------------------------------
-INSTALL=	$(VRJCINEMA_ROOT_DIR)/lib
+INSTALL=	../lib
 
 STATICLIB_EXT=	.a
 
 ## This is needed to make java_idl
-VPATH=		$(VRJCINEMA_ROOT_DIR)/tweek/dt
+VPATH=		$(INDRA_ROOT_DIR)/tweek/dt
 
 ## Extra path for java src. 
 EXTRA_SOURCEPATH_DIRS= 	../java/src
@@ -105,9 +103,9 @@ IDL_CXX_FILES=	dtsubject.cpp dtsubject.h
 IDL_JAVA_FILES=	dtsubject.java	
 		
 
-idl_srcs=	$(filter-out $(VRJCINEMA_SRCS), $(notdir $(wildcard $(CXX_GEN_DIR)/*.cpp)))
+idl_srcs=	$(filter-out $(INDRA_SRCS), $(notdir $(wildcard $(CXX_GEN_DIR)/*.cpp)))
 
-SRCS=		$(VRJCINEMA_SRCS) $(APP_SRCS) $(idl_srcs)
+SRCS=		$(INDRA_SRCS) $(APP_SRCS) $(idl_srcs)
 JAVA_SRCS=	dt/DtTweek.java			\
 		dt/DtObserverImpl.java	
 	
@@ -120,7 +118,7 @@ include $(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
 include $(DZR_BASE_DIR)/mk/dzr.java-app.mk
 
 
-CXX_GEN_DIR=		$(VRJCINEMA_ROOT_DIR)/tweek
+CXX_GEN_DIR=		$(INDRA_ROOT_DIR)/tweek
 CXX_IDL=		$(TWEEK_IDL_CXX)
 CXX_IDL_OPTS=		$(TWEEK_IDLFLAGS_CXX)			\
 			$(TWEEK_IDL_GENDIR_CXX)$(CXX_GEN_DIR)
@@ -170,11 +168,11 @@ cxx: $(OBJS)
 
 java: $(CLASSES)
 
-VrjCinema: 
+$(APP_NAME): 
 	ar rcs libIndra.a *.o
 	@rm -rf 		$(INSTALL)
 	@mkdir -p 		$(INSTALL)
-	@mv libVrjCinema.a 	$(INSTALL)
+	@mv libIndra.a 		$(INSTALL)
 
 DtTweekBean.jar: $(JAVA_CLASSES)
 	$(JAR) cvf $@ $(ALL_CLASSES)
