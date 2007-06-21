@@ -8,8 +8,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "Core/AppBase.h"
-#include "Core/Defs.h"
+#include "Veda/Core/AppBase.h"
+#include "Veda/Core/Defs.h"
 
 #include "vrj/Display/Projection.h"
 

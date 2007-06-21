@@ -20,10 +20,10 @@
 
 #include "osgUtil/IntersectVisitor"
 
-#include "Design/Interaction.h"
+#include "Veda/Design/Interaction.h"
 
-#include "Core/SharedData.h"
-#include "Core/Globals.h"
+#include "Veda/Core/SharedData.h"
+#include "Veda/Core/Globals.h"
 
 #include "OsgTools/SG/OsgFind.h"
 

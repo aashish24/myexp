@@ -30,15 +30,15 @@
 #include "vpr/Util/Debug.h"
 #include "vpr/Sync/Mutex.h" 
 
-#include "Core/User.h"
-#include "Core/SubjectImpl.h"
-#include "Core/UserData.h"
-#include "Core/SharedData.h"
-#include "Core/Types.h"
+#include "Veda/Core/User.h"
+#include "Veda/Core/SubjectImpl.h"
+#include "Veda/Core/UserData.h"
+#include "Veda/Core/SharedData.h"
+#include "Veda/Core/Types.h"
 
-#include "Tweek/TweekWrapper.h"
+#include "Veda/Tweek/TweekWrapper.h"
 
-#include "Core/Export.h"
+#include "Veda/Core/Export.h"
 
 #include <vector>
 #include <string>

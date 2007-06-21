@@ -10,7 +10,7 @@
 
 #ifdef HAVE_OSG
 
-#include "Core/OsgBase.h"
+#include "Veda/Core/OsgBase.h"
 
 #include "vrj/Draw/DrawManager.h"
 #include "vrj/Display/DisplayManager.h"

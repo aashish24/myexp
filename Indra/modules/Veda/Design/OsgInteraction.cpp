@@ -10,9 +10,9 @@
 
 #ifdef HAVE_OSG
 
-#include "Design/OsgInteraction.h"
+#include "Veda/Design/OsgInteraction.h"
 
-#include "Core/Defs.h"
+#include "Veda/Core/Defs.h"
 
 #include "osg/StateAttribute"
 #include "osg/Geometry"

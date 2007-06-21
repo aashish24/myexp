@@ -18,9 +18,9 @@
 #ifndef __CORE_COMMANDFACTORY_H__
 #define __CORE_COMMANDFACTORY_H__
 
-#include "Tweek/TweekCommand.h"
+#include "Veda/Tweek/TweekCommand.h"
 
-#include "Core/Export.h"
+#include "Veda/Core/Export.h"
 
 namespace Core
 {

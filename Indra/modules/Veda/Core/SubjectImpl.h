@@ -25,14 +25,14 @@
 #include "vpr/IO/ObjectWriter.h"
 #include "plugins/ApplicationDataManager/UserData.h"
 
-#include "Tweek/TweekSubject.h"
+#include "Veda/Tweek/TweekSubject.h"
 
-#include "Core/CommandFactory.h"
-#include "Core/UserData.h"
+#include "Veda/Core/CommandFactory.h"
+#include "Veda/Core/UserData.h"
 
-#include "Tweek/TweekCommand.h"
+#include "Veda/Tweek/TweekCommand.h"
 
-#include "Core/Export.h"
+#include "Veda/Core/Export.h"
 
 namespace Veda
 {

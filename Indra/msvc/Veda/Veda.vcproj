@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Veda"
+	Name="lib: Veda"
 	ProjectGUID="{BB294950-FACA-43DA-A791-8ABD7DFEF2A4}"
 	RootNamespace="VJCinema"
 	Keyword="Win32Proj"

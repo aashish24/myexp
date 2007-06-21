@@ -2,7 +2,7 @@
 #ifndef __MYAPP_H__
 #define __MYAPP_H__
 
-#include "Core/OsgBase.h"
+#include "Veda/Core/OsgBase.h"
 
 class MyApp : public Core::OsgBase
 {
@@ -16,9 +16,7 @@ class MyApp : public Core::OsgBase
 
 		void appInit();		
 		void appBufferPreDraw();	
-	  void appSceneInit();	
-
-		void loadGroupedData( osg::Group* group, const std::string& file );	
+	  void appSceneInit();			
 
 	private:	
 		int count;		

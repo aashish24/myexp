@@ -18,7 +18,7 @@
 #ifndef __CORE_SHAREDDATA_H__
 #define __CORE_SHAREDDATA_H__
 
-#include "Core/Command.h"
+#include "Veda/Core/Command.h"
 
 #include "Export.h"
 

@@ -8,7 +8,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "Core/SubjectImpl.h"
+#include "Veda/Core/SubjectImpl.h"
 
 #include "vpr/Util/Debug.h"
 

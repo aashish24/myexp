@@ -25,7 +25,7 @@
 #include "vpr/IO/ObjectWriter.h"
 #include "plugins/ApplicationDataManager/UserData.h"
 
-#include "Design/Interaction.h"
+#include "Veda/Design/Interaction.h"
 
 #include "Export.h"
 

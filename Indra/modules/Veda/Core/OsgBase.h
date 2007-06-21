@@ -23,10 +23,10 @@
 #include "vrj/vrjConfig.h"
 #include "vrj/Draw/OSG/OsgApp.h"
 
-#include "Core/AppBase.h"
-#include "Core/SharedData.h"
+#include "Veda/Core/AppBase.h"
+#include "Veda/Core/SharedData.h"
 
-#include "Design/OsgInteraction.h"
+#include "Veda/Design/OsgInteraction.h"
 
 #include "osg/Group"
 #include "osg/MatrixTransform"

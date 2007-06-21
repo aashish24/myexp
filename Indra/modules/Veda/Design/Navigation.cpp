@@ -8,8 +8,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "Design/Navigation.h"
-#include "Core/SharedData.h"
+#include "Veda/Design/Navigation.h"
+#include "Veda/Core/SharedData.h"
 
 #include "gmtl/Vec.h"
 #include "gmtl/VecOps.h"

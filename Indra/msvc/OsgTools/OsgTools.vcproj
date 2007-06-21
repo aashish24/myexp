@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="OsgTools"
+	Name="lib: OsgTools"
 	ProjectGUID="{15B0BD4F-098F-4AD9-8E69-B403F0BE9050}"
 	RootNamespace="OsgTools"
 	Keyword="Win32Proj"

@@ -26,11 +26,11 @@
 #include "vpr/IO/ObjectWriter.h"
 #include "plugins/ApplicationDataManager/UserData.h"
 
-#include "Core/CommandFactory.h"
+#include "Veda/Core/CommandFactory.h"
 
-#include "Tweek/TweekCommand.h"
+#include "Veda/Tweek/TweekCommand.h"
 
-#include "Core/Export.h"
+#include "Veda/Core/Export.h"
 
 namespace Core
 {

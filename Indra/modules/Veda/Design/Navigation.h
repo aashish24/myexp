@@ -27,9 +27,9 @@
 #include "gmtl/Generate.h"
 #include "gmtl/Math.h"
 
-#include "Core/Types.h"
+#include "Veda/Core/Types.h"
 
-#include "Core/Export.h"
+#include "Veda/Core/Export.h"
 
 namespace Design
 {

@@ -32,16 +32,16 @@
 
 #include "gmtl/Matrix.h"
 
-#include "Core/Types.h"
-#include "Core/Controller.h"
+#include "Veda/Core/Types.h"
+#include "Veda/Core/Controller.h"
 
-#include "Design/Navigation.h"
+#include "Veda/Design/Navigation.h"
 
 #if HAVE_KEYBOARDMOUSE
 #include "Dev/VJKeyboardMouseCallback.h"
 #endif
 
-#include "Core/Export.h"
+#include "Veda/Core/Export.h"
 
 namespace Design
 {
