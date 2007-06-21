@@ -15,8 +15,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef __CORE_DTUSERDATA_H__
-#define __CORE_DTUSERDATA_H__
+#ifndef __VEDA_CORE_USERDATA_H__
+#define __VEDA_CORE_USERDATA_H__
 
 #include <deque> 
 
@@ -174,5 +174,5 @@ namespace Core
   };
 }
 
-#endif // __CORE_DTUSERDATA_H__
+#endif // __VEDA_CORE_USERDATA_H__
 

@@ -1,6 +1,9 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Veda", "Veda\Veda.vcproj", "{BB294950-FACA-43DA-A791-8ABD7DFEF2A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{15B0BD4F-098F-4AD9-8E69-B403F0BE9050} = {15B0BD4F-098F-4AD9-8E69-B403F0BE9050}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OsgTools", "OsgTools\OsgTools.vcproj", "{15B0BD4F-098F-4AD9-8E69-B403F0BE9050}"
 EndProject

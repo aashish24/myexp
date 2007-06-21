@@ -269,6 +269,14 @@
 					RelativePath="..\..\modules\Veda\Core\User.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\modules\Veda\Core\UserData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\modules\Veda\Core\UserData.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Tweek"
