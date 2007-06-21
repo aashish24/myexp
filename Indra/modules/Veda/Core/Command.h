@@ -23,6 +23,7 @@
 #include "vpr/IO/SerializableObject.h"
 #include "vpr/IO/ObjectReader.h"
 #include "vpr/IO/ObjectWriter.h"
+
 #include "plugins/ApplicationDataManager/UserData.h"
 
 #include "gmtl/Matrix.h"
@@ -32,7 +33,7 @@
 
 namespace Core
 {
-  class CORE_EXPORT Command : public vpr::SerializableObject
+  class VEDA_EXPORT Command : public vpr::SerializableObject
   {
     public:
 
@@ -42,7 +43,7 @@ namespace Core
       // 
       /////////////////////////////////////////////////////////////////////////
 
-      virtual vpr::ReturnStatus readObject( vpr::ObjectReader* reader )
+      virtual void readObject( vpr::ObjectReader* reader )
       {        
         float posData[ 16 ];
         
@@ -123,16 +124,15 @@ namespace Core
           mSharedVectorTypeObjects[ str ] = vec;
         }        
 
-        return vpr::ReturnStatus::Succeed;
     }
 
     ///////////////////////////////////////////////////////////////////////////
     //
     // Write data values. 
     //
-    /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
 
-    virtual vpr::ReturnStatus writeObject(vpr::ObjectWriter* writer)
+    virtual void writeObject(vpr::ObjectWriter* writer)
     {
         
         const float* posData = mSharedTransformMatrix.getData();
@@ -216,7 +216,6 @@ namespace Core
             writer->writeFloat( vec_data[ i ] );
           }
         }
-        return vpr::ReturnStatus::Succeed;
     }
 
     public:       

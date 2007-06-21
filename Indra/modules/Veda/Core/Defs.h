@@ -10,7 +10,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// This class CORE_EXPORT defines the device interfaces. 
+// This class VEDA_EXPORT defines the device interfaces. 
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -27,7 +27,7 @@
 
 namespace Core
 {
-  class CORE_EXPORT Defs
+  class VEDA_EXPORT Defs
   {
     public:
         static void init();

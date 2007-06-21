@@ -10,7 +10,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// This class CORE_EXPORT defines the globals used. 
+// This class VEDA_EXPORT defines the globals used. 
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -21,7 +21,7 @@
 
 namespace Core
 {
-  class CORE_EXPORT Display
+  class VEDA_EXPORT Display
   {
     public:
       void              setDisplay( int originx, int originy, int width, int height );
@@ -40,7 +40,7 @@ namespace Core
       int               mHeight;
   };
 
-  class CORE_EXPORT RenderGlobals
+  class VEDA_EXPORT RenderGlobals
   {
     public:
 

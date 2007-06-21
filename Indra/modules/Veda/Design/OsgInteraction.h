@@ -5,8 +5,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef __CORE_OSGINTERACTION_H__
-#define  __CORE_OSGINTERACTION_H__
+#ifndef __DESIGN_OSGINTERACTION_H__
+#define __DESIGN_OSGINTERACTION_H__
 
 #include <iostream>
 #include <vector>
@@ -127,4 +127,4 @@ namespace Core
   };
 }
 
-#endif // __CORE_OSGINTERACTION_H__
+#endif // __DESIGN_OSGINTERACTION_H__

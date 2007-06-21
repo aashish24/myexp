@@ -29,11 +29,11 @@
 
 #include "Core/Types.h"
 
-#include "Export.h"
+#include "Core/Export.h"
 
-namespace Core
+namespace Design
 {
-  class CORE_EXPORT Navigation
+  class VEDA_EXPORT Navigation
   {
     public:
 
@@ -73,8 +73,8 @@ namespace Core
       
       void                                          reset();
 
-      const NavigationMode&                         navigationMode() const;      
-      void                                          navigationMode( const NavigationMode& navMode );
+	  const Core::NavigationMode&                   navigationMode() const;      
+	  void                                          navigationMode( const Core::NavigationMode& navMode );
 
       void                                          accelerate();
       void                                          deaccelerate();
@@ -94,12 +94,12 @@ namespace Core
 
       void                                          pitch( const double& value );
 
-      void                                          translate( const gmtl::Vec3f& vector, Scope = GLOBAL );
-      void                                          rotate   ( gmtl::Matrix44f& matrix, Scope = GLOBAL );
+	  void                                          translate( const gmtl::Vec3f& vector, Core::Scope = Core::GLOBAL );
+	  void                                          rotate   ( gmtl::Matrix44f& matrix, Core::Scope = Core::GLOBAL );
 
       gmtl::Matrix44f&                              slerp( gmtl::Matrix44f& matrix, const float& value );
 
-      void                                          update( const float& delta, Scope = GLOBAL );
+	  void                                          update( const float& delta, Core::Scope = Core::GLOBAL );
     
     private:
 
@@ -134,7 +134,7 @@ namespace Core
       bool                                          mAllowYaw;
       bool                                          mAllowRoll;
 
-      NavigationMode                                mNavigationMode;
+	  Core::NavigationMode                          mNavigationMode;
 
   };
 }

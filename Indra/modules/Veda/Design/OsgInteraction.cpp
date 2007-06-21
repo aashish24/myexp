@@ -8,7 +8,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "Core/OsgInteraction.h"
+#ifdef HAVE_OSG
+
+#include "Design/OsgInteraction.h"
+
 #include "Core/Defs.h"
 
 #include "osg/StateAttribute"
@@ -1033,3 +1036,4 @@ void OsgInteraction::reset()
   Interaction::reset();
 }
 
+#endif 

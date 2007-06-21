@@ -8,6 +8,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef HAVE_OSG
+
 #include "Core/OsgBase.h"
 
 #include "Util/OsgConv.h"
@@ -625,3 +627,5 @@ void Core::OsgBase::appBufferPreDraw()
   glClearColor(0.0, 0.0, 0.0, 0.0);
   glClear(GL_COLOR_BUFFER_BIT);
 }
+
+#endif

@@ -8,8 +8,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef __CORE_EXPORT_H__
-#define __CORE_EXPORT_H__
+#ifndef __VEDA_EXPORT_H__
+#define __VEDA_EXPORT_H__
 
 #if defined( _MSC_VER )  
   #pragma warning( disable : 4251 )
@@ -18,19 +18,19 @@
 
 #if defined( _MSC_VER ) || defined( __CYGWIN__ ) || defined( __MINGW32__ )
   # if defined( INDRA_STATIC_LIBRARY )
-  #  define CORE_EXPORT  
+  #  define VEDA_EXPORT  
   # else
   #  ifdef INDRA_SHARED_LIBRARY
-  #    define CORE_EXPORT __declspec(dllexport)
+  #    define VEDA_EXPORT __declspec(dllexport)
   #  else
-  #    define CORE_EXPORT __declspec(dllimport)
+  #    define VEDA_EXPORT __declspec(dllimport)
   #  endif
   # endif
 #else
-  # define CORE_EXPORT
+  # define VEDA_EXPORT
 #endif 
 
-#endif // __CORE_EXPORT_H__
+#endif // __VEDA_EXPORT_H__
 
 
 

@@ -25,13 +25,15 @@ namespace dt
   {    
     if( UserDataController::mUserData.isLocal() )
     {
-      TweekCommand* tweekCommand      = CommandFactory::create( CommandFactory::TWEEK_COMMAND );
+      Tweek::TweekCommand* tweekCommand  = CommandFactory::create( CommandFactory::TWEEK_COMMAND );
+
       tweekCommand->mIdentifier       = identifier;
       tweekCommand->mEntity           = entity;
       tweekCommand->mStateAttribute   = state_attribute;
       tweekCommand->mModifierString   = modifier_string;
       tweekCommand->mModifierBoolean  = modifier_boolean;
       tweekCommand->mModifierLong     = modifier_long;
+      
       UserDataController::addCommand( tweekCommand );
     }
     

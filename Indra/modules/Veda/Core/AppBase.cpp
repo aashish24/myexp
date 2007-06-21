@@ -172,7 +172,7 @@ void Core::AppBase::setNearFar( const long& near, const long& far )
 void Core::AppBase::initTweek()
 {
   // Initialize the tweek wrapper object. 
-  mTweekWrapper = new TweekWrapper();
+  mTweekWrapper = new Tweek::TweekWrapper();
 
   // Check if tweek has been initialized if not then set state off and return. 
   if(!mTweekWrapper->init())

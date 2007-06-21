@@ -41,7 +41,7 @@ namespace Core
 
   /////////////////////////////////////////////////////////////////////////////
   // 
-  // InteractionMode mode.
+  // Core::InteractionMode mode.
   // @NOTE: 
   // - WORLD for all global interactions.  
   // - OBJECT for manipulating states of individual objects 

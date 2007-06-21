@@ -11,18 +11,20 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Factory class CORE_EXPORT to create command objects. 
+// Factory class VEDA_EXPORT to create command objects. 
 //
 ///////////////////////////////////////////////////////////////////////////////
 
 #ifndef __CORE_COMMANDFACTORY_H__
 #define __CORE_COMMANDFACTORY_H__
 
-#include "Core/TweekCommand.h"
+#include "Tweek/TweekCommand.h"
+
+#include "Core/Export.h"
 
 namespace Core
 {
-  class CORE_EXPORT CommandFactory
+  class VEDA_EXPORT CommandFactory
   {
 
     public: 
@@ -65,13 +67,13 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-      static TweekCommand* create( CommandType type )
+	  static Tweek::TweekCommand* create( CommandType type )
       {
         switch( type )
         {
           case TWEEK_COMMAND:
           {
-            return new TweekCommand();            
+			return new Tweek::TweekCommand();            
           }
           default:
           {

@@ -25,13 +25,13 @@
 #include "vpr/IO/ObjectWriter.h"
 #include "plugins/ApplicationDataManager/UserData.h"
 
-#include "Core/Interaction.h"
+#include "Design/Interaction.h"
 
 #include "Export.h"
 
 namespace Core 
 {
-  class CORE_EXPORT User
+  class VEDA_EXPORT User
   {   
     public:
 
@@ -103,13 +103,13 @@ namespace Core
 
       void setInteraction( void* ptr )
       {
-        Interaction* in = static_cast< Interaction* >( ptr );                  
+		Design::Interaction* in = static_cast< Design::Interaction* >( ptr );                  
 
         if( in ) 
         {  
           if( mInteractions.size() >= 1)
           {
-            std::vector< Interaction* >::iterator itr = mInteractions.begin();
+			std::vector< Design::Interaction* >::iterator itr = mInteractions.begin();
                         
             for( int i = 0; itr != mInteractions.end(); ++i)
             {
@@ -166,7 +166,7 @@ namespace Core
 
     private:    
 
-      std::vector< Interaction* >    mInteractions;
+		std::vector< Design::Interaction* >    mInteractions;
 
   };
 }

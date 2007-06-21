@@ -10,7 +10,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// This class CORE_EXPORT provides the functionality of sharing data from the master to the 
+// This class VEDA_EXPORT provides the functionality of sharing data from the master to the 
 // the slaves nodes. 
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -24,7 +24,7 @@
 
 namespace Core
 {
-  class CORE_EXPORT SharedData
+  class VEDA_EXPORT SharedData
   {          
     public:  
       static cluster::UserData< Command > mCommand;
@@ -32,9 +32,8 @@ namespace Core
 
       static void init()
       {
-        vpr::GUID new_guid("291B6290-1BD9-4844-B757-73D5C4BB1690");
-        SharedData::mCommand.init(new_guid, "viz0");
-
+        vpr::GUID newGuid( "291B6290-1BD9-4844-B757-73D5C4BB1690" );
+        SharedData::mCommand.init( newGuid);
         mActive = true;
       }
 

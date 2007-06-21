@@ -10,7 +10,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// This class CORE_EXPORT provides tweek subject implementation. 
+// This class VEDA_EXPORT provides tweek subject implementation. 
 // 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -25,17 +25,18 @@
 #include "vpr/IO/ObjectWriter.h"
 #include "plugins/ApplicationDataManager/UserData.h"
 
-#include "Core/dtsubject.h"
+#include "Tweek/dtsubject.h"
 
 #include "Core/CommandFactory.h"
-#include "Core/TweekCommand.h"
 #include "Core/UserData.h"
 
-#include "Export.h"
+#include "Tweek/TweekCommand.h"
+
+#include "Core/Export.h"
 
 namespace dt
 {
-  class CORE_EXPORT SubjectImpl : public POA_dt::DtSubject, public tweek::SubjectImpl
+  class VEDA_EXPORT SubjectImpl : public POA_dt::DtSubject, public tweek::SubjectImpl
   {
     public:
       SubjectImpl() : tweek::SubjectImpl()

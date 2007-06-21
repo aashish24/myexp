@@ -27,13 +27,14 @@
 #include "plugins/ApplicationDataManager/UserData.h"
 
 #include "Core/CommandFactory.h"
-#include "Core/TweekCommand.h"
 
-#include "Export.h"
+#include "Tweek/TweekCommand.h"
+
+#include "Core/Export.h"
 
 namespace Core
 {
-  class CORE_EXPORT UserData : public vpr::SerializableObject
+  class VEDA_EXPORT UserData : public vpr::SerializableObject
   {  
     public:
       virtual ~UserData()
@@ -46,12 +47,12 @@ namespace Core
       //
       ///////////////////////////////////////////////////////////////////////////////
 
-      virtual vpr::ReturnStatus readObject( vpr::ObjectReader* reader )
+      virtual void readObject( vpr::ObjectReader* reader )
       {
         unsigned int dataSize  = reader->readUint32();
         for( size_t i = 0; i < dataSize ; ++i )
         {      
-          mPendingTweekCommandList.push_back(new TweekCommand());  
+          mPendingTweekCommandList.push_back( new Tweek::TweekCommand() );  
 
           mPendingTweekCommandList[ i ]->mIdentifier      = reader->readString();
           mPendingTweekCommandList[ i ]->mEntity          = reader->readString();
@@ -59,8 +60,7 @@ namespace Core
           mPendingTweekCommandList[ i ]->mModifierString  = reader->readString();
           mPendingTweekCommandList[ i ]->mModifierBoolean  = reader->readBool();
           mPendingTweekCommandList[ i ]->mModifierLong    = reader->readUint64();        
-        }
-        return vpr::ReturnStatus::Succeed;
+        }        
       }
 
       ///////////////////////////////////////////////////////////////////////////////
@@ -69,7 +69,7 @@ namespace Core
       //
       ///////////////////////////////////////////////////////////////////////////////
 
-      virtual vpr::ReturnStatus writeObject(vpr::ObjectWriter* writer)
+      virtual void writeObject(vpr::ObjectWriter* writer)
       {
         unsigned int dataSize = mPendingTweekCommandList.size();
         
@@ -94,19 +94,16 @@ namespace Core
           mPendingTweekCommandList[ i ] = 0x00;
         }
 
-        mPendingTweekCommandList.clear();
-
-        return vpr::ReturnStatus::Succeed;
+        mPendingTweekCommandList.clear();        
       }
 
     public:
-
-      std::deque< TweekCommand* > mPendingTweekCommandList;
-
-      std::deque< TweekCommand* > mReadyTweekCommandList;
+			
+      std::deque< Tweek::TweekCommand* > mPendingTweekCommandList;
+      std::deque< Tweek::TweekCommand* > mReadyTweekCommandList;
   };  
 
-  class CORE_EXPORT UserDataController
+  class VEDA_EXPORT UserDataController
   {
     public: 
       
@@ -118,8 +115,8 @@ namespace Core
 
       static void init()
       {              
-        vpr::GUID new_guid( "d6be4359-e8cf-41fc-a72b-a5b4f3f29aa2" );
-        mUserData.init( new_guid, "viz0" );
+        vpr::GUID guid( "d6be4359-e8cf-41fc-a72b-a5b4f3f29aa2" );
+        mUserData.init( guid );
       }
 
       ///////////////////////////////////////////////////////////////////////////////
@@ -128,7 +125,7 @@ namespace Core
       //
       ///////////////////////////////////////////////////////////////////////////////
 
-      static void addCommand( TweekCommand* tweek_command )
+      static void addCommand( Tweek::TweekCommand* tweek_command )
       {
         mCommandLock.acquire();
         {
@@ -143,7 +140,7 @@ namespace Core
       //
       ///////////////////////////////////////////////////////////////////////////////
 
-      static std::deque<TweekCommand*> getReadyTweekCommandList()
+      static std::deque< Tweek::TweekCommand* > getReadyTweekCommandList()
       {
         return mUserData->mReadyTweekCommandList;
       }

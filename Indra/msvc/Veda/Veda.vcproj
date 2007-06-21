@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Indra"
+	Name="Veda"
 	ProjectGUID="{BB294950-FACA-43DA-A791-8ABD7DFEF2A4}"
 	RootNamespace="VJCinema"
 	Keyword="Win32Proj"
@@ -25,7 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="$(VJ_DEPS_DIR)/bin/omniidl  -bcxx -Wbh=.h,s=.cpp -C.\..\tweek -I$(VJ_BASE_DIR)\include  .\..\tweek\dt\dtsubject.idl"
+				CommandLine="$(VJ_BASE_DIR)/bin/omniidl  -bcxx -Wbh=.h,s=.cpp -C.\..\..\modules\Veda\Tweek -I$(VJ_BASE_DIR)\include  .\..\..\modules\Veda\Tweek\TweekSubject.idl"
 				ExcludedFromBuild="false"
 			/>
 			<Tool
@@ -45,7 +45,7 @@
 				Optimization="0"
 				InlineFunctionExpansion="0"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="./../tweek/dt;./../src;$(OPENTHREADS_INC_DIR);$(PRODUCER_INC_DIR);$(OSG_INC_DIR);$(VJ_BASE_DIR)/include/tweek/idl;$(VJ_DEPS_DIR)/include;$(VJ_BASE_DIR)/include;"
+				AdditionalIncludeDirectories="./../tweek/dt;../../modules/Veda;&quot;$(VJ_BASE_DIR)\include\tweek\idl&quot;;&quot;$(VJ_BASE_DIR)/include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;__WIN32__=1;__x86__=1;__NT__=1;__OSVERSION__=5;USE_core_stub_in_nt_dll;USE_core_stub_in_nt_dll_NOT_DEFINED_Subject;INDRA_SHARED_LIBRARY;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -70,7 +70,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="osgd.lib osgDBd.lib osgUtild.lib osgFXd.lib osgTextd.lib vrj_d.lib vpr_d.lib gadget_d.lib jccl_d.lib vrj_ogl_d.lib tweek_d.lib openGL32.lib omnithread32_rtd.lib omniDynamic407_rtd.lib omniORB407_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib Producerd.lib $(NOINHERIT)"
-				OutputFile="$(LOCAL_SRC_DIR)/bin/Indrad.dll"
+				OutputFile="../../bin/Indrad.dll"
 				AdditionalLibraryDirectories="$(VJ_BASE_DIR)/lib;$(VJ_DEPS_DIR)/lib;$(OSG_LIB_DIR);$(PRODUCER_LIB_DIR);$(OPENTHREADS_LIB_DIR)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -194,175 +194,123 @@
 				Name="Core"
 				>
 				<File
-					RelativePath="..\src\Core\AppBase.cpp"
+					RelativePath="..\..\modules\Veda\Core\AppBase.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\AppBase.h"
+					RelativePath="..\..\modules\Veda\Core\AppBase.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\Command.h"
+					RelativePath="..\..\modules\Veda\Core\Command.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\CommandFactory.h"
+					RelativePath="..\..\modules\Veda\Core\Controller.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\Controller.cpp"
+					RelativePath="..\..\modules\Veda\Core\Controller.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\Controller.h"
+					RelativePath="..\..\modules\Veda\Core\Defs.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\Defs.cpp"
+					RelativePath="..\..\modules\Veda\Core\Defs.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\Defs.h"
+					RelativePath="..\..\modules\Veda\Core\Export.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\dtsubject.cpp"
+					RelativePath="..\..\modules\Veda\Core\Globals.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\dtsubject.h"
+					RelativePath="..\..\modules\Veda\Core\Globals.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\Export.h"
+					RelativePath="..\..\modules\Veda\Core\OsgBase.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\Globals.cpp"
+					RelativePath="..\..\modules\Veda\Core\OsgBase.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\Globals.h"
+					RelativePath="..\..\modules\Veda\Core\SharedCommand.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\Interaction.h"
+					RelativePath="..\..\modules\Veda\Core\SharedData.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\Navigation.cpp"
+					RelativePath="..\..\modules\Veda\Core\SharedData.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\Navigation.h"
+					RelativePath="..\..\modules\Veda\Core\SubjectImpl.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\OsgBase.cpp"
+					RelativePath="..\..\modules\Veda\Core\SubjectImpl.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\OsgBase.h"
+					RelativePath="..\..\modules\Veda\Core\Types.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Core\OsgInteraction.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\OsgInteraction.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\OssimInteraction.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\OssimInteraction.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\SharedCommand.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\SharedData.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\SharedData.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\SubjectImpl.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\SubjectImpl.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\TweekCommand.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\TweekWrapper.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\Types.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\User.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\UserData.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Core\UserData.h"
+					RelativePath="..\..\modules\Veda\Core\User.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="Util"
+				Name="Tweek"
 				>
 				<File
-					RelativePath="..\src\Util\Export.h"
+					RelativePath="..\..\modules\Veda\Tweek\TweekCommand.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Util\OsgConv.h"
+					RelativePath="..\..\modules\Veda\Tweek\TweekSubject.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Util\OsgFind.h"
+					RelativePath="..\..\modules\Veda\Tweek\TweekSubject.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Util\OsgFrameDump.h"
+					RelativePath="..\..\modules\Veda\Tweek\TweekWrapper.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="Dev"
-				>
-			</Filter>
-			<Filter
-				Name="Math"
+				Name="Design"
 				>
 				<File
-					RelativePath="..\src\Math\ExpFunction.h"
+					RelativePath="..\..\modules\Veda\Design\Interaction.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Math\Export.h"
+					RelativePath="..\..\modules\Veda\Design\Navigation.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Math\Function.h"
+					RelativePath="..\..\modules\Veda\Design\Navigation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\modules\Veda\Design\OsgInteraction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\modules\Veda\Design\OsgInteraction.h"
 					>
 				</File>
 			</Filter>

@@ -44,7 +44,7 @@
 
 namespace Core
 {
-  class CORE_EXPORT OsgBase : public AppBase, public vrj::OsgApp
+  class VEDA_EXPORT OsgBase : public AppBase, public vrj::OsgApp
   {
     public:
       

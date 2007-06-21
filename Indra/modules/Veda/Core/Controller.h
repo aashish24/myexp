@@ -30,11 +30,11 @@
 
 #include "Core/Types.h"
 
-#include "Export.h"
+#include "Core/Export.h"
 
 namespace Core
 {
-  class CORE_EXPORT Controller 
+  class VEDA_EXPORT Controller 
   {
     public:          
       

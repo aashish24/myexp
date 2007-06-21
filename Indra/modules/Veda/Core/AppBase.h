@@ -11,12 +11,12 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// This class CORE_EXPORT provies functionality independent of scenegraph implemenations. 
+// This class VEDA_EXPORT provies functionality independent of scenegraph implemenations. 
 // It also provides some advanced level functionality from vrjuggler like 
 // tweek, vjvnc.
 // 
 // @NOTE: 
-// Application should never be derived directly from this class CORE_EXPORT. 
+// Application should never be derived directly from this class VEDA_EXPORT. 
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -32,19 +32,20 @@
 
 #include "Core/User.h"
 #include "Core/SubjectImpl.h"
-#include "Core/TweekWrapper.h"
 #include "Core/UserData.h"
 #include "Core/SharedData.h"
 #include "Core/Types.h"
 
-#include "Export.h"
+#include "Tweek/TweekWrapper.h"
+
+#include "Core/Export.h"
 
 #include <vector>
 #include <string>
 
 namespace Core
 {
-  class CORE_EXPORT AppBase 
+  class VEDA_EXPORT AppBase 
   {
     public:    
 
@@ -54,7 +55,7 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-      typedef std::deque< TweekCommand* >         TweekCommandList;
+      typedef std::deque< Tweek::TweekCommand* >         TweekCommandList;
 
 
       /////////////////////////////////////////////////////////////////////////
@@ -109,7 +110,7 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
       
-      User                                           mUser;      
+      User                                                      mUser;      
       
 
       /////////////////////////////////////////////////////////////////////////
@@ -119,7 +120,7 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
        
-      std::string                                    mApplicationName;
+      std::string                                               mApplicationName;
 
 
       /////////////////////////////////////////////////////////////////////////
@@ -128,7 +129,7 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
       
-      TweekWrapper*                                  mTweekWrapper;    
+      Tweek::TweekWrapper*                                      mTweekWrapper;    
     
 
       /////////////////////////////////////////////////////////////////////////
@@ -137,7 +138,7 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
        
-      TweekCommandList                               mReadyCommandList;
+      TweekCommandList                                          mReadyCommandList;
 
 
       /////////////////////////////////////////////////////////////////////////
@@ -146,7 +147,7 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////
 
-      bool                                           mNearFarSet;
+      bool                                                      mNearFarSet;
 
 
     private:       

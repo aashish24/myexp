@@ -17,8 +17,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef __CORE_INTERACTION_H__
-#define  __CORE_INTERACTION_H__
+#ifndef __DESIGN_INTERACTION_H__
+#define __DESIGN_INTERACTION_H__
 
 #include <iostream>
 #include <vector>
@@ -33,20 +33,19 @@
 #include "gmtl/Matrix.h"
 
 #include "Core/Types.h"
-#include "Core/Navigation.h"
 #include "Core/Controller.h"
+
+#include "Design/Navigation.h"
 
 #if HAVE_KEYBOARDMOUSE
 #include "Dev/VJKeyboardMouseCallback.h"
 #endif
 
-#include "Math/Function.h"
+#include "Core/Export.h"
 
-#include "Export.h"
-
-namespace Core
+namespace Design
 {
-  class CORE_EXPORT Interaction
+  class VEDA_EXPORT Interaction
   {
     public:
       
@@ -58,7 +57,7 @@ namespace Core
 
       typedef std::vector< gadget::DigitalInterface* >  DigitalInterfaces;
       typedef std::vector< gadget::AnalogInterface* >   AnalogInterfaces;
-      typedef std::vector< ActionState >                ActionStates;
+	  typedef std::vector< Core::ActionState >                ActionStates;
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -73,10 +72,9 @@ namespace Core
         mRotationSpeed    ( 0.0 ),
         mRotationDelta    ( 0.0 ),    
         mUseAnalog        ( false ),
-        mAllowPitch        ( true  ),
-        mAllowYaw          ( true  ), 
-        mInteractionMode  ( WORLD ),
-        mControlFunction  ( 0x00 )
+        mAllowPitch       ( true  ),
+        mAllowYaw         ( true  ), 
+		mInteractionMode  ( Core::WORLD )        
       {  
         gmtl::identity( mWandMatrix );           
       }
@@ -108,7 +106,7 @@ namespace Core
 
       /////////////////////////////////////////////////////////////////////////
       //
-      // Derived class CORE_EXPORT has to provide definition for controls. 
+      // Derived class VEDA_EXPORT has to provide definition for controls. 
       // 
       /////////////////////////////////////////////////////////////////////////
 
@@ -269,7 +267,7 @@ namespace Core
 
       /////////////////////////////////////////////////////////////////////////
       //
-      // Derived class CORE_EXPORT has to implement this. 
+      // Derived class VEDA_EXPORT has to implement this. 
       //
       /////////////////////////////////////////////////////////////////////////      
 
@@ -279,7 +277,7 @@ namespace Core
 
       /////////////////////////////////////////////////////////////////////////
       //
-      // Derived class CORE_EXPORT has to implement this. 
+      // Derived class VEDA_EXPORT has to implement this. 
       //
       /////////////////////////////////////////////////////////////////////////      
 
@@ -311,7 +309,7 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////      
 
-      const InteractionMode& getInteactionMode() const
+	    const Core::InteractionMode& getInteactionMode() const
       {
         return mInteractionMode;
       }
@@ -322,7 +320,7 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////      
 
-      void setInteractionMode( const InteractionMode& mode )
+      void setInteractionMode( const Core::InteractionMode& mode )
       {
           mInteractionMode = mode;
       }      
@@ -334,10 +332,10 @@ namespace Core
       //
       /////////////////////////////////////////////////////////////////////////      
 
-      virtual void  controlFunction( Math::Function* func )
+	  /*virtual void  controlFunction( Math::Function* func )
       {
         mControlFunction = func;
-      }
+      }*/
 
     protected:
 
@@ -411,19 +409,19 @@ namespace Core
       double                                        mRotationSpeed;
       double                                        mRotationDelta;
 
-      InteractionMode                                mInteractionMode;
+      Core::InteractionMode                         mInteractionMode;
 
-      Controller                                    mController;  
+	  Core::Controller                              mController;  
 
-      gmtl::Matrix44f                                mWandMatrix;
+      gmtl::Matrix44f                               mWandMatrix;
 
       #if HAVE_KEYBOARDMOUSE      
-      VJKeyboadMouseCallback*                        mKmCallBack;      
+      VJKeyboadMouseCallback*                       mKmCallBack;      
       #endif
 
-      osg::ref_ptr< Math::Function >                mControlFunction;
+      //osg::ref_ptr< Math::Function >                mControlFunction;
   };
 }
 
-#endif // __CORE_INTERACTION_H__
+#endif // __DESIGN_INTERACTION_H__
 

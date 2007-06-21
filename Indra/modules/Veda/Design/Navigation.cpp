@@ -8,13 +8,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "Core/Navigation.h"
+#include "Design/Navigation.h"
 #include "Core/SharedData.h"
 
 #include "gmtl/Vec.h"
 #include "gmtl/VecOps.h"
 
-using namespace Core;
+using namespace Design;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -34,7 +34,7 @@ Navigation::Navigation() :
   mFrameRenderTime      ( 1.0 / 30.0 ), 
   mFramesPerSecond      ( 30.0 ), 
   mUseRange             ( false ),         
-  mNavigationMode        ( TRACKBALL ), 
+  mNavigationMode       ( Core::TRACKBALL ), 
   mAllowPitch           ( true ), 
   mAllowYaw             ( true ), 
   mAllowRoll            ( true )
@@ -298,7 +298,7 @@ void Navigation::reset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Navigation::navigationMode( const NavigationMode& mode )
+void Navigation::navigationMode( const Core::NavigationMode& mode )
 {
   mNavigationMode = mode;
 }
@@ -309,7 +309,7 @@ void Navigation::navigationMode( const NavigationMode& mode )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-const NavigationMode& Navigation::navigationMode() const
+const Core::NavigationMode& Navigation::navigationMode() const
 {
   return mNavigationMode;
 }
@@ -462,17 +462,17 @@ void Navigation::rotateInZ( const double& value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Navigation::translate( const gmtl::Vec3f& vec, Scope scope )
+void Navigation::translate( const gmtl::Vec3f& vec, Core::Scope scope )
 {
   gmtl::Matrix44f transMatrix = gmtl::makeTrans< gmtl::Matrix44f >( vec );
 
-  if( scope == GLOBAL )
+  if( scope == Core::GLOBAL )
   {
     gmtl::Matrix44f invMatrix;
 
     switch( mNavigationMode )
     {
-      case HELICOPTER:
+  	  case Core::HELICOPTER:
       {
         gmtl::invertFull( invMatrix, mPitchMatrix );
 
@@ -481,17 +481,17 @@ void Navigation::translate( const gmtl::Vec3f& vec, Scope scope )
         gmtl::preMult   ( mCurrentPosition, mPitchMatrix );
         break;
       }
-      case FLIGHT:
+	  case Core::FLIGHT:
       {
         gmtl::preMult( mCurrentPosition, transMatrix );
         break;
       }
-      case TRACKBALL:
+	  case Core::TRACKBALL:
       {
         gmtl::preMult( mCurrentPosition, transMatrix );
         break;
       }
-      case OSSIMNAV:
+      case Core::OSSIMNAV:
       {
         gmtl::preMult( mCurrentPosition, transMatrix );
         break;
@@ -516,19 +516,19 @@ void Navigation::translate( const gmtl::Vec3f& vec, Scope scope )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Navigation::rotate( gmtl::Matrix44f& rotationMatrix, Scope scope )
+void Navigation::rotate( gmtl::Matrix44f& rotationMatrix, Core::Scope scope )
 {
   slerp( rotationMatrix, 0.4f );
 
   gmtl::Vec3f tempVector1, tempVector2; tempVector1.set( 0.0, 0.0, 0.0 );
 
-  if( mNavigationMode == TRACKBALL || mNavigationMode == OSSIMNAV )
+  if( mNavigationMode == Core::TRACKBALL || mNavigationMode == Core::OSSIMNAV )
   {
     gmtl::setTrans( tempVector2, mCurrentPosition );
     gmtl::setTrans( mCurrentPosition, tempVector1 );
   }
 
-  if( scope == GLOBAL && mNavigationMode != OSSIMNAV )
+  if( scope == Core::GLOBAL && mNavigationMode != Core::OSSIMNAV )
   {  
     float p = ( gmtl::makeRot< gmtl::EulerAngleXYZf >( rotationMatrix ) )[ 0 ];
     
@@ -542,7 +542,7 @@ void Navigation::rotate( gmtl::Matrix44f& rotationMatrix, Scope scope )
     
     mPitchMatrix = mPitchMatrix * pitchMatrix;
   }
-  else if( mNavigationMode == OSSIMNAV )
+  else if( mNavigationMode == Core::OSSIMNAV )
   {
     gmtl::preMult( mCurrentPosition, rotationMatrix );
   }
@@ -551,7 +551,7 @@ void Navigation::rotate( gmtl::Matrix44f& rotationMatrix, Scope scope )
     gmtl::postMult( mCurrentPosition, rotationMatrix   );
   }
   
-  if( mNavigationMode == TRACKBALL || mNavigationMode == OSSIMNAV )
+  if( mNavigationMode == Core::TRACKBALL || mNavigationMode == Core::OSSIMNAV )
   {
     gmtl::setTrans( mCurrentPosition, tempVector2 );  
   }
@@ -599,7 +599,7 @@ gmtl::Matrix44f& Navigation::slerp( gmtl::Matrix44f& inputMatrix, const float& a
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Navigation::update( const float& delta, Scope scope )
+void Navigation::update( const float& delta, Core::Scope scope )
 {  
   static const float fps = 30.0;
   
