@@ -14,26 +14,17 @@
 
 using namespace Core;
 
-namespace dt 
+namespace Veda 
 {
-  void SubjectImpl::setCommand( const char* identifier, 
-                                  const char* entity, 
-                                  const char* state_attribute,
-                                  const char* modifier_string,
-                                  CORBA::Boolean modifier_boolean, 
-                                  CORBA::Long modifier_long )
+  void SubjectImpl::setCommand( const char* key, const char* value )
   {    
     if( UserDataController::mUserData.isLocal() )
     {
       Tweek::TweekCommand* tweekCommand  = CommandFactory::create( CommandFactory::TWEEK_COMMAND );
 
-      tweekCommand->mIdentifier       = identifier;
-      tweekCommand->mEntity           = entity;
-      tweekCommand->mStateAttribute   = state_attribute;
-      tweekCommand->mModifierString   = modifier_string;
-      tweekCommand->mModifierBoolean  = modifier_boolean;
-      tweekCommand->mModifierLong     = modifier_long;
-      
+      tweekCommand->mKey   = key;
+      tweekCommand->mValue = value;
+
       UserDataController::addCommand( tweekCommand );
     }
     

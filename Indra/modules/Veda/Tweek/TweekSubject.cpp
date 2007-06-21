@@ -177,11 +177,11 @@ _0RL_lcfn_047346785376FDD1_10000000(omniCallDescriptor* cd, omniServant* svnt)
 
 }
 
-void Veda::_objref_TweekSubject::setCommand(const char* key, const char* command)
+void Veda::_objref_TweekSubject::setCommand(const char* key, const char* value)
 {
   _0RL_cd_047346785376FDD1_00000000 _call_desc(_0RL_lcfn_047346785376FDD1_10000000, "setCommand", 11);
   _call_desc.arg_0 = key;
-  _call_desc.arg_1 = command;
+  _call_desc.arg_1 = value;
 
   _invoke(_call_desc);
 

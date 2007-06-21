@@ -411,7 +411,7 @@ namespace Design
 
       Core::InteractionMode                         mInteractionMode;
 
-	  Core::Controller                              mController;  
+	    Core::Controller                              mController;  
 
       gmtl::Matrix44f                               mWandMatrix;
 

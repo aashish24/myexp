@@ -12,8 +12,6 @@
 
 #include "Core/OsgBase.h"
 
-#include "Util/OsgConv.h"
-
 #include "vrj/Draw/DrawManager.h"
 #include "vrj/Display/DisplayManager.h"
 
@@ -93,7 +91,7 @@ void Core::OsgBase::setOsg()
 
 void Core::OsgBase::setApp()
 {  
-  Interaction * osgInteraction = new OsgInteraction();     
+  Design::Interaction * osgInteraction = new Design::OsgInteraction();     
 
   if( osgInteraction )
   {    
@@ -276,7 +274,8 @@ void Core::OsgBase::viewAll( osg::MatrixTransform* transform, float zScale )
   }
 
   osg::ref_ptr< osg::MatrixTransform > parent = dynamic_cast< osg::MatrixTransform* >( transform->getParent( 0 ) );
-  parent->preMult( osg::Matrixf::translate( Util::OsgConv::transformToOpenGL( mSceneInitialPosition ) ) );    
+  
+  //parent->preMult( osg::Matrixf::translate( Util::OsgConv::transformToOpenGL( mSceneInitialPosition ) ) );    
 }
 
 
@@ -330,9 +329,9 @@ void Core::OsgBase::addSceneLight()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-Core::OsgInteraction* Core::OsgBase::getInteraction()
+Design::OsgInteraction* Core::OsgBase::getInteraction()
 {
-  return ( static_cast< OsgInteraction* >( AppBase::interaction() ) );
+  return ( static_cast< Design::OsgInteraction* >( AppBase::interaction() ) );
 }
 
 
@@ -342,7 +341,7 @@ Core::OsgInteraction* Core::OsgBase::getInteraction()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Core::OsgBase::setInteraction( Interaction* interaction )
+void Core::OsgBase::setInteraction( Design::Interaction* interaction )
 {
   AppBase::interaction( interaction );
 

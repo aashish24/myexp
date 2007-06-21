@@ -14,8 +14,8 @@
 // 
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef __DT_SUBJECT_IMPL_H__
-#define __DT_SUBJECT_IMPL_H__
+#ifndef __VEDA_SUBJECTIMPL_H__
+#define __VEDA_SUBJECTIMPL_H__
 
 #include "tweek/tweekConfig.h"
 #include "tweek/CORBA/SubjectImpl.h"
@@ -25,7 +25,7 @@
 #include "vpr/IO/ObjectWriter.h"
 #include "plugins/ApplicationDataManager/UserData.h"
 
-#include "Tweek/dtsubject.h"
+#include "Tweek/TweekSubject.h"
 
 #include "Core/CommandFactory.h"
 #include "Core/UserData.h"
@@ -34,9 +34,9 @@
 
 #include "Core/Export.h"
 
-namespace dt
+namespace Veda
 {
-  class VEDA_EXPORT SubjectImpl : public POA_dt::DtSubject, public tweek::SubjectImpl
+  class VEDA_EXPORT SubjectImpl : public POA_Veda::TweekSubject, public tweek::SubjectImpl
   {
     public:
       SubjectImpl() : tweek::SubjectImpl()
@@ -49,18 +49,13 @@ namespace dt
       {}
 
       
-      virtual void setCommand( const char* identifier, 
-                   const char* entity, 
-                   const char* state_attribute,
-                   const char* modifier_string,
-                   CORBA::Boolean modifier_boolean, 
-                   CORBA::Long modifier_long );
+      virtual void setCommand( const char* key, const char* value );
       
-      dt::DtSubject_ptr _this()
+      Veda::TweekSubject_ptr _this()
       {
-        return POA_dt::DtSubject::_this();
+        return POA_Veda::TweekSubject::_this();
       }
   };
 }
 
-#endif  // __DT_SUBJECT_IMPL_H__ 
+#endif  // __VEDA_SUBJECTIMPL_H__ 

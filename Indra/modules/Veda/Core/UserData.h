@@ -54,12 +54,8 @@ namespace Core
         {      
           mPendingTweekCommandList.push_back( new Tweek::TweekCommand() );  
 
-          mPendingTweekCommandList[ i ]->mIdentifier      = reader->readString();
-          mPendingTweekCommandList[ i ]->mEntity          = reader->readString();
-          mPendingTweekCommandList[ i ]->mStateAttribute  = reader->readString();
-          mPendingTweekCommandList[ i ]->mModifierString  = reader->readString();
-          mPendingTweekCommandList[ i ]->mModifierBoolean  = reader->readBool();
-          mPendingTweekCommandList[ i ]->mModifierLong    = reader->readUint64();        
+          mPendingTweekCommandList[ i ]->mKey    = reader->readString();
+          mPendingTweekCommandList[ i ]->mValue  = reader->readString();        
         }        
       }
 
@@ -77,12 +73,8 @@ namespace Core
 
         for(size_t i = 0; i < dataSize; ++i)
         {          
-          writer->writeString ( mPendingTweekCommandList[ i ]->mIdentifier      );
-          writer->writeString ( mPendingTweekCommandList[ i ]->mEntity          );
-          writer->writeString ( mPendingTweekCommandList[ i ]->mStateAttribute  );
-          writer->writeString ( mPendingTweekCommandList[ i ]->mModifierString  );
-          writer->writeBool   ( mPendingTweekCommandList[ i ]->mModifierBoolean );
-          writer->writeUint64 ( mPendingTweekCommandList[ i ]->mModifierLong    );                  
+          writer->writeString ( mPendingTweekCommandList[ i ]->mKey   );
+          writer->writeString ( mPendingTweekCommandList[ i ]->mValue );
         }      
 
         // Release the memory allocated. 

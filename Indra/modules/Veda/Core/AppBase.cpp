@@ -180,9 +180,9 @@ void Core::AppBase::initTweek()
     return;
   }
   
-  dt::SubjectImpl* mSubject;
+  Veda::SubjectImpl* mSubject;
 
-  mSubject = new dt::SubjectImpl();
+  mSubject = new Veda::SubjectImpl();
   mSubject->init();
 
   mTweekWrapper->applicationName( mApplicationName );

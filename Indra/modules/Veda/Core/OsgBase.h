@@ -24,8 +24,9 @@
 #include "vrj/Draw/OSG/OsgApp.h"
 
 #include "Core/AppBase.h"
-#include "Core/OsgInteraction.h"
 #include "Core/SharedData.h"
+
+#include "Design/OsgInteraction.h"
 
 #include "osg/Group"
 #include "osg/MatrixTransform"
@@ -70,8 +71,8 @@ namespace Core
       
       virtual void                                   wandInit();    
       
-      virtual OsgInteraction*                        getInteraction();    
-      virtual void                                   setInteraction( Interaction* in );            
+      virtual Design::OsgInteraction*                getInteraction();    
+      virtual void                                   setInteraction( Design::Interaction* in );            
 
       osg::Group*                                    getScene();
       virtual void                                   configSceneView( osgUtil::SceneView* sv );

@@ -18,7 +18,7 @@ using namespace Core;
 //
 /////////////////////////////////////////////////////////////////////////
 
-DeviceData Controller::getDeviceInputData( Button btn )
+Core::DeviceData Controller::getDeviceInputData( Button btn )
 {
   Buttons btns;
   
@@ -35,9 +35,9 @@ DeviceData Controller::getDeviceInputData( Button btn )
 //
 /////////////////////////////////////////////////////////////////////////
 
-DeviceData Controller::getDeviceInputData( Buttons btns, ActionStates states )
+Core::DeviceData Controller::getDeviceInputData( Buttons btns, ActionStates states )
 {
-  DeviceData data( POSITIVE );  
+  Core::DeviceData data( POSITIVE );  
   
   for( unsigned int i = 0; i < states.size(); i++ )
   {
@@ -80,9 +80,9 @@ DeviceData Controller::getDeviceInputData( Buttons btns, ActionStates states )
 //
 /////////////////////////////////////////////////////////////////////////
 
-//DeviceData Controller::getDeviceInputData( Analogs analogs, ActionStates states )
+//Core::DeviceData Controller::getDeviceInputData( Analogs analogs, ActionStates states )
 //{
-//  DeviceData data( ZERO );
+//  Core::DeviceData data( ZERO );
 //  
 //  for ( unsigned int i = 0; i < states.size(); i++ )
 //  {

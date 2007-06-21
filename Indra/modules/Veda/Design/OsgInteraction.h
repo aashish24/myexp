@@ -20,10 +20,12 @@
 
 #include "osgUtil/IntersectVisitor"
 
-#include "Core/Interaction.h"
+#include "Design/Interaction.h"
+
 #include "Core/SharedData.h"
 #include "Core/Globals.h"
-#include "Util/OsgFind.h"
+
+#include "OsgTools/SG/OsgFind.h"
 
 #ifdef HAVE_KEYBOARDMOUSE
 #include "Dev/KeyboardMouse.h"
@@ -31,11 +33,11 @@
 
 #include "Math/ExpFunction.h"
 
-#include "Export.h"
+#include "Veda/Core/Export.h"
 
-namespace Core
+namespace Design
 {
-  class CORE_EXPORT OsgInteraction : public Interaction
+  class VEDA_EXPORT OsgInteraction : public Interaction
   {
     public:
 
@@ -54,15 +56,15 @@ namespace Core
 
       virtual void                                      resetNavigation();
       
-      virtual NavigationMode                            navigationMode();
-      virtual void                                      navigationMode( NavigationMode mode );      
+      virtual Core::NavigationMode                      navigationMode();
+      virtual void                                      navigationMode( Core::NavigationMode mode );      
       
-      virtual Navigation&                               navigator( InteractionMode mode );
+      virtual Navigation&                               navigator( Core::InteractionMode mode );
 
       virtual void                                      defineControls();
 
-      virtual void                                      takeActionAnalog ( InteractionMode mode, int id, double data );
-      virtual void                                      takeActionDigital( InteractionMode mode, int id, DeviceData data );
+      virtual void                                      takeActionAnalog ( Core::InteractionMode mode, int id, double data );
+      virtual void                                      takeActionDigital( Core::InteractionMode mode, int id, Core::DeviceData data );
 
       virtual void                                      joystickAxis1GlobalAction( double data);
       virtual void                                      joystickAxis2GlobalAction( double data );
@@ -74,32 +76,32 @@ namespace Core
       virtual void                                      trackerAxis1GlobalAction( double data);
       virtual void                                      trackerAxis2GlobalAction( double data);
 
-      virtual void                                      joystickButton1GlobalAction ( DeviceData data );
-      virtual void                                      joystickButton2GlobalAction ( DeviceData data );
-      virtual void                                      joystickButton3GlobalAction ( DeviceData data );
-      virtual void                                      joystickButton4GlobalAction ( DeviceData data );
-      virtual void                                      joystickButton5GlobalAction ( DeviceData data );
-      virtual void                                      joystickButton6GlobalAction ( DeviceData data );
-      virtual void                                      joystickButton7GlobalAction ( DeviceData data );
-      virtual void                                      joystickButton8GlobalAction ( DeviceData data );
-      virtual void                                      joystickButton9GlobalAction ( DeviceData data );
-      virtual void                                      joystickButton10GlobalAction( DeviceData data );
-      virtual void                                      joystickButton11GlobalAction( DeviceData data );
-      virtual void                                      joystickButton12GlobalAction( DeviceData data );
-      virtual void                                      joystickButton13GlobalAction( DeviceData data );
-      virtual void                                      joystickButton14GlobalAction( DeviceData data );
-      virtual void                                      joystickButton15GlobalAction( DeviceData data );
-      virtual void                                      joystickButton16GlobalAction( DeviceData data );
-      virtual void                                      joystickButton17GlobalAction( DeviceData data );
-      virtual void                                      joystickButton18GlobalAction( DeviceData data );
+      virtual void                                      joystickButton1GlobalAction ( Core::DeviceData data );
+      virtual void                                      joystickButton2GlobalAction ( Core::DeviceData data );
+      virtual void                                      joystickButton3GlobalAction ( Core::DeviceData data );
+      virtual void                                      joystickButton4GlobalAction ( Core::DeviceData data );
+      virtual void                                      joystickButton5GlobalAction ( Core::DeviceData data );
+      virtual void                                      joystickButton6GlobalAction ( Core::DeviceData data );
+      virtual void                                      joystickButton7GlobalAction ( Core::DeviceData data );
+      virtual void                                      joystickButton8GlobalAction ( Core::DeviceData data );
+      virtual void                                      joystickButton9GlobalAction ( Core::DeviceData data );
+      virtual void                                      joystickButton10GlobalAction( Core::DeviceData data );
+      virtual void                                      joystickButton11GlobalAction( Core::DeviceData data );
+      virtual void                                      joystickButton12GlobalAction( Core::DeviceData data );
+      virtual void                                      joystickButton13GlobalAction( Core::DeviceData data );
+      virtual void                                      joystickButton14GlobalAction( Core::DeviceData data );
+      virtual void                                      joystickButton15GlobalAction( Core::DeviceData data );
+      virtual void                                      joystickButton16GlobalAction( Core::DeviceData data );
+      virtual void                                      joystickButton17GlobalAction( Core::DeviceData data );
+      virtual void                                      joystickButton18GlobalAction( Core::DeviceData data );
           
-      virtual void                                      trackButton1GlobalAction( DeviceData data );
-      virtual void                                      trackButton2GlobalAction( DeviceData data );
-      virtual void                                      trackButton3GlobalAction( DeviceData data );
-      virtual void                                      trackButton4GlobalAction( DeviceData data );
-      virtual void                                      trackButton5GlobalAction( DeviceData data );
-      virtual void                                      trackButton6GlobalAction( DeviceData data );
-      virtual void                                      trackButton7GlobalAction( DeviceData data );
+      virtual void                                      trackButton1GlobalAction( Core::DeviceData data );
+      virtual void                                      trackButton2GlobalAction( Core::DeviceData data );
+      virtual void                                      trackButton3GlobalAction( Core::DeviceData data );
+      virtual void                                      trackButton4GlobalAction( Core::DeviceData data );
+      virtual void                                      trackButton5GlobalAction( Core::DeviceData data );
+      virtual void                                      trackButton6GlobalAction( Core::DeviceData data );
+      virtual void                                      trackButton7GlobalAction( Core::DeviceData data );
       
       virtual void                                      updateAll();
       virtual void                                      updateDeviceData();

@@ -130,7 +130,7 @@ _CORBA_MODULE_BEG
     public virtual tweek::_objref_Subject
   {
   public:
-    void setCommand(const char* key, const char* command);
+    void setCommand(const char* key, const char* value);
 
     inline _objref_TweekSubject()  { _PR_setobj(0); }  // nil
     _objref_TweekSubject(omniIOR*, omniIdentity*);
@@ -164,7 +164,7 @@ _CORBA_MODULE_BEG
   public:
     virtual ~_impl_TweekSubject();
 
-    virtual void setCommand(const char* key, const char* command) = 0;
+    virtual void setCommand(const char* key, const char* value) = 0;
     
   public:  // Really protected, workaround for xlC
     virtual _CORBA_Boolean _dispatch(omniCallHandle&);

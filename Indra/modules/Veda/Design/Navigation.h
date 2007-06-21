@@ -73,8 +73,8 @@ namespace Design
       
       void                                          reset();
 
-	  const Core::NavigationMode&                   navigationMode() const;      
-	  void                                          navigationMode( const Core::NavigationMode& navMode );
+	    const Core::NavigationMode&                   navigationMode() const;      
+	    void                                          navigationMode( const Core::NavigationMode& navMode );
 
       void                                          accelerate();
       void                                          deaccelerate();
@@ -134,7 +134,7 @@ namespace Design
       bool                                          mAllowYaw;
       bool                                          mAllowRoll;
 
-	  Core::NavigationMode                          mNavigationMode;
+	    Core::NavigationMode                          mNavigationMode;
 
   };
 }

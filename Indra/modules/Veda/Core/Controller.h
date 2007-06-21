@@ -75,11 +75,11 @@ namespace Core
       {
       }
       
-      virtual  DeviceData    getDeviceInputData( Button btn );
+      virtual  Core::DeviceData    getDeviceInputData( Button btn );
 
-      virtual DeviceData    getDeviceInputData( std::vector< gadget::DigitalInterface* > btns, std::vector< ActionState > state );
+      virtual Core::DeviceData    getDeviceInputData( std::vector< gadget::DigitalInterface* > btns, std::vector< ActionState > state );
 
-      //virtual DeviceData  getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );          
+      //virtual Core::DeviceData  getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );          
       
       virtual double        getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );      
 

@@ -2,7 +2,7 @@
 #ifndef _CORE_TWEEKSUBJECT_IDEL_H__
 #define _CORE_TWEEKSUBJECT_IDEL_H__
 
-#include <tweek/idl/Subject.idl>
+#include "tweek/idl/Subject.idl"
 
 module Veda
 {  
@@ -10,7 +10,7 @@ module Veda
 
 	interface TweekSubject : tweek::Subject
 	{		
-		void setCommand( in string key, in string command );
+		void setCommand( in string key, in string value );    
 	};
 };
 

@@ -24,12 +24,8 @@ namespace Tweek
 		~TweekCommand()
 		{}
 
-		std::string			mIdentifier;
-		std::string			mEntity;
-		std::string			mStateAttribute;
-		std::string			mModifierString;
-		bool						mModifierBoolean;
-		long						mModifierLong;
+		std::string			mKey;
+		std::string			mValue;
 	};
 }
 
