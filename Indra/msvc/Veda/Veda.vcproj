@@ -26,7 +26,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="$(VJ_BASE_DIR)/bin/omniidl  -bcxx -Wbh=.h,s=.cpp -C.\..\..\modules\Veda\Tweek -I$(VJ_BASE_DIR)\include  .\..\..\modules\Veda\Tweek\TweekSubject.idl"
-				ExcludedFromBuild="false"
+				ExcludedFromBuild="true"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -70,11 +70,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="osgd.lib osgDBd.lib osgUtild.lib osgFXd.lib osgTextd.lib vrj_d-2_3_8.lib vpr_d-2_1_1.lib gadget_d-1_3_7.lib jccl_d-1_3_1.lib vrj_ogl_d-2_3_8.lib tweek_d-1_3_0.lib openGL32.lib omnithread33_rtd.lib omniDynamic410_rtd.lib omniORB410_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
-				OutputFile="../../bin/Indrad.dll"
+				OutputFile="..\..\bin\Vedad.dll"
 				AdditionalLibraryDirectories="$(VJ_BASE_DIR)/lib;$(VJ_DEPS_DIR)/lib;$(OSGHOME)/lib/debug;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
-				ImportLibrary="$(TargetDir)$(TargetName).lib"
+				ImportLibrary="..\..\bin\Vedad.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"

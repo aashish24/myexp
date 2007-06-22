@@ -70,7 +70,7 @@
 				OutputFile="..\..\bin\viewerd.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="$(VJ_BASE_DIR)/lib;$(OSGHOME)\lib\debug;"
+				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSGHOME)\lib\debug;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/viewer.pdb"
 				SubSystem="1"
