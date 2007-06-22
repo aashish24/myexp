@@ -11,10 +11,10 @@
 // Juggler include 
 #include "vrj/Kernel/Kernel.h"
 
-int main( int argc, char* argv[] )
+int main( int argc, char** argv )
 {
 	vrj::Kernel* kernel		= vrj::Kernel::instance();
-	MyApp* application	= new MyApp(kernel, argc, argv);	
+	MyApp* application	= new MyApp( kernel, argc, argv );	
 	
 	// Number of argumets should be more than 1 :: Needs atleast one config file ::
 	if( argc < 2 )
@@ -24,7 +24,11 @@ int main( int argc, char* argv[] )
 
 	for( int i = 1; i < argc; ++i )
 	{
-		kernel->loadConfigFile( argv[i] );
+    std::cout << argv[ i ] << std::endl;
+    if( std::string( argv[ i ] ) == "-c" )
+    {
+		  kernel->loadConfigFile( argv[ ++i ] );
+    }
 	}
 
 	kernel->start();

@@ -18,6 +18,13 @@
 
 MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc, argv )
 {	
+  for( unsigned int i = 1; i < argc; ++i  )
+  {
+    if( std::string( argv[ i ] ) == "-f" )
+    {
+      mFileNames.push_back( argv[ ++i ] );
+    }
+  }
 }
 
 // One time initialization. 
@@ -38,8 +45,12 @@ void MyApp::appBufferPreDraw()
 // Scenegraph will be build here. 
 void MyApp::appSceneInit()
 {
-  if(modelGroupNode.get())
-	{
-		mModelGroupNode->addChild(modelGroupNode.get());
-  }	
+  for( size_t i = 0; i < mFileNames.size(); ++i )
+  {
+    osg::ref_ptr< osg::Node > model = osgDB::readNodeFile( mFileNames[ i ] );
+    if( model.valid() )
+    {
+ 		  mModelGroupNode->addChild( model.get() );
+    }	  
+  }
 }

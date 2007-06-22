@@ -4,6 +4,8 @@
 
 #include "Veda/Core/OsgBase.h"
 
+#include <vector>
+
 class MyApp : public Core::OsgBase
 {
 	public:
@@ -19,7 +21,8 @@ class MyApp : public Core::OsgBase
 	  void appSceneInit();			
 
 	private:	
-		int count;		
+		
+    std::vector< std::string > mFileNames; 
 };
 
 #endif __MYAPP_H__
