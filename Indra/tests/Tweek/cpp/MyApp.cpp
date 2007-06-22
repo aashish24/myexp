@@ -3,6 +3,8 @@
 
 #include "Veda/Tweek/TweekCommand.h"
 
+#include "osgDB/ReadFile"
+
 #include <fstream>
 
 MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : Veda::Core::OsgBase( kern, argc, argv )
@@ -12,8 +14,8 @@ MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : Veda::Core::OsgBase(
 
 void MyApp::appInit()
 {
-	setDevice(TWEEK, ON);
-	setBackgroundColor(( g mtl::Vec4f(0.35, 0.35, 0.35, 1.0 ) ).getData() );	
+	setDevice( TWEEK, ON );
+	setBackgroundColor(( gmtl::Vec4f(0.35, 0.35, 0.35, 1.0 ) ).getData() );	
 }
 
 

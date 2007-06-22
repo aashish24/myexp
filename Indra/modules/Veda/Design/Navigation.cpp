@@ -14,7 +14,8 @@
 #include "gmtl/Vec.h"
 #include "gmtl/VecOps.h"
 
-using namespace Design;
+using namespace Veda::Design;
+using namespace Veda::Core;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -298,7 +299,7 @@ void Navigation::reset()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Navigation::navigationMode( const Core::NavigationMode& mode )
+void Navigation::navigationMode( const NavigationMode& mode )
 {
   mNavigationMode = mode;
 }
@@ -309,7 +310,7 @@ void Navigation::navigationMode( const Core::NavigationMode& mode )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-const Core::NavigationMode& Navigation::navigationMode() const
+const NavigationMode& Navigation::navigationMode() const
 {
   return mNavigationMode;
 }
@@ -462,7 +463,7 @@ void Navigation::rotateInZ( const double& value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Navigation::translate( const gmtl::Vec3f& vec, Core::Scope scope )
+void Navigation::translate( const gmtl::Vec3f& vec, Scope scope )
 {
   gmtl::Matrix44f transMatrix = gmtl::makeTrans< gmtl::Matrix44f >( vec );
 
@@ -516,7 +517,7 @@ void Navigation::translate( const gmtl::Vec3f& vec, Core::Scope scope )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Navigation::rotate( gmtl::Matrix44f& rotationMatrix, Core::Scope scope )
+void Navigation::rotate( gmtl::Matrix44f& rotationMatrix, Scope scope )
 {
   slerp( rotationMatrix, 0.4f );
 
@@ -599,7 +600,7 @@ gmtl::Matrix44f& Navigation::slerp( gmtl::Matrix44f& inputMatrix, const float& a
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Navigation::update( const float& delta, Core::Scope scope )
+void Navigation::update( const float& delta, Scope scope )
 {  
   static const float fps = 30.0;
   

@@ -12,7 +12,7 @@
 
 #include "vpr/Util/Debug.h"
 
-using namespace Core;
+using namespace Veda::Core;
 
 namespace Veda 
 {

@@ -31,112 +31,115 @@
 
 #include "Veda/Core/Export.h"
 
-namespace Design
+namespace Veda
 {
-  class VEDA_EXPORT Navigation
+  namespace Design
   {
-    public:
+    class VEDA_EXPORT Navigation
+    {
+      public:
 
-      Navigation();      
-     ~Navigation();            
+        Navigation();      
+       ~Navigation();            
 
-      const gmtl::Matrix44f&                        currentPosition() const;      
-      void                                          currentPosition( const gmtl::Matrix44f& position );
+        const gmtl::Matrix44f&                        currentPosition() const;      
+        void                                          currentPosition( const gmtl::Matrix44f& position );
 
-      const gmtl::Matrix44f&                        pitchMatrix() const;
-      void                                          pitchMatrix( const gmtl::Matrix44f& matrix );
+        const gmtl::Matrix44f&                        pitchMatrix() const;
+        void                                          pitchMatrix( const gmtl::Matrix44f& matrix );
 
-      void                                          currentRotation( const gmtl::Matrix44f& matrix );
+        void                                          currentRotation( const gmtl::Matrix44f& matrix );
+        
+        const double&                                 navigationSpeed() const;
+        void                                          navigationSpeed( const double& speed );
+
+        const double&                                 navigationDelta() const;
+        void                                          navigationDelta( const double& delta );
+
+        const double&                                 rotationSpeed() const;
+        void                                          rotationSpeed( const double& speed );
+
+
+        const double&                                 rotationDelta() const;
+        void                                          rotationDelta( const double& delta );
+
+        const double&                                 frameRenderTime() const;
+        void                                          frameRenderTime( const double& time );
+
+        const double&                                 getFrameRate() const;      
+        void                                          setFrameRate( const double& fps );
+
+        void                                          allowPitch( const bool& value );
+        void                                          allowYaw( const bool& value );
+        void                                          allowRoll( const bool& value );
+        
+        void                                          reset();
+
+	      const Core::NavigationMode&                   navigationMode() const;      
+	      void                                          navigationMode( const Core::NavigationMode& navMode );
+
+        void                                          accelerate();
+        void                                          deaccelerate();
+
+        void                                          angulatAccelerate();
+        void                                          angulatDeaccelerate();
+
+        void                                          translateInZ( const double& value );
+        void                                          translateInX( const double& value );
+        void                                          translateInY( const double& value );
+
+        void                                          translateInDir( const gmtl::Vec3f& direction );      
+
+        void                                          rotateInX( const double& value );
+        void                                          rotateInY( const double& value );
+        void                                          rotateInZ( const double& value );
+
+        void                                          pitch( const double& value );
+
+	    void                                          translate( const gmtl::Vec3f& vector, Core::Scope = Core::GLOBAL );
+	    void                                          rotate   ( gmtl::Matrix44f& matrix, Core::Scope = Core::GLOBAL );
+
+        gmtl::Matrix44f&                              slerp( gmtl::Matrix44f& matrix, const float& value );
+
+	    void                                          update( const float& delta, Core::Scope = Core::GLOBAL );
       
-      const double&                                 navigationSpeed() const;
-      void                                          navigationSpeed( const double& speed );
+      private:
 
-      const double&                                 navigationDelta() const;
-      void                                          navigationDelta( const double& delta );
+        gmtl::Matrix44f                               mCurrentPosition;      
+        gmtl::Matrix44f                               mHomePosition;
+        
+        gmtl::Matrix44f                               mPitchMatrix;
+        gmtl::Quatf                                   mPitchQuat;
 
-      const double&                                 rotationSpeed() const;
-      void                                          rotationSpeed( const double& speed );
+        gmtl::Vec3f                                    mNavigationVel;
+        gmtl::Vec3f                                    mRotationVel;
+            
+        double                                        mNavigationSpeed;
+        double                                        mRotationSpeed;
+        double                                        mNavigationDelta;
+        double                                        mRotationDelta;  
 
+        double                                        mFrameRenderTime;
+        double                                        mFramesPerSecond;
 
-      const double&                                 rotationDelta() const;
-      void                                          rotationDelta( const double& delta );
+        double                                        mMinNavigationSpeed;
+        double                                        mMaxNavigationSpeed;
+        double                                        mMinRotationSpeed;
+        double                                        mMaxRotationSpeed;
 
-      const double&                                 frameRenderTime() const;
-      void                                          frameRenderTime( const double& time );
+        double                                        mMinDistance;
+        double                                        mMaxDistance;
 
-      const double&                                 getFrameRate() const;      
-      void                                          setFrameRate( const double& fps );
+        bool                                          mUseRange;
 
-      void                                          allowPitch( const bool& value );
-      void                                          allowYaw( const bool& value );
-      void                                          allowRoll( const bool& value );
-      
-      void                                          reset();
+        bool                                          mAllowPitch;
+        bool                                          mAllowYaw;
+        bool                                          mAllowRoll;
 
-	    const Core::NavigationMode&                   navigationMode() const;      
-	    void                                          navigationMode( const Core::NavigationMode& navMode );
+	      Core::NavigationMode                          mNavigationMode;
 
-      void                                          accelerate();
-      void                                          deaccelerate();
-
-      void                                          angulatAccelerate();
-      void                                          angulatDeaccelerate();
-
-      void                                          translateInZ( const double& value );
-      void                                          translateInX( const double& value );
-      void                                          translateInY( const double& value );
-
-      void                                          translateInDir( const gmtl::Vec3f& direction );      
-
-      void                                          rotateInX( const double& value );
-      void                                          rotateInY( const double& value );
-      void                                          rotateInZ( const double& value );
-
-      void                                          pitch( const double& value );
-
-	  void                                          translate( const gmtl::Vec3f& vector, Core::Scope = Core::GLOBAL );
-	  void                                          rotate   ( gmtl::Matrix44f& matrix, Core::Scope = Core::GLOBAL );
-
-      gmtl::Matrix44f&                              slerp( gmtl::Matrix44f& matrix, const float& value );
-
-	  void                                          update( const float& delta, Core::Scope = Core::GLOBAL );
-    
-    private:
-
-      gmtl::Matrix44f                               mCurrentPosition;      
-      gmtl::Matrix44f                               mHomePosition;
-      
-      gmtl::Matrix44f                               mPitchMatrix;
-      gmtl::Quatf                                   mPitchQuat;
-
-      gmtl::Vec3f                                    mNavigationVel;
-      gmtl::Vec3f                                    mRotationVel;
-          
-      double                                        mNavigationSpeed;
-      double                                        mRotationSpeed;
-      double                                        mNavigationDelta;
-      double                                        mRotationDelta;  
-
-      double                                        mFrameRenderTime;
-      double                                        mFramesPerSecond;
-
-      double                                        mMinNavigationSpeed;
-      double                                        mMaxNavigationSpeed;
-      double                                        mMinRotationSpeed;
-      double                                        mMaxRotationSpeed;
-
-      double                                        mMinDistance;
-      double                                        mMaxDistance;
-
-      bool                                          mUseRange;
-
-      bool                                          mAllowPitch;
-      bool                                          mAllowYaw;
-      bool                                          mAllowRoll;
-
-	    Core::NavigationMode                          mNavigationMode;
-
-  };
+    };
+  }
 }
 
 #endif // __CORE_NAVIGATION_H__

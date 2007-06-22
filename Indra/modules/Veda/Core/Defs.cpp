@@ -10,7 +10,7 @@
 
 #include "Veda/Core/Defs.h"
 
-using namespace Core;
+using namespace Veda::Core;
 
 std::vector< std::string > Defs::mJoystickAnalogProxies;
 std::vector< std::string > Defs::mJoystickDigitalProxies;

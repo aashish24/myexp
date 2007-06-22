@@ -24,131 +24,134 @@
 
 #include "Export.h"
 
-namespace Tweek
+namespace Veda
 {
-  class VEDA_EXPORT TweekWrapper
+  namespace Tweek
   {
-    public:
+    class VEDA_EXPORT TweekWrapper
+    {
+      public:
 
-      /////////////////////////////////////////////////////////////////////////
-      //
-      // Constructor.
-      //
-      /////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Constructor.
+        //
+        /////////////////////////////////////////////////////////////////////////
 
-      TweekWrapper() :
-        mTweekInitialized ( false ),
-        mApplicationName  ( "" )
-      {        
-      }
-
-      /////////////////////////////////////////////////////////////////////////
-      //
-      // Destructor.
-      //
-      /////////////////////////////////////////////////////////////////////////
-
-     ~TweekWrapper()
-      {        
-      }
-      
-      /////////////////////////////////////////////////////////////////////////
-      //
-      // Initialization
-      //
-      /////////////////////////////////////////////////////////////////////////
-
-      bool init()
-      {
-        int    argc = 0;      
-        char** argv = NULL;
-
-        std::string namingContext( "TWEEK_INTERFACE" );      
-
-        try
-        {
-          if( mCorbaManager.init( namingContext, argc, argv ) )
-          {  
-            try 
-            {
-              if( mCorbaManager.createSubjectManager() )
-              {
-                mTweekInitialized = true;                  
-              }
-            }
-            catch( CORBA::Exception& e )
-            {                
-            }
-          }
-        }
-        catch( ... )
-        {          
+        TweekWrapper() :
+          mTweekInitialized ( false ),
+          mApplicationName  ( "" )
+        {        
         }
 
-        return mTweekInitialized;
-      }
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Destructor.
+        //
+        /////////////////////////////////////////////////////////////////////////
 
+       ~TweekWrapper()
+        {        
+        }
+        
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Initialization
+        //
+        /////////////////////////////////////////////////////////////////////////
 
-      /////////////////////////////////////////////////////////////////////////
-      //
-      // Set tweel subject with a unique name.
-      //
-      /////////////////////////////////////////////////////////////////////////
-
-      void setSubject( tweek::SubjectImpl* subject, const std::string& name )
-      {
-        if( mTweekInitialized )
+        bool init()
         {
+          int    argc = 0;      
+          char** argv = NULL;
+
+          std::string namingContext( "TWEEK_INTERFACE" );      
+
           try
           {
-            mCorbaManager.getSubjectManager()->registerSubject( subject, name.c_str( ));
-            mCorbaManager.getSubjectManager()->setApplicationName( mApplicationName );
+            if( mCorbaManager.init( namingContext, argc, argv ) )
+            {  
+              try 
+              {
+                if( mCorbaManager.createSubjectManager() )
+                {
+                  mTweekInitialized = true;                  
+                }
+              }
+              catch( CORBA::Exception& e )
+              {                
+              }
+            }
+          }
+          catch( ... )
+          {          
+          }
 
-            mSubject = subject;
-          }      
-          catch( CORBA::Exception& ex )
-          {            
+          return mTweekInitialized;
+        }
+
+
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Set tweel subject with a unique name.
+        //
+        /////////////////////////////////////////////////////////////////////////
+
+        void setSubject( tweek::SubjectImpl* subject, const std::string& name )
+        {
+          if( mTweekInitialized )
+          {
+            try
+            {
+              mCorbaManager.getSubjectManager()->registerSubject( subject, name.c_str( ));
+              mCorbaManager.getSubjectManager()->setApplicationName( mApplicationName );
+
+              mSubject = subject;
+            }      
+            catch( CORBA::Exception& ex )
+            {            
+            }
+          }
+          else
+          {          
           }
         }
-        else
-        {          
+
+        
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Get application name.
+        //
+        /////////////////////////////////////////////////////////////////////////
+
+        const std::string& applicationName() const
+        {
+          return mApplicationName;
         }
-      }
-
-      
-      /////////////////////////////////////////////////////////////////////////
-      //
-      // Get application name.
-      //
-      /////////////////////////////////////////////////////////////////////////
-
-      const std::string& applicationName() const
-      {
-        return mApplicationName;
-      }
 
 
-      /////////////////////////////////////////////////////////////////////////
-      //
-      // Set applicatio name.
-      //
-      /////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Set applicatio name.
+        //
+        /////////////////////////////////////////////////////////////////////////
 
-      void applicationName( const std::string& applicationName )
-      {
-        mApplicationName = applicationName;
-      }      
+        void applicationName( const std::string& applicationName )
+        {
+          mApplicationName = applicationName;
+        }      
 
-    private:      
-      
-      bool                                           mTweekInitialized;    
+      private:      
+        
+        bool                                           mTweekInitialized;    
 
-      std::string                                    mApplicationName;
+        std::string                                    mApplicationName;
 
-      tweek::CorbaManager                            mCorbaManager;
+        tweek::CorbaManager                            mCorbaManager;
 
-      tweek::SubjectImpl*                            mSubject;    
-  };
+        tweek::SubjectImpl*                            mSubject;    
+    };
+  }
 }
 
 #endif // __CORE_TWEEKWRAPPER_H__

@@ -22,26 +22,29 @@
 
 #include "Export.h"
 
-namespace Core
+namespace Veda
 {
-  class VEDA_EXPORT SharedData
-  {          
-    public:  
-      static cluster::UserData< Command > mCommand;
-      static bool                          mActive;
+  namespace Core
+  {
+    class VEDA_EXPORT SharedData
+    {          
+      public:  
+        static cluster::UserData< Command > mCommand;
+        static bool                          mActive;
 
-      static void init()
-      {
-        vpr::GUID newGuid( "291B6290-1BD9-4844-B757-73D5C4BB1690" );
-        SharedData::mCommand.init( newGuid);
-        mActive = true;
-      }
+        static void init()
+        {
+          vpr::GUID newGuid( "291B6290-1BD9-4844-B757-73D5C4BB1690" );
+          SharedData::mCommand.init( newGuid);
+          mActive = true;
+        }
 
-      static bool active()
-      {
-        return mActive;
-      }
-  };
+        static bool active()
+        {
+          return mActive;
+        }
+    };
+  }
 }
 
 #endif // __CORE_SHAREDDATA_H__

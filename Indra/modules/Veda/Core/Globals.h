@@ -19,37 +19,40 @@
 
 #include "Export.h"
 
-namespace Core
+namespace Veda
 {
-  class VEDA_EXPORT Display
+  namespace Core
   {
-    public:
-      void              setDisplay( int originx, int originy, int width, int height );
+    class VEDA_EXPORT Display
+    {
+      public:
+        void              setDisplay( int originx, int originy, int width, int height );
 
-      const int&        width() const;
-      const int&        height() const;
+        const int&        width() const;
+        const int&        height() const;
 
-      const int&        originX()const; 
-      const int&        originY() const;
+        const int&        originX()const; 
+        const int&        originY() const;
 
-    public:
+      public:
+        
+        int                mOriginX;
+        int               mOriginY;
+        int                mWidth;
+        int               mHeight;
+    };
+
+    class VEDA_EXPORT RenderGlobals
+    {
+      public:
+
+        void static        setDisplay( int originx, int originy, int width, int height );
       
-      int                mOriginX;
-      int               mOriginY;
-      int                mWidth;
-      int               mHeight;
-  };
+      public:
 
-  class VEDA_EXPORT RenderGlobals
-  {
-    public:
-
-      void static        setDisplay( int originx, int originy, int width, int height );
-    
-    public:
-
-      static Display    mDisplay;
-  };
+        static Display    mDisplay;
+    };
+  }
 }
 
 #endif // __GLOBALS_H__

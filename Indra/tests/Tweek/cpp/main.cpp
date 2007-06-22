@@ -1,14 +1,7 @@
-//
-//
-// Disable useless warnings
-#ifdef WIN32
-	#pragma warning( disable : 4290 4251 4267 4275 4244 4312)
-#endif
 
-// VRJ includes
+
 #include "MyApp.h"
 
-// Juggler include 
 #include <vrj/Kernel/Kernel.h>
 
 int main( int argc, char* argv[] )
@@ -20,7 +13,6 @@ int main( int argc, char* argv[] )
 	if( argc < 2 )
 	{
 		std::cerr << " Test: " << std::endl;
-		//printUsageInformation();
 		std::exit(1);
 	}
 

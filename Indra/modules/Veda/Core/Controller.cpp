@@ -10,7 +10,7 @@
 
 #include "Veda/Core/Controller.h"
 
-using namespace Core;
+using namespace Veda::Core;
 
 /////////////////////////////////////////////////////////////////////////
 //
@@ -18,7 +18,7 @@ using namespace Core;
 //
 /////////////////////////////////////////////////////////////////////////
 
-Core::DeviceData Controller::getDeviceInputData( Button btn )
+DeviceData Controller::getDeviceInputData( Button btn )
 {
   Buttons btns;
   
@@ -35,7 +35,7 @@ Core::DeviceData Controller::getDeviceInputData( Button btn )
 //
 /////////////////////////////////////////////////////////////////////////
 
-Core::DeviceData Controller::getDeviceInputData( Buttons btns, ActionStates states )
+DeviceData Controller::getDeviceInputData( Buttons btns, ActionStates states )
 {
   Core::DeviceData data( POSITIVE );  
   

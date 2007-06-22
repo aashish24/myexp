@@ -32,64 +32,67 @@
 
 #include "Veda/Core/Export.h"
 
-namespace Core
+namespace Veda
 {
-  class VEDA_EXPORT Controller 
+  namespace Core
   {
-    public:          
-      
-      /////////////////////////////////////////////////////////////////////////
-      //
-      // Typedefs.
-      //
-      /////////////////////////////////////////////////////////////////////////
+    class VEDA_EXPORT Controller 
+    {
+      public:          
+        
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Typedefs.
+        //
+        /////////////////////////////////////////////////////////////////////////
 
-      typedef gadget::DigitalInterface                    Button;
-      typedef std::vector< Button* >                      Buttons;  
+        typedef gadget::DigitalInterface                    Button;
+        typedef std::vector< Button* >                      Buttons;  
 
-      typedef gadget::AnalogInterface*                    Analog;
-      typedef std::vector< Analog >                       Analogs;        
+        typedef gadget::AnalogInterface*                    Analog;
+        typedef std::vector< Analog >                       Analogs;        
 
-      typedef std::vector< ActionState >                  ActionStates;
+        typedef std::vector< ActionState >                  ActionStates;
 
-      /////////////////////////////////////////////////////////////////////////
-      //
-      // Construcor. 
-      //
-      /////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Construcor. 
+        //
+        /////////////////////////////////////////////////////////////////////////
 
-      Controller() : 
-        mIsActive( true ),
-        mMinValue( 0.45 ), 
-        mMaxValue( 0.55 )              
-      {
-      }
-      
-      /////////////////////////////////////////////////////////////////////////
-      //
-      // Destructor.
-      //
-      /////////////////////////////////////////////////////////////////////////
+        Controller() : 
+          mIsActive( true ),
+          mMinValue( 0.45 ), 
+          mMaxValue( 0.55 )              
+        {
+        }
+        
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Destructor.
+        //
+        /////////////////////////////////////////////////////////////////////////
 
-      virtual ~Controller()
-      {
-      }
-      
-      virtual  Core::DeviceData    getDeviceInputData( Button btn );
+        virtual ~Controller()
+        {
+        }
+        
+        virtual  Core::DeviceData    getDeviceInputData( Button btn );
 
-      virtual Core::DeviceData    getDeviceInputData( std::vector< gadget::DigitalInterface* > btns, std::vector< ActionState > state );
+        virtual Core::DeviceData    getDeviceInputData( std::vector< gadget::DigitalInterface* > btns, std::vector< ActionState > state );
 
-      //virtual Core::DeviceData  getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );          
-      
-      virtual double        getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );      
+        //virtual Core::DeviceData  getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );          
+        
+        virtual double        getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );      
 
-    protected:    
+      protected:    
 
-      bool                  mIsActive;  
+        bool                  mIsActive;  
 
-      double                mMinValue;
-      double                mMaxValue;
-  };
+        double                mMinValue;
+        double                mMaxValue;
+    };
+  }
 }
 
 #endif // __CORE_CONTROLLER_H__

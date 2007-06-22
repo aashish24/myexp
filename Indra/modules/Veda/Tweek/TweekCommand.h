@@ -13,20 +13,23 @@
      
 #include "Export.h"
 
-namespace Tweek
+namespace Veda
 {
-	class VEDA_EXPORT TweekCommand
-	{
-	  public:
-		TweekCommand()
-		{}
+  namespace Tweek
+  {
+	  class VEDA_EXPORT TweekCommand
+	  {
+	    public:
+		  TweekCommand()
+		  {}
 
-		~TweekCommand()
-		{}
+		  ~TweekCommand()
+		  {}
 
-		std::string			mKey;
-		std::string			mValue;
-	};
+		  std::string			mKey;
+		  std::string			mValue;
+	  };
+  }
 }
 
 #endif //  __TWEEK_COMMAND_H__

@@ -6,7 +6,7 @@
 
 #include <vector>
 
-class MyApp : public Core::OsgBase
+class MyApp : public Veda::Core::OsgBase
 {
 	public:
 

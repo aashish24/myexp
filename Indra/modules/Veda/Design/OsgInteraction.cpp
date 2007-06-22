@@ -29,7 +29,8 @@
 
 #include <vector>
 
-using namespace Design;
+using namespace Veda::Design;
+using namespace Veda::Core;
 
 const int JOYSTICK_ANALOG_INPUTS_COUNT  = 06 ;
 const int JOYSTICK_DIGITAL_INPUTS_COUNT = 18 ;
@@ -207,7 +208,7 @@ void OsgInteraction::setSceneWand()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-Core::NavigationMode OsgInteraction::navigationMode()
+NavigationMode OsgInteraction::navigationMode()
 {
   return mSceneNavigator.navigationMode();
 
@@ -219,7 +220,7 @@ Core::NavigationMode OsgInteraction::navigationMode()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::navigationMode( Core::NavigationMode mode )
+void OsgInteraction::navigationMode( NavigationMode mode )
 {
   mSceneNavigator.navigationMode( mode );
 }
@@ -231,19 +232,19 @@ void OsgInteraction::navigationMode( Core::NavigationMode mode )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-Navigation& OsgInteraction::navigator( Core::InteractionMode mode )
+Navigation& OsgInteraction::navigator( InteractionMode mode )
 {
   switch( mode )
   {
-    case Core::WORLD:
+    case WORLD:
     {
       return mSceneNavigator;      
     }
-    case Core::OBJECT:
+    case OBJECT:
     {
       return mLocalNavigator;
     }
-    case Core::WAND:
+    case WAND:
     {
       return mWandNavigator;
     }
@@ -262,58 +263,58 @@ Navigation& OsgInteraction::navigator( Core::InteractionMode mode )
 
 void OsgInteraction::defineControls()
 {  
-  int numOfAxes    = Core::Defs::mJoystickAnalogProxies.size();
-  int numOfButtons = Core::Defs::mJoystickDigitalProxies.size();
+  int numOfAxes    = Defs::mJoystickAnalogProxies.size();
+  int numOfButtons = Defs::mJoystickDigitalProxies.size();
 
-  setAnalogActionInputs  ( 0, Core::Defs::mJoystickAnalogProxies );    
-  setDigitalActionButtons( 0, Core::Defs::mJoystickDigitalProxies );  
+  setAnalogActionInputs  ( 0, Defs::mJoystickAnalogProxies );    
+  setDigitalActionButtons( 0, Defs::mJoystickDigitalProxies );  
 
-  mAnalogActionMap[ 0 ] = std::vector< Core::ActionState >( Core::Defs::mAxis0, Core::Defs::mAxis0 + numOfAxes);
-  mAnalogActionMap[ 1 ] = std::vector< Core::ActionState >( Core::Defs::mAxis1, Core::Defs::mAxis1 + numOfAxes );
-  mAnalogActionMap[ 2 ] = std::vector< Core::ActionState >( Core::Defs::mAxis2, Core::Defs::mAxis2 + numOfAxes );
-  mAnalogActionMap[ 3 ] = std::vector< Core::ActionState >( Core::Defs::mAxis3, Core::Defs::mAxis3 + numOfAxes );
-  mAnalogActionMap[ 4 ] = std::vector< Core::ActionState >( Core::Defs::mAxis4, Core::Defs::mAxis4 + numOfAxes );
-  mAnalogActionMap[ 5 ] = std::vector< Core::ActionState >( Core::Defs::mAxis5, Core::Defs::mAxis5 + numOfAxes );  
+  mAnalogActionMap[ 0 ] = std::vector< ActionState >( Defs::mAxis0, Defs::mAxis0 + numOfAxes);
+  mAnalogActionMap[ 1 ] = std::vector< ActionState >( Defs::mAxis1, Defs::mAxis1 + numOfAxes );
+  mAnalogActionMap[ 2 ] = std::vector< ActionState >( Defs::mAxis2, Defs::mAxis2 + numOfAxes );
+  mAnalogActionMap[ 3 ] = std::vector< ActionState >( Defs::mAxis3, Defs::mAxis3 + numOfAxes );
+  mAnalogActionMap[ 4 ] = std::vector< ActionState >( Defs::mAxis4, Defs::mAxis4 + numOfAxes );
+  mAnalogActionMap[ 5 ] = std::vector< ActionState >( Defs::mAxis5, Defs::mAxis5 + numOfAxes );  
  
-  mDigitalActionMap[ 0 ]  = std::vector< Core::ActionState >( Core::Defs::mButton0,   Core::Defs::mButton0   + numOfButtons );
-  mDigitalActionMap[ 1 ]  = std::vector< Core::ActionState >( Core::Defs::mButton1,   Core::Defs::mButton1   + numOfButtons );
-  mDigitalActionMap[ 2 ]  = std::vector< Core::ActionState >( Core::Defs::mButton2,   Core::Defs::mButton2   + numOfButtons );
-  mDigitalActionMap[ 3 ]  = std::vector< Core::ActionState >( Core::Defs::mButton3,   Core::Defs::mButton3   + numOfButtons );
-  mDigitalActionMap[ 4 ]  = std::vector< Core::ActionState >( Core::Defs::mButton4,   Core::Defs::mButton4   + numOfButtons );
-  mDigitalActionMap[ 5 ]  = std::vector< Core::ActionState >( Core::Defs::mButton5,   Core::Defs::mButton5   + numOfButtons );
-  mDigitalActionMap[ 6 ]  = std::vector< Core::ActionState >( Core::Defs::mButton6,   Core::Defs::mButton6   + numOfButtons );
-  mDigitalActionMap[ 7 ]  = std::vector< Core::ActionState >( Core::Defs::mButton7,   Core::Defs::mButton7   + numOfButtons );
-  mDigitalActionMap[ 8 ]  = std::vector< Core::ActionState >( Core::Defs::mButton8,   Core::Defs::mButton8   + numOfButtons );
-  mDigitalActionMap[ 9 ]  = std::vector< Core::ActionState >( Core::Defs::mButton9,   Core::Defs::mButton9   + numOfButtons );  
-  mDigitalActionMap[ 10 ] = std::vector< Core::ActionState >( Core::Defs::mButtonSP0, Core::Defs::mButtonSP0 + numOfButtons );
-  mDigitalActionMap[ 11 ] = std::vector< Core::ActionState >( Core::Defs::mButtonSP1, Core::Defs::mButtonSP1 + numOfButtons );
-  mDigitalActionMap[ 12 ] = std::vector< Core::ActionState >( Core::Defs::mButtonSP2, Core::Defs::mButtonSP2 + numOfButtons );
-  mDigitalActionMap[ 13 ] = std::vector< Core::ActionState >( Core::Defs::mButtonSP3, Core::Defs::mButtonSP3 + numOfButtons );
-  mDigitalActionMap[ 14 ] = std::vector< Core::ActionState >( Core::Defs::mButtonSP4, Core::Defs::mButtonSP4 + numOfButtons );
-  mDigitalActionMap[ 15 ] = std::vector< Core::ActionState >( Core::Defs::mButtonSP5, Core::Defs::mButtonSP5 + numOfButtons );
-  mDigitalActionMap[ 16 ] = std::vector< Core::ActionState >( Core::Defs::mButtonSP6, Core::Defs::mButtonSP6 + numOfButtons );
-  mDigitalActionMap[ 17 ] = std::vector< Core::ActionState >( Core::Defs::mButtonSP7, Core::Defs::mButtonSP7 + numOfButtons );
+  mDigitalActionMap[ 0 ]  = std::vector< ActionState >( Defs::mButton0,   Defs::mButton0   + numOfButtons );
+  mDigitalActionMap[ 1 ]  = std::vector< ActionState >( Defs::mButton1,   Defs::mButton1   + numOfButtons );
+  mDigitalActionMap[ 2 ]  = std::vector< ActionState >( Defs::mButton2,   Defs::mButton2   + numOfButtons );
+  mDigitalActionMap[ 3 ]  = std::vector< ActionState >( Defs::mButton3,   Defs::mButton3   + numOfButtons );
+  mDigitalActionMap[ 4 ]  = std::vector< ActionState >( Defs::mButton4,   Defs::mButton4   + numOfButtons );
+  mDigitalActionMap[ 5 ]  = std::vector< ActionState >( Defs::mButton5,   Defs::mButton5   + numOfButtons );
+  mDigitalActionMap[ 6 ]  = std::vector< ActionState >( Defs::mButton6,   Defs::mButton6   + numOfButtons );
+  mDigitalActionMap[ 7 ]  = std::vector< ActionState >( Defs::mButton7,   Defs::mButton7   + numOfButtons );
+  mDigitalActionMap[ 8 ]  = std::vector< ActionState >( Defs::mButton8,   Defs::mButton8   + numOfButtons );
+  mDigitalActionMap[ 9 ]  = std::vector< ActionState >( Defs::mButton9,   Defs::mButton9   + numOfButtons );  
+  mDigitalActionMap[ 10 ] = std::vector< ActionState >( Defs::mButtonSP0, Defs::mButtonSP0 + numOfButtons );
+  mDigitalActionMap[ 11 ] = std::vector< ActionState >( Defs::mButtonSP1, Defs::mButtonSP1 + numOfButtons );
+  mDigitalActionMap[ 12 ] = std::vector< ActionState >( Defs::mButtonSP2, Defs::mButtonSP2 + numOfButtons );
+  mDigitalActionMap[ 13 ] = std::vector< ActionState >( Defs::mButtonSP3, Defs::mButtonSP3 + numOfButtons );
+  mDigitalActionMap[ 14 ] = std::vector< ActionState >( Defs::mButtonSP4, Defs::mButtonSP4 + numOfButtons );
+  mDigitalActionMap[ 15 ] = std::vector< ActionState >( Defs::mButtonSP5, Defs::mButtonSP5 + numOfButtons );
+  mDigitalActionMap[ 16 ] = std::vector< ActionState >( Defs::mButtonSP6, Defs::mButtonSP6 + numOfButtons );
+  mDigitalActionMap[ 17 ] = std::vector< ActionState >( Defs::mButtonSP7, Defs::mButtonSP7 + numOfButtons );
 
   // Now for trackers. 
-  numOfAxes = Core::Defs::mTrackerAnalogProxies.size();
-  numOfButtons = Core::Defs::mTrackerDigitalProxies.size();
+  numOfAxes = Defs::mTrackerAnalogProxies.size();
+  numOfButtons = Defs::mTrackerDigitalProxies.size();
 
   if(numOfAxes > 0)
   {
-    setAnalogActionInputs( 1, Core::Defs::mTrackerAnalogProxies );
+    setAnalogActionInputs( 1, Defs::mTrackerAnalogProxies );
   }
 
-  mAnalogActionMap[ 6 ] = std::vector< Core::ActionState >( Core::Defs::mAxisTr0, Core::Defs::mAxisTr0 +  numOfAxes );
-  mAnalogActionMap[ 7 ] = std::vector< Core::ActionState >( Core::Defs::mAxisTr1, Core::Defs::mAxisTr1 +  numOfAxes );
+  mAnalogActionMap[ 6 ] = std::vector< ActionState >( Defs::mAxisTr0, Defs::mAxisTr0 +  numOfAxes );
+  mAnalogActionMap[ 7 ] = std::vector< ActionState >( Defs::mAxisTr1, Defs::mAxisTr1 +  numOfAxes );
 
-  mDigitalActionMap[ 18 ] = std::vector< Core::ActionState >( Core::Defs::mButtonTr0, Core::Defs::mButtonTr0 + numOfButtons );
-  mDigitalActionMap[ 19 ] = std::vector< Core::ActionState >( Core::Defs::mButtonTr1, Core::Defs::mButtonTr1 + numOfButtons );
-  mDigitalActionMap[ 20 ] = std::vector< Core::ActionState >( Core::Defs::mButtonTr2, Core::Defs::mButtonTr2 + numOfButtons );
-  mDigitalActionMap[ 21 ] =  std::vector< Core::ActionState >( Core::Defs::mButtonTr3, Core::Defs::mButtonTr3 + numOfButtons );
-  mDigitalActionMap[ 22 ] = std::vector< Core::ActionState >( Core::Defs::mButtonTr4, Core::Defs::mButtonTr4 + numOfButtons );
-  mDigitalActionMap[ 23 ] = std::vector< Core::ActionState >( Core::Defs::mButtonTr5, Core::Defs::mButtonTr5 + numOfButtons );
+  mDigitalActionMap[ 18 ] = std::vector< ActionState >( Defs::mButtonTr0, Defs::mButtonTr0 + numOfButtons );
+  mDigitalActionMap[ 19 ] = std::vector< ActionState >( Defs::mButtonTr1, Defs::mButtonTr1 + numOfButtons );
+  mDigitalActionMap[ 20 ] = std::vector< ActionState >( Defs::mButtonTr2, Defs::mButtonTr2 + numOfButtons );
+  mDigitalActionMap[ 21 ] =  std::vector< ActionState >( Defs::mButtonTr3, Defs::mButtonTr3 + numOfButtons );
+  mDigitalActionMap[ 22 ] = std::vector< ActionState >( Defs::mButtonTr4, Defs::mButtonTr4 + numOfButtons );
+  mDigitalActionMap[ 23 ] = std::vector< ActionState >( Defs::mButtonTr5, Defs::mButtonTr5 + numOfButtons );
 
-  setDigitalActionButtons( 1, Core::Defs::mTrackerDigitalProxies );    
+  setDigitalActionButtons( 1, Defs::mTrackerDigitalProxies );    
 }  
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -322,11 +323,11 @@ void OsgInteraction::defineControls()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::takeActionAnalog( Core::InteractionMode mode, int id, double value )
+void OsgInteraction::takeActionAnalog( InteractionMode mode, int id, double value )
 {
   switch( mode )
   {
-    case Core::WORLD:
+    case WORLD:
     {
       switch( id )
       {
@@ -342,7 +343,7 @@ void OsgInteraction::takeActionAnalog( Core::InteractionMode mode, int id, doubl
       }
       break;
     }
-    case Core::OBJECT:
+    case OBJECT:
     {  
       switch( id )
       {
@@ -355,7 +356,7 @@ void OsgInteraction::takeActionAnalog( Core::InteractionMode mode, int id, doubl
       }    
       break;
     }
-    case Core::WAND:
+    case WAND:
     {       
       value = -value;
       switch( id )
@@ -382,11 +383,11 @@ void OsgInteraction::takeActionAnalog( Core::InteractionMode mode, int id, doubl
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::takeActionDigital( Core::InteractionMode mode, int id, Core::DeviceData value )
+void OsgInteraction::takeActionDigital( InteractionMode mode, int id, DeviceData value )
 {
   switch( mode )
   {
-    case Core::WORLD:
+    case WORLD:
     {
       switch( id )
       {
@@ -546,7 +547,7 @@ void OsgInteraction::trackerAxis2GlobalAction( double value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton1GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton1GlobalAction( DeviceData value )
 {  
   return;
 }
@@ -557,7 +558,7 @@ void OsgInteraction::joystickButton1GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton2GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton2GlobalAction( DeviceData value )
 {
   mSceneNavigator.translateInY( -1.0 );   
 }
@@ -568,11 +569,11 @@ void OsgInteraction::joystickButton2GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton3GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton3GlobalAction( DeviceData value )
 {  
 }
 
-void OsgInteraction::joystickButton4GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton4GlobalAction( DeviceData value )
 {
   mSceneNavigator.translateInY( 1.0 );  
 }
@@ -583,7 +584,7 @@ void OsgInteraction::joystickButton4GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton5GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton5GlobalAction( DeviceData value )
 {
   mSceneNavigator.deaccelerate();
 }
@@ -594,7 +595,7 @@ void OsgInteraction::joystickButton5GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton6GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton6GlobalAction( DeviceData value )
 {
   mSceneNavigator.accelerate();  
 }
@@ -605,7 +606,7 @@ void OsgInteraction::joystickButton6GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton7GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton7GlobalAction( DeviceData value )
 {
   mAllowPitch = !mAllowPitch; 
 
@@ -618,7 +619,7 @@ void OsgInteraction::joystickButton7GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton8GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton8GlobalAction( DeviceData value )
 {
   mAllowYaw = !mAllowYaw;  
 
@@ -631,7 +632,7 @@ void OsgInteraction::joystickButton8GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton9GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton9GlobalAction( DeviceData value )
 {
   return;
 }
@@ -642,7 +643,7 @@ void OsgInteraction::joystickButton9GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton10GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton10GlobalAction( DeviceData value )
 {
   reset();
 }
@@ -653,7 +654,7 @@ void OsgInteraction::joystickButton10GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton11GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton11GlobalAction( DeviceData value )
 {
   return;
 }
@@ -664,7 +665,7 @@ void OsgInteraction::joystickButton11GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton12GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton12GlobalAction( DeviceData value )
 {
   return;
 }
@@ -675,7 +676,7 @@ void OsgInteraction::joystickButton12GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton13GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton13GlobalAction( DeviceData value )
 {
   return;  
 }
@@ -686,7 +687,7 @@ void OsgInteraction::joystickButton13GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton14GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton14GlobalAction( DeviceData value )
 {
   return;
 }
@@ -697,7 +698,7 @@ void OsgInteraction::joystickButton14GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton15GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton15GlobalAction( DeviceData value )
 {
   mSceneNavigator.angulatDeaccelerate();
 }
@@ -708,7 +709,7 @@ void OsgInteraction::joystickButton15GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton16GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton16GlobalAction( DeviceData value )
 {
   mSceneNavigator.angulatAccelerate();
 }
@@ -719,7 +720,7 @@ void OsgInteraction::joystickButton16GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton17GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton17GlobalAction( DeviceData value )
 {
   return;
 }
@@ -730,7 +731,7 @@ void OsgInteraction::joystickButton17GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::joystickButton18GlobalAction( Core::DeviceData value )
+void OsgInteraction::joystickButton18GlobalAction( DeviceData value )
 {
   return;
 }
@@ -741,7 +742,7 @@ void OsgInteraction::joystickButton18GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::trackButton1GlobalAction( Core::DeviceData value )
+void OsgInteraction::trackButton1GlobalAction( DeviceData value )
 {
   return;  
 }
@@ -752,7 +753,7 @@ void OsgInteraction::trackButton1GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::trackButton2GlobalAction( Core::DeviceData value )
+void OsgInteraction::trackButton2GlobalAction( DeviceData value )
 {
   return;
 }
@@ -763,7 +764,7 @@ void OsgInteraction::trackButton2GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::trackButton3GlobalAction( Core::DeviceData value )
+void OsgInteraction::trackButton3GlobalAction( DeviceData value )
 {
   return;
 }
@@ -774,7 +775,7 @@ void OsgInteraction::trackButton3GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::trackButton4GlobalAction( Core::DeviceData value )
+void OsgInteraction::trackButton4GlobalAction( DeviceData value )
 {
   return;
 }
@@ -785,7 +786,7 @@ void OsgInteraction::trackButton4GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::trackButton5GlobalAction( Core::DeviceData value )
+void OsgInteraction::trackButton5GlobalAction( DeviceData value )
 {  
   return;
 }
@@ -796,7 +797,7 @@ void OsgInteraction::trackButton5GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::trackButton6GlobalAction( Core::DeviceData value )
+void OsgInteraction::trackButton6GlobalAction( DeviceData value )
 {
   return;
 }
@@ -807,7 +808,7 @@ void OsgInteraction::trackButton6GlobalAction( Core::DeviceData value )
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void OsgInteraction::trackButton7GlobalAction( Core::DeviceData value )
+void OsgInteraction::trackButton7GlobalAction( DeviceData value )
 {    
   return;
 }
@@ -820,15 +821,15 @@ void OsgInteraction::trackButton7GlobalAction( Core::DeviceData value )
 
 void OsgInteraction::updateDeviceData()
 {
-  Core::DeviceData value = Core::ZERO;   
+  DeviceData value = ZERO;   
   double data      = 0.0;
 
   Interaction::updateDeviceData();  
   
-  std::map< int, std::vector< Core::ActionState > >::const_iterator analogitr;
-  std::map< int, std::vector< Core::ActionState > >::const_iterator digitalitr;
+  std::map< int, std::vector< ActionState > >::const_iterator analogitr;
+  std::map< int, std::vector< ActionState > >::const_iterator digitalitr;
 
-  if( Core::SharedData::mCommand.isLocal() )
+  if( SharedData::mCommand.isLocal() )
   {      
     if( 1 )
     {
@@ -864,7 +865,7 @@ void OsgInteraction::updateDeviceData()
           data = -2.0; 
         }
 
-        Core::SharedData::mCommand->mAnalogInputs[ analogitr->first ] = data;        
+        SharedData::mCommand->mAnalogInputs[ analogitr->first ] = data;        
         
         ++analogs;
 
@@ -885,7 +886,7 @@ void OsgInteraction::updateDeviceData()
     {
       value = mController.getDeviceInputData( mDigitalInputMap[ dindex ], digitalitr->second );      
       
-      Core::SharedData::mCommand->mDigitalInputs[ digitalitr->first ] = ( int )value;
+      SharedData::mCommand->mDigitalInputs[ digitalitr->first ] = ( int )value;
       
       ++digitals;
 
@@ -897,22 +898,22 @@ void OsgInteraction::updateDeviceData()
     
     switch( mInteractionMode )
     {
-      case Core::OBJECT:
+      case OBJECT:
       {
-        mLocalNavigator.update( mDeltaTime, Core::GLOBAL );  
-        Core::SharedData::mCommand->mSharedTransformMatrix = mLocalNavigator.currentPosition();  
+        mLocalNavigator.update( mDeltaTime, GLOBAL );  
+        SharedData::mCommand->mSharedTransformMatrix = mLocalNavigator.currentPosition();  
         break;
       }
-      case Core::WAND:
+      case WAND:
       {
-        mWandNavigator.update( mDeltaTime, Core::GLOBAL );
-        Core::SharedData::mCommand->mSharedTransformMatrix = mWandNavigator.currentPosition();
+        mWandNavigator.update( mDeltaTime, GLOBAL );
+        SharedData::mCommand->mSharedTransformMatrix = mWandNavigator.currentPosition();
       }
-      case Core::WORLD: 
+      case WORLD: 
       {
-        mSceneNavigator.update( 1.0, Core::GLOBAL );
-        Core::SharedData::mCommand->mSharedTransformMatrix = mSceneNavigator.currentPosition();
-        Core::SharedData::mCommand->mSharedMatrixTypeObjects[ "PitchMatrix" ] = mSceneNavigator.pitchMatrix();      
+        mSceneNavigator.update( 1.0, GLOBAL );
+        SharedData::mCommand->mSharedTransformMatrix = mSceneNavigator.currentPosition();
+        SharedData::mCommand->mSharedMatrixTypeObjects[ "PitchMatrix" ] = mSceneNavigator.pitchMatrix();      
         break;
       }
     };      
@@ -944,20 +945,20 @@ void OsgInteraction::updateAll()
 
 void OsgInteraction::updateInputs()
 {
-  for( unsigned int i = 0; i < Core::SharedData::mCommand->mAnalogInputs.size(); ++i )
+  for( unsigned int i = 0; i < SharedData::mCommand->mAnalogInputs.size(); ++i )
   {    
-    takeActionAnalog( mInteractionMode, i, Core::SharedData::mCommand->mAnalogInputs[ i ] );        
+    takeActionAnalog( mInteractionMode, i, SharedData::mCommand->mAnalogInputs[ i ] );        
   }
 
-  for( unsigned int i = 0; i < Core::SharedData::mCommand->mDigitalInputs.size(); ++i )
+  for( unsigned int i = 0; i < SharedData::mCommand->mDigitalInputs.size(); ++i )
   {
-    if( ( Core::DeviceData )Core::SharedData::mCommand->mDigitalInputs[ i ] != 0 )
+    if( ( DeviceData )SharedData::mCommand->mDigitalInputs[ i ] != 0 )
     {
-      takeActionDigital( mInteractionMode, i, ( Core::DeviceData ) Core::SharedData::mCommand->mDigitalInputs[ i ] );
+      takeActionDigital( mInteractionMode, i, ( DeviceData ) SharedData::mCommand->mDigitalInputs[ i ] );
     }    
   }
 
-  mSceneNavigator.pitchMatrix( Core::SharedData::mCommand->mSharedMatrixTypeObjects[ "PitchMatrix" ] );
+  mSceneNavigator.pitchMatrix( SharedData::mCommand->mSharedMatrixTypeObjects[ "PitchMatrix" ] );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -983,13 +984,13 @@ void OsgInteraction::updateTransforms()
 {   
   switch( mInteractionMode )
   {  
-    case Core::WORLD:
+    case WORLD:
     {     
       // Calculate the initial translation ( one time ). 
       static osg::Vec3f offset = ( ( osg::Matrix ) mSceneTransformNode->getMatrix() ).getTrans();    
 
       // Scene transform matrix.
-      osg::Matrixf matrix =  osg::Matrix( Core::SharedData::mCommand->mSharedTransformMatrix.mData );
+      osg::Matrixf matrix =  osg::Matrix( SharedData::mCommand->mSharedTransformMatrix.mData );
       
       // Find resultant translation vector. 
       matrix.setTrans( offset + matrix.getTrans() );    
@@ -1028,9 +1029,9 @@ void OsgInteraction::updateInteractions()
 
 void OsgInteraction::reset()
 {
-  if( Core::SharedData::mCommand.isLocal() )
+  if( SharedData::mCommand.isLocal() )
   {
-    gmtl::identity( Core::SharedData::mCommand->mSharedMatrixTypeObjects[ "PitchMatrix" ] );
+    gmtl::identity( SharedData::mCommand->mSharedMatrixTypeObjects[ "PitchMatrix" ] );
   }
 
   Interaction::reset();
