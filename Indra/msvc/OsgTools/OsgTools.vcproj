@@ -208,6 +208,14 @@
 					RelativePath="..\..\modules\OsgTools\Geom\OsgDashboard.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\modules\OsgTools\Geom\OsgQuad.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\modules\OsgTools\Geom\OsgQuad.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Render"
