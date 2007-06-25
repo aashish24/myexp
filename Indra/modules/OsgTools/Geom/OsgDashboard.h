@@ -29,7 +29,7 @@
 #include "osg/Referenced"
 #include "osgText/Text"
 #include "osg/Node"
-#include "osg/Group"
+#include "osg/MatrixTransform"
 #include "osg/Geometry"
 #include "osg/Texture2D"
 #include "osg/PolygonOffset"
@@ -37,71 +37,17 @@
 
 #include "osgDB/ReadFile"
 
+#include "OsgTools/Geom/OsgQuad.h"
+
+#include "OsgTools/Core/Export.h"
+
 namespace OsgTools
 {
   namespace Geom
-  {    
-    class OsgQuad  : public osg::Referenced
-    {
-      public:
-
-        enum VAlign
-        {
-          CENTER = 0, 
-          TOP,
-          BOTTOM
-        };
-
-        enum HAlign
-        {
-          CENTER = 0, 
-          LEFT,
-          RIGHT
-        };
-
-        OsgQuad() : 
-          osg::Referenced(), 
-          mFixedSize      ( true ), 
-          mFixedAspect    ( true ),  
-          mWrapText       ( true ), 
-          mMargin         ( 0.0 ),
-          mTextMargin     ( 0.0 ), 
-          VAlign          ( CENTER ), 
-          HAlign          ( LEFT ),
-          mColor          ( 1.0, 1.0, 1.0 )
-        {
-        }
-
-        osg::Group* root()
-        {
-          return mRoot.get();
-        }
-
-      protected: 
-
-        virtual ~OsgQuad()
-        {
-        }
-
-        bool                            mFixedSize;
-        bool                            mFixedAspect;
-        bool                            mWrapText;
-
-        float                           mMargin;
-        float                           mTextMargin;
-
-        VAlign                          mVAlign;
-        HAlign                          mHAlign;
-
-        osg::Vec3f                      mColor;
-
-        osg::ref_ptr< osg::Texture2D >  mTextures;
-        osg::ref_ptr< osg::Group >      mRoot;
-    };  
-
-
+  { 
     // A dashboard will be consit of M x N OsgQuads. 
-    class OsgDashboard : public osg::Referenced
+
+    class OSGTOOLS_EXPORT OsgDashboard : public osg::MatrixTransform
     {
       public:  
 
@@ -110,51 +56,43 @@ namespace OsgTools
         // Typedefs. 
         //
         ///////////////////////////////////////////////////////////////////////
-        std::vector< osg::ref_ptr< OsgQuad >      Quads;
+        
+        typedef std::vector< osg::ref_ptr< OsgQuad > >  Quads;
+
 
         ///////////////////////////////////////////////////////////////////////
         //
         // Constructor. 
         //
-        ///////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////        
 
-        OsgDashboard() :
-            osg::Referenced()
+        OsgDashboard( const long double& width = 1.0, const long double& height = 1.0, const osg::Vec3f& pos = osg::Vec3( 0.0, 0.0, 0.0 ), const unsigned& rows = 1, const unsigned& cols = 1 ) : 
+          osg::MatrixTransform()         
         {
-        }
-
-        /////////////////////////////////////////////////////////////////////////
-        //
-        // Construct a quad using position, width and height vector. 
-        //
-        /////////////////////////////////////////////////////////////////////////
-
-        OsgDashboard( const osg::Vec3f& pos, const osg::Vec3f& width, const osg::Vec3f& height, const unsigned& rows = 1, const unsigned& cols = 1 ) : 
-          osg::Referenced()         
-        {
-          // Let try...
+          // Try to build it. 
           try
           {
-            mRoot = new osg::Group();
-            buildDashboard( pos, width, height, rows, cols );
+            this->addChild( buildDashboard( width, height, pos, rows, cols ) );
           }
           catch( ... )
           {
             std::cerr << "Error 4138744601: Failed to initialize. " << std::endl;
           }
         }
-            
+        
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Use user supplied model as geometry for the dashboard. 
         //
         /////////////////////////////////////////////////////////////////////////
 
-        OsgDashboard( const std::string& fileName, const unsigned& rows = 1, const unsigned& cols = 1 ) : 
-          osg::Referenced()
-        {
-          buildDashboard( fileName, rows, cols );
-        }    
+        //OsgDashboard( const std::string& fileName, const unsigned& rows = 1, const unsigned& cols = 1 ) : 
+        //  osg::Referenced()
+        //{
+        //  this->addChild( buildDashboard( fileName, rows, cols ) );
+        //}  
+
         
         /////////////////////////////////////////////////////////////////////////
         //
@@ -162,8 +100,15 @@ namespace OsgTools
         //
         /////////////////////////////////////////////////////////////////////////
 
-        void buildDashboard( const osg::Vec3f& pos, const osg::Vec3f& width, const osg::Vec3f& height, const unsigned& rows, const unsigned& cols )
-        {            
+        osg::Group* buildDashboard( const long double& width=1.0, const long double& height=1.0, const osg::Vec3& pos=osg::Vec3( 0.0, 0.0, 0.0 ), const unsigned& rows=1, const unsigned& cols=1 )
+        {
+          // Lets build only one dashboard. 
+          
+          osg::ref_ptr< osg::Group > group( new osg::Group() );
+          
+          group->addChild( new OsgQuad( width, height, pos ) );
+
+          return group.release();
         }
 
 
@@ -173,7 +118,7 @@ namespace OsgTools
         //
         /////////////////////////////////////////////////////////////////////////
 
-        buildScene()
+        void buildScene()
         {
         }
 
@@ -192,11 +137,7 @@ namespace OsgTools
 
       private:            
 
-        Quads                                       mQuads;  
-
-        osg::ref_ptr< osg::Group >                  mRoot;    
-
-
+        Quads                                       mQuads;          
     };
   }
 }

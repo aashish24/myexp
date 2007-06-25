@@ -23,7 +23,7 @@
   #  ifdef OSGTOOLS_SHARED
   #    define OSGTOOLS_EXPORT __declspec(dllexport)
   #  else
-  #    define OSGTOOLS_EXPORT __declspec(dllimport)
+  #    define OSGTOOLS_EXPORT __declspec(dllexport)
   #  endif
   # endif
 #else
