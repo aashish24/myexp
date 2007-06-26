@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="example: OsgDashboardApp"
 	ProjectGUID="{040D1AFE-AE2E-4511-A150-8AC05BE5B012}"
+	RootNamespace="example: OsgDashboardApp"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -53,7 +54,7 @@
 				AdditionalOptions=" /DWIN32 /D_WINDOWS  /Zm1000   /D_DEBUG        -DCMAKE_INTDIR=\&quot;Debug\&quot;"
 				Optimization="0"
 				InlineFunctionExpansion="0"
-				AdditionalIncludeDirectories="$(OSGHOME)\include;..\..\..\;"
+				AdditionalIncludeDirectories="$(OSGHOME)\include;"
 				PreprocessorDefinitions=",_SCL_SECURE_NO_WARNINGS,"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

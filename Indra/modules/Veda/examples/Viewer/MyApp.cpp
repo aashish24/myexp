@@ -16,6 +16,8 @@
 #include "gmtl/Math.h"   
 #include "gmtl/MatrixOps.h"
 
+using namespace Veda::Core;
+
 MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc, argv )
 {	
   for( unsigned int i = 1; i < argc; ++i  )
@@ -28,6 +30,7 @@ MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc,
 }
 
 // One time initialization. 
+
 void MyApp::appInit()
 {
   setDevice( ALL, OFF );
