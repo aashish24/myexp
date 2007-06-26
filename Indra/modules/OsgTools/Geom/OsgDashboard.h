@@ -59,6 +59,9 @@ namespace OsgTools
         
         typedef std::vector< osg::ref_ptr< OsgQuad > >  Quads;
 
+  
+        enum TextureMode{ BACKGROUND = 0, SPECIFIC, ALL };
+        
 
         ///////////////////////////////////////////////////////////////////////
         //
@@ -72,7 +75,7 @@ namespace OsgTools
           // Try to build it. 
           try
           {
-            this->addChild( buildDashboard( width, height, pos, rows, cols ) );
+            buildDashboard( width, height, pos, rows, cols );
           }
           catch( ... )
           {
@@ -100,27 +103,51 @@ namespace OsgTools
         //
         /////////////////////////////////////////////////////////////////////////
 
-        osg::Group* buildDashboard( const long double& width=1.0, const long double& height=1.0, const osg::Vec3& pos=osg::Vec3( 0.0, 0.0, 0.0 ), const unsigned& rows=1, const unsigned& cols=1 )
+        void buildDashboard( const long double& width=1.0, const long double& height=1.0, const osg::Vec3& pos=osg::Vec3( 0.0, 0.0, 0.0 ), const unsigned& rows=1, const unsigned& cols=1 )
         {
-          // Lets build only one dashboard. 
-          
-          osg::ref_ptr< osg::Group > group( new osg::Group() );
-          
-          group->addChild( new OsgQuad( width, height, pos ) );
-
-          return group.release();
+          this->addChild( new OsgQuad( width, height, pos ) );
+        
         }
-
-
-        /////////////////////////////////////////////////////////////////////////
-        //
-        // Build scene. 
-        //
-        /////////////////////////////////////////////////////////////////////////
-
-        void buildScene()
+       
+        void setTexture( osg::Texture2D* texture, TextureMode mode = BACKGROUND, const unsigned& childNo = 0  )
         {
-        }
+          switch( mode )
+          {
+            case BACKGROUND:
+            {
+              // @Todo: Implement this.
+              break;
+            }
+            case SPECIFIC:
+            {
+              try
+              {
+                osg::ref_ptr< OsgQuad > quad = dynamic_cast< OsgQuad* >( this->getChild( childNo ) );
+                if( quad.valid() )
+                {
+                  quad->setTexture( texture );
+                }
+              }
+              catch( ... )
+              {
+                // Error. 
+              }
+
+              break;
+            }
+            case ALL:
+            {
+              for( size_t i = 0; i < this->getNumChildren(); ++i )
+              {
+                osg::ref_ptr< OsgQuad > quad = dynamic_cast< OsgQuad* >( this->getChild( i ) );
+                if( quad.valid() )
+                {
+                  quad->setTexture( texture );
+                }
+              }
+            }
+          };
+        }        
 
       protected: 
 
@@ -132,12 +159,7 @@ namespace OsgTools
         
         virtual ~OsgDashboard()
         {
-        }
-    
-
-      private:            
-
-        Quads                                       mQuads;          
+        }        
     };
   }
 }
