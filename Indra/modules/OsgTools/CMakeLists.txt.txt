@@ -37,7 +37,17 @@ INCLUDE_DIRECTORIES
 
 LINK_LIBRARIES
 ( 
-	${OSG_LIB}
+	OsgTools 
+	osg	
+)
+
+# Set the library path. 
+#
+
+TARGET_LINK_LIBRARY
+(
+	OsgTools 
+	${OSG_LIB}	
 )
 
 
