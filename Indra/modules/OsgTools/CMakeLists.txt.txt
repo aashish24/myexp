@@ -1,0 +1,47 @@
+
+# Project name.
+#
+
+PROJECT( OsgTools )
+
+
+# List all the sub directories. 
+#
+
+SUBDIRS( SG Geom Core Render ) 
+
+
+# List all the source files. 
+#
+
+SET( SOURCES SG/OsgFind.cpp Geom/OsgQuad.cpp Geom/OsgDashboard.cpp )
+
+
+# Find. 
+#
+
+FIND_LIBRARY( OSG_LIB osglib $ENV{OSG_LIB_DIR} )
+
+
+# List all the includes. 
+#
+
+INCLUDE_DIRECTORIES
+( 
+	${OSGHOME}/include 
+)
+
+
+# Link the libraries. 
+#
+
+LINK_LIBRARIES
+( 
+	${OSG_LIB}
+)
+
+
+# Make a shared library. 
+#
+
+ADD_LIBRARY( OsgTools.so ${SRCS} )
