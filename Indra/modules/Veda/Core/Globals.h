@@ -17,7 +17,7 @@
 #ifndef __GLOBALS_H__
 #define __GLOBALS_H__
 
-#include "Export.h"
+#include "Veda/Export.h"
 
 namespace Veda
 {

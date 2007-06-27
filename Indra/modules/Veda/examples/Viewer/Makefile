@@ -57,10 +57,18 @@ SRCS=		MyApp.cpp	\
 
 NO_DEPEND=	YES
 		
-EXTRA_INCLUDES=		-I../include -I$(INDRA_ROOT_DIR)/src -I$(OSGHOME)/include -I$(OPENTHREADSHOME)/include -I$(PRODUCERHOME)/include \
-			-I$(VJ_BASE_DIR)/include/tweek/idl -I$(VJ_BASE_DIR)/include -I$(VJ_BASE_DIR)/include/tweek/CORBA
+EXTRA_INCLUDES=		-I../../../ -I$(OSG_INC_DIR) 										\
+			-I$(VJ_BASE_DIR)/include/tweek/idl -I$(VJ_BASE_DIR)/include -I$(VJ_BASE_DIR)/include/tweek/CORBA	\
+			-I$(GMTL_INC_DIR)	\
+			-I$(CPPDOM_INC_DIR)	\
+			-I$(OMNIORB_INC_DIR)
 
-EXTRA_LIBS=		-L$(INDRA_ROOT_DIR)/lib -L$(OSGHOME)/lib/Linux64 -lIndra -losg -losgDB -losgGA -losgUtil -losgText -losgFX 
+
+EXTRA_LIBS=		-L../../../../bin		\
+			-L$(OSG_LIB_DIR) 		\
+			-L$(BOOST_LIB_DIR)		\
+			-L$(OMNIORB_LIB_DIR)		\
+			-lVeda -lOsgTools -losg -losgDB -losgGA -losgUtil -losgText -losgFX -lomniORB4 -lomnithread
 
 # Advanced options. 
 #---------------------------------------------------------------

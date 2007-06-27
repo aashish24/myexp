@@ -20,7 +20,7 @@
 
 #include "Veda/Core/Command.h"
 
-#include "Export.h"
+#include "Veda/Export.h"
 
 namespace Veda
 {

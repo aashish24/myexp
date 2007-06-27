@@ -1,4 +1,5 @@
 
+#define HAVE_OSG
 
 #define VRJUGGLER_MAJOR_VERSION 2
 

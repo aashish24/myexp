@@ -41,7 +41,7 @@
 
 #include "osgUtil/SceneView"
 
-#include "Export.h"
+#include "Veda/Export.h"
 
 namespace Veda
 {

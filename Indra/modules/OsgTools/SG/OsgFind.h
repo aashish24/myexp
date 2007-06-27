@@ -54,9 +54,9 @@ namespace OsgTools
           DOWN
         };
 
-        static osg::Node* findNodeByName    ( osg::Node*  node, const std::string& id, Dir dir = DOWN );            
+        static osg::Node* 	findNodeByName    ( osg::Node*  node, const std::string& id, Dir dir = DOWN );            
 
-        static Nodes      findAllNodesByName( osg::Node*  node, const std::string& id, Dir dir = DOWN ); 
+        static Nodes     	findAllNodesByName( osg::Node*  node, const std::string& id, Dir dir = DOWN ); 
     };     
   }
 }

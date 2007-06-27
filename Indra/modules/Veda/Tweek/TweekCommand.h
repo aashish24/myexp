@@ -11,7 +11,7 @@
 #ifndef __TWEEK_COMMAND_H__
 #define __TWEEK_COMMAND_H__
      
-#include "Export.h"
+#include "Veda/Export.h"
 
 namespace Veda
 {

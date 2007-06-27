@@ -3,7 +3,6 @@
 
 #include <iostream>
 
-using namespace OsgTools::SG;
 
 /////////////////////////////////////////////////////////////////////////
 //
@@ -13,7 +12,7 @@ using namespace OsgTools::SG;
 //
 /////////////////////////////////////////////////////////////////////////
 
-inline osg::Node* OsgFind::findNodeByName( osg::Node* node, const std::string& id, Dir dir )
+osg::Node* OsgTools::SG::OsgFind::findNodeByName( osg::Node* node, const std::string& id, Dir dir )
 {
   osg::ref_ptr< osg::Group > currGroup;
   osg::ref_ptr< osg::Node >  foundNode;
@@ -94,7 +93,7 @@ inline osg::Node* OsgFind::findNodeByName( osg::Node* node, const std::string& i
 //
 /////////////////////////////////////////////////////////////////////////
 
-inline Nodes OsgFind::findAllNodesByName( osg::Node*  node, const std::string& id, Dir dir )
+OsgTools::SG::Nodes OsgTools::SG::OsgFind::findAllNodesByName( osg::Node*  node, const std::string& id, Dir dir )
 {
   Nodes                       nodes;
   Nodes                       children;

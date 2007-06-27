@@ -46,7 +46,7 @@
 # **********************************************************************
 # */
 
-APP_NAME=			Indra
+APP_NAME=			Veda
 
 c++:
 	$(MAKE) NO_DEPEND=0 cxx
@@ -65,12 +65,10 @@ all:
 #-------------------------------------------------------
 BUILD_TYPE?=			opt
 
-srcdir=				../src
-EXTRA_PATH_FOR_SOURCES=		../src/Core			\
-				../src/Dev			\
-				../src/Util			\
-				../java/src			\
-				../tweek/dt	
+srcdir=				./
+EXTRA_PATH_FOR_SOURCES=		./Core				\
+				./Design			\
+				./Tweek				\
 
 INDRA_SRCS=			Controller.cpp			\
 				Defs.cpp			\
@@ -78,7 +76,6 @@ INDRA_SRCS=			Controller.cpp			\
 				SubjectImpl.cpp			\
 				UserData.cpp			\
 				Globals.cpp			\
-				KeyboardMouse.cpp		\
 				Navigation.cpp			\
 				OsgInteraction.cpp 		\
 				OssimInteraction.cpp 		\
@@ -87,30 +84,36 @@ INDRA_SRCS=			Controller.cpp			\
 		
 # Advanced options. 
 #---------------------------------------------------------------
-INSTALL=	../lib
 
-STATICLIB_EXT=	.a
+INSTALL=			../../bin
+
+STATICLIB_EXT=			.a
 
 ## This is needed to make java_idl
-VPATH=		$(INDRA_ROOT_DIR)/tweek/dt
+VPATH=				./Tweek
 
 ## Extra path for java src. 
-EXTRA_SOURCEPATH_DIRS= 	../java/src
+EXTRA_SOURCEPATH_DIRS= 		./Tweek
 
-NO_DEPEND=	YES
+NO_DEPEND=				YES
 
-IDL_CXX_FILES=	dtsubject.cpp dtsubject.h		
-IDL_JAVA_FILES=	dtsubject.java	
+IDL_CXX_FILES=			TweekSubject.cpp TweekSubject.h		
+IDL_JAVA_FILES=			TweekSubject.java	
 		
 
-idl_srcs=	$(filter-out $(INDRA_SRCS), $(notdir $(wildcard $(CXX_GEN_DIR)/*.cpp)))
+idl_srcs=			$(filter-out $(INDRA_SRCS), $(notdir $(wildcard $(CXX_GEN_DIR)/*.cpp)))
 
-SRCS=		$(INDRA_SRCS) $(APP_SRCS) $(idl_srcs)
-JAVA_SRCS=	dt/DtTweek.java			\
-		dt/DtObserverImpl.java	
+SRCS=				$(INDRA_SRCS) $(APP_SRCS) $(idl_srcs)
+JAVA_SRCS=			dt/DtTweek.java			\
+				dt/DtObserverImpl.java	
 	
-ALL_CLASSES=	dt/*.class
-CLASSPATH=	$(TWEEK_JARS)
+ALL_CLASSES=			dt/*.class
+CLASSPATH=			$(TWEEK_JARS)
+
+#---------------------------------------------------------------
+
+#
+#---------------------------------------------------------------
 
 include $(VJ_BASE_DIR)/share/vrjuggler/vrj.appdefs.mk
 include $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.glapp.mk
@@ -118,7 +121,7 @@ include $(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
 include $(DZR_BASE_DIR)/mk/dzr.java-app.mk
 
 
-CXX_GEN_DIR=		$(INDRA_ROOT_DIR)/tweek
+CXX_GEN_DIR=		./Tweek
 CXX_IDL=		$(TWEEK_IDL_CXX)
 CXX_IDL_OPTS=		$(TWEEK_IDLFLAGS_CXX)			\
 			$(TWEEK_IDL_GENDIR_CXX)$(CXX_GEN_DIR)
@@ -126,23 +129,21 @@ CXX_IDL_INCLUDES=
 
 
 EXTRA_INCLUDES+=	-I$(CXX_GEN_DIR) 			\
-			-I../include 			\
-			-I../tweek/dt 			\
+			-I../					\
 			-I$(VJ_BASE_DIR)/include/tweek/idl 	\
 			-I$(VJ_BASE_DIR)/include/tweek/CORBA	\
 			-I$(OSG_INC_DIR)			\
-			-I$(PRODUCER_INC_DIR)			\
-			-I$(OPENTHREADS_INC_DIR)		\
-			-I$(OSSIM_PLANET_INC_DIR) 		\
-			-I$(OSSIM_INC_DIR)			\
-			-I$(OSG_EPHEMERIS_INC_DIR) 	
+			-I$(GMTL_INC_DIR)			\
+			-I$(CPPDOM_INC_DIR)			\
+			-I$(OMNIORB_INC_DIR)			\
 
+EXTRA_LIBS+=		-L../../bin -lOsgTools
 # Java specific
 #----------------------------------------------------------------------
-JAVA_GEN_DIR=		../java/src
-JAVA_IDL=			$(TWEEK_IDL_JAVA)
+JAVA_GEN_DIR=		./Tweek
+JAVA_IDL=		$(TWEEK_IDL_JAVA)
 JAVA_IDL_OPTS=		$(TWEEK_IDLFLAGS_JAVA)			\
-				$(TWEEK_IDL_GENDIR_JAVA)$(JAVA_GEN_DIR)
+			$(TWEEK_IDL_GENDIR_JAVA)$(JAVA_GEN_DIR)
 JAVA_IDL_INCLUDES=	
 
 
@@ -169,10 +170,10 @@ cxx: $(OBJS)
 java: $(CLASSES)
 
 $(APP_NAME): 
-	ar rcs libIndra.a *.o
-	@rm -rf 		$(INSTALL)
+	ar rcs libVeda.a *.o
+	#@rm -rf 		$(INSTALL)
 	@mkdir -p 		$(INSTALL)
-	@mv libIndra.a 		$(INSTALL)
+	@mv libVeda.a 		$(INSTALL)
 
 DtTweekBean.jar: $(JAVA_CLASSES)
 	$(JAR) cvf $@ $(ALL_CLASSES)
