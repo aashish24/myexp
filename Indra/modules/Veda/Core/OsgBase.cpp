@@ -449,7 +449,7 @@ inline void Core::OsgBase::latePreFrame()
 {  
   updateOSG();  
 
-  update();
+  updateAll();
   
   updateTweek();
   
