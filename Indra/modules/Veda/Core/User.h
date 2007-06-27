@@ -8,17 +8,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
-///////////////////////////////////////////////////////////////////////////////
-//
-//
-//
-///////////////////////////////////////////////////////////////////////////////
-
 #ifndef __CORE_USER_H__
 #define __CORE_USER_H__
-
-#include <vector>
 
 #include "vpr/IO/SerializableObject.h"
 #include "vpr/IO/ObjectReader.h"
@@ -27,7 +18,9 @@
 
 #include "Veda/Design/Interaction.h"
 
-#include "Export.h"
+#include "Veda/Export.h"
+
+#include <vector>
 
 namespace Veda
 {
@@ -64,6 +57,7 @@ namespace Veda
           }
         }
 
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Initialization.
@@ -97,6 +91,7 @@ namespace Veda
           }
         }
 
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Set interaction.
@@ -105,13 +100,13 @@ namespace Veda
 
         void setInteraction( void* ptr )
         {
-		  Design::Interaction* in = static_cast< Design::Interaction* >( ptr );                  
+		      Design::Interaction* in = static_cast< Design::Interaction* >( ptr );                  
 
           if( in ) 
           {  
             if( mInteractions.size() >= 1)
             {
-			  std::vector< Design::Interaction* >::iterator itr = mInteractions.begin();
+			        std::vector< Design::Interaction* >::iterator itr = mInteractions.begin();
                           
               for( int i = 0; itr != mInteractions.end(); ++i)
               {
