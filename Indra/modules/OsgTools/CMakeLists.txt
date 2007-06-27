@@ -1,4 +1,5 @@
 
+set( CMAKE_INSTALL_PREFIX "./" )
 set( OSG_LIB_DIR "$ENV{OSG_LIB_DIR}" )
 set( OSG_INC_DIR "$ENV{OSG_INC_DIR}" )
 
@@ -6,12 +7,6 @@ set( OSG_INC_DIR "$ENV{OSG_INC_DIR}" )
 # Project name.
 #
 PROJECT( OsgTools )
-
-
-# List all the sub directories. 
-#
-SUBDIRS( SG Geom Core Render ) 
-
 
 # List all the source files. 
 #
@@ -45,4 +40,5 @@ ADD_LIBRARY( OsgTools SHARED ${SOURCES} )
 TARGET_LINK_LIBRARIES( OsgTools ${OSG_LIB} )
 
 
-#INSTALL( TARGETS OsgTools DESTINATION ../../bin )
+INSTALL( TARGETS OsgTools DESTINATION ../../bin )
+
