@@ -92,3 +92,4 @@ void OsgTools::Geom::OsgQuad::useTexture( const unsigned int &index )
 {
   this->getOrCreateStateSet()->setTextureAttributeAndModes( 0, mTextures[ index ].get(), osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON );  
 }
+
