@@ -23,7 +23,7 @@ namespace OsgTools
 
         OsgQuad( const long double& width, const long double& height, const osg::Vec3f& pos );
 
-        void                                      buildQuad( const unsigned long& width, const unsigned long& height, const osg::Vec3f& pos = osg::Vec3( 0.0, 0.0, 0.0  ) );
+        void                                      buildQuad( const long double& width, const long double& height, const osg::Vec3& pos = osg::Vec3( 0.0, 0.0, 0.0  ) );
 
         void                                      addTexture( osg::Texture2D* texture );
 
@@ -49,3 +49,4 @@ namespace OsgTools
      };  
   }
 }
+
