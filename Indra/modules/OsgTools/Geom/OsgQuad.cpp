@@ -27,7 +27,8 @@ OsgTools::Geom::OsgQuad::~OsgQuad()
 {
 }
 
-void OsgTools::Geom::OsgQuad::buildQuad( const unsigned long& width, const unsigned long& height, const osg::Vec3f& pos )
+
+void OsgTools::Geom::OsgQuad::buildQuad( const long double& width, const long double& height, const osg::Vec3& pos )
 {
   osg::ref_ptr< osg::Geode > geode( new osg::Geode() );
 
