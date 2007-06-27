@@ -45,7 +45,7 @@
 				Optimization="0"
 				InlineFunctionExpansion="0"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="./../tweek/dt;../../modules/Veda;../../modules;$(VJ_BASE_DIR)/include/tweek/idl;$(VJ_BASE_DIR)/include;$(VJ_DEPS_DIR)/include;$(OSGHOME)/include;"
+				AdditionalIncludeDirectories="./../tweek/dt;../../modules/Veda;../../modules;$(VJ_BASE_DIR)/include/tweek/idl;$(VJ_BASE_DIR)/include;$(VJ_DEPS_DIR)/include;$(OSG_INC_DIR);"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;__WIN32__=1;__x86__=1;__NT__=1;__OSVERSION__=5;USE_core_stub_in_nt_dll;USE_core_stub_in_nt_dll_NOT_DEFINED_Subject;INDRA_SHARED_LIBRARY; "
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -71,7 +71,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="osgd.lib osgDBd.lib osgUtild.lib osgFXd.lib osgTextd.lib vrj_d-2_3_8.lib vpr_d-2_1_1.lib gadget_d-1_3_7.lib jccl_d-1_3_1.lib vrj_ogl_d-2_3_8.lib tweek_d-1_3_0.lib openGL32.lib omnithread33_rtd.lib omniDynamic410_rtd.lib omniORB410_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
 				OutputFile="..\..\bin\Vedad.dll"
-				AdditionalLibraryDirectories="$(VJ_BASE_DIR)/lib;$(VJ_DEPS_DIR)/lib;$(OSGHOME)/lib/debug;"
+				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(VJ_DEPS_DIR)\lib;$(OSG_LIB_DIR)\debug;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				ImportLibrary="..\..\bin\Vedad.lib"
@@ -111,7 +111,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="$(VJ_DEPS_DIR)/bin/omniidl  -bcxx -Wbh=.h,s=.cpp -C.\..\tweek -I$(VJ_BASE_DIR)\include  .\..\tweek\dt\dtsubject.idl"
+				CommandLine="omniidl  -bcxx -Wbh=.h,s=.cpp -C.\..\..\modules\Veda\Tweek -I$(VJ_BASE_DIR)\include  .\..\..\modules\Veda\Tweek\TweekSubject.idl"
 				ExcludedFromBuild="false"
 			/>
 			<Tool
@@ -130,8 +130,8 @@
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="0"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="./../tweek/dt;./../src;$(OPENTHREADS_INC_DIR);$(PRODUCER_INC_DIR);$(OSG_INC_DIR);$(VJ_BASE_DIR)/include/tweek/idl;$(VJ_DEPS_DIR)/include;$(VJ_BASE_DIR)/include;"
-				PreprocessorDefinitions="WIN32;_OPT;NDEBUG;_CONSOLE;__WIN32__=1;__x86__=1;__NT__=1;__OSVERSION__=5;USE_core_stub_in_nt_dll;USE_core_stub_in_nt_dll_NOT_DEFINED_Subject"
+				AdditionalIncludeDirectories="./../tweek/dt;../../modules/Veda;../../modules;$(VJ_BASE_DIR)/include/tweek/idl;$(VJ_BASE_DIR)/include;$(VJ_DEPS_DIR)/include;$(OSG_INC_DIR);"
+				PreprocessorDefinitions="WIN32;_OPT;NDEBUG;_CONSOLE;__WIN32__=1;__x86__=1;__NT__=1;__OSVERSION__=5;USE_core_stub_in_nt_dll;USE_core_stub_in_nt_dll_NOT_DEFINED_Subject;INDRA_SHARED_LIBRARY; "
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
@@ -152,9 +152,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="osg.lib osgDB.lib osgUtil.lib osgFX.lib osgText.lib Producer.lib vrj.lib vpr.lib gadget.lib jccl.lib vrj_ogl.lib tweek.lib openGL32.lib omnithread32_rt.lib omniDynamic407_rt.lib omniORB407_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
-				OutputFile="$(LOCAL_SRC_DIR)/bin/Indra.dll"
-				AdditionalLibraryDirectories="$(VJ_BASE_DIR)/lib;$(VJ_DEPS_DIR)/lib;$(OSG_LIB_DIR);$(PRODUCER_LIB_DIR);$(OPENTHREADS_LIB_DIR)"
+				AdditionalDependencies="osg.lib osgDB.lib osgUtil.lib osgFX.lib osgText.lib vrj.lib vpr.lib gadget.lib jccl.lib vrj_ogl.lib tweek.lib openGL32.lib omnithread33_rt.lib omniDynamic410_rt.lib omniORB410_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
+				OutputFile="..\..\bin\Veda.dll"
+				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(VJ_DEPS_DIR)\lib;$(OSG_LIB_DIR)\release;"
 			/>
 			<Tool
 				Name="VCALinkTool"

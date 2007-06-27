@@ -70,7 +70,7 @@
 				OutputFile="..\..\bin\viewerd.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSGHOME)\lib\debug;$(VJ_DEPS_DIR)\lib;"
+				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(VJ_DEPS_DIR)\lib;$(OSG_LIB_DIR)\debug;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/viewerd.pdb"
 				SubSystem="1"
@@ -127,7 +127,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="&quot;$(VJCINEMA)/include&quot;;&quot;$(VJ_BASE_DIR)/include/tweek/idl&quot;;&quot;$(VJ_BASE_DIR)/include&quot;;&quot;$(VJ_DEPS_DIR)/include&quot;;&quot;$(OSGHOME)/include&quot;;&quot;$(PRODUCERHOME)/include&quot;;&quot;$(OPENTHREADSHOME)/include&quot;"
+				AdditionalIncludeDirectories="$(VJ_DEPS_DIR)\include;$(VJ_BASE_DIR)\include\tweek\idl;$(VJ_BASE_DIR)\include;$(OSGHOME)\include;..\..\..\;"
 				PreprocessorDefinitions="WIN32;_OPT;NDEBUG;_CONSOLE;__WIN32__=1;__x86__=1;__NT__=1;__OSVERSION__=5;USE_core_stub_in_nt_dll;USE_core_stub_in_nt_dll_NOT_DEFINED_Subject;$(NOINHERIT)"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -149,11 +149,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="VJCinema.lib osg.lib osgDB.lib osgUtil.lib osgFX.lib osgText.lib Producer.lib vrj.lib vpr.lib gadget.lib jccl.lib vrj_ogl.lib tweek.lib openGL32.lib omnithread32_rt.lib omniDynamic407_rt.lib omniORB407_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
-				OutputFile="$(LOCAL_SRC_DIR)/bin/viewer.exe"
+				AdditionalDependencies="osg.lib osgDB.lib osgUtil.lib osgFX.lib osgText.lib vrj.lib vpr.lib gadget.lib jccl.lib vrj_ogl.lib tweek.lib openGL32.lib omnithread33_rt.lib omniDynamic410_rt.lib omniORB410_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
+				OutputFile="..\..\bin\viewer.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="$(LOCAL_SRC_DIR))/lib;$(VJ_BASE_DIR)/lib;$(VJ_DEPS_DIR)/lib;$(OSGHOME)/lib/win32;$(PRODUCERHOME)/lib/win32;$(OPENTHREADSHOME)/lib/win32"
+				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(VJ_DEPS_DIR)\lib;$(OSG_LIB_DIR)\release;"
 				GenerateDebugInformation="false"
 				SubSystem="1"
 				OptimizeReferences="0"
