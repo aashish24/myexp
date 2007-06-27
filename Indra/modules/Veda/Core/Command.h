@@ -29,7 +29,7 @@
 #include "gmtl/Matrix.h"
 #include "gmtl/Vec.h"
 
-#include "Veda/Core/Export.h"
+#include "Veda/Export.h"
 #include "Veda/VedaDefines.h"
 
 namespace Veda

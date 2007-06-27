@@ -30,7 +30,7 @@
 
 #include "Veda/Tweek/TweekCommand.h"
 
-#include "Veda/Core/Export.h"
+#include "Veda/Export.h"
 #include "Veda/VedaDefines.h"
 
 namespace Veda

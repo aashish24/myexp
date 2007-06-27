@@ -38,7 +38,7 @@
 
 #include "Veda/Tweek/TweekWrapper.h"
 
-#include "Veda/Core/Export.h"
+#include "Veda/Export.h"
 
 #include <vector>
 #include <string>

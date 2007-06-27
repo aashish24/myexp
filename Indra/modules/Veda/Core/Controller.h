@@ -30,7 +30,7 @@
 
 #include "Veda/Core/Types.h"
 
-#include "Veda/Core/Export.h"
+#include "Veda/Export.h"
 
 namespace Veda
 {

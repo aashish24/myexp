@@ -41,7 +41,7 @@
 #include "Dev/VJKeyboardMouseCallback.h"
 #endif
 
-#include "Veda/Core/Export.h"
+#include "Veda/Export.h"
 
 namespace Veda
 {
