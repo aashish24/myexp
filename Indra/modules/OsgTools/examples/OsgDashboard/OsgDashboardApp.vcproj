@@ -87,7 +87,7 @@
 				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSGHOME)\lib\debug;"
 				GenerateManifest="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="D:/aashish/src/osg/OpenSceneGraph/lib/$(OutDir)\example_osgwindows.pdb"
+				ProgramDatabaseFile="$(OutDir)/osgdashboardappd.pdb"
 				SubSystem="1"
 				StackReserveSize="10000000"
 			/>

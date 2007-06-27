@@ -72,7 +72,7 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSGHOME)\lib\debug;$(VJ_DEPS_DIR)\lib;"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/viewer.pdb"
+				ProgramDatabaseFile="$(OutDir)/viewerd.pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
