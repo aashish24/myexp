@@ -49,7 +49,7 @@ void OsgTools::Geom::OsgQuad::buildQuad( const unsigned long& width, const unsig
 
   osg::ref_ptr< osg::Vec2Array > texCoords( new osg::Vec2Array( 4 ) );
   ( *texCoords )[ 0 ].set( 0.0, 0.0 );
-  ( *texCoords )[ 1 ].set( 0.0, 1.0 );
+  ( *texCoords )[ 1 ].set( 1.0, 0.0 );
   ( *texCoords )[ 2 ].set( 1.0, 1.0 );
   ( *texCoords )[ 3 ].set( 0.0, 1.0 );
   
