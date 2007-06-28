@@ -51,6 +51,7 @@ OsgInteraction::OsgInteraction() :
 {
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Destructor.
@@ -60,6 +61,7 @@ OsgInteraction::OsgInteraction() :
 OsgInteraction::~OsgInteraction()
 {
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -151,6 +153,7 @@ osg::Group* OsgInteraction::root()
   return mSceneRootNode.get();
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Set scene root. 
@@ -177,6 +180,7 @@ void OsgInteraction::root( void* node )
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Get scene transform.
@@ -187,6 +191,7 @@ osg::MatrixTransform* OsgInteraction::transform()
 {
   return mSceneTransformNode.get();
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -203,6 +208,7 @@ void OsgInteraction::setSceneWand()
   {
   }            
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -999,9 +1005,9 @@ void OsgInteraction::updateTransforms()
 
       mSceneTransformNode->setMatrix( matrix );
       
-      #ifdef HAVE_KEYBOARDMOUSE
+#ifdef HAVE_KEYBOARDMOUSE
       sceneTransformNode->preMult( mKmCallBack->getViewMatrix() );
-      #endif
+#endif
       
       break;
     }
