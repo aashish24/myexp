@@ -13,16 +13,17 @@ class MyApp : public Veda::Core::OsgBase
 		MyApp( vrj::Kernel* kern, int& argc, char** argv );
 
 		~MyApp()
-    {
-    }
+    		{
+    		}
 
 		void appInit();		
 		void appBufferPreDraw();	
-	  void appSceneInit();			
+	  	void appSceneInit();			
 
 	private:	
 		
-    std::vector< std::string > mFileNames; 
+    		std::vector< std::string > mFileNames; 
 };
 
-#endif __MYAPP_H__
+#endif // __MYAPP_H__
+
