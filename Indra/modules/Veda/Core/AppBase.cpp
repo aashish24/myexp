@@ -160,7 +160,7 @@ void Core::AppBase::clearReadyCommandList()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-void Core::AppBase::setNearFar( const long& near, const long& far )
+void Core::AppBase::setNearFar( const long double& near, const long double& far )
 {  
 }
 

@@ -98,7 +98,7 @@ namespace Veda
         virtual TweekCommandList                       getReadyCommandList();
         virtual void                                   clearReadyCommandList();
 
-        virtual void                                   setNearFar( const long&  near, const long& far );       
+        virtual void                                   setNearFar( const long double&  near, const long double& far );       
 
         virtual void                                   updateAll();
         virtual void                                   updateDeviceData();
