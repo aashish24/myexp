@@ -36,7 +36,7 @@ namespace Veda
 
           // Wingman specific. 
           static const int mNumberOfAxes          = 6;
-          static const int mNumberOfButtons        = 10;
+          static const int mNumberOfButtons       = 10;
 
           static std::vector< std::string >    mJoystickAnalogProxies;
           static std::vector< std::string >    mJoystickDigitalProxies;
@@ -58,7 +58,7 @@ namespace Veda
           static ActionState                  mButton7  [ mNumberOfButtons ];
           static ActionState                  mButton8  [ mNumberOfButtons ];
           static ActionState                  mButton9  [ mNumberOfButtons ];
-          static ActionState                   mButtonSP0[ mNumberOfButtons ];
+          static ActionState                  mButtonSP0[ mNumberOfButtons ];
           static ActionState                  mButtonSP1[ mNumberOfButtons ];
           static ActionState                  mButtonSP2[ mNumberOfButtons ];
           static ActionState                  mButtonSP3[ mNumberOfButtons ];
@@ -68,7 +68,7 @@ namespace Veda
           static ActionState                  mButtonSP7[ mNumberOfButtons ];
 
           // Trackers specific. 
-          static const int mNumberOfAxesTracker      = 2;
+          static const int mNumberOfAxesTracker     = 2;
           static const int mNumberOfButtonsTracker  = 6;
           
           static std::vector< std::string >   mTrackerAnalogProxies;
