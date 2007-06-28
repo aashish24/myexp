@@ -298,6 +298,9 @@ namespace Veda
 
         virtual void updateAll()
         {
+	 gmtl::Vec3f dir( 0.0, 0.0, -1.0 );
+	 dir = mWandMatrix * dir;
+	 mSceneNavigator.translate( dir );
         }
 
         /////////////////////////////////////////////////////////////////////////

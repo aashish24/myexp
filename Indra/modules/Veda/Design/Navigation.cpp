@@ -445,6 +445,11 @@ void Navigation::translateInDir( const gmtl::Vec3f& direction )
 }
 
 
+void Navigation::rotate( const gmtl::Vec3f& value )
+{
+ mRotationVel = value;
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -675,8 +680,8 @@ void Navigation::update( const float& delta, Scope scope )
   
   gmtl::Matrix44f rotationMatrix = gmtl::makeRot<gmtl::Matrix44f>( euler );
 
-  rotate( rotationMatrix, scope );
-
+  rotate( rotationMatrix, scope ); 
+  
   // Do we still need to do this? 
   mNavigationVel[1] = 0.0;
 }

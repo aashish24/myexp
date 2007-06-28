@@ -90,6 +90,7 @@ namespace Veda
 
         void                                          translateInDir( const gmtl::Vec3f& direction );      
 
+	void					      rotate( const gmtl::Vec3f& value );
         void                                          rotateInX( const double& value );
         void                                          rotateInY( const double& value );
         void                                          rotateInZ( const double& value );
