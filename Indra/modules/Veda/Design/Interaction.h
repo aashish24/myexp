@@ -100,6 +100,7 @@ namespace Veda
         virtual void init()
         {
           mWand.init( "VJWand" );          
+          mHead.init( "VJWand" );          
 
           #ifdef HAVE_KEYBOARDMOUSE
           KeyboardMouse::instance()->init();        
@@ -248,6 +249,18 @@ namespace Veda
           return mWandMatrix;
         }
 
+
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Get head matrix. 
+        //
+        /////////////////////////////////////////////////////////////////////////      
+
+        const gmtl::Matrix44f& headMatrix() const
+        {
+          return mHeadMatrix;
+        }
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Reset.
@@ -298,11 +311,12 @@ namespace Veda
           vpr::Interval curTime   = mWand->getTimeStamp();        
 
           mWandMatrix             = mWand->getData();
+          mHeadMatrix             = mHead->getData();
 
           vpr::Interval diffTime  = curTime -  mPrevTime;
           
           mDeltaTime              = diffTime.secf();        
-          mPrevTime                = curTime;      
+          mPrevTime               = curTime;      
         }
       
         /////////////////////////////////////////////////////////////////////////
@@ -334,10 +348,12 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////      
 
-	    /*virtual void  controlFunction( Math::Function* func )
+	/*
+	virtual void  controlFunction( Math::Function* func )
         {
           mControlFunction = func;
-        }*/
+        }
+	*/
 
       protected:
 
@@ -397,6 +413,7 @@ namespace Veda
         bool                                          mAllowYaw;
         
         gadget::PositionInterface                     mWand;
+        gadget::PositionInterface                     mHead;
 
         vpr::Interval                                 mPrevTime;    
 
@@ -416,6 +433,7 @@ namespace Veda
 	Core::Controller                              mController;  
 
         gmtl::Matrix44f                               mWandMatrix;
+        gmtl::Matrix44f                               mHeadMatrix;
 
         #if HAVE_KEYBOARDMOUSE      
         VJKeyboadMouseCallback*                       mKmCallBack;      
