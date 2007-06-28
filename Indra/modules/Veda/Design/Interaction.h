@@ -59,7 +59,7 @@ namespace Veda
 
         typedef std::vector< gadget::DigitalInterface* >  DigitalInterfaces;
         typedef std::vector< gadget::AnalogInterface* >   AnalogInterfaces;
-	    typedef std::vector< Core::ActionState >                ActionStates;
+	typedef std::vector< Core::ActionState >                ActionStates;
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -68,15 +68,15 @@ namespace Veda
         /////////////////////////////////////////////////////////////////////////
 
         Interaction()  : 
+          mUseAnalog        ( false ),
+          mAllowPitch       ( true  ),
+          mAllowYaw         ( true  ), 
           mDeltaTime        ( 0.0 ), 
           mNavigationSpeed  ( 0.0 ),
           mNavigationDelta  ( 0.0 ),
           mRotationSpeed    ( 0.0 ),
           mRotationDelta    ( 0.0 ),    
-          mUseAnalog        ( false ),
-          mAllowPitch       ( true  ),
-          mAllowYaw         ( true  ), 
-		  mInteractionMode  ( Core::WORLD )        
+	  mInteractionMode  ( Core::WORLD )        
         {  
           gmtl::identity( mWandMatrix );           
         }
@@ -388,7 +388,7 @@ namespace Veda
 
         std::map< int, DigitalInterfaces >            mDigitalInputMap;
         std::map< int, AnalogInterfaces  >            mAnalogInputMap;
-        std::map< int, bool >                          mAnalogInputStatusMap;
+        std::map< int, bool >                         mAnalogInputStatusMap;
         std::map< int , ActionStates >                mAnalogActionMap;
         std::map< int , ActionStates >                mDigitalActionMap;
 
@@ -396,11 +396,11 @@ namespace Veda
         bool                                          mAllowPitch;
         bool                                          mAllowYaw;
         
-        gadget::PositionInterface                      mWand;
+        gadget::PositionInterface                     mWand;
 
-        vpr::Interval                                  mPrevTime;    
+        vpr::Interval                                 mPrevTime;    
 
-        float                                          mDeltaTime;
+        float                                         mDeltaTime;
 
         Navigation                                    mSceneNavigator;
         Navigation                                    mLocalNavigator;
@@ -413,7 +413,7 @@ namespace Veda
 
         Core::InteractionMode                         mInteractionMode;
 
-	      Core::Controller                              mController;  
+	Core::Controller                              mController;  
 
         gmtl::Matrix44f                               mWandMatrix;
 
@@ -421,7 +421,7 @@ namespace Veda
         VJKeyboadMouseCallback*                       mKmCallBack;      
         #endif
 
-        //osg::ref_ptr< Math::Function >                mControlFunction;
+        //osg::ref_ptr< Math::Function >              mControlFunction;
     };
   }
 }

@@ -136,7 +136,7 @@ namespace Veda
         bool                                          mAllowYaw;
         bool                                          mAllowRoll;
 
-	      Core::NavigationMode                          mNavigationMode;
+	Core::NavigationMode                          mNavigationMode;
 
     };
   }

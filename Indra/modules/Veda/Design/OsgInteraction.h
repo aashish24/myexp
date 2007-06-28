@@ -124,8 +124,8 @@ namespace Veda
 
         
         
-        osg::Vec3f                                        mObjectPivot;    
         osg::Vec3f                                        mScenePivot;
+        osg::Vec3f                                        mObjectPivot;    
 
         double                                            mSceneRadius;    
     };
