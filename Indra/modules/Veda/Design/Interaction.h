@@ -325,7 +325,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////      
 
-	      const Core::InteractionMode& getInteactionMode() const
+	const Core::InteractionMode& getInteactionMode() const
         {
           return mInteractionMode;
         }
@@ -355,6 +355,7 @@ namespace Veda
         }
 	*/
 
+
       protected:
 
         /////////////////////////////////////////////////////////////////////////
@@ -378,6 +379,7 @@ namespace Veda
           }
         }
 
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Set  digital or digital inputs ( buttons ) that can be used for
@@ -399,6 +401,7 @@ namespace Veda
             mDigitalInputMap[ index ][ i ]->init( inputs[ i ] );
           }
         }  
+
 
       protected:  
 

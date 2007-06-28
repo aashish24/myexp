@@ -44,6 +44,7 @@ Navigation::Navigation() :
   mNavigationVel.set( 0.0, 0.0, 0.0 ); mRotationVel.set( 0.0, 0.0, 0.0 );       
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Destructor. 
@@ -53,6 +54,7 @@ Navigation::Navigation() :
 Navigation::~Navigation()
 {
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -65,6 +67,7 @@ const gmtl::Matrix44f& Navigation::currentPosition() const
   return mCurrentPosition;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Set current positional matrix.
@@ -75,6 +78,7 @@ void Navigation::currentPosition( const gmtl::Matrix44f& position )
 {
   mCurrentPosition = position;        
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -87,6 +91,7 @@ const gmtl::Matrix44f& Navigation::pitchMatrix() const
   return mPitchMatrix;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Set pitch matrix. 
@@ -97,6 +102,7 @@ void Navigation::pitchMatrix( const gmtl::Matrix44f& matrix )
 {
   mPitchMatrix = matrix;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -109,6 +115,7 @@ void Navigation::currentRotation( const gmtl::Matrix44f& matrix )
   mCurrentPosition = matrix * mCurrentPosition;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -120,6 +127,7 @@ const double& Navigation::navigationSpeed() const
   return mNavigationSpeed;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -128,8 +136,9 @@ const double& Navigation::navigationSpeed() const
 
 void Navigation::navigationSpeed( const double& speed )
 {
-mNavigationSpeed = speed;    
+  mNavigationSpeed = speed;    
 }    
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -142,6 +151,7 @@ const double& Navigation::navigationDelta() const
   return mNavigationDelta; 
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -152,6 +162,7 @@ void Navigation::navigationDelta( const double& delta )
 {
   mNavigationDelta = delta;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -164,6 +175,7 @@ void Navigation::rotationSpeed( const double& speed )
   mRotationSpeed = speed;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -175,6 +187,7 @@ const double& Navigation::rotationSpeed() const
   return mRotationSpeed;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -185,6 +198,7 @@ const double& Navigation::rotationDelta() const
 {
   return mRotationDelta;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -207,6 +221,7 @@ void Navigation::frameRenderTime( const double& time )
 {
   mFrameRenderTime = time;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -241,6 +256,7 @@ const double& Navigation::getFrameRate() const
   return mFramesPerSecond;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -251,6 +267,7 @@ void Navigation::allowPitch( const bool& value )
 {      
   mAllowPitch = value;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -263,6 +280,7 @@ void Navigation::allowYaw( const bool& value )
   mAllowYaw = value;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -273,6 +291,7 @@ void Navigation::allowRoll( const bool& value )
 {
   mAllowRoll = value;  
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -293,6 +312,7 @@ void Navigation::reset()
   gmtl::identity( mPitchMatrix );
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -304,6 +324,7 @@ void Navigation::navigationMode( const NavigationMode& mode )
   mNavigationMode = mode;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -314,6 +335,7 @@ const NavigationMode& Navigation::navigationMode() const
 {
   return mNavigationMode;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -329,6 +351,7 @@ void Navigation::accelerate()
   }        
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -342,6 +365,7 @@ void Navigation::deaccelerate()
     mNavigationSpeed = mNavigationSpeed - mNavigationDelta;
   }  
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -357,6 +381,7 @@ void Navigation::angulatAccelerate()
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -371,6 +396,7 @@ void Navigation::angulatDeaccelerate()
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -381,6 +407,7 @@ void Navigation::translateInZ( const double& value )
 {
   mNavigationVel[2] =  -( mNavigationSpeed * value );      
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -393,6 +420,7 @@ void Navigation::translateInX( const double& value )
   mNavigationVel[0] =  -( mNavigationSpeed * value );      
 }  
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -404,6 +432,7 @@ void Navigation::translateInY( const double& value )
   mNavigationVel[1] = 0.1 * -( mNavigationSpeed * value ) ;      
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -414,6 +443,7 @@ void Navigation::translateInDir( const gmtl::Vec3f& direction )
 {
   mNavigationVel = (float) mNavigationSpeed * direction;
 }
+
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -429,6 +459,7 @@ void Navigation::rotateInX( const double& value )
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -443,6 +474,7 @@ void Navigation::rotateInY( const double& value )
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -456,6 +488,7 @@ void Navigation::rotateInZ( const double& value )
     mRotationVel[2] =  -( mRotationSpeed * value );                
   }
 }    
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -482,12 +515,12 @@ void Navigation::translate( const gmtl::Vec3f& vec, Scope scope )
         gmtl::preMult   ( mCurrentPosition, mPitchMatrix );
         break;
       }
-	  case Core::FLIGHT:
+      case Core::FLIGHT:
       {
         gmtl::preMult( mCurrentPosition, transMatrix );
         break;
       }
-	  case Core::TRACKBALL:
+      case Core::TRACKBALL:
       {
         gmtl::preMult( mCurrentPosition, transMatrix );
         break;
@@ -510,6 +543,7 @@ void Navigation::translate( const gmtl::Vec3f& vec, Scope scope )
     gmtl::postMult( mCurrentPosition, transMatrix );
   }
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
