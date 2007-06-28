@@ -111,22 +111,23 @@ namespace Veda
         gmtl::Matrix44f                               mPitchMatrix;
         gmtl::Quatf                                   mPitchQuat;
 
-        gmtl::Vec3f                                    mNavigationVel;
-        gmtl::Vec3f                                    mRotationVel;
+        gmtl::Vec3f                                   mNavigationVel;
+        gmtl::Vec3f                                   mRotationVel;
             
         double                                        mNavigationSpeed;
         double                                        mRotationSpeed;
-        double                                        mNavigationDelta;
-        double                                        mRotationDelta;  
-
-        double                                        mFrameRenderTime;
-        double                                        mFramesPerSecond;
 
         double                                        mMinNavigationSpeed;
         double                                        mMaxNavigationSpeed;
         double                                        mMinRotationSpeed;
         double                                        mMaxRotationSpeed;
 
+        double                                        mNavigationDelta;
+        double                                        mRotationDelta;  
+
+        double                                        mFrameRenderTime;
+        double                                        mFramesPerSecond;
+        
         double                                        mMinDistance;
         double                                        mMaxDistance;
 

@@ -35,10 +35,10 @@ Navigation::Navigation() :
   mFrameRenderTime      ( 1.0 / 30.0 ), 
   mFramesPerSecond      ( 30.0 ), 
   mUseRange             ( false ),         
-  mNavigationMode       ( Core::TRACKBALL ), 
   mAllowPitch           ( true ), 
   mAllowYaw             ( true ), 
-  mAllowRoll            ( true )
+  mAllowRoll            ( true ),
+  mNavigationMode       ( Core::TRACKBALL )
 {
   gmtl::identity( mCurrentPosition  ); gmtl::identity( mHomePosition );   gmtl::identity( mPitchMatrix  );
   mNavigationVel.set( 0.0, 0.0, 0.0 ); mRotationVel.set( 0.0, 0.0, 0.0 );       
@@ -602,8 +602,6 @@ gmtl::Matrix44f& Navigation::slerp( gmtl::Matrix44f& inputMatrix, const float& a
 
 void Navigation::update( const float& delta, Scope scope )
 {  
-  static const float fps = 30.0;
-  
   if( delta > 2.0 )
   {
     std::cerr << "Warning 2471119497w: Delta too big, returning. " << std::endl;
