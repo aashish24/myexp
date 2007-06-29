@@ -54,5 +54,5 @@ ActionState Defs::mButtonTr0[]  = { TOGGLE_ON, OFF, OFF, OFF, OFF, OFF};
 ActionState Defs::mButtonTr1[]  = { OFF, TOGGLE_ON, OFF, OFF, OFF, OFF};
 ActionState Defs::mButtonTr2[]  = { OFF, OFF, TOGGLE_ON, OFF, OFF, OFF};
 ActionState Defs::mButtonTr3[]  = { OFF, OFF, OFF, TOGGLE_ON, OFF, OFF};
-ActionState Defs::mButtonTr4[]  = { OFF, OFF, OFF, OFF, TOGGLE_ON, OFF}; 
+ActionState Defs::mButtonTr4[]  = { OFF, OFF, OFF, OFF, ON, OFF}; 
 ActionState Defs::mButtonTr5[]  = { OFF, OFF, OFF, OFF, OFF, ON};

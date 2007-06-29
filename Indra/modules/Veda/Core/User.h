@@ -100,7 +100,7 @@ namespace Veda
 
         void setInteraction( void* ptr )
         {
-		      Design::Interaction* in = static_cast< Design::Interaction* >( ptr );                  
+	   Design::Interaction* in = static_cast< Design::Interaction* >( ptr );                  
 
           if( in ) 
           {  
@@ -129,6 +129,11 @@ namespace Veda
               mInteractions.push_back( in );
             }
           }
+	  else
+	  {
+		std::cerr << "Invalid or corrupted pointer: " << std::endl;
+	  }	  
+	
         }
       
 
