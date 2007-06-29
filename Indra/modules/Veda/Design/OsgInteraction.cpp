@@ -18,6 +18,8 @@
 
 #include "osg/StateAttribute"
 #include "osg/Geometry"
+#include "osg/Vec3"
+#include "osg/Vec3f" 
 
 #include "gmtl/MatrixOps.h"
 #include "gmtl/Matrix.h"
@@ -423,7 +425,7 @@ void OsgInteraction::takeActionDigital( InteractionMode mode, int id, DeviceData
         case 19: { trackButton2GlobalAction ( value ); break; }
         case 20: { trackButton3GlobalAction ( value ); break; }
         case 21: { trackButton4GlobalAction ( value ); break; }
-        case 22: { trackButton5GlobalAction ( value ); break; }
+        case 22: { std::cout << " test 5: " << std::endl; trackButton5GlobalAction ( value ); break; }
         case 23: { trackButton6GlobalAction ( value ); break; }
         case 24: { trackButton7GlobalAction ( value ); break; }
 
@@ -797,7 +799,8 @@ void OsgInteraction::trackButton4GlobalAction( DeviceData value )
 
 void OsgInteraction::trackButton5GlobalAction( DeviceData value )
 {  
-  return;
+  std::cout << "OsgInteraction::trackButton5GlobalAction" << std::endl;
+  mUseTracker = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -839,7 +842,8 @@ void OsgInteraction::updateDeviceData()
   std::map< int, std::vector< ActionState > >::const_iterator digitalitr;
 
   if( SharedData::mCommand.isLocal() )
-  {      
+  {     
+     std::cout << "Local: " << std::endl; 
     if( 1 )
     {
       static int firstTime = 1;
@@ -894,13 +898,18 @@ void OsgInteraction::updateDeviceData()
     for( digitalitr = mDigitalActionMap.begin(); digitalitr != mDigitalActionMap.end(); ++digitalitr )
     {
       value = mController.getDeviceInputData( mDigitalInputMap[ dindex ], digitalitr->second );      
-      
+     
+     if( dindex == 1 )
+      {
+		std::cout << "value of track button is: " << value << std::endl;
+	}	 
       SharedData::mCommand->mDigitalInputs[ digitalitr->first ] = ( int )value;
       
       ++digitals;
 
       if( digitals == JOYSTICK_DIGITAL_INPUTS_COUNT )
       {
+	std::cout << "Reached JOYSTICK_DIGITAL_INPUTS_COUNT" << std::endl;
         ++dindex;
       }
     }          
@@ -963,6 +972,7 @@ void OsgInteraction::updateInputs()
 
   for( unsigned int i = 0; i < SharedData::mCommand->mDigitalInputs.size(); ++i )
   {
+    std::cout << " size is: " << SharedData::mCommand->mDigitalInputs.size() << std::endl;
     if( ( DeviceData )SharedData::mCommand->mDigitalInputs[ i ] != 0 )
     {
       takeActionDigital( mInteractionMode, i, ( DeviceData ) SharedData::mCommand->mDigitalInputs[ i ] );
@@ -1001,23 +1011,34 @@ void OsgInteraction::updateTransforms()
       static osg::Vec3f offset = ( ( osg::Matrix ) mSceneTransformNode->getMatrix() ).getTrans();    
 
       // Scene transform matrix.
-      osg::Matrixf matrix =  osg::Matrix( SharedData::mCommand->mSharedTransformMatrix.mData );
+      //osg::Matrixf matrix =  osg::Matrix( SharedData::mCommand->mSharedTransformMatrix.mData );
       
+      static osg::Matrixf matrix;
+
       // Find resultant translation vector. 
       
       if( mUseTracker )
       {
+	std::cout << "mUseTracker==true" << std::endl;
         this->mUseTracker = false;
         gmtl::Vec3f dir( 0.0, 0.0, -1.0 );
-        dir = -( mWandMatrix * dir );        
-        matrix.setTrans( offset + matrix.getTrans() + osg::Vec3f( dir[ 0 ], dir[ 1 ], dir[ 2 ] ) );    
+        dir = -( mWandMatrix * dir );
+        osg::Vec3f osgDir( dir[ 0 ], dir[ 1 ], dir[ 2 ] );
+	osgDir = osgDir * 0.01;
+ 
+        //matrix.setTrans( offset + matrix.getTrans() );
+
+	std::cout << osgDir[ 0 ] << " " << osgDir[ 1 ] << " " << osgDir[ 2 ] << std::endl; 
+
+	matrix.preMult( osg::Matrix::translate( osgDir ) );    
+      	mSceneTransformNode->setMatrix( matrix );
       }
       else
       {
-        matrix.setTrans( offset + matrix.getTrans() );    
+        //matrix.setTrans( offset + matrix.getTrans() );    
       }     
 
-      mSceneTransformNode->setMatrix( matrix );
+      //mSceneTransformNode->setMatrix( matrix );
       
 #ifdef HAVE_KEYBOARDMOUSE
       sceneTransformNode->preMult( mKmCallBack->getViewMatrix() );
