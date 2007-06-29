@@ -46,30 +46,30 @@
             </position_transform_filter>
          </position_filters>
       </position_proxy>
-      <digital_proxy name="VJButton0" version="1">
+      <digital_proxy name="VJTrackButton0" version="1">
          <device>Wand/Button Joystick</device>
          <unit>0</unit>
       </digital_proxy>
       <input_manager name="InputManager0" version="2">
          <driver>Trackd_drv</driver>
       </input_manager>
-      <digital_proxy name="VJButton1" version="1">
+      <digital_proxy name="VJTrackButton1" version="1">
          <device>Wand/Button Joystick</device>
          <unit>1</unit>
       </digital_proxy>
-      <digital_proxy name="VJButton2" version="1">
+      <digital_proxy name="VJTrackButton2" version="1">
          <device>Wand/Button Joystick</device>
          <unit>2</unit>
       </digital_proxy>
-      <digital_proxy name="VJButton3" version="1">
+      <digital_proxy name="VJTrackButton3" version="1">
          <device>Wand/Button Joystick</device>
          <unit>3</unit>
       </digital_proxy>
-       <digital_proxy name="VJButton4" version="1">
+       <digital_proxy name="VJTrackButton4" version="1">
          <device>Wand/Button Joystick</device>
          <unit>4</unit>
       </digital_proxy>
-      <digital_proxy name="VJButton5" version="1">
+      <digital_proxy name="VJTrackButton5" version="1">
          <device>Wand/Button Joystick</device>
          <unit>5</unit>
       </digital_proxy>
@@ -101,11 +101,11 @@
          <max>1.0</max>
          <device_host>Node(ws6)</device_host>
       </trackd_controller>
-      <analog_proxy name="VJJoyX" version="1">
+      <analog_proxy name="VJTrackAxis0" version="1">
          <device>Wand/Button Joystick</device>
          <unit>0</unit>
       </analog_proxy>
-      <analog_proxy name="VJJoyY" version="1">
+      <analog_proxy name="VJTrackAxis1" version="1">
          <device>Wand/Button Joystick</device>
          <unit>1</unit>
       </analog_proxy>
