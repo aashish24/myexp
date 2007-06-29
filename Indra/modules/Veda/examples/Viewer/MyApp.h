@@ -18,11 +18,11 @@ class MyApp : public Veda::Core::OsgBase
 
 		void appInit();		
 		void appBufferPreDraw();	
-	  	void appSceneInit();			
+	  void appSceneInit();			
 
 	private:	
 		
-    		std::vector< std::string > mFileNames; 
+    std::vector< std::string > mFileNames; 
 };
 
 #endif // __MYAPP_H__

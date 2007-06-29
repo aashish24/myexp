@@ -116,6 +116,8 @@ namespace Veda
       
       protected:
 
+        bool                                              mUseTracker;    
+
         osg::ref_ptr< osg::Group >                        mSceneRootNode;
         osg::ref_ptr< osg::MatrixTransform >              mSceneTransformNode;
         

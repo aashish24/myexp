@@ -435,7 +435,7 @@ void Core::OsgBase::preFrame()
     getInteraction()->navigator( WORLD ).frameRenderTime( deltaTime );
   }
 
-  updateDeviceData();  
+  updateDeviceData();    
 
   appPreFrame();
 }

@@ -47,7 +47,8 @@ OsgInteraction::OsgInteraction() :
   Interaction       (),
   mScenePivot       ( 0.0, 0.0, 0.0 ), 
   mObjectPivot      ( 0.0, 0.0, 0.0 ), 
-  mSceneRadius      ( 0.0 )  
+  mSceneRadius      ( 0.0 ), 
+  mUseTracker       ( false )
 {
 }
 
@@ -807,7 +808,7 @@ void OsgInteraction::trackButton5GlobalAction( DeviceData value )
 
 void OsgInteraction::trackButton6GlobalAction( DeviceData value )
 {
-  return;
+  mUseTracker = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -936,6 +937,8 @@ void OsgInteraction::updateDeviceData()
 
 void OsgInteraction::updateAll()
 {
+  Interaction::updateAll();
+
   updateInputs();
 
   updateStates();  
@@ -1001,7 +1004,18 @@ void OsgInteraction::updateTransforms()
       osg::Matrixf matrix =  osg::Matrix( SharedData::mCommand->mSharedTransformMatrix.mData );
       
       // Find resultant translation vector. 
-      matrix.setTrans( offset + matrix.getTrans() );    
+      
+      if( mUseTracker )
+      {
+        this->mUseTracker = false;
+        gmtl::Vec3f dir( 0.0, 0.0, -1.0 );
+        dir = -( mWandMatrix * dir );        
+        matrix.setTrans( offset + matrix.getTrans() + osg::Vec3f( dir[ 0 ], dir[ 1 ], dir[ 2 ] ) );    
+      }
+      else
+      {
+        matrix.setTrans( offset + matrix.getTrans() );    
+      }     
 
       mSceneTransformNode->setMatrix( matrix );
       

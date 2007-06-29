@@ -297,11 +297,9 @@ namespace Veda
         /////////////////////////////////////////////////////////////////////////      
 
         virtual void updateAll()
-        {
-	 gmtl::Vec3f dir( 0.0, 0.0, -1.0 );
-	 dir = mWandMatrix * dir;
-	 mSceneNavigator.translate( -dir );
+        {	        
         }
+
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -321,17 +319,18 @@ namespace Veda
           mDeltaTime              = diffTime.secf();        
           mPrevTime               = curTime;      
         }
-      
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Get current interaction mode.  
         //
         /////////////////////////////////////////////////////////////////////////      
 
-	const Core::InteractionMode& getInteactionMode() const
+      	const Core::InteractionMode& getInteactionMode() const
         {
           return mInteractionMode;
         }
+
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -343,6 +342,7 @@ namespace Veda
         {
             mInteractionMode = mode;
         }      
+
 
         /////////////////////////////////////////////////////////////////////////
         //
