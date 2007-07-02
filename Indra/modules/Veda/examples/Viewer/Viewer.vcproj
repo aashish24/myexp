@@ -66,11 +66,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="osgd.lib osgDBd.lib osgUtild.lib osgFXd.lib osgTextd.lib vrj_d-2_3_8.lib vpr_d-2_1_1.lib gadget_d-1_3_7.lib jccl_d-1_3_1.lib vrj_ogl_d-2_3_8.lib tweek_d-1_3_0.lib openGL32.lib omnithread33_rtd.lib omniDynamic410_rtd.lib omniORB410_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
-				OutputFile="..\..\bin\viewerd.exe"
+				AdditionalDependencies="osgd.lib osgDBd.lib osgUtild.lib osgFXd.lib osgTextd.lib vrj_d.lib vpr_d.lib gadget_d.lib jccl_d.lib vrj_ogl_d.lib tweek_d.lib openGL32.lib omnithread32_rtd.lib omniORB407_rtd.lib omniDynamic407_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
+				OutputFile="..\..\..\..\bin\viewerd.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(VJ_DEPS_DIR)\lib;$(OSG_LIB_DIR)\debug;"
+				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(VJ_DEPS_DIR)\lib;$(VJ_DEPS_DIR)\bin;$(OSG_LIB_DIR)\debug;D:\aashish\sdk\vrjuggler\2.0.1\vrjuggler-deps\build.win32.vc80\lib;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/viewerd.pdb"
 				SubSystem="1"

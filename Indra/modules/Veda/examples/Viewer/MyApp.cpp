@@ -20,6 +20,8 @@ using namespace Veda::Core;
 
 MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc, argv )
 {	
+  osg::Matrix mat();
+
   for( unsigned int i = 1; i < argc; ++i  )
   {
     if( std::string( argv[ i ] ) == "-f" )
@@ -55,5 +57,5 @@ void MyApp::appSceneInit()
     {
  		  mModelGroupNode->addChild( model.get() );
     }	  
-  }
+  }  
 }
