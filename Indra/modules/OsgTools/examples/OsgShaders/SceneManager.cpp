@@ -69,8 +69,7 @@ static osg::Image* make3DNoiseImage(int texSize)
     return image;        
 }
 
-static osg::Texture3D*
-make3DNoiseTexture(int texSize )
+static osg::Texture3D* make3DNoiseTexture(int texSize )
 {
     osg::Texture3D* noiseTexture = new osg::Texture3D;
     noiseTexture->setFilter(osg::Texture3D::MIN_FILTER, osg::Texture3D::LINEAR);
@@ -82,24 +81,22 @@ make3DNoiseTexture(int texSize )
     return noiseTexture;
 }
 
-///////////////////////////////////////////////////////////////////////////
 
-static osg::Image*
-make1DSineImage( int texSize )
+static osg::Image* make1DSineImage( int texSize )
 {
     const float PI = 3.1415927;
 
     osg::Image* image = new osg::Image;
-    image->setImage(texSize, 1, 1,
-            4, GL_RGBA, GL_UNSIGNED_BYTE,
-            new unsigned char[4 * texSize],
-            osg::Image::USE_NEW_DELETE);
+    image->setImage(  texSize, 1, 1,
+                      4, GL_RGBA, GL_UNSIGNED_BYTE,
+                      new unsigned char[ 4 * texSize ],
+                      osg::Image::USE_NEW_DELETE );
 
     GLubyte* ptr = image->data();
-    float inc = 2. * PI / (float)texSize;
-    for(int i = 0; i < texSize; i++)
+    float inc = 2. * PI / ( float )texSize;
+    for( int i = 0; i < texSize; i++ )
     {
-        *ptr++ = (GLubyte)((sinf(i * inc) * 0.5 + 0.5) * 255.);
+        *ptr++ = ( GLubyte )( ( sinf( i * inc ) * 0.5 + 0.5 ) * 255.);
         *ptr++ = 0;
         *ptr++ = 0;
         *ptr++ = 1;
@@ -107,8 +104,7 @@ make1DSineImage( int texSize )
     return image;        
 }
 
-static osg::Texture1D*
-make1DSineTexture( int texSize )
+static osg::Texture1D* make1DSineTexture( int texSize )
 {
     osg::Texture1D* sineTexture = new osg::Texture1D;
     sineTexture->setWrap(osg::Texture1D::WRAP_S, osg::Texture1D::REPEAT);
@@ -118,33 +114,11 @@ make1DSineTexture( int texSize )
     return sineTexture;
 }
 
-///////////////////////////////////////////////////////////////////////////
-// in-line GLSL source code for the "microshader" example
-
-static const char *microshaderVertSource = {
-    "// microshader - colors a fragment based on its position\n"
-    "varying vec4 color;\n"
-    "void main(void)\n"
-    "{\n"
-    "    color = gl_Vertex;\n"
-    "    gl_Position = gl_ModelViewProjec  tionMatrix * gl_Vertex;\n"
-    "}\n"
-};
-
-static const char *microshaderFragSource = {
-    "varying vec4 color;\n"
-    "void main(void)\n"
-    "{\n"
-    "    gl_FragColor = clamp( color, 0.0, 1.0 );\n"
-    "}\n"
-};
-
-///////////////////////////////////////////////////////////////////////////
 
 static osg::ref_ptr<osg::Group> rootNode;
 
-static osg::StateSet*
-ModelInstance()
+
+static osg::StateSet* ModelInstance()
 {
     static float zvalue = 0.0f;
     static osg::Node* masterModel = new OsgTools::Geom::OsgDashboard( 500.0, 500.0, osg::Vec3f( -10.0, 0.0, 0.0 ) );
@@ -157,9 +131,9 @@ ModelInstance()
     return xform->getOrCreateStateSet();
 }
 
+
 // load source from a file.
-static void
-LoadShaderSource( osg::Shader* shader, const std::string& fileName )
+static void LoadShaderSource( osg::Shader* shader, const std::string& fileName )
 {
     std::string fqFileName = osgDB::findDataFile(fileName);
     if( fqFileName.length() != 0 )
@@ -190,7 +164,7 @@ class AnimateCallback: public osg::Uniform::Callback
             COLOR2            
         };
     
-        AnimateCallback(Operation op) : _enabled(true),_operation(op) {}
+        AnimateCallback(Operation op) : _enabled( true ),_operation( op ) {}
 
         virtual void operator() ( osg::Uniform* uniform, osg::NodeVisitor* nv )
         {
@@ -209,21 +183,23 @@ class AnimateCallback: public osg::Uniform::Callback
                       else
                       {
                         uniform->set( osg::Vec3( counter, counter, counter ) );
-                        counter += 0.001;                                         
+                        counter += 0.005;                                         
                       }
 
                       break;  
                     }
-                    case SIN : uniform->set( 0.0f ); break;
-                    case COLOR1 : uniform->set( osg::Vec3(0, 0.0f, 0.0f) ); break;
-                    case COLOR2 : uniform->set( osg::Vec3(1, 1, 0) ); break;
+
+                    //case SIN : uniform->set( 0.0f ); break;
+                    //case COLOR1 : uniform->set( osg::Vec3(0, 0.0f, 0.0f) ); break;
+                    //case COLOR2 : uniform->set( osg::Vec3(1, 1, 0) ); break;
                 }
             }
         }
 
     private:
-        bool _enabled;
-        Operation _operation;
+      
+      bool _enabled;
+      Operation _operation;
 };
 
 
@@ -238,7 +214,7 @@ SceneManager::buildScene()
     osg::Texture3D* noiseTexture = make3DNoiseTexture( 32 /*128*/ );
     osg::Texture1D* sineTexture = make1DSineTexture( 32 /*1024*/ );
     
-    osg::Image* image =  osgDB::readImageFile("Images/dog_left_eye.jpg");
+    osg::Image* image =  osgDB::readImageFile("Images/textura_jove.png");
     osg::Texture2D* decalTexture( new osg::Texture2D( image ) );    
 
     // the root of our scenegraph.
@@ -251,10 +227,7 @@ SceneManager::buildScene()
         osg::Uniform* Color1Uniform = new osg::Uniform( "Color1", osg::Vec3(0.0f, 0.0f, 0.0f) );
         osg::Uniform* Color2Uniform = new osg::Uniform( "Color2", osg::Vec3(0.0f, 0.0f, 0.0f) );
 
-        OffsetUniform->setUpdateCallback(new AnimateCallback(AnimateCallback::OFFSET));
-        SineUniform->setUpdateCallback(new AnimateCallback(AnimateCallback::SIN));
-        Color1Uniform->setUpdateCallback(new AnimateCallback(AnimateCallback::COLOR1));
-        Color2Uniform->setUpdateCallback(new AnimateCallback(AnimateCallback::COLOR2));
+        OffsetUniform->setUpdateCallback( new AnimateCallback( AnimateCallback::OFFSET ) );        
 
         osg::StateSet* ss = rootNode->getOrCreateStateSet();
         ss->addUniform( OffsetUniform );
@@ -266,22 +239,24 @@ SceneManager::buildScene()
     // the "eroded" shader, uses a noise texture to discard fragments
     {
         osg::StateSet* ss = ModelInstance();
-        ss->setTextureAttribute(TEXUNIT_NOISE, noiseTexture);
-        ss->setTextureAttribute(TEXTURE, decalTexture);
+        ss->setTextureAttribute( TEXUNIT_NOISE, noiseTexture );
+        ss->setTextureAttribute( TEXTURE, decalTexture );
+        
         ErodedProgram = new osg::Program;
         ErodedProgram->setName( "eroded" );
         _programList.push_back( ErodedProgram );
+
         ErodedVertObj = new osg::Shader( osg::Shader::VERTEX );
         ErodedFragObj = new osg::Shader( osg::Shader::FRAGMENT );
         ErodedProgram->addShader( ErodedFragObj );
         ErodedProgram->addShader( ErodedVertObj );
-        ss->setAttributeAndModes(ErodedProgram, osg::StateAttribute::ON);
-
-        ss->addUniform( new osg::Uniform("LightPosition", osg::Vec3(0.0f, 0.0f, 4.0f)) );
-        ss->addUniform( new osg::Uniform("Scale", 1.0f) );
-        ss->addUniform( new osg::Uniform("sampler3d", TEXUNIT_NOISE) );
-        ss->addUniform( new osg::Uniform("texture", TEXTURE ) ); 
+        
+        ss->setAttributeAndModes( ErodedProgram, osg::StateAttribute::ON );
+        ss->addUniform( new osg::Uniform( "lightPosition", osg::Vec3( 0.0f, 0.0f, 4.0f ) ) );        
+        ss->addUniform( new osg::Uniform( "sampler3d", TEXUNIT_NOISE ) );
+        ss->addUniform( new osg::Uniform( "texture", TEXTURE ) ); 
     }
+
     reloadShaderSource();
 
     return rootNode;
@@ -300,17 +275,13 @@ SceneManager::~SceneManager()
 {
 }
 
-void
-SceneManager::reloadShaderSource()
+void SceneManager::reloadShaderSource()
 {
     osg::notify(osg::INFO) << "reloadShaderSource()" << std::endl;
 
     
-    LoadShaderSource( ErodedVertObj, "shaders/eroded.vert" );
-    LoadShaderSource( ErodedFragObj, "shaders/eroded.frag" );
-
-    LoadShaderSource( MarbleVertObj, "shaders/marble.vert" );
-    LoadShaderSource( MarbleFragObj, "shaders/marble.frag" );
+    LoadShaderSource( ErodedVertObj, "Erode/Erode.vert" );
+    LoadShaderSource( ErodedFragObj, "Erode/Erode.frag" );
 }
 
 
@@ -318,8 +289,7 @@ SceneManager::reloadShaderSource()
 // osg::Program enable state in OSG core.  glProgram are
 // different enough from other GL state that StateSet::setAttributeAndModes()
 // doesn't fit well, so came up with a local implementation.
-void
-SceneManager::toggleShaderEnable()
+void SceneManager::toggleShaderEnable()
 {
     _shadersEnabled = ! _shadersEnabled;
     osg::notify(osg::WARN) << "shader enable = " <<
@@ -330,4 +300,3 @@ SceneManager::toggleShaderEnable()
     }
 }
 
-/*EOF*/
