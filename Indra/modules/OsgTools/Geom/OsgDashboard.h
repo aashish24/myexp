@@ -45,7 +45,7 @@ namespace OsgTools
 {
   namespace Geom
   { 
-    // A dashboard will be consit of M x N OsgQuads. 
+    // A dashboard contains M (row ) x N ( column ) OsgQuads. 
 
     class OSGTOOLS_EXPORT OsgDashboard : public osg::MatrixTransform
     {
