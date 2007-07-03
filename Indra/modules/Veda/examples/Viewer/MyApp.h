@@ -19,6 +19,7 @@ class MyApp : public Veda::Core::OsgBase
 		void appInit();		
 		void appBufferPreDraw();	
 	  void appSceneInit();			
+    void appLatePreFrame();
 
 	private:	
 		

@@ -279,7 +279,7 @@ void Core::OsgBase::viewAll( osg::MatrixTransform* transform, float zScale )
 
   osg::ref_ptr< osg::MatrixTransform > parent = dynamic_cast< osg::MatrixTransform* >( transform->getParent( 0 ) );
   
-  //parent->preMult( osg::Matrixf::translate( Util::OsgConv::transformToOpenGL( mSceneInitialPosition ) ) );    
+  parent->preMult( osg::Matrixf::translate( mSceneInitialPosition[ 0 ], mSceneInitialPosition[ 2 ], -mSceneInitialPosition[ 1 ] ) );    
 }
 
 

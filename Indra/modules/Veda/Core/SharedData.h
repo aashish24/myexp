@@ -21,6 +21,7 @@
 #include "Veda/Core/Command.h"
 
 #include "Veda/Export.h"
+#include "Veda/VedaDefines.h"
 
 namespace Veda
 {
@@ -34,8 +35,12 @@ namespace Veda
 
         static void init()
         {
+#ifdef VRJUGGLER_MAJOR_VERSION >= 2 && VRJUGGLER_MINOR_VERSION > 0
           vpr::GUID newGuid( "291B6290-1BD9-4844-B757-73D5C4BB1690" );
-          SharedData::mCommand.init( newGuid, "ws6" );
+#else
+          vpr::GUID newGuid( "291B6290-1BD9-4844-B757-73D5C4BB1690", "ws6" );
+#endif
+          SharedData::mCommand.init( newGuid );
           mActive = true;
         }
 

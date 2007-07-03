@@ -36,8 +36,9 @@ MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc,
 void MyApp::appInit()
 {
   setDevice( ALL, OFF );
-	setBackgroundColor((gmtl::Vec4f(0.35, 0.35, 0.35, 1.0)).getData());		
-  setNearFar(0.1, 1000000000.0);
+	setBackgroundColor( ( gmtl::Vec4f( 0.35, 0.35, 0.35, 1.0 ) ).getData() );		
+  setNearFar( 0.1, 1000000000.0 );
+  setSceneInitialPosition( osg::Vec3( 0.0, 100.0, 0.0 ) );
 } 
 
 // Clears OpenGL buffers. 
@@ -55,7 +56,23 @@ void MyApp::appSceneInit()
     osg::ref_ptr< osg::Node > model = osgDB::readNodeFile( mFileNames[ i ] );
     if( model.valid() )
     {
- 		  mModelGroupNode->addChild( model.get() );
+      osg::ref_ptr< osg::MatrixTransform > mat1( new osg::MatrixTransform() );
+      mat1->setMatrix( osg::Matrix::translate( osg::Vec3f( 10.0f, 0.0f, 0.0f ) ) ); 
+
+      osg::ref_ptr< osg::MatrixTransform > mat2( new osg::MatrixTransform() );
+      mat2->setMatrix( osg::Matrix::translate( osg::Vec3f( -10.0f, 0.0f, 0.0f ) ) ); 
+
+      mat1->addChild( model.get() );
+      mat2->addChild( model.get() );
+
+      mModelGroupNode->addChild( mat1.get() );
+ 		  mModelGroupNode->addChild( mat2.get() );
     }	  
   }  
+}
+
+void MyApp::appLatePreFrame()
+{
+  //osg::Matrix mat( osg::Matrix::translate( osg::Vec3f( -10.0, 0.0, 0.0 ) ) );
+  //mSceneTransformNode->setMatrix( mat );
 }
