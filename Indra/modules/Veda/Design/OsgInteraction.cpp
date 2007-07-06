@@ -78,7 +78,8 @@ void OsgInteraction::init()
   
   defineControls();      
 
-  #ifdef HAVE_KEYBOARDMOUSE
+#if HAVE_KEYBOARDMOUSE
+  
   osg::ref_ptr< osg::Group > transform = dynamic_cast< osg::Group* >( Util::OsgFind::findNodeByName( mSceneRootNode.get(), "mModelTransformNode" ) );        
   if( transform.valid() )
   {
@@ -90,7 +91,9 @@ void OsgInteraction::init()
       RenderGlobals::mDisplay.width(), RenderGlobals::mDisplay.height() );        
     }
   }
-  #endif
+
+#endif
+
 }    
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -504,7 +507,7 @@ void OsgInteraction::joystickAxis4GlobalAction( double value )
 
 void OsgInteraction::joystickAxis5GlobalAction( double value ) 
 {
-  if( value != 0.0 )
+  if( value != -2.0 )
   {
     mSceneNavigator.rotateInZ( value ); 
   }
@@ -518,7 +521,7 @@ void OsgInteraction::joystickAxis5GlobalAction( double value )
 
 void OsgInteraction::joystickAxis6GlobalAction( double value )
 {
-  if( value !=0.0 )
+  if( value != -2.0 )
   {
     mSceneNavigator.pitch( value ); 
   }
@@ -898,18 +901,13 @@ void OsgInteraction::updateDeviceData()
     for( digitalitr = mDigitalActionMap.begin(); digitalitr != mDigitalActionMap.end(); ++digitalitr )
     {
       value = mController.getDeviceInputData( mDigitalInputMap[ dindex ], digitalitr->second );      
-     
-     if( dindex == 1 )
-      {
-		std::cout << "value of track button is: " << value << std::endl;
-	}	 
+
       SharedData::mCommand->mDigitalInputs[ digitalitr->first ] = ( int )value;
       
       ++digitals;
 
       if( digitals == JOYSTICK_DIGITAL_INPUTS_COUNT )
-      {
-	std::cout << "Reached JOYSTICK_DIGITAL_INPUTS_COUNT" << std::endl;
+      {	      
         ++dindex;
       }
     }          
@@ -952,9 +950,10 @@ void OsgInteraction::updateAll()
 
   updateStates();  
 
-  #ifdef HAVE_KEYBOARDMOUSE
+#if HAVE_KEYBOARDMOUSE
   KeyboardMouse::instance()->update();
-  #endif
+#endif
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1019,28 +1018,27 @@ void OsgInteraction::updateTransforms()
       
       if( mUseTracker )
       {
-	std::cout << "mUseTracker==true" << std::endl;
-        this->mUseTracker = false;
+	      this->mUseTracker = false;
         gmtl::Vec3f dir( 0.0, 0.0, -1.0 );
         dir = -( mWandMatrix * dir );
         osg::Vec3f osgDir( dir[ 0 ], dir[ 1 ], dir[ 2 ] );
-	osgDir = osgDir * 0.01;
+	      osgDir = osgDir * 0.01;
  
         //matrix.setTrans( offset + matrix.getTrans() );
 
-	std::cout << osgDir[ 0 ] << " " << osgDir[ 1 ] << " " << osgDir[ 2 ] << std::endl; 
+	      std::cout << osgDir[ 0 ] << " " << osgDir[ 1 ] << " " << osgDir[ 2 ] << std::endl; 
 
-	matrix.preMult( osg::Matrix::translate( osgDir ) );    
+	      matrix.preMult( osg::Matrix::translate( osgDir ) );    
       	mSceneTransformNode->setMatrix( matrix );
       }
       else
       {
-        //matrix.setTrans( offset + matrix.getTrans() );    
+        matrix = osg::Matrix( SharedData::mCommand->mSharedTransformMatrix.mData );
+        matrix.setTrans( offset + matrix.getTrans() );    
+        mSceneTransformNode->setMatrix( matrix );
       }     
-
-      //mSceneTransformNode->setMatrix( matrix );
       
-#ifdef HAVE_KEYBOARDMOUSE
+#if HAVE_KEYBOARDMOUSE
       sceneTransformNode->preMult( mKmCallBack->getViewMatrix() );
 #endif
       

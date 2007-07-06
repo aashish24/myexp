@@ -102,9 +102,9 @@ namespace Veda
           mWand.init( "VJWand" );          
           mHead.init( "VJWand" );          
 
-          #ifdef HAVE_KEYBOARDMOUSE
+#if HAVE_KEYBOARDMOUSE
           KeyboardMouse::instance()->init();        
-          #endif
+#endif
         }
 
         /////////////////////////////////////////////////////////////////////////
@@ -351,12 +351,10 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////      
 
-	/*
-	virtual void  controlFunction( Math::Function* func )
-        {
-          mControlFunction = func;
-        }
-	*/
+        //virtual void  controlFunction( Math::Function* func )
+        //{
+        //  mControlFunction = func;
+        //}
 
 
       protected:

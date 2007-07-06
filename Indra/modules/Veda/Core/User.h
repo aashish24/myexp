@@ -69,6 +69,7 @@ namespace Veda
           for(unsigned int i=0; i < mInteractions.size(); ++i )
           {
             mInteractions[ i ]->init();
+            mInteractions[ i ]->reset();
           }
         }    
         
@@ -100,10 +101,11 @@ namespace Veda
 
         void setInteraction( void* ptr )
         {
-	   Design::Interaction* in = static_cast< Design::Interaction* >( ptr );                  
+	        Design::Interaction* in = static_cast< Design::Interaction* >( ptr );                  
 
+          // If its a valid interactor. 
           if( in ) 
-          {  
+          {
             if( mInteractions.size() >= 1)
             {
 			        std::vector< Design::Interaction* >::iterator itr = mInteractions.begin();
@@ -128,12 +130,11 @@ namespace Veda
             {
               mInteractions.push_back( in );
             }
-          }
-	  else
-	  {
-		std::cerr << "Invalid or corrupted pointer: " << std::endl;
-	  }	  
-	
+          }         
+	        else
+	        {
+		        std::cerr << "Invalid or corrupted pointer: " << std::endl;
+	        }
         }
       
 
