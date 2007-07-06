@@ -15,8 +15,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef __CORE_COMMAND_H__
-#define  __CORE_COMMAND_H__  
+#ifndef __VEDA_CORE_COMMAND_H__
+#define __CORE_COMMAND_H__  
 
 #include <string>
 
@@ -405,7 +405,7 @@ namespace Veda
 
       public:       
 
-        gmtl::Matrix44f                            mSharedTransformMatrix;  
+        gmtl::Matrix44f                             mSharedTransformMatrix;  
         
         std::map< int, int >                        mDigitalInputs;       
         std::map< int, double >                     mAnalogInputs;

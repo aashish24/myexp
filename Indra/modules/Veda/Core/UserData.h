@@ -142,13 +142,15 @@ namespace Veda
 
           return vpr::ReturnStatus::Succeed;
         }  
-#endif 
+
+#endif // VRJUGGLER_MAJOR_VERSION && VRJUGGLER_MINOR_VERSION
 
       public:
   			
         std::deque< Tweek::TweekCommand* > mPendingTweekCommandList;
         std::deque< Tweek::TweekCommand* > mReadyTweekCommandList;
     };  
+
 
     class VEDA_EXPORT UserDataController
     {
@@ -166,6 +168,7 @@ namespace Veda
           mUserData.init( guid );
         }
 
+
         ///////////////////////////////////////////////////////////////////////////////
         //
         // Add new command. 
@@ -180,6 +183,7 @@ namespace Veda
           }
           mCommandLock.release();
         }
+
 
         ///////////////////////////////////////////////////////////////////////////////
         //
@@ -198,6 +202,7 @@ namespace Veda
         //
         ///////////////////////////////////////////////////////////////////////////////
 
+
         static void clearTweekCommandList()
         {
           for( size_t i = 0; i < mUserData->mReadyTweekCommandList.size(); ++i )
@@ -205,6 +210,7 @@ namespace Veda
             mUserData->mReadyTweekCommandList.pop_front();
           }      
         }
+
 
         ///////////////////////////////////////////////////////////////////////////////
         //
@@ -225,7 +231,7 @@ namespace Veda
       public:
 
         static cluster::UserData< UserData >    mUserData;
-        static vpr::Mutex                        mCommandLock;
+        static vpr::Mutex                       mCommandLock;
     };
   }
 }

@@ -10,9 +10,12 @@
 
 #include "Veda/Core/UserData.h"
 
-using namespace Veda::Core;
+namespace Veda
+{
+  namespace Core
+  {
+    cluster::UserData<UserData> UserDataController::mUserData;
 
-cluster::UserData<UserData> UserDataController::mUserData;
-
-vpr::Mutex                  UserDataController::mCommandLock;
-
+    vpr::Mutex                  UserDataController::mCommandLock;
+  }
+}

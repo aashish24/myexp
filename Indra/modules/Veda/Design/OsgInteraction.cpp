@@ -10,7 +10,7 @@
 
 #include "Veda/VedaDefines.h"
 
-#ifdef HAVE_OSG
+#if HAVE_OSG
 
 #include "Veda/Design/OsgInteraction.h"
 
@@ -96,6 +96,7 @@ void OsgInteraction::init()
 
 }    
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Set navigation parameters to their default.
@@ -147,6 +148,7 @@ void OsgInteraction::resetNavigation()
     mSceneNavigator.rotationDelta( mRotationDelta );
   }
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -228,6 +230,7 @@ NavigationMode OsgInteraction::navigationMode()
 
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Set navigation mode.
@@ -268,6 +271,7 @@ Navigation& OsgInteraction::navigator( InteractionMode mode )
     }
   };
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -331,6 +335,7 @@ void OsgInteraction::defineControls()
   setDigitalActionButtons( 1, Defs::mTrackerDigitalProxies );    
 }  
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Take action for analog inputs. 
@@ -391,6 +396,7 @@ void OsgInteraction::takeActionAnalog( InteractionMode mode, int id, double valu
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Take action for digital inputs. 
@@ -443,6 +449,7 @@ void OsgInteraction::takeActionDigital( InteractionMode mode, int id, DeviceData
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -456,6 +463,7 @@ void OsgInteraction::joystickAxis1GlobalAction( double value )
     mSceneNavigator.translateInX( value );
   }
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -471,6 +479,7 @@ void OsgInteraction::joystickAxis2GlobalAction( double value )
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -484,6 +493,7 @@ void OsgInteraction::joystickAxis3GlobalAction( double value )
     mSceneNavigator.rotateInX( -value ); 
   }
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -499,6 +509,7 @@ void OsgInteraction::joystickAxis4GlobalAction( double value )
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -512,6 +523,7 @@ void OsgInteraction::joystickAxis5GlobalAction( double value )
     mSceneNavigator.rotateInZ( value ); 
   }
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -527,6 +539,7 @@ void OsgInteraction::joystickAxis6GlobalAction( double value )
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -540,6 +553,7 @@ void OsgInteraction::trackerAxis1GlobalAction( double value )
     mSceneNavigator.rotateInY( value ); 
   }
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -555,6 +569,7 @@ void OsgInteraction::trackerAxis2GlobalAction( double value )
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -565,6 +580,7 @@ void OsgInteraction::joystickButton1GlobalAction( DeviceData value )
 {  
   return;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -577,6 +593,7 @@ void OsgInteraction::joystickButton2GlobalAction( DeviceData value )
   mSceneNavigator.translateInY( -1.0 );   
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -587,10 +604,12 @@ void OsgInteraction::joystickButton3GlobalAction( DeviceData value )
 {  
 }
 
+
 void OsgInteraction::joystickButton4GlobalAction( DeviceData value )
 {
   mSceneNavigator.translateInY( 1.0 );  
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -603,6 +622,7 @@ void OsgInteraction::joystickButton5GlobalAction( DeviceData value )
   mSceneNavigator.deaccelerate();
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -613,6 +633,7 @@ void OsgInteraction::joystickButton6GlobalAction( DeviceData value )
 {
   mSceneNavigator.accelerate();  
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -627,6 +648,7 @@ void OsgInteraction::joystickButton7GlobalAction( DeviceData value )
   mSceneNavigator.allowPitch( mAllowPitch ) ;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -640,6 +662,7 @@ void OsgInteraction::joystickButton8GlobalAction( DeviceData value )
   mSceneNavigator.allowYaw( mAllowYaw );
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -650,6 +673,7 @@ void OsgInteraction::joystickButton9GlobalAction( DeviceData value )
 {
   return;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -662,6 +686,7 @@ void OsgInteraction::joystickButton10GlobalAction( DeviceData value )
   reset();
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -672,6 +697,7 @@ void OsgInteraction::joystickButton11GlobalAction( DeviceData value )
 {
   return;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -684,6 +710,7 @@ void OsgInteraction::joystickButton12GlobalAction( DeviceData value )
   return;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -694,6 +721,7 @@ void OsgInteraction::joystickButton13GlobalAction( DeviceData value )
 {
   return;  
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -706,6 +734,7 @@ void OsgInteraction::joystickButton14GlobalAction( DeviceData value )
   return;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -716,6 +745,7 @@ void OsgInteraction::joystickButton15GlobalAction( DeviceData value )
 {
   mSceneNavigator.angulatDeaccelerate();
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -728,6 +758,7 @@ void OsgInteraction::joystickButton16GlobalAction( DeviceData value )
   mSceneNavigator.angulatAccelerate();
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -738,6 +769,7 @@ void OsgInteraction::joystickButton17GlobalAction( DeviceData value )
 {
   return;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -750,6 +782,7 @@ void OsgInteraction::joystickButton18GlobalAction( DeviceData value )
   return;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -760,6 +793,7 @@ void OsgInteraction::trackButton1GlobalAction( DeviceData value )
 {
   return;  
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -772,6 +806,7 @@ void OsgInteraction::trackButton2GlobalAction( DeviceData value )
   return;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -783,6 +818,7 @@ void OsgInteraction::trackButton3GlobalAction( DeviceData value )
   return;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -793,6 +829,7 @@ void OsgInteraction::trackButton4GlobalAction( DeviceData value )
 {
   return;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -806,6 +843,7 @@ void OsgInteraction::trackButton5GlobalAction( DeviceData value )
   mUseTracker = true;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -817,6 +855,7 @@ void OsgInteraction::trackButton6GlobalAction( DeviceData value )
   mUseTracker = true;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -827,6 +866,7 @@ void OsgInteraction::trackButton7GlobalAction( DeviceData value )
 {    
   return;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -845,8 +885,7 @@ void OsgInteraction::updateDeviceData()
   std::map< int, std::vector< ActionState > >::const_iterator digitalitr;
 
   if( SharedData::mCommand.isLocal() )
-  {     
-     std::cout << "Local: " << std::endl; 
+  {  
     if( 1 )
     {
       static int firstTime = 1;
@@ -936,6 +975,7 @@ void OsgInteraction::updateDeviceData()
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -956,6 +996,7 @@ void OsgInteraction::updateAll()
 
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -970,8 +1011,7 @@ void OsgInteraction::updateInputs()
   }
 
   for( unsigned int i = 0; i < SharedData::mCommand->mDigitalInputs.size(); ++i )
-  {
-    std::cout << " size is: " << SharedData::mCommand->mDigitalInputs.size() << std::endl;
+  {    
     if( ( DeviceData )SharedData::mCommand->mDigitalInputs[ i ] != 0 )
     {
       takeActionDigital( mInteractionMode, i, ( DeviceData ) SharedData::mCommand->mDigitalInputs[ i ] );
@@ -980,6 +1020,7 @@ void OsgInteraction::updateInputs()
 
   mSceneNavigator.pitchMatrix( SharedData::mCommand->mSharedMatrixTypeObjects[ "PitchMatrix" ] );
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -993,6 +1034,7 @@ void OsgInteraction::updateStates()
 
   updateInteractions();
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -1051,6 +1093,7 @@ void OsgInteraction::updateTransforms()
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // 
@@ -1061,6 +1104,7 @@ void OsgInteraction::updateInteractions()
 {  
   return;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -1078,4 +1122,5 @@ void OsgInteraction::reset()
   Interaction::reset();
 }
 
-#endif 
+#endif // HAVE_OSG
+

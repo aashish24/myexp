@@ -26,6 +26,7 @@ namespace Veda
     class VEDA_EXPORT Display
     {
       public:
+
         void              setDisplay( int originx, int originy, int width, int height );
 
         const int&        width() const;
@@ -36,18 +37,20 @@ namespace Veda
 
       public:
         
-        int                mOriginX;
+        int               mOriginX;
         int               mOriginY;
-        int                mWidth;
+        int               mWidth;
         int               mHeight;
     };
+
 
     class VEDA_EXPORT RenderGlobals
     {
       public:
 
-        void static        setDisplay( int originx, int originy, int width, int height );
+        void static       setDisplay( int originx, int originy, int width, int height );
       
+
       public:
 
         static Display    mDisplay;

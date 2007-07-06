@@ -10,7 +10,11 @@
 
 #include "Veda/Core/SharedData.h"
 
-using namespace Veda::Core;
-
-cluster::UserData< Command > SharedData::mCommand;
-bool                         SharedData::mActive = false;
+namespace Veda
+{
+  namespace Core
+  {
+    cluster::UserData< Command > SharedData::mCommand;
+    bool                         SharedData::mActive = false;
+  }
+}

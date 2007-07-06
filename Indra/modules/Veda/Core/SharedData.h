@@ -15,8 +15,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef __CORE_SHAREDDATA_H__
-#define __CORE_SHAREDDATA_H__
+#ifndef __VEDA_CORE_SHAREDATA_H__
+#define __VEDA_CORE_SHAREDATA_H__
 
 #include "Veda/Core/Command.h"
 
@@ -30,11 +30,13 @@ namespace Veda
     class VEDA_EXPORT SharedData
     {          
       public:  
+        
         static cluster::UserData< Command > mCommand;
-        static bool                          mActive;
+        static bool                         mActive;
 
         static void init()
         {
+
 #ifdef VRJUGGLER_MAJOR_VERSION >= 2 && VRJUGGLER_MINOR_VERSION > 0
           vpr::GUID newGuid( "291B6290-1BD9-4844-B757-73D5C4BB1690" );
 #else
@@ -52,4 +54,4 @@ namespace Veda
   }
 }
 
-#endif // __CORE_SHAREDDATA_H__
+#endif // __VEDA_CORE_SHAREDATA_H__

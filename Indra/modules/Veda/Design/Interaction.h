@@ -43,6 +43,8 @@
 
 #include "Veda/Export.h"
 
+namespace Core = Veda::Core;
+
 namespace Veda
 {
   namespace Design
@@ -59,7 +61,7 @@ namespace Veda
 
         typedef std::vector< gadget::DigitalInterface* >  DigitalInterfaces;
         typedef std::vector< gadget::AnalogInterface* >   AnalogInterfaces;
-	typedef std::vector< Core::ActionState >                ActionStates;
+	      typedef std::vector< Core::ActionState >          ActionStates;
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -91,6 +93,7 @@ namespace Veda
         {
         }    
 
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Initialization. 
@@ -107,6 +110,7 @@ namespace Veda
 #endif
         }
 
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Derived class VEDA_EXPORT has to provide definition for controls. 
@@ -116,6 +120,7 @@ namespace Veda
         virtual void defineControls()
         {
         }
+
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -128,6 +133,7 @@ namespace Veda
           return &mSceneNavigator;
         }
 
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Get current position. 
@@ -138,6 +144,7 @@ namespace Veda
         {
           return mSceneNavigator.currentPosition();      
         }
+
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -150,6 +157,7 @@ namespace Veda
           mSceneNavigator.currentPosition( position );
         }
 
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Get navigation speed. 
@@ -160,6 +168,7 @@ namespace Veda
         {
           return mNavigationSpeed;
         }
+
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -172,6 +181,7 @@ namespace Veda
           mNavigationSpeed = speed;
         }
 
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Get delta for navigation. 
@@ -182,6 +192,7 @@ namespace Veda
         {
           return mNavigationDelta;
         }
+
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -194,6 +205,7 @@ namespace Veda
           mNavigationDelta = delta;        
         }      
 
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Get rotation speed. 
@@ -204,6 +216,7 @@ namespace Veda
         {
           return mRotationSpeed;
         }
+
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -216,6 +229,7 @@ namespace Veda
           mRotationSpeed = speed;        
         }
 
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Get rotation delta.
@@ -227,6 +241,8 @@ namespace Veda
           return mRotationDelta;
 
         }
+        
+        
         /////////////////////////////////////////////////////////////////////////
         //
         // Set rotation delta
@@ -237,6 +253,7 @@ namespace Veda
         {
           mRotationDelta = delta;
         }
+        
         
         /////////////////////////////////////////////////////////////////////////
         //
@@ -261,6 +278,7 @@ namespace Veda
           return mHeadMatrix;
         }
 
+        
         /////////////////////////////////////////////////////////////////////////
         //
         // Reset.
@@ -280,6 +298,7 @@ namespace Veda
           resetNavigation();
         }
 
+        
         /////////////////////////////////////////////////////////////////////////
         //
         // Derived class VEDA_EXPORT has to implement this. 
@@ -290,6 +309,7 @@ namespace Veda
         {
         }
 
+        
         /////////////////////////////////////////////////////////////////////////
         //
         // Derived class VEDA_EXPORT has to implement this. 
@@ -320,6 +340,7 @@ namespace Veda
           mPrevTime               = curTime;      
         }
 
+        
         /////////////////////////////////////////////////////////////////////////
         //
         // Get current interaction mode.  
@@ -434,7 +455,7 @@ namespace Veda
 
         Core::InteractionMode                         mInteractionMode;
 
-	Core::Controller                              mController;  
+	      Core::Controller                              mController;  
 
         gmtl::Matrix44f                               mWandMatrix;
         gmtl::Matrix44f                               mHeadMatrix;

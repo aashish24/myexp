@@ -8,8 +8,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef __CORE_USER_H__
-#define __CORE_USER_H__
+#ifndef __VEDA_CORE_USER_H__
+#define __VEDA_CORE_USER_H__
 
 #include "vpr/IO/SerializableObject.h"
 #include "vpr/IO/ObjectReader.h"
@@ -175,4 +175,4 @@ namespace Veda
   }
 }
 
-#endif // __CORE_USER_H__
+#endif // __VEDA_CORE_USER_H__

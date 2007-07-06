@@ -21,10 +21,12 @@ namespace Veda
 	  {
 	    public:
 		  TweekCommand()
-		  {}
+		  {
+      }
 
 		  ~TweekCommand()
-		  {}
+		  {
+      }
 
 		  std::string			mKey;
 		  std::string			mValue;

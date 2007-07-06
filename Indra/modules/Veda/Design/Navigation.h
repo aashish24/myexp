@@ -90,19 +90,19 @@ namespace Veda
 
         void                                          translateInDir( const gmtl::Vec3f& direction );      
 
-	void					      rotate( const gmtl::Vec3f& value );
+	      void					                                rotate( const gmtl::Vec3f& value );
         void                                          rotateInX( const double& value );
         void                                          rotateInY( const double& value );
         void                                          rotateInZ( const double& value );
 
         void                                          pitch( const double& value );
 
-	    void                                          translate( const gmtl::Vec3f& vector, Core::Scope = Core::GLOBAL );
-	    void                                          rotate   ( gmtl::Matrix44f& matrix, Core::Scope = Core::GLOBAL );
+	      void                                          translate( const gmtl::Vec3f& vector, Core::Scope = Core::GLOBAL );
+	      void                                          rotate   ( gmtl::Matrix44f& matrix, Core::Scope = Core::GLOBAL );
 
         gmtl::Matrix44f&                              slerp( gmtl::Matrix44f& matrix, const float& value );
 
-	    void                                          update( const float& delta, Core::Scope = Core::GLOBAL );
+	      void                                          update( const float& delta, Core::Scope = Core::GLOBAL );
       
       private:
 
@@ -138,7 +138,7 @@ namespace Veda
         bool                                          mAllowYaw;
         bool                                          mAllowRoll;
 
-	Core::NavigationMode                          mNavigationMode;
+	      Core::NavigationMode                          mNavigationMode;
 
     };
   }

@@ -15,8 +15,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef __CORE_OSGBASE_H__
-#define __CORE_OSGBASE_H__
+#ifndef __VEDA_CORE_OSGBASE_H__
+#define __VEDA_CORE_OSGBASE_H__
 
 #include <stdlib.h>
 
@@ -103,6 +103,7 @@ namespace Veda
 
         virtual void                                   cleanUp();
 
+
       protected:    
       
         /////////////////////////////////////////////////////////////////////////
@@ -152,6 +153,7 @@ namespace Veda
         virtual void                                   addSceneLight();
 
         virtual void                                   updateOSG();
+
 
       protected:  
 
@@ -329,16 +331,16 @@ namespace Veda
 
       private:
         
-        osg::ref_ptr< osg::StateSet >                  mRootStateSet;
+        osg::ref_ptr< osg::StateSet >                   mRootStateSet;
 
         
         osg::ref_ptr< osg::FrameStamp >                 mFrameStamp;    
 
-        osg::Timer                                     mTimer;
-        osg::Timer_t                                   mStartTime;
-        osg::Timer_t                                   mLastTime;
+        osg::Timer                                      mTimer;
+        osg::Timer_t                                    mStartTime;
+        osg::Timer_t                                    mLastTime;
     };  
   }
 }
 
-#endif // __CORE_OSGBASE_H__
+#endif // __VEDA_CORE_OSGBASE_H__
