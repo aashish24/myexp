@@ -16,3 +16,4 @@
 #define HAVE_KEYBOARDMOUSE      0
 
 #endif // __VEDA_CORE_VEDADEFINES_H__
+
