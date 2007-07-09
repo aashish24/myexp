@@ -47,10 +47,10 @@ const int JOYSTICK_DIGITAL_INPUTS_COUNT = 18 ;
 
 OsgInteraction::OsgInteraction() :
   Interaction       (),
+  mUseTracker       ( false ),
   mScenePivot       ( 0.0, 0.0, 0.0 ), 
   mObjectPivot      ( 0.0, 0.0, 0.0 ), 
-  mSceneRadius      ( 0.0 ), 
-  mUseTracker       ( false )
+  mSceneRadius      ( 0.0 )
 {
 }
 
