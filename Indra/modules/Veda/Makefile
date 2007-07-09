@@ -115,7 +115,9 @@ CLASSPATH=			$(TWEEK_JARS)
 #
 #---------------------------------------------------------------
 
-include $(VJ_BASE_DIR)/share/vrjuggler/vrj.appdefs.mk
+DZR_BASE_DIR=   $(shell flagpoll doozer --get-prefix)
+
+include $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.mk
 include $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.glapp.mk
 include $(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
 include $(DZR_BASE_DIR)/mk/dzr.java-app.mk
