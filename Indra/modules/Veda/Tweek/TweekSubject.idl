@@ -6,11 +6,14 @@
 
 module Veda
 {  
-  typedef string string_var;
+	module ITweek
+	{
+  		typedef string string_var;
 
-	interface TweekSubject : tweek::Subject
-	{		
-		void setCommand( in string key, in string value );    
+		interface TweekSubject : tweek::Subject
+		{		
+			void setCommand( in string key, in string value );    
+		};
 	};
 };
 
