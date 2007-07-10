@@ -41,26 +41,27 @@
 # **********************************************************************
 # */
 
-default:	all
 
-APP_NAME=	viewer
+default:		all
+
+APP_NAME=		viewer
 
 
-# Basic options.
-#-------------------------------------------------------
-BUILD_TYPE?=	opt
+#----------------------------Basic options-------------------------------------
 
-srcdir=		../src
+BUILD_TYPE?=		dbg
 
-SRCS=		MyApp.cpp	\
-		main.cpp
+srcdir=			../src
 
-NO_DEPEND=	YES
+SRCS=			MyApp.cpp	\
+			main.cpp
+
+NO_DEPEND=		YES
 		
-EXTRA_INCLUDES=		-I../../../ -I$(OSG_INC_DIR) 										\
-			-I$(VJ_BASE_DIR)/include/tweek/idl -I$(VJ_BASE_DIR)/include -I$(VJ_BASE_DIR)/include/tweek/CORBA	\
-			-I$(GMTL_INC_DIR)	\
-			-I$(CPPDOM_INC_DIR)	\
+EXTRA_INCLUDES=		-I../../../			\
+			-I$(OSG_INC_DIR)		\
+			-I$(GMTL_INC_DIR)		\
+			-I$(CPPDOM_INC_DIR)		\
 			-I$(OMNIORB_INC_DIR)
 
 
@@ -70,22 +71,23 @@ EXTRA_LIBS=		-L../../../../bin		\
 			-L$(OMNIORB_LIB_DIR)		\
 			-lVeda -lOsgTools -losg -losgDB -losgGA -losgUtil -losgText -losgFX -lomniORB4 -lomnithread
 
-# Advanced options. 
-#---------------------------------------------------------------
+#----------------------------Advanced options---------------------------------- 
 
-include $(VJ_BASE_DIR)/share/vrjuggler/vrj.appdefs.mk
+DZR_BASE_DIR=   $(shell flagpoll doozer --get-prefix)
+include $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.mk
 include $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.glapp.mk
 include $(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
 
 #vpath %.cpp $(CXX_GEN_DIR)
 #vpath %.h $(CXX_GEN_DIR)
 
-# -----------------------------------------------------------------------------
-# Application build targets.
-# -----------------------------------------------------------------------------
-all: 		
-		$(MAKE) $(APP_NAME)
+#-----------------------------Application build targets------------------------
 
-$(APP_NAME): 	$(OBJS)
-		$(LINK) $(LINK_OUT)$@ $(OBJS) $(TWEEK_LIBS) $(EXTRA_LIBS) $(LIBS)
+all: 		
+			$(MAKE) $(APP_NAME)
+
+$(APP_NAME): 		$(OBJS)
+			$(LINK) $(LINK_OUT)$@ $(OBJS) $(TWEEK_LIBS) $(EXTRA_LIBS) $(LIBS)
+
+CLEAN_FILES+=		$(APP_NAME)
 

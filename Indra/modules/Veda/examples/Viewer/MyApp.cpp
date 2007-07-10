@@ -22,7 +22,7 @@ MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc,
 {	
   osg::Matrix mat();
 
-  for( unsigned int i = 1; i < argc; ++i  )
+  for( int i = 1; i < argc; ++i  )
   {
     if( std::string( argv[ i ] ) == "-f" )
     {
@@ -76,3 +76,4 @@ void MyApp::appLatePreFrame()
   //osg::Matrix mat( osg::Matrix::translate( osg::Vec3f( -10.0, 0.0, 0.0 ) ) );
   //mSceneTransformNode->setMatrix( mat );
 }
+
