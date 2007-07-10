@@ -36,7 +36,7 @@
 
 namespace Veda
 {
-  class VEDA_EXPORT SubjectImpl : public POA_Veda::TweekSubject, public tweek::SubjectImpl
+  class VEDA_EXPORT SubjectImpl : public POA_Veda::ITweek::TweekSubject, public tweek::SubjectImpl
   {
     public:
       SubjectImpl() : tweek::SubjectImpl()
@@ -51,9 +51,9 @@ namespace Veda
       
       virtual void setCommand( const char* key, const char* value );
       
-      Veda::TweekSubject_ptr _this()
+      Veda::ITweek::TweekSubject_ptr _this()
       {
-        return POA_Veda::TweekSubject::_this();
+        return POA_Veda::ITweek::TweekSubject::_this();
       }
   };
 }
