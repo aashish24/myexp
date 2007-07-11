@@ -10,7 +10,7 @@
 // Define vrjuggler major and minor version as the API has changes just a little bit 
 #define VRJUGGLER_MAJOR_VERSION 2
 
-#define VRJUGGLER_MINOR_VERSION 2
+#define VRJUGGLER_MINOR_VERSION 0
 
 // If we using KeyboardMouse for navigation. 
 #define HAVE_KEYBOARDMOUSE      0
