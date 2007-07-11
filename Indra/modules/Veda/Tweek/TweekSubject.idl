@@ -1,6 +1,6 @@
 
-#ifndef _CORE_TWEEKSUBJECT_IDEL_H__
-#define _CORE_TWEEKSUBJECT_IDEL_H__
+#ifndef __CORE_TWEEKSUBJECT_IDEL_H__
+#define __CORE_TWEEKSUBJECT_IDEL_H__
 
 #include "tweek/idl/Subject.idl"
 
@@ -8,8 +8,6 @@ module Veda
 {  
 	module ITweek
 	{
-  		typedef string string_var;
-
 		interface TweekSubject : tweek::Subject
 		{		
 			void setCommand( in string key, in string value );    
@@ -17,4 +15,5 @@ module Veda
 	};
 };
 
-#endif 
+#endif  // __CORE_TWEEKSUBJECT_IDEL_H__
+
