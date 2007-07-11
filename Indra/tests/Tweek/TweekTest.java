@@ -11,7 +11,7 @@
  * @version 1.0
  */
 
-package dt;
+package Veda;
 
 import java.awt.BorderLayout;
 
@@ -33,7 +33,7 @@ import org.vrjuggler.tweek.net.corba.*;
 
 import tweek.*;
 
-public class DtTweek extends JPanel implements CommunicationListener, ActionListener
+public class TweekTest extends JPanel implements CommunicationListener, ActionListener
 {
     /**
      * Sample GUI for tweek observer.
@@ -57,7 +57,7 @@ public class DtTweek extends JPanel implements CommunicationListener, ActionList
     JButton jButton1 = new JButton();
     JComboBox jComboBox1 = new JComboBox();
     JSlider jSlider1 = new JSlider();
-    public DtTweek() {
+    public TweekTest() {
         try {
             jbInit();
         } catch (Exception exception) {
@@ -147,7 +147,7 @@ public class DtTweek extends JPanel implements CommunicationListener, ActionList
         }
         catch(BAD_PARAM narrow_ex)
         {
-           System.out.println(" [DtTweek] Error narrowing down the subject: ");
+           System.out.println(" [TweekTest] Error narrowing down the subject: ");
         }
     }
 
@@ -218,7 +218,7 @@ public class DtTweek extends JPanel implements CommunicationListener, ActionList
 
 class FrameListener extends TweekFrameAdapter
 {
-    public FrameListener (DtTweek bean)
+    public FrameListener (TweekTest bean)
     {
         this.mBean = bean;
     }
@@ -228,6 +228,6 @@ class FrameListener extends TweekFrameAdapter
         return true;
     }
 
-    private DtTweek mBean = null;
+    private TweekTest mBean = null;
 }
 

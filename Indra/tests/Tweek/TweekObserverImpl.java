@@ -17,9 +17,9 @@ package dt;
 import javax.swing.JSlider;
 import tweek.*;
 
-public class DtObserverImpl extends ObserverPOA
+public class TweekObserverImpl.java extends ObserverPOA
 {
-    public DtObserverImpl() {
+    public TweekObserverImpl.java() {
         try {
             jbInit();
         } catch (Exception ex) {
@@ -27,28 +27,28 @@ public class DtObserverImpl extends ObserverPOA
         }
     }
 
-    public DtObserverImpl(DtSubject subject)
+    public TweekObserverImpl.java(TweekSubject subject)
     {
-        mDtSubject = subject;
+        mTweekSubject = subject;
     }
 
-    public DtSubject getSubject()
+    public TweekSubject getSubject()
     {
-        return mDtSubject;
+        return mTweekSubject;
     }
 
     public void update()
     {
-        System.out.println(" [DtObserverImpl] Update from our subject: ");
-        System.out.println(" [DtObserverImpl] Update processed: ");
+        System.out.println(" [TweekObserverImpl.java] Update from our subject: ");
+        System.out.println(" [TweekObserverImpl.java] Update processed: ");
     }
 
     public void detach()
     {
-        mDtSubject.detach(this._this());
+        mTweekSubject.detach(this._this());
     }
 
-    private DtSubject mDtSubject = null;
+    private TweekSubject mTweekSubject = null;
     private void jbInit() throws Exception {
     }
 }
