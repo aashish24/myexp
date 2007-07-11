@@ -65,72 +65,68 @@ NO_DEPEND=			YES
 #IDL_JAVA_FILES=		dtsubject.java	
 		
 
-base_srcs=	TweekSubjectImpl.cpp MyApp.cpp main.cpp		
-idl_srcs=	$(filter-out $(base_srcs), $(notdir $(wildcard $(CXX_GEN_DIR)/*.cpp)))
+base_srcs=			MyApp.cpp main.cpp		
+idl_srcs=			$(filter-out $(base_srcs), $(notdir $(wildcard $(CXX_GEN_DIR)/*.cpp)))
 
-SRCS=		$(base_srcs) $(idl_srcs)
-JAVA_SRCS=	TweekTest.java			\
-		TweekObserverImpl.java	
+SRCS=				$(base_srcs) $(idl_srcs)
+JAVA_SRCS=			TweekTest.java TweekObserverImpl.java	
 	
-ALL_CLASSES=	*.class
-CLASSPATH=	$(TWEEK_JARS)
+ALL_CLASSES=			*.class
+CLASSPATH=			.
 
-DZR_BASE_DIR=   $(shell flagpoll doozer --get-prefix)
+DZR_BASE_DIR=   		$(shell flagpoll doozer --get-prefix)
 
-include $(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
-include $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.glapp.mk
-include $(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
-include $(DZR_BASE_DIR)/mk/dzr.java-app.mk
+include 			$(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.mk
+include 			$(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.glapp.mk
+include 			$(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
+include 			$(DZR_BASE_DIR)/mk/dzr.java-app.mk
 
-
-CXX_GEN_DIR=		$(VJCINEMA)/tweek/dt
-CXX_IDL=		$(TWEEK_IDL_CXX)
-CXX_IDL_OPTS=		$(TWEEK_IDLFLAGS_CXX)			\
-			$(TWEEK_IDL_GENDIR_CXX)$(CXX_GEN_DIR)
+CXX_GEN_DIR=			$(VJCINEMA)/tweek/dt
+CXX_IDL=			$(TWEEK_IDL_CXX)
+CXX_IDL_OPTS=			$(TWEEK_IDLFLAGS_CXX)			\
+				$(TWEEK_IDL_GENDIR_CXX)$(CXX_GEN_DIR)
 CXX_IDL_INCLUDES=	
 
-EXTRA_INCLUDES+=	-I$(INDRA_ROOT_DIR)/modules -I$(OSG_INC_DIR)
-EXTRA_LIBS+=		-L$(OSG_LIB_DIR) -losg -losgDB -losgGA -losgUtil -losgText -losgFX
+EXTRA_INCLUDES+=		-I$(INDRA_ROOT_DIR)/modules -I$(OSG_INC_DIR)
+EXTRA_LIBS+=			-L$(OSG_LIB_DIR) -L$(INDRA_ROOT_DIR)/bin -lOsgTools -lVeda -losg -losgDB -losgGA -losgUtil -losgText -losgFX
 
-JAVA_GEN_DIR=		.
-JAVA_IDL=		$(TWEEK_IDL_JAVA)
-JAVA_IDL_OPTS=		$(TWEEK_IDLFLAGS_JAVA)			\
-			$(TWEEK_IDL_GENDIR_JAVA)$(JAVA_GEN_DIR)
+JAVA_GEN_DIR=			.
+JAVA_IDL=			$(TWEEK_IDL_JAVA)
+JAVA_IDL_OPTS=			$(TWEEK_IDLFLAGS_JAVA)			\
+				$(TWEEK_IDL_GENDIR_JAVA)$(JAVA_GEN_DIR)
 JAVA_IDL_INCLUDES=	
 
-vpath %.idl $(srcdir)
-vpath %.cpp $(CXX_GEN_DIR)
-vpath %.h $(CXX_GEN_DIR)
-vpath %.java $(JAVA_GEN_DIR)
+vpath %.idl 			$(srcdir)
+vpath %.cpp 			$(CXX_GEN_DIR)
+vpath %.h 			$(CXX_GEN_DIR)
+vpath %.java 			$(JAVA_GEN_DIR)
 
-# -----------------------------------------------------------------------------
 # Application build targets.
-# -----------------------------------------------------------------------------
-cxx_idl: $(IDL_CXX_FILES)
+
+cxx_idl: 			$(IDL_CXX_FILES)
 
 %.cpp %.h: %.idl
-	$(CXX_IDL) $(CXX_IDL_OPTS) $(CXX_IDL_INCLUDES) $<
+				$(CXX_IDL) $(CXX_IDL_OPTS) $(CXX_IDL_INCLUDES) $<
 
-java_idl: $(IDL_JAVA_FILES)
+java_idl: 			$(IDL_JAVA_FILES)
 
 %.java: %.idl
-	$(JAVA_IDL) $(JAVA_IDL_OPTS) $(JAVA_IDL_INCLUDES) $<
+				$(JAVA_IDL) $(JAVA_IDL_OPTS) $(JAVA_IDL_INCLUDES) $<
 
-cxx: $(OBJS)
+cxx: 				$(OBJS)
 
-java: $(CLASSES)
+java: 				$(CLASSES)
 
-server: $(OBJS)
-	$(LINK) $(LINK_OUT)$@ $(OBJS) $(TWEEK_LIBS) $(EXTRA_LIBS) $(LIBS)
+server: 			$(OBJS)
+				$(LINK) $(LINK_OUT)$@ $(OBJS) $(TWEEK_LIBS) $(EXTRA_LIBS) $(LIBS)
 
-DtTweekBean.jar: $(JAVA_CLASSES)
-	$(JAR) cvf $@ $(ALL_CLASSES)
+TweekTestBean.jar: 		$(JAVA_CLASSES)
+				$(JAR) cvf $@ $(ALL_CLASSES)
+			
 
-install:
-	mv DtTweekBean.jar ../java/src
+CLEAN_FILES+=			$(CLASSES) *.class, $(EXTRA_SOURCEPATH_DIRS)/TweekTestBean.jar
 
-CLEAN_FILES+=	$(addprefix $(VJCINEMA)/tweek/dt/, $(IDL_CXX_FILES))		\
-		$(addprefix ../java/src/dt/, $(IDL_JAVA_FILES))	\
-		$(CLASSES) dt/*.class, $(EXTRA_SOURCEPATH_DIRS)/DtTweekBean.jar
-CLEAN_DIRS+=	./dt
-CLOBBER_FILES+=	DtTweekBean.jar
+CLEAN_DIRS+=			
+
+CLOBBER_FILES+=			TweekTestBean.jar
+

@@ -41,26 +41,34 @@ public class TweekTest extends JPanel implements CommunicationListener, ActionLi
      * Button to apply texture on the scene.
      * Button to hide the scene.
      */
-    private BorderLayout borderLayout1 = new BorderLayout(1, 4);
-    private DtObserverImpl mDtObserver = null;
-    //private FrameListener mFrameListener = null;
-    private JFrame mFrame = null;
+    private BorderLayout 	borderLayout1 = new BorderLayout(1, 4);
+    private TweekObserverImpl 	mTweekObserver = null;
+    
+    //private FrameListener mFrameListener 	= null;
+    
+    private JFrame 		mFrame = null;
 
-    private JPanel mPanel1 = null;
-    private JPanel mPanel2 = null;
+    private JPanel 		mPanel1	= null;
+    private JPanel 		mPanel2	= null;
 
-    private JButton mTextureButton = null;
-    private JButton mHideButton = null;
+    private JButton 		mTextureButton = null;
+    private JButton 		mHideButton = null;
 
-    private int mHide = 0;
-    private int mTextureOn = 1;
-    JButton jButton1 = new JButton();
-    JComboBox jComboBox1 = new JComboBox();
-    JSlider jSlider1 = new JSlider();
-    public TweekTest() {
-        try {
+    private int 		mHide = 0;
+    private int 		mTextureOn = 1;
+
+    JButton 			jButton1 = new JButton();
+    JComboBox 			jComboBox1 = new JComboBox();
+    JSlider 			jSlider1 = new JSlider();
+    
+    public TweekTest() 
+    {
+        try 
+	{
             jbInit();
-        } catch (Exception exception) {
+        } 
+	catch (Exception exception) 
+        {
             exception.printStackTrace();
         }
     }
@@ -120,9 +128,9 @@ public class TweekTest extends JPanel implements CommunicationListener, ActionLi
     }
 
     private void disconnect() {
-        if (mDtObserver != null) {
-            mDtObserver.detach();
-            mDtObserver = null;
+        if (mTweekObserver != null) {
+            mTweekObserver.detach();
+            mTweekObserver = null;
         }
     }
 
@@ -131,18 +139,18 @@ public class TweekTest extends JPanel implements CommunicationListener, ActionLi
         CorbaService corba_service = e.getCorbaService();
         SubjectManager mgr = corba_service.getSubjectManager();
 
-        Subject subject = mgr.getSubject("DtSubject");
-        DtSubject dt_subject = null;
+        Subject subject = mgr.getSubject("TweekSubject");
+        TweekSubject tSubject = null;
 
         try
         {
-            dt_subject = DtSubjectHelper.narrow(subject);
+            tSubject = SubjectHelper.narrow(subject);
 
-            if(dt_subject != null)
+            if( tSubject != null)
             {
-                mDtObserver = new DtObserverImpl(dt_subject);
-                corba_service.registerObject(mDtObserver, "DtObserver");
-                dt_subject.attach(mDtObserver._this());
+                mTweekObserver = new TweekObserverImpl( tSubject );
+                corba_service.registerObject( mTweekObserver, "TweekObserver" );
+                tSubject.attach( TweekObserver._this() );
             }
         }
         catch(BAD_PARAM narrow_ex)
@@ -153,10 +161,10 @@ public class TweekTest extends JPanel implements CommunicationListener, ActionLi
 
     public void connectionClosed(CommunicationEvent e)
     {
-        if(mDtObserver != null)
+        if( mTweekObserver != null )
         {
-            mDtObserver.detach();
-            mDtObserver = null;
+            mTweekObserver.detach();
+            mTweekObserver = null;
         }
     }
 
@@ -180,15 +188,15 @@ public class TweekTest extends JPanel implements CommunicationListener, ActionLi
             if (mHide == 0)
             {
                 mHide = 1;
-                if (mDtObserver != null)
-                    mDtObserver.getSubject().setCommand("Command1", "SceneRoot", "", "OFF", true, 0);
+                if (mTweekObserver != null)
+                    mTweekObserver.getSubject().setCommand("Command1", "SceneRoot", "", "OFF", true, 0);
                 mHideButton.setText("UnHide Scene");
             }
             else
             {
                 mHide = 0;
-                if (mDtObserver != null)
-                    mDtObserver.getSubject().setCommand("Command1", "SceneRoot", "", "ON", true, 0);
+                if (mTweekObserver != null)
+                    mTweekObserver.getSubject().setCommand("Command1", "SceneRoot", "", "ON", true, 0);
                 mHideButton.setText("Hide Scene");
             }
             System.out.println(mHide);
@@ -199,15 +207,15 @@ public class TweekTest extends JPanel implements CommunicationListener, ActionLi
            if(mTextureOn == 1)
            {
                 mTextureOn = 0;
-                if (mDtObserver != null)
-                    mDtObserver.getSubject().setCommand("Command2", "Cow", "TextureUnit0", "OFF", true, 0);
+                if ( mTweekObserver != null )
+                mTweekObserver.getSubject().setCommand("Command2", "Cow", "TextureUnit0", "OFF", true, 0);
                 mTextureButton.setText("Texture ON");
             }
             else
             {
                 mTextureOn = 1;
-                if (mDtObserver != null)
-                    mDtObserver.getSubject().setCommand("Command2", "Cow", "TextureUnit0", "ON", true, 0);
+                if (mTweekObserver != null)
+                    mTweekObserver.getSubject().setCommand("Command2", "Cow", "TextureUnit0", "ON", true, 0);
                 mTextureButton.setText("Texture OFF");
             }
                 System.out.println(mTextureOn);
