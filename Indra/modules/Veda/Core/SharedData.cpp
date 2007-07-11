@@ -18,3 +18,4 @@ namespace Veda
     bool                         SharedData::mActive = false;
   }
 }
+
