@@ -29,7 +29,7 @@ void MyApp::appBufferPreDraw()
 void MyApp::appSceneInit()
 {	
 	osg::ref_ptr< osg::Group > modelGroupNode = new osg::Group();
-	loadGroupedData( modelGroupNode.get(), ".//../data/ModelList.txt" );
+	loadGroupedData( modelGroupNode.get(), ".//data/ModelList.txt" );
 	if( modelGroupNode.get() )
 	{
 		mModelGroupNode->addChild( modelGroupNode.get() );
@@ -55,6 +55,15 @@ void MyApp::appLatePreFrame()
 
 void MyApp::takeAction( const std::string& key, const std::string& value )
 {	
+	if( value == "HIDE" )
+	{
+		mModelGroupNode->setNodeMask( 0x00 );	
+	}
+	
+	if( value == "SHOW" )
+	{
+		mModelGroupNode->setNodeMask( 0xff );
+	}
 }
 
 
