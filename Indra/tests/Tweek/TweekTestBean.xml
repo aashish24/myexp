@@ -3,7 +3,7 @@
           xsi:noNamespaceSchemaLocation="http://www.vrjuggler.org/tweek/xsd/1.0/beanlist.xsd">
   <guipanel name="Test Tweek">
     <file name="TweekTestBean.jar" 
-          class="dt.DtTweek" />
+          class="Veda.ITweek.TweekTest" />
     <tree path="/" />
   </guipanel>
 </beanlist>
