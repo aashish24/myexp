@@ -66,115 +66,117 @@ _CORBA_MODULE Veda
 
 _CORBA_MODULE_BEG
 
-  typedef char* string_var;
-  typedef CORBA::String_var string_var_var;
-  typedef CORBA::String_out string_var_out;
+  _CORBA_MODULE ITweek
 
-#ifndef __Veda_mTweekSubject__
-#define __Veda_mTweekSubject__
+  _CORBA_MODULE_BEG
 
-  class TweekSubject;
-  class _objref_TweekSubject;
-  class _impl_TweekSubject;
-  
-  typedef _objref_TweekSubject* TweekSubject_ptr;
-  typedef TweekSubject_ptr TweekSubjectRef;
+#ifndef __Veda_mITweek_mTweekSubject__
+#define __Veda_mITweek_mTweekSubject__
 
-  class TweekSubject_Helper {
-  public:
-    typedef TweekSubject_ptr _ptr_type;
+    class TweekSubject;
+    class _objref_TweekSubject;
+    class _impl_TweekSubject;
+    
+    typedef _objref_TweekSubject* TweekSubject_ptr;
+    typedef TweekSubject_ptr TweekSubjectRef;
 
-    static _ptr_type _nil();
-    static _CORBA_Boolean is_nil(_ptr_type);
-    static void release(_ptr_type);
-    static void duplicate(_ptr_type);
-    static void marshalObjRef(_ptr_type, cdrStream&);
-    static _ptr_type unmarshalObjRef(cdrStream&);
-  };
+    class TweekSubject_Helper {
+    public:
+      typedef TweekSubject_ptr _ptr_type;
 
-  typedef _CORBA_ObjRef_Var<_objref_TweekSubject, TweekSubject_Helper> TweekSubject_var;
-  typedef _CORBA_ObjRef_OUT_arg<_objref_TweekSubject,TweekSubject_Helper > TweekSubject_out;
+      static _ptr_type _nil();
+      static _CORBA_Boolean is_nil(_ptr_type);
+      static void release(_ptr_type);
+      static void duplicate(_ptr_type);
+      static void marshalObjRef(_ptr_type, cdrStream&);
+      static _ptr_type unmarshalObjRef(cdrStream&);
+    };
+
+    typedef _CORBA_ObjRef_Var<_objref_TweekSubject, TweekSubject_Helper> TweekSubject_var;
+    typedef _CORBA_ObjRef_OUT_arg<_objref_TweekSubject,TweekSubject_Helper > TweekSubject_out;
 
 #endif
 
-  // interface TweekSubject
-  class TweekSubject {
-  public:
-    // Declarations for this interface type.
-    typedef TweekSubject_ptr _ptr_type;
-    typedef TweekSubject_var _var_type;
+    // interface TweekSubject
+    class TweekSubject {
+    public:
+      // Declarations for this interface type.
+      typedef TweekSubject_ptr _ptr_type;
+      typedef TweekSubject_var _var_type;
 
-    static _ptr_type _duplicate(_ptr_type);
-    static _ptr_type _narrow(CORBA::Object_ptr);
-    static _ptr_type _unchecked_narrow(CORBA::Object_ptr);
-    
-    static _ptr_type _nil();
+      static _ptr_type _duplicate(_ptr_type);
+      static _ptr_type _narrow(CORBA::Object_ptr);
+      static _ptr_type _unchecked_narrow(CORBA::Object_ptr);
+      
+      static _ptr_type _nil();
 
-    static inline void _marshalObjRef(_ptr_type, cdrStream&);
+      static inline void _marshalObjRef(_ptr_type, cdrStream&);
 
-    static inline _ptr_type _unmarshalObjRef(cdrStream& s) {
-      omniObjRef* o = omniObjRef::_unMarshal(_PD_repoId,s);
-      if (o)
-        return (_ptr_type) o->_ptrToObjRef(_PD_repoId);
-      else
-        return _nil();
-    }
+      static inline _ptr_type _unmarshalObjRef(cdrStream& s) {
+        omniObjRef* o = omniObjRef::_unMarshal(_PD_repoId,s);
+        if (o)
+          return (_ptr_type) o->_ptrToObjRef(_PD_repoId);
+        else
+          return _nil();
+      }
 
-    static _core_attr const char* _PD_repoId;
+      static _core_attr const char* _PD_repoId;
 
-    // Other IDL defined within this scope.
-    
-  };
+      // Other IDL defined within this scope.
+      
+    };
 
-  class _objref_TweekSubject :
-    public virtual tweek::_objref_Subject
-  {
-  public:
-    void setCommand(const char* key, const char* value);
+    class _objref_TweekSubject :
+      public virtual tweek::_objref_Subject
+    {
+    public:
+      void setCommand(const char* key, const char* value);
 
-    inline _objref_TweekSubject()  { _PR_setobj(0); }  // nil
-    _objref_TweekSubject(omniIOR*, omniIdentity*);
+      inline _objref_TweekSubject()  { _PR_setobj(0); }  // nil
+      _objref_TweekSubject(omniIOR*, omniIdentity*);
 
-  protected:
-    virtual ~_objref_TweekSubject();
+    protected:
+      virtual ~_objref_TweekSubject();
 
-    
-  private:
-    virtual void* _ptrToObjRef(const char*);
+      
+    private:
+      virtual void* _ptrToObjRef(const char*);
 
-    _objref_TweekSubject(const _objref_TweekSubject&);
-    _objref_TweekSubject& operator = (const _objref_TweekSubject&);
-    // not implemented
+      _objref_TweekSubject(const _objref_TweekSubject&);
+      _objref_TweekSubject& operator = (const _objref_TweekSubject&);
+      // not implemented
 
-    friend class TweekSubject;
-  };
+      friend class TweekSubject;
+    };
 
-  class _pof_TweekSubject : public _OMNI_NS(proxyObjectFactory) {
-  public:
-    inline _pof_TweekSubject() : _OMNI_NS(proxyObjectFactory)(TweekSubject::_PD_repoId) {}
-    virtual ~_pof_TweekSubject();
+    class _pof_TweekSubject : public _OMNI_NS(proxyObjectFactory) {
+    public:
+      inline _pof_TweekSubject() : _OMNI_NS(proxyObjectFactory)(TweekSubject::_PD_repoId) {}
+      virtual ~_pof_TweekSubject();
 
-    virtual omniObjRef* newObjRef(omniIOR*,omniIdentity*);
-    virtual _CORBA_Boolean is_a(const char*) const;
-  };
+      virtual omniObjRef* newObjRef(omniIOR*,omniIdentity*);
+      virtual _CORBA_Boolean is_a(const char*) const;
+    };
 
-  class _impl_TweekSubject :
-    public virtual tweek::_impl_Subject
-  {
-  public:
-    virtual ~_impl_TweekSubject();
+    class _impl_TweekSubject :
+      public virtual tweek::_impl_Subject
+    {
+    public:
+      virtual ~_impl_TweekSubject();
 
-    virtual void setCommand(const char* key, const char* value) = 0;
-    
-  public:  // Really protected, workaround for xlC
-    virtual _CORBA_Boolean _dispatch(omniCallHandle&);
+      virtual void setCommand(const char* key, const char* value) = 0;
+      
+    public:  // Really protected, workaround for xlC
+      virtual _CORBA_Boolean _dispatch(omniCallHandle&);
 
-  private:
-    virtual void* _ptrToInterface(const char*);
-    virtual const char* _mostDerivedRepoId();
-    
-  };
+    private:
+      virtual void* _ptrToInterface(const char*);
+      virtual const char* _mostDerivedRepoId();
+      
+    };
 
+
+  _CORBA_MODULE_END
 
 _CORBA_MODULE_END
 
@@ -183,17 +185,22 @@ _CORBA_MODULE_END
 _CORBA_MODULE POA_Veda
 _CORBA_MODULE_BEG
 
-  class TweekSubject :
-    public virtual Veda::_impl_TweekSubject,
-    public virtual POA_tweek::Subject
-  {
-  public:
-    virtual ~TweekSubject();
+  _CORBA_MODULE ITweek
+  _CORBA_MODULE_BEG
 
-    inline ::Veda::TweekSubject_ptr _this() {
-      return (::Veda::TweekSubject_ptr) _do_this(::Veda::TweekSubject::_PD_repoId);
-    }
-  };
+    class TweekSubject :
+      public virtual Veda::ITweek::_impl_TweekSubject,
+      public virtual POA_tweek::Subject
+    {
+    public:
+      virtual ~TweekSubject();
+
+      inline ::Veda::ITweek::TweekSubject_ptr _this() {
+        return (::Veda::ITweek::TweekSubject_ptr) _do_this(::Veda::ITweek::TweekSubject::_PD_repoId);
+      }
+    };
+
+  _CORBA_MODULE_END
 
 _CORBA_MODULE_END
 
@@ -201,6 +208,11 @@ _CORBA_MODULE_END
 
 _CORBA_MODULE OBV_Veda
 _CORBA_MODULE_BEG
+
+  _CORBA_MODULE ITweek
+  _CORBA_MODULE_BEG
+
+  _CORBA_MODULE_END
 
 _CORBA_MODULE_END
 
@@ -214,7 +226,7 @@ _CORBA_MODULE_END
 
 
 inline void
-Veda::TweekSubject::_marshalObjRef(::Veda::TweekSubject_ptr obj, cdrStream& s) {
+Veda::ITweek::TweekSubject::_marshalObjRef(::Veda::ITweek::TweekSubject_ptr obj, cdrStream& s) {
   omniObjRef::_marshal(obj->_PR_getobj(),s);
 }
 

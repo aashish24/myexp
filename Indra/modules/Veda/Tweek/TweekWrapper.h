@@ -67,15 +67,18 @@ namespace Veda
           int    argc = 0;      
           char** argv = NULL;
 
-          std::string namingContext( "TWEEK_INTERFACE" );      
+          std::string namingContext( "TweekSubject" );      
 
           try
           {
+	    std::cout << "Initializing CORBA manager: " << std::endl;
             if( mCorbaManager.init( namingContext, argc, argv ) )
             {  
               try 
               {
-                if( mCorbaManager.createSubjectManager() )
+	    	std::cout << "Creating SUBJECT  manager: " << std::endl;
+                
+		if( mCorbaManager.createSubjectManager() )
                 {
                   mTweekInitialized = true;                  
                 }
@@ -98,7 +101,7 @@ namespace Veda
           int    argc = 0;      
           char** argv = NULL;
 
-          std::string namingContext( "TWEEK_INTERFACE" );      
+          std::string namingContext( "TweekSubject" );      
 
           try
           {

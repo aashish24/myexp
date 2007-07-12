@@ -176,9 +176,14 @@ namespace Veda
 
     void AppBase::initTweek()
     {
+
+      UserDataController::init();
+
       // Initialize the tweek wrapper object. 
       mTweekWrapper = new Tweek::TweekWrapper();
 
+      std::cout << "Initializing tweek: " << std::endl; 
+ 
       // Check if tweek has been initialized if not then set state off and return. 
       if(!mTweekWrapper->init())
       {    
@@ -191,7 +196,7 @@ namespace Veda
       mSubject->init();
 
       mTweekWrapper->applicationName( mApplicationName );
-      mTweekWrapper->setSubject( mSubject, "Subject");      
+      mTweekWrapper->setSubject( mSubject, "TweekSubject");      
     }
 
     ///////////////////////////////////////////////////////////////////////////////
