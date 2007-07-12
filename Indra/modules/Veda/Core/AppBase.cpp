@@ -18,22 +18,26 @@ namespace Veda
   namespace Core
   {
 
+    static const std::string TWEEK_SUBJECT_ID = "TweekSubject";
+
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Constructor. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
     AppBase::AppBase()  : 
       mApplicationName( "Application" ), 
-      mNearFarSet     ( false )
+      mNearFarSet     ( false ), 
+      mEnableVnc      ( false ), 
+      mEnableTweek    ( true )
     {  
     }
 
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Destructor. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
@@ -49,13 +53,13 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Initialize features.  
     //
     ///////////////////////////////////////////////////////////////////////////////
 
-    void AppBase::initDevices()
+    void AppBase::initFeatures()
     {
-      if( mTweekState == ON )
+      if( mEnableTweek )
       {
         initTweek();
       }
@@ -64,7 +68,7 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Set application name for Tweek purposes. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
@@ -76,7 +80,7 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Get current interaction in use. 
     //
     //////////////////////////////////////////////////////////////////////////////
 
@@ -88,7 +92,7 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Set interaction. 
     //
     //////////////////////////////////////////////////////////////////////////////
 
@@ -100,7 +104,7 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Initialize. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
@@ -118,14 +122,14 @@ namespace Veda
       // Set default near far. 
       if( !mNearFarSet )
       {
-        setNearFar( 0.1, 1000000.0 ); 
+        setNearFar( 0.1f, 1000000.0f ); 
       }
     }
 
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Get commands that are ready to execute. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
@@ -137,13 +141,13 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Clean command that are already executed. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
     void AppBase::clearReadyCommandList()
     {      
-      if( mReadyCommandList.size() != 0 && ( mTweekState == ON ) )
+      if( mReadyCommandList.size() != 0 && ( mEnableTweek ) )
       {
         for( size_t i = 0; i < mReadyCommandList.size(); ++i )
         {
@@ -159,24 +163,25 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Set near far. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
-    void AppBase::setNearFar( const long double& near, const long double& far )
-    {  
+    void AppBase::setNearFar( const float& nearVal, const float& farVal )
+    { 
+      vrj::Projection::setNearFar( nearVal, farVal );
     }
 
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Initialize tweek. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
     void AppBase::initTweek()
     {
-
+      // Initialize cluste data sharing for tweek. 
       UserDataController::init();
 
       // Initialize the tweek wrapper object. 
@@ -187,30 +192,34 @@ namespace Veda
       // Check if tweek has been initialized if not then set state off and return. 
       if(!mTweekWrapper->init())
       {    
+        mEnableTweek = false;
         return;
       }
       
+      // Else initialize tweek server. 
       Veda::SubjectImpl* mSubject;
 
       mSubject = new Veda::SubjectImpl();
       mSubject->init();
 
       mTweekWrapper->applicationName( mApplicationName );
-      mTweekWrapper->setSubject( mSubject, "TweekSubject");      
+      mTweekWrapper->setSubject( mSubject, TWEEK_SUBJECT_ID );      
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Update tweek. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
     void AppBase::updateTweek()
     {
-      if( mTweekState == ON )
+      if( mEnableTweek )
       {
         // First copy the commands over at the current list. 
         mReadyCommandList  = UserDataController::getReadyTweekCommandList();
+
+        // Now clear the list in the shared memory. 
         UserDataController::clearTweekCommandList();
 
         // Now update it.
@@ -225,7 +234,7 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Update everything else. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
@@ -237,7 +246,7 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Update device data. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
@@ -249,41 +258,36 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    //
+    // Set features. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
-    void AppBase::setDevice( DEVICE device, STATE state )
+    void AppBase::setFeature( FEATURE feature, bool val )
     {  
-      switch( device )
+      switch( feature )
       {
         case VJVNC: 
         {
-          mVncState   = state;
-          mTweekState = OFF;
+          mEnableVnc  = val;          
           break;        
         }
         case TWEEK: 
         {        
-          mTweekState = state;
-          mVncState   = OFF;
+          mEnableTweek = val;
           break;
         }
         case ALL: 
         {      
-          mVncState    = state;    
-          mTweekState  = state;
+          mEnableTweek = mEnableVnc = true;
           break;
         }
         default: 
-        {
-          mVncState    = OFF;
-          mTweekState  = OFF;
+        { 
           break;
         }
       };
       
-      initDevices();
+      initFeatures();
     } 
   }
 }

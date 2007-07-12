@@ -66,14 +66,11 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
 
-        enum DEVICE 
+        enum FEATURE 
         { 
-          TWEEK  = 0, VJVNC = 1, ALL = 2 
-        };      
-        
-        enum STATE  
-        { 
-          OFF = 0, ON = 1 
+          TWEEK  = 0, 
+          VJVNC = 1, 
+          ALL = 2 
         };
 
         AppBase();
@@ -82,13 +79,13 @@ namespace Veda
         
         virtual void                                   init();
 
-        virtual void                                   initDevices();       
+        virtual void                                   initFeatures();       
 
         virtual void                                   initTweek();      
         
         virtual void                                   initMenus(){}      
 
-        virtual void                                   setDevice( DEVICE device=ALL, STATE state=OFF );                  
+        virtual void                                   setFeature( FEATURE feature=ALL, bool val=false );                  
         
         virtual void                                   applicationName( const std::string& name );
 
@@ -98,7 +95,7 @@ namespace Veda
         virtual TweekCommandList                       getReadyCommandList();
         virtual void                                   clearReadyCommandList();
 
-        virtual void                                   setNearFar( const long double&  near, const long double& far );       
+        virtual void                                   setNearFar( const float& nearVal, const float& farVal );       
 
         virtual void                                   updateAll();
         virtual void                                   updateDeviceData();
@@ -112,7 +109,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
         
-        User                                                     mUser;      
+        User                                           mUser;      
         
 
         /////////////////////////////////////////////////////////////////////////
@@ -122,7 +119,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
          
-        std::string                                              mApplicationName;
+        std::string                                    mApplicationName;
 
 
         /////////////////////////////////////////////////////////////////////////
@@ -131,7 +128,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
         
-        Tweek::TweekWrapper*                                     mTweekWrapper;    
+        Tweek::TweekWrapper*                           mTweekWrapper;    
       
 
         /////////////////////////////////////////////////////////////////////////
@@ -140,7 +137,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
          
-        TweekCommandList                                         mReadyCommandList;
+        TweekCommandList                               mReadyCommandList;
 
 
         /////////////////////////////////////////////////////////////////////////
@@ -149,7 +146,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
 
-        bool                                                     mNearFarSet;
+        bool                                           mNearFarSet;
 
 
       private:       
@@ -160,7 +157,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
         
-        STATE                                         		 mVncState;
+        bool                                           mEnableVnc;
         
 
         /////////////////////////////////////////////////////////////////////////
@@ -169,7 +166,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
         
-        STATE                                          		 mTweekState;    
+        bool                                          mEnableTweek;    
 
 
         ////////////////////////////////////////////////////////////////////////
@@ -178,7 +175,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
 
-        cluster::UserData< UserData >                  		 mUserData;
+        cluster::UserData< UserData >                 mUserData;
     };
   }
 }
