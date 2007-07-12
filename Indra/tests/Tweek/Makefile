@@ -45,34 +45,37 @@ all:
 				#$(MAKE) java_idl
 				$(MAKE) NO_DEPEND=0 cxx
 				$(MAKE) $(APP_NAME)
-				$(MAKE) java
+				#$(MAKE) java
 				$(MAKE) TweekTestBean.jar
-				$(MAKE) install
 
 # Basic options.
 srcdir=				.
 EXTRA_PATH_FOR_SOURCES=		$(INDRA_ROOT_DIR)/modules/Veda
 
 ## This is needed to make java_idl
-VPATH=				$(INDRA_ROOT_DIR)/modules/Veda
+VPATH=				/home/aashish/src/indra/Indra/tests/Tweek/Veda/ITweek
 
 ## Extra path for java src. 
-EXTRA_SOURCEPATH_DIRS= 		.
+EXTRA_SOURCEPATH_DIRS= 		/home/aashish/src/indra/Indra/tests/Tweek
+
+JAVA_CLASSPATH= 		/home/aashish/src/indra/Indra/tests/Tweek/Veda/ITweek/TweekSubject.class
 
 NO_DEPEND=			YES
 
 #IDL_CXX_FILES=			dtsubject.cpp dtsubject.h		
-#IDL_JAVA_FILES=		dtsubject.java	
+IDL_JAVA_FILES=			TweekSubject.java	
 		
 
 base_srcs=			MyApp.cpp main.cpp		
 idl_srcs=			$(filter-out $(base_srcs), $(notdir $(wildcard $(CXX_GEN_DIR)/*.cpp)))
 
 SRCS=				$(base_srcs) $(idl_srcs)
-JAVA_SRCS=			TweekTest.java TweekObserverImpl.java	
+JAVA_SRCS=			Veda/ITweek/TweekSubject.java		\
+				Veda/ITweek/TweekObserverImpl.java	\
+				Veda/ITweek/TweekSubjectHolder.java	\
+				Veda/ITweek/TweekTest.java 		\
 	
-ALL_CLASSES=			*.class
-CLASSPATH=			.
+ALL_CLASSES=			Veda/ITweek/*.class
 
 DZR_BASE_DIR=   		$(shell flagpoll doozer --get-prefix)
 
@@ -95,6 +98,8 @@ JAVA_IDL=			$(TWEEK_IDL_JAVA)
 JAVA_IDL_OPTS=			$(TWEEK_IDLFLAGS_JAVA)			\
 				$(TWEEK_IDL_GENDIR_JAVA)$(JAVA_GEN_DIR)
 JAVA_IDL_INCLUDES=	
+
+JAVAC_FLAGS+=  			-classpath $(JAVA_CLASSPATH):$(CLASSPATH) 
 
 vpath %.idl 			$(srcdir)
 vpath %.cpp 			$(CXX_GEN_DIR)
@@ -121,8 +126,8 @@ server: 			$(OBJS)
 				$(LINK) $(LINK_OUT)$@ $(OBJS) $(TWEEK_LIBS) $(EXTRA_LIBS) $(LIBS)
 
 TweekTestBean.jar: 		$(JAVA_CLASSES)
-				$(JAR) cvf $@ $(ALL_CLASSES)
-			
+				$(JAR) cvf $@  $(ALL_CLASSES)
+
 
 CLEAN_FILES+=			$(CLASSES) *.class, $(EXTRA_SOURCEPATH_DIRS)/TweekTestBean.jar
 
