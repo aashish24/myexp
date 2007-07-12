@@ -1,7 +1,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (c) 2007, Arizona State University
 //  All rights reserved.
 //  BSD License: http://www.opensource.org/licenses/bsd-license.html
 //  Created by: Aashish Chaudhary
@@ -54,9 +53,9 @@ namespace OsgTools
           DOWN
         };
 
-        static osg::Node* 	findNodeByName    ( osg::Node*  node, const std::string& id, Dir dir = DOWN );            
+        static osg::Node* 	              findNodeByName    ( osg::Node*  node, const std::string& id, Dir dir = DOWN );            
 
-        static Nodes     	findAllNodesByName( osg::Node*  node, const std::string& id, Dir dir = DOWN ); 
+        static Nodes     	                findAllNodesByName( osg::Node*  node, const std::string& id, Dir dir = DOWN ); 
     };     
   }
 }
