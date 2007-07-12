@@ -1,26 +1,13 @@
+
 package Veda.ITweek;
 
-/**
- * <p>Title: </p>
- *
- * <p>Description: </p>
- *
- * <p>Copyright: Copyright (c) 2005</p>
- *
- * <p>Company: </p>
- *
- * @author Aashish Chaudhary
- * @version 1.0
- */
-
-//import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JSlider;
 import tweek.*;
 
-
 public class TweekObserverImpl  extends ObserverPOA
 {
-    public TweekObserverImpl() {
+    public TweekObserverImpl() 
+    {
         try {
             jbInit();
         } catch (Exception ex) {
