@@ -135,7 +135,8 @@ $(STATIC_LIB_FILENAME): 	$(OBJS)
 				$(STATIC_LINK) $(STATIC_OUT)$@ $(OBJS)
 
 install: 						
-				 $(INSTALLCMD) $(SHARED_LIB_FILENAME) $(STATIC_LIB_FILENAME) -d $(prefix)
+				$(INSTALLCMD) $(SHARED_LIB_FILENAME) $(prefix) 
+				$(INSTALLCMD) $(STATIC_LIB_FILENAME) $(prefix)/static
 				
 
 CLEAN_FILES+=			$(addprefix, $(IDL_CXX_FILES))		\
