@@ -84,7 +84,7 @@ namespace Veda
         
         virtual void                                   initMenus(){}      
 
-        virtual void                                   setFeature( FEATURE feature=ALL, bool val=false );                  
+        virtual void                                   enableFeature( FEATURE feature=ALL );                  
         
         virtual void                                   applicationName( const std::string& name );
 

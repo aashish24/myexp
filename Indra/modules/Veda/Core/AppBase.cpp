@@ -261,18 +261,18 @@ namespace Veda
     //
     ///////////////////////////////////////////////////////////////////////////////
 
-    void AppBase::setFeature( FEATURE feature, bool val )
+    void AppBase::enableFeature( FEATURE feature )
     {  
       switch( feature )
       {
         case VJVNC: 
         {
-          mEnableVnc  = val;          
+          mEnableVnc  = true;          
           break;        
         }
         case TWEEK: 
         {        
-          mEnableTweek = val;
+          mEnableTweek = true;
           break;
         }
         case ALL: 
