@@ -15,7 +15,7 @@ all:
 				$(MAKE) cxx_idl
 				$(MAKE) java_idl
 				$(MAKE) $(LIB_NAME)
-
+				$(MAKE) install
 
 #-----------------------Basic options-------------------------------------
 
@@ -45,8 +45,9 @@ INDRA_SRCS=			Controller.cpp			\
 		
 
 SHLIB_PREFIX=			lib
-SHLIB_EXT=			so
-LIB_EXT=			a
+SHLIB_EXT=			.so
+LIB_PREFIX=			lib
+LIB_EXT=			.a
 
 SHARED_LIB_FILENAME=		$(SHLIB_PREFIX)$(LIB_NAME)$(SHLIB_EXT)
 STATIC_LIB_FILENAME=		$(LIB_PREFIX)$(LIB_NAME)$(LIB_EXT)
@@ -57,7 +58,7 @@ CFLAGS_DYNLIB=          	-fPIC -DPIC
 
 EXTRA_CXXFLAGS=			$(CFLAGS_DYNLIB)
 
-INSTALL=			../../bin
+prefix=				../../bin
 
 STATICLIB_EXT=          	.a
 DYNAMICLIB_EXT=         	.so
@@ -111,6 +112,8 @@ include 			$(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
 include 			$(DZR_BASE_DIR)/mk/dzr.java-app.mk
 include 			$(DZR_BASE_DIR)/mk/dzr.lib.mk
 
+INSTALLCMD=			cp -rf
+
 #---------------------------Application build targets-------------------------
 
 cxx_idl: $(IDL_CXX_FILES)
@@ -125,12 +128,15 @@ java_idl: 			$(IDL_JAVA_FILES)
 
 $(LIB_NAME): 			$(SHARED_LIB_FILENAME) $(STATIC_LIB_FILENAME)
 
-$(SHARED_LIB_FILENAME): $(OBJS)
+$(SHARED_LIB_FILENAME): 	$(OBJS)
 				$(SHARED_LINK) $(SHARED_OUT)$@ $(OBJS)
 
-$(STATIC_LIB_FILENAME): $(OBJS)	
+$(STATIC_LIB_FILENAME): 	$(OBJS)	
 				$(STATIC_LINK) $(STATIC_OUT)$@ $(OBJS)
 
+install: 						
+				 $(INSTALLCMD) $(SHARED_LIB_FILENAME) $(STATIC_LIB_FILENAME) -d $(prefix)
+				
 
 CLEAN_FILES+=			$(addprefix, $(IDL_CXX_FILES))		\
 				$(addprefix ./, $(INSTALL)/lib*$(APP_NAME), $(IDL_JAVA_FILES))
