@@ -29,7 +29,7 @@ namespace Veda
       mApplicationName( "Application" ), 
       mNearFarSet     ( false ), 
       mEnableVnc      ( false ), 
-      mEnableTweek    ( true )
+      mEnableTweek    ( false )
     {  
     }
 

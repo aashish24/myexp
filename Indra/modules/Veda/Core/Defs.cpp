@@ -59,3 +59,4 @@ namespace Veda
     ActionState Defs::mButtonTr5[]  = { OFF, OFF, OFF, OFF, OFF, ON};
   }
 }
+
