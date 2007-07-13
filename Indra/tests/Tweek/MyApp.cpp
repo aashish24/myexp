@@ -14,7 +14,7 @@ MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : Veda::Core::OsgBase(
 
 void MyApp::appInit()
 {
-	setDevice( TWEEK, ON );
+	//enableFeature( TWEEK );
 	setBackgroundColor(( gmtl::Vec4f(0.35, 0.35, 0.35, 1.0 ) ).getData() );	
 }
 
@@ -28,6 +28,7 @@ void MyApp::appBufferPreDraw()
 
 void MyApp::appSceneInit()
 {	
+	std::cout <<"Initializing scene: " << std::endl; 
 	osg::ref_ptr< osg::Group > modelGroupNode = new osg::Group();
 	loadGroupedData( modelGroupNode.get(), ".//data/ModelList.txt" );
 	if( modelGroupNode.get() )

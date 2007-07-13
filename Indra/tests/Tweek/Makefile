@@ -90,8 +90,18 @@ CXX_IDL_OPTS=			$(TWEEK_IDLFLAGS_CXX)			\
 				$(TWEEK_IDL_GENDIR_CXX)$(CXX_GEN_DIR)
 CXX_IDL_INCLUDES=	
 
-EXTRA_INCLUDES+=		-I$(INDRA_ROOT_DIR)/modules -I$(OSG_INC_DIR)
-EXTRA_LIBS+=			-L$(OSG_LIB_DIR) -L$(INDRA_ROOT_DIR)/bin -lOsgTools -lVeda -losg -losgDB -losgGA -losgUtil -losgText -losgFX
+EXTRA_INCLUDES+=		-I$(INDRA_ROOT_DIR)/modules		\
+				-I$(OSG_INC_DIR)			\
+				-I$(CPPDOM_INC_DIR)			\
+				-I$(GMTL_INC_DIR)			\
+				-I$(OMNIORB_INC_DIR)			
+
+EXTRA_LIBS+=			-L$(OSG_LIB_DIR) 			\
+				-L$(INDRA_ROOT_DIR)/bin 		\
+				-L$(OMNIORB_LIB_DIR)			\
+				-L$(BOOST_LIB_DIR)			\
+				-L$(CPPDOM_LIB_DIR)			\
+				-lOsgTools -lVeda -losg -losgDB -losgGA -losgUtil -losgText -losgFX
 
 JAVA_GEN_DIR=			.
 JAVA_IDL=			$(TWEEK_IDL_JAVA)

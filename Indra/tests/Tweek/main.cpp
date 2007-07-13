@@ -6,8 +6,8 @@
 
 int main( int argc, char* argv[] )
 {
-	vrj::Kernel* kernel		= vrj::Kernel::instance();
-	MyApp* application	= new MyApp(kernel, argc, argv);	
+	vrj::Kernel* kernel = vrj::Kernel::instance();
+	MyApp* application  = new MyApp(kernel, argc, argv);	
 	
 	// Number of argumets should be more than 1 :: Needs atleast one config file ::
 	if( argc < 2 )
