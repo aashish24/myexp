@@ -53,19 +53,18 @@ srcdir=				.
 EXTRA_PATH_FOR_SOURCES=		$(INDRA_ROOT_DIR)/modules/Veda
 
 ## This is needed to make java_idl
-VPATH=				/home/aashish/src/indra/Indra/tests/Tweek/Veda/ITweek
+VPATH=				$(INDRA_ROOT_DIR)/modules/Veda/TweekJava
 
-## Extra path for java src. 
-EXTRA_SOURCEPATH_DIRS= 		/home/aashish/src/indra/Indra/tests/Tweek
+#------Extra path for java src----------
+EXTRA_SOURCEPATH_DIRS= 		$(INDRA_ROOT_DIR)/modules/Veda/TweekJava
 
-JAVA_CLASSPATH= 		/home/aashish/src/indra/Indra/tests/Tweek/Veda/ITweek/TweekSubject.class
+#------No need for this----------------
+JAVA_CLASSPATH= 	
 
 NO_DEPEND=			YES
 
-#IDL_CXX_FILES=			dtsubject.cpp dtsubject.h		
 IDL_JAVA_FILES=			TweekSubject.java	
 		
-
 base_srcs=			MyApp.cpp main.cpp		
 idl_srcs=			$(filter-out $(base_srcs), $(notdir $(wildcard $(CXX_GEN_DIR)/*.cpp)))
 
