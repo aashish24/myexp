@@ -44,71 +44,35 @@ namespace Veda
         {
         }
 
+
         ///////////////////////////////////////////////////////////////////////////////
         //
         // Read data values. 
         //
         ///////////////////////////////////////////////////////////////////////////////
 
-#if ( VRJUGGLER_MAJOR_VERSION <= 2 ) && ( VRJUGGLER_MINOR_VERSION > 0 )
-
-        virtual void readObject( vpr::ObjectReader* reader )
-        {
-          unsigned int dataSize  = reader->readUint32();
-          for( size_t i = 0; i < dataSize ; ++i )
-          {      
-            mPendingTweekCommandList.push_back( new Tweek::TweekCommand() );  
-
-            mPendingTweekCommandList[ i ]->mKey    = reader->readString();
-            mPendingTweekCommandList[ i ]->mValue  = reader->readString();        
-          }        
-        }
-
-        ///////////////////////////////////////////////////////////////////////////////
-        //
-        // Write data values. 
-        //
-        ///////////////////////////////////////////////////////////////////////////////
-
-        virtual void writeObject(vpr::ObjectWriter* writer)
-        {
-          unsigned int dataSize = mPendingTweekCommandList.size();
-          
-          writer->writeUint32( dataSize );
-
-          for(size_t i = 0; i < dataSize; ++i)
-          {          
-            writer->writeString ( mPendingTweekCommandList[ i ]->mKey   );
-            writer->writeString ( mPendingTweekCommandList[ i ]->mValue );
-          }      
-
-          // Release the memory allocated. 
-          for( size_t i = 0; i < dataSize; ++i )
-          {
-            delete mPendingTweekCommandList[ i ];
-
-            // Set the pointer to null.
-            mPendingTweekCommandList[ i ] = 0x00;
-          }
-
-          mPendingTweekCommandList.clear();        
-        }
+#if def( __VPR_version ) && ( __VPR_version < 1001005 )
+        virtual void 
 #else 
-
-        virtual vpr::ReturnStatus readObject( vpr::ObjectReader* reader )
-        {          
+        virtual vpr::ReturnStatus  
+#endif // def( __VPR_version ) && ( __VPR_version < 1001005 )
+        readObject( vpr::ObjectReader* reader )
+        {
           unsigned int dataSize  = reader->readUint32();
-         
+          
           for( size_t i = 0; i < dataSize ; ++i )
           {      
             mPendingTweekCommandList.push_back( new Tweek::TweekCommand() );  
 
             mPendingTweekCommandList[ i ]->mKey    = reader->readString();
             mPendingTweekCommandList[ i ]->mValue  = reader->readString();        
-          }        
-
+          }                     
+#if def( __VPR_version ) && ( __VPR_version < 1001005 )
+#else
           return vpr::ReturnStatus::Succeed;
+#endif // def( __VPR_version ) && ( __VPR_version < 1001005 )
         }
+
 
         ///////////////////////////////////////////////////////////////////////////////
         //
@@ -116,7 +80,12 @@ namespace Veda
         //
         ///////////////////////////////////////////////////////////////////////////////
 
-        virtual vpr::ReturnStatus  writeObject(vpr::ObjectWriter* writer)
+#if def( __VPR_version ) && ( __VPR_version < 1001005 )
+        virtual void 
+#else
+        vpr::ReturnStatus
+#endif // def( __VPR_version ) && ( __VPR_version < 1001005 )
+        writeObject(vpr::ObjectWriter* writer)
         {
           unsigned int dataSize = mPendingTweekCommandList.size();
           
@@ -139,10 +108,11 @@ namespace Veda
 
           mPendingTweekCommandList.clear();        
 
-          return vpr::ReturnStatus::Succeed;
-        }  
-
-#endif // VRJUGGLER_MAJOR_VERSION && VRJUGGLER_MINOR_VERSION
+#if def( __VPR_version ) && ( __VPR_version < 1001005 )
+#else
+          return vpr::ReturnStatus::Succeed;   
+#endif  
+        }
 
       public:
   			
@@ -195,12 +165,12 @@ namespace Veda
           return mUserData->mReadyTweekCommandList;
         }
 
+
         ///////////////////////////////////////////////////////////////////////////////
         //
         // Clean already executed commands. 
         //
         ///////////////////////////////////////////////////////////////////////////////
-
 
         static void clearTweekCommandList()
         {
