@@ -51,11 +51,11 @@ namespace Veda
         //
         ///////////////////////////////////////////////////////////////////////////////
 
-#if def( __VPR_version ) && ( __VPR_version < 1001005 )
+#if defined( __VPR_version ) && ( __VPR_version > 1001005 )
         virtual void 
 #else 
         virtual vpr::ReturnStatus  
-#endif // def( __VPR_version ) && ( __VPR_version < 1001005 )
+#endif // defined( __VPR_version ) && ( __VPR_version > 1001005 )
         readObject( vpr::ObjectReader* reader )
         {
           unsigned int dataSize  = reader->readUint32();
@@ -67,10 +67,10 @@ namespace Veda
             mPendingTweekCommandList[ i ]->mKey    = reader->readString();
             mPendingTweekCommandList[ i ]->mValue  = reader->readString();        
           }                     
-#if def( __VPR_version ) && ( __VPR_version < 1001005 )
+#if defined( __VPR_version ) && ( __VPR_version > 1001005 )
 #else
           return vpr::ReturnStatus::Succeed;
-#endif // def( __VPR_version ) && ( __VPR_version < 1001005 )
+#endif // defined( __VPR_version ) && ( __VPR_version > 1001005 )
         }
 
 
@@ -80,11 +80,11 @@ namespace Veda
         //
         ///////////////////////////////////////////////////////////////////////////////
 
-#if def( __VPR_version ) && ( __VPR_version < 1001005 )
+#if defined( __VPR_version ) && ( __VPR_version > 1001005 )
         virtual void 
 #else
         vpr::ReturnStatus
-#endif // def( __VPR_version ) && ( __VPR_version < 1001005 )
+#endif // defined( __VPR_version ) && ( __VPR_version > 1001005 )
         writeObject(vpr::ObjectWriter* writer)
         {
           unsigned int dataSize = mPendingTweekCommandList.size();
@@ -108,10 +108,10 @@ namespace Veda
 
           mPendingTweekCommandList.clear();        
 
-#if def( __VPR_version ) && ( __VPR_version < 1001005 )
+#if defined( __VPR_version ) && ( __VPR_version > 1001005 )
 #else
           return vpr::ReturnStatus::Succeed;   
-#endif  
+#endif	// defined( __VPR_version ) && ( __VPR_version > 1001005 ) 
         }
 
       public:

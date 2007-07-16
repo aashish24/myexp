@@ -22,6 +22,7 @@
 #include "vpr/Util/Debug.h"
 
 #include "Veda/Export.h"
+#include "Veda/VedaDefines.h"
 
 namespace Veda
 {
@@ -59,8 +60,6 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
 
-#if ( VRJUGGLER_MAJOR_VERSION <= 2 ) && ( VRJUGGLER_MINOR_VERSION > 0 )
-        
         bool init()
         {
           int    argc = 0;      
@@ -71,44 +70,21 @@ namespace Veda
           try
           {
 	    std::cout << "Initializing CORBA manager: " << std::endl;
+
+#if defined( __TWEEK_version ) && ( __TWEEK_version >= 1001013 )
             if( mCorbaManager.init( namingContext, argc, argv ) )
+#else
+  	    if( mCorbaManager.init( namingContext, argc, argv ).success() )	
+#endif // defined( __TWEEK_version ) && ( __TWEEK_version >= 1001013 )
             {  
               try 
               {
 	    	std::cout << "Creating SUBJECT  manager: " << std::endl;
-                
+#if defined( __TWEEK_version ) && ( __TWEEK_version >= 1001013 )
 		if( mCorbaManager.createSubjectManager() )
-                {
-                  mTweekInitialized = true;                  
-                }
-              }
-              catch( CORBA::Exception& e )
-              {                
-              }
-            }
-          }
-          catch( ... )
-          {          
-          }
-
-          return mTweekInitialized;
-        }
-
 #else
-        bool init()
-        {
-          int    argc = 0;      
-          char** argv = NULL;
-
-          std::string namingContext( "TweekSubject" );      
-
-          try
-          {
-            if( mCorbaManager.init( namingContext, argc, argv ).success() )
-            {  
-              try 
-              {
-                if( mCorbaManager.createSubjectManager().success() )
+		if( mCorbaManager.createSubjectManager().success() )
+#endif //defined( __TWEEK_version ) && ( __TWEEK_version >= 1001013 )
                 {
                   mTweekInitialized = true;                  
                 }
@@ -125,7 +101,6 @@ namespace Veda
           return mTweekInitialized;
         }
 
-#endif
 
         /////////////////////////////////////////////////////////////////////////
         //

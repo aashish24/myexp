@@ -14,5 +14,7 @@
 
 #include "vpr/vprParam.h"
 
+#include "tweek/tweekParam.h"
+
 #endif // __VEDA_CORE_VEDADEFINES_H__
 
