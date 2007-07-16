@@ -153,3 +153,4 @@ OsgTools::SG::Nodes OsgTools::SG::OsgFind::findAllNodesByName( osg::Node*  node,
 
   return nodes;
 }  
+
