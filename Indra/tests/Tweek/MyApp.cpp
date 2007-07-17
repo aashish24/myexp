@@ -14,8 +14,8 @@ MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : Veda::Core::OsgBase(
 
 void MyApp::appInit()
 {
-	//enableFeature( TWEEK );
-	setBackgroundColor(( gmtl::Vec4f(0.35, 0.35, 0.35, 1.0 ) ).getData() );	
+	enableFeature( TWEEK );
+	setBackgroundColor( ( gmtl::Vec4f(0.35, 0.35, 0.35, 1.0 ) ).getData() );	
 }
 
 

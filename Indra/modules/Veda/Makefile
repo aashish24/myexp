@@ -112,7 +112,7 @@ include 			$(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
 include 			$(DZR_BASE_DIR)/mk/dzr.java-app.mk
 include 			$(DZR_BASE_DIR)/mk/dzr.lib.mk
 
-INSTALLCMD=			cp -rf
+INSTALLCMD=			../../scripts/install.sh
 
 #---------------------------Application build targets-------------------------
 
@@ -134,9 +134,9 @@ $(SHARED_LIB_FILENAME): 	$(OBJS)
 $(STATIC_LIB_FILENAME): 	$(OBJS)	
 				$(STATIC_LINK) $(STATIC_OUT)$@ $(OBJS)
 
-install: 						
-				$(INSTALLCMD) $(SHARED_LIB_FILENAME) $(prefix) 
-				$(INSTALLCMD) $(STATIC_LIB_FILENAME) $(prefix)/static/
+install: 		
+				$(INSTALLCMD) $(SHARED_LIB_FILENAME) $(prefix)
+				$(INSTALLCMD) $(STATIC_LIB_FILENAME) $(prefix)/static
 				
 
 CLEAN_FILES+=			$(addprefix, $(IDL_CXX_FILES))		\
