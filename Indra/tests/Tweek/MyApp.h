@@ -16,7 +16,8 @@ class MyApp : public Veda::Core::OsgBase
 		void appBufferPreDraw();		
 		void appSceneInit();
 		void appLatePreFrame();
-		
+		void appPostFrame();
+			
     void takeAction( const std::string& key, const std::string& value );
 
 		void loadGroupedData(osg::Group* groupNode, const std::string& fileName);

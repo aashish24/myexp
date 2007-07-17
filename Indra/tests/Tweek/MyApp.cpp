@@ -39,7 +39,8 @@ void MyApp::appSceneInit()
 
 
 void MyApp::appLatePreFrame()
-{	
+{
+	/*	
 	if( mReadyCommandList.size() != 0 )
 	{
 		std::cerr << mReadyCommandList.size() << std::endl;
@@ -51,8 +52,12 @@ void MyApp::appLatePreFrame()
 	}	
 
 	clearReadyCommandList();	
+	*/
 }
 
+void MyApp::appPostFrame()
+{
+}
 
 void MyApp::takeAction( const std::string& key, const std::string& value )
 {	

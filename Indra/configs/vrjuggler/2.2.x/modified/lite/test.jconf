@@ -4,7 +4,7 @@
    <include>components/common/base.jconf</include>
    <include>components/sites/tis/cluster/cluster.jconf</include>
    <!--<include>components/devices/vrpn.cluster.jconf</include>-->
-   <include>components/devices/linux_joystick3.jconf</include>
+   <include>components/devices/joystick.vrpn.jconf</include>
    <include>components/sim/sim.jconf</include>
    <include>components/sim/sim2.jconf</include>
    <elements />
