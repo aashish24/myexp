@@ -54,9 +54,9 @@ STATIC_LIB_FILENAME=		$(LIB_PREFIX)$(LIB_NAME)$(LIB_EXT)
 
 #-------------------Advanced options--------------------------------------- 
 
-CFLAGS_DYNLIB=          	-fPIC -DPIC
+CFLAGS_DYNLIB=          	-fPIC -DPIC 
 
-EXTRA_CXXFLAGS=			$(CFLAGS_DYNLIB)
+EXTRA_CXXFLAGS=			$(CFLAGS_DYNLIB) -DHAVE_OSG
 
 prefix=				../../bin
 
@@ -136,7 +136,7 @@ $(STATIC_LIB_FILENAME): 	$(OBJS)
 
 install: 						
 				$(INSTALLCMD) $(SHARED_LIB_FILENAME) $(prefix) 
-				$(INSTALLCMD) $(STATIC_LIB_FILENAME) $(prefix)/static
+				$(INSTALLCMD) $(STATIC_LIB_FILENAME) $(prefix)/static/
 				
 
 CLEAN_FILES+=			$(addprefix, $(IDL_CXX_FILES))		\

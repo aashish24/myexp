@@ -43,6 +43,8 @@ namespace Veda
       
       for( unsigned int i = 0; i < states.size(); i++ )
       {
+
+	std::cout << "Button: " << i << ( *btns[ i ] )->getData() << std::endl;
         if( states[i] == ON )
         {
           if( !( *btns[ i ] )->getData() )

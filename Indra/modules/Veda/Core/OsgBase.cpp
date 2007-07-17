@@ -422,8 +422,11 @@ namespace Veda
 
     void OsgBase::preFrame()
     {
+      std::cout << "This node is not local: " << std::endl;	
+		
       if( SharedData::mCommand.isLocal() )
       {
+	std::cout << "This node is local: " << std::endl;
         osg::Timer_t currTimer  = mTimer.tick();
         
         float deltaTime          = mTimer.delta_s( mLastTime, currTimer ) ;

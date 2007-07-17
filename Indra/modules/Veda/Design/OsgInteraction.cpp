@@ -576,7 +576,8 @@ void OsgInteraction::trackerAxis2GlobalAction( double value )
 ///////////////////////////////////////////////////////////////////////////////
 
 void OsgInteraction::joystickButton1GlobalAction( DeviceData value )
-{  
+{ 
+   std::cout <<"aashish test: button 0 " << std::endl; 
   return;
 }
 
@@ -940,6 +941,7 @@ void OsgInteraction::updateDeviceData()
     {
       value = mController.getDeviceInputData( mDigitalInputMap[ dindex ], digitalitr->second );      
 
+       std::cout << " aashish dbg: value is : " << value << std::endl;
       SharedData::mCommand->mDigitalInputs[ digitalitr->first ] = ( int )value;
       
       ++digitals;

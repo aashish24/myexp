@@ -37,7 +37,7 @@ namespace Veda
         static void init()
         {
 
-          vpr::GUID newGuid( "291B6290-1BD9-4844-B757-73D5C4BB1690" );
+          vpr::GUID newGuid( "24658da0-4c3d-48fc-b892-2e8538e24811" );
           SharedData::mCommand.init( newGuid );
           mActive = true;
         }
