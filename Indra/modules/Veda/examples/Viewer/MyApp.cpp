@@ -43,8 +43,7 @@ MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc,
 
 void MyApp::appInit()
 {
-  setFeature( ALL, false );
-	setBackgroundColor( ( gmtl::Vec4f( 0.35, 0.35, 0.35, 1.0 ) ).getData() );		
+  setBackgroundColor( ( gmtl::Vec4f( 0.35, 0.35, 0.35, 1.0 ) ).getData() );		
   setNearFar( 0.1, 1000000000.0 );
   setSceneInitialPosition( osg::Vec3( 0.0, 10.0, 0.0 ) );
 } 

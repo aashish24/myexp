@@ -69,6 +69,7 @@ EXTRA_LIBS=		-L../../../../bin		\
 			-L$(OSG_LIB_DIR) 		\
 			-L$(BOOST_LIB_DIR)		\
 			-L$(OMNIORB_LIB_DIR)		\
+			-L$(CPPDOM_LIB_DIR)		\
 			-lVeda -lOsgTools -losg -losgDB -losgGA -losgUtil -losgText -losgFX -lomniORB4 -lomnithread
 
 #----------------------------Advanced options---------------------------------- 
