@@ -61,7 +61,7 @@
          <analog_server>joy@172.20.26.254</analog_server>
          <tracker_count>2</tracker_count>
          <button_count>12</button_count>
-         <analog_count>2</analog_count>
+         <analog_count>6</analog_count>
          <min>-1.0</min>
          <max>1.0</max>
          <position_filters>
