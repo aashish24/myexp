@@ -896,7 +896,8 @@ void OsgInteraction::updateDeviceData()
       for( analogitr = mAnalogActionMap.begin(); analogitr != mAnalogActionMap.end(); ++analogitr )
       {
         data = mController.getDeviceInputData( mAnalogInputMap[ aindex ], analogitr->second );        
-        
+
+	std::cout << "analog data: " << data << " from " << aindex << std::endl;        
         // I had to do it as in gadageteer I couldnot find a way to check whether or not if a Analog
         // interface is present. The way it works that for the very first time if the value returned 
         // is -1.0 then it would be considered not active hence false then later we can assign value 
@@ -941,7 +942,6 @@ void OsgInteraction::updateDeviceData()
     {
       value = mController.getDeviceInputData( mDigitalInputMap[ dindex ], digitalitr->second );      
 
-       std::cout << " aashish dbg: value is : " << value << std::endl;
       SharedData::mCommand->mDigitalInputs[ digitalitr->first ] = ( int )value;
       
       ++digitals;

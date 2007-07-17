@@ -43,9 +43,7 @@ namespace Veda
       
       for( unsigned int i = 0; i < states.size(); i++ )
       {
-
-	std::cout << "Button: " << i << ( *btns[ i ] )->getData() << std::endl;
-        if( states[i] == ON )
+        if( states[ i ] == ON )
         {
           if( !( *btns[ i ] )->getData() )
           {  
@@ -66,9 +64,9 @@ namespace Veda
             data = ZERO; 
           }          
         }
-        else if( states[i] == TOGGLE_OFF )
+        else if( states[ i ] == TOGGLE_OFF )
         {
-          if(( *btns[i] )->getData() != 3 )
+          if(( *btns[ i ] )->getData() != 3 )
           { 
             data = ZERO; 
           }          
