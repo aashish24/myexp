@@ -3,7 +3,10 @@
 <configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
    <include>components/common/base.jconf</include>
    <include>components/sites/tis/cluster/cluster.jconf</include>
-   <include>components/devices/trackd.cluster.jconf</include>
+   <!--<include>components/devices/vrpn.cluster.jconf</include>-->
+   <include>components/devices/linux_joystick3.jconf</include>
+   <include>components/sim/sim.jconf</include>
+   <include>components/sim/sim2.jconf</include>
    <elements />
 </configuration>
 
