@@ -1,10 +1,15 @@
 #!/bin/bash
-
+#
+# All rights reserved.
+# BSD License: http://www.opensource.org/licenses/bsd-license.html
+# Created by: Aashish Chaudhary
+#
+###############################################################################
 
 if [ $# -ne 2 ] 
-	then
-		echo "Usage: $0 file dir"
-        	echo "copies all files from one directory to another"
+  then
+	  echo "Usage: $0 file dir"
+    echo "copies file to the destination directory"
 fi
 
 file=$1
