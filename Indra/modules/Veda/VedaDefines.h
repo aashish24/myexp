@@ -14,6 +14,10 @@
 
 #include "vpr/vprParam.h"
 
+// Need this header file as one of preprocessor symbols used in tweekParam.h
+// defined here. 
+#include "tweek/tweekConfig.h"
+
 #include "tweek/tweekParam.h"
 
 #endif // __VEDA_CORE_VEDADEFINES_H__
