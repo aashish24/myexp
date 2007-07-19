@@ -41,43 +41,53 @@
 # **********************************************************************
 # */
 
-default:	all
 
-APP_NAME=	viewer
+default:		all
+
+APP_NAME=		viewer
 
 
-# Basic options.
-#-------------------------------------------------------
-BUILD_TYPE?=	opt
+#----------------------------Basic options-------------------------------------
 
-srcdir=		../src
+BUILD_TYPE?=		dbg
 
-SRCS=		MyApp.cpp	\
-		main.cpp
+#srcdir=			../src
 
-NO_DEPEND=	YES
+SRCS=			MyApp.cpp	\
+			main.cpp
+
+NO_DEPEND=		YES
 		
-EXTRA_INCLUDES=		-I../include -I$(INDRA_ROOT_DIR)/src -I$(OSGHOME)/include -I$(OPENTHREADSHOME)/include -I$(PRODUCERHOME)/include \
-			-I$(VJ_BASE_DIR)/include/tweek/idl -I$(VJ_BASE_DIR)/include -I$(VJ_BASE_DIR)/include/tweek/CORBA
+EXTRA_INCLUDES=		-I../../../			\
+			-I$(OSG_INC_DIR)		\
+			-I$(GMTL_INC_DIR)		\
+			-I$(CPPDOM_INC_DIR)		\
+			-I$(OMNIORB_INC_DIR)
 
-EXTRA_LIBS=		-L$(INDRA_ROOT_DIR)/lib -L$(OSGHOME)/lib/Linux64 -lIndra -losg -losgDB -losgGA -losgUtil -losgText -losgFX 
 
-# Advanced options. 
-#---------------------------------------------------------------
+EXTRA_LIBS=		-L../../../../bin		\
+			-L$(OSG_LIB_DIR) 		\
+			-L$(BOOST_LIB_DIR)		\
+			-L$(OMNIORB_LIB_DIR)		\
+			-L$(CPPDOM_LIB_DIR)		\
+			-lVeda -lOsgTools -losg -losgDB -losgGA -losgUtil -losgText -losgFX -lomniORB4 -lomnithread
 
-include $(VJ_BASE_DIR)/share/vrjuggler/vrj.appdefs.mk
+#----------------------------Advanced options---------------------------------- 
+
+DZR_BASE_DIR=   $(shell flagpoll doozer --get-prefix)
+include $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.mk
 include $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.glapp.mk
 include $(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
 
 #vpath %.cpp $(CXX_GEN_DIR)
 #vpath %.h $(CXX_GEN_DIR)
 
-# -----------------------------------------------------------------------------
-# Application build targets.
-# -----------------------------------------------------------------------------
+#-----------------------------Application build targets------------------------
+
 all: 		
-		$(MAKE) $(APP_NAME)
+			$(MAKE) $(APP_NAME)
 
-$(APP_NAME): 	$(OBJS)
-		$(LINK) $(LINK_OUT)$@ $(OBJS) $(TWEEK_LIBS) $(EXTRA_LIBS) $(LIBS)
+$(APP_NAME): 		$(OBJS)
+			$(LINK) $(LINK_OUT)$@ $(OBJS) $(TWEEK_LIBS) $(EXTRA_LIBS) $(LIBS)
 
+CLEAN_FILES+=		$(APP_NAME)
