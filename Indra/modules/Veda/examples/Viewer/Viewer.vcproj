@@ -70,7 +70,7 @@
 				OutputFile="..\..\..\..\bin\viewerd.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(VJ_DEPS_DIR)\lib;$(VJ_DEPS_DIR)\bin;$(OSG_LIB_DIR)\debug;D:\aashish\sdk\vrjuggler\2.0.1\vrjuggler-deps\build.win32.vc80\lib;"
+				AdditionalLibraryDirectories="&quot;$(VJ_BASE_DIR)\lib&quot;;&quot;$(VJ_DEPS_DIR)\lib&quot;;&quot;$(VJ_DEPS_DIR)\bin&quot;;&quot;$(OSG_LIB_DIR)&quot;;&quot;D:\aashish\sdk\vrjuggler\2.0.1\vrjuggler-deps\build.win32.vc80\lib&quot;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/viewerd.pdb"
 				SubSystem="1"
