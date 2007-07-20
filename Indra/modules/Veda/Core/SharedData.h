@@ -36,8 +36,8 @@ namespace Veda
 
         static void init()
         {
-
-          vpr::GUID newGuid( "24658da0-4c3d-48fc-b892-2e8538e24811" );
+	  std::cout << "Initializing shared data object: " << std::endl;
+	  vpr::GUID newGuid( "24658da0-4c3d-48fc-b892-2e8538e24811" );
           SharedData::mCommand.init( newGuid );
           mActive = true;
         }

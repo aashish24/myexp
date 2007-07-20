@@ -125,6 +125,7 @@ namespace Veda
       {
         if( states[ i ] == ON )
         {
+
           double value = ( *analogs[ i ] )->getData();
           
           if( value > mMaxValue )

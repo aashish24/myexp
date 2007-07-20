@@ -38,8 +38,8 @@ INDRA_SRCS=			Controller.cpp			\
 				UserData.cpp			\
 				Globals.cpp			\
 				Navigation.cpp			\
-				OsgInteraction.cpp 		\
-				OssimInteraction.cpp 		\
+				OsgInteractor.cpp 		\
+				OssimInteractor.cpp 		\
 				OsgBase.cpp			\
 				AppBase.cpp			\
 		
@@ -112,7 +112,7 @@ include 			$(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
 include 			$(DZR_BASE_DIR)/mk/dzr.java-app.mk
 include 			$(DZR_BASE_DIR)/mk/dzr.lib.mk
 
-INSTALLCMD=			../../scripts/install.sh
+INSTALL_CMD=			./../../scripts/install.sh
 
 #---------------------------Application build targets-------------------------
 
@@ -135,8 +135,8 @@ $(STATIC_LIB_FILENAME): 	$(OBJS)
 				$(STATIC_LINK) $(STATIC_OUT)$@ $(OBJS)
 
 install: 		
-				$(INSTALLCMD) $(SHARED_LIB_FILENAME) $(prefix)
-				$(INSTALLCMD) $(STATIC_LIB_FILENAME) $(prefix)/static
+				$(INSTALL_CMD) $(SHARED_LIB_FILENAME) $(prefix)
+				$(INSTALL_CMD) $(STATIC_LIB_FILENAME) $(prefix)/static
 				
 
 CLEAN_FILES+=			$(addprefix, $(IDL_CXX_FILES))		\

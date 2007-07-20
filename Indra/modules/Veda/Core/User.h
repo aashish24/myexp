@@ -100,14 +100,14 @@ namespace Veda
 
         void setInteractor( void* ptr )
         {
-	        Design::Interactor* in = static_cast< Design::Interactor* >( ptr );                  
+	  Design::Interactor* in = static_cast< Design::Interactor* >( ptr );                  
 
           // If its a valid interactor. 
           if( in ) 
           {
             if( mInteractions.size() >= 1)
             {
-			        std::vector< Design::Interactor* >::iterator itr = mInteractions.begin();
+	      std::vector< Design::Interactor* >::iterator itr = mInteractions.begin();
                           
               for( int i = 0; itr != mInteractions.end(); ++i)
               {

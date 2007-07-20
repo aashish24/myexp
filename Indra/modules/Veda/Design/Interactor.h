@@ -110,6 +110,8 @@ namespace Veda
 #if HAVE_KEYBOARDMOUSE
           KeyboardMouse::instance()->init();        
 #endif // HAVE_KEYBOARDMOUSE
+
+	  initDeviceProxies();
         }
 
 
@@ -659,7 +661,6 @@ namespace Veda
 
         void handleDigitalInput22( Core::DeviceData value )
         {  
-          std::cout << "handleDigitalInput22" << std::endl;
           mUseTracker = true;
         }
 
@@ -798,7 +799,7 @@ namespace Veda
                 {
                   if( data == -1.0 )
                   {
-                    mAnalogInputStatusMap[ analogs ] = false;
+                    mAnalogInputStatusMap[ analogs ] = true;
                   }
                   else
                   {
@@ -906,7 +907,7 @@ namespace Veda
         // 
         /////////////////////////////////////////////////////////////////////////
 
-        virtual void defineControls()
+        virtual void initDeviceProxies()
         {
           int numOfAxes    = Core::Defs::mJoystickAnalogProxies.size();
           int numOfButtons = Core::Defs::mJoystickDigitalProxies.size();
@@ -1016,8 +1017,8 @@ namespace Veda
         
         virtual void updateInputs()
         {
-           for( unsigned int i = 0; i < Core::SharedData::mCommand->mAnalogInputs.size(); ++i )
-          {    
+          for( unsigned int i = 0; i < Core::SharedData::mCommand->mAnalogInputs.size(); ++i )
+          { 
             handleAnalogInputs( i, Core::SharedData::mCommand->mAnalogInputs[ i ] );        
           }
 
@@ -1039,7 +1040,7 @@ namespace Veda
         //
         ///////////////////////////////////////////////////////////////////////////////
 
-        void updateStates()
+        virtual void updateStates()
         {
         }       
 

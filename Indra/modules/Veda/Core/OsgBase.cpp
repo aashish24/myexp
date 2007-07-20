@@ -204,9 +204,9 @@ namespace Veda
       mSceneTransformNode   = new osg::MatrixTransform();
       mSceneStaticNode      = new osg::MatrixTransform();
       mModelTransformNode   = new osg::MatrixTransform();
-      mModelGroupNode        = new osg::Group();
-      mLightGroup            = new osg::Group();
-      mLightModel            = new osg::LightModel();
+      mModelGroupNode       = new osg::Group();
+      mLightGroup           = new osg::Group();
+      mLightModel           = new osg::LightModel();
      
       mSceneRoot.get()->setName   ( "mSceneRoot" );
       mSceneTransformNode->setName( "mSceneTransformNode" );    
@@ -420,12 +420,10 @@ namespace Veda
     ///////////////////////////////////////////////////////////////////////////////
 
     void OsgBase::preFrame()
-    {
-      std::cout << "This node is not local: " << std::endl;	
-		
+    {		
       if( SharedData::mCommand.isLocal() )
       {
-	std::cout << "This node is local: " << std::endl;
+	//std::cout << "This node is local: " << std::endl;
         osg::Timer_t currTimer  = mTimer.tick();
         
         float deltaTime          = mTimer.delta_s( mLastTime, currTimer ) ;
