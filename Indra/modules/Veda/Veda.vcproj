@@ -302,7 +302,7 @@
 				Name="Design"
 				>
 				<File
-					RelativePath="..\..\modules\Veda\Design\Interaction.h"
+					RelativePath=".\Design\Interactor.h"
 					>
 				</File>
 				<File
@@ -314,11 +314,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\modules\Veda\Design\OsgInteraction.cpp"
+					RelativePath=".\Design\OsgInteractor.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\modules\Veda\Design\OsgInteraction.h"
+					RelativePath=".\Design\OsgInteractor.h"
 					>
 				</File>
 			</Filter>

@@ -79,25 +79,25 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    // Get current interaction in use. 
+    // Get current getInteractor in use. 
     //
     //////////////////////////////////////////////////////////////////////////////
 
-    void* AppBase::interaction()
+    void* AppBase::getInteractor()
     {
-      return mUser.getInteaction();
+      return ( static_cast< void* >( mUser.getInteractor() ) );
     }
 
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    // Set interaction. 
+    // Set getInteractor. 
     //
     //////////////////////////////////////////////////////////////////////////////
 
-    void AppBase::interaction( void* ptr )
+    void AppBase::setInteractor( void* ptr )
     {
-      mUser.setInteraction( ptr );
+      mUser.setInteractor( ptr );
     }  
 
 

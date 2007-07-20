@@ -15,7 +15,7 @@
 #include "vpr/IO/ObjectWriter.h"
 #include "plugins/ApplicationDataManager/UserData.h"
 
-#include "Veda/Design/Interaction.h"
+#include "Veda/Design/Interactor.h"
 
 #include "Veda/Export.h"
 
@@ -75,11 +75,11 @@ namespace Veda
 
         /////////////////////////////////////////////////////////////////////////
         //
-        // Get interaction.
+        // Get getInteractor.
         //
         /////////////////////////////////////////////////////////////////////////
 
-        void* getInteaction( const unsigned int& pos=0 )
+        void* getInteractor( const unsigned int& pos=0 )
         {
           if( !mInteractions.empty() )
           {
@@ -94,20 +94,20 @@ namespace Veda
 
         /////////////////////////////////////////////////////////////////////////
         //
-        // Set interaction.
+        // Set getInteractor.
         //
         /////////////////////////////////////////////////////////////////////////
 
-        void setInteraction( void* ptr )
+        void setInteractor( void* ptr )
         {
-	        Design::Interaction* in = static_cast< Design::Interaction* >( ptr );                  
+	        Design::Interactor* in = static_cast< Design::Interactor* >( ptr );                  
 
           // If its a valid interactor. 
           if( in ) 
           {
             if( mInteractions.size() >= 1)
             {
-			        std::vector< Design::Interaction* >::iterator itr = mInteractions.begin();
+			        std::vector< Design::Interactor* >::iterator itr = mInteractions.begin();
                           
               for( int i = 0; itr != mInteractions.end(); ++i)
               {
@@ -168,7 +168,7 @@ namespace Veda
 
       private:    
 
-		  std::vector< Design::Interaction* >    mInteractions;
+		  std::vector< Design::Interactor* >    mInteractions;
 
     };
   }

@@ -88,8 +88,8 @@ namespace Veda
         
         virtual void                                   applicationName( const std::string& name );
 
-        virtual void*                                  interaction();
-        virtual void                                   interaction( void* ptr );
+        virtual void*                                  getInteractor();
+        virtual void                                   setInteractor( void* ptr );
         
         virtual TweekCommandList                       getReadyCommandList();
         virtual void                                   clearReadyCommandList();

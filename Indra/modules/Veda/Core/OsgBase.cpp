@@ -96,11 +96,11 @@ namespace Veda
 
     void OsgBase::setApp()
     {  
-      Design::Interaction * osgInteraction = new Design::OsgInteraction();     
+      Design::OsgInteractor * interactor = new Design::OsgInteractor();     
 
-      if( osgInteraction )
+      if( interactor )
       {    
-        setInteraction( osgInteraction );        
+        setOsgInteractor( interactor );        
       }
       else
       {
@@ -141,7 +141,7 @@ namespace Veda
       // change some of the defaults and initializations of those param
       // will be delayed unless everything is finalized. This also 
       // removes the necessity of having another function to initialize 
-      // interaction engine. 
+      // getInteractor engine. 
 
       AppBase::init();
     }
@@ -188,7 +188,7 @@ namespace Veda
 
       wandInit(); 
 
-      getInteraction()->root( mSceneRoot.get() );
+      getOsgInteractor()->root( mSceneRoot.get() );
     }
 
 
@@ -331,27 +331,26 @@ namespace Veda
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    // Get interaction. 
+    // Get getInteractor. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
-    Design::OsgInteraction* OsgBase::getInteraction()
+    Design::OsgInteractor* OsgBase::getOsgInteractor()
     {
-      return ( static_cast< Design::OsgInteraction* >( AppBase::interaction() ) );
+      return ( static_cast< Design::OsgInteractor* >( AppBase::getInteractor() ) );
     }
 
 
     ///////////////////////////////////////////////////////////////////////////////
     //
-    // Set interaction. 
+    // Set getInteractor. 
     //
     ///////////////////////////////////////////////////////////////////////////////
 
-    void OsgBase::setInteraction( Design::Interaction* interaction )
+    void OsgBase::setOsgInteractor( Design::OsgInteractor* interactor )
     {
-      AppBase::interaction( interaction );
-
-      mInteractionSet = true;    
+      AppBase::setInteractor( ( static_cast< void* >( interactor ) ) );
+      
     }
 
 
@@ -437,7 +436,7 @@ namespace Veda
         SharedData::mCommand->mSharedLongTypeObjects[ "FRAME_COUNT" ]  = ++mFrameNumber;      
         SharedData::mCommand->mSharedLongTypeObjects[ "REF_TIME"]      = refTime;;
 
-        getInteraction()->navigator( WORLD ).frameRenderTime( deltaTime );
+        getOsgInteractor()->getNavigator()->frameRenderTime( deltaTime );
       }
 
       updateDeviceData();    

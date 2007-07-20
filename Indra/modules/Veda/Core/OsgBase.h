@@ -26,7 +26,7 @@
 #include "Veda/Core/AppBase.h"
 #include "Veda/Core/SharedData.h"
 
-#include "Veda/Design/OsgInteraction.h"
+#include "Veda/Design/OsgInteractor.h"
 
 #include "osg/Group"
 #include "osg/MatrixTransform"
@@ -61,27 +61,27 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
 
-        virtual void                                   setAll();      
-        virtual void                                   setOsg();
-        virtual void                                   setApp();  
+        virtual void                                    setAll();      
+        virtual void                                    setOsg();
+        virtual void                                    setApp();  
       
-        virtual void                                   init();
-        virtual void                                   contextInit();
+        virtual void                                    init();
+        virtual void                                    contextInit();
         
-        virtual void                                   initScene();    
-        virtual void                                   initSceneNodes();
+        virtual void                                    initScene();    
+        virtual void                                    initSceneNodes();
         
-        virtual void                                   wandInit();    
+        virtual void                                    wandInit();    
         
-        virtual Design::OsgInteraction*                getInteraction();    
-        virtual void                                   setInteraction( Design::Interaction* in );            
+        virtual Design::OsgInteractor*                  getOsgInteractor();
+        virtual void                                    setOsgInteractor( Design::OsgInteractor* );
 
-        osg::Group*                                    getScene();
-        virtual void                                   configSceneView( osgUtil::SceneView* sv );
+        osg::Group*                                     getScene();
+        virtual void                                    configSceneView( osgUtil::SceneView* sv );
       
-        virtual float                                  getDrawScaleFactor();
+        virtual float                                   getDrawScaleFactor();
         
-        virtual void                                   viewAll( osg::MatrixTransform* tranform, float zScale = 2.0 );  
+        virtual void                                    viewAll( osg::MatrixTransform* tranform, float zScale = 2.0 );  
     
         /////////////////////////////////////////////////////////////////////////
         //
@@ -89,19 +89,19 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
 
-        virtual void                                   bufferPreDraw ();       
+        virtual void                                    bufferPreDraw ();       
 
-        virtual void                                   preFrame();
+        virtual void                                    preFrame();
         
-        virtual void                                   latePreFrame();
+        virtual void                                    latePreFrame();
         
-        virtual void                                   draw();
+        virtual void                                    draw();
         
-        virtual void                                   intraFrame();
+        virtual void                                    intraFrame();
         
-        virtual void                                   postFrame();
+        virtual void                                    postFrame();
 
-        virtual void                                   cleanUp();
+        virtual void                                    cleanUp();
 
 
       protected:    
@@ -112,29 +112,30 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
 
-        virtual void                                   appInit(){;}    
-
-        virtual void                                   appSceneInit(){;}
-
-        virtual void                                   appContextInit(){;}      
+        virtual void                                    appInit(){}
         
-        virtual void                                   appPostInit(){;}
+        virtual void                                    appSceneInit(){}
         
-        virtual void                                   appBufferPreDraw();
+        virtual void                                    appContextInit(){}
+
+        virtual void                                    appPostInit(){}
+        
+        virtual void                                    appBufferPreDraw();
       
-        virtual void                                   appPreFrame(){;}
+        virtual void                                    appPreFrame(){}
 
-        virtual void                                   appLatePreFrame(){;}
+        virtual void                                    appLatePreFrame(){}
         
-        virtual void                                   appPreOsgDraw(){;}
+        virtual void                                    appPreOsgDraw(){}
 
-        virtual void                                   appPostOsgDraw(){;}
+        virtual void                                    appPostOsgDraw(){}
 
-        virtual void                                   appOpenGLDraw(){;}
+        virtual void                                    appOpenGLDraw(){} 
 
-        virtual void                                   appIntraFrame(){;}
+        virtual void                                    appIntraFrame(){}
         
-        virtual void                                   appPostFrame(){;}
+        virtual void                                    appPostFrame(){}
+
 
         /////////////////////////////////////////////////////////////////////////
         //
