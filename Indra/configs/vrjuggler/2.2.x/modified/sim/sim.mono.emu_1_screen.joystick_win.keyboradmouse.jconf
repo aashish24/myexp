@@ -4,7 +4,7 @@
    <include>components/devices/joystick_win.jconf</include>
    <include>components/common/sim.base.winasevent.jconf</include>
    <include>components/common/sim.controller.keyboardmouse.jconf</include>
-   <include>components/display/sim.mono.display.emu_1_screen.winasevent.jconf</include>
+   <include>components/display/sim.mono.display.emu.1.screen.winasevent.jconf</include>
    <elements />
 </configuration>
 

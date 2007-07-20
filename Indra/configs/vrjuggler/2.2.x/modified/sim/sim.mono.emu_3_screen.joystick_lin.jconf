@@ -4,7 +4,7 @@
    <include>components/devices/joystick.lin.jconf</include>	
    <include>components/common/sim.base.jconf</include>
    <include>components/common/sim.controller.jconf</include>	
-   <include>components/common/sim.mono.display.emu_3_screen.jconf</include>
+   <include>components/common/sim.mono.display.emu.3.screen.jconf</include>
    <elements />
 </configuration>
 
