@@ -17,6 +17,6 @@ else
 fi
 		
 echo "Copying $file"
-cp $file $dir
+cp -f $file $dir
 echo done
 
