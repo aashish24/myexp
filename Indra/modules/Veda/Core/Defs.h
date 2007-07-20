@@ -23,7 +23,7 @@
 
 #include "Veda/Core/Types.h"
 
-#include "Export.h"
+#include "OsgTools/Core/Export.h"
 
 namespace Veda
 {
