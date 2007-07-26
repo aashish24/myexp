@@ -8,8 +8,11 @@
          <plugin>RIMPlugin</plugin>
          <plugin>StartBarrierPlugin</plugin>
          <plugin>SwapLockTCPPlugin</plugin>
+         <cluster_node>Node(ws1)</cluster_node>
          <cluster_node>Node(ws2)</cluster_node>
+         <cluster_node>Node(ws3)</cluster_node>
          <cluster_node>Node(ws4)</cluster_node>
+         <cluster_node>Node(ws5)</cluster_node>
          <cluster_node>Node(ws6)</cluster_node>
       </cluster_manager>
       <swap_lock_tcp_plugin name="SwapLockTCPPlugin" version="1">
