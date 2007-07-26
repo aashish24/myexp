@@ -43,4 +43,4 @@ class MyApp : public Veda::Core::OsgBase
     std::vector< std::string > mFileNames;
 };
 
-#endif __MYAPP_H__
+#endif // __MYAPP_H__

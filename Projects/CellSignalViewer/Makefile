@@ -51,21 +51,21 @@ APP_NAME=		viewer
 
 BUILD_TYPE?=		dbg
 
-#srcdir=			../src
+srcdir=			../src
 
 SRCS=			MyApp.cpp	\
 			main.cpp
 
 NO_DEPEND=		YES
 		
-EXTRA_INCLUDES=		-I../../../			\
+EXTRA_INCLUDES=		-I$(INDRA_ROOT_DIR)/modules	\
 			-I$(OSG_INC_DIR)		\
 			-I$(GMTL_INC_DIR)		\
 			-I$(CPPDOM_INC_DIR)		\
 			-I$(OMNIORB_INC_DIR)
 
 
-EXTRA_LIBS=		-L../../../../bin		\
+EXTRA_LIBS=		-L$(INDRA_ROOT_DIR)/bin		\
 			-L$(OSG_LIB_DIR) 		\
 			-L$(BOOST_LIB_DIR)		\
 			-L$(OMNIORB_LIB_DIR)		\
@@ -91,3 +91,4 @@ $(APP_NAME): 		$(OBJS)
 			$(LINK) $(LINK_OUT)$@ $(OBJS) $(TWEEK_LIBS) $(EXTRA_LIBS) $(LIBS)
 
 CLEAN_FILES+=		$(APP_NAME)
+
