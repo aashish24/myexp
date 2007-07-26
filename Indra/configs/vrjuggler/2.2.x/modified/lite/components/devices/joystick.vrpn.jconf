@@ -84,89 +84,89 @@
          </position_filters>
          <device_host>Node(ws6)</device_host>
       </vrpn>
-      <digital_proxy name="Button0Proxy" version="1">
+      <digital_proxy name="ButtonJS0Proxy" version="1">
          <device>Vrpn</device>
          <unit>0</unit>
       </digital_proxy>
-      <digital_proxy name="Button1Proxy" version="1">
+      <digital_proxy name="ButtonJS1Proxy" version="1">
          <device>Vrpn</device>
          <unit>1</unit>
       </digital_proxy>
-      <digital_proxy name="Button2Proxy" version="1">
+      <digital_proxy name="ButtonJS2Proxy" version="1">
          <device>Vrpn</device>
          <unit>2</unit>
       </digital_proxy>
-      <digital_proxy name="Button3Proxy" version="1">
+      <digital_proxy name="ButtonJS3Proxy" version="1">
          <device>Vrpn</device>
          <unit>3</unit>
       </digital_proxy>
-      <digital_proxy name="Button4Proxy" version="1">
+      <digital_proxy name="ButtonJS4Proxy" version="1">
          <device>Vrpn</device>
          <unit>4</unit>
       </digital_proxy>
-      <digital_proxy name="Button5Proxy" version="1">
+      <digital_proxy name="ButtonJS5Proxy" version="1">
          <device>Vrpn</device>
          <unit>5</unit>
       </digital_proxy>
-      <digital_proxy name="Button6Proxy" version="1">
+      <digital_proxy name="ButtonJS6Proxy" version="1">
          <device>Vrpn</device>
          <unit>6</unit>
       </digital_proxy>
-      <digital_proxy name="Button7Proxy" version="1">
+      <digital_proxy name="ButtonJS7Proxy" version="1">
          <device>Vrpn</device>
          <unit>7</unit>
       </digital_proxy>
-      <digital_proxy name="Button8Proxy" version="1">
+      <digital_proxy name="ButtonJS8Proxy" version="1">
          <device>Vrpn</device>
          <unit>8</unit>
       </digital_proxy>
-      <digital_proxy name="Button9Proxy" version="1">
+      <digital_proxy name="ButtonJS9Proxy" version="1">
          <device>Vrpn</device>
          <unit>9</unit>
       </digital_proxy>
-      <digital_proxy name="Button10Proxy" version="1">
+      <digital_proxy name="ButtonJS10Proxy" version="1">
          <device>Vrpn</device>
          <unit>10</unit>
       </digital_proxy>
-      <digital_proxy name="Button11Proxy" version="1">
+      <digital_proxy name="ButtonJS11Proxy" version="1">
          <device>Vrpn</device>
          <unit>11</unit>
       </digital_proxy>
       <alias name="VJButtonJS0" version="1">
-         <proxy>Button0Proxy</proxy>
+         <proxy>ButtonJS0Proxy</proxy>
       </alias>
       <alias name="VJButtonJS1" version="1">
-         <proxy>Button1Proxy</proxy>
+         <proxy>ButtonJS1Proxy</proxy>
       </alias>
       <alias name="VJButtonJS2" version="1">
-         <proxy>Button2Proxy</proxy>
+         <proxy>ButtonJS2Proxy</proxy>
       </alias>
       <alias name="VJButtonJS3" version="1">
-         <proxy>Button3Proxy</proxy>
+         <proxy>ButtonJS3Proxy</proxy>
       </alias>
       <alias name="VJButtonJS4" version="1">
-         <proxy>Button4Proxy</proxy>
+         <proxy>ButtonJS4Proxy</proxy>
       </alias>
       <alias name="VJButtonJS5" version="1">
-         <proxy>Button5Proxy</proxy>
+         <proxy>ButtonJS5Proxy</proxy>
       </alias>
       <alias name="VJButtonJS6" version="1">
-         <proxy>Button6Proxy</proxy>
+         <proxy>ButtonJS6Proxy</proxy>
       </alias>
       <alias name="VJButtonJS7" version="1">
-         <proxy>Button7Proxy</proxy>
+         <proxy>ButtonJS7Proxy</proxy>
       </alias>
       <alias name="VJButtonJS8" version="1">
-         <proxy>Button8Proxy</proxy>
+         <proxy>ButtonJS8Proxy</proxy>
       </alias>
       <alias name="VJButtonJS9" version="1">
-         <proxy>Button9Proxy</proxy>
+         <proxy>ButtonJS9Proxy</proxy>
       </alias>
       <alias name="VJButtonJS10" version="1">
-         <proxy>Button10Proxy</proxy>
+         <proxy>ButtonJS10Proxy</proxy>
       </alias>
       <alias name="VJButtonJS11" version="1">
-         <proxy>Button11Proxy</proxy>
+         <proxy>ButtonJS11Proxy</proxy>
       </alias>
       <analog_proxy name="VJAxis0Proxy" version="1">
          <device>Vrpn</device>

@@ -14,7 +14,8 @@ MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : Veda::Core::OsgBase(
 
 void MyApp::appInit()
 {
-	enableFeature( TWEEK );
+	//enableFeature( TWEEK );
+	setSceneInitialPosition( osg::Vec3f( 0.0, 0.0, 0.0 ) );
 	setBackgroundColor( ( gmtl::Vec4f(0.35, 0.35, 0.35, 1.0 ) ).getData() );	
 }
 
@@ -53,6 +54,8 @@ void MyApp::appLatePreFrame()
 
 	clearReadyCommandList();	
 	*/
+	
+	//mSceneTransformNode->setMatrix( osg::Matrix::translate( 0.0, 5.0, 0.0 ) );
 }
 
 void MyApp::appPostFrame()
