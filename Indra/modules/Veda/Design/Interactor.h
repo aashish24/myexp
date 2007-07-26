@@ -881,6 +881,7 @@ namespace Veda
           if( Core::SharedData::mCommand.isLocal() )
           {
             gmtl::identity( Core::SharedData::mCommand->mSharedMatrixTypeObjects[ "PitchMatrix" ] );
+            gmtl::identity( Core::SharedData::mCommand->mSharedTransformMatrix );
           }
   
           if( !mUseAnalog )
@@ -891,7 +892,8 @@ namespace Veda
           // Reset getNavigator.
           mSceneNavigator.reset(); 
 
-          // Now reset navigation. 
+          // Now reset navigation.
+	  resetNavigation(); 
         }
 
         virtual void resetNavigation()
