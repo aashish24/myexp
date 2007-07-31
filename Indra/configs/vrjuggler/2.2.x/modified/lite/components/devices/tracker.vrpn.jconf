@@ -18,11 +18,11 @@
          <device>Track Server</device>
          <unit>3</unit>
       </digital_proxy>
-      <analog_proxy name="VJTrackAxis0" version="1">
+      <analog_proxy name="VJTrackerAxis0" version="1">
          <device>Track Server</device>
          <unit>0</unit>
       </analog_proxy>
-      <analog_proxy name="VJTrackAxis1" version="1">
+      <analog_proxy name="VJTrackerAxis1" version="1">
          <device>Track Server</device>
          <unit>1</unit>
       </analog_proxy>
