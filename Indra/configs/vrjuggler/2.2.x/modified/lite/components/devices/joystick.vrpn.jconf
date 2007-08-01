@@ -56,7 +56,7 @@
          </position_filters>
       </position_proxy>
       <vrpn name="Vrpn" version="2">
-         <tracker_server>joyWin32@tcp:172.20.26.254</tracker_server>
+         <tracker_server>joyLeft@tcp:172.20.26.254</tracker_server>
          <button_server>joyWin32@tcp:172.20.26.254</button_server>
          <analog_server>joyWin32@tcp:172.20.26.254</analog_server>
          <tracker_count>2</tracker_count>
@@ -209,6 +209,20 @@
       </alias>
       <alias name="VJAxis5" version="1">
          <proxy>VJAxis5Proxy</proxy>
+      </alias>
+      <position_proxy name="VJTrackerProxy0" version="1">
+         <device>Vrpn</device>
+         <unit>0</unit>
+      </position_proxy>
+      <position_proxy name="VJTrackerProxy1" version="1">
+         <device>Vrpn</device>
+         <unit>0</unit>
+      </position_proxy>
+      <alias name="VJTracker0" version="1">
+         <proxy>VJTrackerProxy0</proxy>
+      </alias>
+      <alias name="VJTracker1" version="1">
+         <proxy>VJTrackerProxy1</proxy>
       </alias>
    </elements>
 </configuration>
