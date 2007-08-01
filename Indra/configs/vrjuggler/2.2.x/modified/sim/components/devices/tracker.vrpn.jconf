@@ -30,9 +30,9 @@
          <driver>VRPN_drv</driver>
       </input_manager>
       <vrpn name="Track Server" version="2">
-         <tracker_server>tracker@tcp:172.20.26.254</tracker_server>
-         <button_server>button@tcp:172.20.26.254</button_server>
-         <analog_server>button@tcp:172.20.26.254</analog_server>
+         <tracker_server>tracker@172.20.26.254</tracker_server>
+         <button_server>button@172.20.26.254</button_server>
+         <analog_server>button@172.20.26.254</analog_server>
          <tracker_count>2</tracker_count>
          <button_count>6</button_count>
          <analog_count>2</analog_count>
@@ -56,7 +56,7 @@
                <post_rotation>0.0</post_rotation>
             </position_transform_filter>
          </position_filters>
-         <device_host>Node(ws6)</device_host>
+         <device_host/>
       </vrpn>
       <position_proxy name="Head Proxy" version="1">
          <device>Track Server</device>

@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?org-vrjuggler-jccl-settings configuration.version="3.0"?>
 <configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
-   <include>plugins/plugins.jconf</include>
-   <include>plugins/adm.jconf</include>
-   <include>nodes/ws1.stereo.jconf</include>
-   <include>nodes/ws2.stereo.jconf</include>
-   <include>nodes/ws3.stereo.jconf</include>
-   <include>nodes/ws4.stereo.jconf</include>
-   <include>nodes/ws5.stereo.jconf</include>
-   <include>nodes/ws6.stereo.jconf</include>
+   <include>plugins/plugins.master.mono.jconf</include>
+   <include>nodes/ws6.mono.jconf</include>
    <elements />
 </configuration>
 
