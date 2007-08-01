@@ -2,19 +2,19 @@
 <?org-vrjuggler-jccl-settings configuration.version="3.0"?>
 <configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="/store/toolkit/VRJFiles/final/flex/flex.trackd.jconf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
    <elements>
-      <digital_proxy name="VJTrackButton0" version="1">
+      <digital_proxy name="VJTrackerButton0" version="1">
          <device>Track Server</device>
          <unit>0</unit>
       </digital_proxy>
-      <digital_proxy name="VJTrackButton1" version="1">
+      <digital_proxy name="VJTrackerButton1" version="1">
          <device>Track Server</device>
          <unit>1</unit>
       </digital_proxy>
-      <digital_proxy name="VJTrackButton2" version="1">
+      <digital_proxy name="VJTrackerButton2" version="1">
          <device>Track Server</device>
          <unit>2</unit>
       </digital_proxy>
-      <digital_proxy name="VJTrackButton3" version="1">
+      <digital_proxy name="VJTrackerButton3" version="1">
          <device>Track Server</device>
          <unit>3</unit>
       </digital_proxy>
@@ -102,11 +102,11 @@
             </position_transform_filter>
          </position_filters>
       </position_proxy>
-      <digital_proxy name="VJTrackButton4" version="1">
+      <digital_proxy name="VJTrackerButton4" version="1">
          <device>Track Server</device>
          <unit>4</unit>
       </digital_proxy>
-      <digital_proxy name="VJTrackButton5" version="1">
+      <digital_proxy name="VJTrackerButton5" version="1">
          <device>Track Server</device>
          <unit>5</unit>
       </digital_proxy>
