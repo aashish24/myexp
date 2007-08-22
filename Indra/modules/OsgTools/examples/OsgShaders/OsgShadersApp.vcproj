@@ -84,7 +84,7 @@
 				OutputFile="..\..\..\..\bin\osgshadersappd.exe"
 				Version="0.0"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(VJ_BASE_DIR)\lib&quot;;&quot;$(OSG_LIB_DIR)&quot;"
+				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR)"
 				GenerateManifest="true"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/osgdashboardappd.pdb"

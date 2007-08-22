@@ -183,7 +183,7 @@ class AnimateCallback: public osg::Uniform::Callback
                       else
                       {
                         uniform->set( osg::Vec3( counter, counter, counter ) );
-                        counter += 0.005;                                         
+                        counter += 0.001;                                         
                       }
 
                       break;  
