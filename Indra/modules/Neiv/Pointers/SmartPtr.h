@@ -1,122 +1,161 @@
+
 #ifndef __SMART_PTR_H__
 #define __SMART_PTR_H__
 
-#include <oge/Export.h>
-
-#include <iostream>
-
-namespace oge
+namespace Neiv
 {
-	template< class T >
-	class OGE_EXPORT SmartPtr 
-	{
-		public:
-			SmartPtr() :
-				mPtr( 0 )
-			{}
+  namespace Pointers
+  {    
+	    template< typename T > 
+      class NEIV_EXPORT SmartPtr 
+	    {
+		    public:
 
-			SmartPtr( T* ptr ) :
-				mPtr( ptr )
-			{
-				if( mPtr ) 
-				{
-					mPtr->ref();
-				}
-			}
+          /////////////////////////////////////////////////////////////////////
+          //
+          // Constructor. 
+          //
+          /////////////////////////////////////////////////////////////////////
 
-			SmartPtr( const SmartPtr& sp ) :
-				mPtr( sp.mPtr )
-			{
-				if( mPtr )
-				{
-					mPtr->ref();
-				}
-			}	
+			    SmartPtr() :
+				    mPtr( 0 )
+			    {
+          }
 
-		   ~SmartPtr()
-			{
-				if( mPtr )
-				{
-					mPtr->unref();
-				}
-			}
 
-			SmartPtr& operator = ( const SmartPtr& sp )
-			{
-				if( mPtr == sp.mPtr )
-					return *this;
-				
-				T* tmpPtr = mPtr;
-				mPtr = sp.mPtr;
-				mPtr->ref();
+          /////////////////////////////////////////////////////////////////////
+          //
+          // Constructor with pointer argument. 
+          //
+          /////////////////////////////////////////////////////////////////////
 
-				if( tmpPtr )
-				{
-					tmpPtr->unref();
-				}
+			    SmartPtr( T* ptr ) :
+				    mPtr( ptr )
+			    {
+				    if( mPtr ) 
+				    {
+					    mPtr->ref();
+				    }
+			    }
 
-				return *this;				
-			}
 
-			SmartPtr& operator = ( T* ptr )
-			{
-				if( mPtr == ptr )
-					return *this;
-				
-				T* tmpPtr = mPtr;
-				mPtr = ptr;
+          /////////////////////////////////////////////////////////////////////
+          //
+          // Copy constructor. 
+          //
+          /////////////////////////////////////////////////////////////////////
 
-				if( mPtr )
-				{
-					mPtr->ref();
-				}
+			    SmartPtr( const SmartPtr& sp ) :
+				    mPtr( sp.mPtr )
+			    {
+				    if( mPtr )
+				    {
+					    mPtr->ref();
+				    }
+			    }	
 
-				if( tmpPtr )
-				{
-					tmpPtr->unref();
-				}
+		       ~SmartPtr()
+			    {
+				    if( mPtr )
+				    {
+					    mPtr->unref();
+				    }
+			    }
 
-				return *this;
-			}
+          /////////////////////////////////////////////////////////////////////
+          //
+          // Assignment operator ( overloaded ).
+          // Note@: Making sure that we dont assign smart pointer to itself. 
+          //
+          /////////////////////////////////////////////////////////////////////
 
-			T* operator -> ()
-			{
-				return mPtr;
-			}
+			    SmartPtr& operator = ( const SmartPtr& sp )
+			    {
+				    if( mPtr == sp.mPtr )
+					    return *this;
+    				
+				    T* tmpPtr = mPtr;
+				    mPtr = sp.mPtr;
+				    
+            if( mPtr )
+            {
+              mPtr->ref();
+            }
 
-			T* operator -> () const
-			{
-				return mPtr;
-			}
+				    if( tmpPtr )
+				    {
+					    tmpPtr->unref();
+				    }
 
-			bool valid() const
-			{
-				return mPtr != 0;
-			}
+				    return *this;				
+			    }
 
-			T* get() const
-			{
-				return mPtr;
-			}
+          /////////////////////////////////////////////////////////////////////
+          //
+          // Element selection through pointer operator ( overloaded ).
+          // Note@: Making sure that we dont assign smart pointer to itself. 
+          //
+          /////////////////////////////////////////////////////////////////////			   
 
-			T* release()
-			{
-				T* tmpPtr = mPtr; 
-				if( mPtr )
-				{
-					mPtr->unrefDoNotDelete();
-					mPtr = 0;
-					return tmpPtr;
-				}
-				else
-				{
-					return 0;
-				}
-			}
+			    T* operator -> () const
+			    {
+				    return mPtr;
+			    }
 
-		private:
-			T* mPtr;
-	};
+
+          /////////////////////////////////////////////////////////////////////
+          //
+          // Check for null pointers. 
+          //
+          /////////////////////////////////////////////////////////////////////
+
+			    bool valid() const
+			    {
+				    return mPtr != 0;
+			    }
+
+
+          /////////////////////////////////////////////////////////////////////
+          //
+          // Return raw pointer. 
+          //
+          /////////////////////////////////////////////////////////////////////
+
+			    T* get() const
+			    {
+				    return mPtr;
+			    }
+
+
+          /////////////////////////////////////////////////////////////////////
+          //
+          // Return raw pointer. 
+          // Note@ Making sure that we dont not delete it even though the count 
+          // goes to zero. 
+          //
+          /////////////////////////////////////////////////////////////////////
+
+			    T* release()
+			    {
+				    T* tmpPtr = mPtr; 
+				    if( mPtr )
+				    {
+					    mPtr->unrefDoNotDelete();
+					    mPtr = 0;
+					    return tmpPtr;
+				    }
+				    else
+				    {
+					    return 0;
+				    }
+			    }
+
+		    private:
+
+			    T* mPtr;
+	    };
+    }
+  }
 }
 
 #endif // __SMART_PTR_H__
