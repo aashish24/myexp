@@ -4,7 +4,7 @@
 
 namespace Neiv
 {
-  namespace Pointers
+  namespace Pointer
   {    
 	    template< typename T > 
       class NEIV_EXPORT SmartPtr 
