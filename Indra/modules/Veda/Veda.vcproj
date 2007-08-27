@@ -152,7 +152,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="osg.lib osgDB.lib osgUtil.lib osgFX.lib osgText.lib vrj.lib vpr.lib gadget.lib jccl.lib vrj_ogl.lib tweek.lib openGL32.lib omnithread33_rt.lib omniDynamic410_rt.lib omniORB410_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
+				AdditionalDependencies="vrj-2_3_8.lib vrj_ogl-2_3_8.lib vpr-2_1_1.lib tweek-1_3_0.lib gadget-1_3_7.lib jccl-1_3_1.lib openGL32.lib omnithread33_rt.lib omniDynamic410_rt.lib omniORB410_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
 				OutputFile="..\..\bin\Veda.dll"
 				AdditionalLibraryDirectories="&quot;$(VJ_BASE_DIR)\lib&quot;;&quot;$(VJ_DEPS_DIR)\lib&quot;;&quot;$(OSG_LIB_DIR)&quot;"
 			/>

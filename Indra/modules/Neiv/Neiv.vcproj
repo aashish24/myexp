@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Neiv"
+	Name="lib: Neiv"
 	ProjectGUID="{2519737E-8FD7-49E1-A617-B8331D233496}"
 	RootNamespace="Neiv"
 	Keyword="Win32Proj"
@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../modules;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;NEIV_EXPORTS;NEIV_SHARED_LIBRARY;"
+				PreprocessorDefinitions="_DEBUG; NEIV_SHARED_LIBRARY;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;NEIV_EXPORTS"
+				PreprocessorDefinitions="NDEBUG;NEIV_SHARED_LIBRARY;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"

@@ -2,14 +2,12 @@
 #ifndef __NEIV_POINTER_SMARTPTR_H__
 #define __NEIV_POINTER_SMARTPTR_H__
 
-#include "Neiv/Export.h"
-
 namespace Neiv
 {
   namespace Pointer
   {    
 	    template< typename T > 
-      class NEIV_EXPORT SmartPtr 
+      class SmartPtr 
 	    {
 		    public:
 

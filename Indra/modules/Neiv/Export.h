@@ -17,13 +17,13 @@
 #endif 
 
 #if defined( _MSC_VER ) || defined( __CYGWIN__ ) || defined( __MINGW32__ )
-  # if defined( NEIV_STATIC_LIBRARY )
+  # if defined( NEIV_STATIC )
   #  define NEIV_EXPORT  
   # else
-  #  ifdef NEIV_SHARED_LIBRARY
+  #  if defined NEIV_SHARED_LIBRARY
   #    define NEIV_EXPORT __declspec(dllexport)
   #  else
-  #    define NEIV_EXPORT __declspec(dllexport)
+  #    define NEIV_EXPORT __declspec(dllimport)
   #  endif
   # endif
 #else
