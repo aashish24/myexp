@@ -19,15 +19,21 @@
 
 #include "Veda/Export.h"
 
+#include "Neiv/Base/Referenced.h"
+#include "Neiv/Pointer/SmartPtr.h"
+
 #include <vector>
 
 namespace Veda
 {
   namespace Core 
   {
-    class VEDA_EXPORT User
+    class VEDA_EXPORT User : public Neiv::Base::Referenced
     {   
+
       public:
+
+        typedef  std::vector< Neiv::Pointer::SmartPtr< Design::Interactor >  > Interactors;
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -38,24 +44,7 @@ namespace Veda
         User() 
         {
         }
-        
-
-        /////////////////////////////////////////////////////////////////////////
-        //
-        // Destructor. 
-        //
-        /////////////////////////////////////////////////////////////////////////
-
-       ~User()
-        {
-          for( size_t i=0; i < mInteractions.size(); i++ )
-          {
-            delete mInteractions[ i ];
-            
-            mInteractions[ i ] = 0;
-          }
-        }
-
+             
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -65,10 +54,10 @@ namespace Veda
 
         void init()
         {        
-          for(unsigned int i=0; i < mInteractions.size(); ++i )
+          for( unsigned int i=0; i < mInteractors.size(); ++i )
           {
-            mInteractions[ i ]->init();
-            mInteractions[ i ]->reset();
+            mInteractors[ i ]->init();
+            mInteractors[ i ]->reset();
           }
         }    
         
@@ -81,9 +70,9 @@ namespace Veda
 
         void* getInteractor( const unsigned int& pos=0 )
         {
-          if( !mInteractions.empty() )
+          if( !mInteractors.empty() )
           {
-            return mInteractions.at( pos );
+            return ( mInteractors.at( pos ) ).get();
           }
           else
           {        
@@ -100,34 +89,34 @@ namespace Veda
 
         void setInteractor( void* ptr )
         {
-	  Design::Interactor* in = static_cast< Design::Interactor* >( ptr );                  
+          Neiv::Pointer::SmartPtr< Design::Interactor > in = static_cast< Design::Interactor* >( ptr );                  
 
           // If its a valid interactor. 
-          if( in ) 
+          if( in.valid() ) 
           {
-            if( mInteractions.size() >= 1)
+            if( mInteractors.size() >= 1)
             {
-	      std::vector< Design::Interactor* >::iterator itr = mInteractions.begin();
+              std::vector< Neiv::Pointer::SmartPtr< Design::Interactor > >::iterator itr = mInteractors.begin();
                           
-              for( int i = 0; itr != mInteractions.end(); ++i)
+              for( int i = 0; itr != mInteractors.end(); ++i)
               {
                 if(i == 0)
                 {
-                  delete *itr;
-                  itr = mInteractions.erase( itr );                                            
+                  //delete *itr;
+                  itr = mInteractors.erase( itr );
                 }  
 
                 // Only swapTexture the iterator if we the list is not empty. 
-                if( mInteractions.size() > 0 )
+                if( mInteractors.size() > 0 )
                 {
                   ++itr;
                 }
               }
-              mInteractions.push_back( in );
+              mInteractors.push_back( in.get() );
             }
             else
             {
-              mInteractions.push_back( in );
+              mInteractors.push_back( in.get() );
             }
           }         
 	        else
@@ -145,9 +134,9 @@ namespace Veda
 
         void updateDeviceData()
         {
-          for( size_t i=0; i < mInteractions.size(); i++ )
+          for( size_t i=0; i < mInteractors.size(); i++ )
           {
-            ( mInteractions[ i ] )->updateDeviceData();        
+            ( mInteractors[ i ] )->updateDeviceData();        
           }
         }
 
@@ -160,15 +149,30 @@ namespace Veda
 
         void update()
         {
-          for( size_t i=0; i < mInteractions.size(); ++i )
+          for( size_t i=0; i < mInteractors.size(); ++i )
           {
-            ( mInteractions[ i ] )->updateAll();
+            ( mInteractors[ i ] )->updateAll();
           }        
         }       
+      
+
+      protected:
+
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Destructor. 
+        //
+        /////////////////////////////////////////////////////////////////////////
+
+       ~User()
+        {
+          
+        }
+
 
       private:    
 
-		  std::vector< Design::Interactor* >    mInteractions;
+        Interactors mInteractors;
 
     };
   }

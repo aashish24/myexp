@@ -96,11 +96,11 @@ namespace Veda
 
     void OsgBase::setApp()
     {  
-      Design::OsgInteractor * interactor = new Design::OsgInteractor();     
+      Neiv::Pointer::SmartPtr< Design::OsgInteractor > interactor( new Design::OsgInteractor() );     
 
-      if( interactor )
+      if( interactor.valid() )
       {    
-        setOsgInteractor( interactor );        
+        setOsgInteractor( interactor.get() );        
       }
       else
       {

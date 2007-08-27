@@ -157,6 +157,6 @@ namespace Neiv
 	    };
     }
   }
-}
+
 
 #endif // __NEIV_POINTER_SMARTPTR_H__

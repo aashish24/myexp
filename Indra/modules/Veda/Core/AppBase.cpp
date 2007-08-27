@@ -26,6 +26,7 @@ namespace Veda
     ///////////////////////////////////////////////////////////////////////////////
 
     AppBase::AppBase()  : 
+      mUser( new User() ),
       mApplicationName( "Application" ), 
       mNearFarSet     ( false ), 
       mEnableVnc      ( false ), 
@@ -85,7 +86,7 @@ namespace Veda
 
     void* AppBase::getInteractor()
     {
-      return ( static_cast< void* >( mUser.getInteractor() ) );
+      return ( static_cast< void* >( mUser->getInteractor() ) );
     }
 
 
@@ -97,7 +98,7 @@ namespace Veda
 
     void AppBase::setInteractor( void* ptr )
     {
-      mUser.setInteractor( ptr );
+      mUser->setInteractor( ptr );
     }  
 
 
@@ -116,7 +117,7 @@ namespace Veda
       SharedData::init(); 
 
       // User related initialization. 
-      mUser.init();          
+      mUser->init();          
 
       // Set default near far. 
       if( !mNearFarSet )
@@ -239,7 +240,7 @@ namespace Veda
 
     void AppBase::updateAll()
     {
-      mUser.update();
+      mUser->update();
     }
 
 
@@ -251,7 +252,7 @@ namespace Veda
 
     void AppBase::updateDeviceData()
     {
-      mUser.updateDeviceData();
+      mUser->updateDeviceData();
     }
 
 

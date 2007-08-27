@@ -25,65 +25,77 @@
 
 #include "OsgTools/Core/Export.h"
 
+#include "Neiv/Base/Referenced.h"
+
 namespace Veda
 {
   namespace Core
   {
-    class VEDA_EXPORT Defs
+    class VEDA_EXPORT Defs : public Neiv::Base::Referenced
     {
       public:
-          static void init();
 
-          // Wingman specific. 
-          static const int mNumberOfAxes          = 6;
-          static const int mNumberOfButtons       = 10;
+        static void init();
 
-          static std::vector< std::string >    mJoystickAnalogProxies;
-          static std::vector< std::string >    mJoystickDigitalProxies;
+        // Wingman specific. 
+        static const int mNumberOfAxes          = 6;
+        static const int mNumberOfButtons       = 10;
 
-          static ActionState                  mAxis0[ mNumberOfAxes ];
-          static ActionState                  mAxis1[ mNumberOfAxes ];
-          static ActionState                  mAxis2[ mNumberOfAxes ];
-          static ActionState                  mAxis3[ mNumberOfAxes ];
-          static ActionState                  mAxis4[ mNumberOfAxes ];
-          static ActionState                  mAxis5[ mNumberOfAxes ];
+        static std::vector< std::string >    mJoystickAnalogProxies;
+        static std::vector< std::string >    mJoystickDigitalProxies;
 
-          static ActionState                  mButton0  [ mNumberOfButtons ];
-          static ActionState                  mButton1  [ mNumberOfButtons ];
-          static ActionState                  mButton2  [ mNumberOfButtons ];
-          static ActionState                  mButton3  [ mNumberOfButtons ];
-          static ActionState                  mButton4  [ mNumberOfButtons ];
-          static ActionState                  mButton5  [ mNumberOfButtons ];
-          static ActionState                  mButton6  [ mNumberOfButtons ];
-          static ActionState                  mButton7  [ mNumberOfButtons ];
-          static ActionState                  mButton8  [ mNumberOfButtons ];
-          static ActionState                  mButton9  [ mNumberOfButtons ];
-          static ActionState                  mButtonSP0[ mNumberOfButtons ];
-          static ActionState                  mButtonSP1[ mNumberOfButtons ];
-          static ActionState                  mButtonSP2[ mNumberOfButtons ];
-          static ActionState                  mButtonSP3[ mNumberOfButtons ];
-          static ActionState                  mButtonSP4[ mNumberOfButtons ];
-          static ActionState                  mButtonSP5[ mNumberOfButtons ];
-          static ActionState                  mButtonSP6[ mNumberOfButtons ];
-          static ActionState                  mButtonSP7[ mNumberOfButtons ];
+        static ActionState                  mAxis0[ mNumberOfAxes ];
+        static ActionState                  mAxis1[ mNumberOfAxes ];
+        static ActionState                  mAxis2[ mNumberOfAxes ];
+        static ActionState                  mAxis3[ mNumberOfAxes ];
+        static ActionState                  mAxis4[ mNumberOfAxes ];
+        static ActionState                  mAxis5[ mNumberOfAxes ];
 
-          // Trackers specific. 
-          static const int mNumberOfAxesTracker     = 2;
-          static const int mNumberOfButtonsTracker  = 6;
-          
-          static std::vector< std::string >   mTrackerAnalogProxies;
-          static std::vector< std::string >   mTrackerDigitalProxies;      
+        static ActionState                  mButton0  [ mNumberOfButtons ];
+        static ActionState                  mButton1  [ mNumberOfButtons ];
+        static ActionState                  mButton2  [ mNumberOfButtons ];
+        static ActionState                  mButton3  [ mNumberOfButtons ];
+        static ActionState                  mButton4  [ mNumberOfButtons ];
+        static ActionState                  mButton5  [ mNumberOfButtons ];
+        static ActionState                  mButton6  [ mNumberOfButtons ];
+        static ActionState                  mButton7  [ mNumberOfButtons ];
+        static ActionState                  mButton8  [ mNumberOfButtons ];
+        static ActionState                  mButton9  [ mNumberOfButtons ];
+        static ActionState                  mButtonSP0[ mNumberOfButtons ];
+        static ActionState                  mButtonSP1[ mNumberOfButtons ];
+        static ActionState                  mButtonSP2[ mNumberOfButtons ];
+        static ActionState                  mButtonSP3[ mNumberOfButtons ];
+        static ActionState                  mButtonSP4[ mNumberOfButtons ];
+        static ActionState                  mButtonSP5[ mNumberOfButtons ];
+        static ActionState                  mButtonSP6[ mNumberOfButtons ];
+        static ActionState                  mButtonSP7[ mNumberOfButtons ];
 
-          static ActionState                  mAxisTr0[ mNumberOfAxesTracker ];
-          static ActionState                  mAxisTr1[ mNumberOfAxesTracker ];
-          
-          static ActionState                  mButtonTr0[ mNumberOfButtonsTracker ];
-          static ActionState                  mButtonTr1[ mNumberOfButtonsTracker ];
-          static ActionState                  mButtonTr2[ mNumberOfButtonsTracker ];
-          static ActionState                  mButtonTr3[ mNumberOfButtonsTracker ];
-          static ActionState                  mButtonTr4[ mNumberOfButtonsTracker ];
-          static ActionState                  mButtonTr5[ mNumberOfButtonsTracker ];
-          static ActionState                  mButtonTr6[ mNumberOfButtonsTracker ];
+        // Trackers specific. 
+        static const int mNumberOfAxesTracker     = 2;
+        static const int mNumberOfButtonsTracker  = 6;
+        
+        static std::vector< std::string >   mTrackerAnalogProxies;
+        static std::vector< std::string >   mTrackerDigitalProxies;      
+
+        static ActionState                  mAxisTr0[ mNumberOfAxesTracker ];
+        static ActionState                  mAxisTr1[ mNumberOfAxesTracker ];
+        
+        static ActionState                  mButtonTr0[ mNumberOfButtonsTracker ];
+        static ActionState                  mButtonTr1[ mNumberOfButtonsTracker ];
+        static ActionState                  mButtonTr2[ mNumberOfButtonsTracker ];
+        static ActionState                  mButtonTr3[ mNumberOfButtonsTracker ];
+        static ActionState                  mButtonTr4[ mNumberOfButtonsTracker ];
+        static ActionState                  mButtonTr5[ mNumberOfButtonsTracker ];
+        static ActionState                  mButtonTr6[ mNumberOfButtonsTracker ];
+    
+      protected:
+        
+        Defs();
+
+        ~Defs()
+        {
+        }
+
     };
 
     inline void Defs::init()

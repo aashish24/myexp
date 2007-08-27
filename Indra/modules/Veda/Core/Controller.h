@@ -31,11 +31,13 @@
 
 #include "Veda/Export.h"
 
+#include "Neiv/Base/Referenced.h"
+
 namespace Veda
 {
   namespace Core
   {
-    class VEDA_EXPORT Controller 
+    class VEDA_EXPORT Controller : public Neiv::Base::Referenced
     {
       public:          
         
@@ -64,8 +66,18 @@ namespace Veda
           mMinValue( 0.45 ), 
           mMaxValue( 0.55 )              
         {
-        }
+        }       
+               
+        virtual  Core::DeviceData    getDeviceInputData( Button btn );
+
+        virtual Core::DeviceData    getDeviceInputData( std::vector< gadget::DigitalInterface* > btns, std::vector< ActionState > state );
+
+        //virtual Core::DeviceData  getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );          
         
+        virtual double        getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );      
+
+      protected:
+ 
         /////////////////////////////////////////////////////////////////////////
         //
         // Destructor.
@@ -75,14 +87,7 @@ namespace Veda
         virtual ~Controller()
         {
         }
-        
-        virtual  Core::DeviceData    getDeviceInputData( Button btn );
-
-        virtual Core::DeviceData    getDeviceInputData( std::vector< gadget::DigitalInterface* > btns, std::vector< ActionState > state );
-
-        //virtual Core::DeviceData  getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );          
-        
-        virtual double        getDeviceInputData( std::vector< gadget::AnalogInterface* > inputs, std::vector< ActionState > state );      
+ 
 
       protected:    
 

@@ -43,6 +43,14 @@
 
 #include "Veda/Export.h"
 
+#ifdef _MSC_VER
+# pragma comment( lib, "osgd.lib" )
+# pragma comment( lib, "osgDBd.lib" )
+# pragma comment( lib, "osgUtild.lib" )
+# pragma comment( lib, "osgFXd.lib" )
+# pragma comment( lib, "osgTextd.lib" )
+#endif
+
 namespace Veda
 {
   namespace Core
@@ -53,8 +61,7 @@ namespace Veda
         
         OsgBase( vrj::Kernel* kern, int& argc, char** argv );
 
-        virtual ~OsgBase();
-        
+       
         /////////////////////////////////////////////////////////////////////////
         //
         // Initialization functions. 
@@ -106,6 +113,9 @@ namespace Veda
 
       protected:    
       
+        
+        virtual                                         ~OsgBase();
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Application specific functions. 

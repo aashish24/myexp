@@ -30,6 +30,12 @@ namespace OsgTools
 
             virtual void operator() ( osg::Uniform* uniform, osg::NodeVisitor* nv );
 
+        protected:
+            
+          virtual ~OsgUniformCallback()
+          {
+          }
+
         private:
           
           bool                      mEnabled;

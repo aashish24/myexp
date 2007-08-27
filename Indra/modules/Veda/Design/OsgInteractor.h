@@ -53,8 +53,6 @@ namespace Veda
 
         OsgInteractor();
 
-        virtual ~OsgInteractor();
-
         virtual osg::Group*                               root();
         virtual void                                      root( void* node );
 
@@ -68,6 +66,10 @@ namespace Veda
         virtual void                                      updateStates();
         virtual void                                      updateTransforms();
         virtual void                                      updateInteractions();  
+
+      protected:
+        
+        virtual ~OsgInteractor();
 
       protected:   
 

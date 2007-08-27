@@ -39,6 +39,9 @@
 
 #include "Veda/Export.h"
 
+#include "Neiv/Base/Referenced.h"
+#include "Neiv/Pointer/SmartPtr.h"
+
 #include <vector>
 #include <string>
 
@@ -74,8 +77,6 @@ namespace Veda
 
         AppBase();
 
-        virtual ~AppBase();
-        
         virtual void                                   init();
 
         virtual void                                   initFeatures();       
@@ -101,6 +102,10 @@ namespace Veda
         virtual void                                   updateTweek();
 
       protected:
+        
+        virtual                                         ~AppBase();
+
+      protected:
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -108,7 +113,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
         
-        User                                           mUser;      
+        Neiv::Pointer::SmartPtr< User >                 mUser;      
         
 
         /////////////////////////////////////////////////////////////////////////

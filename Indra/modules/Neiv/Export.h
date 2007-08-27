@@ -23,7 +23,7 @@
   #  ifdef NEIV_SHARED_LIBRARY
   #    define NEIV_EXPORT __declspec(dllexport)
   #  else
-  #    define NEIV_EXPORT __declspec(dllimport)
+  #    define NEIV_EXPORT __declspec(dllexport)
   #  endif
   # endif
 #else

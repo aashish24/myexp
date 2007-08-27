@@ -38,7 +38,8 @@
 
 #include "Veda/Design/Navigation.h"
 
-#include "Neiv/Base/Rerefenced.h"
+#include "Neiv/Base/Referenced.h"
+#include "Neiv/Pointer/SmartPtr.h"
 
 #if HAVE_KEYBOARDMOUSE
   #include "Dev/VJKeyboardMouseCallback.h"
@@ -83,20 +84,12 @@ namespace Veda
           mNavigationSpeed  ( 0.0 ),
           mNavigationDelta  ( 0.0 ),
           mRotationSpeed    ( 0.0 ),
-          mRotationDelta    ( 0.0 )
+          mRotationDelta    ( 0.0 ), 
+          mController       ( new Core::Controller() )
         {  
           gmtl::identity( mWandMatrix );           
         }
-
-        /////////////////////////////////////////////////////////////////////////
-        //
-        // Destructor. 
-        // 
-        /////////////////////////////////////////////////////////////////////////
-
-        virtual ~Interactor()
-        {
-        }    
+        
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -113,7 +106,7 @@ namespace Veda
           KeyboardMouse::instance()->init();        
 #endif // HAVE_KEYBOARDMOUSE
 
-	  initDeviceProxies();
+	        initDeviceProxies();
         }
 
 
@@ -789,7 +782,7 @@ namespace Veda
               
               for( analogitr = mAnalogActionMap.begin(); analogitr != mAnalogActionMap.end(); ++analogitr )
               {
-                data = mController.getDeviceInputData( mAnalogInputMap[ aindex ], analogitr->second );        
+                data = mController->getDeviceInputData( mAnalogInputMap[ aindex ], analogitr->second );        
         	
                 // I had to do it as in gadageteer I couldnot find a way to check whether or not if a Analog
                 // interface is present. The way it works that for the very first time if the value returned 
@@ -833,7 +826,7 @@ namespace Veda
 
             for( digitalitr = mDigitalActionMap.begin(); digitalitr != mDigitalActionMap.end(); ++digitalitr )
             {
-              value = mController.getDeviceInputData( mDigitalInputMap[ dindex ], digitalitr->second );      
+              value = mController->getDeviceInputData( mDigitalInputMap[ dindex ], digitalitr->second );      
 
               Core::SharedData::mCommand->mDigitalInputs[ digitalitr->first ] = ( int )value;
               
@@ -1048,6 +1041,18 @@ namespace Veda
         {
         }       
 
+      protected:
+
+        /////////////////////////////////////////////////////////////////////////
+        //
+        // Destructor. 
+        // 
+        /////////////////////////////////////////////////////////////////////////
+
+        virtual ~Interactor()
+        {
+        }    
+
       protected:  
 
         std::map< int, DigitalInterfaces >            mDigitalInputMap;
@@ -1078,7 +1083,7 @@ namespace Veda
 
         Navigation                                    mSceneNavigator;
 
-	      Core::Controller                              mController;  
+        Neiv::Pointer::SmartPtr< Core::Controller >   mController;  
 
         
 #if HAVE_KEYBOARDMOUSE      

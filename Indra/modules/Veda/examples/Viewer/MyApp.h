@@ -10,6 +10,14 @@
 #ifndef __MYAPP_H__
 #define __MYAPP_H__
 
+#ifdef _MSC_VER
+# pragma comment( lib, "osgd.lib" )
+# pragma comment( lib, "osgDBd.lib" )
+# pragma comment( lib, "osgUtild.lib" )
+# pragma comment( lib, "osgFXd.lib" )
+# pragma comment( lib, "osgTextd.lib" )
+#endif
+
 #include "Veda/Core/OsgBase.h"
 
 #include <vector>

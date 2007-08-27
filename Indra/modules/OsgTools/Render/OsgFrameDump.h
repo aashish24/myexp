@@ -25,7 +25,7 @@
 
 #include "osgDB/WriteFile"
 
-#include "Core/Export.h"
+#include "OsgTools/Core/Export.h"
 
 namespace OsgTools
 {
