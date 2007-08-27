@@ -794,7 +794,7 @@ namespace Veda
                 {
                   if( data == -1.0 )
                   {
-                    mAnalogInputStatusMap[ analogs ] = true;
+                    mAnalogInputStatusMap[ analogs ] = false;
                   }
                   else
                   {
