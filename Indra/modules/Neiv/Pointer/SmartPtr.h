@@ -1,6 +1,8 @@
 
-#ifndef __SMART_PTR_H__
-#define __SMART_PTR_H__
+#ifndef __NEIV_POINTER_SMARTPTR_H__
+#define __NEIV_POINTER_SMARTPTR_H__
+
+#include "Neiv/Export.h"
 
 namespace Neiv
 {
@@ -93,8 +95,7 @@ namespace Neiv
           /////////////////////////////////////////////////////////////////////
           //
           // Element selection through pointer operator ( overloaded ).
-          // Note@: Making sure that we dont assign smart pointer to itself. 
-          //
+          // 
           /////////////////////////////////////////////////////////////////////			   
 
 			    T* operator -> () const
@@ -158,4 +159,4 @@ namespace Neiv
   }
 }
 
-#endif // __SMART_PTR_H__
+#endif // __NEIV_POINTER_SMARTPTR_H__

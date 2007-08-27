@@ -35,7 +35,7 @@ namespace Veda
 {
   namespace Core
   {
-    class VEDA_EXPORT Command : public vpr::SerializableObject
+    class VEDA_EXPORT Command : public vpr::SerializableObject 
     {
       public:
 

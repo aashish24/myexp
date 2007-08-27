@@ -38,6 +38,8 @@
 
 #include "Veda/Design/Navigation.h"
 
+#include "Neiv/Base/Rerefenced.h"
+
 #if HAVE_KEYBOARDMOUSE
   #include "Dev/VJKeyboardMouseCallback.h"
 #endif
@@ -53,7 +55,7 @@ namespace Veda
     const int JOYSTICK_ANALOG_INPUTS_COUNT  = 06 ;
     const int JOYSTICK_DIGITAL_INPUTS_COUNT = 18 ;
 
-    class VEDA_EXPORT Interactor
+    class VEDA_EXPORT Interactor : public Neiv::Base::Referenced
     {
       public:
         

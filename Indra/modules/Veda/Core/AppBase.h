@@ -46,7 +46,7 @@ namespace Veda
 {
   namespace Core
   {
-    class VEDA_EXPORT AppBase 
+    class VEDA_EXPORT AppBase : public Neiv::Base::Referenced
     {
       public:    
 

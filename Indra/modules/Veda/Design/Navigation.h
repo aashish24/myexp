@@ -30,11 +30,13 @@
 
 #include "Veda/Export.h"
 
+#include "Neiv/Base/Referenced.h"
+
 namespace Veda
 {
   namespace Design
   {
-    class VEDA_EXPORT Navigation
+    class VEDA_EXPORT Navigation : public Neiv::Base::Referenced
     {
       public:
 
