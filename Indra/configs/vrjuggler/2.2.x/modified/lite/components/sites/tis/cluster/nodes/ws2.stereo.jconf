@@ -72,7 +72,7 @@
                <sleep_time>75</sleep_time>
             </display_window>
          </display_windows>
-         <listen_port>7000</listen_port>
+         <listen_port>7001</listen_port>
          <host_name>ws2</host_name>
       </cluster_node>
    </elements>
