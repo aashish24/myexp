@@ -35,6 +35,8 @@ namespace Veda
     {
       public:
 
+        typedef Neiv::Pointer::SmartPtr< AppBase >         RefPtr;
+
         static void init();
 
         // Wingman specific. 

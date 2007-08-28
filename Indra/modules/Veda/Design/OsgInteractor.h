@@ -51,6 +51,8 @@ namespace Veda
     {
       public:
 
+        typedef Neiv::Pointer::SmartPtr< OsgInteractor >  RefPtr;
+
         OsgInteractor();
 
         virtual osg::Group*                               root();

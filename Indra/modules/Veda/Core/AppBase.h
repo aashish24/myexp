@@ -59,6 +59,8 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
 
+        typedef Neiv::Pointer::SmartPtr< AppBase >         RefPtr;
+
         typedef std::deque< Tweek::TweekCommand* >         TweekCommandList;
 
 
@@ -113,7 +115,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
         
-        Neiv::Pointer::SmartPtr< User >                 mUser;      
+        User::RefPtr                                   mUser;      
         
 
         /////////////////////////////////////////////////////////////////////////

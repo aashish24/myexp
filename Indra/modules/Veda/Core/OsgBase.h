@@ -64,7 +64,9 @@ namespace Veda
     class VEDA_EXPORT OsgBase : public AppBase, public vrj::OsgApp
     {
       public:
-        
+       
+        typedef Neiv::Pointer::SmartPtr< OsgBase >      RefPtr;
+
         OsgBase( vrj::Kernel* kern, int& argc, char** argv );
 
        

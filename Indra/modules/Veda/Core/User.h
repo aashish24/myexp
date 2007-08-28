@@ -33,7 +33,9 @@ namespace Veda
 
       public:
 
-        typedef  std::vector< Neiv::Pointer::SmartPtr< Design::Interactor >  > Interactors;
+        typedef Neiv::Pointer::SmartPtr< User >                               RefPtr;
+
+        typedef std::vector< Neiv::Pointer::SmartPtr< Design::Interactor >  > Interactors;
 
         /////////////////////////////////////////////////////////////////////////
         //

@@ -66,6 +66,8 @@ namespace Veda
         // 
         /////////////////////////////////////////////////////////////////////////
 
+        typedef Neiv::Pointer::SmartPtr< Interactor >     RefPtr;
+
         typedef std::vector< gadget::DigitalInterface* >  DigitalInterfaces;
         typedef std::vector< gadget::AnalogInterface* >   AnalogInterfaces;
 	      typedef std::vector< Core::ActionState >          ActionStates;

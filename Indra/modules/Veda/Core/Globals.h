@@ -19,41 +19,61 @@
 
 #include "Veda/Export.h"
 
+#include "Neiv/Base/Referenced.h"
+#include "Neiv/Pointer/SmartPtr.h"
+
 namespace Veda
 {
   namespace Core
   {
-    class VEDA_EXPORT Display
+    class VEDA_EXPORT Display : public Neiv::Base::Referenced
     {
       public:
 
-        void              setDisplay( int originx, int originy, int width, int height );
+        Neiv::Pointer::SmartPtr< Display >  RefPtr;
 
-        const int&        width() const;
-        const int&        height() const;
+        void                                Display();
 
-        const int&        originX()const; 
-        const int&        originY() const;
+        void                                setDisplay( int originx, int originy, int width, int height );
+
+        const int&                          width() const;
+        const int&                          height() const;
+
+        const int&                          originX()const; 
+        const int&                          originY() const;
+
+
+      protected: 
+        
+        void                                ~Display();
 
       public:
         
-        int               mOriginX;
-        int               mOriginY;
-        int               mWidth;
-        int               mHeight;
+        int                                 mOriginX;
+        int                                 mOriginY;
+
+        int                                 mWidth;
+        int                                 mHeight;
     };
 
 
-    class VEDA_EXPORT RenderGlobals
+    class VEDA_EXPORT RenderGlobals : public Neiv::Base::Referenced
     {
       public:
 
-        void static       setDisplay( int originx, int originy, int width, int height );
+        Neiv::Pointer::SmartPtr< RenderGlobals >  RefPtr;
+
+        void static                               setDisplay( int originx, int originy, int width, int height );
       
+
+      protected:
+
+        virtual                                   ~RenderGlobals();
+
 
       public:
 
-        static Display    mDisplay;
+        static Display                            mDisplay;
     };
   }
 }

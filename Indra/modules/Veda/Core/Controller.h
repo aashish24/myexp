@@ -47,6 +47,8 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
 
+        typedef Neiv::Pointer::SmartPtr< AppBase >          RefPtr;
+
         typedef gadget::DigitalInterface                    Button;
         typedef std::vector< Button* >                      Buttons;  
 
