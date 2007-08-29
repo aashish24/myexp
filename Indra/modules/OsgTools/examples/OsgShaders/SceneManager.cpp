@@ -19,7 +19,7 @@
 
 #include "OsgTools/Geom/OsgDashboard.h"
 
-#include "OsgTools/Anime/OsgUniformCallback.h"
+#include "OsgTools/Callback/OsgUniformCallback.h"
 
 #include <iostream>
 
@@ -181,7 +181,7 @@ SceneManager::buildScene()
         //OsgTools::Anime::OsgUniformCallback< double >* aOUCB 
 
         double a = 0.1;
-        osg::ref_ptr< OsgTools::Anime::OsgUniformCallback< double, 5 >  >sa( new OsgTools::Anime::OsgUniformCallback< double, 5 >( 0.0, 0.0, 1.0, 0.001, 0 ) );
+        osg::ref_ptr< OsgTools::Callback::OsgUniformCallback< double, 5 >  >sa( new OsgTools::Callback::OsgUniformCallback< double, 5 >( 0.0, 0.0, 1.0, 0.001, 0 ) );
         OffsetUniform->setUpdateCallback( sa.get() );
 
         osg::StateSet* ss = rootNode->getOrCreateStateSet();
