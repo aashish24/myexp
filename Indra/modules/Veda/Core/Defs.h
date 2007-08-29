@@ -25,6 +25,7 @@
 
 #include "OsgTools/Core/Export.h"
 
+#include "Neiv/Pointer/SmartPtr.h"
 #include "Neiv/Base/Referenced.h"
 
 namespace Veda
@@ -35,7 +36,7 @@ namespace Veda
     {
       public:
 
-        typedef Neiv::Pointer::SmartPtr< AppBase >         RefPtr;
+        typedef Neiv::Pointer::SmartPtr< Defs > RefPtr;
 
         static void init();
 

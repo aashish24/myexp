@@ -30,9 +30,9 @@ namespace Veda
     {
       public:
 
-        Neiv::Pointer::SmartPtr< Display >  RefPtr;
+        typedef Neiv::Pointer::SmartPtr< Display > RefPtr;
 
-        void                                Display();
+        Display();
 
         void                                setDisplay( int originx, int originy, int width, int height );
 
@@ -45,7 +45,7 @@ namespace Veda
 
       protected: 
         
-        void                                ~Display();
+        ~Display();
 
       public:
         
@@ -64,7 +64,7 @@ namespace Veda
         Neiv::Pointer::SmartPtr< RenderGlobals >  RefPtr;
 
         void static                               setDisplay( int originx, int originy, int width, int height );
-      
+        
 
       protected:
 
@@ -73,7 +73,7 @@ namespace Veda
 
       public:
 
-        static Display                            mDisplay;
+        static Display::RefPtr                    mDisplay;
     };
   }
 }

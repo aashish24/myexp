@@ -19,13 +19,25 @@ namespace Veda
     //
     ///////////////////////////////////////////////////////////////////////////////
     
-    void Display::Display() :
+    Display::Display() :
       mOriginX( 0 ), 
       mOriginY( 0 ), 
       mWidth( 0 ), 
       mHeight( 0 )
     {
     }
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    //
+    // Constructor. 
+    //
+    ///////////////////////////////////////////////////////////////////////////////
+    
+    Display::~Display()
+    {
+    }
+  
 
     ///////////////////////////////////////////////////////////////////////////////
     //
@@ -96,7 +108,7 @@ namespace Veda
     //
     ///////////////////////////////////////////////////////////////////////////////
 
-    void RenderGlobals::~RenderGlobals()
+    RenderGlobals::~RenderGlobals()
     {
     }
 
@@ -109,10 +121,10 @@ namespace Veda
 
     void RenderGlobals::setDisplay( int originx, int originy, int width, int height )
     {
-      mDisplay.setDisplay( originx, originy, width, height );
+      mDisplay->setDisplay( originx, originy, width, height );
     }
 
-    Display RenderGlobals::mDisplay;
+    Display::RefPtr RenderGlobals::mDisplay = new Display();
   }
 }
 

@@ -13,6 +13,8 @@
 
 #include "Veda/Core/OsgBase.h"
 
+#include "Veda/Design/OsgInteractor.h"
+
 #include "vrj/Draw/DrawManager.h"
 #include "vrj/Display/DisplayManager.h"
 
@@ -96,7 +98,7 @@ namespace Veda
 
     void OsgBase::setApp()
     {  
-      OsgInteractor::RefPtr interactor( new Design::OsgInteractor() );     
+      Design::OsgInteractor::RefPtr interactor( new Design::OsgInteractor() );     
 
       if( interactor.valid() )
       {    
@@ -121,7 +123,7 @@ namespace Veda
       vrj::OsgApp::init();
 
       
-      vrj::DrawManager* dm = getDrawManager();
+     /* vrj::DrawManager* dm = getDrawManager();
       if( dm )
       {
         int originX, originY, width, height;
@@ -130,7 +132,7 @@ namespace Veda
         
         RenderGlobals::setDisplay( originX, originY, width, height );
       }
-
+      */
        appInit();    
 
       viewAll(mModelTransformNode.get());    

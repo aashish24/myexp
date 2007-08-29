@@ -31,6 +31,7 @@
 
 #include "Veda/Export.h"
 
+#include "Neiv/Pointer/SmartPtr.h"
 #include "Neiv/Base/Referenced.h"
 
 namespace Veda
@@ -47,7 +48,7 @@ namespace Veda
         //
         /////////////////////////////////////////////////////////////////////////
 
-        typedef Neiv::Pointer::SmartPtr< AppBase >          RefPtr;
+        typedef Neiv::Pointer::SmartPtr< Controller >       RefPtr;
 
         typedef gadget::DigitalInterface                    Button;
         typedef std::vector< Button* >                      Buttons;  

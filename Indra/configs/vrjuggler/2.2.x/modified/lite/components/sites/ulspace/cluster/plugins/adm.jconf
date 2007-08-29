@@ -4,7 +4,7 @@
    <elements>
       <application_data name="ApplicationData0" version="1">
          <guid>24658da0-4c3d-48fc-b892-2e8538e24811</guid>
-         <hostname>gradcomp3</hostname>
+         <hostname>matrix</hostname>
       </application_data>
    </elements>
 </configuration>
