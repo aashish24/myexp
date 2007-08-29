@@ -6,12 +6,7 @@
          <plugin_path>${VJ_BASE_DIR}/lib/gadgeteer/plugins/</plugin_path>
          <plugin>ApplicationDataManager</plugin>
          <plugin>RIMPlugin</plugin>
-         <cluster_node>Node(ws1)</cluster_node>
-         <cluster_node>Node(ws2)</cluster_node>
-         <cluster_node>Node(ws3)</cluster_node>
-         <cluster_node>Node(ws4)</cluster_node>
-         <cluster_node>Node(ws5)</cluster_node>
-         <cluster_node>Node(ws6)</cluster_node>
+         <cluster_node>Node(matrix)</cluster_node>
          <use_software_swap_lock>true</use_software_swap_lock>
       </cluster_manager>
    </elements>
