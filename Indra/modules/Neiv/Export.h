@@ -27,7 +27,7 @@
   #  endif
   # endif
 #else
-  # define VEDA_EXPORT
+  # define NEIV_EXPORT
 #endif 
 
 #endif // __NEIV_EXPORT_H__
