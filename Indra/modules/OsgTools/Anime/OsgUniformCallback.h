@@ -15,6 +15,7 @@ namespace OsgTools
 {
   namespace Anime
   {
+    template< class T, unsigned int MODE >
     class OSGTOOLS_EXPORT OsgUniformCallback: public osg::Uniform::Callback
     {
 
@@ -22,13 +23,39 @@ namespace OsgTools
 
             enum Mode
             {
-                COUNTER = 0,
-                TIME
+                COUNTER_BASED = 0,
+                TIME_BASED
             };
         
-            OsgUniformCallback( Mode op );            
+            OsgUniformCallback( T initialVal, T minVal, T maxVal, T delta, unsigned int mode ) :
+                mMode( mode ),             
+                mInitialVal( initialVal ), 
+                mCurrentVal( initialVal ),
+                mMinVal( minVal ), 
+                mMaxVal( maxVal ), 
+                mDelta( delta )
+            {
+            }
 
-            virtual void operator() ( osg::Uniform* uniform, osg::NodeVisitor* nv );
+            virtual void operator() ( osg::Uniform* uniform, osg::NodeVisitor* nv )
+            {
+              if( mEnabled )
+              {   
+                  switch( mMode )
+                  {
+                      case COUNTER_BASED: 
+                      {                 
+                        if( mCurrentVal <= mMaxVal || mCurrentVal >= mMinVal )
+                        {
+                          mCurrentVal = mCurrentVal + mDelta;
+                          uniform->set( osg::Vec3( mCurrentVal, mCurrentVal, mCurrentVal ) );                    
+                        }
+                        
+                        break;  
+                      }                
+                  };
+              }
+            }
 
         protected:
             
@@ -40,15 +67,16 @@ namespace OsgTools
           
           bool                      mEnabled;
 
-          Mode                      mMode;
+          unsigned int              mMode;
 
-          long double               mMin;
-          long double               mMax;
-          long double               mDelta;
+          T                         mInitialVal;
+          T                         mCurrentVal;
+          T                         mMinVal;
+          T                         mMaxVal;
+          T                         mDelta;
 
+          // Note@: Not implemented as of now. 
           bool                      mConsiderFPS;
-          long double               mDuration;
-                   
     };
   }
 }

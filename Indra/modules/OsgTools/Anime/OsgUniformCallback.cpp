@@ -13,31 +13,27 @@ namespace OsgTools
 {
   namespace Anime
   {
-    void OsgUniformCallback::operator() ( osg::Uniform* uniform, osg::NodeVisitor* nv )
+    /*
+    template< class T >
+    inline void OsgUniformCallback< T >::operator() ( osg::Uniform* uniform, osg::NodeVisitor* nv )
     {
         if( mEnabled )
         {   
-            static double counter = 0.0;
-            
             switch( mMode )
             {
                 case COUNTER: 
-                {
-                  if( counter >= 1.0 )
+                {                 
+                  if( mCurrentVal <= mMaxVal || mCurrentVal >= mMinVal )
                   {
-                    uniform->set( osg::Vec3( 1.0, 1.0, 1.0 ) );
+                    mCurrentVal = mCurrentVal + mDelta;
+                    uniform->set( osg::Vec3( mCurrentVal, mCurrentVal, mCurrentVal ) );                    
                   }
-                  else
-                  {
-                    uniform->set( osg::Vec3( counter, counter, counter ) );
-                    counter += 0.005;                                         
-                  }
-
+                  
                   break;  
-                }
-                
-            }
+                }                
+            };
         }
     }
+    */
   }
 }

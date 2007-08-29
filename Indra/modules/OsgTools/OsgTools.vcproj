@@ -234,10 +234,6 @@
 				Name="Anime"
 				>
 				<File
-					RelativePath=".\Anime\OsgUniformCallback.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Anime\OsgUniformCallback.h"
 					>
 				</File>

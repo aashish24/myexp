@@ -19,6 +19,8 @@
 
 #include "OsgTools/Geom/OsgDashboard.h"
 
+#include "OsgTools/Anime/OsgUniformCallback.h"
+
 #include <iostream>
 
 #include "SceneManager.h"
@@ -152,57 +154,6 @@ static osg::Shader*  ErodedVertObj;
 static osg::Shader*  ErodedFragObj;
 
 
-class AnimateCallback: public osg::Uniform::Callback
-{
-    public:
-    
-        enum Operation
-        {
-            OFFSET,
-            SIN,
-            COLOR1,
-            COLOR2            
-        };
-    
-        AnimateCallback(Operation op) : _enabled( true ),_operation( op ) {}
-
-        virtual void operator() ( osg::Uniform* uniform, osg::NodeVisitor* nv )
-        {
-            if( _enabled )
-            {   
-                static double counter = 0.0;
-                
-                switch(_operation)
-                {
-                    case OFFSET : 
-                    {
-                      if( counter >= 1.0 )
-                      {
-                        uniform->set( osg::Vec3( 1.0, 1.0, 1.0 ) );
-                      }
-                      else
-                      {
-                        uniform->set( osg::Vec3( counter, counter, counter ) );
-                        counter += 0.001;                                         
-                      }
-
-                      break;  
-                    }
-
-                    //case SIN : uniform->set( 0.0f ); break;
-                    //case COLOR1 : uniform->set( osg::Vec3(0, 0.0f, 0.0f) ); break;
-                    //case COLOR2 : uniform->set( osg::Vec3(1, 1, 0) ); break;
-                }
-            }
-        }
-
-    private:
-      
-      bool _enabled;
-      Operation _operation;
-};
-
-
 #define TEXUNIT_SINE        1
 #define TEXUNIT_NOISE       2
 #define TEXTURE             3
@@ -227,7 +178,11 @@ SceneManager::buildScene()
         osg::Uniform* Color1Uniform = new osg::Uniform( "Color1", osg::Vec3(0.0f, 0.0f, 0.0f) );
         osg::Uniform* Color2Uniform = new osg::Uniform( "Color2", osg::Vec3(0.0f, 0.0f, 0.0f) );
 
-        OffsetUniform->setUpdateCallback( new AnimateCallback( AnimateCallback::OFFSET ) );        
+        //OsgTools::Anime::OsgUniformCallback< double >* aOUCB 
+
+        double a = 0.1;
+        osg::ref_ptr< OsgTools::Anime::OsgUniformCallback< double, 5 >  >sa( new OsgTools::Anime::OsgUniformCallback< double, 5 >( 0.0, 0.0, 1.0, 0.001, 0 ) );
+        OffsetUniform->setUpdateCallback( sa.get() );
 
         osg::StateSet* ss = rootNode->getOrCreateStateSet();
         ss->addUniform( OffsetUniform );
