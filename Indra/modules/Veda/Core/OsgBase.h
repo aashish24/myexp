@@ -43,13 +43,13 @@
 
 #include "Veda/Export.h"
 
-#ifdef _MSC_VER && _DEBUG
+#if defined _MSC_VER && _DEBUG
 # pragma comment( lib, "osgd.lib" )
 # pragma comment( lib, "osgDBd.lib" )
 # pragma comment( lib, "osgUtild.lib" )
 # pragma comment( lib, "osgFXd.lib" )
 # pragma comment( lib, "osgTextd.lib" )
-# else
+# elif defined _MSC_VER
 # pragma comment( lib, "osg.lib" )
 # pragma comment( lib, "osgDB.lib" )
 # pragma comment( lib, "osgUtil.lib" )
