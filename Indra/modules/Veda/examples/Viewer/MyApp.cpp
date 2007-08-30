@@ -64,7 +64,7 @@ void MyApp::appSceneInit()
     if( model.valid() )
     {
       osg::ref_ptr< osg::MatrixTransform > mat1( new osg::MatrixTransform() );
-      mat1->setMatrix( osg::Matrix::translate( osg::Vec3f( 10.0f, 0.0f, 0.0f ) ) ); 
+      //mat1->setMatrix( osg::Matrix::translate( osg::Vec3f( 10.0f, 0.0f, 0.0f ) ) ); 
 
       osg::ref_ptr< osg::MatrixTransform > mat2( new osg::MatrixTransform() );
       mat2->setMatrix( osg::Matrix::translate( osg::Vec3f( -10.0f, 0.0f, 0.0f ) ) ); 
@@ -80,7 +80,7 @@ void MyApp::appSceneInit()
 
 void MyApp::appLatePreFrame()
 {
-  //osg::Matrix mat( osg::Matrix::translate( osg::Vec3f( -10.0, 0.0, 0.0 ) ) );
+  //osg::Matrix mat;( osg::Matrix::translate( osg::Vec3f( -10.0, 0.0, 0.0 ) ) );
   //mSceneTransformNode->setMatrix( mat );
 }
 
