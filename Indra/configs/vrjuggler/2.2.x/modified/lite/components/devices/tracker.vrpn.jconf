@@ -30,7 +30,7 @@
          <driver>VRPN_drv</driver>
       </input_manager>
       <vrpn name="Track Server" version="2">
-         <tracker_server>tracker@172.20.26.247</tracker_server>
+         <tracker_server>tracker@tcp:172.20.26.247</tracker_server>
          <button_server>button@tcp:172.20.26.247</button_server>
          <analog_server>button@tcp:172.20.26.247</analog_server>
          <tracker_count>2</tracker_count>
