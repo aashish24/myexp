@@ -460,6 +460,8 @@ namespace Veda
       updateTweek();
       
       appLatePreFrame();
+
+      vrj::OsgApp::latePreFrame();
     }
 
 
