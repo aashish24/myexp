@@ -3,12 +3,12 @@
 <configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
    <include>plugins/plugins.jconf</include>
    <include>plugins/adm.jconf</include>
-   <include>nodes/ws1.jconf</include>
-   <include>nodes/ws2.jconf</include>
-   <include>nodes/ws3.jconf</include>
-   <include>nodes/ws4.jconf</include>
-   <include>nodes/ws5.jconf</include>
-   <include>nodes/ws6.jconf</include>
+   <include>nodes/ws1.mono.jconf</include>
+   <include>nodes/ws2.mono.jconf</include>
+   <include>nodes/ws3.mono.jconf</include>
+   <include>nodes/ws4.mono.jconf</include>
+   <include>nodes/ws5.mono.jconf</include>
+   <include>nodes/ws6.mono.jconf</include>
    <elements />
 </configuration>
 
