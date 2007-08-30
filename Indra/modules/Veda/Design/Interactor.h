@@ -757,6 +757,8 @@ namespace Veda
 
         void updateDeviceData()
         {
+	  //std::cout << "Update device data: " << std::endl;
+
           Core::DeviceData value( Core::ZERO );   
           double data( 0.0 );
 
@@ -774,7 +776,8 @@ namespace Veda
           std::map< int, std::vector< Core::ActionState > >::const_iterator digitalitr;
 
           if( Core::SharedData::mCommand.isLocal() )
-          {  
+          {
+            //std::cout << "Is local: " << std::endl;  
             if( 1 )
             {
               static int firstTime = 1;

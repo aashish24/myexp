@@ -121,15 +121,15 @@ namespace Veda
       mJoystickDigitalProxies.push_back( std::string( "VJButtonJS8" ) );
       mJoystickDigitalProxies.push_back( std::string( "VJButtonJS9" ) );
       
-      mTrackerAnalogProxies.push_back( std::string( "VJTrackAxis0" ) );
-      mTrackerAnalogProxies.push_back( std::string( "VJTrackAxis1" ) );
+      mTrackerAnalogProxies.push_back( std::string( "VJTrackerAxis0" ) );
+      mTrackerAnalogProxies.push_back( std::string( "VJTrackerAxis1" ) );
       
-      mTrackerDigitalProxies.push_back( std::string( "VJTrackButton0" ) );
-      mTrackerDigitalProxies.push_back( std::string( "VJTrackButton1" ) );
-      mTrackerDigitalProxies.push_back( std::string( "VJTrackButton2" ) );
-      mTrackerDigitalProxies.push_back( std::string( "VJTrackButton3" ) );
-      mTrackerDigitalProxies.push_back( std::string( "VJTrackButton4" ) );
-      mTrackerDigitalProxies.push_back( std::string( "VJTrackButton5" ) );
+      mTrackerDigitalProxies.push_back( std::string( "VJTrackerButton0" ) );
+      mTrackerDigitalProxies.push_back( std::string( "VJTrackerButton1" ) );
+      mTrackerDigitalProxies.push_back( std::string( "VJTrackerButton2" ) );
+      mTrackerDigitalProxies.push_back( std::string( "VJTrackerButton3" ) );
+      mTrackerDigitalProxies.push_back( std::string( "VJTrackerButton4" ) );
+      mTrackerDigitalProxies.push_back( std::string( "VJTrackerButton5" ) );
     }  
   }
 }

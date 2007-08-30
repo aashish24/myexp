@@ -222,6 +222,9 @@ namespace Veda
       
       if( mUseTracker )
       {
+
+	std::cout << "Use tracker enabled: " << std::endl;
+	
         this->mUseTracker = false;
         gmtl::Vec3f dir( 0.0, 0.0, -1.0 );
 
