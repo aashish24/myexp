@@ -27,7 +27,7 @@ INCLUDE_DIRECTORIES( ../ ${OSG_INC_DIR} )
 #------------------Link the libraries------------------ 
 LINK_LIBRARIES( OsgTools osg )
 
-
+#------------------Build shared library------------------ 
 ADD_LIBRARY( OsgTools SHARED ${SOURCES} )
 
 
