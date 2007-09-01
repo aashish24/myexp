@@ -62,6 +62,7 @@ namespace Neiv
 				    }
 			    }
 
+
           /////////////////////////////////////////////////////////////////////
           //
           // Assignment operator ( overloaded ).
@@ -89,6 +90,75 @@ namespace Neiv
 
 				    return *this;				
 			    }
+
+          SmartPtr& operator = ( SmartPtr* ptr )
+			    {
+				    if( mPtr == ptr )
+					    return *this;
+    				
+				    T* tmpPtr = mPtr;
+				    mPtr = ptr;
+				    
+            if( mPtr )
+            {
+              mPtr->ref();
+            }
+
+				    if( tmpPtr )
+				    {
+					    tmpPtr->unref();
+				    }
+
+				    return *this;				
+			    }
+
+          
+          /////////////////////////////////////////////////////////////////////
+          //
+          // Comparison operators.
+          // 
+          /////////////////////////////////////////////////////////////////////			   
+          
+          bool operator == ( const SmartPtr& sp )
+          {
+            return ( sp.mPtr == mPtr );
+          }
+
+          bool operator == ( const SmartPtr* ptr )
+          {
+            return ( ptr == mPtr );
+          }
+
+          friend bool operator == ( const SmartPtr* ptr, const SmartPtr& sp )
+          {
+            return ( ptr == sp.mPtr );
+          }
+
+          bool operator != ( const SmartPtr& sp )
+          {
+            return ( sp.mPtr == mPtr );
+          }
+
+          bool operator != ( const SmartPtr* ptr )
+          {
+            return ( ptr == mPtr );
+          }
+
+          friend bool operator != ( const SmartPtr* ptr, const SmartPtr& sp )
+          {
+            return ( ptr == sp.mPtr );
+          }
+
+          bool operator < ( const SmartPtr& sp )
+          {
+            return ( mPtr < sp.mPtr );
+          }
+
+          bool operator > ( const SmartPtr& sp )
+          {
+            return ( mPtr > sp.mPtr );
+          }
+
 
           /////////////////////////////////////////////////////////////////////
           //
