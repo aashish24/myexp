@@ -4,8 +4,7 @@ set( OSG_LIB_DIR "$ENV{OSG_LIB_DIR}" )
 set( OSG_INC_DIR "$ENV{OSG_INC_DIR}" )
 
 
-# Project name.
-#
+#------------------Project name------------------.
 PROJECT( OsgTools )
 
 # List all the source files. 
@@ -17,28 +16,24 @@ SET( SOURCES
 )
 
 
-# Find. 
-#
+#------------------Find------------------ 
 FIND_LIBRARY( OSG_LIB osg ${OSG_LIB_DIR} )
 
 
-# List all the includes. 
-#
+#------------------List all the includes------------------  
 INCLUDE_DIRECTORIES( ../ ${OSG_INC_DIR} ) 
 
 
-# Link the libraries. 
-#
-#LINK_LIBRARIES( OsgTools osg )
+#------------------Link the libraries------------------ 
+LINK_LIBRARIES( OsgTools osg )
 
 
 ADD_LIBRARY( OsgTools SHARED ${SOURCES} )
 
 
-# Set the library path. 
-#
+#------------------Set the library path------------------ 
 TARGET_LINK_LIBRARIES( OsgTools ${OSG_LIB} )
 
-
+#------------------Install------------------
 INSTALL( TARGETS OsgTools DESTINATION ../../bin )
 
