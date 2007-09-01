@@ -119,27 +119,27 @@ namespace Neiv
           // 
           /////////////////////////////////////////////////////////////////////			   
           
-          bool operator == ( const SmartPtr& sp )
+          bool operator == ( const SmartPtr& sp ) const
           {
             return ( sp.mPtr == mPtr );
           }
 
-          bool operator == ( const SmartPtr* ptr )
+          bool operator == ( const SmartPtr* ptr ) const
           {
             return ( ptr == mPtr );
           }
 
-          friend bool operator == ( const SmartPtr* ptr, const SmartPtr& sp )
+          friend bool operator == ( const SmartPtr* ptr, const SmartPtr& sp ) 
           {
             return ( ptr == sp.mPtr );
           }
 
-          bool operator != ( const SmartPtr& sp )
+          bool operator != ( const SmartPtr& sp ) const
           {
             return ( sp.mPtr == mPtr );
           }
 
-          bool operator != ( const SmartPtr* ptr )
+          bool operator != ( const SmartPtr* ptr ) const
           {
             return ( ptr == mPtr );
           }
@@ -149,12 +149,12 @@ namespace Neiv
             return ( ptr == sp.mPtr );
           }
 
-          bool operator < ( const SmartPtr& sp )
+          bool operator < ( const SmartPtr& sp ) const
           {
             return ( mPtr < sp.mPtr );
           }
 
-          bool operator > ( const SmartPtr& sp )
+          bool operator > ( const SmartPtr& sp ) const
           {
             return ( mPtr > sp.mPtr );
           }
