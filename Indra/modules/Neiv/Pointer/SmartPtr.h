@@ -219,6 +219,20 @@ namespace Neiv
 				    }
 			    }
 
+
+          /////////////////////////////////////////////////////////////////////
+          //
+          // Swap the pointers. 
+          //
+          /////////////////////////////////////////////////////////////////////
+
+          void swap( SmartPtr& sp )
+          {
+            T* tmp = mPtr;
+            mPtr = sp.mPtr;
+            sp.mPtr = tmp;
+          }
+
 		    private:
 
 			    T* mPtr;
