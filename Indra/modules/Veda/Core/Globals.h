@@ -20,7 +20,8 @@
 #include "Veda/Export.h"
 
 #include "Neiv/Base/Referenced.h"
-#include "Neiv/Pointer/SmartPtr.h"
+#include "Neiv/Pointer/Pointer.h"
+#include "Neiv/Pointer/SmartPointer.h"
 
 namespace Veda
 {
@@ -30,7 +31,7 @@ namespace Veda
     {
       public:
 
-        typedef Neiv::Pointer::SmartPtr< Display > RefPtr;
+        NEIV_DELCARE_SMART_PTR( Display );
 
         Display();
 
@@ -61,7 +62,7 @@ namespace Veda
     {
       public:
 
-        Neiv::Pointer::SmartPtr< RenderGlobals >  RefPtr;
+        NEIV_DELCARE_SMART_PTR( RenderGlobals );
 
         void static                               setDisplay( int originx, int originy, int width, int height );
         

@@ -20,7 +20,8 @@
 #include "Veda/Export.h"
 
 #include "Neiv/Base/Referenced.h"
-#include "Neiv/Pointer/SmartPtr.h"
+#include "Neiv/Pointer/Pointer.h"
+#include "Neiv/Pointer/SmartPointer.h"
 
 #include <vector>
 
@@ -33,9 +34,9 @@ namespace Veda
 
       public:
 
-        typedef Neiv::Pointer::SmartPtr< User >                               RefPtr;
+        NEIV_DELCARE_SMART_PTR( User );
 
-        typedef std::vector< Neiv::Pointer::SmartPtr< Design::Interactor >  > Interactors;
+        typedef std::vector< Design::Interactor::RefPtr > Interactors;
 
         /////////////////////////////////////////////////////////////////////////
         //
@@ -91,14 +92,14 @@ namespace Veda
 
         void setInteractor( void* ptr )
         {
-          Neiv::Pointer::SmartPtr< Design::Interactor > in = static_cast< Design::Interactor* >( ptr );                  
+          Design::Interactor::RefPtr in = static_cast< Design::Interactor* >( ptr );                  
 
           // If its a valid interactor. 
           if( in.valid() ) 
           {
             if( mInteractors.size() >= 1)
             {
-              std::vector< Neiv::Pointer::SmartPtr< Design::Interactor > >::iterator itr = mInteractors.begin();
+              std::vector< Design::Interactor::RefPtr >::iterator itr = mInteractors.begin();
                           
               for( int i = 0; itr != mInteractors.end(); ++i)
               {

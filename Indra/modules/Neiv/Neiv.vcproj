@@ -185,7 +185,11 @@
 				Name="Pointer"
 				>
 				<File
-					RelativePath=".\Pointer\SmartPtr.h"
+					RelativePath=".\Pointer\Pointer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Pointer\SmartPointer.h"
 					>
 				</File>
 			</Filter>

@@ -40,7 +40,8 @@
 #include "Veda/Export.h"
 
 #include "Neiv/Base/Referenced.h"
-#include "Neiv/Pointer/SmartPtr.h"
+#include "Neiv/Pointer/SmartPointer.h"
+#include "Neiv/Pointer/Pointer.h"
 
 #include <vector>
 #include <string>
@@ -53,14 +54,15 @@ namespace Veda
     {
       public:    
 
+        NEIV_DELCARE_SMART_PTR( AppBase );
+
         /////////////////////////////////////////////////////////////////////////
         //
         // Typedefs.
         //
         /////////////////////////////////////////////////////////////////////////
 
-        typedef Neiv::Pointer::SmartPtr< AppBase >         RefPtr;
-
+        
         typedef std::deque< Tweek::TweekCommand* >         TweekCommandList;
 
 

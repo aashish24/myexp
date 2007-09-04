@@ -65,7 +65,7 @@ namespace Veda
     {
       public:
        
-        typedef Neiv::Pointer::SmartPtr< OsgBase >      RefPtr;
+        NEIV_DELCARE_SMART_PTR( OsgBase );
 
         OsgBase( vrj::Kernel* kern, int& argc, char** argv );
 

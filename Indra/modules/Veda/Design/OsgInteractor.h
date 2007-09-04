@@ -35,6 +35,9 @@
 
 #include "OsgTools/SG/OsgFind.h"
 
+#include "Neiv/Pointer/Pointer.h"
+#include "Neiv/Pointer/SmartPointer.h"
+
 #ifdef HAVE_KEYBOARDMOUSE
 #include "Dev/KeyboardMouse.h"
 #endif
@@ -51,7 +54,7 @@ namespace Veda
     {
       public:
 
-        typedef Neiv::Pointer::SmartPtr< OsgInteractor >  RefPtr;
+        NEIV_DELCARE_SMART_PTR( OsgInteractor );
 
         OsgInteractor();
 

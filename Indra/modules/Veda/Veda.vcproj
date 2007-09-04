@@ -69,7 +69,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="vrj_d-2_3_8.lib vrj_ogl_d-2_3_8.lib vpr_d-2_1_1.lib tweek_d-1_3_0.lib gadget_d-1_3_7.lib jccl_d-1_3_1.lib openGL32.lib omnithread33_rtd.lib omniDynamic410_rtd.lib omniORB410_rtd.lib  libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
+				AdditionalDependencies="vrj_d-2_3_8.lib vrj_ogl_d-2_3_8.lib vpr_d-2_1_1.lib tweek_d-1_3_0.lib gadget_d-1_3_7.lib jccl_d-1_3_1.lib openGL32.lib omnithread33_rtd.lib omniDynamic410_rtd.lib omniORB410_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
 				OutputFile="..\..\bin\Vedad.dll"
 				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR);"
 				GenerateDebugInformation="true"

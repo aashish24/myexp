@@ -12,7 +12,7 @@
 namespace Veda
 {
   namespace Core
-      {
+  {
     /////////////////////////////////////////////////////////////////////////
     //
     // Get data from digital input device. 

@@ -39,7 +39,8 @@
 #include "Veda/Design/Navigation.h"
 
 #include "Neiv/Base/Referenced.h"
-#include "Neiv/Pointer/SmartPtr.h"
+#include "Neiv/Pointer/Pointer.h"
+#include "Neiv/Pointer/SmartPointer.h"
 
 #if HAVE_KEYBOARDMOUSE
   #include "Dev/VJKeyboardMouseCallback.h"
@@ -66,7 +67,7 @@ namespace Veda
         // 
         /////////////////////////////////////////////////////////////////////////
 
-        typedef Neiv::Pointer::SmartPtr< Interactor >     RefPtr;
+        NEIV_DELCARE_SMART_PTR( Interactor );
 
         typedef std::vector< gadget::DigitalInterface* >  DigitalInterfaces;
         typedef std::vector< gadget::AnalogInterface* >   AnalogInterfaces;
@@ -1088,7 +1089,7 @@ namespace Veda
 
         Navigation                                    mSceneNavigator;
 
-        Neiv::Pointer::SmartPtr< Core::Controller >   mController;  
+        Core::Controller::RefPtr                      mController;  
 
         
 #if HAVE_KEYBOARDMOUSE      
