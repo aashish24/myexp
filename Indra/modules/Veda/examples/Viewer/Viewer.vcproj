@@ -66,7 +66,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Vedad.lib openGL32.lib omnithread33_rtd.lib omniORB410_rtd.lib omniDynamic410_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
+				AdditionalDependencies="openGL32.lib omnithread33_rtd.lib omniORB410_rtd.lib omniDynamic410_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
 				OutputFile="..\..\..\..\bin\viewerd.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
