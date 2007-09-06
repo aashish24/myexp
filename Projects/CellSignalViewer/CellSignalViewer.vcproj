@@ -66,11 +66,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="osgd.lib osgDBd.lib osgUtild.lib osgFXd.lib osgTextd.lib&#x0D; openGL32.lib omnithread33_rtd.lib omniDynamic4_rtd.lib omniORB4_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(INDRA_ROOT_DIR)\bin\Vedad.lib $(INDRA_ROOT_DIR)\bin\OsgToolsd.lib $(NOINHERIT)"
+				AdditionalDependencies="osgd.lib osgDBd.lib osgUtild.lib osgFXd.lib osgTextd.lib&#x0D; openGL32.lib omnithread33_rtd.lib omniDynamic4_rtd.lib omniORB4_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib Vedad.lib OsgToolsd.lib $(NOINHERIT)"
 				OutputFile="debug\CellSignalViewerd.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="&quot;$(VJ_BASE_DIR)\lib&quot;;&quot;$(OSG_LIB_DIR)&quot;"
+				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR);$(INDRA_ROOT_DIR)\bin;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/viewer.pdb"
 				SubSystem="1"
