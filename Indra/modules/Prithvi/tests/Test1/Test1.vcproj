@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="test Prithvi: Test1"
+	Name="test: PrithviTest1"
 	ProjectGUID="{C0F54593-B165-4E6E-B23C-BA1E209D2AFC}"
-	RootNamespace="test Prithvi: Test1"
+	RootNamespace="test: PrithviTest1"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="osgd.lib osgViewerd.lib"
-				OutputFile="..\..\..\..\bin\test_prithvi_test1d.exe"
+				OutputFile="..\..\..\..\bin\prithvitest1d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR);"
 				GenerateDebugInformation="true"

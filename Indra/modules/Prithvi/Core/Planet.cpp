@@ -49,7 +49,11 @@ namespace Prithvi
         }
 
         mPlanet->getLand()->setMipMappingFlag( mEnableMipMap );        
-        mPlanet->setEnableHudFlag( mEnableHud );        
+        mPlanet->setEnableHudFlag( mEnableHud );     
+
+        // Add texture layers. 
+        mPlanet->getLand()->setTextureLayer( mTextureLayerGroup.get(), 0 );
+
       }
       catch( ... )
       {
@@ -78,7 +82,29 @@ namespace Prithvi
 #endif // HAVE_OSSIM
     }
 
+
+    bool Planet::removeLayer( const unsigned int &id ) 
+    {
+#ifdef HAVE_OSSIM
+      if( mTextureLayerGroup->removeLayer( id ).valid() )
+        return true;
+      else
+        return false;
+#else
+      return false;        
+#endif // HAVE_OSSIM
+    }
     
+
+    bool Planet::hasLayer( const  unsigned int& id ) const 
+    {
+#ifdef HAVE_OSSIM
+      return mTextureLayerGroup->containsLayer( this->getLayer( id ) );
+#else
+      return false;
+#endif // HAVE_OSSIM
+    }
+
 #ifdef HAVE_OSSIM
     void Planet::readKwl( const std::string& file )
     {
@@ -104,9 +130,24 @@ namespace Prithvi
       return index;
     }
 
+    bool Planet::removeLayer( ossimPlanetTextureLayer* layer )
+    {
+      if( 0x00 != layer )
+      {
+        return mTextureLayerGroup->removeLayer( layer );
+      }
+      
+      return false;
+    }
+
     ossimPlanetTextureLayer* Planet::getLayer( const unsigned int& id ) const
     {
       return ( mTextureLayerGroup->getLayer( id ) ).get();
+    }
+
+    bool Planet::hasLayer( ossimPlanetTextureLayer* layer ) const 
+    {
+      return mTextureLayerGroup->containsLayer( layer );
     }
 
 #endif // HAVE_OSSIM

@@ -37,6 +37,8 @@
 # include "ossimPlanet/ossimPlanetActionRouter.h"
 #endif
 
+#include "osg/Group"
+
 #include "Prithvi/Export.h"
 
 #include "Neiv/Base/Referenced.h"
@@ -55,16 +57,24 @@ namespace Prithvi
 
         Planet();
 
-        virtual osg::Group* root();
+        virtual osg::Group*                           root();
 
-        virtual int addLayer( const std::string& file );
+        virtual int                                   addLayer( const std::string& file );
+
+        virtual bool                                  removeLayer( const unsigned int& id );
+
+        virtual bool                                  hasLayer( const unsigned int& id ) const;
 
 #ifdef HAVE_OSSIM
-        virtual void readKwl( const std::string& kwl );
+        virtual void                                  readKwl( const std::string& kwl );
 
-        virtual int addLayer( ossimPlanetTextureLayer* layer );
+        virtual int                                   addLayer( ossimPlanetTextureLayer* layer );
 
-        virtual ossimPlanetTextureLayer* getLayer( const unsigned int& id ) const; 
+        virtual bool                                  removeLayer( ossimPlanetTextureLayer* layer );
+
+        virtual bool                                  hasLayer( ossimPlanetTextureLayer* layer ) const;
+
+        virtual ossimPlanetTextureLayer*              getLayer( const unsigned int& id ) const; 
 #endif
        
       protected:
