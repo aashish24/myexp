@@ -2,6 +2,7 @@
 #ifndef __MYAPP_H__
 #define __MYAPP_H__
 
+#include "Veda/VedaConfig.h"
 #include "Veda/Core/OsgBase.h"
 
 #include "Prithvi/Core/Planet.h"
