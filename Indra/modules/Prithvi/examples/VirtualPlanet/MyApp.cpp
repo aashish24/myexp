@@ -22,7 +22,7 @@ MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc,
   mPlanet( new Prithvi::Core::Planet() )
 {	
   // Second argument should be a kwl file. 
-  mPlanet->readKwl( argv[ 1 ] );
+  mPlanet->readKwl( std::string( argv[ 1 ] ) );
 }
 
 // One time initialization. 

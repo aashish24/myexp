@@ -4,6 +4,15 @@
 #include "osgViewer/Viewer"
 #include "osgViewer/ViewerEventHandlers"
 
+
+#if defined _MSC_VER && _DEBUG
+# pragma comment( lib, "osgd.lib" )
+# pragma comment( lib, "osgViewerd.lib" )
+#elif defined _MSC_VER
+# pragma comment( lib, "osg.lib" )
+# pragma comment( lib, "osgViewer.lib" )
+#endif // defined ( _MSC_VER && _DEBUG )
+
 int main( int argc, char** argv )
 {
   osgViewer::Viewer viewer;

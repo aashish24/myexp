@@ -61,7 +61,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="osgd.lib osgViewerd.lib"
 				OutputFile="..\..\..\..\bin\prithvitest1d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR);"
@@ -119,7 +118,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="$(INDRA_ROOT_DIR)\modules;$(OSG_INC_DIR);$(OSSIMPLANET_INC_DIR);$(OSSIM_INC_DIR);$(LIBWMS_INC_DIR);"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;HAVE_OSSIM;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -137,6 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				OutputFile="..\..\..\..\bin\prithvitest1.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"

@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="ossimd.lib ossimPlanetd.lib osgd.lib osgGAd.lib"
-				OutputFile="..\..\bin\Vedad.dll"
+				OutputFile="..\..\bin\Prithvid.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(OSSIM_LIB_DIR);$(OSSIMPLANET_LIB_DIR);$(LOCAL_SRC_DIR)\bin;"
 				GenerateDebugInformation="true"
@@ -137,6 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				OutputFile="..\..\bin\Prithvi.dll"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
