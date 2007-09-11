@@ -17,6 +17,9 @@
 #ifndef __VEDA_CORE_USERDATA_H__
 #define __VEDA_CORE_USERDATA_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include <deque> 
 
 #include "vpr/Sync/Mutex.h" 

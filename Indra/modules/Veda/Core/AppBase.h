@@ -22,6 +22,9 @@
 #ifndef __CORE_APPBASE_H__
 #define __CORE_APPBASE_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include "vrj/Draw/OGL/GlApp.h"
 
 #include "tweek/CORBA/CorbaManager.h"

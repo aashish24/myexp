@@ -17,6 +17,9 @@
 #ifndef __CORE_CONTROLLER_H__
 #define __CORE_CONTROLLER_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include <vector>
 
 #include "gmtl/Matrix.h"

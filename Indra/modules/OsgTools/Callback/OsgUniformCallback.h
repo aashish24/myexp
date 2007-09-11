@@ -7,6 +7,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+// This should be the first include. 
+#include "OsgTools/OsgToolsConfig.h"
+
 #include "OsgTools/Core/Export.h"
 
 #include "osg/Uniform"

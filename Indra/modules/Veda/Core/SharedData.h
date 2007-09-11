@@ -18,6 +18,9 @@
 #ifndef __VEDA_CORE_SHAREDATA_H__
 #define __VEDA_CORE_SHAREDATA_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include "Veda/Core/Command.h"
 
 #include "Veda/Export.h"

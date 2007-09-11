@@ -15,7 +15,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #ifndef __TYPES_H__
-#define  __TYPES_H__  
+#define __TYPES_H__  
+
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
 
 #include <string>
 #include <vector>

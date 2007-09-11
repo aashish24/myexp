@@ -2,8 +2,10 @@
 #ifndef __PRITHVI_CORE_PLANET_H__
 #define __PRITHVI_CORE_PLANET_H__
 
-// Adding this fixes the ossim::min ossim::max problem.
+// This should be the first include. 
+#include "Prithvi/PrithviConfig.h"
 
+// Adding this fixes the ossim::min ossim::max problem.
 #ifdef _WIN32
 # include <windows.h>
 # ifdef max

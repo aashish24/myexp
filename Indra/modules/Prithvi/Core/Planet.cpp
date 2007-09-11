@@ -13,9 +13,9 @@ namespace Prithvi
       mElevationScale     ( 1.0 ), 
       mElevationEstimate  ( 16.0 ), 
       mLevelDetail        ( 16.0 ), 
-      mSplitMetricRatio   ( 0 ),
-#ifdef HAVE_OSSIM
-        mLandType( ossimPlanetLandType_NORMALIZED_ELLIPSOID ),
+      mSplitMetricRatio   ( 0 )
+#ifdef HAVE_OSSIM        
+        ,mLandType( ossimPlanetLandType_NORMALIZED_ELLIPSOID ),
         mElevationCache(""),
         mBindsFile("") 
 #endif

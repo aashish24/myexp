@@ -118,7 +118,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="NDEBUG;NEIV_SHARED_LIBRARY;"
+				AdditionalIncludeDirectories="../../modules;"
+				PreprocessorDefinitions="NDEBUG;NEIV_SHARED_LIBRARY;NEIV_BUILD;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -136,11 +137,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				OutputFile="..\..\bin\Neiv.dll"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				ImportLibrary="..\..\bin\Neiv.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -178,7 +181,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\AutoLink.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Export.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NeivConfig.h"
 				>
 			</File>
 			<Filter

@@ -17,6 +17,9 @@
 #ifndef __OSGTOOLS_SG_OSGFIND_H__
 #define __OSGTOOLS_SG_OSGFIND_H__
 
+// This should be the first include. 
+#include "OsgTools/OsgToolsConfig.h"
+
 #include <vector>
 
 #include "osg/Node"

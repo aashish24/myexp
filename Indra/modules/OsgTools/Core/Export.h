@@ -7,8 +7,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef _OSGTOOLS_CORE_EXPORT_H__
-#define _OSGTOOLS_CORE_EXPORT_H__
+#ifndef __OSGTOOLS_EXPORT_H__
+#define __OSGTOOLS_EXPORT_H__
 
 #if defined( _MSC_VER )  
   #pragma warning( disable : 4251 )
@@ -29,7 +29,7 @@
   # define OSGTOOLS_EXPORT
 #endif 
 
-#endif // _OSGTOOLS_CORE_EXPORT_H__
+#endif // _OSGTOOLS_EXPORT_H__
 
 
 

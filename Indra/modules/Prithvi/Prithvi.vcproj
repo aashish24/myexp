@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\modules;$(OSSIM_INC_DIR); $(OSSIMPLANET_INC_DIR);$(OSG_INC_DIR);$(LIBWMS_INC_DIR);"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PRITHVI_EXPORTS;HAVE_OSSIM;PRITHVI_SHARED;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PRITHVI_EXPORTS;HAVE_OSSIM;PRITHVI_SHARED;PRITHVI_BUILD;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -119,7 +119,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PRITHVI_EXPORTS"
+				AdditionalIncludeDirectories="..\..\modules;$(OSSIM_INC_DIR); $(OSSIMPLANET_INC_DIR);$(OSG_INC_DIR);$(LIBWMS_INC_DIR);"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PRITHVI_EXPORTS;HAVE_OSSIM;PRITHVI_SHARED;PRITHVI_BUILD;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -137,12 +138,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="ossim.lib ossimPlanet.lib osg.lib osgGA.lib"
 				OutputFile="..\..\bin\Prithvi.dll"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(OSSIM_LIB_DIR);$(OSSIMPLANET_LIB_DIR);$(LOCAL_SRC_DIR)\bin;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				ImportLibrary="..\..\bin\Prithvi.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -180,7 +184,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\AutoLink.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Export.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PrithviConfig.h"
 				>
 			</File>
 			<Filter

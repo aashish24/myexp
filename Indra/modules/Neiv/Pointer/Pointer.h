@@ -2,6 +2,9 @@
 #ifndef __NEIV_POINTER_POINTER_H__
 #define __NEIV_POINTER_POINTER_H__
 
+// This should be the first include. 
+#include "Neiv/NeivConfig.h"
+
 #include "Neiv/Pointer/SmartPointer.h"
 
 namespace Neiv

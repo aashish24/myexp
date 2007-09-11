@@ -10,6 +10,9 @@
 #ifndef __VEDA_CORE_USER_H__
 #define __VEDA_CORE_USER_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include "vpr/IO/SerializableObject.h"
 #include "vpr/IO/ObjectReader.h"
 #include "vpr/IO/ObjectWriter.h"

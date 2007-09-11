@@ -11,7 +11,26 @@
 #include "osgUtil/Optimizer"
 #include "osgViewer/Viewer"
 
+#include "OsgTools/OsgToolsConfig.h"
 #include "OsgTools/Geom/OsgDashboard.h"
+
+#if defined _MSC_VER && _DEBUG
+# pragma comment( lib, "osgd.lib" )
+# pragma comment( lib, "osgDBd.lib" )
+# pragma comment( lib, "osgUtild.lib" )
+# pragma comment( lib, "osgGAd.lib" )
+# pragma comment( lib, "osgTextd.lib" )
+# pragma comment( lib, "osgViewerd.lib" )
+# pragma comment( lib, "OpenThreadsd.lib" )
+# elif defined _MSC_VER
+# pragma comment( lib, "osg.lib" )
+# pragma comment( lib, "osgDB.lib" )
+# pragma comment( lib, "osgUtil.lib" )
+# pragma comment( lib, "osgGA.lib" )
+# pragma comment( lib, "osgText.lib" )  
+# pragma comment( lib, "osgViewer.lib" )  
+# pragma comment( lib, "OpenThreads.lib" )
+#endif
 
 #include <iostream>
 

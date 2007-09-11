@@ -139,6 +139,7 @@
 				Name="VCLinkerTool"
 				OutputFile="..\..\..\..\bin\prithvitest1.exe"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(OSG_LIB_DIR);..\..\..\..\bin;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

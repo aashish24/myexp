@@ -19,6 +19,9 @@
 #ifndef __VEDA_DESIGN_INTERACTION_H__
 #define __VEDA_DESIGN_INTERACTION_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include <iostream>
 #include <vector>
 #include <string>

@@ -17,6 +17,9 @@
 #ifndef __GLOBALS_H__
 #define __GLOBALS_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include "Veda/Export.h"
 
 #include "Neiv/Base/Referenced.h"

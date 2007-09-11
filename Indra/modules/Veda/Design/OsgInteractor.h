@@ -17,6 +17,9 @@
 #ifndef __DESIGN_OSGINTERACTION_H__
 #define __DESIGN_OSGINTERACTION_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include <iostream>
 #include <vector>
 #include <string>

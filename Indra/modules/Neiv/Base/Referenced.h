@@ -2,6 +2,9 @@
 #ifndef __NEIV_BASE_REFERENCED_H__
 #define __NEIV_BASE_REFERENCED_H__
 
+// This should be the first include. 
+#include "Neiv/NeivConfig.h"
+
 #include "Neiv/Export.h"
 
 namespace Neiv

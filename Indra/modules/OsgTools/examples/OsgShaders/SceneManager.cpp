@@ -17,8 +17,8 @@
 #include "osg/Shader"
 #include "osg/Uniform"
 
+#include "OsgTools/OsgToolsConfig.h"
 #include "OsgTools/Geom/OsgDashboard.h"
-
 #include "OsgTools/Callback/OsgUniformCallback.h"
 
 #include <iostream>

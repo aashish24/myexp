@@ -7,7 +7,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Class to provide billborads objects on which information can be 
@@ -22,6 +21,9 @@
 
 #ifndef __OSGTOOLS_GEOM_DASHBOARD_H__
 #define __OSGTOOLS_GEOM_DASHBOARD_H__
+
+// This should be the first include. 
+#include "OsgTools/OsgToolsConfig.h"
 
 #include <string>
 #include <iostream>

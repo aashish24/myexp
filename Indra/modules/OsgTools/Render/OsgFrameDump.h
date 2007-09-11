@@ -7,7 +7,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 // OpenSceneGraph implementation for the interface. 
@@ -16,6 +15,9 @@
 
 #ifndef __OSGTOOLS_RENDER_OSGFRAMEDUMP_H__
 #define __OSGTOOLS_RENDER_OSGFRAMEDUMP_H__
+
+// This should be the first include. 
+#include "OsgTools/OsgToolsConfig.h"
 
 #include <string>
 #include <sstream>

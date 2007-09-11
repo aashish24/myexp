@@ -70,7 +70,7 @@
 				OutputFile="..\..\..\..\bin\viewerd.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR);C:\aashish\src\indra\Indra\bin;"
+				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR);..\..\..\..\bin;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/viewerd.pdb"
 				SubSystem="1"
@@ -149,11 +149,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="vrj-2_3_8.lib vrj_ogl-2_3_8.lib vpr-2_1_1.lib tweek-1_3_0.lib gadget-1_3_7.lib jccl-1_3_1.lib openGL32.lib omnithread33_rt.lib omniDynamic410_rt.lib omniORB410_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
-				OutputFile="..\..\bin\viewer.exe"
+				AdditionalDependencies="openGL32.lib omnithread33_rt.lib omniDynamic410_rt.lib omniORB410_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
+				OutputFile="..\..\..\..\bin\viewer.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="&quot;$(VJ_BASE_DIR)\lib&quot;;&quot;$(VJ_DEPS_DIR)\lib&quot;;&quot;$(OSG_LIB_DIR)&quot;"
+				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR);..\..\..\..\bin;"
 				GenerateDebugInformation="false"
 				SubSystem="1"
 				OptimizeReferences="0"

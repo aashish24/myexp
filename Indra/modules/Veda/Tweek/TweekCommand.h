@@ -10,6 +10,9 @@
 #ifndef __TWEEK_COMMAND_H__
 #define __TWEEK_COMMAND_H__
      
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include "Veda/Export.h"
 
 namespace Veda

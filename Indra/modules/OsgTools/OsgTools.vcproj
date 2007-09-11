@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\modules\OsgTools;..\..\modules;$(OSG_INC_DIR);"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL; OSGTOOLS_SHARED;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL; OSGTOOLS_SHARED;OSGTOOLS_BUILD;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -64,7 +64,7 @@
 				AdditionalDependencies="osgd.lib "
 				OutputFile="..\..\bin\OsgToolsd.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(OSG_LIB_DIR)&quot;"
+				AdditionalLibraryDirectories="$(OSG_LIB_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				ImportLibrary="..\..\bin\OsgToolsd.lib"
@@ -121,7 +121,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\..\modules\OsgTools;..\..\modules;$(OSG_INC_DIR);"
-				PreprocessorDefinitions="WIN32; NDEBUG; _WINDOWS; _USRDLL; OSGTOOLS_SHARED;"
+				PreprocessorDefinitions="WIN32; NDEBUG; _WINDOWS; _USRDLL; OSGTOOLS_SHARED;OSGTOOLS_BUILD;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -139,10 +139,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="osg.lib "
+				AdditionalDependencies="osg.lib"
 				OutputFile="..\..\bin\OsgTools.dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(OSG_LIB_DIR)&quot;"
+				AdditionalLibraryDirectories="$(OSG_LIB_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -182,13 +182,21 @@
 		<Filter
 			Name="Source"
 			>
+			<File
+				RelativePath=".\AutoLink.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\modules\OsgTools\Core\Export.h"
+				>
+			</File>
+			<File
+				RelativePath=".\OsgToolsConfig.h"
+				>
+			</File>
 			<Filter
 				Name="Core"
 				>
-				<File
-					RelativePath="..\..\modules\OsgTools\Core\Export.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="SG"
@@ -231,10 +239,10 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Anime"
+				Name="Callback"
 				>
 				<File
-					RelativePath=".\Anime\OsgUniformCallback.h"
+					RelativePath=".\Callback\OsgUniformCallback.h"
 					>
 				</File>
 			</Filter>

@@ -17,6 +17,9 @@
 #ifndef __VEDA_CORE_COMMAND_H__
 #define __CORE_COMMAND_H__  
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include <string>
 
 #include "vpr/IO/SerializableObject.h"

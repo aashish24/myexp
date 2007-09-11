@@ -18,6 +18,9 @@
 #ifndef __VEDA_CORE_OSGBASE_H__
 #define __VEDA_CORE_OSGBASE_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include <stdlib.h>
 
 #include "vrj/vrjConfig.h"

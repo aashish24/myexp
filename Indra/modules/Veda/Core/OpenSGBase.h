@@ -18,18 +18,16 @@
 #ifndef __VEDA_CORE_OPENSGBASE_H__
 #define __VEDA_CORE_OPENSGBASE_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
 
-
-/*-----------------------------OpenSG includes--------------------------------*/
 #include <OpenSG/OSGGL.h>
 #include <OpenSG/OSGNode.h>
 #include <OpenSG/OSGTransform.h>
-/*----------------------------------------------------------------------------*/
 
 #include <iostream>
 #include <iomanip>
 
-/*-----------------------------Juggler includes-------------------------------*/
 #include <vrj/vrjConfig.h>
 #include <vrj/Draw/OGL/GlApp.h>
 #include <vrj/Draw/OpenSG/OpenSGApp.h>

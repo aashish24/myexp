@@ -17,6 +17,9 @@
 #ifndef __CORE_NAVIGATION_H__
 #define __CORE_NAVIGATION_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include <iostream>
 #include <string>
 

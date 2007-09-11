@@ -17,6 +17,9 @@
 #ifndef __VEDA_SUBJECTIMPL_H__
 #define __VEDA_SUBJECTIMPL_H__
 
+// This should be the first include. 
+#include "Veda/VedaConfig.h"
+
 #include "tweek/tweekConfig.h"
 #include "tweek/CORBA/SubjectImpl.h"
 
