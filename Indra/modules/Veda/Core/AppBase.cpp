@@ -122,7 +122,7 @@ namespace Veda
       // Set default near far. 
       if( !mNearFarSet )
       {
-        setNearFar( 0.1f, 1000000.0f ); 
+        setNearFar( 0.01f, 1000000.0f ); 
       }
     }
 
@@ -170,6 +170,7 @@ namespace Veda
     void AppBase::setNearFar( const float& nearVal, const float& farVal )
     { 
       vrj::Projection::setNearFar( nearVal, farVal );
+      mNearFarSet = true;
     }
 
 
