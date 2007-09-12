@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="example: OsgBumpMapping"
+	Name="example: OsgBumpMapApp"
 	ProjectGUID="{5FC015C8-DBFD-4434-A7F6-B66B238FC9C1}"
-	RootNamespace="example: OsgBumpMapping"
+	RootNamespace="example: OsgBumpMapApp"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
