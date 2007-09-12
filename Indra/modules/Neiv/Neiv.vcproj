@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../modules;"
-				PreprocessorDefinitions="_DEBUG; NEIV_SHARED_LIBRARY;"
+				PreprocessorDefinitions="_DEBUG; NEIV_SHARED_LIBRARY;NEIV_BUILD;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
