@@ -422,7 +422,7 @@
 			Name="Source"
 			>
 			<File
-				RelativePath=".\OsgBumpMapping.cpp"
+				RelativePath=".\OsgBumpMapApp.cpp"
 				>
 			</File>
 			<File

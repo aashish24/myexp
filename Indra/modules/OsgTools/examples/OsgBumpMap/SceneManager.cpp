@@ -17,6 +17,8 @@
 #include "osg/Shader"
 #include "osg/Uniform"
 
+#include "osgUtil/TangentSpaceGenerator"
+
 #include "OsgTools/OsgToolsConfig.h"
 #include "OsgTools/Geom/OsgDashboard.h"
 #include "OsgTools/Callback/OsgUniformCallback.h"
@@ -33,11 +35,23 @@ static osg::StateSet* ModelInstance()
     static float zvalue = 0.0f;
     static osg::Node* masterModel = new OsgTools::Geom::OsgDashboard( 500.0, 500.0, osg::Vec3f( -10.0, 0.0, 0.0 ) );
 
+    static osg::Geode* geode = static_cast< osg::Geode* >( masterModel );
+    if( geode )
+    {
+      osg::Geometry* geom = static_cast< osg::Geometry* >( geode->getDrawable( 0 ) );
+      if( geom )
+      {
+        osgUtil::TangentSpaceGenerator* tsg( new osgUtil::TangentSpaceGenerator() );
+        tsg->generate( geom );
+
+      }
+    }
+
     osg::PositionAttitudeTransform* xform = new osg::PositionAttitudeTransform();
-    xform->setPosition(osg::Vec3( 0.0f, -1.0f, zvalue ));
+    xform->setPosition( osg::Vec3( 0.0f, -1.0f, zvalue ) );
     zvalue = zvalue + 2.2f;
-    xform->addChild(masterModel);
-    rootNode->addChild(xform);
+    xform->addChild( masterModel );
+    rootNode->addChild( xform );
     return xform->getOrCreateStateSet();
 }
 
@@ -62,7 +76,7 @@ static osg::Shader*  ShaderVertObj;
 static osg::Shader*  ShaderFragObj;
 
 #define NORMAL_MAP          1
-#define DEACL_TEXTURE       2      
+#define DECAL_TEXTURE       2      
 
 osg::ref_ptr<osg::Group>
 
@@ -91,11 +105,10 @@ SceneManager::buildScene()
     // the "eroded" shader, uses a noise texture to discard fragments
     {
         osg::StateSet* ss = ModelInstance();
-        ss->setTextureAttribute( TEXUNIT_NOISE, noiseTexture );
-        ss->setTextureAttribute( TEXTURE, decalTexture );
-        
+        ss->setTextureAttribute( DECAL_TEXTURE, decalTexture );
+                
         ShaderProgram = new osg::Program;
-        ShaderProgram->setName( "eroded" );
+        ShaderProgram->setName( "BumpMap" );
         mProgramList.push_back( ShaderProgram );
 
         ShaderVertObj = new osg::Shader( osg::Shader::VERTEX );
@@ -104,9 +117,9 @@ SceneManager::buildScene()
         ShaderProgram->addShader( ShaderVertObj );
         
         ss->setAttributeAndModes( ShaderProgram, osg::StateAttribute::ON );
-        ss->addUniform( new osg::Uniform( "lightPosition", osg::Vec3( 0.0f, 0.0f, 4.0f ) ) );        
-        ss->addUniform( new osg::Uniform( "sampler3d", TEXUNIT_NOISE ) );
-        ss->addUniform( new osg::Uniform( "texture", TEXTURE ) ); 
+        //ss->addUniform( new osg::Uniform( "lightPosition", osg::Vec3( 0.0f, 0.0f, 4.0f ) ) );       
+        ss->addUniform( new osg::Uniform( "sampler2d", NORMAL_MAP ) );
+        ss->addUniform( new osg::Uniform( "texture", DECAL_TEXTURE ) ); 
     }
 
     reloadShaderSource();
@@ -132,8 +145,8 @@ void SceneManager::reloadShaderSource()
     osg::notify(osg::INFO) << "reloadShaderSource()" << std::endl;
 
     
-    LoadShaderSource( ShaderVertObj, "Erode/Erode.vert" );
-    LoadShaderSource( ShaderFragObj, "Erode/Erode.frag" );
+    LoadShaderSource( ShaderVertObj, "BumpMap/BumpMap.vert" );
+    LoadShaderSource( ShaderFragObj, "BumpMap/BumpMap.frag" );
 }
 
 

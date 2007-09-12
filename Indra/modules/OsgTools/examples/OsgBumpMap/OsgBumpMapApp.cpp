@@ -26,6 +26,8 @@
 
 #include <iostream>
 
+#include "SceneManager.h" 
+
 int main(int, char **)
 {
     // construct the viewer.
