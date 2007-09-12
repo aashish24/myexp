@@ -28,22 +28,44 @@
 #include "SceneManager.h"
 
 static osg::ref_ptr<osg::Group> rootNode;
-
+static osg::ref_ptr< osgUtil::TangentSpaceGenerator > tsg;
 
 static osg::StateSet* ModelInstance()
 {
     static float zvalue = 0.0f;
     static osg::Node* masterModel = new OsgTools::Geom::OsgDashboard( 500.0, 500.0, osg::Vec3f( -10.0, 0.0, 0.0 ) );
 
-    static osg::Geode* geode = static_cast< osg::Geode* >( masterModel );
+    static OsgTools::Geom::OsgDashboard* group = static_cast< OsgTools::Geom::OsgDashboard* >( masterModel );
+
+    if( !group )
+      return 0x00;
+    
+    static osg::Group* sub = static_cast< osg::Group* >( group->getChild( 0 ) );
+    static osg::Geode* geode = static_cast< osg::Geode* >( sub->getChild( 0 ) );
+
     if( geode )
     {
       osg::Geometry* geom = static_cast< osg::Geometry* >( geode->getDrawable( 0 ) );
       if( geom )
       {
-        osgUtil::TangentSpaceGenerator* tsg( new osgUtil::TangentSpaceGenerator() );
+        tsg =  new osgUtil::TangentSpaceGenerator();
         tsg->generate( geom );
 
+        geom->setVertexAttribArray( 6, tsg->getTangentArray() );
+        geom->setVertexAttribBinding( 6, osg::Geometry::BIND_PER_VERTEX );
+        //geom->setVertexAttribIndices( 0, geom->getNormalIndices() );
+
+        geom->setVertexAttribArray( 7, tsg->getBinormalArray() );
+        geom->setVertexAttribBinding( 7, osg::Geometry::BIND_PER_VERTEX );
+        //geom->setVertexAttribIndices( 1, geom->getNormalIndices() );
+
+        //geom->setVertexAttribArray( 2, tsg->getNormalArray() );
+        //geom->setVertexAttribBinding( 2, osg::Geometry::BIND_PER_VERTEX );
+        //geom->setVertexAttribBinding( osg::( 2, geom->getNormalIndices() );
+
+        /*GLint locB  = glGetAttribLocation( gProgram, "binormal" );
+        glBindAttribLocation( gProgram, locB, "binormal" );
+        glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, b->getDataPointer() );*/
       }
     }
 
@@ -75,15 +97,18 @@ static osg::Program* ShaderProgram;
 static osg::Shader*  ShaderVertObj;
 static osg::Shader*  ShaderFragObj;
 
-#define NORMAL_MAP          1
-#define DECAL_TEXTURE       2      
+#define NORMAL_MAP          0
+//#define DECAL_TEXTURE       1      
 
 osg::ref_ptr<osg::Group>
 
 SceneManager::buildScene()
 {
-   osg::Image* decalImage =  osgDB::readImageFile("Images/BumpMap/Decal.png");
-   osg::Texture2D* decalTexture( new osg::Texture2D( decalImage ) );    
+   //osg::Image* decalImage =  osgDB::readImageFile("Images/BumpMap/DecalMap.jpg");
+   //osg::Texture2D* decalTexture( new osg::Texture2D( decalImage ) );    
+
+   osg::Image* normalImage =  osgDB::readImageFile("Images/BumpMap/NormalMap.jpg");
+   osg::Texture2D* normalTexture( new osg::Texture2D( normalImage ) );    
 
     // the root of our scenegraph.
     rootNode = new osg::Group;
@@ -105,7 +130,7 @@ SceneManager::buildScene()
     // the "eroded" shader, uses a noise texture to discard fragments
     {
         osg::StateSet* ss = ModelInstance();
-        ss->setTextureAttribute( DECAL_TEXTURE, decalTexture );
+        ss->setTextureAttribute( NORMAL_MAP, normalTexture );
                 
         ShaderProgram = new osg::Program;
         ShaderProgram->setName( "BumpMap" );
@@ -117,9 +142,18 @@ SceneManager::buildScene()
         ShaderProgram->addShader( ShaderVertObj );
         
         ss->setAttributeAndModes( ShaderProgram, osg::StateAttribute::ON );
-        //ss->addUniform( new osg::Uniform( "lightPosition", osg::Vec3( 0.0f, 0.0f, 4.0f ) ) );       
-        ss->addUniform( new osg::Uniform( "sampler2d", NORMAL_MAP ) );
-        ss->addUniform( new osg::Uniform( "texture", DECAL_TEXTURE ) ); 
+        ss->addUniform( new osg::Uniform( "lightDir", osg::Vec3( 0.0f, 100.0f, 0.0f ) ) );       
+        ss->addUniform( new osg::Uniform( "NormalMap", NORMAL_MAP ) );
+        //ss->addUniform( new osg::Uniform( "Decal", DECAL_TEXTURE ) );
+        
+        ShaderProgram->addBindAttribLocation( "tangent", osg::Drawable::ATTRIBUTE_6 );
+        //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, tsg->getTangentArray() );
+
+        ShaderProgram->addBindAttribLocation( "binormal", osg::Drawable::ATTRIBUTE_7 );
+        //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, tsg->getBinormalArray() );
+
+        //ShaderProgram->addBindAttribLocation( "normal", osg::Drawable::NORMALS );
+        //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, tsg->getNormalArray() );
     }
 
     reloadShaderSource();
