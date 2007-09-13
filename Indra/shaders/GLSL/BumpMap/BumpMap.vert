@@ -18,23 +18,28 @@ varying vec3     bnormal;
 void main()
 {  
 
-  bnormal = vec3( binormal[1], binormal[2], binormal[3] );
+  //bnormal = vec3( binormal[1], binormal[2], binormal[3] );
+  //bnormal = vec3( gl_Normal );
     
 	gl_Position     = ftransform();	
 	gl_TexCoord[0]  = gl_MultiTexCoord0;	
 	
 	eyeDir          = vec3( gl_ModelViewMatrix * gl_Vertex );
 	
-	t               = normalize( gl_NormalMatrix * vec3( tangent[1], tangent[2], tangent[3] ) );
-	n               = normalize( gl_NormalMatrix * gl_Normal );
-	b               = normalize( gl_NormalMatrix * vec3( binormal[1], binormal[2], binormal[3] ) );		
+	t               = vec3( tangent[0], tangent[1], tangent[2] ) ;
+	n               = gl_Normal;
+	b               = vec3( binormal[1], binormal[2], binormal[3] ) ;		
 
-  vec3 lightPos   =  vec4( uLightPos, 1.0 ).xyz;
+  vec3 lightPos   =  normalize(  gl_LightSource[0].position );
 
+  
+  
 	vec3 v;	
 	v.x             = dot( t, ( lightPos ) );
 	v.y             = dot( b, ( lightPos ) );
 	v.z             = dot( n, ( lightPos ) );	
+	
+	bnormal = t;
 	
 	lightDir        = normalize( v );
 	
@@ -44,7 +49,7 @@ void main()
 	
 	eyeDir          = normalize( v );	
 		
-		lightDir        = vec3( 0.0, 0.0, 10.0 );
+	//lightDir        = vec3( 0.0, 0.0, 1.0 );
 }
 
 

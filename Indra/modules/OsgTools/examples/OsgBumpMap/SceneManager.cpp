@@ -16,6 +16,7 @@
 #include "osg/Program"
 #include "osg/Shader"
 #include "osg/Uniform"
+#include "osg/LightSource"
 
 #include "osgUtil/TangentSpaceGenerator"
 
@@ -35,6 +36,15 @@ static osg::StateSet* ModelInstance()
     static float zvalue = 0.0f;
     static osg::Node* masterModel = new OsgTools::Geom::OsgDashboard( 500.0, 500.0, osg::Vec3f( -10.0, 0.0, 0.0 ) );
 
+    osg::Material* mat( new osg::Material() );
+    mat->setAmbient( osg::Material::FRONT_AND_BACK, osg::Vec4f( 0.0, 0.0, 0.0, 1.0 ) );
+    mat->setDiffuse( osg::Material::FRONT_AND_BACK, osg::Vec4f( 0.7, 0.7, 0.7, 1.0 ) );
+    mat->setSpecular( osg::Material::FRONT_AND_BACK, osg::Vec4f( 0.7, 0.7, 0.7, 1.0 ) );
+    mat->setShininess( osg::Material::FRONT_AND_BACK, 128.0 );
+
+    osg::StateSet* mms = masterModel->getOrCreateStateSet();
+    mms->setAttributeAndModes( mat );
+    
     static OsgTools::Geom::OsgDashboard* group = static_cast< OsgTools::Geom::OsgDashboard* >( masterModel );
 
     if( !group )
@@ -100,9 +110,7 @@ static osg::Shader*  ShaderFragObj;
 #define NORMAL_MAP          0
 //#define DECAL_TEXTURE       1      
 
-osg::ref_ptr<osg::Group>
-
-SceneManager::buildScene()
+osg::ref_ptr<osg::Group> SceneManager::buildScene()
 {
    //osg::Image* decalImage =  osgDB::readImageFile("Images/BumpMap/DecalMap.jpg");
    //osg::Texture2D* decalTexture( new osg::Texture2D( decalImage ) );    
@@ -110,8 +118,24 @@ SceneManager::buildScene()
    osg::Image* normalImage =  osgDB::readImageFile("Images/BumpMap/NormalMap.jpg");
    osg::Texture2D* normalTexture( new osg::Texture2D( normalImage ) );    
 
+   osg::Light* light1( new osg::Light() );
+   light1->setLightNum( 0 );
+   light1->setPosition( osg::Vec4( 0.0, -10.0, 0.0, 1.0 ) );
+   light1->setSpecular( osg::Vec4( 0.0, 1.0, 1.0, 1.0 ) );
+
+   osg::LightSource* ls1( new osg::LightSource() );
+   ls1->setLight( light1 );
+
     // the root of our scenegraph.
     rootNode = new osg::Group;
+
+    osg::StateSet* sset ( new osg::StateSet() );
+    rootNode->setStateSet( sset );
+
+    ls1->setLocalStateSetModes( osg::StateAttribute::ON );
+    ls1->setStateSetModes( *( sset ), osg::StateAttribute::ON );
+
+    rootNode->addChild( ls1 );
 
     // attach some Uniforms to the root, to be inherited by Programs.
     {
