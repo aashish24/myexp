@@ -1,4 +1,6 @@
 
+#if define HAVE_OSSIM
+
 #include "Prithvi/Core/Planet.h"
 
 namespace Prithvi
@@ -13,12 +15,10 @@ namespace Prithvi
       mElevationScale     ( 1.0 ), 
       mElevationEstimate  ( 16.0 ), 
       mLevelDetail        ( 16.0 ), 
-      mSplitMetricRatio   ( 0 )
-#ifdef HAVE_OSSIM        
-        ,mLandType( ossimPlanetLandType_NORMALIZED_ELLIPSOID ),
-        mElevationCache(""),
-        mBindsFile("") 
-#endif
+      mSplitMetricRatio   ( 0 ),
+      mLandType( ossimPlanetLandType_NORMALIZED_ELLIPSOID ),
+      mElevationCache(""),
+      mBindsFile("") 
     {
       // Lets initialize the planet. 
       init();
@@ -30,7 +30,6 @@ namespace Prithvi
 
     void Planet::init()
     {
-#ifdef HAVE_OSSIM
       try
       {
         ossimInit::instance()->initialize();
@@ -65,56 +64,38 @@ namespace Prithvi
       {
         std::cerr << "Error: " << std::endl;
       }
-#endif // HAVE_OSSIM
     }
 
     osg::Group* Planet::root()
     {
-#ifdef HAVE_OSSIM
-      return mOssimPlanet.get();
-#else
-      throw "Null pointer exception";
-#endif // HAVE_OSSIM
+      return mOssimPlanet.release();
     }
 
 
     int Planet::addLayer( const std::string& file )
     {
-#ifdef HAVE_OSSIM
       osg::ref_ptr< ossimPlanetTextureLayer > layer( ossimPlanetTextureLayerRegistry::instance()->createLayer( file.c_str() ) );
       return this->addLayer( layer.get() );
-#else
-      return -1;
-#endif // HAVE_OSSIM
     }
 
 
     bool Planet::removeLayer( const unsigned int &id ) 
     {
-#ifdef HAVE_OSSIM
       if( mTextureLayerGroup->removeLayer( id ).valid() )
         return true;
       else
         return false;
-#else
-      return false;        
-#endif // HAVE_OSSIM
     }
     
 
     bool Planet::hasLayer( const  unsigned int& id ) const 
     {
-#ifdef HAVE_OSSIM
       return mTextureLayerGroup->containsLayer( this->getLayer( id ) );
-#else
-      return false;
-#endif // HAVE_OSSIM
     }
 
-#ifdef HAVE_OSSIM
-    void Planet::readKwl( const std::string& file )
+    void Planet::readKwl( char* file )
     {
-      ossimKeywordlist kwl( file.c_str() );
+      ossimKeywordlist kwl( file );
       osg::ref_ptr< ossimPlanetTextureLayer > layer = ossimPlanetTextureLayerRegistry::instance()->createLayer( kwl.toString() );
       if( layer.valid() )
       {
@@ -165,9 +146,9 @@ namespace Prithvi
     {
       return mOssimPlanet->getLand()->getHeightExag();
     }
+  }
+}
 
 #endif // HAVE_OSSIM
 
-  }
-}
 

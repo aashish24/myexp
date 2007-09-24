@@ -37,7 +37,6 @@
 # include "ossimPlanet/ossimPlanetServerThread.h"
 # include "ossimPlanet/ossimPlanetServerMessageHandler.h"
 # include "ossimPlanet/ossimPlanetActionRouter.h"
-#endif
 
 #include "osg/Group"
 
@@ -46,6 +45,7 @@
 #include "Neiv/Base/Referenced.h"
 #include "Neiv/Pointer/Pointer.h"
 #include "Neiv/Pointer/SmartPointer.h"
+
 
 namespace Prithvi
 {
@@ -67,8 +67,7 @@ namespace Prithvi
 
         virtual bool                                  hasLayer( const unsigned int& id ) const;
 
-#ifdef HAVE_OSSIM
-        virtual void                                  readKwl( const std::string& kwl );
+        virtual void                                  readKwl( char* kwl );
 
         virtual int                                   addLayer( ossimPlanetTextureLayer* layer );
 
@@ -80,7 +79,6 @@ namespace Prithvi
 
         virtual float                                 getElevationScale();
         virtual void                                  setElevationScale( const float& scale ); 
-#endif
        
       protected:
        
@@ -100,7 +98,6 @@ namespace Prithvi
         int                                           mLevelDetail;
         float                                         mSplitMetricRatio;
 
-#ifdef HAVE_OSSIM
         ossimPlanetLandType                           mLandType;
         ossimFilename                                 mElevationCache;
         ossimFilename                                 mBindsFile;
@@ -108,10 +105,9 @@ namespace Prithvi
         osg::ref_ptr< ossimPlanet >                   mOssimPlanet;
         osg::ref_ptr< ossimPlanetTextureLayerGroup >  mTextureLayerGroup;
         osg::ref_ptr< osgDB::DatabasePager >          mDatabasePager;        
-#endif
-     
     };
   }
 }
 
 #endif // __PRITHVI_CORE_PLANET_H__
+
