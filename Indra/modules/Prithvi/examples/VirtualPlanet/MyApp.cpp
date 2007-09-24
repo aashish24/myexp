@@ -23,6 +23,7 @@ MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc,
 {	
   // Second argument should be a kwl file. 
   mPlanet->readKwl( std::string( argv[ 1 ] ) );
+  mPlanet->setElevationScale( 10.0 );
 }
 
 // One time initialization. 
@@ -30,7 +31,16 @@ void MyApp::appInit()
 {
   setBackgroundColor( ( gmtl::Vec4f( 0.35, 0.35, 0.35, 1.0 ) ).getData() );		
   setNearFar( 0.00001, 10.0 );
-  setSceneInitialPosition( osg::Vec3( 0.0, 0.0, 0.0 ) );
+  setSceneInitialPosition( osg::Vec3( 0.0, 0.0, 0.0 ) );  
+
+  try
+  {
+    getOsgInteractor()->getNavigator()->navigationMode( OSSIMNAV );
+  }
+  catch( ... )
+  {
+    std::cerr << "Unknown Error: Invalid pointer or memory corruption error " << std::endl;
+  }
 } 
 
 // Clears OpenGL buffers. 
