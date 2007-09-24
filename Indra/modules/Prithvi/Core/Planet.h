@@ -62,27 +62,24 @@ namespace Prithvi
         virtual osg::Group*                           root();
 
         virtual int                                   addLayer( const std::string& file );
-
-        virtual bool                                  removeLayer( const unsigned int& id );
-
-        virtual bool                                  hasLayer( const unsigned int& id ) const;
-
-        virtual void                                  readKwl( char* kwl );
-
         virtual int                                   addLayer( ossimPlanetTextureLayer* layer );
 
+        virtual bool                                  removeLayer( const unsigned int& id );
         virtual bool                                  removeLayer( ossimPlanetTextureLayer* layer );
 
+        virtual bool                                  hasLayer( const unsigned int& id ) const;
         virtual bool                                  hasLayer( ossimPlanetTextureLayer* layer ) const;
 
         virtual ossimPlanetTextureLayer*              getLayer( const unsigned int& id ) const; 
 
-        virtual float                                 getElevationScale();
+        virtual void                                  readKwl( char* kwl );
+        
+	virtual float                                 getElevationScale();
         virtual void                                  setElevationScale( const float& scale ); 
        
       protected:
        
-        virtual void init();
+        virtual void 				      init();
 
         virtual ~Planet(); 
 

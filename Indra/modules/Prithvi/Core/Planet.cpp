@@ -7,6 +7,12 @@ namespace Prithvi
 {
   namespace Core
   {
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Constructor.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    
     Planet::Planet() : Neiv::Base::Referenced(), 
       mEnableElevation    ( true ),
       mEnableHud          ( false ),
@@ -24,10 +30,24 @@ namespace Prithvi
       init();
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Destructor.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    
     Planet::~Planet()
     {
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Initializations.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    
     void Planet::init()
     {
       try
@@ -66,11 +86,24 @@ namespace Prithvi
       }
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Return the root of the scene. 
+    //
+    ///////////////////////////////////////////////////////////////////////////
+
     osg::Group* Planet::root()
     {
       return mOssimPlanet.release();
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Add texture layer. 
+    //
+    ///////////////////////////////////////////////////////////////////////////
 
     int Planet::addLayer( const std::string& file )
     {
@@ -78,30 +111,12 @@ namespace Prithvi
       return this->addLayer( layer.get() );
     }
 
-
-    bool Planet::removeLayer( const unsigned int &id ) 
-    {
-      if( mTextureLayerGroup->removeLayer( id ).valid() )
-        return true;
-      else
-        return false;
-    }
     
-
-    bool Planet::hasLayer( const  unsigned int& id ) const 
-    {
-      return mTextureLayerGroup->containsLayer( this->getLayer( id ) );
-    }
-
-    void Planet::readKwl( char* file )
-    {
-      ossimKeywordlist kwl( file );
-      osg::ref_ptr< ossimPlanetTextureLayer > layer = ossimPlanetTextureLayerRegistry::instance()->createLayer( kwl.toString() );
-      if( layer.valid() )
-      {
-        this->addLayer( layer.get() );
-      }
-    }
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Add texture layer.
+    //
+    ///////////////////////////////////////////////////////////////////////////
 
     int Planet::addLayer( ossimPlanetTextureLayer* layer )
     {
@@ -117,30 +132,109 @@ namespace Prithvi
       return index;
     }
 
+    
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Remove a texture layer with given id.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+   
+    bool Planet::removeLayer( const unsigned int &id ) 
+    {
+      if( mTextureLayerGroup->removeLayer( id ).valid() )
+        return true;
+      else
+        return false;
+    }
+   
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Remove a texture layer.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+
     bool Planet::removeLayer( ossimPlanetTextureLayer* layer )
     {
       if( 0x00 != layer )
       {
         return mTextureLayerGroup->removeLayer( layer );
       }
-      
+
       return false;
     }
+ 
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Check if layer already exists.  
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    
+    bool Planet::hasLayer( const  unsigned int& id ) const 
+    {
+      return mTextureLayerGroup->containsLayer( this->getLayer( id ) );
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Check if the layer already exists.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+
+    bool Planet::hasLayer( ossimPlanetTextureLayer* layer ) const
+    {
+      return mTextureLayerGroup->containsLayer( layer );
+    }
+
+ 
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Get a texture layer with given id. 
+    //
+    ///////////////////////////////////////////////////////////////////////////
 
     ossimPlanetTextureLayer* Planet::getLayer( const unsigned int& id ) const
     {
       return ( mTextureLayerGroup->getLayer( id ) ).get();
     }
 
-    bool Planet::hasLayer( ossimPlanetTextureLayer* layer ) const 
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Read KWL file.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+
+    void Planet::readKwl( char* file )
     {
-      return mTextureLayerGroup->containsLayer( layer );
+      ossimKeywordlist kwl( file );
+      osg::ref_ptr< ossimPlanetTextureLayer > layer = ossimPlanetTextureLayerRegistry::instance()->createLayer( kwl.toString() );
+      if( layer.valid() )
+      {
+        this->addLayer( layer.get() );
+      }
     }
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Set elevation exaggeration.
+    //
+    ///////////////////////////////////////////////////////////////////////////
 
     void Planet::setElevationScale( const float& scale )
     {
       mOssimPlanet->getLand()->setHeightExag( scale );
     }
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Get elevation exaggeration.
+    //
+    ///////////////////////////////////////////////////////////////////////////
 
     float Planet::getElevationScale() 
     {
