@@ -11,6 +11,7 @@
 #include "osgDB/ReadFile"
 
 #include "Veda/Core/Types.h"
+#include "Prithvi/Core/Planet.h"
 
 #include "gmtl/Matrix.h"
 #include "gmtl/Math.h"   
@@ -18,12 +19,16 @@
 
 using namespace Veda::Core;
 
-MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc, argv ), 
-  mPlanet( new Prithvi::Core::Planet() )
+MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc, argv )
 {	
   // Second argument should be a kwl file. 
-  mPlanet->readKwl( std::string( argv[ 1 ] ) );
-  mPlanet->setElevationScale( 10.0 );
+/*  mPlanet = new Prithvi::Core::Planet();
+  
+std::cout << " arg is: " << argv[1] << std::endl;
+
+if( mPlanet.get() == 0x00 ) std::cout << "NULL: " << std::endl;
+	mPlanet->readKwl( argv[ 1 ] );
+  mPlanet->setElevationScale( 10.0 );*/
 }
 
 // One time initialization. 
@@ -53,6 +58,15 @@ void MyApp::appBufferPreDraw()
 // Scenegraph will be build here. 
 void MyApp::appSceneInit()
 {
+	 // Second argument should be a kwl file.
+  mPlanet = new Prithvi::Core::Planet();
+
+//std::cout << " arg is: " << argv[1] << std::endl;
+
+if( mPlanet.get() == 0x00 ) std::cout << "NULL: " << std::endl;
+        mPlanet->readKwl( "/home/aashish/src/ossim/current/archive/ossimPlanet/examples/ossimplanetviewer/archive_manager.kwl" );
+  mPlanet->setElevationScale( 10.0 );
+
   mModelGroupNode->addChild( mPlanet->root() );
 }
 

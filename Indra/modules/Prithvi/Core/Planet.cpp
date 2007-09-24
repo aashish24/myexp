@@ -1,5 +1,5 @@
 
-#if define HAVE_OSSIM
+#ifdef HAVE_OSSIM
 
 #include "Prithvi/Core/Planet.h"
 

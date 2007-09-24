@@ -58,12 +58,12 @@ SRCS=			MyApp.cpp	\
 
 NO_DEPEND=		YES
 		
-EXTRA_INCLUDES=	-I../../../			\
+EXTRA_INCLUDES=		-I../../../			\
 			-I$(OSG_INC_DIR)		\
 			-I$(GMTL_INC_DIR)		\
-			-I$(CPPDOM_INC_DIR)	\
-			-I$(OMNIORB_INC_DIR)	\
-			-I$(OSSIM_INC_DIR)	\
+			-I$(CPPDOM_INC_DIR)		\
+			-I$(OMNIORB_INC_DIR)		\
+			-I$(OSSIM_INC_DIR)		\
 			-I$(OSSIMPLANET_INC_DIR)	\
 			-I$(LIBWMS_INC_DIR)		\
 			
@@ -71,13 +71,13 @@ EXTRA_INCLUDES=	-I../../../			\
 
 EXTRA_LIBS=		-L../../../../bin		\
 			-L$(OSG_LIB_DIR) 		\
-			-L$(BOOST_LIB_DIR)	\
-			-L$(OMNIORB_LIB_DIR)	\
-			-L$(CPPDOM_LIB_DIR)	\
-			-L$(OSSIM_LIB_DIR)	\
+			-L$(BOOST_LIB_DIR)		\
+			-L$(OMNIORB_LIB_DIR)		\
+			-L$(CPPDOM_LIB_DIR)		\
+			-L$(OSSIM_LIB_DIR)		\
 			-L$(OSSIMPLANET_LIB_DIR)	\
-			-L$(LIBWMS_LIB_DIR)			
-			-lVeda -lOsgTools -lNeiv -losg -losgDB -losgGA -losgUtil -losgText -losgFX -lomniORB4 -lomnithread	\
+			-L$(LIBWMS_LIB_DIR)		\
+			-lVeda -lOsgTools -lNeiv -lPrithvi -losg -losgDB -losgGA -losgUtil -losgText -losgFX -lomniORB4 -lomnithread	\
 			-lossim -lossimPlanet
 
 #----------------------------Advanced options---------------------------------- 

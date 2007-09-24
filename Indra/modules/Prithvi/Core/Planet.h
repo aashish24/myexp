@@ -16,7 +16,6 @@
 # endif
 #endif
 
-#ifdef HAVE_OSSIM
 # include "ossimPlanet/ossimPlanet.h"
 # include "ossimPlanet/ossimPlanetDatabasePager.h"
 # include "ossimPlanet/ossimPlanetLand.h"

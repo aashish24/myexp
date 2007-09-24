@@ -28,14 +28,7 @@ int main( int argc, char** argv )
 		std::exit(1);
 	}
 
-	for( int i = 1; i < argc; ++i )
-	{
-    std::cout << argv[ i ] << std::endl;
-    if( std::string( argv[ i ] ) == "-c" )
-    {
-		  kernel->loadConfigFile( argv[ ++i ] );
-    }
-	}
+		 kernel->loadConfigFile( argv[ 2 ] );
 
 	kernel->start();
 	kernel->setApplication( application );

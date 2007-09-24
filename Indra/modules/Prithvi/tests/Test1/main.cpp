@@ -21,7 +21,7 @@ int main( int argc, char** argv )
 
   Prithvi::Core::Planet::RefPtr planet( new Prithvi::Core::Planet() );
   
-  planet->readKwl( std::string( argv[ 1 ] ) );
+  planet->readKwl( argv[ 1 ] );
 
   // add the thread model handler
    viewer.addEventHandler(new osgViewer::ThreadingHandler);
@@ -38,6 +38,7 @@ int main( int argc, char** argv )
    // add the record camera path handler
    viewer.addEventHandler(new osgViewer::RecordCameraPathHandler);
 
+//if( planet->root() == 0x00 ) std::cout << "NULL: " << std::endl;
   viewer.setSceneData( planet->root() );
 
   viewer.realize();

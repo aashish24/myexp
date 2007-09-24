@@ -2,6 +2,8 @@
 #ifndef __MYAPP_H__
 #define __MYAPP_H__
 
+#define HAVE_OSSIM
+
 #include "Veda/VedaConfig.h"
 #include "Veda/Core/OsgBase.h"
 
