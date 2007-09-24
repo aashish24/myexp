@@ -6,7 +6,7 @@ namespace Prithvi
   namespace Core
   {
     Planet::Planet() : Neiv::Base::Referenced(), 
-      mEnableElevation    ( false ),
+      mEnableElevation    ( true ),
       mEnableHud          ( false ),
       mEnableEphemeris    ( false ), 
       mEnableMipMap       ( true ), 
@@ -33,27 +33,33 @@ namespace Prithvi
 #ifdef HAVE_OSSIM
       try
       {
-        mPlanet = new ossimPlanet();
+        ossimInit::instance()->initialize();
+
+        mDatabasePager = new ossimPlanetDatabasePager();
+        osgDB::Registry::instance()->setDatabasePager( mDatabasePager.get() );
+
+        mOssimPlanet = new ossimPlanet();
         mTextureLayerGroup =  new ossimPlanetTextureLayerGroup();
 
-        mPlanet->getLand()->setLandType( mLandType );
-        mPlanet->getLand()->setElevationEnabledFlag( mEnableElevation );
-        mPlanet->getLand()->setHeightExag( mElevationScale );
-        mPlanet->getLand()->setElevationPatchSize( mElevationEstimate );
-        mPlanet->getLand()->setMaxLevelDetail( mLevelDetail );
-        mPlanet->getLand()->setElevationCacheDir( mElevationCache );
+        mOssimPlanet->getLand()->setLandType( mLandType );
+        mOssimPlanet->getLand()->setElevationEnabledFlag( mEnableElevation );
+        mOssimPlanet->getLand()->setHeightExag( mElevationScale );
+        mOssimPlanet->getLand()->setElevationPatchSize( mElevationEstimate );
+        mOssimPlanet->getLand()->setMaxLevelDetail( mLevelDetail );
+        mOssimPlanet->getLand()->setElevationCacheDir( mElevationCache );
         
         if ( mSplitMetricRatio != 0 )
         {
-	        mPlanet->getLand()->setSplitMetricRatio( mSplitMetricRatio );
+	        mOssimPlanet->getLand()->setSplitMetricRatio( mSplitMetricRatio );
         }
 
-        mPlanet->getLand()->setMipMappingFlag( mEnableMipMap );        
-        mPlanet->setEnableHudFlag( mEnableHud );     
+        mOssimPlanet->getLand()->setMipMappingFlag( mEnableMipMap );        
+        mOssimPlanet->setEnableHudFlag( mEnableHud );     
 
         // Add texture layers. 
-        mPlanet->getLand()->setTextureLayer( mTextureLayerGroup.get(), 0 );
+        mOssimPlanet->getLand()->setTextureLayer( mTextureLayerGroup.get(), 0 );
 
+        mDatabasePager->setExpiryDelay( 0 );
       }
       catch( ... )
       {
@@ -65,7 +71,7 @@ namespace Prithvi
     osg::Group* Planet::root()
     {
 #ifdef HAVE_OSSIM
-      return mPlanet.get();
+      return mOssimPlanet.get();
 #else
       throw "Null pointer exception";
 #endif // HAVE_OSSIM
@@ -148,6 +154,16 @@ namespace Prithvi
     bool Planet::hasLayer( ossimPlanetTextureLayer* layer ) const 
     {
       return mTextureLayerGroup->containsLayer( layer );
+    }
+
+    void Planet::setElevationScale( const float& scale )
+    {
+      mOssimPlanet->getLand()->setHeightExag( scale );
+    }
+
+    float Planet::getElevationScale() 
+    {
+      return mOssimPlanet->getLand()->getHeightExag();
     }
 
 #endif // HAVE_OSSIM

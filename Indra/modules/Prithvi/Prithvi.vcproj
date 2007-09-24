@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ossimd.lib ossimPlanetd.lib osgd.lib osgGAd.lib"
+				AdditionalDependencies="ossimd.lib ossimPlanetd.lib osgd.lib osgDBd.lib osgGAd.lib OpenThreadsd.lib"
 				OutputFile="..\..\bin\Prithvid.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(OSSIM_LIB_DIR);$(OSSIMPLANET_LIB_DIR);$(LOCAL_SRC_DIR)\bin;"
@@ -138,7 +138,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ossim.lib ossimPlanet.lib osg.lib osgGA.lib"
+				AdditionalDependencies="ossim.lib ossimPlanet.lib osg.lib osgDB.lib osgGA.lib OpenThreads.lib"
 				OutputFile="..\..\bin\Prithvi.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(OSSIM_LIB_DIR);$(OSSIMPLANET_LIB_DIR);$(LOCAL_SRC_DIR)\bin;"

@@ -77,6 +77,9 @@ namespace Prithvi
         virtual bool                                  hasLayer( ossimPlanetTextureLayer* layer ) const;
 
         virtual ossimPlanetTextureLayer*              getLayer( const unsigned int& id ) const; 
+
+        virtual float                                 getElevationScale();
+        virtual void                                  setElevationScale( const float& scale ); 
 #endif
        
       protected:
@@ -102,8 +105,9 @@ namespace Prithvi
         ossimFilename                                 mElevationCache;
         ossimFilename                                 mBindsFile;
 
-        osg::ref_ptr< ossimPlanet >                   mPlanet;
-        osg::ref_ptr < ossimPlanetTextureLayerGroup > mTextureLayerGroup;
+        osg::ref_ptr< ossimPlanet >                   mOssimPlanet;
+        osg::ref_ptr< ossimPlanetTextureLayerGroup >  mTextureLayerGroup;
+        osg::ref_ptr< osgDB::DatabasePager >          mDatabasePager;        
 #endif
      
     };
