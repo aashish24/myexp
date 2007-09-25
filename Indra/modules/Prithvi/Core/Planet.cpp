@@ -207,9 +207,9 @@ namespace Prithvi
     //
     ///////////////////////////////////////////////////////////////////////////
 
-    void Planet::readKwl( char* file )
+    void Planet::readKwl( const std::string&  kwlFile )
     {
-      ossimKeywordlist kwl( file );
+      ossimKeywordlist kwl( kwlFile.c_str() );
       osg::ref_ptr< ossimPlanetTextureLayer > layer = ossimPlanetTextureLayerRegistry::instance()->createLayer( kwl.toString() );
       if( layer.valid() )
       {

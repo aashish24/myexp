@@ -57,7 +57,9 @@ SRCS=			MyApp.cpp	\
 			main.cpp
 
 NO_DEPEND=		YES
-		
+	
+EXTRA_CXXFLAGS=		-DHAVE_OSSIM
+	
 EXTRA_INCLUDES=		-I../../../			\
 			-I$(OSG_INC_DIR)		\
 			-I$(GMTL_INC_DIR)		\

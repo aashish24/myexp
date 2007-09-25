@@ -71,7 +71,7 @@ namespace Prithvi
 
         virtual ossimPlanetTextureLayer*              getLayer( const unsigned int& id ) const; 
 
-        virtual void                                  readKwl( char* kwl );
+        virtual void                                  readKwl( const std::string& kwlFile );
         
 	virtual float                                 getElevationScale();
         virtual void                                  setElevationScale( const float& scale ); 
