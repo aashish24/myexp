@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?org-vrjuggler-jccl-settings configuration.version="3.0"?>
+<configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="/store/toolkit/vrjuggler.2.0.1/share/vrjuggler/data/configFiles/lite/experiment/3pipes-tune.jconf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
+   <elements>
+      <trackd_sensor name="Head/Wand Pos" version="1">
+         <shared_memory_key>4126</shared_memory_key>
+         <position_filters>
+            <position_transform_filter name="Default" version="1">
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>-1.612</pre_translate>
+               <pre_translate>-1.83</pre_translate>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <custom_scale>1.0</custom_scale>
+               <device_units>Feet</device_units>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>0.0</post_rotation>
+            </position_transform_filter>
+         </position_filters>
+         <device_host />
+      </trackd_sensor>
+      <input_manager name="Trackd Manager" version="2">
+         <driver>Trackd_drv</driver>
+      </input_manager>
+      <trackd_controller name="Wand Button/Joystick" version="1">
+         <shared_memory_key>4127</shared_memory_key>
+         <min>-1.0</min>
+         <max>1.0</max>
+         <device_host />
+      </trackd_controller>
+      <digital_proxy name="Button 0 Proxy" version="1">
+         <device>Wand Button/Joystick</device>
+         <unit>0</unit>
+      </digital_proxy>
+      <digital_proxy name="Button 1 Proxy" version="1">
+         <device>Wand Button/Joystick</device>
+         <unit>1</unit>
+      </digital_proxy>
+      <digital_proxy name="Button 2 Proxy" version="1">
+         <device>Wand Button/Joystick</device>
+         <unit>2</unit>
+      </digital_proxy>
+      <digital_proxy name="Button 3 Proxy" version="1">
+         <device>Wand Button/Joystick</device>
+         <unit>3</unit>
+      </digital_proxy>
+      <digital_proxy name="Button 4 Proxy" version="1">
+         <device>Wand Button/Joystick</device>
+         <unit>4</unit>
+      </digital_proxy>
+      <analog_proxy name="Joystick X-Axis Proxy" version="1">
+         <device>Wand Button/Joystick</device>
+         <unit>0</unit>
+      </analog_proxy>
+      <analog_proxy name="Joystick Y-Axis Proxy" version="1">
+         <device>Wand Button/Joystick</device>
+         <unit>1</unit>
+      </analog_proxy>
+      <position_proxy name="Wand Proxy" version="1">
+         <device>Head/Wand Pos</device>
+         <unit>1</unit>
+         <position_filters>
+            <position_transform_filter name="Default" version="1">
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>0.0</pre_translate>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <custom_scale>1.0</custom_scale>
+               <device_units>1.0</device_units>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>0.0</post_rotation>
+            </position_transform_filter>
+         </position_filters>
+      </position_proxy>
+      <position_proxy name="Head Proxy" version="1">
+         <device>Head/Wand Pos</device>
+         <unit>0</unit>
+         <position_filters>
+            <position_transform_filter name="Default" version="1">
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>0.0</pre_translate>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <custom_scale>1.0</custom_scale>
+               <device_units>1.0</device_units>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>0.0</post_rotation>
+            </position_transform_filter>
+         </position_filters>
+      </position_proxy>
+   </elements>
+</configuration>
+

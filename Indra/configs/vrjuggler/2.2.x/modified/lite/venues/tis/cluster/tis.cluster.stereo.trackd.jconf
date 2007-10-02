@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?org-vrjuggler-jccl-settings configuration.version="3.0"?>
+<configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
+   <include>base/user01.tracked.jconf</include>
+   <include>devices/tracker/trackd/tracker01.trackd.base.jconf</include>
+   <include>devices/tracker/tracker01.alias.jconf</include>
+   <include>devices/km/km01.base.jconf</include>
+   <include>devices/km/km01.alias.jconf</include>
+   <include>plugins/plugins.jconf</include>
+   <include>nodes/ws1.stereo.jconf</include>
+   <include>nodes/ws2.stereo.jconf</include>
+   <include>nodes/ws3.stereo.jconf</include>
+   <include>nodes/ws4.stereo.jconf</include>
+   <include>nodes/ws5.stereo.jconf</include>
+   <include>nodes/ws6.stereo.jconf</include>
+   <elements />
+</configuration>
+
