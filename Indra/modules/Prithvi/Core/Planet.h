@@ -30,9 +30,9 @@
 # ifndef OSGPLANET_WITHOUT_WMS
 #   include "wms/wms.h"
 # endif /* #ifndef OSGPLANET_WITHOUT_WMS */
-# include "ossimPlanet/io/sg_socket.h"
-# include "ossimPlanet/io/netChannel.h"
-# include "ossimPlanet/io/netMonitor.h"
+# include "ossimPlanet/sg_socket.h"
+# include "ossimPlanet/netChannel.h"
+# include "ossimPlanet/netMonitor.h"
 # include "ossimPlanet/ossimPlanetServerThread.h"
 # include "ossimPlanet/ossimPlanetServerMessageHandler.h"
 # include "ossimPlanet/ossimPlanetActionRouter.h"
