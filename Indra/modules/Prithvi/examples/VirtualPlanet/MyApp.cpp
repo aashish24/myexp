@@ -26,6 +26,12 @@ MyApp::MyApp( vrj::Kernel* kern, int& argc, char** argv ) : OsgBase( kern, argc,
   mPlanet->setElevationScale( 10.0 );	
 }
 
+//
+void MyApp::appContextInit()
+{  
+  mPlanet->initShaders();
+}
+
 // One time initialization. 
 void MyApp::appInit()
 {

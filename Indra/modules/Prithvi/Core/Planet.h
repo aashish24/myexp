@@ -60,6 +60,8 @@ namespace Prithvi
 
         virtual osg::Group*                           root();
 
+        virtual void                                  initShaders();
+        
         virtual int                                   addLayer( const std::string& file );
         virtual int                                   addLayer( ossimPlanetTextureLayer* layer );
 
@@ -73,7 +75,7 @@ namespace Prithvi
 
         virtual void                                  readKwl( const std::string& kwlFile );
         
-	virtual float                                 getElevationScale();
+	virtual float                                       getElevationScale();
         virtual void                                  setElevationScale( const float& scale ); 
        
       protected:

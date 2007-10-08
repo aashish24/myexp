@@ -98,6 +98,13 @@ namespace Prithvi
       return mOssimPlanet.release();
     }
 
+    void Planet::initShaders()
+    {
+      if( mOssimPlanet.valid() )
+      {
+        mOssimPlanet->getLand()->initShaders();
+      }
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     //
