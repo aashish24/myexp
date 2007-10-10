@@ -14,7 +14,9 @@ class SceneManager : public osg::Referenced
     
     void reloadShaderSource();
     void toggleShaderEnable();
-  
+
+    void update();
+
   protected:
 	  ~SceneManager();
 

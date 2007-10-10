@@ -80,7 +80,7 @@ namespace Prithvi
        
       protected:
        
-        virtual void 				      init();
+        virtual void 				                          init();
 
         virtual ~Planet(); 
 

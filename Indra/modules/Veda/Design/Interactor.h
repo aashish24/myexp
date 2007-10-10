@@ -358,7 +358,7 @@ namespace Veda
         {
           if( value != -2.0 )
           {
-            mSceneNavigator.pitch( value ); 
+            //mSceneNavigator.pitch( value ); 
           }
         }
 
@@ -373,7 +373,7 @@ namespace Veda
         {
           if( value != -2.0 )
           {
-            mSceneNavigator.rotateInY( value ); 
+            //mSceneNavigator.rotateInZ( value ); 
           }
         }
 

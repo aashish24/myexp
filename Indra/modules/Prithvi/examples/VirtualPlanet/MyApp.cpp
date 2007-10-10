@@ -59,10 +59,6 @@ void MyApp::appBufferPreDraw()
 // Scenegraph will be build here. 
 void MyApp::appSceneInit()
 {
-  mPlanet = new Prithvi::Core::Planet();
-  mPlanet->readKwl( "/home/aashish/src/ossim/current/archive/ossimPlanet/examples/ossimplanetviewer/archive_manager.kwl" );
-  mPlanet->setElevationScale( 10.0 );
-
   mModelGroupNode->addChild( mPlanet->root() );
 }
 

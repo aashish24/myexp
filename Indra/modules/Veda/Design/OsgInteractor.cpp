@@ -222,10 +222,7 @@ namespace Veda
       
       if( mUseTracker )
       {
-
-	std::cout << "Use tracker enabled: " << std::endl;
-	
-        this->mUseTracker = false;
+        mUseTracker = false;
         gmtl::Vec3f dir( 0.0, 0.0, -1.0 );
 
         // Get the resultant direction and negate it as scece moves opposite to the camera. 
@@ -244,7 +241,7 @@ namespace Veda
       else
       {
         matrix = osg::Matrix( Core::SharedData::mCommand->mSharedTransformMatrix.mData );
-        matrix.setTrans( offset + matrix.getTrans() );    
+        //matrix.setTrans( offset + matrix.getTrans() );    
         mSceneTransformNode->setMatrix( matrix );
       }     
       

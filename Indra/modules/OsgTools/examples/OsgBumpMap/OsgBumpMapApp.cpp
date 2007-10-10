@@ -28,6 +28,41 @@
 
 #include "SceneManager.h" 
 
+// create the scene
+static osg::ref_ptr< SceneManager > sm;
+
+
+class KeyboardEventHandler : public osgGA::GUIEventHandler
+{
+public:
+    
+        KeyboardEventHandler()
+        {
+        }
+            
+    
+        virtual bool handle(const osgGA::GUIEventAdapter& ea,osgGA::GUIActionAdapter&)
+        {
+            switch(ea.getEventType())
+            {
+                case(osgGA::GUIEventAdapter::KEYDOWN):
+                {                
+                    sm->update();
+                    return true;
+                }
+                case(osgGA::GUIEventAdapter::KEYUP):
+                {                 
+                    return true;
+                }
+
+                default:
+                    return false;
+            }
+        }
+        
+};
+
+
 int main(int, char **)
 {
     // construct the viewer.
@@ -51,11 +86,14 @@ int main(int, char **)
       osgDB::Registry::instance()->setDataFilePathList( dirs );
     }
 
-    // create the scene
-    osg::ref_ptr< SceneManager > sm( new SceneManager );
+    sm = new SceneManager();
 
     viewer.setSceneData( sm->getRootNode().get() );
 
-    return viewer.run();
+    viewer.addEventHandler( new KeyboardEventHandler() );
+
+    viewer.run();
+  
+    return 1;
 }
 
