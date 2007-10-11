@@ -35,13 +35,8 @@ FIND_LIBRARY( OSSIM_LIB ossim ${OSSIM_LIB_DIR} )
 FIND_LIBRARY( OSSIMPLANET_LIB ossimPlanet ${OSSIMPLANET_LIB_DIR} )
 
 #------------------List all the includes------------------  
-INCLUDE_DIRECTORIES( ${OSSIM_INC_DIR} ) 
-
-#------------------List all the includes------------------  
-INCLUDE_DIRECTORIES( ${OSSIMPLANET_INC_DIR} ) 
-
-#------------------List all the includes------------------  
-INCLUDE_DIRECTORIES( ../ ${OSG_INC_DIR} ) 
+INCLUDE_DIRECTORIES( ../ ${OSG_INC_DIR} ${OSSIM_INC_DIR}
+${OSSIMPLANET_INC_DIR} ) 
 
 #------------------Link the libraries------------------ 
 LINK_LIBRARIES( Prithvi osg ossim ossimPlanet )
