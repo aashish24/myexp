@@ -20,10 +20,6 @@ SET(SOURCES
 INCLUDE_DIRECTORIES(../ ${OSG_INC_DIR}) 
 
 
-#------------------Link the libraries------------------ 
-#LINK_INTERNAL( OsgTools Neiv )
-
-
 #------------------Build shared library------------------ 
 ADD_LIBRARY( OsgTools SHARED ${SOURCES} )
 
@@ -33,5 +29,5 @@ TARGET_LINK_LIBRARIES( OsgTools ${OSG_LIB} )
 
 
 #------------------Install------------------
-INSTALL( TARGETS OsgTools DESTINATION ../../bin )
+INSTALL( TARGETS OsgTools DESTINATION ${Indra_SOURCE_DIR}/bin )
 
