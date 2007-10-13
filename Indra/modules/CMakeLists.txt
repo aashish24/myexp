@@ -1,0 +1,14 @@
+SUBDIRS(
+        Neiv
+)
+
+OPTION( BUILD_OSG_TOOLS "Enable to build OSG Toos" ON)
+IF( BUILD_OSG_TOOLS )
+ ADD_SUBDIRECTORY( OsgTools )
+ENDIF( BUILD_OSG_TOOLS )
+
+OPTION( BUILD_PRITHVI "Enable to build Prithvi (earth)  module" OFF )
+IF( BUILD_PRITHVI )
+ ADD_SUBDIRECTORY( Prithvi )
+ENDIF( BUILD_PRITHVI )
+
