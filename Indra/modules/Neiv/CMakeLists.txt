@@ -1,19 +1,19 @@
 
-set( CMAKE_INSTALL_PREFIX "./" )
-
-#------Project name.
-PROJECT( OsgTools )
+INCLUDE( ${CMAKE_MODULES_DIR}/Indra.cmake )
 
 
-#------List all the source files. 
+PROJECT( Neiv )
+
+SET( LIB_NAME Neiv )
+
 SET( SOURCES 
  ./Base/Referenced.cpp )  
 
 INCLUDE_DIRECTORIES( ../ )
 
-ADD_LIBRARY( Neiv SHARED ${SOURCES} )
+ADD_LIBRARY( ${LIB_NAME} SHARED ${SOURCES} )
 
-TARGET_LINK_LIBRARIES( Neiv )
+TARGET_LINK_LIBRARIES( ${LIB_NAME} )
 
-INSTALL( TARGETS Neiv  DESTINATION ${Indra_SOURCE_DIR}/bin )
+INSTALL( TARGETS ${LIB_NAME}  DESTINATION ${Indra_SOURCE_DIR}/bin )
 
