@@ -1,0 +1,4 @@
+
+SET( VJ_BASE_DIR $ENV{VJ_BASE_DIR} )
+SET(  
+
