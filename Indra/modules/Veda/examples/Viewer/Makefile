@@ -27,35 +27,35 @@
 # **********************************************************************
 # */
 
-default:		    all
+default:	all
 
-APP_NAME=		    viewer
+APP_NAME=	viewer
 
-BUILD_TYPE?=		dbg
+BUILD_TYPE?=	dbg
 
-srcdir=			    ../src
+srcdir=		../src
 
-SRCS=			      MyApp.cpp	\
-			          main.cpp
+SRCS=		MyApp.cpp			\
+		main.cpp
 
-NO_DEPEND=		  YES
+NO_DEPEND=	YES
 		
-EXTRA_INCLUDES=	-I../../../			    \
-			          -I$(OSG_INC_DIR)		\
-			          -I$(GMTL_INC_DIR)		\
-			          -I$(CPPDOM_INC_DIR)	\
-			          -I$(OMNIORB_INC_DIR)
+EXTRA_INCLUDES=	-I../../../			\
+		-I$(OSG_INC_DIR)		\
+		-I$(GMTL_INC_DIR)		\
+		-I$(CPPDOM_INC_DIR)		\
+		-I$(OMNIORB_INC_DIR)
 
 
-EXTRA_LIBS=		  -L../../../../bin		        \
-			          -L$(OSG_LIB_DIR) 		        \
-			          -L$(BOOST_LIB_DIR)	        \
-			          -L$(OMNIORB_LIB_DIR)        \
-			          -L$(CPPDOM_LIB_DIR)	        \
-			          -lVeda -lOsgTools -lNeiv    \
-			          -losg -losgDB -losgGA       \
-			          -losgUtil -losgText -losgFX \
-			          -lomniORB4 -lomnithread 
+EXTRA_LIBS=	-L../../../../bin		\
+		-L$(OSG_LIB_DIR) 		\
+		-L$(BOOST_LIB_DIR)	        \
+		-L$(OMNIORB_LIB_DIR)        	\
+		-L$(CPPDOM_LIB_DIR)	        \
+		-lVeda -lOsgToolsd -lNeivd	\
+		-losgd -losgDBd -losgGAd       	\
+		-losgUtild -losgTextd -losgFXd 	\
+		-lomniORB4 -lomnithread 
 
 DZR_BASE_DIR=   $(shell flagpoll doozer --get-prefix)
 include         $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.mk
@@ -65,11 +65,11 @@ include         $(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
 #vpath %.cpp    $(CXX_GEN_DIR)
 #vpath %.h      $(CXX_GEN_DIR)
 
-all: 		
-			          $(MAKE) $(APP_NAME)
+all:		
+		$(MAKE) $(APP_NAME)
 
-$(APP_NAME): 		$(OBJS)
-			          $(LINK) $(LINK_OUT)$@ $(OBJS) $(EXTRA_LIBS) $(LIBS)
+$(APP_NAME): 	$(OBJS)
+		$(LINK) $(LINK_OUT)$@ $(OBJS) $(EXTRA_LIBS) $(LIBS)
 
-CLEAN_FILES+=		$(APP_NAME)
+CLEAN_FILES+=	$(APP_NAME)
 

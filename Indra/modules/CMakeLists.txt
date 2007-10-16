@@ -1,6 +1,8 @@
-SUBDIRS(
-        Neiv
-)
+
+OPTION( BUILD_NEIV "Enable to build NEIV" ON)
+IF( BUILD_NEIV )
+ ADD_SUBDIRECTORY( NEIV )
+ENDIF( BUILD_NEIV )
 
 OPTION( BUILD_OSG_TOOLS "Enable to build OSG Toos" ON)
 IF( BUILD_OSG_TOOLS )

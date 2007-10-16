@@ -21,3 +21,4 @@ namespace Neiv
 }
 
 #endif // __NEIV_POINTER_POINTER_H__
+
