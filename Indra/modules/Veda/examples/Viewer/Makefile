@@ -1,94 +1,75 @@
 #/**********************************************************************
 # * @Author: Aashish Chaudhary
-# *          Sr. Research Analyst at DT   
-# *          Arizona State University 
-# *
-# * @Date: Jan 23 2006
-# *
-# *
+# *          
 # * @Comment:
 # *	This is a example makefile. This makefile assumes that 
-# *  user is using VJCinema framework along with VRJuggler. 
-# *  OSG, OGL and OpenSG are optional though this makefile 
-# *  using OSG. This makefile is a standard gnu makefile using 
-# *  basic tools from VRJuggler to make it portable alond 
-# *  different architecture. Its higly recommended that you learn 
-# *  gnu make to understand some basic described here. 
+# * user is using Indra framework along with VRJuggler. 
+# * OSG, OGL and OpenSG are optional though this makefile 
+# * using OSG. This makefile is a standard gnu makefile using 
+# * basic tools from VRJuggler to make it portable along 
+# * different architectures. 
 # *
-# *  This makefile is divided into two parts basic and advanced. 
-# *  Which is described in detail below. 
-# * 
-# * @Note:
-# *	Only standard variables defined here. 
 # *
 # *	Basic options.
-# *  -------------------------------------------------------------------
-# *	1)	srcdir
-# *		srcdir=		../src
 # *
-# *	This variable should be used to define the primary dir for the src 
-# *	files. If you want to add more src dir then use EXTRA_PATH_FOR_SOURCES. 
+# * 1. srcdir
+# *	srcdir=		../src
 # *
-# *	2)	EXTRA_PATH_FOR_SOURCES
+# *	This variable should be used to define the primary folder for the source 
+# *	files. If you want to add more source paths then use EXTRA_PATH_FOR_SOURCES. 
+# *
+# *	2. EXTRA_PATH_FOR_SOURCES
 # *		
-# *		EXTRA_PATH_FOR_SOURCES=		path1	\
-# *						path2	
+# *	EXTRA_PATH_FOR_SOURCES=		path1	\
+# *						                path2	
 # * 
-# *  This variable defines where the makefile will look for the src
-# *	files. If there are more than one directory then they should be 
-# *  included by a backslash. 
 # *	
 # **********************************************************************
 # */
 
+default:		    all
 
-default:		all
-
-APP_NAME=		viewer
-
-
-#----------------------------Basic options-------------------------------------
+APP_NAME=		    viewer
 
 BUILD_TYPE?=		dbg
 
-srcdir=			../src
+srcdir=			    ../src
 
-SRCS=			MyApp.cpp	\
-			main.cpp
+SRCS=			      MyApp.cpp	\
+			          main.cpp
 
-NO_DEPEND=		YES
+NO_DEPEND=		  YES
 		
-EXTRA_INCLUDES=		-I../../../			\
-			-I$(OSG_INC_DIR)		\
-			-I$(GMTL_INC_DIR)		\
-			-I$(CPPDOM_INC_DIR)		\
-			-I$(OMNIORB_INC_DIR)
+EXTRA_INCLUDES=	-I../../../			    \
+			          -I$(OSG_INC_DIR)		\
+			          -I$(GMTL_INC_DIR)		\
+			          -I$(CPPDOM_INC_DIR)	\
+			          -I$(OMNIORB_INC_DIR)
 
 
-EXTRA_LIBS=		-L../../../../bin		\
-			-L$(OSG_LIB_DIR) 		\
-			-L$(BOOST_LIB_DIR)		\
-			-L$(OMNIORB_LIB_DIR)		\
-			-L$(CPPDOM_LIB_DIR)		\
-			-lVeda -lOsgTools -lNeiv -losg -losgDB -losgGA -losgUtil -losgText -losgFX -lomniORB4 -lomnithread
-
-#----------------------------Advanced options---------------------------------- 
+EXTRA_LIBS=		  -L../../../../bin		        \
+			          -L$(OSG_LIB_DIR) 		        \
+			          -L$(BOOST_LIB_DIR)	        \
+			          -L$(OMNIORB_LIB_DIR)        \
+			          -L$(CPPDOM_LIB_DIR)	        \
+			          -lVeda -lOsgTools -lNeiv    \
+			          -losg -losgDB -losgGA       \
+			          -losgUtil -losgText -losgFX \
+			          -lomniORB4 -lomnithread 
 
 DZR_BASE_DIR=   $(shell flagpoll doozer --get-prefix)
-include $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.mk
-include $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.glapp.mk
-include $(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
+include         $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.mk
+include         $(DZR_BASE_DIR)/ext/vrjuggler/dzr.vrjuggler.glapp.mk
+include         $(DZR_BASE_DIR)/ext/tweek/dzr.tweek.mk
 
-#vpath %.cpp $(CXX_GEN_DIR)
-#vpath %.h $(CXX_GEN_DIR)
-
-#-----------------------------Application build targets------------------------
+#vpath %.cpp    $(CXX_GEN_DIR)
+#vpath %.h      $(CXX_GEN_DIR)
 
 all: 		
-			$(MAKE) $(APP_NAME)
+			          $(MAKE) $(APP_NAME)
 
 $(APP_NAME): 		$(OBJS)
-			$(LINK) $(LINK_OUT)$@ $(OBJS) $(EXTRA_LIBS) $(LIBS)
+			          $(LINK) $(LINK_OUT)$@ $(OBJS) $(EXTRA_LIBS) $(LIBS)
 
 CLEAN_FILES+=		$(APP_NAME)
 
