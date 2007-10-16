@@ -1,40 +1,36 @@
 
-#------------------Project name------------------
 PROJECT( Prithvi )
 
-INCLUDE( ${CMAKE_MODULES_DIR}/Indra.cmake 
-	 ${CMAKE_MODULES_DIR}/FindOSG.cmake
-         ${CMAKE_MODULES_DIR}/FindOSSIM.cmake )
+
+SET( LIB_NAME ${PROJECT} )
 
 
-#-----------------List all the source files----------------- 
+INCLUDE( ${CMAKE_MODULES_DIR}/Indra.cmake )
+INCLUDE( ${CMAKE_MODULES_DIR}/FindOSG.cmake )
+INCLUDE( ${CMAKE_MODULES_DIR}/FindOSSIM.cmake )
+
+
 SET( SOURCES 
      ./Core/Planet.cpp )
 
 
-#----------------Set CXX Flags------------------
 set( CMAKE_CXX_FLAGS -DHAVE_OSSIM )
 
 
-#------------------List all the includes------------------  
 INCLUDE_DIRECTORIES( ../ 
-		    ${OSG_INC_DIR} 
-		    ${OSSIM_INC_DIR}
-		    ${OSSIMPLANET_INC_DIR} ) 
+		                 ${OSG_INC_DIR} 
+		                 ${OSSIM_INC_DIR}
+		                 ${OSSIMPLANET_INC_DIR} ) 
 
 
-#------------------Link the libraries------------------ 
-LINK_INDRA( Prithvi Neiv )
+LINK_INTERNAL( ${LIB_NAME} Neiv )
 
 
-#------------------Build shared library------------------ 
-ADD_LIBRARY( Prithvi SHARED ${SOURCES} )
+ADD_LIBRARY( ${LIB_NAME} SHARED ${SOURCES} )
 
 
-#------------------Set the library path------------------ 
-TARGET_LINK_LIBRARIES( Prithvi ${OSG_LIB} ${OSSIM_LIB} ${OSSIMPLANET_LIB} )
+TARGET_LINK_LIBRARIES( ${LIB_NAME} ${OSG_LIB} ${OSSIM_LIB} ${OSSIMPLANET_LIB} )
 
 
-#------------------Install------------------
-INSTALL( TARGETS Prithvi DESTINATION ../../bin )
+INSTALL( TARGETS ${LIB_NAME} DESTINATION ${Indra_SOURCE_DIR}/bin )
 
