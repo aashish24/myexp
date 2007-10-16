@@ -88,7 +88,7 @@ all:
 			$(MAKE) $(APP_NAME)
 
 $(APP_NAME): 		$(OBJS)
-			$(LINK) $(LINK_OUT)$@ $(OBJS) $(TWEEK_LIBS) $(EXTRA_LIBS) $(LIBS)
+			$(LINK) $(LINK_OUT)$@ $(OBJS) $(EXTRA_LIBS) $(LIBS)
 
 CLEAN_FILES+=		$(APP_NAME)
 
