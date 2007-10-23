@@ -216,6 +216,26 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Interfaces"
+				>
+				<File
+					RelativePath=".\Interfaces\IDocument.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Interfaces\IInput.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Interfaces\IUnknown.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Interfaces\IViewer.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
