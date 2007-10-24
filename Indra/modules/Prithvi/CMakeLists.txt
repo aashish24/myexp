@@ -18,9 +18,9 @@ set( CMAKE_CXX_FLAGS -DHAVE_OSSIM )
 
 
 INCLUDE_DIRECTORIES( ../ 
-		                 ${OSG_INC_DIR} 
-		                 ${OSSIM_INC_DIR}
-		                 ${OSSIMPLANET_INC_DIR} ) 
+                     ${OSG_INC_DIR} 
+		     ${OSSIM_INC_DIR}
+		     ${OSSIMPLANET_INC_DIR} ) 
 
 
 

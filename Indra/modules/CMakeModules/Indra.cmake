@@ -1,14 +1,12 @@
 
-#------Add debug build preprocessors.
 IF( CMAKE_BUILD_TYPE STREQUAL "Debug" )
  ADD_DEFINITIONS( "-D_DEBUG" )
  SET( CMAKE_DEBUG_POSTFIX d )
 ENDIF( CMAKE_BUILD_TYPE STREQUAL "Debug" )
 
 
-#------Add release build preprocessors.
 IF( CMAKE_BUILD_TYPE STREQUAL "Release" )
- ADD_DEFINTIONS( "-DNDEBUG" )
+ ADD_DEFINITIONS( "-DNDEBUG" )
 ENDIF( CMAKE_BUILD_TYPE STREQUAL "Release" )
 
 

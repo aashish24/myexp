@@ -511,12 +511,11 @@ namespace Veda
       gmtl::Matrix44f transMatrix = gmtl::makeTrans< gmtl::Matrix44f >( vec );
 
       const float* mat = transMatrix.getData();
-      std::cout << "Translation matrix is: " << std::endl;
       
-      std::cout << mat[0] << " " << mat[1] << " " << mat[2] << " " << mat[3] << std::endl;
-      std::cout << mat[4] << " " << mat[5] << " " << mat[6] << " " << mat[7] << std::endl;
-      std::cout << mat[8] << " " << mat[9] << " " << mat[10] << " " << mat[11] << std::endl;
-      std::cout << mat[12] << " " << mat[13] << " " << mat[14] << " " << mat[15] << std::endl;
+      //std::cout << mat[0] << " " << mat[1] << " " << mat[2] << " " << mat[3] << std::endl;
+      //std::cout << mat[4] << " " << mat[5] << " " << mat[6] << " " << mat[7] << std::endl;
+      //std::cout << mat[8] << " " << mat[9] << " " << mat[10] << " " << mat[11] << std::endl;
+      //std::cout << mat[12] << " " << mat[13] << " " << mat[14] << " " << mat[15] << std::endl;
 
       if( scope == Core::GLOBAL )
       {
@@ -598,8 +597,6 @@ namespace Veda
       }
       else if( mNavigationMode == Core::OSSIMNAV )
       {
-        std::cout << "Rotation matrix is: " << rotationMatrix.getData() << std::endl;
-
         gmtl::preMult( mCurrentPosition, rotationMatrix );
       }
       else 

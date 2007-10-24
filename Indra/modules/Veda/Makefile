@@ -3,10 +3,9 @@ default=			c++
 
 JAR_NAME= 			VedaTweek.jar
 	
-LIB_NAME= 			Veda
+LIB_NAME= 			Vedad
 
-DEBUG_APP= 			FALSE
-OPTIM_APP= 			TRUE
+BUILD_TYPE=	 		dbg
 
 c++:
 				$(MAKE) $(LIB_NAME)
@@ -90,7 +89,7 @@ EXTRA_INCLUDES+=		-I$(CXX_GEN_DIR) 			\
 				-I$(CPPDOM_INC_DIR)			\
 				-I$(OMNIORB_INC_DIR)			\
 
-EXTRA_LIBS+=			-L../../bin -lOsgTools -L$(OSG_LIB_DIR) -losg -losgDB -losgUtil
+EXTRA_LIBS+=			-L../../bin -lOsgToolsd -L$(OSG_LIB_DIR) -losgd -losgDBd -losgUtild
 
 
 #-----------------------------Java specific-----------------------------------
