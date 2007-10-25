@@ -4,10 +4,18 @@ IF( BUILD_NEIV )
  ADD_SUBDIRECTORY( Neiv )
 ENDIF( BUILD_NEIV )
 
-OPTION( BUILD_OSG_TOOLS "Enable to build OSG Toos" ON)
+
+OPTION( BUILD_VEDA "Enable to build Veda" ON)
+IF( BUILD_VEDA )
+ ADD_SUBDIRECTORY( Veda )
+ENDIF( BUILD_VEDA )
+
+
+OPTION( BUILD_OSG_TOOLS "Enable to build OSG Tools" ON)
 IF( BUILD_OSG_TOOLS )
  ADD_SUBDIRECTORY( OsgTools )
 ENDIF( BUILD_OSG_TOOLS )
+
 
 OPTION( BUILD_PRITHVI "Enable to build Prithvi (earth)  module" OFF )
 IF( BUILD_PRITHVI )
