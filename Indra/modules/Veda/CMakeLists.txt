@@ -36,8 +36,10 @@ SET( SOURCES
 
 
 INCLUDE_DIRECTORIES( ../
-		     ${VRJUGGLER_INC}
-		     ${GMTL_INC_DIR} )
+		     ${GMTL_INC_DIR}
+		     ${CPPDOM_INC_DIR}
+		     ${OMNIORB_INC_DIR}
+ 		     ${VRJUGGLER_INCS} )
 
 
 ADD_LIBRARY( ${LIB_NAME} SHARED ${SOURCES} ) 
@@ -55,11 +57,7 @@ IF( USE_OSG )
 ENDIF( USE_OSG )
 
 TARGET_LINK_LIBRARIES( ${LIB_NAME} 
-			${VRJ_LIB}
-			${VRJ_OGL_LIB}
-			${GADGET_LIB}
-			${JCCL_LIB}
-			${TWEEK_LIB} )
+		       ${VRJUGGLER_LIBS} )
 
 
 
