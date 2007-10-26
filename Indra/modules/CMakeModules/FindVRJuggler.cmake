@@ -13,7 +13,8 @@ ENDIF( VRJUGGLER_VRJ_INC )
 	   
 	   
 FIND_LIBRARY( VRJUGGLER_VRJ_LIB 		 
-	      NAMES vrj-2_0
+	      NAMES vrj
+		    vrj-2_0
 	      	    vrj-2_1
 	            vrj-2_2
 	            vrj-2_3
@@ -34,7 +35,8 @@ ENDIF( VRJUGGLER_VRJ_LIB )
 
   
 FIND_LIBRARY( VRJUGGLER_VRJ_OGL_LIB
-              NAMES vrj_ogl-2_0
+              NAMES vrj_ogl
+                    vrj_ogl-2_0
 	      	    vrj_ogl-2_1
 		    vrj_ogl-2_2
 		    vrj_ogl-2_3
@@ -64,7 +66,8 @@ ENDIF( VRJUGGLER_VPR_INC )
 
 
 FIND_LIBRARY( VRJUGGLER_VPR_LIB
-	      NAMES vpr-2_0
+	      NAMES vpr
+                    vpr-2_0
 	      	    vpr-2_1
 		    vpr-2_2
 		    vpr-2_3
@@ -94,7 +97,8 @@ ENDIF( VRJUGGLER_GADGET_INC )
 
 
 FIND_LIBRARY( VRJUGGLER_GADGET_LIB
-	      NAMES gadget-1_0
+	      NAMES gadget
+                    gadget-1_0
 	      	    gadget-1_1
 		    gadget-1_2
 		    gadget-1_3
@@ -124,7 +128,8 @@ ENDIF( VRJUGGLER_JCCL_INC )
 
 
 FIND_LIBRARY( VRJUGGLER_JCCL_LIB
-              NAMES jccl-1_0
+              NAMES jccl
+                    jccl-1_0
 	            jccl-1_1
 		    jccl-1_2
 		    jccl-1_3
@@ -154,7 +159,8 @@ ENDIF( VRJUGGLER_TWEEK_INC )
 
 
 FIND_LIBRARY( VRJUGGLER_TWEEK_LIB 
-              NAMES tweek-1_0
+              NAMES tweek
+                    tweek-1_0
 		    tweek-1_1
 		    tweek-1_2
 		    tweek-1_3
@@ -184,7 +190,8 @@ ENDIF( VRJUGGLER_SONIX_INC )
 
 
 FIND_LIBRARY( VRJUGGLER_SONIX_LIB 
-              NAMES sonix-1_0
+              NAMES sonix
+                    sonix-1_0
 		    sonix-1_1
 		    sonix-1_2
 		    sonix-1_3
