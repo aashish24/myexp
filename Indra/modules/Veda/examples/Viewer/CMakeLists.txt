@@ -1,0 +1,60 @@
+
+PROJECT( Viewer )
+
+SET( APP_NAME Viewer )
+
+
+OPTION( USE_OSG "Use OpenSceneGraph" ON )
+
+ 
+INCLUDE( ${CMAKE_MODULES_DIR}/Indra.cmake )
+INCLUDE( ${CMAKE_MODULES_DIR}/FindVRJuggler.cmake )
+INCLUDE( ${CMAKE_MODULES_DIR}/FindOmniORB.cmake )
+INCLUDE( ${CMAKE_MODULES_DIR}/FindCppDOM.cmake )
+INCLUDE( ${CMAKE_MODULES_DIR}/FindGMTL.cmake )
+
+SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread" ) 
+SET( CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS}  -pthread -Bdynamic" ) 
+
+
+IF( USE_OSG )
+ INCLUDE( ${CMAKE_MODULES_DIR}/FindOSG.cmake ) 
+ ADD_DEFINITIONS( "-DHAVE_OSG" ) 
+ INCLUDE_DIRECTORIES( ${OSG_INC_DIR} )
+ENDIF( USE_OSG )
+
+
+SET( SOURCES 
+     ./MyApp.cpp
+     ./main.cpp )  	
+
+
+INCLUDE_DIRECTORIES( ${Indra_SOURCE_DIR}/modules
+		     ${GMTL_INC_DIR}
+		     ${OMNIORB_INC_DIR}		     
+ 		     ${VRJUGGLER_INCS} )
+
+		     
+
+ADD_EXECUTABLE( ${APP_NAME} ${SOURCES} ) 
+
+
+LINK_INTERNAL( ${APP_NAME} Neiv Veda )
+
+
+IF( USE_OSG )
+ LINK_INTERNAL( ${APP_NAME} OsgTools )
+ TARGET_LINK_LIBRARIES( ${APP_NAME}
+                        ${OPENSCENEGRAPH_OSG_LIB}
+                        ${OPENSCENEGRAPH_OSGUTIL_LIB}
+			${OPENSCENEGRAPH_OSGDB_LIB} )
+ENDIF( USE_OSG )
+
+TARGET_LINK_LIBRARIES( ${APP_NAME} 
+		       ${OMNIORB_LIB}
+		       ${VRJUGGLER_LIBS} )
+
+
+
+INSTALL( TARGETS ${APP_NAME} DESTINATION ${Indra_SOURCE_DIR}/bin )
+

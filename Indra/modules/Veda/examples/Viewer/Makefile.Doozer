@@ -31,9 +31,9 @@ default:	all
 
 APP_NAME=	viewer
 
-BUILD_TYPE?=	dbg
+BUILD_TYPE?=	opt
 
-srcdir=		../src
+srcdir=		.
 
 SRCS=		MyApp.cpp			\
 		main.cpp

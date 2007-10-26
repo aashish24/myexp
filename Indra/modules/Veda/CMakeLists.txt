@@ -6,8 +6,12 @@ SET( LIB_NAME Veda )
 
 OPTION( USE_OSG "Use OpenSceneGraph" ON )
 
- 
+IF( BUILD_EXAMPLES )
+ ADD_SUBDIRECTORY( examples )
+ENDIF( BUILD_EXAMPLES )
 
+ 
+INCLUDE( ${CMAKE_MODULES_DIR}/Indra.cmake )
 INCLUDE( ${CMAKE_MODULES_DIR}/FindVRJuggler.cmake )
 INCLUDE( ${CMAKE_MODULES_DIR}/FindOmniORB.cmake )
 INCLUDE( ${CMAKE_MODULES_DIR}/FindCppDOM.cmake )
@@ -17,32 +21,44 @@ SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -DPIC -fPIC" )
 
 
 IF( USE_OSG )
+ INCLUDE( ${CMAKE_MODULES_DIR}/FindOSG.cmake ) 
  ADD_DEFINITIONS( "-DHAVE_OSG" ) 
+ INCLUDE_DIRECTORIES( ${OSG_INC_DIR} )
 ENDIF( USE_OSG )
 
 
 SET( SOURCES 
+     ./Core/AppBase.cpp
      ./Core/Controller.cpp                  
      ./Core/Defs.cpp 
+     ./Core/Globals.cpp                     
+     ./Core/OsgBase.cpp 
      ./Core/SharedData.cpp                  
      ./Core/SubjectImpl.cpp                 
-     ./Core/UserData.cpp                    
-     ./Core/Globals.cpp                     
+     ./Core/UserData.cpp                         
      ./Design/Navigation.cpp                  
      ./Design/OsgInteractor.cpp               
-     ./Design/OssimInteractor.cpp             
-     ./Core/OsgBase.cpp                     
-     ./Core/AppBase.cpp )  	
+     ./Design/OssimInteractor.cpp                  
+     ./Tweek/TweekSubject.cpp )  	
 
 
 INCLUDE_DIRECTORIES( ../
 		     ${GMTL_INC_DIR}
 		     ${CPPDOM_INC_DIR}
-		     ${OMNIORB_INC_DIR}
+		     ${OMNIORB_INC_DIR}		     
  		     ${VRJUGGLER_INCS} )
+
+		     
+SET( $ENV{JACORB_PATH} ${VJ_BASE_DIR}/bin )
+
+
+ADD_CUSTOM_TARGET( CXX_IDL omniidl -bcxx -Wbh=.h,s=.cpp -I${VRJUGGLER_TWEEK_INC} -C./Tweek  ./Tweek/TweekSubject.idl )
 
 
 ADD_LIBRARY( ${LIB_NAME} SHARED ${SOURCES} ) 
+
+
+ADD_DEPENDENCIES( ${LIB_NAME} CXX_IDL )
 
 
 LINK_INTERNAL( ${LIB_NAME} Neiv )
@@ -51,9 +67,9 @@ LINK_INTERNAL( ${LIB_NAME} Neiv )
 IF( USE_OSG )
  LINK_INTERNAL( ${LIB_NAME} OsgTools )
  TARGET_LINK_LIBRARIES( ${LIB_NAME}
-                        ${OSG_LIB}
-                        ${OSG_UTIL_LIB}
-			${OSG_DB_LIB} )
+                        ${OPENSCENEGRAPH_OSG_LIB}
+                        ${OPENSCENEGRAPH_OSGUTIL_LIB}
+			${OPENSCENEGRAPH_OSGDB_LIB} )
 ENDIF( USE_OSG )
 
 TARGET_LINK_LIBRARIES( ${LIB_NAME} 

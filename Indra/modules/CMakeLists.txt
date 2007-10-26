@@ -1,4 +1,7 @@
 
+OPTION( BUILD_EXAMPLES "Build examples" ON )
+
+
 OPTION( BUILD_NEIV "Enable to build NEIV" ON)
 IF( BUILD_NEIV )
  ADD_SUBDIRECTORY( Neiv )
@@ -21,4 +24,5 @@ OPTION( BUILD_PRITHVI "Enable to build Prithvi (earth)  module" OFF )
 IF( BUILD_PRITHVI )
  ADD_SUBDIRECTORY( Prithvi )
 ENDIF( BUILD_PRITHVI )
+
 
