@@ -28,8 +28,10 @@ int main( int argc, char** argv )
 		std::exit(1);
 	}
 
-		 kernel->loadConfigFile( argv[ 2 ] );
-
+	for( int i = 2; i < argc; ++i )
+	{
+			 kernel->loadConfigFile( argv[ i ] );
+	}
 	kernel->start();
 	kernel->setApplication( application );
 	kernel->waitForKernelStop();

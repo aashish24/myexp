@@ -13,8 +13,9 @@ INCLUDE( ${CMAKE_MODULES_DIR}/FindOmniORB.cmake )
 INCLUDE( ${CMAKE_MODULES_DIR}/FindCppDOM.cmake )
 INCLUDE( ${CMAKE_MODULES_DIR}/FindGMTL.cmake )
 
-SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread" ) 
-SET( CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS}  -pthread -Bdynamic" ) 
+#------Lets do more study on how to set flags in CMAKE
+#SET( CMAKE_CXX_FLAGS "-fexceptions -pthread -Wall -DHAVE_CONFIG_H -O2 -fno-strict-aliasing -DJUGGLER_OPT -DNDEBUG -fno-strict-aliasing  -DTWEEK_HAVE_CXX=1 -D__OSVERSION__=2 -D__linux__ -D__processor_unknown__" ) 
+#SET( CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -pthread -Bdynamic" ) 
 
 
 IF( USE_OSG )
@@ -30,7 +31,9 @@ SET( SOURCES
 
 
 INCLUDE_DIRECTORIES( ${Indra_SOURCE_DIR}/modules
+		     "$ENV{BOOST_INC_DIR}"
 		     ${GMTL_INC_DIR}
+		     ${CPPDOM_INC_DIR}
 		     ${OMNIORB_INC_DIR}		     
  		     ${VRJUGGLER_INCS} )
 
@@ -51,7 +54,10 @@ IF( USE_OSG )
 ENDIF( USE_OSG )
 
 TARGET_LINK_LIBRARIES( ${APP_NAME} 
+		       ${CPPDOM_LIB}
 		       ${OMNIORB_LIB}
+		       ${OMNIDYNAMIC_LIB}
+		       ${OMNITHREAD_LIB}
 		       ${VRJUGGLER_LIBS} )
 
 

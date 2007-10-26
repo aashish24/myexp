@@ -296,6 +296,7 @@ namespace Veda
 
         void handleAnalogInput1( double value )
         {
+	   std::cout << "handleAnalogInput1()" << std::endl;
           if( value != -2.0)
           {    
             mSceneNavigator.translateInZ( value );
@@ -803,7 +804,7 @@ namespace Veda
                 {
                   if( data == -1.0 )
                   {
-                    mAnalogInputStatusMap[ analogs ] = false;
+                    mAnalogInputStatusMap[ analogs ] = true;
                   }
                   else
                   {
@@ -1024,7 +1025,7 @@ namespace Veda
         virtual void updateInputs()
         {
           for( unsigned int i = 0; i < Core::SharedData::mCommand->mAnalogInputs.size(); ++i )
-          { 
+          {
             handleAnalogInputs( i, Core::SharedData::mCommand->mAnalogInputs[ i ] );        
           }
 

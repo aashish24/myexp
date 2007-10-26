@@ -17,7 +17,9 @@ INCLUDE( ${CMAKE_MODULES_DIR}/FindOmniORB.cmake )
 INCLUDE( ${CMAKE_MODULES_DIR}/FindCppDOM.cmake )
 INCLUDE( ${CMAKE_MODULES_DIR}/FindGMTL.cmake )
 
-SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -DPIC -fPIC" ) 
+#------@TODO: Read more about how to set flags in CMAKE and whether we really need these flags for Juggler app 
+#SET( CMAKE_CXX_FLAGS "-DPIC -fPIC -DTWEEK_HAVE_CXX=1 -D__OSVERSION__=2 -D__linux__ -D__processor_unknown__ -fexceptions -pthread -O2 -fno-strict-aliasing -Wall -DHAVE_CONFIG_H" ) 
+#SET( CMAKE_CXX_LINK_FLAGS "-pthread -Bdynamic" ) 
 
 
 IF( USE_OSG )
