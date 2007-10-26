@@ -25,13 +25,13 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.release/bin/cmake
+CMAKE_COMMAND = /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.debug/bin/cmake
 
 # The command to remove a file.
-RM = /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.release/bin/cmake -E remove -f
+RM = /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.debug/bin/cmake -E remove -f
 
 # The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.release/bin/ccmake
+CMAKE_EDIT_COMMAND = /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.debug/bin/ccmake
 
 # The top-level source directory on which CMake was run.
 CMAKE_SOURCE_DIR = /home/aashish/src/osve/current/osve/trunk/Indra
@@ -48,7 +48,7 @@ include CMakeFiles/progress.make
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	cd /home/aashish/src/osve/current/osve/trunk/Indra/modules/Veda && /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.release/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	cd /home/aashish/src/osve/current/osve/trunk/Indra/modules/Veda && /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.debug/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 
 # Special rule for the target edit_cache
 edit_cache/fast: edit_cache
@@ -56,17 +56,17 @@ edit_cache/fast: edit_cache
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	cd /home/aashish/src/osve/current/osve/trunk/Indra/modules/Veda && /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.release/bin/cmake -P cmake_install.cmake
+	cd /home/aashish/src/osve/current/osve/trunk/Indra/modules/Veda && /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.debug/bin/cmake -P cmake_install.cmake
 
 # Special rule for the target install
 install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	cd /home/aashish/src/osve/current/osve/trunk/Indra/modules/Veda && /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.release/bin/cmake -P cmake_install.cmake
+	cd /home/aashish/src/osve/current/osve/trunk/Indra/modules/Veda && /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.debug/bin/cmake -P cmake_install.cmake
 
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	cd /home/aashish/src/osve/current/osve/trunk/Indra/modules/Veda && /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.release/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+	cd /home/aashish/src/osve/current/osve/trunk/Indra/modules/Veda && /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.debug/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 
 # Special rule for the target install/local
 install/local/fast: install/local
@@ -81,7 +81,7 @@ list_install_components/fast: list_install_components
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	cd /home/aashish/src/osve/current/osve/trunk/Indra/modules/Veda && /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.release/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	cd /home/aashish/src/osve/current/osve/trunk/Indra/modules/Veda && /home/aashish/src/cmake/cmake-2.4.6/install/linux.x86_64.gcc34.debug/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
