@@ -1,7 +1,6 @@
 
 SET( VJ_INC_DIR  $ENV{VJ_BASE_DIR}/include )
 SET( VJ_BASE_DIR $ENV{VJ_BASE_DIR} )
-SET( VRJUGGLER_INCS "/usr/include" )
 
 
 FIND_PATH( VRJUGGLER_VRJ_INC vrj/vrjConfig.h

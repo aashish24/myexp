@@ -36,7 +36,7 @@ SET( SOURCES
 
 
 INCLUDE_DIRECTORIES( ../
-		     ${VRJUGGLER_INCS}
+		     ${VRJUGGLER_INC}
 		     ${GMTL_INC_DIR} )
 
 
