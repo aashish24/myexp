@@ -1,9 +1,9 @@
 
-SET( CPPDOM_INC_DIR $ENV{CPPDOM_INC_DIR} )
+SET( CPPDOM_INC $ENV{CPPDOM_INC_DIR} )
 SET( CPPDOM_LIB_DIR $ENV{CPPDOM_LIB_DIR} )
 
 FIND_PATH( CPPDOM_INC_DIR cppdom/cppdom.h 
-           ${CPPDOM_INC_DIR}/*
+           ${CPPDOM_INC}/*
            /usr/local/include/* )
                 
 FIND_LIBRARY( CPPDOM_LIB 
