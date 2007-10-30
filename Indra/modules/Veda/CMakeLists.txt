@@ -40,8 +40,7 @@ SET( SOURCES
      ./Core/UserData.cpp                         
      ./Design/Navigation.cpp                  
      ./Design/OsgInteractor.cpp               
-     ./Design/OssimInteractor.cpp                  
-     ./Tweek/TweekSubject.cpp )  	
+     ./Design/OssimInteractor.cpp )
 
 
 INCLUDE_DIRECTORIES( ../
@@ -54,10 +53,14 @@ INCLUDE_DIRECTORIES( ../
 SET( $ENV{JACORB_PATH} ${VJ_BASE_DIR}/bin )
 
 
-ADD_CUSTOM_TARGET( CXX_IDL omniidl -bcxx -Wbh=.h,s=.cpp -I${VRJUGGLER_TWEEK_INC} -C./Tweek  ./Tweek/TweekSubject.idl )
+ADD_CUSTOM_TARGET( CXX_IDL )
 
 
-ADD_LIBRARY( ${LIB_NAME} SHARED ${SOURCES} ) 
+ADD_CUSTOM_COMMAND( TARGET CXX_IDL 
+                    COMMAND omniidl -bcxx -Wbh=.h,s=.cpp -I${VRJUGGLER_TWEEK_INC} -C./Tweek  ./Tweek/TweekSubject.idl )
+                   
+
+ADD_LIBRARY( ${LIB_NAME} SHARED ${SOURCES} ${Veda_SOURCE_DIR}/Tweek/TweekSubject.cpp ) 
 
 
 ADD_DEPENDENCIES( ${LIB_NAME} CXX_IDL )
