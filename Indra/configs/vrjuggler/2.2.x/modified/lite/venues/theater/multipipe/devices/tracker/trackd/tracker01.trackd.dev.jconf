@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?org-vrjuggler-jccl-settings configuration.version="3.0"?>
+<configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="/store/toolkit/VRJFiles/final/flex/flex.base.jconf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
+   <elements>
+	<trackd_sensor name="Tracker01Trackd01" version="1">
+         <shared_memory_key>4126</shared_memory_key>
+         <position_filters>
+            <position_transform_filter name="CHANGEME" version="1">
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>0.0</pre_translate>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <custom_scale>1.0</custom_scale>
+               <device_units>Feet</device_units>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>0.0</post_rotation>
+            </position_transform_filter>
+         </position_filters>
+         <device_host/> 
+      </trackd_sensor>
+      <trackd_controller name="Tracker01Trackd02" version="1">
+         <shared_memory_key>4127</shared_memory_key>
+         <min>-1.0</min>
+         <max>1.0</max>
+         <device_host/>
+      </trackd_controller>
+      </analog_proxy>
+   </elements>
+</configuration>
+
