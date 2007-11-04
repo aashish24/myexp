@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?org-vrjuggler-jccl-settings configuration.version="3.0"?>
 <configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
-   <include>components/base/base.jconf</include>
-   <include>components/nodes/aristotle.jconf</include>
-   <include>components/devices/gamepad01.win.jconf</include>
+   <include>components/base/sim.base.jconf</include>
+   <include>components/base/sim.dev.jconf</include>
+   <include>components/base/user01.jconf</include>
+   <include>components/nodes/local.jconf</include>
+   <include>components/devices/km/km01.alias.jconf</include>
+   <include>components/devices/km/km01.base.jconf</include>
    <elements />
 </configuration>
 
