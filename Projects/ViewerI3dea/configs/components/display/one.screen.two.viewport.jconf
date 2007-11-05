@@ -45,17 +45,17 @@
                <size>1.0</size>
                <view>Left Eye</view>
                <lower_left_corner>-1.0033</lower_left_corner>
-                <lower_left_corner>-0.8509</lower_left_corner>
-                 <lower_left_corner>-3.81</lower_left_corner>
-                 <lower_right_corner>1.0033</lower_right_corner>
-                 <lower_right_corner>-0.8509</lower_right_corner>
-                 <lower_right_corner>-3.81</lower_right_corner>
-                 <upper_right_corner>1.0033</upper_right_corner>
-                 <upper_right_corner>0.8509</upper_right_corner>
-                 <upper_right_corner>-3.81</upper_right_corner>
-                 <upper_left_corner>-1.0033</upper_left_corner>
-                 <upper_left_corner>0.8509</upper_left_corner>
-                 <upper_left_corner>-3.81</upper_left_corner>
+               <lower_left_corner>-0.8509</lower_left_corner>
+               <lower_left_corner>-3.81</lower_left_corner>
+               <lower_right_corner>1.0033</lower_right_corner>
+               <lower_right_corner>-0.8509</lower_right_corner>
+               <lower_right_corner>-3.81</lower_right_corner>
+               <upper_right_corner>1.0033</upper_right_corner>
+               <upper_right_corner>0.8509</upper_right_corner>
+               <upper_right_corner>-3.81</upper_right_corner>
+               <upper_left_corner>-1.0033</upper_left_corner>
+               <upper_left_corner>0.8509</upper_left_corner>
+               <upper_left_corner>-3.81</upper_left_corner>
                <user>User01</user>
                <active>true</active>
                <tracked>false</tracked>
@@ -69,18 +69,18 @@
                <size>1.0</size>
                <size>1.0</size>
                <view>Right Eye</view>
-             <lower_left_corner>-1.0033</lower_left_corner>
-                <lower_left_corner>-0.8509</lower_left_corner>
-                 <lower_left_corner>-3.81</lower_left_corner>
-                 <lower_right_corner>1.0033</lower_right_corner>
-                 <lower_right_corner>-0.8509</lower_right_corner>
-                 <lower_right_corner>-3.81</lower_right_corner>
-                 <upper_right_corner>1.0033</upper_right_corner>
-                 <upper_right_corner>0.8509</upper_right_corner>
-                 <upper_right_corner>-3.81</upper_right_corner>
-                 <upper_left_corner>-1.0033</upper_left_corner>
-                 <upper_left_corner>0.8509</upper_left_corner>
-                 <upper_left_corner>-3.81</upper_left_corner>
+               <lower_left_corner>-1.0033</lower_left_corner>
+               <lower_left_corner>-0.8509</lower_left_corner>
+               <lower_left_corner>-3.81</lower_left_corner>
+               <lower_right_corner>1.0033</lower_right_corner>
+               <lower_right_corner>-0.8509</lower_right_corner>
+               <lower_right_corner>-3.81</lower_right_corner>
+               <upper_right_corner>1.0033</upper_right_corner>
+               <upper_right_corner>0.8509</upper_right_corner>
+               <upper_right_corner>-3.81</upper_right_corner>
+               <upper_left_corner>-1.0033</upper_left_corner>
+               <upper_left_corner>0.8509</upper_left_corner>
+               <upper_left_corner>-3.81</upper_left_corner>
                <user>User01</user>
                <active>true</active>
                <tracked>false</tracked>

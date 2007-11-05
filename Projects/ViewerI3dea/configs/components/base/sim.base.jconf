@@ -9,7 +9,7 @@
       <position_proxy name="SimWandProxy" version="1">
          <device />
          <unit>0</unit>
-      </position_proxy>      
+      </position_proxy>
    </elements>
 </configuration>
 

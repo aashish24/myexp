@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?org-vrjuggler-jccl-settings configuration.version="3.0"?>
 <configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="/store/toolkit/VRJFiles/config/tis/dan.base.gamepad.jconf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
-   <elements>     
+   <elements>
       <simulated_positional_device name="SimHeadPos" version="3">
          <keyboard_mouse_proxy>Keyboard Proxy</keyboard_mouse_proxy>
          <key_pair>
@@ -104,8 +104,8 @@
                <post_rotation>0.0</post_rotation>
             </position_transform_filter>
          </position_filters>
-	 <device_host />
-      </simulated_positional_device>	
+         <device_host />
+      </simulated_positional_device>
    </elements>
 </configuration>
 
