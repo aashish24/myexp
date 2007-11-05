@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="."
+				AdditionalIncludeDirectories=".;$(VJ_BASE_DIR)/include;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;VRJI3DEA_EXPORTS;VRJ_I3DEA_COMPILE;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,6 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="$(VJ_BASE_DIR)/lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -183,7 +184,7 @@
 				Name="I3dea"
 				>
 				<Filter
-					Name="VRJ"
+					Name="Vrj"
 					>
 					<File
 						RelativePath=".\I3dea\Vrj\AppBase.cpp"
@@ -198,11 +199,11 @@
 					Name="Functors"
 					>
 					<File
-						RelativePath=".\Functors\GlobalDisplayFunctor.h"
+						RelativePath=".\I3dea\Functors\GlobalDisplayFunctor.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Functors\IFunctor.h"
+						RelativePath=".\I3dea\Functors\IFunctor.h"
 						>
 					</File>
 				</Filter>

@@ -11,7 +11,7 @@ namespace I3dea
 		{
 		}
 
-		~AppBase::AppBase()
+		AppBase::~AppBase()
 		{
 		}
 

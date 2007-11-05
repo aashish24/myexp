@@ -8,7 +8,7 @@
 template< typename T >
 struct VRJ_I3DEA_EXPORT GlobalDisplayFunctor : public IFunctor 
 {	
-	typedef (*DisplayFunc)();
+	typedef void (*DisplayFunc)( void );
 
 	GlobalDisplayFunctor( DisplayFunc* displayFunc ) : 
 		mDisplayFunc( displayFunc )

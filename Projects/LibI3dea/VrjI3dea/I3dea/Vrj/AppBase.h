@@ -4,18 +4,33 @@
 
 #include "Export.h"
 
+#include "vrj/vrjConfig.h"
+
+#include <iostream>
+#include <iomanip>
+
+#if defined(__APPLE__)
+#  include <OpenGL/gl.h>
+#else
+#  include <GL/gl.h>
+#endif
+
+#include "vrj/Draw/OGL/GlApp.h"
+
+#include "I3dea/Functors/GlobalDisplayFunctor.h"
+
 namespace I3dea
 {
 	namespace Vrj
 	{
-		class VRJ_I3DEA_EXPORT AppBase : public vrj::OglApp
+		class VRJ_I3DEA_EXPORT AppBase : public vrj::GlApp
 		{
 			public:
 
 								AppBase(); 
 				virtual		   ~AppBase();
 
-				virtual void	displayFunc( GlobalDisplayFunctor< T >* displayFunctor );
+				virtual void	displayFunc( IFunctor* displayFunctor );
 				
 				//virtual void	keyboardFunc();
 				//virtual void	gamepadFunc();				
