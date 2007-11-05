@@ -2,13 +2,12 @@
 <?org-vrjuggler-jccl-settings configuration.version="3.0"?>
 <configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
    <elements>
-      <cluster_node name="Node(local)" version="1">
-         <display_system>
-            <display_system name="Display System" version="1">
-               <number_of_pipes>0</number_of_pipes>
-               <x11_pipes>:0.0</x11_pipes>
-            </display_system>
-         </display_system>
+       <display_system>
+        <display_system name="Display System" version="1">
+           <number_of_pipes>0</number_of_pipes>
+           <x11_pipes>:0.0</x11_pipes>
+        </display_system>
+        </display_system>
          <display_windows>
             <display_window name="Window: Local" version="4">
                <origin>0</origin>
@@ -59,11 +58,11 @@
                      <user>User01</user>
                      <active>true</active>
                      <tracked>false</tracked>
-                     <tracker_proxy /><!--Head Proxy</tracker_proxy>-->
+                     <tracker_proxy />
                   </surface_viewport>
                </surface_viewports>
                <surface_viewports>
-                  <surface_viewport name="local_left_eye version="2">
+                  <surface_viewport name="local_left_eye" version="2">
                      <origin>0.0</origin>
                      <origin>0.0</origin>
                      <size>0.5</size>
@@ -84,7 +83,7 @@
                      <user>User01</user>
                      <active>true</active>
                      <tracked>false</tracked>
-                     <tracker_proxy /><!--Head Proxy</tracker_proxy>-->
+                     <tracker_proxy />
                   </surface_viewport>
                </surface_viewports>
                <keyboard_mouse_device_name />
@@ -93,9 +92,6 @@
                <sleep_time>75</sleep_time>
             </display_window>
          </display_windows>
-         <listen_port>7000</listen_port>
-         <host_name ><!--aristotle.dt.prism.asu.edu</host_name>-->
-      </cluster_node>
-   </elements>
+    </elements>
 </configuration>
 
