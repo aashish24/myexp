@@ -53,38 +53,40 @@ namespace i3dea
 		{
 			public:
 			
-				static AppBase& instance();
+				static AppBase&   instance();
 				
-				virtual void	displayFunc( IFunctor* displayFunctor );			
-				
-				static  void	run();
+				static  void	    run();
 
-				static	void	exit();
+				static	void	    exit();
+
+        virtual void	    displayFunc( IFunctor* displayFunctor );			
 
 			private:
-								AppBase(); 
+								          AppBase(); 
 
-				virtual		   ~AppBase();
+				virtual		       ~AppBase();
 
 			protected:
 
-				IFunctor*		_displayFunctor;
+				IFunctor*		      _displayFunctor;
 
-				virtual void	contextInit();
+				virtual void	    contextInit();
 
-				virtual void	init();
+				virtual void	    init();
 
-				virtual void	preFrame();
+				virtual void	    preFrame();
 				
-				virtual void	intraFrame();
+				virtual void	    intraFrame();
 
-				virtual void	postFrame();
+				virtual void	    postFrame();
 
-				virtual void	draw();			
+        virtual void      bufferPreDraw();
+
+				virtual void	    draw();			
 
 			private:
 				
-				static AppBase*	_appBaseInstance;
+				static AppBase*	  _appBaseInstance;
 		};
 	}
 }

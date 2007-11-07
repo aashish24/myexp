@@ -19,7 +19,7 @@ void Test::display2( void )
 		return ;
 	}
 
-void display( bool  val )
+void display()
 {
 	std::cout << "Display:" << std::endl;
 }
@@ -28,7 +28,8 @@ int main()
 {
 	Test testApp;
 			
-	i3dea::vrj::setDisplayFunc( boost::bind( &Test::display2, &testApp ) );
+	//i3dea::vrj::setDisplayFunc( boost::bind( &Test::display2, &testApp ) );
+  i3dea::vrj::setDisplayFunc( &display );
 
 	i3dea::vrj::AppBase::instance().run();
 

@@ -15,13 +15,11 @@ class  GlobalDisplayFunctor : public IFunctor
 {
 public:
 	GlobalDisplayFunctor( T func ) : mDisplayFunc( func ) 
-	{
-		//func();
+	{		
 	}
 
 	virtual void call()
 	{
-		//(*mDisplayFunc)( true );
 		mDisplayFunc();
 	}
 

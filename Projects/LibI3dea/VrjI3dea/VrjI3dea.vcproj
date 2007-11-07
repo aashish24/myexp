@@ -61,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="opengl32.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(VJ_BASE_DIR)/lib"
 				GenerateDebugInformation="true"
