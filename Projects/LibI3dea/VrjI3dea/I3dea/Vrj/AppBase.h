@@ -17,31 +17,74 @@
 
 #include "vrj/Draw/OGL/GlApp.h"
 
-#include "I3dea/Functors/GlobalDisplayFunctor.h"
+#include "i3dea/Functors/GlobalDisplayFunctor.h"
 
-namespace I3dea
+namespace i3dea
 {
-	namespace Vrj
-	{
-		class VRJ_I3DEA_EXPORT AppBase : public vrj::GlApp
+	namespace vrj
+	{		
+		///////////////////////////////////////////////////////////////////////
+		// 
+		// Non member functions. 
+		// 
+		///////////////////////////////////////////////////////////////////////
+
+
+		///////////////////////////////////////////////////////////////////////
+		// 
+		// GLUT style display function. 
+		// 
+		///////////////////////////////////////////////////////////////////////
+
+		template< typename T >
+		void setDisplayFunc( T func ) 
+		{
+			AppBase::instance().displayFunc( new GlobalDisplayFunctor< T >( func ) );
+		}
+
+
+		///////////////////////////////////////////////////////////////////////
+		// 
+		// 
+		// 
+		///////////////////////////////////////////////////////////////////////
+
+		class VRJ_I3DEA_EXPORT AppBase : public ::vrj::GlApp
 		{
 			public:
-
-								AppBase(); 
-				virtual		   ~AppBase();
-
-				virtual void	displayFunc( IFunctor* displayFunctor );
+			
+				static AppBase& instance();
 				
-				//virtual void	keyboardFunc();
-				//virtual void	gamepadFunc();				
+				virtual void	displayFunc( IFunctor* displayFunctor );			
+				
+				static  void	run();
+
+				static	void	exit();
+
+			private:
+								AppBase(); 
+
+				virtual		   ~AppBase();
 
 			protected:
 
+				IFunctor*		_displayFunctor;
+
 				virtual void	contextInit();
+
 				virtual void	init();
+
 				virtual void	preFrame();
+				
+				virtual void	intraFrame();
+
 				virtual void	postFrame();
-				virtual void	draw();
+
+				virtual void	draw();			
+
+			private:
+				
+				static AppBase*	_appBaseInstance;
 		};
 	}
 }
