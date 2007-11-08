@@ -127,7 +127,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="&quot;$(VJCINEMA)/include&quot;;&quot;$(VJ_BASE_DIR)/include/tweek/idl&quot;;&quot;$(VJ_BASE_DIR)/include&quot;;&quot;$(VJ_DEPS_DIR)/include&quot;;&quot;$(OSG_INC_DIR)&quot;"
+				AdditionalIncludeDirectories="&quot;$(VJ_BASE_DIR)\include\tweek\idl&quot;;&quot;$(VJ_BASE_DIR)\include&quot;;&quot;$(INDRA_ROOT_DIR)/Modules&quot;;&quot;$(OSG_INC_DIR)&quot;"
 				PreprocessorDefinitions="WIN32;_OPT;NDEBUG;_CONSOLE;__WIN32__=1;__x86__=1;__NT__=1;__OSVERSION__=5;USE_core_stub_in_nt_dll;USE_core_stub_in_nt_dll_NOT_DEFINED_Subject;$(NOINHERIT)"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -149,11 +149,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="VJCinema.lib osg.lib osgDB.lib osgUtil.lib osgFX.lib osgText.lib Producer.lib vrj.lib vpr.lib gadget.lib jccl.lib vrj_ogl.lib tweek.lib openGL32.lib omnithread32_rt.lib omniDynamic407_rt.lib omniORB407_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
-				OutputFile="$(LOCAL_SRC_DIR)/bin/viewer.exe"
+				AdditionalDependencies="osg.lib osgDB.lib osgUtil.lib osgFX.lib osgText.lib openGL32.lib omnithread33_rt.lib omniDynamic4_rt.lib omniORB4_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib Veda.lib $(NOINHERIT)"
+				OutputFile="release\CellSignalViewer.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="&quot;$(LOCAL_SRC_DIR))/lib&quot;;&quot;$(VJ_BASE_DIR)/lib&quot;;&quot;$(VJ_DEPS_DIR)/lib&quot;;&quot;$(OSG_LIB_DIR)&quot;"
+				AdditionalLibraryDirectories="&quot;$(VJ_BASE_DIR)\lib&quot;;&quot;$(VJ_DEPS_DIR)\lib&quot;;&quot;$(OSG_LIB_DIR)&quot;;$(INDRA_ROOT_DIR)\bin"
 				GenerateDebugInformation="false"
 				SubSystem="1"
 				OptimizeReferences="0"
