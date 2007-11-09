@@ -216,7 +216,7 @@ main_menu_select(int value)
 int
 init()
 {
-  //int left_light_m, right_light_m, torus_m, teapot_m, ico_m;
+  int left_light_m, right_light_m, torus_m, teapot_m, ico_m;
 
   //glutInitWindowSize(400, 400);
   //glutInit(&argc, argv);
@@ -225,7 +225,7 @@ init()
   //glutDisplayFunc(display);
 
 #define LIGHT_MENU_ENTRIES() \
-    /*glutAddMenuEntry("Disable", LIGHT_OFF); \
+    glutAddMenuEntry("Disable", LIGHT_OFF); \
     glutAddMenuEntry("Red", LIGHT_RED); \
     glutAddMenuEntry("White", LIGHT_WHITE); \
     glutAddMenuEntry("Green", LIGHT_GREEN);
@@ -233,20 +233,20 @@ init()
     glutAddMenuEntry("Brass", BRASS); \
     glutAddMenuEntry("Red plastic", RED_PLASTIC); \
     glutAddMenuEntry("Emerald", EMERALD); \
-    glutAddMenuEntry("Slate", SLATE);*/
+    glutAddMenuEntry("Slate", SLATE);
 
-  //left_light_m = glutCreateMenu(left_light_select);
-  //LIGHT_MENU_ENTRIES();
-  //right_light_m = glutCreateMenu(right_light_select);
-  //LIGHT_MENU_ENTRIES();
-  //torus_m = glutCreateMenu(torus_select);
-  //MATERIAL_MENU_ENTRIES();
-  //teapot_m = glutCreateMenu(teapot_select);
-  //MATERIAL_MENU_ENTRIES();
-  //ico_m = glutCreateMenu(ico_select);
-  //MATERIAL_MENU_ENTRIES();
+  left_light_m = glutCreateMenu(left_light_select);
+  LIGHT_MENU_ENTRIES();
+  right_light_m = glutCreateMenu(right_light_select);
+  LIGHT_MENU_ENTRIES();
+  torus_m = glutCreateMenu(torus_select);
+  MATERIAL_MENU_ENTRIES();
+  teapot_m = glutCreateMenu(teapot_select);
+  MATERIAL_MENU_ENTRIES();
+  ico_m = glutCreateMenu(ico_select);
+  MATERIAL_MENU_ENTRIES();
 
-  /*glutCreateMenu(main_menu_select);
+  glutCreateMenu(main_menu_select);
   glutAddMenuEntry("Smooth shading", GL_SMOOTH);
   glutAddMenuEntry("Flat shading", GL_FLAT);
   glutAddSubMenu("Left light", left_light_m);
@@ -255,7 +255,7 @@ init()
   glutAddSubMenu("Teapot", teapot_m);
   glutAddSubMenu("Icosahedron", ico_m);
   glutAddMenuEntry("Quit", 666);
-  glutAttachMenu(GLUT_RIGHT_BUTTON);*/
+  glutAttachMenu(GLUT_RIGHT_BUTTON);
 
   glLightfv(GL_LIGHT0, GL_POSITION, left_light_position);
   glLightfv(GL_LIGHT0, GL_SPECULAR, white_light);
@@ -270,14 +270,14 @@ init()
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_NORMALIZE);
   glLineWidth(1.0);
-  //glMatrixMode(GL_PROJECTION);
-  //gluPerspective( /* degrees field of view */ 50.0,
-  //  /* aspect ratio */ 1.0, /* Z near */ 1.0, /* Z far */ 10.0);
-  //glMatrixMode(GL_MODELVIEW);
-  //gluLookAt(0.0, 0.0, 5.0,  /* eye is at (0,0,5) */
-  //  0.0, 0.0, 0.0,      /* center is at (0,0,0) */
-  //  0.0, 1.0, 0.);      /* up is in positive Y direction */
-  //glTranslatef(0.0, 0.0, -1.0);
+  glMatrixMode(GL_PROJECTION);
+  gluPerspective( /* degrees field of view */ 50.0,
+    /* aspect ratio */ 1.0, /* Z near */ 1.0, /* Z far */ 10.0);
+  glMatrixMode(GL_MODELVIEW);
+  gluLookAt(0.0, 0.0, 5.0,  /* eye is at (0,0,5) */
+    0.0, 0.0, 0.0,      /* center is at (0,0,0) */
+    0.0, 1.0, 0.);      /* up is in positive Y direction */
+  glTranslatef(0.0, 0.0, -1.0);
 
   //glutMainLoop();
   return 0;             /* ANSI C requires main to return int. */
