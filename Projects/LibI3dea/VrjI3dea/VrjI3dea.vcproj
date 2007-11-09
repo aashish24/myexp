@@ -212,10 +212,6 @@
 						>
 					</File>
 					<File
-						RelativePath=".\functors\ExitFunctor.h"
-						>
-					</File>
-					<File
 						RelativePath=".\i3dea\functors\IFunctor.h"
 						>
 					</File>
