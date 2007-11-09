@@ -20,6 +20,7 @@ namespace i3dea
 
     AppBase::AppBase() : 
       _displayFunctor( 0x00 ), 
+      _contextInitFunctor( 0x00 ),
       _exitFunctor( 0x00 ) 
 		{
 		}
@@ -65,6 +66,18 @@ namespace i3dea
 		void AppBase::displayFunc( IFunctor* displayFunctor )
 		{
 			_displayFunctor = displayFunctor;
+		}
+
+
+    ///////////////////////////////////////////////////////////////////////
+		//
+		//
+		//
+		///////////////////////////////////////////////////////////////////////
+
+		void AppBase::contextInitFunc( IFunctor* contextInitFunctor )
+		{
+			_contextInitFunctor = contextInitFunctor;
 		}
 
 
@@ -118,15 +131,16 @@ namespace i3dea
       }
     }
 
-		///////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////
 		//
 		//
 		//
 		///////////////////////////////////////////////////////////////////////
 
-		void AppBase::contextInit()
+		void AppBase::init()
 		{
-			::vrj::GlApp::contextInit();
+			::vrj::GlApp::init();
 		}
 
 
@@ -136,9 +150,14 @@ namespace i3dea
 		//
 		///////////////////////////////////////////////////////////////////////
 
-		void AppBase::init()
+		void AppBase::contextInit()
 		{
-			::vrj::GlApp::init();
+			::vrj::GlApp::contextInit();
+
+      if( _contextInitFunctor )
+      {
+        _contextInitFunctor->call();
+      }
 		}
 
 

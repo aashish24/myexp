@@ -41,6 +41,8 @@ namespace i3dea
 
         void	            displayFunc( IFunctor* displayFunctor );			
 
+        void              contextInitFunc( IFunctor* contextInitFunctor ); 
+
         void              exitFunc( IFunctor* exitFunctor );
 
 			private:
@@ -51,12 +53,12 @@ namespace i3dea
 			protected:
 
 				IFunctor*		      _displayFunctor;
-
+        IFunctor*         _contextInitFunctor;
         IFunctor*         _exitFunctor;
 
-				void	            contextInit();
+        void              init();
 
-				void	            init();
+				void	            contextInit();
 
 				void	            preFrame();
 				

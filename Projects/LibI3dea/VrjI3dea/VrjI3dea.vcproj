@@ -208,7 +208,15 @@
 					Name="functors"
 					>
 					<File
+						RelativePath=".\i3dea\functors\ContextInitFunctor.h"
+						>
+					</File>
+					<File
 						RelativePath=".\i3dea\functors\DisplayFunctor.h"
+						>
+					</File>
+					<File
+						RelativePath=".\i3dea\functors\ExitFunctor.h"
 						>
 					</File>
 					<File

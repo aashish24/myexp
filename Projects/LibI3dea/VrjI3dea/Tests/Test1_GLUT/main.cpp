@@ -1,10 +1,18 @@
 
-#include "boost/bind.hpp"
+//#include "boost/bind.hpp"
+
+// First file that should be included. 
+
+
+
 
 #include "i3dea/vrj/glut/GlutWrapper.h"
 
+#include "GlutApp.h"
+
 #include <functional>
 
+#if 0
 class Test
 {
 public:
@@ -36,3 +44,20 @@ int main()
   
   i3dea::vrj::glut::glutMainLoop();	
 }
+#endif // #if 0
+
+int main()
+{
+  torus_select(RED_PLASTIC);
+  teapot_select(BRASS);
+  ico_select(EMERALD);
+
+  i3dea::vrj::glut::glutDisplayFunc( &display );
+
+  i3dea::vrj::glut::glutContextInitFunc( &init );
+
+  i3dea::vrj::glut::glutMainLoop();
+}
+
+
+
