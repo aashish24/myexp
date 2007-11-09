@@ -17,32 +17,13 @@
 
 #include "vrj/Draw/OGL/GlApp.h"
 
-#include "i3dea/Functors/GlobalDisplayFunctor.h"
+#include "i3dea/Functors/DisplayFunctor.h"
 
 namespace i3dea
 {
 	namespace vrj
 	{		
-		///////////////////////////////////////////////////////////////////////
-		// 
-		// Non member functions. 
-		// 
-		///////////////////////////////////////////////////////////////////////
-
-
-		///////////////////////////////////////////////////////////////////////
-		// 
-		// GLUT style display function. 
-		// 
-		///////////////////////////////////////////////////////////////////////
-
-		template< typename T >
-		void setDisplayFunc( T func ) 
-		{
-			AppBase::instance().displayFunc( new GlobalDisplayFunctor< T >( func ) );
-		}
-
-
+		
 		///////////////////////////////////////////////////////////////////////
 		// 
 		// 
@@ -54,12 +35,13 @@ namespace i3dea
 			public:
 			
 				static AppBase&   instance();
-				
-				static  void	    run();
+				static void	      exit();
 
-				static	void	    exit();
+				void	            run();				
 
-        virtual void	    displayFunc( IFunctor* displayFunctor );			
+        void	            displayFunc( IFunctor* displayFunctor );			
+
+        void              exitFunc( IFunctor* exitFunctor );
 
 			private:
 								          AppBase(); 
@@ -70,23 +52,27 @@ namespace i3dea
 
 				IFunctor*		      _displayFunctor;
 
-				virtual void	    contextInit();
+        IFunctor*         _exitFunctor;
 
-				virtual void	    init();
+				void	            contextInit();
 
-				virtual void	    preFrame();
+				void	            init();
+
+				void	            preFrame();
 				
-				virtual void	    intraFrame();
+				void	            intraFrame();
 
-				virtual void	    postFrame();
+				void	            postFrame();
 
-        virtual void      bufferPreDraw();
+        void              bufferPreDraw();
 
-				virtual void	    draw();			
+				void	            draw();		
+
+        void              clean();
 
 			private:
 				
-				static AppBase*	  _appBaseInstance;
+				static AppBase*	  _appInstance;
 		};
 	}
 }

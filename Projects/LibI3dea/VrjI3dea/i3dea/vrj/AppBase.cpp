@@ -5,7 +5,7 @@
 #include "vrj/Kernel/Kernel.h"
 
 
-i3dea::vrj::AppBase* i3dea::vrj::AppBase::_appBaseInstance = 0x00; 	
+i3dea::vrj::AppBase* i3dea::vrj::AppBase::_appInstance = 0x00; 	
 
 
 namespace i3dea
@@ -18,7 +18,9 @@ namespace i3dea
 		//
 		///////////////////////////////////////////////////////////////////////
 
-		AppBase::AppBase()
+    AppBase::AppBase() : 
+      _displayFunctor( 0x00 ), 
+      _exitFunctor( 0x00 ) 
 		{
 		}
 
@@ -42,14 +44,14 @@ namespace i3dea
 
 		AppBase&  AppBase::instance()
 		{			
-			if( _appBaseInstance )
+			if( _appInstance )
 			{
-				return ( *_appBaseInstance );
+				return ( *_appInstance );
 			}
 			else
 			{
-				_appBaseInstance = new AppBase();
-				return ( *_appBaseInstance );
+				_appInstance = new AppBase();
+				return ( *_appInstance );
 			}
 		}
 
@@ -74,7 +76,7 @@ namespace i3dea
 
 		void AppBase::run()
 		{
-			if( _appBaseInstance ) 
+			if( _appInstance ) 
 			{			
 				::vrj::Kernel* kernel = ::vrj::Kernel::instance();
 				
@@ -83,7 +85,7 @@ namespace i3dea
 				}
 				
 				kernel->start();
-				kernel->setApplication( _appBaseInstance );
+				kernel->setApplication( _appInstance );
 				
 				// Some how we have to do this: 
 				// Find out where this dll is
@@ -108,11 +110,13 @@ namespace i3dea
 		
 		void AppBase::exit()
 		{
-			if( _appBaseInstance )
-			{
-				delete AppBase::_appBaseInstance;
-			}
-		}
+      if( _appInstance )
+      {
+        _appInstance->clean();
+        delete _appInstance; 
+        _appInstance = 0x00;
+      }
+    }
 
 		///////////////////////////////////////////////////////////////////////
 		//
@@ -188,7 +192,19 @@ namespace i3dea
 
 		void AppBase::draw()
 		{
-			_displayFunctor->call();
+      if( _displayFunctor )
+      {
+			  _displayFunctor->call();
+      }
 		}		
+
+
+    void AppBase::clean()
+    {
+      if( _exitFunctor )
+      {
+        _exitFunctor->call();
+      }
+    }
 	}
 }

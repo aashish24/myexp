@@ -1,8 +1,7 @@
 
 #include "boost/bind.hpp"
 
-#include "i3dea/Vrj/AppBase.h"
-#include "i3dea/Functors/GlobalDisplayFunctor.h"
+#include "i3dea/vrj/glut/GlutWrapper.h"
 
 #include <functional>
 
@@ -15,7 +14,12 @@ public:
 void Test::display2( void )
 	{
 	
-		std::cout << "Display2:" << std::endl;
+    glBegin( GL_QUADS );
+        glVertex3f( 0.0, 0.0, 0.0 );
+          glVertex3f( 10.0, 0.0, 0.0 );
+          glVertex3f( 10.0, 10.0, 0.0 );
+          glVertex3f( 0.0, 10.0, 0.0 );
+      glEnd();
 		return ;
 	}
 
@@ -28,10 +32,7 @@ int main()
 {
 	Test testApp;
 			
-	//i3dea::vrj::setDisplayFunc( boost::bind( &Test::display2, &testApp ) );
-  i3dea::vrj::setDisplayFunc( &display );
-
-	i3dea::vrj::AppBase::instance().run();
-
-	i3dea::vrj::AppBase::exit();
+  i3dea::vrj::glut::glutDisplayFunc( boost::bind( &Test::display2, &testApp ) );
+  
+  i3dea::vrj::glut::glutMainLoop();	
 }

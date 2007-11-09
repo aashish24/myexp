@@ -182,10 +182,10 @@
 				>
 			</File>
 			<Filter
-				Name="I3dea"
+				Name="i3dea"
 				>
 				<Filter
-					Name="Vrj"
+					Name="vrj"
 					>
 					<File
 						RelativePath=".\I3dea\Vrj\AppBase.cpp"
@@ -195,16 +195,28 @@
 						RelativePath=".\I3dea\Vrj\AppBase.h"
 						>
 					</File>
+					<Filter
+						Name="glut"
+						>
+						<File
+							RelativePath=".\i3dea\vrj\glut\GlutWrapper.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
-					Name="Functors"
+					Name="functors"
 					>
 					<File
-						RelativePath=".\I3dea\Functors\GlobalDisplayFunctor.h"
+						RelativePath=".\i3dea\functors\DisplayFunctor.h"
 						>
 					</File>
 					<File
-						RelativePath=".\I3dea\Functors\IFunctor.h"
+						RelativePath=".\functors\ExitFunctor.h"
+						>
+					</File>
+					<File
+						RelativePath=".\i3dea\functors\IFunctor.h"
 						>
 					</File>
 				</Filter>
