@@ -183,7 +183,11 @@ namespace Veda
         // the scene graph. 
         mOsgDatabasePager = osgDB::Registry::instance()->getOrCreateDatabasePager();
 
+#if defined(  OSG_VERSION_MAJOR <= 2   && OSG_VERSION_MINOR <= 0 )
         mOsgDatabasePager->setUseFrameBlock( false );
+#else
+        mOsgDatabasePager->setDatabasePagerThreadPause( false );
+#endif
         mOsgDatabasePager->registerPagedLODs( mSceneRoot.get() );
         mOsgDatabasePager->setUnrefImageDataAfterApplyPolicy( true, false );    
       }
