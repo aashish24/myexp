@@ -220,6 +220,10 @@
 							RelativePath=".\IView.h"
 							>
 						</File>
+						<File
+							RelativePath=".\IViewer.h"
+							>
+						</File>
 					</Filter>
 				</Filter>
 				<Filter

@@ -1,7 +1,6 @@
 
-#ifndef __OGE_OGE_OSG_OGE_OSG_VIEWER_VIWER_H__
-#define __OGE_OGE_OSG_OGE_OSG_VIEWER_VIWER_H__
-
+#ifndef __OGE_OGE_OSG_OSG_VIEWER_VIWER_H__
+#define __OGE_OGE_OSG_OSG_VIEWER_VIWER_H__
 #include "IFindNode.h"
 
 namespace Oge
@@ -25,4 +24,4 @@ osg::Node* Oge::OgeOsg::OsgViewer::Viewer::findNode( const std::string& id )
   return 0x00;
 }
 
-#endif // __OGE_OGE_OSG_OGE_OSG_VIEWER_VIWER_H__
+#endif // __OGE_OGE_OSG_OSG_VIEWER_VIWER_H__
