@@ -2,6 +2,12 @@
 #include "AlphaOsgModel.h"
 
 #include "IObserver.h"
+
+#include "osg/Node"
+#include "osg/Group"
+#include "osg/MatrixTransform"
+
+#include "IOsgModel.h"
 #include "IOsgView.h"
 
 namespace Oge

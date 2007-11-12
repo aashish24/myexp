@@ -4,6 +4,8 @@
 #include "IOsgModel.h"
 #include "AlphaOsgModel.h"
 
+#include "osgUtil/SceneView"
+
 using namespace Oge::OgeBase::OgeInterfaces;
 
 namespace Oge
@@ -24,7 +26,7 @@ namespace Oge
         }
       }
 
-      IUnknown* AlphaOsgView::queryInterface( unsigned long iid )
+      AlphaOsgView::IUnknown* AlphaOsgView::queryInterface( unsigned long iid )
       {
         switch( iid )
         {

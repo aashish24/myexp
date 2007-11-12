@@ -4,7 +4,10 @@
 
 #include "IOsgView.h"
 
-#include "osgUtil/SceneView"
+namespace osgUtil
+{
+  class SceneView;
+}
 
 namespace Oge
 {

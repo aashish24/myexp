@@ -2,11 +2,15 @@
 #ifndef __I_ALPHA_OSG_MODEL_H__
 #define __I_ALPHA_OSG_MODEL_H__
 
-#include "osg/Node"
-#include "osg/Group"
-#include "osg/MatrixTransform"
-
 #include "IOsgModel.h"
+
+#include <vector>
+
+namespace osg
+{
+  class Group;
+  class MatrixTransform;
+}
 
 namespace Oge
 {
@@ -31,6 +35,9 @@ namespace Oge
         typedef Oge::OgeBase::OgeInterfaces::IObserver  IObserver;
         typedef Oge::OgeBase::OgeInterfaces::IOsgView   IOsgView;
       
+        typedef osg::Group                              Group;
+        typedef osg::MatrixTransform                    MatrixTransform;
+
         AlphaOsgModel();
 
        ~AlphaOsgModel();
@@ -57,15 +64,15 @@ namespace Oge
 
         protected: 
 
-          osg::Group*               _root;
+          Group*                    _root;
 
-          osg::Group*               _rootModel;
+          Group*                    _rootModel;
           
-          osg::MatrixTransform*     _rootNav;
+          MatrixTransform*          _rootNav;
 
-          osg::Group*               _rootStatic;
+          Group*                    _rootStatic;
           
-          osg::Group*               _rootScreen;
+          Group*                    _rootScreen;
 
           std::vector< IOsgView* >  _osgViews;
       };
