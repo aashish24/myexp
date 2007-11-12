@@ -24,15 +24,15 @@ namespace Oge
 {
   namespace OgeOsg
   {
-    namespace OgeOsgCore
+    namespace OsgCore
     { 
-      struct AlphaOsgView : public Oge::OgeBase::OgeInterfaces::IOsgView
+      struct OsgView : public Oge::OgeBase::OgeInterfaces::IOsgView
       {
         typedef Oge::OgeBase::OgeInterfaces::IUnknown   IUnknown;  
         typedef Oge::OgeBase::OgeInterfaces::IOsgModel  IOsgModel;
 
-        AlphaOsgView( IOsgModel* model ); 
-       ~AlphaOsgView(); 
+        OsgView( IOsgModel* model ); 
+       ~OsgView(); 
 
         virtual IUnknown*             queryInterface( unsigned long iid );
 
@@ -49,7 +49,7 @@ namespace Oge
 
           osgUtil::SceneView*         _sceneView;
       };
-    } // namespace OgeOsgCore
+    } // namespace OsgCore
   } // namespace OgeOsg
 } // namespace Oge
 

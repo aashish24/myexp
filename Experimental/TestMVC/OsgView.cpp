@@ -1,8 +1,8 @@
 
-#include "AlphaOsgView.h"
+#include "OsgView.h"
 
 #include "IOsgModel.h"
-#include "AlphaOsgModel.h"
+#include "OsgModel.h"
 
 #include "osgUtil/SceneView"
 
@@ -12,9 +12,9 @@ namespace Oge
 {
   namespace OgeOsg
   {
-    namespace OgeOsgCore
+    namespace OsgCore
     {
-      AlphaOsgView::AlphaOsgView( Oge::OgeBase::OgeInterfaces::IOsgModel* model ) : 
+      OsgView::OsgView( Oge::OgeBase::OgeInterfaces::IOsgModel* model ) : 
         _model( model ), 
         _sceneView( new osgUtil::SceneView() )
       {
@@ -26,7 +26,7 @@ namespace Oge
         }
       }
 
-      AlphaOsgView::IUnknown* AlphaOsgView::queryInterface( unsigned long iid )
+      OsgView::IUnknown* OsgView::queryInterface( unsigned long iid )
       {
         switch( iid )
         {
@@ -50,21 +50,21 @@ namespace Oge
         };
       }
 
-      osgUtil::SceneView* AlphaOsgView::sceneView()
+      osgUtil::SceneView* OsgView::sceneView()
       {
         return _sceneView;
       }
 
-      void AlphaOsgView::update()
+      void OsgView::update()
       {
         _sceneView->update();
       }
 
-      void AlphaOsgView::draw()
+      void OsgView::draw()
       { 
         _sceneView->cull();
         _sceneView->draw();
       }
-    } // namespace OgeOsgCore
+    } // namespace OsgCore
   } // namespace OsgOsg
 } // namespace Oge

@@ -27,9 +27,9 @@ namespace Oge
 {
   namespace OgeOsg
   {
-    namespace OgeOsgCore
+    namespace OsgCore
     {
-      struct AlphaOsgModel : public Oge::OgeBase::OgeInterfaces::IOsgModel
+      struct OsgModel : public Oge::OgeBase::OgeInterfaces::IOsgModel
       {
         typedef Oge::OgeBase::OgeInterfaces::IUnknown   IUnknown;
         typedef Oge::OgeBase::OgeInterfaces::IObserver  IObserver;
@@ -38,9 +38,9 @@ namespace Oge
         typedef osg::Group                              Group;
         typedef osg::MatrixTransform                    MatrixTransform;
 
-        AlphaOsgModel();
+        OsgModel();
 
-       ~AlphaOsgModel();
+       ~OsgModel();
 
         virtual IUnknown*           queryInterface( unsigned long iid );
         
@@ -76,7 +76,7 @@ namespace Oge
 
           std::vector< IOsgView* >  _osgViews;
       };
-    } // namespace OgeOsgCore
+    } // namespace OsgCore
   } // namespace OgeOsg
 } // namespace Oge
 

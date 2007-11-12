@@ -1,5 +1,5 @@
 
-#include "AlphaOsgModel.h"
+#include "OsgModel.h"
 
 #include "IObserver.h"
 
@@ -14,9 +14,9 @@ namespace Oge
 {
   namespace OgeOsg
   {
-    namespace OgeOsgCore
+    namespace OsgCore
     {
-      AlphaOsgModel::AlphaOsgModel() : 
+      OsgModel::OsgModel() : 
         _root       ( new osg::Group() ), 
         _rootModel  ( new osg::Group() ),
         _rootNav    ( new osg::MatrixTransform() ), 
@@ -25,11 +25,11 @@ namespace Oge
       {  
       }
 
-      AlphaOsgModel::~AlphaOsgModel()
+      OsgModel::~OsgModel()
       {        
       }
 
-      AlphaOsgModel::IUnknown* AlphaOsgModel::queryInterface( unsigned long iid )
+      OsgModel::IUnknown* OsgModel::queryInterface( unsigned long iid )
       {
         switch( iid )
         {
@@ -49,7 +49,7 @@ namespace Oge
         };
       }
 
-      void AlphaOsgModel::attach( IObserver* observer )
+      void OsgModel::attach( IObserver* observer )
       {
         IUnknown* view = observer->queryInterface( IOsgView::IID );  
         
@@ -59,7 +59,7 @@ namespace Oge
         }
       }
 
-      void AlphaOsgModel::update()
+      void OsgModel::update()
       {
         std::vector< IOsgView* >::const_iterator constItr; 
         for( constItr = _osgViews.begin(); constItr != _osgViews.end(); ++constItr )
@@ -68,38 +68,38 @@ namespace Oge
         }
       }
 
-      osg::Node* AlphaOsgModel::root()
+      osg::Node* OsgModel::root()
       {
         return _root;
       }
 
 
-      osg::Node* AlphaOsgModel::rootModel() 
+      osg::Node* OsgModel::rootModel() 
       {
         return _rootModel;
       }
 
-      osg::Node* AlphaOsgModel::rootNav()
+      osg::Node* OsgModel::rootNav()
       {
         return _rootNav;
       }
 
-      osg::Node* AlphaOsgModel::rootStatic()
+      osg::Node* OsgModel::rootStatic()
       {
         return _rootStatic;
       }
 
-      osg::Node* AlphaOsgModel::rootScreen()
+      osg::Node* OsgModel::rootScreen()
       {
         return _rootScreen;
       }
 
-      void AlphaOsgModel::setSceneData( osg::Node* node )
+      void OsgModel::setSceneData( osg::Node* node )
       {
         _rootModel->addChild( node );
       }
 
-      void AlphaOsgModel::build()
+      void OsgModel::build()
       {  
         _rootNav->addChild( _rootModel );  
         _rootStatic->addChild( _rootScreen );
@@ -107,6 +107,6 @@ namespace Oge
         _root->addChild( _rootNav );
         _root->addChild( _rootStatic );
       } 
-    } // namespace OgeOsgCore
+    } // namespace OsgCore
   } // namespace OgeOsg
 } // namespace Oge

@@ -226,22 +226,30 @@
 					Name="OgeOsg"
 					>
 					<Filter
-						Name="OgeOsgCore"
+						Name="OsgCore"
 						>
 						<File
-							RelativePath=".\AlphaOsgModel.cpp"
+							RelativePath=".\OsgModel.cpp"
 							>
 						</File>
 						<File
-							RelativePath=".\AlphaOsgModel.h"
+							RelativePath=".\OsgModel.h"
 							>
 						</File>
 						<File
-							RelativePath=".\AlphaOsgView.cpp"
+							RelativePath=".\OsgView.cpp"
 							>
 						</File>
 						<File
-							RelativePath=".\AlphaOsgView.h"
+							RelativePath=".\OsgView.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OsgViewer"
+						>
+						<File
+							RelativePath=".\Viewer.h"
 							>
 						</File>
 					</Filter>

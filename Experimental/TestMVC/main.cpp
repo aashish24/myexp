@@ -2,14 +2,16 @@
 #include "osgDB/ReadFile"
 #include "osgViewer/Viewer"
 
-#include "AlphaOsgModel.h"
-#include "AlphaOsgView.h"
+#include "OsgModel.h"
+#include "OsgView.h"
+
+#include "Viewer.h"
 
 int main( int argc, char** argv )
 {
   // We need to have a document which contains a viewer.   
-  Oge::OgeOsg::OgeOsgCore::AlphaOsgModel* model = new Oge::OgeOsg::OgeOsgCore::AlphaOsgModel();
-  Oge::OgeOsg::OgeOsgCore::AlphaOsgView* view = new Oge::OgeOsg::OgeOsgCore::AlphaOsgView( model );   
+  Oge::OgeOsg::OsgCore::OsgModel* model = new Oge::OgeOsg::OsgCore::OsgModel();
+  Oge::OgeOsg::OsgCore::OsgView* view   = new Oge::OgeOsg::OsgCore::OsgView( model );   
   
   osg::Node* node = osgDB::readNodeFile( "cow.osg" );
   
