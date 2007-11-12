@@ -4,21 +4,30 @@
 
 #include "IModel.h" 
 
-struct IOsgModel : public IModel
+namespace Oge
 {
-  enum{ IID = 3 };
+  namespace OgeBase
+  {
+    namespace OgeInterfaces
+    {
+      struct IOsgModel : public IModel
+      {
+        enum{ IID = 1088960704 };
 
-  virtual osg::Node*    root() = 0;  
+        virtual osg::Node*    root() = 0;  
 
-  virtual osg::Node*    rootNav() = 0;
+        virtual osg::Node*    rootNav() = 0;
 
-  virtual osg::Node*    rootModel() = 0;  
-  
-  virtual osg::Node*    rootStatic() = 0;
-  
-  virtual osg::Node*    rootScreen() = 0;
-  
-  virtual void          setSceneData( osg::Node* node ) = 0;
-};
+        virtual osg::Node*    rootModel() = 0;  
+        
+        virtual osg::Node*    rootStatic() = 0;
+        
+        virtual osg::Node*    rootScreen() = 0;
+        
+        virtual void          setSceneData( osg::Node* node ) = 0;
+      };
+    } // namespace OgeInterfaces
+  } // namespace OgeBase
+} // namespace Oge
 
 #endif // __I_OSG_MODEL_H__

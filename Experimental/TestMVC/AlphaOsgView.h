@@ -6,77 +6,48 @@
 
 #include "osgUtil/SceneView"
 
-struct AlphaOsgView : public IOsgView
+namespace Oge
 {
-  AlphaOsgView( IOsgModel* model ); 
- ~AlphaOsgView(); 
-
-  virtual IUnknown*           queryInterface( unsigned long iid );
-
-  virtual osgUtil::SceneView* sceneView();  
-
-  virtual void                update();
-
-  virtual void                draw();
-  
-
-  protected: 
-
-    IOsgModel*                _model;
-
-    osgUtil::SceneView*       _sceneView;
-};
-
-AlphaOsgView::AlphaOsgView( IOsgModel* model ) : 
-  _model( model ), 
-  _sceneView( new osgUtil::SceneView() )
-{
-  if( _model )
+  namespace OgeBase
   {
-    _model->attach( this );
-    _sceneView->setDefaults();
-    _sceneView->setSceneData( _model->root() );
+    namespace OgeInterfaces
+    {
+      struct IOsgModel;
+    }
   }
 }
 
-IUnknown* AlphaOsgView::queryInterface( unsigned long iid )
+namespace Oge
 {
-  switch( iid )
+  namespace OgeOsg
   {
-    case IUnknown::IID :
-    case IObserver::IID:
-    {
-      return static_cast< IObserver* >( this );
-    }
-    case IView::IID :
-    {
-      return static_cast< IView* >( this );
-    }
-    case IOsgView::IID :
-    {
-      return static_cast< IOsgView* >( this );
-    }    
-    default :
-    {
-      return 0x00;
-    }
-  };
-}
+    namespace OgeOsgCore
+    { 
+      struct AlphaOsgView : public Oge::OgeBase::OgeInterfaces::IOsgView
+      {
+        typedef Oge::OgeBase::OgeInterfaces::IUnknown   IUnknown;  
+        typedef Oge::OgeBase::OgeInterfaces::IOsgModel  IOsgModel;
 
-osgUtil::SceneView* AlphaOsgView::sceneView()
-{
-  return _sceneView;
-}
+        AlphaOsgView( IOsgModel* model ); 
+       ~AlphaOsgView(); 
 
-void AlphaOsgView::update()
-{
-  _sceneView->update();
-}
+        virtual IUnknown*             queryInterface( unsigned long iid );
 
-void AlphaOsgView::draw()
-{ 
-  _sceneView->cull();
-  _sceneView->draw();
-}
+        virtual osgUtil::SceneView*   sceneView();  
+
+        virtual void                  update();
+
+        virtual void                  draw();
+        
+
+        protected: 
+
+          IOsgModel*                  _model;
+
+          osgUtil::SceneView*         _sceneView;
+      };
+    } // namespace OgeOsgCore
+  } // namespace OgeOsg
+} // namespace Oge
 
 #endif // __ALPHA_OSG_VIEW_H__

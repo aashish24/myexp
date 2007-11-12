@@ -21,6 +21,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
+			ManagedExtensions="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -43,12 +44,12 @@
 				AdditionalIncludeDirectories="$(OSG_INC_DIR)"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="false"
-				BasicRuntimeChecks="3"
+				BasicRuntimeChecks="0"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -65,6 +66,7 @@
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR)"
 				GenerateDebugInformation="true"
+				AssemblyDebug="1"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -178,7 +180,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\AlphaOsgModel.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\AlphaOsgModel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\AlphaOsgView.cpp"
 				>
 			</File>
 			<File

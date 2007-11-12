@@ -4,16 +4,22 @@
 
 #include "IView.h" 
 
-namespace osgUtil
-{
-  class SceneView;
-}
+#include "osgUtil/SceneView"
 
-struct IOsgView : IView 
-{
-  enum{ IID = 5 };
+namespace Oge
+{ 
+  namespace OgeBase
+  {
+    namespace OgeInterfaces
+    {
+      struct IOsgView : IView 
+      {
+        enum{ IID = 1607842543 };
 
-  virtual osgUtil::SceneView* sceneView() = 0;
-};
+        virtual osgUtil::SceneView* sceneView() = 0;
+      };
+    } // namespace OgeInterfaces
+  } // namespace OgeBase
+} // namespace Oge
 
 #endif // __I_OSG_VIEW_H__

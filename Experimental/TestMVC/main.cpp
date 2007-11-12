@@ -13,6 +13,9 @@
 #include "AlphaOsgModel.h"
 #include "AlphaOsgView.h"
 
+using namespace Oge::OgeBase::OgeInterfaces;
+using namespace Oge::OgeOsg::OgeOsgCore;
+
 int main( int argc, char** argv )
 {
   // We need to have a document which contains a viewer.   
@@ -22,8 +25,7 @@ int main( int argc, char** argv )
   osg::Node* node = osgDB::readNodeFile( "cow.osg" );
   
   model->setSceneData( node );
-  model->buildScene();
-  
+  model->build();
   
   osgViewer::Viewer viewer;
   

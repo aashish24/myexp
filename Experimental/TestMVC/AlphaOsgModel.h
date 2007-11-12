@@ -1,146 +1,76 @@
 
+#ifndef __I_ALPHA_OSG_MODEL_H__
+#define __I_ALPHA_OSG_MODEL_H__
+
 #include "osg/Node"
 #include "osg/Group"
 #include "osg/MatrixTransform"
 
-
-#include "IObserver.h"
-#include "IOsgView.h"
-
 #include "IOsgModel.h"
 
-
-struct AlphaOsgModel : public IOsgModel
+namespace Oge
 {
-  AlphaOsgModel();
-
- ~AlphaOsgModel();
-
-  virtual IUnknown*           queryInterface( unsigned long iid );
-
-  virtual void                attach( IObserver* observer );
-  
-  virtual void                update();
-
-  virtual osg::Node*          root();
-
-  virtual osg::Node*          rootModel();   
-    
-  virtual osg::Node*          rootNav();
-  
-  virtual osg::Node*          rootStatic();
-  
-  virtual osg::Node*          rootScreen();    
-  
-  virtual void                buildScene();
-  
-  virtual void                setSceneData( osg::Node* node ); 
-
-  protected: 
-
-    osg::Group*               _root;
-
-    osg::Group*               _rootModel;
-    
-    osg::MatrixTransform*     _rootNav;
-
-    osg::Group*               _rootStatic;
-    
-    osg::Group*               _rootScreen;
-
-    std::vector< IOsgView* >  _osgViews;
-};
-
-
-
-AlphaOsgModel::AlphaOsgModel() : 
-  _root       ( new osg::Group() ), 
-  _rootModel  ( new osg::Group() ),
-  _rootNav    ( new osg::MatrixTransform() ), 
-  _rootStatic ( new osg::Group() ), 
-  _rootScreen ( new osg::Group() )
-{ 
-}
-
-AlphaOsgModel::~AlphaOsgModel()
-{
-}
-
-IUnknown* AlphaOsgModel::queryInterface( unsigned long iid )
-{
-  switch( iid )
+  namespace OgeBase
   {
-    case IUnknown::IID :
-    case IModel::IID :
+    namespace OgeInterfaces
     {
-      return static_cast< IModel* >( this );
+      struct IOsgView;
     }
-    case IOsgModel::IID :
-    {
-      return static_cast< IOsgModel* >( this );
-    }    
-    default:
-    {
-      return  0x00;
-    }
-  };
-}
-
-void AlphaOsgModel::attach( IObserver* observer )
-{
-  IUnknown* view = observer->queryInterface( IOsgView::IID );  
-  
-  if( view )
-  {
-    _osgViews.push_back( static_cast< IOsgView* >( view ) );
   }
 }
 
-void AlphaOsgModel::update()
+namespace Oge
 {
-  std::vector< IOsgView* >::const_iterator constItr; 
-  for( constItr = _osgViews.begin(); constItr != _osgViews.end(); ++constItr )
+  namespace OgeOsg
   {
-    (*constItr)->update();
-  }
-}
+    namespace OgeOsgCore
+    {
+      struct AlphaOsgModel : public Oge::OgeBase::OgeInterfaces::IOsgModel
+      {
+        typedef Oge::OgeBase::OgeInterfaces::IUnknown   IUnknown;
+        typedef Oge::OgeBase::OgeInterfaces::IObserver  IObserver;
+        typedef Oge::OgeBase::OgeInterfaces::IOsgView   IOsgView;
+      
+        AlphaOsgModel();
 
-osg::Node* AlphaOsgModel::root()
-{
-  return _root;
-}
+       ~AlphaOsgModel();
 
+        virtual IUnknown*           queryInterface( unsigned long iid );
 
-osg::Node* AlphaOsgModel::rootModel() 
-{
-  return _rootModel;
-}
+        virtual void                attach( IObserver* observer );
+        
+        virtual void                update();
 
-osg::Node* AlphaOsgModel::rootNav()
-{
-  return _rootNav;
-}
+        virtual osg::Node*          root();
 
-osg::Node* AlphaOsgModel::rootStatic()
-{
-  return _rootStatic;
-}
+        virtual osg::Node*          rootModel();   
+          
+        virtual osg::Node*          rootNav();
+        
+        virtual osg::Node*          rootStatic();
+        
+        virtual osg::Node*          rootScreen();    
+        
+        virtual void                build();
+        
+        virtual void                setSceneData( osg::Node* node ); 
 
-osg::Node* AlphaOsgModel::rootScreen()
-{
-  return _rootScreen;
-}
+        protected: 
 
-void AlphaOsgModel::setSceneData( osg::Node* node )
-{
-  _rootModel->addChild( node );
-}
+          osg::Group*               _root;
 
-void AlphaOsgModel::buildScene()
-{  
-  _rootNav->addChild( _rootModel );  
-  _rootStatic->addChild( _rootScreen );
-    
-  _root->addChild( _rootNav );
-  _root->addChild( _rootStatic );
-} 
+          osg::Group*               _rootModel;
+          
+          osg::MatrixTransform*     _rootNav;
+
+          osg::Group*               _rootStatic;
+          
+          osg::Group*               _rootScreen;
+
+          std::vector< IOsgView* >  _osgViews;
+      };
+    } // namespace OgeOsgCore
+  } // namespace OgeOsg
+} // namespace Oge
+
+#endif // __I_ALPHA_OSG_MODEL_H__

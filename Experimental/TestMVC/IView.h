@@ -4,11 +4,20 @@
 
 #include "IObserver.h"
 
-struct IView : public IObserver 
-{
-  enum { IID = 4 };
+namespace Oge
+{ 
+  namespace OgeBase
+  {
+    namespace OgeInterfaces
+    {
+      struct IView : public IObserver 
+      {
+        enum { IID = 9514518190 };
 
-  virtual void draw() = 0;
-};
+        virtual void draw() = 0;
+      };      
+    } // namespace OgeInterfaces
+  } // namespace OgeBase
+} // namespace Oge      
 
 #endif // __I_VIEW_H__
