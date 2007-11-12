@@ -26,7 +26,7 @@ namespace Oge
       }
 
       AlphaOsgModel::~AlphaOsgModel()
-      {
+      {        
       }
 
       AlphaOsgModel::IUnknown* AlphaOsgModel::queryInterface( unsigned long iid )

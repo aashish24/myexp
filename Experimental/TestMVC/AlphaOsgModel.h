@@ -43,24 +43,24 @@ namespace Oge
        ~AlphaOsgModel();
 
         virtual IUnknown*           queryInterface( unsigned long iid );
+        
+        virtual Node*               root();
 
+        virtual Node*               rootModel();   
+          
+        virtual Node*               rootNav();
+        
+        virtual Node*               rootStatic();
+        
+        virtual Node*               rootScreen();    
+        
+        virtual void                build();
+        
         virtual void                attach( IObserver* observer );
         
         virtual void                update();
 
-        virtual osg::Node*          root();
-
-        virtual osg::Node*          rootModel();   
-          
-        virtual osg::Node*          rootNav();
-        
-        virtual osg::Node*          rootStatic();
-        
-        virtual osg::Node*          rootScreen();    
-        
-        virtual void                build();
-        
-        virtual void                setSceneData( osg::Node* node ); 
+        virtual void                setSceneData( Node* node ); 
 
         protected: 
 
