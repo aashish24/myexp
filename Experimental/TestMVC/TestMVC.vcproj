@@ -193,6 +193,10 @@
 						Name="OgeInterfaces"
 						>
 						<File
+							RelativePath=".\IFindNode.h"
+							>
+						</File>
+						<File
 							RelativePath=".\IModel.h"
 							>
 						</File>
