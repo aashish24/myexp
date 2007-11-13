@@ -2,6 +2,8 @@
 #ifndef __OGE_OGE_BASE_OGE_INTERFACES_FIND_NODE_H__
 #define __OGE_OGE_BASE_OGE_INTERFACES_FIND_NODE_H__
 
+#include <string>
+
 namespace Oge
 {
   namespace OgeBase 

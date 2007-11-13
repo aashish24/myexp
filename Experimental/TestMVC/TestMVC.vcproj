@@ -253,6 +253,10 @@
 						Name="OsgViewer"
 						>
 						<File
+							RelativePath=".\Viewer.cpp"
+							>
+						</File>
+						<File
 							RelativePath=".\Viewer.h"
 							>
 						</File>
