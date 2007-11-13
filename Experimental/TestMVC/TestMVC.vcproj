@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(OSG_INC_DIR);C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include\Qt;;C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include\QtGui;C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include;C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include\QtOpenGL;"
+				AdditionalIncludeDirectories="./;$(OSG_INC_DIR);C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include\Qt;;C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include\QtGui;C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include;C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include\QtOpenGL;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
@@ -193,35 +193,35 @@
 						Name="OgeInterfaces"
 						>
 						<File
-							RelativePath=".\IFindNode.h"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IFindNode.h"
 							>
 						</File>
 						<File
-							RelativePath=".\IModel.h"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IModel.h"
 							>
 						</File>
 						<File
-							RelativePath=".\IObserver.h"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IObserver.h"
 							>
 						</File>
 						<File
-							RelativePath=".\IOsgModel.h"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IOsgModel.h"
 							>
 						</File>
 						<File
-							RelativePath=".\IOsgView.h"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IOsgView.h"
 							>
 						</File>
 						<File
-							RelativePath=".\IUnknown.h"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IUnknown.h"
 							>
 						</File>
 						<File
-							RelativePath=".\IView.h"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IView.h"
 							>
 						</File>
 						<File
-							RelativePath=".\IViewer.h"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IViewer.h"
 							>
 						</File>
 					</Filter>
@@ -233,19 +233,19 @@
 						Name="OsgCore"
 						>
 						<File
-							RelativePath=".\OsgModel.cpp"
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgModel.cpp"
 							>
 						</File>
 						<File
-							RelativePath=".\OsgModel.h"
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgModel.h"
 							>
 						</File>
 						<File
-							RelativePath=".\OsgView.cpp"
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgView.cpp"
 							>
 						</File>
 						<File
-							RelativePath=".\OsgView.h"
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgView.h"
 							>
 						</File>
 					</Filter>
@@ -253,11 +253,11 @@
 						Name="OsgViewer"
 						>
 						<File
-							RelativePath=".\Viewer.cpp"
+							RelativePath=".\Oge\OgeOsg\OsgViewer\Viewer.cpp"
 							>
 						</File>
 						<File
-							RelativePath=".\Viewer.h"
+							RelativePath=".\Oge\OgeOsg\OsgViewer\Viewer.h"
 							>
 						</File>
 					</Filter>

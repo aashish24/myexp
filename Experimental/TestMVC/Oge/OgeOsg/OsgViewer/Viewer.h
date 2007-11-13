@@ -2,9 +2,9 @@
 #ifndef __OSG_VIEWER_VIEWER_H__
 #define __OSG_VIEWER_VIEWER_H__
 
-#include "IUnknown.h"
-#include "IFindNode.h"
-#include "IViewer.h"
+#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
+#include "Oge/OgeBase/OgeInterfaces/IFindNode.h"
+#include "Oge/OgeBase/OgeInterfaces/IViewer.h"
 
 #include "osgViewer/Viewer"
 

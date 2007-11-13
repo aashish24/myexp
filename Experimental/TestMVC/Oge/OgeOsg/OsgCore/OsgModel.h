@@ -2,7 +2,7 @@
 #ifndef __OSG_VIEWER_OSG_MODEL_H__
 #define __OSG_VIEWER_OSG_MODEL_H__
 
-#include "IOsgModel.h"
+#include "Oge/OgeBase/OgeInterfaces/IOsgModel.h"
 
 #include <vector>
 

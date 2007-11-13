@@ -1,14 +1,13 @@
 
 #include "OsgModel.h"
 
-#include "IObserver.h"
+#include "Oge/OgeBase/OgeInterfaces/IObserver.h"
+#include "Oge/OgeBase/OgeInterfaces/IOsgModel.h"
+#include "Oge/OgeBase/OgeInterfaces/IOsgView.h"
 
 #include "osg/Node"
 #include "osg/Group"
 #include "osg/MatrixTransform"
-
-#include "IOsgModel.h"
-#include "IOsgView.h"
 
 namespace Oge
 {

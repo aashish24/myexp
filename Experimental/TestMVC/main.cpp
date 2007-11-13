@@ -3,8 +3,9 @@
 
 #include "osgDB/ReadFile"
 
-#include "OsgModel.h"
-#include "Viewer.h"
+#include "Oge/OgeOsg/OsgCore/OsgModel.h"
+
+#include "Oge/OgeOsg/OsgViewer/Viewer.h"
 
 #include "QtGui"
 #include "QtOpenGL"

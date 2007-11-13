@@ -1,8 +1,8 @@
 
-#include "OsgView.h"
+#include "Oge/OgeBase/OgeInterfaces/IOsgModel.h"
 
-#include "IOsgModel.h"
-#include "OsgModel.h"
+#include "Oge/OgeOsg/OsgCore/OsgModel.h"
+#include "Oge/OgeOsg/OsgCore/OsgView.h"
 
 #include "osgUtil/SceneView"
 

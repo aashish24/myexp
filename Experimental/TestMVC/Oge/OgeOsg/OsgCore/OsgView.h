@@ -2,7 +2,7 @@
 #ifndef __OSG_VIEWER_OSG_VIEW_H__
 #define __OSG_VIEWER_OSG_VIEW_H__
 
-#include "IOsgView.h"
+#include "Oge/OgeBase/OgeInterfaces/IOsgView.h"
 
 namespace osgUtil
 {

@@ -1,8 +1,8 @@
 
 #include "Viewer.h"
 
-#include "OsgModel.h" 
-#include "OsgView.h" 
+#include "Oge/OgeOsg/OsgCore/OsgModel.h" 
+#include "Oge/OgeOsg/OsgCore/OsgView.h" 
 
 namespace Oge
 {
