@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(OSG_INC_DIR)"
+				AdditionalIncludeDirectories="$(OSG_INC_DIR);C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include\Qt;;C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include\QtGui;C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include;C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\include\QtOpenGL;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
@@ -64,7 +64,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib OpenThreadsd.lib osgd.lib osgDBd.lib osgUtild.lib osgGAd.lib osgViewerd.lib osgTextd.lib glu32.lib opengl32.lib $(NOINHERIT)"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(OSG_LIB_DIR)"
+				AdditionalLibraryDirectories="$(OSG_LIB_DIR);C:\aashish\src\qt\qt-4.3.2\install\windows.x86_32.vc8.all\lib"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				SubSystem="1"

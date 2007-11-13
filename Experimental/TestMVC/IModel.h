@@ -1,6 +1,6 @@
 
-#ifndef __I_MODEL_H__
-#define __I_MODEL_H__
+#ifndef __OGE_INTERFACES_I_MODEL_H__
+#define __OGE_INTERFACES_I_MODEL_H__
 
 #include "IUnknown.h"
 
@@ -26,4 +26,4 @@ namespace Oge
   } // namespace OgeBase
 } // namespace Oge
 
-#endif // __I_MODEL_H__
+#endif // __OGE_INTERFACES_I_MODEL_H__

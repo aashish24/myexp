@@ -1,6 +1,6 @@
 
-#ifndef __OGE_OGE_OSG_OSG_VIEWER_VIWER_H__
-#define __OGE_OGE_OSG_OSG_VIEWER_VIWER_H__
+#ifndef __OSG_VIEWER_VIEWER_H__
+#define __OSG_VIEWER_VIEWER_H__
 
 #include "IUnknown.h"
 #include "IFindNode.h"
@@ -69,12 +69,14 @@ namespace Oge
 
                                                         Viewer( ViewerModel vMode = NORMAL );    
           virtual                                      ~Viewer();  
-
+          
           virtual void                                  init(); 
 
           virtual void                                  contextInit();
 
           virtual void                                  setModelData( osg::Node* );
+
+          virtual void                                  setEmbeddedDisplaySize( int x, int y, int width, int height );
 
           virtual osg::Node*                            findNode( const std::string& id );
 
@@ -93,6 +95,14 @@ namespace Oge
 
         protected: 
         
+          bool                                          _isDisplayWindowSizeSet;
+
+          int                                           _viewportX;
+          int                                           _viewportY;
+          int                                           _viewportWidth;
+          int                                           _viewportHeight;
+  
+
           OsgModel*                                     _model;
           
           OsgView*                                      _view; 
@@ -103,4 +113,4 @@ namespace Oge
   }
 }
 
-#endif // __OGE_OGE_OSG_OSG_VIEWER_VIWER_H__
+#endif // __OSG_VIEWER_VIEWER_H__

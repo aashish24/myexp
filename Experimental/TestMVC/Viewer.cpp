@@ -11,11 +11,16 @@ namespace Oge
     namespace OsgViewer
     {
 
-      Viewer::Viewer( ViewerModel vModel) : 
+      Viewer::Viewer( ViewerModel vModel ) : 
         osgViewer::Viewer(),
-        _model( new Viewer::OsgModel() ) ,
-        _view( new Viewer::OsgView( _model ) ), 
-        _viewerModel( vModel )
+        _model                  ( new Viewer::OsgModel() ) ,
+        _view                   ( new Viewer::OsgView ( _model ) ), 
+        _viewportX              ( 0 ), 
+        _viewportY              ( 0 ), 
+        _viewportWidth          ( 1280 ), 
+        _viewportHeight         ( 1024 ), 
+        _isDisplayWindowSizeSet ( false ),
+        _viewerModel            ( vModel )
       {   
         init();
       }
@@ -29,18 +34,45 @@ namespace Oge
       void Viewer::init()
       {
         _model->build();
-        setSceneData( _view->sceneView()->getSceneData() );
+        setSceneData( _view->sceneView()->getSceneData() );        
       }
 
+      
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // 
+      // @Note: This function should be called by the external windowing system 
+      // only when we have a valid context. 
+      //
+      /////////////////////////////////////////////////////////////////////////
 
       void Viewer::contextInit()
-      {
+      {        
+        if( _viewerModel == EMBEDDED )
+        {
+          this->setUpViewerAsEmbeddedInWindow
+            ( _viewportX, _viewportY, _viewportWidth, _viewportHeight );
+        }
+        else
+        {
+          this->realize();
+        }
       }
 
 
       void Viewer::setModelData( osg::Node* node )
       {
         ( _model->rootModel()->asGroup() )->addChild ( node );
+      }
+
+
+      void Viewer::setEmbeddedDisplaySize( int x, int y, int width, int height )
+      {
+        _viewportX = x;
+        _viewportY = y;
+
+        _viewportWidth =  width;
+        _viewportHeight = height;
       }
 
 

@@ -1,6 +1,6 @@
 
-#ifndef __ALPHA_OSG_VIEW_H__
-#define __ALPHA_OSG_VIEW_H__
+#ifndef __OSG_VIEWER_OSG_VIEW_H__
+#define __OSG_VIEWER_OSG_VIEW_H__
 
 #include "IOsgView.h"
 
@@ -55,4 +55,4 @@ namespace Oge
   } // namespace OgeOsg
 } // namespace Oge
 
-#endif // __ALPHA_OSG_VIEW_H__
+#endif // __OSG_VIEWER_OSG_VIEW_H__

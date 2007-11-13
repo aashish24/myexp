@@ -1,6 +1,6 @@
 
-#ifndef __I_VIEWER_H__
-#define __I_VIEWER_H__
+#ifndef __OGE_INTERFACES_I_VIEWER_H__
+#define __OGE_INTERFACES_I_VIEWER_H__
 
 namespace Oge
 {
@@ -26,6 +26,8 @@ namespace Oge
         virtual void          init() = 0;
 
         virtual void          contextInit() = 0; 
+
+        virtual void          setEmbeddedDisplaySize( int x, int y, int width, int height ) = 0;
 
         virtual void          update() = 0; 
 

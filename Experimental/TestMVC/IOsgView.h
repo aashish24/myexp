@@ -1,6 +1,6 @@
 
-#ifndef __I_OSG_VIEW_H__
-#define __I_OSG_VIEW_H__
+#ifndef __OGE_INTERFACES_I_OSG_VIEW_H__
+#define __OGE_INTERFACES_I_OSG_VIEW_H__
 
 #include "IView.h" 
 
@@ -27,4 +27,4 @@ namespace Oge
   } // namespace OgeBase
 } // namespace Oge
 
-#endif // __I_OSG_VIEW_H__
+#endif // __OGE_INTERFACES_I_VIEW_H__

@@ -1,6 +1,6 @@
 
-#ifndef __OGE_OGE_BASE_OGE_INTERFACES_FIND_NODE_H__
-#define __OGE_OGE_BASE_OGE_INTERFACES_FIND_NODE_H__
+#ifndef __OGE_INTERFACES_I_FIND_NODE_H__
+#define __OGE_INTERFACES_I_FIND_NODE_H__
 
 #include <string>
 
@@ -23,4 +23,4 @@ namespace Oge
   }
 }
 
-#endif // __OGE_OGE_BASE_OGE_INTERFACES_FIND_NODE_H__
+#endif // __OGE_INTERFACES_I_FIND_NODE_H__

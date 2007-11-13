@@ -1,6 +1,6 @@
 
-#ifndef __I_ALPHA_OSG_MODEL_H__
-#define __I_ALPHA_OSG_MODEL_H__
+#ifndef __OSG_VIEWER_OSG_MODEL_H__
+#define __OSG_VIEWER_OSG_MODEL_H__
 
 #include "IOsgModel.h"
 
@@ -80,4 +80,4 @@ namespace Oge
   } // namespace OgeOsg
 } // namespace Oge
 
-#endif // __I_ALPHA_OSG_MODEL_H__
+#endif // __OSG_VIEWER_OSG_MODEL_H__

@@ -1,6 +1,6 @@
 
-#ifndef __I_UNKNOWN_H__
-#define __I_UNKNOWN_H__
+#ifndef __OGE_INTERFACES_I_UNKNOWN_H__
+#define __OGE_INTERFACES_I_UNKNOWN_H__
 
 namespace Oge
 { 
@@ -18,4 +18,4 @@ namespace Oge
   } // namespace OgeBase
 } // namespace Oge
 
-#endif // __I_UNKNOWN_H__
+#endif // __OGE_INTERFACES_I_UNKNOWN_H__
