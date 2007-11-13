@@ -59,6 +59,11 @@ namespace Oge
           virtual int                                   run(); 
 
         protected: 
+
+          virtual void                                  setSceneData( osg::Node* );
+
+
+        protected: 
         
           Oge::OgeOsg::OsgCore::OsgModel*               _model;
           
@@ -116,6 +121,11 @@ void Oge::OgeOsg::OsgViewer::Viewer::draw()
 int Oge::OgeOsg::OsgViewer::Viewer::run()
 {
   return osgViewer::Viewer::run();
+}
+
+void Oge::OgeOsg::OsgViewer::Viewer::setSceneData( osg::Node* node )
+{
+  osgViewer::Viewer::setSceneData( node );
 }
 
 #endif // __OGE_OGE_OSG_OSG_VIEWER_VIWER_H__
