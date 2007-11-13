@@ -12,7 +12,7 @@ namespace Oge
       {
         enum { IID = 3197031617 };
         
-        virtual IUnknown* queryInterface( unsigned long iid ) = 0;
+        virtual IUnknown* queryInterface( const unsigned long& iid ) = 0;
       };
     } // namespace OgeInterfaces
   } // namespace OgeBase

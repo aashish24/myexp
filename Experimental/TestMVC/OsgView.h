@@ -31,12 +31,14 @@ namespace Oge
         typedef Oge::OgeBase::OgeInterfaces::IUnknown   IUnknown;  
         typedef Oge::OgeBase::OgeInterfaces::IOsgModel  IOsgModel;
 
+        typedef osgUtil::SceneView                      SceneView;  
+
         OsgView( IOsgModel* model ); 
        ~OsgView(); 
 
-        virtual IUnknown*             queryInterface( unsigned long iid );
+        virtual IUnknown*             queryInterface( const unsigned long& iid );
 
-        virtual osgUtil::SceneView*   sceneView();  
+        virtual SceneView*            sceneView();  
 
         virtual void                  update();
 
@@ -47,7 +49,7 @@ namespace Oge
 
           IOsgModel*                  _model;
 
-          osgUtil::SceneView*         _sceneView;
+          SceneView*                  _sceneView;
       };
     } // namespace OsgCore
   } // namespace OgeOsg

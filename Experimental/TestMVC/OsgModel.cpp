@@ -29,7 +29,7 @@ namespace Oge
       {        
       }
 
-      OsgModel::IUnknown* OsgModel::queryInterface( unsigned long iid )
+      OsgModel::IUnknown* OsgModel::queryInterface( const unsigned long& iid )
       {
         switch( iid )
         {

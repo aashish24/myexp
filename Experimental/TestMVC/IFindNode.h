@@ -13,6 +13,8 @@ namespace Oge
       template< typename T > 
       struct IFindNode : public IUnknown
       {
+        enum { IID = 4176415812 };
+
         virtual T* findNode( const std::string& id ) = 0;
       };
     }

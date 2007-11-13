@@ -26,7 +26,12 @@ namespace Oge
         }
       }
 
-      OsgView::IUnknown* OsgView::queryInterface( unsigned long iid )
+
+      OsgView::~OsgView()
+      {
+      }
+
+      OsgView::IUnknown* OsgView::queryInterface( const unsigned long& iid )
       {
         switch( iid )
         {

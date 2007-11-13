@@ -42,7 +42,7 @@ namespace Oge
 
        ~OsgModel();
 
-        virtual IUnknown*           queryInterface( unsigned long iid );
+        virtual IUnknown*           queryInterface( const unsigned long& iid );
         
         virtual Node*               root();
 

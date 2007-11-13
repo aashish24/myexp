@@ -4,7 +4,10 @@
 
 #include "IView.h" 
 
-#include "osgUtil/SceneView"
+namespace osgUtil
+{
+    class SceneView;
+}
 
 namespace Oge
 { 
@@ -14,9 +17,11 @@ namespace Oge
     {
       struct IOsgView : IView 
       {
-        enum{ IID = 1607842543 };
+        typedef osgUtil::SceneView                      SceneView;
+        
+        enum                                            { IID = 1607842543 };
 
-        virtual osgUtil::SceneView* sceneView() = 0;
+        virtual SceneView*                              sceneView() = 0;
       };
     } // namespace OgeInterfaces
   } // namespace OgeBase
