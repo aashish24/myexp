@@ -17,8 +17,8 @@ namespace Oge
         _view                   ( new Viewer::OsgView ( _model ) ), 
         _viewportX              ( 0 ), 
         _viewportY              ( 0 ), 
-        _viewportWidth          ( 1280 ), 
-        _viewportHeight         ( 1024 ), 
+        _viewportWidth          ( 400 ), 
+        _viewportHeight         ( 400 ), 
         _isDisplayWindowSizeSet ( false ),
         _viewerModel            ( vModel )
       {   
@@ -52,10 +52,6 @@ namespace Oge
         {
           this->setUpViewerAsEmbeddedInWindow
             ( _viewportX, _viewportY, _viewportWidth, _viewportHeight );
-        }
-        else
-        {
-          this->realize();
         }
       }
 
@@ -100,7 +96,15 @@ namespace Oge
 
       int Viewer::run()
       {
-        return osgViewer::Viewer::run();
+        if( _viewerModel == EMBEDDED )
+        {
+          osgViewer::Viewer::run();
+        }
+        {
+          frame();
+        }
+
+        return 1;
       }
 
 
