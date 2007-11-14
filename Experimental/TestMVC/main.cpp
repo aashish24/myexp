@@ -30,9 +30,10 @@
 
 #endif
 
-#include "AdapterWidget.h"
+#include "Oge/OgeOsg/OsgQt/AdapterWidget.h"
 
 typedef Oge::OgeOsg::OsgViewer::Viewer Viewer;
+typedef Oge::OgeOsg::OsgQt::AdapterWidget AdapterWidget;
 
 class ViewerQT : public Viewer, public AdapterWidget
 {

@@ -182,14 +182,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\AdapterWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\AdapterWidget.h"
-				>
-			</File>
-			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -268,6 +260,18 @@
 						</File>
 						<File
 							RelativePath=".\Oge\OgeOsg\OsgViewer\Viewer.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OsgQt"
+						>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgQT\AdapterWidget.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgQT\AdapterWidget.h"
 							>
 						</File>
 					</Filter>
