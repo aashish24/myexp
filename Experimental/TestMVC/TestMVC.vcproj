@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="4"
-				AdditionalIncludeDirectories="./;$(OSG_INC_DIR);C:\aashish\src\qt\qt-4.3.1\install\windows.x86_32.vc8.all\include\Qt;;C:\aashish\src\qt\qt-4.3.1\install\windows.x86_32.vc8.all\include\QtGui;C:\aashish\src\qt\qt-4.3.1\install\windows.x86_32.vc8.all\include;C:\aashish\src\qt\qt-4.3.1\install\windows.x86_32.vc8.all\include\QtOpenGL;C:\aashish\src\qt\qt-4.3.1\install\windows.x86_32.vc8.all\mkspecs\win32-msvc2005;"
+				AdditionalIncludeDirectories="./;&quot;$(OSG_INC_DIR)&quot;;&quot;$(QT_INC_DIR)\Qt&quot;;&quot;$(QT_INC_DIR)\QtGui&quot;;&quot;$(QT_INC_DIR)\QtOpenGL&quot;;&quot;$(QT_INC_DIR)\&quot;"
 				PreprocessorDefinitions="WIN32;UNICODE;_DEBUG;_CONSOLE;QT_LARGEFILE_SUPPORT;QT_EDITION=QT_EDITION_DESKTOP;QT_DLL;QT_OPENGL_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_THREAD_SUPPORT&apos;;USE_QT4"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
@@ -66,7 +66,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib OpenThreadsd.lib osgd.lib osgDBd.lib osgUtild.lib osgGAd.lib osgViewerd.lib osgTextd.lib glu32.lib opengl32.lib QtOpenGLd4.lib qtmaind.lib QtGuid4.lib QtCored4.lib $(NOINHERIT)"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(OSG_LIB_DIR);C:\aashish\src\qt\qt-4.3.1\install\windows.x86_32.vc8.all\lib"
+				AdditionalLibraryDirectories="&quot;$(OSG_LIB_DIR)&quot;;&quot;$(QT_LIB_DIR)&quot;"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				SubSystem="2"
