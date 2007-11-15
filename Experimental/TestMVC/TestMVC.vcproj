@@ -279,6 +279,18 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="OsgVrj"
+						>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgVrj\ViewerVrj.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgVrj\ViewerVrj.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 		</Filter>

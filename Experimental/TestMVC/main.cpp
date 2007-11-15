@@ -51,12 +51,12 @@ int main( int argc, char **argv )
 
   ViewerQt* viewerWindow = new ViewerQt;
 
-  viewerWindow->setCameraManipulator(new osgGA::TrackballManipulator);
+  viewerWindow->setCameraManipulator( new osgGA::TrackballManipulator );
   viewerWindow->setModelData( loadedModel.get() );
 
   viewerWindow->show();   
   
-  a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
+  a.connect( &a, SIGNAL( lastWindowClosed() ), &a, SLOT( quit() ) );
  
   return a.exec();
 }
