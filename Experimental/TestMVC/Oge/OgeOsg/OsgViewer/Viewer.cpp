@@ -12,7 +12,7 @@ namespace Oge
     {
 
       Viewer::Viewer( ViewerModel vModel ) : 
-        osgViewer::Viewer(),
+        osgViewer::Viewer       (),
         _model                  ( new Viewer::OsgModel() ) ,
         _view                   ( new Viewer::OsgView ( _model ) ), 
         _viewportX              ( 0 ), 
@@ -96,7 +96,7 @@ namespace Oge
 
       int Viewer::run()
       {
-        if( _viewerModel == EMBEDDED )
+        if( _viewerModel != EMBEDDED )
         {
           osgViewer::Viewer::run();
         }
