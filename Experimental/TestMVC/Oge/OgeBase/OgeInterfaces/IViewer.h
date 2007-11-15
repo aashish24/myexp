@@ -10,7 +10,7 @@ namespace Oge
     {
       /////////////////////////////////////////////////////////////////////////
       //
-      // We should have some interface for evene handling here. 
+      // We should have some interface for event handling here. 
       // Also how the user would have to set whether or not this viewer is embedded 
       // in an external window in the constrcutor. We could provide some interface 
       // later but for now lets keep it simple. 

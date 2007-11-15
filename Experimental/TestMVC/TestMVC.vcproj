@@ -274,6 +274,10 @@
 							RelativePath=".\Oge\OgeOsg\OsgQT\AdapterWidget.h"
 							>
 						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgQt\ViewerQt.h"
+							>
+						</File>
 					</Filter>
 				</Filter>
 			</Filter>
