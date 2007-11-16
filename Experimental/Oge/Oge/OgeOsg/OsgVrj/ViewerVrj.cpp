@@ -57,8 +57,6 @@ namespace Oge
       void ViewerVrj::postFrame()
       {
       }
-
-
     }
   }
 }
