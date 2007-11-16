@@ -2,6 +2,8 @@
 #ifndef __OSG_VIEWER_VIEWER_H__
 #define __OSG_VIEWER_VIEWER_H__
 
+#include "Oge/Export.h"
+
 #include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
 #include "Oge/OgeBase/OgeInterfaces/IFindNode.h"
 #include "Oge/OgeBase/OgeInterfaces/IViewer.h"
@@ -56,7 +58,7 @@ namespace Oge
       //  
       /////////////////////////////////////////////////////////////////////////
 
-      class Viewer : 
+      class OGE_EXPORT Viewer : 
         public osgViewer::Viewer,         
         public Oge::OgeBase::OgeInterfaces::IViewer, 
         public IFindNode

@@ -2,6 +2,17 @@
 #ifndef __OSG_QT_GL_WIDGET_H__
 #define __OSG_QT_GL_WIDGET_H__
 
+#include "Oge/Export.h"
+
+#define QT_LARGEFILE_SUPPORT
+#define QT_EDITION QT_EDITION_DESKTOP
+#define QT_DLL
+#define QT_OPENGL_LIB
+#define QT_GUI_LIB
+#define QT_CORE_LIB
+#define QT_THREAD_SUPPORT
+#define USE_QT4 1
+
 #if USE_QT4
     #include <QtCore/QString>
     #include <QtCore/QTimer>
@@ -15,9 +26,9 @@
     #define WindowFlags WFlags
 #endif
 
-#include <osgViewer/ViewerEventHandlers>
-#include <osgGA/TrackballManipulator>
-#include <osgDB/ReadFile>
+#include "osgViewer/ViewerEventHandlers"
+#include "osgGA/TrackballManipulator"
+#include "osgDB/ReadFile"
 
 namespace Oge
 { 
@@ -25,7 +36,7 @@ namespace Oge
   {
     namespace OsgQt
     {
-      class AdapterWidget : public QGLWidget
+      class OGE_EXPORT AdapterWidget : public QGLWidget
       {
           public:
 

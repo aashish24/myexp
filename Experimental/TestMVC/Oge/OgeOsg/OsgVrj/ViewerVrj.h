@@ -1,4 +1,5 @@
 
+#include "Oge/Export.h"
 #include "Oge/OgeOsg/OsgViewer/Viewer.h"
 
 #include "vrj/vrjConfig.h"
@@ -20,7 +21,7 @@ namespace Oge
 
       namespace ov = Oge::OgeOsg::OsgViewer; 
 
-      class ViewerVrj : public ov::Viewer, public vrj::OsgApp
+      class OGE_EXPORT ViewerVrj : public ov::Viewer, public vrj::OsgApp
       {
         public:     
           

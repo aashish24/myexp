@@ -2,6 +2,8 @@
 #ifndef __OSG_VIEWER_OSG_VIEW_H__
 #define __OSG_VIEWER_OSG_VIEW_H__
 
+#include "Oge/Export.h"
+
 #include "Oge/OgeBase/OgeInterfaces/IOsgView.h"
 
 namespace osgUtil
@@ -26,7 +28,7 @@ namespace Oge
   {
     namespace OsgCore
     { 
-      struct OsgView : public Oge::OgeBase::OgeInterfaces::IOsgView
+      struct OGE_EXPORT OsgView : public Oge::OgeBase::OgeInterfaces::IOsgView
       {
         typedef Oge::OgeBase::OgeInterfaces::IUnknown   IUnknown;  
         typedef Oge::OgeBase::OgeInterfaces::IOsgModel  IOsgModel;

@@ -38,6 +38,27 @@ namespace Oge
 
         return result;
       }
+
+      void ViewerVrj::preFrame()
+      {
+      }
+
+
+      void ViewerVrj::latePreFrame()
+      {
+      }
+
+
+      void ViewerVrj::intraFrame()
+      {
+      }
+
+
+      void ViewerVrj::postFrame()
+      {
+      }
+
+
     }
   }
 }

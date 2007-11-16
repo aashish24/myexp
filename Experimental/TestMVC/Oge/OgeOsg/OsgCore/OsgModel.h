@@ -2,6 +2,8 @@
 #ifndef __OSG_VIEWER_OSG_MODEL_H__
 #define __OSG_VIEWER_OSG_MODEL_H__
 
+#include "Oge/Export.h"
+
 #include "Oge/OgeBase/OgeInterfaces/IOsgModel.h"
 
 #include <vector>
@@ -29,7 +31,7 @@ namespace Oge
   {
     namespace OsgCore
     {
-      struct OsgModel : public Oge::OgeBase::OgeInterfaces::IOsgModel
+      struct OGE_EXPORT OsgModel : public Oge::OgeBase::OgeInterfaces::IOsgModel
       {
         typedef Oge::OgeBase::OgeInterfaces::IUnknown   IUnknown;
         typedef Oge::OgeBase::OgeInterfaces::IObserver  IObserver;
