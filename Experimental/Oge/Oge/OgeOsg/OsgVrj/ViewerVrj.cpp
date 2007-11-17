@@ -7,7 +7,9 @@ namespace Oge
   {
     namespace OsgVrj
     {
-      ViewerVrj::ViewerVrj( ViewerMode vm ) : Viewer( vm ) 
+      ViewerVrj::ViewerVrj( ViewerMode vm ) : 
+        Viewer( vm ), 
+        vrj::OsgApp()
       {
       }
 
@@ -56,9 +58,8 @@ namespace Oge
 
       int ViewerVrj::run()
       {
-        int result( 1 );
-          
-        // Initialize the kernel here and hand off the application. 
+        int result( 1 );          
+        
         vrj::Kernel* kernel = vrj::Kernel::instance();
 
         kernel->loadConfigFile( "simstandalone.jconf" );
