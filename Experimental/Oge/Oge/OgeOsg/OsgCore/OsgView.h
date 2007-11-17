@@ -41,6 +41,9 @@ namespace Oge
         virtual IUnknown*             queryInterface( const unsigned long& iid );
 
         virtual SceneView*            sceneView();  
+        
+        virtual IOsgModel*            getModel();
+        virtual void                  setModel( IOsgModel* model );
 
         virtual void                  update();
 

@@ -4,6 +4,8 @@
 
 #include "IView.h" 
 
+#include "IOsgModel.h"
+
 namespace osgUtil
 {
     class SceneView;
@@ -22,6 +24,9 @@ namespace Oge
         enum                                            { IID = 1607842543 };
 
         virtual SceneView*                              sceneView() = 0;
+
+        virtual IOsgModel*                              getModel() = 0;
+        virtual void                                    setModel( IOsgModel* model ) = 0;
       };
     } // namespace OgeInterfaces
   } // namespace OgeBase

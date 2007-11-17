@@ -8,6 +8,9 @@ namespace Oge
   {
     namespace OgeInterfaces
     {
+      struct IModel;
+
+
       /////////////////////////////////////////////////////////////////////////
       //
       // We should have some interface for event handling here. 
@@ -27,7 +30,7 @@ namespace Oge
 
         virtual void          contextInit() = 0; 
 
-        virtual void          setEmbeddedDisplaySize( int x, int y, int width, int height ) = 0;
+        virtual void          setEmbeddedDisplaySize( int x, int y, int width, int height ) = 0;        
 
         virtual void          update() = 0; 
 

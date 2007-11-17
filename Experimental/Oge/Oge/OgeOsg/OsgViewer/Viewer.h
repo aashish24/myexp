@@ -8,6 +8,8 @@
 #include "Oge/OgeBase/OgeInterfaces/IFindNode.h"
 #include "Oge/OgeBase/OgeInterfaces/IViewer.h"
 
+#include "Oge/OgeOsg/OsgCore/OsgView.h"
+
 #include "osgViewer/Viewer"
 
 
@@ -24,6 +26,14 @@ namespace osg
 
 namespace Oge
 { 
+  namespace OgeBase
+  {
+    namespace OgeInterfaces
+    {
+      struct IModel;
+    }
+  }
+
   namespace OgeOsg
   {
     namespace OsgCore
@@ -59,6 +69,7 @@ namespace Oge
       /////////////////////////////////////////////////////////////////////////
 
       class OGE_EXPORT Viewer : 
+        public Oge::OgeOsg::OsgCore::OsgView,
         public osgViewer::Viewer,         
         public Oge::OgeBase::OgeInterfaces::IViewer, 
         public IFindNode
@@ -66,8 +77,10 @@ namespace Oge
         public:           
 
           typedef Oge::OgeBase::OgeInterfaces::IUnknown IUnknown;
-          typedef Oge::OgeOsg::OsgCore::OsgModel        OsgModel;
-          typedef Oge::OgeOsg::OsgCore::OsgView         OsgView;
+          typedef Oge::OgeBase::OgeInterfaces::IModel   IModel;
+
+          //typedef Oge::OgeOsg::OsgCore::OsgModel        OsgModel;
+          //typedef Oge::OgeOsg::OsgCore::OsgView         OsgView;
 
                                                         Viewer( ViewerModel vMode = NORMAL );    
           virtual                                      ~Viewer();  
@@ -76,7 +89,7 @@ namespace Oge
 
           virtual void                                  contextInit();
 
-          virtual void                                  setModelData( osg::Node* );
+          virtual void                                  addDataModel( osg::Node* );
 
           virtual void                                  setEmbeddedDisplaySize( int x, int y, int width, int height );
 
@@ -103,11 +116,6 @@ namespace Oge
           int                                           _viewportY;
           int                                           _viewportWidth;
           int                                           _viewportHeight;
-  
-
-          OsgModel*                                     _model;
-          
-          OsgView*                                      _view; 
 
           ViewerModel                                   _viewerModel;
       };

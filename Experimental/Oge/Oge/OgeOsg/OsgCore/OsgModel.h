@@ -10,6 +10,7 @@
 
 namespace osg
 {
+  class Node;
   class Group;
   class MatrixTransform;
 }
@@ -46,15 +47,15 @@ namespace Oge
 
         virtual IUnknown*           queryInterface( const unsigned long& iid );
         
-        virtual Node*               root();
+        virtual osg::Node*          root();
 
-        virtual Node*               rootModel();   
+        virtual osg::Node*          rootModel();   
           
-        virtual Node*               rootNav();
+        virtual osg::Node*          rootNav();
         
-        virtual Node*               rootStatic();
+        virtual osg::Node*          rootStatic();
         
-        virtual Node*               rootScreen();    
+        virtual osg::Node*          rootScreen();    
         
         virtual void                build();
         
@@ -62,7 +63,7 @@ namespace Oge
         
         virtual void                update();
 
-        virtual void                setSceneData( Node* node ); 
+        virtual void                setSceneData( osg::Node* node ); 
 
         protected: 
 

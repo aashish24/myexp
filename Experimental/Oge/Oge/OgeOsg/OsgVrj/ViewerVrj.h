@@ -25,25 +25,31 @@ namespace Oge
       {
         public:     
           
-          virtual void  init();
+          virtual void          init();
 
-          virtual void  contextInit(); 
+          virtual void          contextInit(); 
 
-          virtual void  update(); 
+          virtual void          initScene();
 
-          virtual void  draw(); 
+          virtual osg::Group*   getScene();
 
-          virtual int   run();
+          virtual void          update(); 
+
+          virtual void          draw(); 
+
+          virtual int           run();
 
         protected: 
-            
-          virtual void  preFrame(); 
           
-          virtual void  latePreFrame(); 
+          virtual void          bufferPreDraw();
 
-          virtual void  intraFrame(); 
+          virtual void          preFrame(); 
+          
+          virtual void          latePreFrame(); 
 
-          virtual void  postFrame();               
+          virtual void          intraFrame(); 
+
+          virtual void          postFrame();               
       };
     }
   }

@@ -9,11 +9,24 @@ namespace Oge
     {
       void ViewerVrj::init()
       {
+        vrj::OsgApp::init();
       }
 
 
       void ViewerVrj::contextInit()
       {
+        vrj::OsgApp::contextInit();
+      }
+
+
+      void ViewerVrj::initScene()
+      {
+      }
+
+
+      osg::Group* ViewerVrj::getScene()
+      {
+        return this->getModel()->root()->asGroup();
       }
 
 
@@ -27,6 +40,7 @@ namespace Oge
       {
         // Call vrj::OsgApp::draw() here? 
         // Or should we write our own draw. 
+        vrj::OsgApp::draw();
       }
 
 
@@ -35,9 +49,26 @@ namespace Oge
         int result( 1 );
           
         // Initialize the kernel here and hand off the application. 
+        vrj::Kernel* kernel = vrj::Kernel::instance();
 
+        kernel->loadConfigFile( "simstandalone.jconf" );
+
+        kernel->start();        
+
+        kernel->setApplication( this ); 
+
+        kernel->waitForKernelStop();
+        
         return result;
       }
+
+
+      void ViewerVrj::bufferPreDraw()
+      {
+        glClearColor( 0.5, 0.5, 0.5, 1.0 );
+        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+      }
+
 
       void ViewerVrj::preFrame()
       {
@@ -45,7 +76,9 @@ namespace Oge
 
 
       void ViewerVrj::latePreFrame()
-      {
+      {        
+        update();
+        vrj::OsgApp::latePreFrame();
       }
 
 

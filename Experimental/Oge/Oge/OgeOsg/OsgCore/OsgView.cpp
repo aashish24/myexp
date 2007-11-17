@@ -60,6 +60,17 @@ namespace Oge
         return _sceneView;
       }
 
+      IOsgModel* OsgView::getModel()
+      {
+        return _model;
+      }
+
+
+      void OsgView::setModel( IOsgModel* model )
+      {
+        // Todo: Implement this. 
+      }
+
       void OsgView::update()
       {
         _sceneView->update();

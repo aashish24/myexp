@@ -12,15 +12,14 @@ namespace Oge
     {
 
       Viewer::Viewer( ViewerModel vModel ) : 
-        osgViewer::Viewer       (),
-        _model                  ( new Viewer::OsgModel() ) ,
-        _view                   ( new Viewer::OsgView ( _model ) ), 
-        _viewportX              ( 0 ), 
-        _viewportY              ( 0 ), 
-        _viewportWidth          ( 400 ), 
-        _viewportHeight         ( 400 ), 
-        _isDisplayWindowSizeSet ( false ),
-        _viewerModel            ( vModel )
+        OgeOsg::OsgCore::OsgView  ( new OsgCore::OsgModel() ), 
+        osgViewer::Viewer         (),        
+        _viewportX                ( 0 ), 
+        _viewportY                ( 0 ), 
+        _viewportWidth            ( 400 ), 
+        _viewportHeight           ( 400 ), 
+        _isDisplayWindowSizeSet   ( false ),
+        _viewerModel              ( vModel )
       {   
         init();
       }
@@ -34,7 +33,7 @@ namespace Oge
       void Viewer::init()
       {
         _model->build();
-        setSceneData( _view->sceneView()->getSceneData() );        
+        setSceneData( this->sceneView()->getSceneData() );        
       }
 
       
@@ -56,9 +55,9 @@ namespace Oge
       }
 
 
-      void Viewer::setModelData( osg::Node* node )
+      void Viewer::addDataModel( osg::Node* node )
       {
-        ( _model->rootModel()->asGroup() )->addChild ( node );
+        ( this->getModel()->rootModel()->asGroup() )->addChild ( node );
       }
 
 
