@@ -23,8 +23,12 @@ namespace Oge
 
       class OGE_EXPORT ViewerVrj : public ov::Viewer, public vrj::OsgApp
       {
-        public:     
-          
+        public:               
+                    
+                                ViewerVrj( ViewerMode vm =  EMBEDDED );
+
+          virtual               ~ViewerVrj();
+
           virtual void          init();
 
           virtual void          contextInit(); 

@@ -7,6 +7,16 @@ namespace Oge
   {
     namespace OsgVrj
     {
+      ViewerVrj::ViewerVrj( ViewerMode vm ) : Viewer( vm ) 
+      {
+      }
+
+
+      ViewerVrj::~ViewerVrj()
+      {
+      }
+
+
       void ViewerVrj::init()
       {
         vrj::OsgApp::init();

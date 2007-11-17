@@ -11,7 +11,7 @@ namespace Oge
     namespace OsgViewer
     {
 
-      Viewer::Viewer( ViewerModel vModel ) : 
+      Viewer::Viewer( ViewerMode vModel ) : 
         OgeOsg::OsgCore::OsgView  ( new OsgCore::OsgModel() ), 
         osgViewer::Viewer         (),        
         _viewportX                ( 0 ), 

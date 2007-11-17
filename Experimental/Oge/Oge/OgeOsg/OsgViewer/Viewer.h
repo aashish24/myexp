@@ -82,7 +82,7 @@ namespace Oge
           //typedef Oge::OgeOsg::OsgCore::OsgModel        OsgModel;
           //typedef Oge::OgeOsg::OsgCore::OsgView         OsgView;
 
-                                                        Viewer( ViewerModel vMode = NORMAL );    
+                                                        Viewer( ViewerMode vMode = NORMAL );    
           virtual                                      ~Viewer();  
           
           virtual void                                  init(); 
@@ -117,7 +117,7 @@ namespace Oge
           int                                           _viewportWidth;
           int                                           _viewportHeight;
 
-          ViewerModel                                   _viewerModel;
+          ViewerMode                                   _viewerModel;
       };
     }
   }

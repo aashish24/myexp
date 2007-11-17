@@ -24,7 +24,7 @@ namespace Oge
       {
         enum                  { IID = 2546660797 };
 
-        enum                  ViewerModel{ EMBEDDED = 1, NORMAL = 0 };
+        enum                  ViewerMode{ EMBEDDED = 1, NORMAL = 0 };
 
         virtual void          init() = 0;
 
