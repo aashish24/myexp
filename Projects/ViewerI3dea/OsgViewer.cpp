@@ -177,8 +177,10 @@ osg::Node* loadData( const std::string& file )
 osg::Node* loadData( const boost::filesystem::path& path )
 {
   if( boost::filesystem::is_directory( path ) )
-    {
-    osg::ref_ptr< osg::Group > group( new osg::Group() ); 
+  {
+    osgDB::Registry::instance()->getDataFilePathList().push_back( path.string() );
+
+    osg::ref_ptr< osg::Group > group( new osg::Group() );     
 
     boost::filesystem::directory_iterator endItr;
     boost::filesystem::directory_iterator itr( path ); 
