@@ -6,6 +6,7 @@
 #include "osgDB/ReadFile"
 
 #include "Oge/OgeOsg/OsgVrj/ViewerVrj.h"
+#include "Oge/OgeBase/OgeDev/Gamepad.h"
 
 int main( int argc, char **argv )
 {
@@ -23,7 +24,11 @@ int main( int argc, char **argv )
 
   ViewerVrj* viewer = new ViewerVrj;
 
-  viewer->addDataModel( loadedModel.get() );
+  viewer->addDataModel( loadedModel.get() );  
+
+  viewer->addInputDevice( new Oge::OgeBase::OgeDev::Gamepad() );
+
+  //viewer->init();
 
   viewer->run();
 }

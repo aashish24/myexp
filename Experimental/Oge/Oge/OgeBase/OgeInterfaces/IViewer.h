@@ -9,6 +9,7 @@ namespace Oge
     namespace OgeInterfaces
     {
       struct IModel;
+      struct IInputDevice;
 
 
       /////////////////////////////////////////////////////////////////////////
@@ -22,21 +23,23 @@ namespace Oge
 
       struct IViewer : public IUnknown
       {
-        enum                  { IID = 2546660797 };
+        enum{ IID = 2546660797 };
 
-        enum                  ViewerMode{ EMBEDDED = 1, NORMAL = 0 };
-
+        enum ViewerMode{ EMBEDDED = 1, NORMAL = 0 };                
+        
         virtual void          init() = 0;
 
-        virtual void          contextInit() = 0; 
-
-        virtual void          setEmbeddedDisplaySize( int x, int y, int width, int height ) = 0;        
+        virtual void          contextInit() = 0;         
 
         virtual void          update() = 0; 
 
         virtual void          draw()= 0; 
 
         virtual int           run() = 0;
+
+        virtual void          addInputDevice( IInputDevice* inputDevice ) = 0;
+
+        virtual void          setEmbeddedDisplaySize( int x, int y, int width, int height ) = 0;
       };
     } // namespace OgeInterfaces
   } // namespace OgeBase

@@ -1,8 +1,10 @@
 
-#include "Viewer.h"
+#include "Oge/OgeOsg/OsgViewer/Viewer.h"
 
 #include "Oge/OgeOsg/OsgCore/OsgModel.h" 
 #include "Oge/OgeOsg/OsgCore/OsgView.h" 
+
+#include "oge/OgeBase/OgeInterfaces/IInputDevice.h"
 
 namespace Oge
 {
@@ -21,7 +23,7 @@ namespace Oge
         _isDisplayWindowSizeSet   ( false ),
         _viewerModel              ( vModel )
       {   
-        init();
+        //init();
       }
 
 
@@ -33,7 +35,14 @@ namespace Oge
       void Viewer::init()
       {
         _model->build();
-        setSceneData( this->sceneView()->getSceneData() );        
+        setSceneData( this->sceneView()->getSceneData() );       
+
+        // Now initialize the devices. 
+        std::vector< IInputDevice* >::iterator itr;
+        for( itr = _inputDevices.begin(); itr != _inputDevices.end(); ++itr )
+        {
+          (*itr)->init();
+        }
       }
 
       
@@ -85,6 +94,10 @@ namespace Oge
 
       void Viewer::update()
       {
+        for( size_t i=0; i < _inputDevices.size(); ++i )
+        {
+          _inputDevices[ i ]->update();
+        }
       }
 
 
@@ -110,6 +123,15 @@ namespace Oge
       void Viewer::setSceneData( osg::Node* node )
       {
         osgViewer::Viewer::setSceneData( node );
+      }
+
+
+      void Viewer::addInputDevice( IInputDevice *inputDevice )
+      {
+        if( std::find( _inputDevices.begin(), _inputDevices.end(), inputDevice ) == _inputDevices.end() )
+        {
+          _inputDevices.push_back( inputDevice );
+        }
       }
     }
   }

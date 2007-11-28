@@ -12,7 +12,7 @@ namespace Oge
     {
       struct IView : public IObserver 
       {
-        enum                  { IID = 9514518190 };         
+        enum{ IID = 9514518190 };         
 
         virtual void          draw() = 0;
       };      

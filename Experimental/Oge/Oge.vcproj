@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="4"
 				AdditionalIncludeDirectories="./;&quot;$(OSG_INC_DIR)&quot;;&quot;$(QT_INC_DIR)\Qt&quot;;&quot;$(QT_INC_DIR)\QtGui&quot;;&quot;$(QT_INC_DIR)\QtOpenGL&quot;;&quot;$(QT_INC_DIR)&quot;;&quot;$(VJ_BASE_DIR)/include&quot;;&quot;$(GMTL_INC_DIR)&quot;;$(BOOST_INC_DIR);$(NSPR_INC_DIR);"
-				PreprocessorDefinitions="WIN32;UNICODE;_DEBUG;_CONSOLE;OGE_BUILD_SHARED_LIBRARY;"
+				PreprocessorDefinitions="WIN32;UNICODE;_DEBUG;_CONSOLE;OGE_BUILD_SHARED_LIBRARY;__WIN32__=1;__x86__=1;__NT__=1;__OSVERSION__=5;USE_core_stub_in_nt_dll;USE_core_stub_in_nt_dll_NOT_DEFINED_Subject"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="3"
@@ -196,7 +196,27 @@
 						Name="OgeInterfaces"
 						>
 						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IEvent.h"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeBase\OgeInterfaces\IFindNode.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IFunctor.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInput.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputData.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputDevice.h"
 							>
 						</File>
 						<File
@@ -229,8 +249,36 @@
 						</File>
 					</Filter>
 					<Filter
+						Name="OgeController"
+						>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeController\InputElement.h"
+							>
+						</File>
+					</Filter>
+					<Filter
 						Name="OgeCore"
 						>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Event.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Input.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\MemberFunctor.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OgeDev"
+						>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeDev\Gamepad.h"
+							>
+						</File>
 					</Filter>
 				</Filter>
 				<Filter
@@ -293,6 +341,22 @@
 						</File>
 						<File
 							RelativePath=".\Oge\OgeOsg\OsgVrj\ViewerVrj.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="OgeVrj"
+					>
+					<Filter
+						Name="VrjController"
+						>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjController\VrjDigitalInput.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjController\VrjDigitalInput.h"
 							>
 						</File>
 					</Filter>

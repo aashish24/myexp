@@ -18,13 +18,14 @@ namespace Oge
       //    - viewer preferenced file
       //    - and may be some other options. 
       // Add frame capture functionality ( better via a plugin )
+      // How we add the devices? 
+      // How we add functions that needs to be called? 
 
       namespace ov = Oge::OgeOsg::OsgViewer; 
 
       class OGE_EXPORT ViewerVrj : public ov::Viewer, public vrj::OsgApp
       {
-        public:               
-                    
+        public: 
                                 ViewerVrj( ViewerMode vm =  EMBEDDED );
 
           virtual               ~ViewerVrj();

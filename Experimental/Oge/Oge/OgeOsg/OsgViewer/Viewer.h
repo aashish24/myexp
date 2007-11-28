@@ -31,6 +31,7 @@ namespace Oge
     namespace OgeInterfaces
     {
       struct IModel;
+      struct IInputDevice;
     }
   }
 
@@ -58,6 +59,7 @@ namespace Oge
       /////////////////////////////////////////////////////////////////////////
 
       typedef Oge::OgeBase::OgeInterfaces::IFindNode< osg::Node > IFindNode;      
+      typedef Oge::OgeBase::OgeInterfaces::IInputDevice           IInputDevice;
 
 
       /////////////////////////////////////////////////////////////////////////
@@ -78,18 +80,21 @@ namespace Oge
 
           typedef Oge::OgeBase::OgeInterfaces::IUnknown IUnknown;
           typedef Oge::OgeBase::OgeInterfaces::IModel   IModel;
-
-          //typedef Oge::OgeOsg::OsgCore::OsgModel        OsgModel;
-          //typedef Oge::OgeOsg::OsgCore::OsgView         OsgView;
-
+          
                                                         Viewer( ViewerMode vMode = NORMAL );    
           virtual                                      ~Viewer();  
-          
+
           virtual void                                  init(); 
 
           virtual void                                  contextInit();
 
           virtual void                                  addDataModel( osg::Node* );
+          
+          virtual void                                  update();
+           
+          virtual void                                  draw();
+
+          virtual int                                   run(); 
 
           virtual void                                  setEmbeddedDisplaySize( int x, int y, int width, int height );
 
@@ -97,11 +102,7 @@ namespace Oge
 
           virtual IUnknown*                             queryInterface( const unsigned long& iid );
 
-          virtual void                                  update();
-           
-          virtual void                                  draw();
-
-          virtual int                                   run(); 
+          virtual void                                  addInputDevice( IInputDevice* inputDevice );
 
         protected: 
 
@@ -118,6 +119,8 @@ namespace Oge
           int                                           _viewportHeight;
 
           ViewerMode                                   _viewerModel;
+
+          std::vector< IInputDevice* >                 _inputDevices;
       };
     }
   }

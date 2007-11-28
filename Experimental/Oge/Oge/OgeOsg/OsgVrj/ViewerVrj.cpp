@@ -22,6 +22,7 @@ namespace Oge
       void ViewerVrj::init()
       {
         vrj::OsgApp::init();
+        Viewer::init();
       }
 
 
@@ -41,10 +42,10 @@ namespace Oge
         return this->getModel()->root()->asGroup();
       }
 
-
+      // Called by the latePreFrame();
       void ViewerVrj::update()
       {
-        // Called by the latePreFrame();
+        Viewer::update();
       }
 
 
@@ -62,6 +63,7 @@ namespace Oge
         
         vrj::Kernel* kernel = vrj::Kernel::instance();
 
+        // @Todo: This is hardcoded as of now. 
         kernel->loadConfigFile( "simstandalone.jconf" );
 
         kernel->start();        

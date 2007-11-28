@@ -19,10 +19,10 @@ namespace Oge
     {
       struct IOsgView : IView 
       {
+        enum{ IID = 1607842543 };
+
         typedef osgUtil::SceneView                      SceneView;
         
-        enum                                            { IID = 1607842543 };
-
         virtual SceneView*                              sceneView() = 0;
 
         virtual IOsgModel*                              getModel() = 0;
