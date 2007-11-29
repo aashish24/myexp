@@ -38,10 +38,10 @@ namespace Oge
         setSceneData( this->sceneView()->getSceneData() );       
 
         // Now initialize the devices. 
-        std::vector< IInputDevice* >::iterator itr;
+        std::map< const std::string, IInputDevice* >::iterator itr;
         for( itr = _inputDevices.begin(); itr != _inputDevices.end(); ++itr )
         {
-          (*itr)->init();
+          itr->second->init();
         }
       }
 
@@ -94,9 +94,10 @@ namespace Oge
 
       void Viewer::update()
       {
-        for( size_t i=0; i < _inputDevices.size(); ++i )
+        std::map< const std::string, IInputDevice* >::iterator itr;
+        for( itr = _inputDevices.begin(); itr != _inputDevices.end(); ++itr )
         {
-          _inputDevices[ i ]->update();
+          itr->second->update();
         }
       }
 
@@ -126,11 +127,25 @@ namespace Oge
       }
 
 
-      void Viewer::addInputDevice( IInputDevice *inputDevice )
+      void Viewer::addInputDevice( const std::string& deviceName, IInputDevice *inputDevice )
       {
-        if( std::find( _inputDevices.begin(), _inputDevices.end(), inputDevice ) == _inputDevices.end() )
+
+        if( _inputDevices.find( deviceName ) == _inputDevices.end() )
         {
-          _inputDevices.push_back( inputDevice );
+          _inputDevices[ deviceName ] = inputDevice;
+        }
+      }
+
+
+      IInputDevice* Viewer::getInputDevice( const std::string& deviceName )
+      {
+        if( _inputDevices.find( deviceName ) != _inputDevices.end() )
+        {
+          return _inputDevices.find( deviceName )->second;
+        }
+        else
+        {
+          return 0x00;
         }
       }
     }

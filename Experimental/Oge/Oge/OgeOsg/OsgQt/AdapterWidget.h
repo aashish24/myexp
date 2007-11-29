@@ -4,6 +4,8 @@
 
 #include "Oge/Export.h"
 
+#include "Oge/OgeBase/OgeCore/Referenced.h"
+
 #define QT_LARGEFILE_SUPPORT
 #define QT_EDITION QT_EDITION_DESKTOP
 #define QT_DLL
@@ -36,7 +38,7 @@ namespace Oge
   {
     namespace OsgQt
     {
-      class OGE_EXPORT AdapterWidget : public QGLWidget
+      class OGE_EXPORT AdapterWidget : public QGLWidget, public OgeBase::OgeCore::Referenced
       {
           public:
 
@@ -45,13 +47,14 @@ namespace Oge
                              const QGLWidget * shareWidget = 0, 
                              WindowFlags f = 0 );
 
-              virtual ~AdapterWidget() {}
+              
 
               osgViewer::GraphicsWindow*                        getGraphicsWindow() { return _gw.get(); }
               const osgViewer::GraphicsWindow*                  getGraphicsWindow() const { return _gw.get(); }
 
           protected:
 
+              virtual                                           ~AdapterWidget() {}
               void                                              init();
 
               virtual void                                      resizeGL( int width, int height );

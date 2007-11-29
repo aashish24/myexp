@@ -1,12 +1,35 @@
 
 #include "Oge/OgeOsg/OsgVrj/ViewerVrj.h" 
 
+#include "Oge/OgeBase/OgeDev/Gamepad.h"
+
+#include "boost/bind.hpp" 
+
+#include <iostream>
+
+#include "Oge/OgeBase/OgeInterfaces/IFunctor.h"
+
 namespace Oge
 {
   namespace OgeOsg
   {
     namespace OsgVrj
     {
+
+      struct Print : public Oge::OgeBase::OgeInterfaces::IFunctor 
+      {
+        virtual void operator()( )
+        {
+          std::cout << "Test: " << std::endl;
+        }
+
+        virtual IUnknown* queryInterface( const unsigned long& iid )
+        {
+          return 0x00;
+        }
+      };
+
+
       ViewerVrj::ViewerVrj( ViewerMode vm ) : 
         Viewer( vm ), 
         vrj::OsgApp()
@@ -23,6 +46,8 @@ namespace Oge
       {
         vrj::OsgApp::init();
         Viewer::init();
+
+        configDevices();
       }
 
 
@@ -103,6 +128,27 @@ namespace Oge
       void ViewerVrj::postFrame()
       {
       }
-    }
+
+
+      void ViewerVrj::configDevices()
+      {
+        this->addInputDevice( "Gamepad01", new Oge::OgeBase::OgeDev::Gamepad() );
+        this->configGamepad();
+      }
+
+
+      void ViewerVrj::configGamepad()
+      {
+        Print* print = new Print();
+
+        Oge::OgeBase::OgeDev::Gamepad* gp =  dynamic_cast< Oge::OgeBase::OgeDev::Gamepad* >( this->getInputDevice( "Gamepad01" ) );
+        if( gp )
+        { 
+          gp->getInput( 0 )->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyPress, print, true ); 
+        }
+      }
+    } 
   }
 }
+
+    

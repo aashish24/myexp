@@ -44,6 +44,7 @@ namespace Oge
 
           virtual int           run();
 
+        
         protected: 
           
           virtual void          bufferPreDraw();
@@ -55,6 +56,13 @@ namespace Oge
           virtual void          intraFrame(); 
 
           virtual void          postFrame();               
+
+      
+        private:
+        
+          void                  configDevices(); 
+
+          void                  configGamepad();
       };
     }
   }

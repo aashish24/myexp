@@ -6,6 +6,8 @@
 
 #include "Oge/OgeBase/OgeInterfaces/IOsgModel.h"
 
+#include "Oge/OgeBase/OgeCore/Referenced.h"
+
 #include <vector>
 
 namespace osg
@@ -32,7 +34,7 @@ namespace Oge
   {
     namespace OsgCore
     {
-      struct OGE_EXPORT OsgModel : public Oge::OgeBase::OgeInterfaces::IOsgModel
+      struct OGE_EXPORT OsgModel : public Oge::OgeBase::OgeInterfaces::IOsgModel,public OgeBase::OgeCore::Referenced
       {
         typedef Oge::OgeBase::OgeInterfaces::IUnknown   IUnknown;
         typedef Oge::OgeBase::OgeInterfaces::IObserver  IObserver;
@@ -41,9 +43,7 @@ namespace Oge
         typedef osg::Group                              Group;
         typedef osg::MatrixTransform                    MatrixTransform;
 
-        OsgModel();
-
-       ~OsgModel();
+        OsgModel();       
 
         virtual IUnknown*           queryInterface( const unsigned long& iid );
         
@@ -64,6 +64,12 @@ namespace Oge
         virtual void                update();
 
         virtual void                setSceneData( osg::Node* node ); 
+
+
+        protected: 
+          
+          virtual                   ~OsgModel();
+
 
         protected: 
 

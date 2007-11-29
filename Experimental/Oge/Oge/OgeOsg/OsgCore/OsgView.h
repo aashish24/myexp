@@ -6,6 +6,8 @@
 
 #include "Oge/OgeBase/OgeInterfaces/IOsgView.h"
 
+#include "Oge/OgeBase/OgeCore/Referenced.h" 
+
 namespace osgUtil
 {
   class SceneView;
@@ -28,7 +30,7 @@ namespace Oge
   {
     namespace OsgCore
     { 
-      struct OGE_EXPORT OsgView : public Oge::OgeBase::OgeInterfaces::IOsgView
+      struct OGE_EXPORT OsgView : public Oge::OgeBase::OgeInterfaces::IOsgView, public OgeBase::OgeCore::Referenced
       {
         typedef Oge::OgeBase::OgeInterfaces::IUnknown   IUnknown;  
         typedef Oge::OgeBase::OgeInterfaces::IOsgModel  IOsgModel;
@@ -36,8 +38,7 @@ namespace Oge
         typedef osgUtil::SceneView                      SceneView;  
 
         OsgView( IOsgModel* model ); 
-       ~OsgView(); 
-
+       
         virtual IUnknown*             queryInterface( const unsigned long& iid );
 
         virtual SceneView*            sceneView();  
@@ -48,7 +49,11 @@ namespace Oge
         virtual void                  update();
 
         virtual void                  draw();
-        
+       
+
+        protected: 
+      
+          virtual                     ~OsgView();    
 
         protected: 
 

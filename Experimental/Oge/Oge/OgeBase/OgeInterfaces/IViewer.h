@@ -37,7 +37,9 @@ namespace Oge
 
         virtual int           run() = 0;
 
-        virtual void          addInputDevice( IInputDevice* inputDevice ) = 0;
+        virtual void          addInputDevice( const std::string& deviceName, IInputDevice* inputDevice ) = 0;
+
+        virtual IInputDevice* getInputDevice( const std::string& deviceName ) = 0;
 
         virtual void          setEmbeddedDisplaySize( int x, int y, int width, int height ) = 0;
       };

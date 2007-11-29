@@ -102,7 +102,9 @@ namespace Oge
 
           virtual IUnknown*                             queryInterface( const unsigned long& iid );
 
-          virtual void                                  addInputDevice( IInputDevice* inputDevice );
+          virtual void                                  addInputDevice( const std::string& deviceName, IInputDevice* inputDevice );
+
+          virtual IInputDevice*                         getInputDevice( const std::string& deviceName );
 
         protected: 
 
@@ -111,16 +113,16 @@ namespace Oge
 
         protected: 
         
-          bool                                          _isDisplayWindowSizeSet;
+          bool                                                            _isDisplayWindowSizeSet;
 
-          int                                           _viewportX;
-          int                                           _viewportY;
-          int                                           _viewportWidth;
-          int                                           _viewportHeight;
+          int                                                             _viewportX;
+          int                                                             _viewportY;
+          int                                                             _viewportWidth;
+          int                                                             _viewportHeight;
 
-          ViewerMode                                   _viewerModel;
+          ViewerMode                                                      _viewerModel;
 
-          std::vector< IInputDevice* >                 _inputDevices;
+          std::map< const std::string, IInputDevice* >                    _inputDevices;
       };
     }
   }
