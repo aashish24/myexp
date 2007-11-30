@@ -2,10 +2,12 @@
 #ifndef __OGE_CORE_SMARTPOINTER_H__
 #define __OGE_CORE_SMARTPOINTER_H__
 
-namespace Neiv
+namespace Oge
 {
-  namespace Pointer
+  namespace OgeBase
   {    
+    namespace OgeCore
+    {
 	    template< typename T > 
       class SmartPointer 
 	    {
@@ -239,7 +241,7 @@ namespace Neiv
 	    };
     }
   }
-
+}
 
 #endif // __OGE_CORE_SMARTPOINTER_H__
 

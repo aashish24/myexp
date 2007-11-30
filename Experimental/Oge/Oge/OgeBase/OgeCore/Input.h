@@ -2,11 +2,14 @@
 #ifndef __OGE_CORE_INPUT_H__
 #define __OGE_CORE_INPUT_H__
 
+#include "Oge/Export.h"
+
 #include "Oge/OgeBase/OgeInterfaces/IFunctor.h"
 #include "Oge/OgeBase/OgeInterfaces/IInput.h"
 #include "Oge/OgeBase/OgeInterfaces/IEvent.h"
 
 #include "Oge/OgeBase/OgeCore/Referenced.h"
+#include "Oge/OgeBase/OgeCore/Pointer.h"
 
 #include <vector>
 #include <map>
@@ -17,7 +20,7 @@ namespace Oge
   {
     namespace OgeCore
     {
-      struct Input : public OgeInterfaces::IInput, public Referenced
+      struct OGE_EXPORT Input : public OgeInterfaces::IInput, public Referenced
       {
         typedef OgeInterfaces::IFunctor                     IFunctor; 
         typedef OgeInterfaces::IEvent                       IEvent;         
@@ -26,6 +29,8 @@ namespace Oge
         typedef std::pair< Type, std::vector< Pair > >      BasePair;   
 
         typedef std::map< Type, std::vector < Pair > > Callbacks;          
+
+        OGE_DELCARE_SMART_PTR( Input );
 
         virtual void addActionCallback( IEvent::Type type, IFunctor* ftor, bool executeNext= true )
         {        

@@ -224,6 +224,10 @@
 							>
 						</File>
 						<File
+							RelativePath=".\INavigation.h"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeBase\OgeInterfaces\IObserver.h"
 							>
 						</File>
@@ -251,14 +255,14 @@
 					<Filter
 						Name="OgeController"
 						>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeController\InputElement.h"
-							>
-						</File>
 					</Filter>
 					<Filter
 						Name="OgeCore"
 						>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Event.cpp"
+							>
+						</File>
 						<File
 							RelativePath=".\Oge\OgeBase\OgeCore\Event.h"
 							>
@@ -268,13 +272,37 @@
 							>
 						</File>
 						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\MemberFunctor.cpp"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeBase\OgeCore\MemberFunctor.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Pointer.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Referenced.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Referenced.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\SmartPointer.h"
 							>
 						</File>
 					</Filter>
 					<Filter
 						Name="OgeDev"
 						>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeDev\Gamepad.cpp"
+							>
+						</File>
 						<File
 							RelativePath=".\Oge\OgeBase\OgeDev\Gamepad.h"
 							>

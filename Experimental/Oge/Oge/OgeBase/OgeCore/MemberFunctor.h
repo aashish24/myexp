@@ -3,45 +3,43 @@
 #ifndef __OGE_CORE_MEMBER_FUNCTOR_H__
 #define __OGE_CORE_MEMBER_FUNCTOR_H__
 
+#include "Oge/Export.h"
+
+#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
 #include "Oge/OgeBase/OgeInterfaces/IFunctor.h"
 
 #include "Oge/OgeBase/OgeCore/Referenced.h"
+#include "Oge/OgeBase/OgeCore/Pointer.h"
 
 namespace Oge
 {
   namespace OgeBase 
   {
     namespace OgeCore
-    {
+    { 
       template< typename T >
-      struct MemberFunctor : public Oge::OgeBase::OgeInterfaces::IFunctor, public Referenced
+      struct OGE_EXPORT MemberFunctor : public Oge::OgeBase::OgeInterfaces::IFunctor, public Referenced
       {
-        typedef void ( T::*FPtr )( );
+        typedef void                ( T::*FPtr )( );
 
-        MemberFunctor( T* obj, FPtr fPtr ) : 
-          _obj( obj ), 
-          _fPtr( fPtr )
-        {
-        }
-          
-        virtual void operator()( )
-        {
-          ( _obj->*_fPtr )();
-        }
+                                    OGE_DELCARE_SMART_PTR( MemberFunctor );
 
-        IUnknown* queryInterface( const unsigned long& iid )
-        {
-          return 0x00;
-        }
 
-        T*    _obj;
-        FPtr  _fPtr;
+                                    MemberFunctor( T* obj, FPtr fPtr );
+        
+
+        virtual void                operator()( );
+
+
+        OgeInterfaces::IUnknown*    queryInterface( const unsigned long& iid );
+
+
+        T*                          _obj;
+        FPtr                        _fPtr;
 
         protected:
           
-          virtual ~MemberFunctor()
-          {
-          }
+          virtual                  ~MemberFunctor();
       };
     }
   }

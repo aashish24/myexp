@@ -144,6 +144,9 @@ namespace Oge
         Oge::OgeBase::OgeDev::Gamepad* gp =  dynamic_cast< Oge::OgeBase::OgeDev::Gamepad* >( this->getInputDevice( "Gamepad01" ) );
         if( gp )
         { 
+          // @Temp
+          // This is an example. 
+          gp->getInput( 0 )->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyPress, print, false ); 
           gp->getInput( 0 )->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyPress, print, true ); 
         }
       }

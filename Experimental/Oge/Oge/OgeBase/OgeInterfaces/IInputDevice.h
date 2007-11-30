@@ -2,6 +2,8 @@
 #ifndef __OGE_INTERFACES_I_INPUT_DEVICE_H__
 #define __OGE_INTERFACES_I_INPUT_DEVICE_H__
 
+#include <string>
+
 namespace Oge 
 {
   namespace OgeBase
