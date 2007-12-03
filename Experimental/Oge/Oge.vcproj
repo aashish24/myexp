@@ -196,6 +196,10 @@
 						Name="OgeInterfaces"
 						>
 						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\ICamera.h"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeBase\OgeInterfaces\IEvent.h"
 							>
 						</File>
@@ -221,10 +225,6 @@
 						</File>
 						<File
 							RelativePath=".\Oge\OgeBase\OgeInterfaces\IModel.h"
-							>
-						</File>
-						<File
-							RelativePath=".\INavigation.h"
 							>
 						</File>
 						<File
@@ -259,6 +259,14 @@
 					<Filter
 						Name="OgeCore"
 						>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Camera.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Camera.h"
+							>
+						</File>
 						<File
 							RelativePath=".\Oge\OgeBase\OgeCore\Event.cpp"
 							>
