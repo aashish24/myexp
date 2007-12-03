@@ -21,7 +21,7 @@ namespace Oge
     namespace OgeInterfaces
     {
       struct IUnknown; 
-      struct IInput;  
+      struct IInput;        
     }
 
     namespace OgeDev
@@ -35,10 +35,12 @@ namespace Oge
           }
       };
 
-      class OGE_EXPORT Gamepad : public  OgeInterfaces::IInputDevice, public OgeCore::Referenced
+      class OGE_EXPORT Gamepad : public  OgeInterfaces::IInputDevice
       {
         public:
-      
+                                                                
+                                                              OGE_DELCARE_SMART_PTR( Gamepad ); 
+
                                                               Gamepad();
 
 

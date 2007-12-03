@@ -3,11 +3,13 @@
 
 #include "Oge/OgeBase/OgeDev/Gamepad.h"
 
+#include "Oge/OgeBase/OgeInterfaces/IFunctor.h"
+
+#include "Oge/OgeBase/OgeCore/MakeFunctor.h"
+
 #include "boost/bind.hpp" 
 
 #include <iostream>
-
-#include "Oge/OgeBase/OgeInterfaces/IFunctor.h"
 
 namespace Oge
 {
@@ -15,21 +17,6 @@ namespace Oge
   {
     namespace OsgVrj
     {
-
-      struct Print : public Oge::OgeBase::OgeInterfaces::IFunctor 
-      {
-        virtual void operator()( )
-        {
-          std::cout << "Test: " << std::endl;
-        }
-
-        virtual IUnknown* queryInterface( const unsigned long& iid )
-        {
-          return 0x00;
-        }
-      };
-
-
       ViewerVrj::ViewerVrj( ViewerMode vm ) : 
         Viewer( vm ), 
         vrj::OsgApp()
@@ -144,15 +131,24 @@ namespace Oge
 
       void ViewerVrj::configGamepad()
       {
-        Print* print = new Print();
+        Print* print = new Print( this );
+        Print2*print2 = new Print2( this );  
 
         Oge::OgeBase::OgeDev::Gamepad* gp =  dynamic_cast< Oge::OgeBase::OgeDev::Gamepad* >( this->getInputDevice( "Gamepad01" ) );
         if( gp )
         { 
           // @Temp
           // This is an example. 
-          gp->getInput( 0 )->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyPress, print, false ); 
-          gp->getInput( 0 )->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyPress, print, true ); 
+          //gp->getInput( 0 )->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyDown, print, false ); 
+          //gp->getInput( 1 )->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyDown, print2, true ); 
+          //gp->getInput( 1 )->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyDown, OgeBase::OgeCore::MakeMyFunctor( boost::bind( &Camera::move, this->getCamera(), _1 )( 1.0 ) ), true ); 
+          
+          //Oge::OgeBase::OgeInterfaces::IFunctor* functor = 
+          //   new Oge::OgeBase::OgeCore::MakeFunctor( boost::bind( &Oge::OgeBase::OgeCore::Camera::move, 
+          //  dynamic_cast< Oge::OgeBase::OgeCore::Camera* >( this->getCamera() ), _1 ) );
+
+          //gp->getInput( 1 )->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyDown, functor, false );
+                                                
         }
       }
     } 

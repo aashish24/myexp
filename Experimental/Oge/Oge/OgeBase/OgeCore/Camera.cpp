@@ -22,12 +22,14 @@ namespace Oge
       }
 
 
-      void Camera::move( float speed ) 
+      float Camera::move( float speed ) 
       {
         gmtl::Vec3f dir = _view - _pos;
         gmtl::normalize( dir );
 
         _pos = _pos + dir * speed;
+
+        return 1.0;
       }
 
 

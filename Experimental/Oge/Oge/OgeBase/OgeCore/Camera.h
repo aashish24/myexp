@@ -31,7 +31,7 @@ namespace Oge
                                  float viewX, float viewY,  float viewZ, 
                                  float upX,   float upY,    float upZ );
 
-          void              move( float speed );
+          float             move( float speed );
 
           void              moveWorld( float delX, float delY, float delZ  );
 

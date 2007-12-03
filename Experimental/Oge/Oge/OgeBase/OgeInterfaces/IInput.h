@@ -23,7 +23,7 @@ namespace Oge
 
         virtual void          addActionCallback( IEvent::Type eventType, IFunctor* ftor, bool executeNext ) = 0; 
         virtual void          setActionCallback( IEvent::Type eventType, IFunctor* ftor, bool executeNext ) = 0; 
-
+       
         virtual void          call( IEvent::Type type ) = 0;
       };
     }

@@ -21,7 +21,7 @@ namespace Oge
         _viewportWidth            ( 400 ), 
         _viewportHeight           ( 400 ), 
         _isDisplayWindowSizeSet   ( false ),
-        _viewerModel              ( vModel )
+        _viewerMode              ( vModel )
       {   
         //init();
       }
@@ -38,7 +38,7 @@ namespace Oge
         setSceneData( this->sceneView()->getSceneData() );       
 
         // Now initialize the devices. 
-        std::map< const std::string, IInputDevice* >::iterator itr;
+        std::map< const std::string, IInputDevice::RefPtr >::iterator itr;
         for( itr = _inputDevices.begin(); itr != _inputDevices.end(); ++itr )
         {
           itr->second->init();
@@ -56,7 +56,7 @@ namespace Oge
 
       void Viewer::contextInit()
       {        
-        if( _viewerModel == EMBEDDED )
+        if( _viewerMode == EMBEDDED )
         {
           this->setUpViewerAsEmbeddedInWindow
             ( _viewportX, _viewportY, _viewportWidth, _viewportHeight );
@@ -94,7 +94,7 @@ namespace Oge
 
       void Viewer::update()
       {
-        std::map< const std::string, IInputDevice* >::iterator itr;
+        std::map< const std::string, IInputDevice::RefPtr >::iterator itr;
         for( itr = _inputDevices.begin(); itr != _inputDevices.end(); ++itr )
         {
           itr->second->update();
@@ -111,7 +111,7 @@ namespace Oge
 
       int Viewer::run()
       {
-        if( _viewerModel != EMBEDDED )
+        if( _viewerMode != EMBEDDED )
         {
           osgViewer::Viewer::run();
         }
@@ -143,7 +143,7 @@ namespace Oge
       {
         if( _inputDevices.find( deviceName ) != _inputDevices.end() )
         {
-          return _inputDevices.find( deviceName )->second;
+          return _inputDevices.find( deviceName )->second.get();
         }
         else
         {

@@ -7,6 +7,7 @@
 #include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
 #include "Oge/OgeBase/OgeInterfaces/IFindNode.h"
 #include "Oge/OgeBase/OgeInterfaces/IViewer.h"
+#include "Oge/OgeBase/OgeInterfaces/IInputDevice.h"
 
 #include "Oge/OgeOsg/OsgCore/OsgView.h"
 
@@ -30,8 +31,7 @@ namespace Oge
   {
     namespace OgeInterfaces
     {
-      struct IModel;
-      struct IInputDevice;
+      struct IModel;      
     }
   }
 
@@ -114,16 +114,16 @@ namespace Oge
 
         protected: 
         
-          bool                                           _isDisplayWindowSizeSet;
+          bool                                                _isDisplayWindowSizeSet;
 
-          int                                            _viewportX;
-          int                                            _viewportY;
-          int                                            _viewportWidth;
-          int                                            _viewportHeight;
+          int                                                 _viewportX;
+          int                                                 _viewportY;
+          int                                                 _viewportWidth;
+          int                                                 _viewportHeight;
 
-          ViewerMode                                     _viewerModel;
+          ViewerMode                                          _viewerMode;
 
-          std::map< const std::string, IInputDevice* >   _inputDevices;
+          std::map< const std::string, IInputDevice::RefPtr > _inputDevices;
       };
     }
   }

@@ -280,6 +280,10 @@
 							>
 						</File>
 						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\MakeFunctor.h"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeBase\OgeCore\MemberFunctor.cpp"
 							>
 						</File>
