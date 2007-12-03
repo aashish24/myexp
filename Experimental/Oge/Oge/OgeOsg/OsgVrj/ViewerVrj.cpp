@@ -101,6 +101,11 @@ namespace Oge
       }
 
 
+      bi::ICamera* ViewerVrj::getCamera( const unsigned int& index ) 
+      {
+        return Oge::OgeOsg::OsgCore::OsgView::getCamera( index );
+      }
+
       void ViewerVrj::bufferPreDraw()
       {
         glClearColor( 0.5, 0.5, 0.5, 1.0 );

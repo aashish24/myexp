@@ -31,8 +31,10 @@ namespace Oge
       {
         public: 
 
-          VrjDigitalInput( const std::string& id, 
-                           const std::string& proxy );
+                                                    OGE_DELCARE_SMART_PTR( VrjDigitalInput );
+
+                                                    VrjDigitalInput( const std::string& id, 
+                                                                     const std::string& proxy );
                   
           virtual void                              init(); 
 

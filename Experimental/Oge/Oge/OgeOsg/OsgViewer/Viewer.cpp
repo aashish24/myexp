@@ -99,6 +99,8 @@ namespace Oge
         {
           itr->second->update();
         }
+
+        OsgView::update();
       }
 
 

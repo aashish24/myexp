@@ -21,14 +21,15 @@ namespace Oge
       // How we add the devices? 
       // How we add functions that needs to be called? 
 
+      namespace bi = Oge::OgeBase::OgeInterfaces;
       namespace ov = Oge::OgeOsg::OsgViewer; 
 
       class OGE_EXPORT ViewerVrj : public ov::Viewer, public vrj::OsgApp
       {
         public: 
-                                ViewerVrj( ViewerMode vm =  EMBEDDED );
+                                OGE_DELCARE_SMART_PTR( ViewerVrj );     
 
-          virtual               ~ViewerVrj();
+                                ViewerVrj( ViewerMode vm =  EMBEDDED );
 
           virtual void          init();
 
@@ -44,9 +45,13 @@ namespace Oge
 
           virtual int           run();
 
+          virtual bi::ICamera*  getCamera( const unsigned int& index = 0 );
+
         
         protected: 
           
+          virtual              ~ViewerVrj();
+
           virtual void          bufferPreDraw();
 
           virtual void          preFrame(); 

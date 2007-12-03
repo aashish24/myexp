@@ -76,53 +76,54 @@ namespace Oge
         public Oge::OgeBase::OgeInterfaces::IViewer, 
         public IFindNode
       {
-        public:           
+          public: 
+                                                          OGE_DELCARE_SMART_PTR( Viewer ); 
 
-          typedef Oge::OgeBase::OgeInterfaces::IUnknown IUnknown;
-          typedef Oge::OgeBase::OgeInterfaces::IModel   IModel;
-          
-                                                        Viewer( ViewerMode vMode = NORMAL );    
-          virtual                                      ~Viewer();  
+            typedef Oge::OgeBase::OgeInterfaces::IUnknown IUnknown;
+            typedef Oge::OgeBase::OgeInterfaces::IModel   IModel;
+            
+                                                          Viewer( ViewerMode vMode = NORMAL );    
+            
+            virtual void                                  init(); 
 
-          virtual void                                  init(); 
+            virtual void                                  contextInit();
 
-          virtual void                                  contextInit();
+            virtual void                                  addDataModel( osg::Node* );
+            
+            virtual void                                  update();
+             
+            virtual void                                  draw();
 
-          virtual void                                  addDataModel( osg::Node* );
-          
-          virtual void                                  update();
-           
-          virtual void                                  draw();
+            virtual int                                   run(); 
 
-          virtual int                                   run(); 
+            virtual void                                  setEmbeddedDisplaySize( int x, int y, int width, int height );
 
-          virtual void                                  setEmbeddedDisplaySize( int x, int y, int width, int height );
+            virtual osg::Node*                            findNode( const std::string& id );
 
-          virtual osg::Node*                            findNode( const std::string& id );
+            virtual IUnknown*                             queryInterface( const unsigned long& iid );
 
-          virtual IUnknown*                             queryInterface( const unsigned long& iid );
+            virtual void                                  addInputDevice( const std::string& deviceName, IInputDevice* inputDevice );
 
-          virtual void                                  addInputDevice( const std::string& deviceName, IInputDevice* inputDevice );
-
-          virtual IInputDevice*                         getInputDevice( const std::string& deviceName );
+            virtual IInputDevice*                         getInputDevice( const std::string& deviceName );
 
         protected: 
 
-          virtual void                                  setSceneData( osg::Node* );
+          virtual                                        ~Viewer();  
+          virtual void                                    setSceneData( osg::Node* );
 
 
         protected: 
         
-          bool                                                            _isDisplayWindowSizeSet;
+          bool                                           _isDisplayWindowSizeSet;
 
-          int                                                             _viewportX;
-          int                                                             _viewportY;
-          int                                                             _viewportWidth;
-          int                                                             _viewportHeight;
+          int                                            _viewportX;
+          int                                            _viewportY;
+          int                                            _viewportWidth;
+          int                                            _viewportHeight;
 
-          ViewerMode                                                      _viewerModel;
+          ViewerMode                                     _viewerModel;
 
-          std::map< const std::string, IInputDevice* >                    _inputDevices;
+          std::map< const std::string, IInputDevice* >   _inputDevices;
       };
     }
   }

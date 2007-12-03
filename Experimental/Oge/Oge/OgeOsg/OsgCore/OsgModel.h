@@ -6,7 +6,6 @@
 
 #include "Oge/OgeBase/OgeInterfaces/IOsgModel.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
 
 #include <vector>
 
@@ -34,8 +33,10 @@ namespace Oge
   {
     namespace OsgCore
     {
-      struct OGE_EXPORT OsgModel : public Oge::OgeBase::OgeInterfaces::IOsgModel,public OgeBase::OgeCore::Referenced
+      struct OGE_EXPORT OsgModel : public Oge::OgeBase::OgeInterfaces::IOsgModel
       {
+                                                        OGE_DELCARE_SMART_PTR( OsgModel );     
+
         typedef Oge::OgeBase::OgeInterfaces::IUnknown   IUnknown;
         typedef Oge::OgeBase::OgeInterfaces::IObserver  IObserver;
         typedef Oge::OgeBase::OgeInterfaces::IOsgView   IOsgView;
