@@ -8,9 +8,6 @@
 #include "Oge/OgeBase/OgeInterfaces/IInput.h"
 #include "Oge/OgeBase/OgeInterfaces/IEvent.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
-#include "Oge/OgeBase/OgeCore/Pointer.h"
-
 #include <vector>
 #include <map>
 
@@ -20,7 +17,7 @@ namespace Oge
   {
     namespace OgeCore
     {
-      struct OGE_EXPORT Input : public OgeInterfaces::IInput, public Referenced
+      struct OGE_EXPORT Input : public OgeInterfaces::IInput
       {
         typedef OgeInterfaces::IFunctor                     IFunctor; 
         typedef OgeInterfaces::IEvent                       IEvent;         

@@ -8,9 +8,6 @@
 #include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
 #include "Oge/OgeBase/OgeInterfaces/IFunctor.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
-#include "Oge/OgeBase/OgeCore/Pointer.h"
-
 namespace Oge
 {
   namespace OgeBase 
@@ -18,7 +15,7 @@ namespace Oge
     namespace OgeCore
     { 
       template< typename T >
-      struct OGE_EXPORT MemberFunctor : public Oge::OgeBase::OgeInterfaces::IFunctor, public Referenced
+      struct OGE_EXPORT MemberFunctor : public Oge::OgeBase::OgeInterfaces::IFunctor
       {
         typedef void                ( T::*FPtr )( );
 

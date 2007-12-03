@@ -6,10 +6,6 @@
 
 #include "Oge/OgeBase/OgeInterfaces/IEvent.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h" 
-#include "Oge/OgeBase/OgeCore/Pointer.h" 
-
-
 namespace Oge
 {
   namespace OgeBase
@@ -18,7 +14,7 @@ namespace Oge
     {
       typedef Oge::OgeBase::OgeInterfaces::IEvent::Type Type;
 
-      struct OGE_EXPORT Event : public Oge::OgeBase::OgeInterfaces::IEvent, public Referenced
+      struct OGE_EXPORT Event : public Oge::OgeBase::OgeInterfaces::IEvent
       {
                             OGE_DELCARE_SMART_PTR( Event );
 
