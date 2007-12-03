@@ -12,7 +12,9 @@ namespace Oge
     {
       struct IFunctor : public IUnknown
       {
-        virtual void operator()( )  = 0;
+                      OGE_DELCARE_SMART_PTR( IFunctor );
+
+        virtual void  operator()( )  = 0;
       };
     }
   }

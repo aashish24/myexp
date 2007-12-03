@@ -17,7 +17,9 @@ namespace Oge
     {
       struct IOsgModel : public IModel
       {
-        enum{ IID = 1088960704 };
+        enum                  { IID = 1088960704 };
+
+                              OGE_DELCARE_SMART_PTR( IOsgModel );
 
         virtual osg::Node*    root() = 0;  
 

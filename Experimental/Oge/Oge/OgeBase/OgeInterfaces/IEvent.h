@@ -102,9 +102,10 @@ namespace Oge
           User = 1000, 
           MaxUser = 65535          
         };
-
-        virtual Type type() const = 0;
-
+  
+                      OGE_DELCARE_SMART_PTR( IEvent );
+              
+        virtual Type  type() const = 0;
       };
     }
   }

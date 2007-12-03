@@ -12,9 +12,11 @@ namespace Oge
     {
       struct IObserver : public IUnknown
       {
-        enum { IID = 2535777544 };
+        enum          { IID = 2535777544 };
 
-        virtual void update() = 0;
+                      OGE_DELCARE_SMART_PTR( IObserver );
+
+        virtual void  update() = 0;
       };
     } // namespace OgeInterfaces
   } // namespace OgeBase

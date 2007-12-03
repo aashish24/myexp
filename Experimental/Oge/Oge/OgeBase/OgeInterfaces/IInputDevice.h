@@ -16,6 +16,8 @@ namespace Oge
 
       struct IInputDevice : public IUnknown
       {
+                                      OGE_DELCARE_SMART_PTR( IInputDevice );
+                
         virtual void                  init() = 0; 
 
         virtual void                  config( const std::string& config ) = 0;
