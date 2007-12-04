@@ -8,22 +8,20 @@
 
 namespace Oge
 {
-  namespace OgeOsg
+  namespace OgeBase
   { 
-    namespace OsgViewer
+    namespace OgeCore
     {
 
-      Viewer::Viewer( ViewerMode vModel ) : 
-        OgeOsg::OsgCore::OsgView  ( new OsgCore::OsgModel() ), 
-        osgViewer::Viewer         (),        
+      Viewer::Viewer( OgeBase::OgeInterfaces::IModel* model, ViewerMode mode ) : 
+        View                      ( model ),         
         _viewportX                ( 0 ), 
         _viewportY                ( 0 ), 
         _viewportWidth            ( 400 ), 
         _viewportHeight           ( 400 ), 
         _isDisplayWindowSizeSet   ( false ),
-        _viewerMode              ( vModel )
-      {   
-        //init();
+        _viewerMode               ( mode )
+      { 
       }
 
 
@@ -32,10 +30,10 @@ namespace Oge
       }  
 
 
+      // Initialize model and input devices. 
       void Viewer::init()
       {
-        _model->build();
-        setSceneData( this->sceneView()->getSceneData() );       
+        _model->build();       
 
         // Now initialize the devices. 
         std::map< const std::string, IInputDevice::RefPtr >::iterator itr;
@@ -55,18 +53,7 @@ namespace Oge
       /////////////////////////////////////////////////////////////////////////
 
       void Viewer::contextInit()
-      {        
-        if( _viewerMode == EMBEDDED )
-        {
-          this->setUpViewerAsEmbeddedInWindow
-            ( _viewportX, _viewportY, _viewportWidth, _viewportHeight );
-        }
-      }
-
-
-      void Viewer::addDataModel( osg::Node* node )
-      {
-        ( this->getModel()->rootModel()->asGroup() )->addChild ( node );
+      { 
       }
 
 
@@ -80,18 +67,14 @@ namespace Oge
       }
 
 
-      osg::Node* Viewer::findNode( const std::string& id )
-      {
-        return 0x00;
-      }
-
-
+      // Need to implement this. 
       Viewer::IUnknown* Viewer::queryInterface( const unsigned long& iid )
       {
         return 0x00;
       }
 
 
+      // update input devices and view. 
       void Viewer::update()
       {
         std::map< const std::string, IInputDevice::RefPtr >::iterator itr;
@@ -100,7 +83,7 @@ namespace Oge
           itr->second->update();
         }
 
-        OsgView::update();
+        View::update();
       }
 
 
@@ -111,21 +94,7 @@ namespace Oge
 
       int Viewer::run()
       {
-        if( _viewerMode != EMBEDDED )
-        {
-          osgViewer::Viewer::run();
-        }
-        {
-          frame();
-        }
-
         return 1;
-      }
-
-
-      void Viewer::setSceneData( osg::Node* node )
-      {
-        osgViewer::Viewer::setSceneData( node );
       }
 
 
