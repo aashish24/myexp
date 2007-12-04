@@ -1,11 +1,11 @@
 
-#include "Oge/OgeVrj/VrjController/VrjDigitalInput.h"
+#include "Oge/OgeVrj/VrjCore/VrjDigitalInput.h"
 
 namespace Oge
 { 
   namespace OgeVrj
   {
-    namespace VrjController
+    namespace VrjCore
     {
       VrjDigitalInput::VrjDigitalInput( const std::string& id, 
         const std::string& proxy ) :

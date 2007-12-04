@@ -16,7 +16,7 @@ namespace Oge
 { 
   namespace OgeVrj
   {
-    namespace VrjController
+    namespace VrjCore
     {
       namespace bi = Oge::OgeBase::OgeInterfaces;      
       namespace bc = Oge::OgeBase::OgeCore;
