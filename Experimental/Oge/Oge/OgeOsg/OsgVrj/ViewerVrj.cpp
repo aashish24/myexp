@@ -18,7 +18,7 @@ namespace Oge
     namespace OsgVrj
     {
       ViewerVrj::ViewerVrj( ViewerMode vm ) : 
-        Viewer( vm ), 
+        OsgCore::OsgViewer( vm ), 
         vrj::OsgApp()
       {
       }
@@ -32,7 +32,7 @@ namespace Oge
       void ViewerVrj::init()
       {
         vrj::OsgApp::init();
-        Viewer::init();
+        OsgCore::OsgViewer::init();
 
         configDevices();
       }
@@ -51,13 +51,14 @@ namespace Oge
 
       osg::Group* ViewerVrj::getScene()
       {
-        return this->getModel()->root()->asGroup();
+        return this->root()->asGroup();
       }
+
 
       // Called by the latePreFrame();
       void ViewerVrj::update()
       {
-        Viewer::update();
+        OsgCore::OsgViewer::update();
       }
 
 
@@ -90,8 +91,9 @@ namespace Oge
 
       bi::ICamera* ViewerVrj::getCamera( const unsigned int& index ) 
       {
-        return Oge::OgeOsg::OsgCore::OsgView::getCamera( index );
+        return OgeBase::OgeCore::View::getCamera( index );
       }
+
 
       void ViewerVrj::bufferPreDraw()
       {
@@ -131,12 +133,13 @@ namespace Oge
 
       void ViewerVrj::configGamepad()
       {
-        Print* print = new Print( this );
-        Print2*print2 = new Print2( this );  
+        //Print* print = new Print( this );
+        //Print2*print2 = new Print2( this );  
 
         Oge::OgeBase::OgeDev::Gamepad* gp =  dynamic_cast< Oge::OgeBase::OgeDev::Gamepad* >( this->getInputDevice( "Gamepad01" ) );
         if( gp )
         { 
+
           // @Temp
           // This is an example. 
           //gp->getInput( 0 )->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyDown, print, false ); 

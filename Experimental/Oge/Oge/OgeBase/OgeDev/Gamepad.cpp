@@ -2,7 +2,7 @@
 #include "Oge/OgeBase/OgeDev/Gamepad.h"
 
 // @Temp
-#include "Oge/OgeVrj/VrjController/VrjDigitalInput.h"
+#include "Oge/OgeVrj/VrjCore/VrjDigitalInput.h"
 
 #include <ostream>
 
@@ -48,7 +48,7 @@ namespace Oge
           oStrStream1 << i << std::endl;
           oStrStream2 << "VJButton" << i << "\0";
 
-          _inputs.push_back( new OgeVrj::VrjController::VrjDigitalInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
+          _inputs.push_back( new OgeVrj::VrjCore::VrjDigitalInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
           _inputs[ i ]->init();
           //_inputs[ i ]->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyPress, testFtor, true );
         }

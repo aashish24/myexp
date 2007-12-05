@@ -1,8 +1,5 @@
 
-#include "Oge/OgeOsg/OsgViewer/Viewer.h"
-
-#include "Oge/OgeOsg/OsgCore/OsgModel.h" 
-#include "Oge/OgeOsg/OsgCore/OsgView.h" 
+#include "Oge/OgeBase/OgeCore/Viewer.h"
 
 #include "oge/OgeBase/OgeInterfaces/IInputDevice.h"
 

@@ -25,9 +25,11 @@ int main( int argc, char **argv )
       return 1;
   }
 
+  Oge::OgeOsg::OsgCore::OsgViewer* viewer1 = new Oge::OgeOsg::OsgCore::OsgViewer( 0x00 );
+
   ViewerVrj* viewer = new ViewerVrj;
 
-  viewer->addDataModel( loadedModel.get() );    
+  viewer->setSceneData( loadedModel.get() );    
 
   viewer->getCamera()->set( 0.0, -10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 );
 

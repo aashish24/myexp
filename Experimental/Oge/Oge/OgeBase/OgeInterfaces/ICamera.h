@@ -1,4 +1,5 @@
 
+
 #ifndef __OGE_INTERFACES_I_CAMERA_H__
 #define __OGE_INTERFACES_I_CAMERA_H__
 

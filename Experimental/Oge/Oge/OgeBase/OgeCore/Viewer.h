@@ -11,6 +11,9 @@
 
 
 #include "Oge/OgeBase/OgeCore/View.h"
+#include "Oge/OgeBase/OgeCore/Referenced.h"
+#include "Oge/OgeBase/OgeCore/Pointer.h"
+
 
 #include <map>
 
@@ -39,10 +42,14 @@ namespace Oge
 
       class OGE_EXPORT Viewer : 
         public View,        
-        public Oge::OgeBase::OgeInterfaces::IViewer         
+        public Oge::OgeBase::OgeInterfaces::IViewer, 
+        public Oge::OgeBase::OgeCore::Referenced
       {
           public: 
-                                                          OGE_DELCARE_SMART_PTR( Viewer ); 
+
+            OGE_DELCARE_SMART_PTR( Viewer ); 
+
+            IMPLEMENT_IUNKNOWN_MEMBERS( Viewer, Oge::OgeBase::OgeCore::Referenced ); 
 
             typedef Oge::OgeBase::OgeInterfaces::IUnknown IUnknown;
             typedef Oge::OgeBase::OgeInterfaces::IModel   IModel;

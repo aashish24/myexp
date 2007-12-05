@@ -8,7 +8,7 @@
 
 #include "Oge/OgeBase/OgeInterfaces/IInputDevice.h"
 
-#include "Oge/OgeVrj/VrjController/VrjDigitalInput.h"
+#include "Oge/OgeVrj/VrjCore/VrjDigitalInput.h"
 
 
 #include <ostream>

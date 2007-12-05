@@ -5,8 +5,9 @@
 
 #include "Oge/Export.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
 #include "Oge/OgeBase/OgeInterfaces/IFunctor.h"
+
+#include "Oge/OgeBase/OgeCore/Referenced.h"
 
 namespace Oge
 {
@@ -15,12 +16,15 @@ namespace Oge
     namespace OgeCore
     { 
       template< typename T >
-      struct OGE_EXPORT MemberFunctor : public Oge::OgeBase::OgeInterfaces::IFunctor
+      struct OGE_EXPORT MemberFunctor : 
+        public Oge::OgeBase::OgeInterfaces::IFunctor, 
+        public Oge::OgeBase::OgeCore::Referenced
       {
+        OGE_DELCARE_SMART_PTR( MemberFunctor );
+        
+        IMPLEMENT_IUNKNOWN_MEMBERS( MemberFunctor, Oge::OgeBase::OgeCore::Referenced );
+
         typedef void                ( T::*FPtr )( );
-
-                                    OGE_DELCARE_SMART_PTR( MemberFunctor );
-
 
                                     MemberFunctor( T* obj, FPtr fPtr );
         
@@ -30,6 +34,9 @@ namespace Oge
 
         OgeInterfaces::IUnknown*    queryInterface( const unsigned long& iid );
 
+        /*virtual void                ref(){ Oge::OgeBase::OgeCore::Referenced::ref() };
+        virtual void                unref(){ Oge::OgeBase::OgeCore::Referenced::unref() };
+        virtual void                unrefDoNotDelete(){ Oge::OgeBase::OgeCore::Referenced::unrefDoNotDelete() };*/
 
         T*                          _obj;
         FPtr                        _fPtr;
