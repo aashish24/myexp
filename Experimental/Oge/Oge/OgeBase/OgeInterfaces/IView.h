@@ -1,8 +1,8 @@
 
-#ifndef __OGE_INTERFACES_I_VIEW_H__
-#define __OGE_INTERFACES_I_VIEW_H__
+#ifndef 2
+#define 2
 
-#include "Oge/OgeBase/OgeInterfaces/IObserver.h"
+#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
 
 namespace Oge
 { 
@@ -12,11 +12,11 @@ namespace Oge
     {
       struct ICamera;
 
-      struct IView : public IObserver
+      struct IView : public Oge::OgeBase::OgeInterfaces::IUnknown
       {
-                              enum{ IID = 9514518190 };         
+        OGE_DECLARE_SMART_PTR( IView ); 
 
-                              OGE_DELCARE_SMART_PTR( IView );
+        enum                  { IID = 9514518190 };         
 
         virtual void          setCamera( ICamera* camera ) = 0;
         virtual ICamera*      getCamera( const unsigned int& index = 0 ) = 0;
@@ -29,4 +29,4 @@ namespace Oge
   } // namespace OgeBase
 } // namespace Oge      
 
-#endif // __OGE_INTERFACES_I_VIEW_H__
+#endif // 2
