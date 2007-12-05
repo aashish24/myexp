@@ -12,9 +12,9 @@ namespace Oge
     { 
       struct ICamera : public Oge::OgeBase::OgeInterfaces::IUnknown
       {
-                              enum { IID = 0 };
+        OGE_DELCARE_SMART_PTR( ICamera );
 
-                              OGE_DELCARE_SMART_PTR( ICamera );
+        enum                  { IID = 0 };
 
         virtual void          set( float posX,  float posY,  float posZ, 
                                    float viewX, float viewY, float viewZ, 

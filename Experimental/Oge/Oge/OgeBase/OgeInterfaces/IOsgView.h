@@ -17,21 +17,18 @@ namespace Oge
   {
     namespace OgeInterfaces
     {
-      struct IOsgView : public IView 
+      struct IOsgView : public IUnknown  
       {
-        enum                                            { IID = 1607842543 };
+        OGE_DECLARE_SMART_PTR( IOsgView );
 
-                                                        OGE_DELCARE_SMART_PTR( IOsgView );
+        enum                                            { IID = 1607842543 };
 
         typedef osgUtil::SceneView                      SceneView;
 
-        virtual SceneView*                              sceneView() = 0;
-
-        virtual IOsgModel*                              getModel() = 0;
-        virtual void                                    setModel( IOsgModel* model ) = 0;
+        virtual SceneView*                              sceneView() = 0;        
       };
-    } // namespace OgeInterfaces
-  } // namespace OgeBase
-} // namespace Oge
+    } 
+  } 
+} 
 
 #endif // __OGE_INTERFACES_I_VIEW_H__

@@ -15,11 +15,11 @@ namespace Oge
   {
     namespace OgeInterfaces
     {
-      struct IOsgModel : public IModel
+      struct IOsgModel : public IUnknown
       {
-        enum                  { IID = 1088960704 };
+        OGE_DECLARE_SMART_PTR( IOsgModel );
 
-                              OGE_DELCARE_SMART_PTR( IOsgModel );
+        enum                  { IID = 1088960704 };
 
         virtual osg::Node*    root() = 0;  
 

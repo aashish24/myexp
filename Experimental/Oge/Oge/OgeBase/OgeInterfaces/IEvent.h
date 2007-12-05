@@ -10,8 +10,12 @@ namespace Oge
   {
     namespace OgeInterfaces
     {
-      struct IEvent
+      struct IEvent : public IUnknown
       {
+        OGE_DELCARE_SMART_PTR( IEvent );
+
+        enum { IID = 0 };
+
         enum Type
         {
           None = 0, 
@@ -102,8 +106,6 @@ namespace Oge
           User = 1000, 
           MaxUser = 65535          
         };
-  
-                      OGE_DELCARE_SMART_PTR( IEvent );
               
         virtual Type  type() const = 0;
       };

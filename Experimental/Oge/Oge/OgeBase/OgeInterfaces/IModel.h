@@ -2,23 +2,21 @@
 #ifndef __OGE_INTERFACES_I_MODEL_H__
 #define __OGE_INTERFACES_I_MODEL_H__
 
-#include "IUnknown.h"
+#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
 
 namespace Oge
 { 
   namespace OgeBase
   {
     namespace OgeInterfaces
-    {
-      struct IObserver;
-
-      struct IModel : public IUnknown
+    { 
+      struct IModel : public Oge::OgeBase::OgeInterfaces::IUnknown
       {
+        OGE_DECLARE_SMART_PTR( IModel );
+
         enum          { IID = 8364633860 };
 
-                      OGE_DELCARE_SMART_PTR( IModel );
-
-        virtual void  attach( IObserver* observer ) = 0;
+        virtual void  attach( IModel* model ) = 0;
         
         virtual void  build()  = 0; 
         

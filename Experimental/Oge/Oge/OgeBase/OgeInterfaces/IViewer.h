@@ -23,11 +23,11 @@ namespace Oge
 
       struct IViewer : public IUnknown
       {
+        OGE_DECLARE_SMART_PTR( IViewer );
+
         enum                  { IID = 2546660797 };
 
         enum                  ViewerMode{ EMBEDDED = 1, NORMAL = 0 };                
-        
-                              OGE_DELCARE_SMART_PTR( IViewer );
 
         virtual void          init() = 0;
 

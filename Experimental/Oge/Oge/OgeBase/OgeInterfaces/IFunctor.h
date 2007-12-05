@@ -10,9 +10,11 @@ namespace Oge
   {
     namespace OgeInterfaces
     {
-      struct IFunctor : public IUnknown
+      struct IFunctor : public Oge::OgeBase::OgeInterfaces::IUnknown
       {
-                      OGE_DELCARE_SMART_PTR( IFunctor );
+        OGE_DELCARE_SMART_PTR( IFunctor );
+
+        enum          { IID = 0 };
 
         virtual void  operator()( )  = 0;
       };

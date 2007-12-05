@@ -10,14 +10,12 @@ namespace Oge
   {
     namespace OgeInterfaces
     {
-      enum{ IID = 2654034121 };
-
       template< typename T > 
       struct IFindNode : public IUnknown
       {
-                    enum { IID = 4176415812 };
+        OGE_DELCARE_SMART_PTR( IFindNode );
 
-                    OGE_DELCARE_SMART_PTR( IFindNode );
+        enum        { IID = 4176415812 };                    
 
         virtual T*  findNode( const std::string& id ) = 0;
       };

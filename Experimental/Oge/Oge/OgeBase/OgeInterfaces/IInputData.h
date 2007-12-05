@@ -11,7 +11,9 @@ namespace Oge
       template< typename T >
       struct IInputData : public IUnknown
       {
-                  OGE_DELCARE_SMART_PTR( IInputData );
+        OGE_DELCARE_SMART_PTR( IInputData );
+
+        enum      { IID = 0 };
 
         virtual T getData() const = 0;
       };

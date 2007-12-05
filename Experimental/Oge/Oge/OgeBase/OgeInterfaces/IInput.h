@@ -16,7 +16,9 @@ namespace Oge
       // May be instead of event we call it state. 
       struct IInput : public IUnknown
       {
-                              OGE_DELCARE_SMART_PTR( IInput );
+        OGE_DELCARE_SMART_PTR( IInput );
+
+        enum                  { IID = 0 };
 
         virtual void          init() = 0;                      
         virtual IEvent::Type  getEvent() const = 0;

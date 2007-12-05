@@ -16,7 +16,9 @@ namespace Oge
 
       struct IInputDevice : public IUnknown
       {
-                                      OGE_DELCARE_SMART_PTR( IInputDevice );
+        OGE_DELCARE_SMART_PTR( IInputDevice );
+
+        enum                          { IID = 0 };
                 
         virtual void                  init() = 0; 
 
