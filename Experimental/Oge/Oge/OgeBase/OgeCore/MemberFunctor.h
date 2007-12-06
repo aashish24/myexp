@@ -22,7 +22,8 @@ namespace Oge
       {
         OGE_DELCARE_SMART_PTR( MemberFunctor );
         
-        IMPLEMENT_IUNKNOWN_MEMBERS( MemberFunctor, Oge::OgeBase::OgeCore::Referenced );
+        // Not sure why this does not work. 
+        //IMPLEMENT_IUNKNOWN_MEMBERS( MemberFunctor, Oge::OgeBase::OgeCore::Referenced );
 
         typedef void                ( T::*FPtr )( );
 
@@ -32,12 +33,12 @@ namespace Oge
         virtual void                operator()( );
 
 
-        OgeInterfaces::IUnknown*    queryInterface( const unsigned long& iid );
-
-        /*virtual void                ref(){ Oge::OgeBase::OgeCore::Referenced::ref() };
+        virtual void                ref(){ Oge::OgeBase::OgeCore::Referenced::ref() };
         virtual void                unref(){ Oge::OgeBase::OgeCore::Referenced::unref() };
-        virtual void                unrefDoNotDelete(){ Oge::OgeBase::OgeCore::Referenced::unrefDoNotDelete() };*/
+        virtual void                unrefDoNotDelete(){ Oge::OgeBase::OgeCore::Referenced::unrefDoNotDelete() };
 
+        OgeInterfaces::IUnknown*    queryInterface( const unsigned long& iid );
+        
         T*                          _obj;
         FPtr                        _fPtr;
 

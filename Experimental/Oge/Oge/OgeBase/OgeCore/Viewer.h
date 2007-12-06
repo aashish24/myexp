@@ -6,16 +6,16 @@
 
 #include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
 #include "Oge/OgeBase/OgeInterfaces/IFindNode.h"
+#include "Oge/OgeBase/OgeInterfaces/IView.h"
+#include "Oge/OgeBase/OgeInterfaces/IModel.h"
 #include "Oge/OgeBase/OgeInterfaces/IViewer.h"
 #include "Oge/OgeBase/OgeInterfaces/IInputDevice.h"
 
-
-#include "Oge/OgeBase/OgeCore/View.h"
 #include "Oge/OgeBase/OgeCore/Referenced.h"
 #include "Oge/OgeBase/OgeCore/Pointer.h"
 
-
 #include <map>
+#include <vector>
 
 namespace Oge
 {
@@ -41,8 +41,7 @@ namespace Oge
       /////////////////////////////////////////////////////////////////////////
 
       class OGE_EXPORT Viewer : 
-        public View,        
-        public Oge::OgeBase::OgeInterfaces::IViewer, 
+        public Oge::OgeBase::OgeInterfaces::IViewer,         
         public Oge::OgeBase::OgeCore::Referenced
       {
           public: 
@@ -53,8 +52,9 @@ namespace Oge
 
             typedef Oge::OgeBase::OgeInterfaces::IUnknown IUnknown;
             typedef Oge::OgeBase::OgeInterfaces::IModel   IModel;
+            typedef Oge::OgeBase::OgeInterfaces::IView    IView;
             
-                                                          Viewer( OgeInterfaces::IModel* model, ViewerMode vMode = NORMAL );    
+                                                          Viewer( ViewerMode vMode = REGULAR );    
             
             virtual void                                  init(); 
 
@@ -70,9 +70,12 @@ namespace Oge
 
             virtual IUnknown*                             queryInterface( const unsigned long& iid );
 
+            virtual IView*                                getView() const;
+
             virtual void                                  addInputDevice( const std::string& deviceName, IInputDevice* inputDevice );
 
             virtual IInputDevice*                         getInputDevice( const std::string& deviceName );
+        
 
         protected: 
 
@@ -89,6 +92,10 @@ namespace Oge
           int                                                 _viewportHeight;
 
           ViewerMode                                          _viewerMode;
+
+          IView::RefPtr                                       _view;
+          IModel::RefPtr                                      _model;
+
 
           std::map< const std::string, IInputDevice::RefPtr > _inputDevices;
       };

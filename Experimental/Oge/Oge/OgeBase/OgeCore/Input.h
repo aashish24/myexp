@@ -24,6 +24,8 @@ namespace Oge
       {
         OGE_DELCARE_SMART_PTR( Input ); 
         
+        IMPLEMENT_IUNKNOWN_MEMBERS( Input, Oge::OgeBase::OgeCore::Referenced );
+
         typedef OgeInterfaces::IFunctor                     IFunctor; 
         typedef OgeInterfaces::IEvent                       IEvent;         
         typedef OgeInterfaces::IEvent::Type                 Type;        

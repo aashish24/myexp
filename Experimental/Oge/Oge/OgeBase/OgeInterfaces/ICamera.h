@@ -11,7 +11,7 @@ namespace Oge
   {
     namespace OgeInterfaces
     { 
-      struct ICamera : public Oge::OgeBase::OgeInterfaces::IUnknown
+      struct ICamera : public IUnknown
       {
         OGE_DELCARE_SMART_PTR( ICamera );
 

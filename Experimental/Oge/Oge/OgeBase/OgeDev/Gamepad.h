@@ -35,11 +35,15 @@ namespace Oge
           }
       };
 
-      class OGE_EXPORT Gamepad : public  OgeInterfaces::IInputDevice
+      class OGE_EXPORT Gamepad : 
+        public Oge::OgeBase::OgeInterfaces::IInputDevice, 
+        public Oge::OgeBase::OgeCore::Referenced
       {
         public:
                                                                 
-                                                              OGE_DELCARE_SMART_PTR( Gamepad ); 
+          OGE_DELCARE_SMART_PTR( Gamepad ); 
+
+          IMPLEMENT_IUNKNOWN_MEMBERS( Gamepad, Oge::OgeBase::OgeCore::Referenced );
 
                                                               Gamepad();
 

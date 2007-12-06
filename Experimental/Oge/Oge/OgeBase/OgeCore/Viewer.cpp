@@ -1,5 +1,6 @@
 
 #include "Oge/OgeBase/OgeCore/Viewer.h"
+#include "Oge/OgeBase/OgeCore/View.h"
 
 #include "oge/OgeBase/OgeInterfaces/IInputDevice.h"
 
@@ -10,8 +11,7 @@ namespace Oge
     namespace OgeCore
     {
 
-      Viewer::Viewer( OgeBase::OgeInterfaces::IModel* model, ViewerMode mode ) : 
-        View                      ( model ),         
+      Viewer::Viewer( ViewerMode mode ) :         
         _viewportX                ( 0 ), 
         _viewportY                ( 0 ), 
         _viewportWidth            ( 400 ), 
@@ -30,7 +30,7 @@ namespace Oge
       // Initialize model and input devices. 
       void Viewer::init()
       {
-        _model->build();       
+        _model->build();
 
         // Now initialize the devices. 
         std::map< const std::string, IInputDevice::RefPtr >::iterator itr;
@@ -67,7 +67,16 @@ namespace Oge
       // Need to implement this. 
       Viewer::IUnknown* Viewer::queryInterface( const unsigned long& iid )
       {
-        return 0x00;
+        switch( iid )
+        {
+          case IUnknown::IID:
+          {
+          }          
+          default: 
+          {
+            return 0x00;
+          }
+        };
       }
 
 
@@ -80,7 +89,7 @@ namespace Oge
           itr->second->update();
         }
 
-        View::update();
+        _model->update();
       }
 
 
@@ -92,6 +101,12 @@ namespace Oge
       int Viewer::run()
       {
         return 1;
+      }
+
+
+      Viewer::IView* Viewer::getView() const
+      {
+        return _view.get();
       }
 
 
@@ -115,7 +130,7 @@ namespace Oge
         {
           return 0x00;
         }
-      }
+      }      
     }
   }
 }

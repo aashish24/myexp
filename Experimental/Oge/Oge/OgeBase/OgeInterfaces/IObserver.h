@@ -2,7 +2,7 @@
 #ifndef __OGE_INTERFACES_I_OBSERVER_H__
 #define __OGE_INTERFACES_I_OBSERVER_H__
 
-#include "IUnknown.h"
+#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
 
 namespace Oge
 { 
@@ -12,9 +12,9 @@ namespace Oge
     {
       struct IObserver : public IUnknown
       {
-        enum          { IID = 2535777544 };
+        OGE_DELCARE_SMART_PTR( IObserver );
 
-                      OGE_DELCARE_SMART_PTR( IObserver );
+        enum          { IID = 2535777544 };
 
         virtual void  update() = 0;
       };

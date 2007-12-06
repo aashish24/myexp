@@ -2,13 +2,15 @@
 #ifndef __OGE_INTERFACES_I_VIEWER_H__
 #define __OGE_INTERFACES_I_VIEWER_H__
 
+#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
+
 namespace Oge
 {
   namespace OgeBase
   {
     namespace OgeInterfaces
-    {
-      struct IModel;
+    { 
+      struct IView;
       struct IInputDevice;
 
 
@@ -23,11 +25,11 @@ namespace Oge
 
       struct IViewer : public IUnknown
       {
-        OGE_DECLARE_SMART_PTR( IViewer );
+        OGE_DELCARE_SMART_PTR( IViewer );
 
         enum                  { IID = 2546660797 };
 
-        enum                  ViewerMode{ EMBEDDED = 1, NORMAL = 0 };                
+        enum                  ViewerMode{ REGULAR = 0, EMBEDDED = 1 };                
 
         virtual void          init() = 0;
 
@@ -38,6 +40,8 @@ namespace Oge
         virtual void          draw()= 0; 
 
         virtual int           run() = 0;
+
+        virtual IView*        getView() const = 0;
 
         virtual void          addInputDevice( const std::string& deviceName, IInputDevice* inputDevice ) = 0;
 

@@ -31,7 +31,9 @@ namespace Oge
       {
         public: 
 
-                                                    OGE_DELCARE_SMART_PTR( VrjDigitalInput );
+          OGE_DELCARE_SMART_PTR( VrjDigitalInput );          
+
+          IMPLEMENT_IUNKNOWN_MEMBERS( VrjDigitalInput, Oge::OgeBase::OgeCore::Input );
 
                                                     VrjDigitalInput( const std::string& id, 
                                                                      const std::string& proxy );
@@ -42,7 +44,7 @@ namespace Oge
 
           virtual Type                              getEvent() const;
 
-          virtual IUnknown*                         queryInterface( const unsigned long& iid );
+          IUnknown*                                 queryInterface( const unsigned long& iid );
 
         protected: 
           

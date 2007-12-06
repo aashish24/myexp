@@ -1,6 +1,10 @@
 
 #include "Oge/Export.h"
+
 #include "Oge/OgeOsg/OsgCore/OsgViewer.h"
+
+#include "Oge/OgeBase/OgeInterfaces/IOsgImpl.h"
+
 
 #include "vrj/vrjConfig.h"
 #include "vrj/Draw/OSG/OsgApp.h"
@@ -29,7 +33,10 @@ namespace Oge
       class OGE_EXPORT ViewerVrj : public OsgCore::OsgViewer, public vrj::OsgApp
       {
         public: 
-                                OGE_DELCARE_SMART_PTR( ViewerVrj );     
+          
+          OGE_DELCARE_SMART_PTR( ViewerVrj );     
+
+          typedef OgeBase::OgeInterfaces::IOsgImpl IOsgImpl;
 
                                 ViewerVrj( ViewerMode vm =  EMBEDDED );
 
@@ -46,9 +53,6 @@ namespace Oge
           virtual void          draw(); 
 
           virtual int           run();
-
-          virtual bi::ICamera*  getCamera( const unsigned int& index = 0 );
-
         
         protected: 
           
@@ -63,8 +67,8 @@ namespace Oge
           virtual void          intraFrame(); 
 
           virtual void          postFrame();               
+          
 
-      
         private:
         
           void                  configDevices(); 

@@ -1,86 +1,42 @@
 
-#ifndef __OSG_VIEWER_OSG_VIEW_H__
-#define __OSG_VIEWER_OSG_VIEW_H__
+#ifndef __OSG_VIEW_H__
+#define __OSG_VIEW_H__
 
-#include "Oge/Export.h"
+#include "Oge/OgeBase/OgeCore/View.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IOsgView.h"
+#include "Oge/OgeOsg/OsgCore/OsgModel.h"
 
-#include "Oge/OgeBase/OgeCore/Camera.h" 
-#include "Oge/OgeBase/OgeCore/Referenced.h" 
-
-
-#include <vector>
-
-namespace osgUtil
-{
-  class SceneView;
-}
-
-namespace Oge
-{
-  namespace OgeBase
-  {
-    namespace OgeInterfaces
-    {
-      struct IOsgModel;
-      struct ICamera;
-    }
-  }
-}
+#include "osgUtil/SceneView"
 
 namespace Oge
 {
   namespace OgeOsg
   {
     namespace OsgCore
-    { 
-      struct OGE_EXPORT OsgView : public Oge::OgeBase::OgeInterfaces::IOsgView
+    {
+      class OGE_EXPORT OsgView : public OgeBase::OgeCore::View
       {
-                                                        OGE_DELCARE_SMART_PTR( OsgView );     
-
-        typedef Oge::OgeBase::OgeInterfaces::IUnknown   IUnknown;  
-        typedef Oge::OgeBase::OgeInterfaces::IOsgModel  IOsgModel;
-        typedef Oge::OgeBase::OgeInterfaces::ICamera    ICamera;
+        public: 
         
-        typedef Oge::OgeBase::OgeCore::Camera           Camera;
+          OGE_DELCARE_SMART_PTR( OsgView );
 
-        typedef osgUtil::SceneView                      SceneView;  
+                                                OsgView( OgeOsg::OsgCore::OsgModel* model );
 
-                                                        OsgView( IOsgModel* model ); 
-       
-        virtual IUnknown*                               queryInterface( const unsigned long& iid );
+          virtual void                          update(); 
 
-        virtual SceneView*                              sceneView();  
-        
-        virtual IOsgModel*                              getModel();
-        virtual void                                    setModel( IOsgModel* model );
-
-        virtual void                                    update();
-
-        virtual void                                    setCamera( ICamera* camera );
-        virtual ICamera*                                getCamera( const unsigned int& index = 0 );
-
-        virtual void                                    addCamera( ICamera* camera );
-
-        virtual void                                    draw();
-       
-
-        protected: 
-      
-          virtual                                      ~OsgView();    
+          virtual void                          draw();
 
 
         protected: 
 
-          IOsgModel*                                  _model;
+           virtual                              ~OsgView();
 
-          SceneView*                                  _sceneView;
-
-          std::vector< ICamera::RefPtr >              _cameras;
+        protected: 
+        
+          osg::ref_ptr< osgUtil::SceneView >    _sceneView;
       };
-    } // namespace OsgCore
-  } // namespace OgeOsg
-} // namespace Oge
+    }
+  }
+}
 
-#endif // __OSG_VIEWER_OSG_VIEW_H__
+#endif // __OSG_VIEW_H__

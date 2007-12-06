@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OgeNew", "OgeNew.vcproj", "{950450AE-616E-453E-BB50-78CDBE50BF84}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestViewerVrj", "Tests\TestViewerVrj\TestViewerVrj.vcproj", "{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}"
+	ProjectSection(ProjectDependencies) = postProject
+		{950450AE-616E-453E-BB50-78CDBE50BF84} = {950450AE-616E-453E-BB50-78CDBE50BF84}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{950450AE-616E-453E-BB50-78CDBE50BF84}.Debug|Win32.ActiveCfg = Debug|Win32
+		{950450AE-616E-453E-BB50-78CDBE50BF84}.Debug|Win32.Build.0 = Debug|Win32
+		{950450AE-616E-453E-BB50-78CDBE50BF84}.Release|Win32.ActiveCfg = Release|Win32
+		{950450AE-616E-453E-BB50-78CDBE50BF84}.Release|Win32.Build.0 = Release|Win32
+		{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}.Debug|Win32.Build.0 = Debug|Win32
+		{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}.Release|Win32.ActiveCfg = Release|Win32
+		{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

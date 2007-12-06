@@ -20,7 +20,7 @@ namespace Oge
       ViewerVrj::ViewerVrj( ViewerMode vm ) : 
         OsgCore::OsgViewer( vm ), 
         vrj::OsgApp()
-      {
+      { 
       }
 
 
@@ -51,7 +51,7 @@ namespace Oge
 
       osg::Group* ViewerVrj::getScene()
       {
-        return this->root()->asGroup();
+        return _osgModel->root();
       }
 
 
@@ -86,12 +86,6 @@ namespace Oge
         kernel->waitForKernelStop();
         
         return result;
-      }
-
-
-      bi::ICamera* ViewerVrj::getCamera( const unsigned int& index ) 
-      {
-        return OgeBase::OgeCore::View::getCamera( index );
       }
 
 

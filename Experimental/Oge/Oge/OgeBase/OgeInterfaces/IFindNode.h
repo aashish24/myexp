@@ -2,6 +2,8 @@
 #ifndef __OGE_INTERFACES_I_FIND_NODE_H__
 #define __OGE_INTERFACES_I_FIND_NODE_H__
 
+#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
+
 #include <string>
 
 namespace Oge

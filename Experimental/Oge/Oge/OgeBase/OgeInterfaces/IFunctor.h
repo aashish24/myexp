@@ -10,7 +10,7 @@ namespace Oge
   {
     namespace OgeInterfaces
     {
-      struct IFunctor : public Oge::OgeBase::OgeInterfaces::IUnknown
+      struct IFunctor : public IUnknown
       {
         OGE_DELCARE_SMART_PTR( IFunctor );
 
