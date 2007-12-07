@@ -130,7 +130,7 @@
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="0"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="../../modules/Veda;../../modules;$(VJ_BASE_DIR)/include/tweek/idl;$(VJ_BASE_DIR)/include;$(VJ_DEPS_DIR)/include;$(OSG_INC_DIR);"
+				AdditionalIncludeDirectories="../../modules/Veda;../../modules;$(VJ_BASE_DIR)/include/tweek/idl;$(VJ_BASE_DIR)/include;$(VJ_DEPS_DIR)/include;$(OSG_INC_DIR);$(OSG_INC_DIR);$(OPENSG_INC_DIR);$(GMTL_INC_DIR);$(BOOST_INC_DIR);$(OMNIORB_INC_DIR);$(NSPR_INC_DIR);$(CPPDOM_INC_DIR)"
 				PreprocessorDefinitions="WIN32;_OPT;NDEBUG;_CONSOLE;__WIN32__=1;__x86__=1;__NT__=1;__OSVERSION__=5;USE_core_stub_in_nt_dll;USE_core_stub_in_nt_dll_NOT_DEFINED_Subject;HAVE_OSG;INDRA_SHARED_LIBRARY; VEDA_BUILD;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -152,9 +152,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="openGL32.lib omnithread33_rt.lib omniDynamic410_rt.lib omniORB410_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
+				AdditionalDependencies="openGL32.lib omnithread33_rt.lib omniDynamic411_rt.lib omniORB411_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
 				OutputFile="..\..\bin\Veda.dll"
-				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR);..\..\bin;"
+				AdditionalLibraryDirectories="$(BOOST_LIB_DIR);$(OMNIORB_LIB_DIR);$(NSPR_LIB_DIR);$(CPPDOM_LIB_DIR);$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR);..\..\bin;"
 				ImportLibrary="..\..\bin\Veda.lib"
 			/>
 			<Tool
