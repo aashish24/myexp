@@ -16,6 +16,7 @@
       </display_system>
       <keyboard_mouse_device name="Event window configuration 0 KM Dev" version="1">
          <mouse_sensitivity>0.0</mouse_sensitivity>
+         <device_host />
       </keyboard_mouse_device>
       <display_window name="SimWindow" version="5">
          <origin>0</origin>
