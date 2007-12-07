@@ -69,9 +69,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="openGL32.lib omnithread33_rtd.lib omniDynamic410_rtd.lib omniORB410_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
+				AdditionalDependencies="openGL32.lib omnithread_rtd.lib omniDynamic411_rtd.lib omniORB411_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
 				OutputFile="..\..\bin\Vedad.dll"
-				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR);..\..\bin;"
+				AdditionalLibraryDirectories="$(BOOST_LIB_DIR);$(OMNIORB_LIB_DIR);$(NSPR_LIB_DIR);$(CPPDOM_LIB_DIR);$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR);..\..\bin;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				ImportLibrary="..\..\bin\Vedad.lib"

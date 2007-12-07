@@ -296,7 +296,6 @@ namespace Veda
 
         void handleAnalogInput1( double value )
         {
-	   std::cout << "handleAnalogInput1()" << std::endl;
           if( value != -2.0)
           {    
             mSceneNavigator.translateInZ( value );
