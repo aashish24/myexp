@@ -4,7 +4,7 @@
 
 #include "Oge/Export.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IFunctor.h"
+#include "Oge/OgeBase/OgeInterfaces/IInputCallback.h"
 #include "Oge/OgeBase/OgeInterfaces/IInput.h"
 #include "Oge/OgeBase/OgeInterfaces/IEvent.h"
 
@@ -19,30 +19,49 @@ namespace Oge
   namespace OgeBase
   {
     namespace OgeCore
-    {
-      struct OGE_EXPORT Input : public OgeInterfaces::IInput, public Oge::OgeBase::OgeCore::Referenced
+    { 
+      struct OGE_EXPORT Input : 
+        public OgeInterfaces::IInput,
+        public Oge::OgeBase::OgeCore::Referenced
       {
         OGE_DELCARE_SMART_PTR( Input ); 
         
-        IMPLEMENT_IUNKNOWN_MEMBERS( Input, Oge::OgeBase::OgeCore::Referenced );
+              
 
-        typedef OgeInterfaces::IFunctor                     IFunctor; 
+        typedef OgeInterfaces::IInputCallback               IInputCallback; 
         typedef OgeInterfaces::IEvent                       IEvent;         
         typedef OgeInterfaces::IEvent::Type                 Type;        
-        typedef std::pair< bool, IFunctor* >                Pair;
+        typedef std::pair< bool, IInputCallback* >          Pair;
         typedef std::pair< Type, std::vector< Pair > >      BasePair;   
 
         typedef std::map< Type, std::vector < Pair > >      Callbacks;          
-                                        
 
-        virtual void addActionCallback( IEvent::Type type, IFunctor* ftor, bool executeNext= true )
-        {        
-          //_callbacks.insert( BasePair( type, Pair( executeNext, ftor ) ) );
-          _callbacks[ type ].push_back( Pair( executeNext, ftor ) );
+        virtual void ref()
+        {
+          OgeBase::OgeCore::Referenced::ref();
         }
 
 
-        virtual void setActionCallback( IEvent::Type type, IFunctor* ftor, bool executeNext= true )
+        virtual void unref()
+        {
+          OgeBase::OgeCore::Referenced::unref();
+        }
+
+
+        virtual void unrefDoNotDelete()
+        {
+          OgeBase::OgeCore::Referenced::unrefDoNotDelete();
+        }
+
+
+        virtual void addActionCallback( IEvent::Type type, IInputCallback* callback, bool executeNext= true )
+        {        
+          //_callbacks.insert( BasePair( type, Pair( executeNext, ftor ) ) );
+          _callbacks[ type ].push_back( Pair( executeNext, callback ) );
+        }
+
+
+        virtual void setActionCallback( IEvent::Type type, IInputCallback* callback, bool executeNext= true )
         {
           /*_callbacks.clear();
           _callbacks.insert( Pair( executeNext, ftor ) ):*/
@@ -61,7 +80,7 @@ namespace Oge
               while( cont && ( sItr != itr->second.end() ) )
               { 
                 cont = sItr->first;
-                sItr->second->operator ()();
+                sItr->second->operator ()( this );
                 ++sItr;
               }
             }

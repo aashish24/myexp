@@ -11,13 +11,15 @@ namespace Oge
     namespace OgeCore
     {
 
-      Viewer::Viewer( ViewerMode mode ) :         
+      Viewer::Viewer( int argc, char** argv, ViewerMode mode, IView* view, IModel* model ) :         
         _viewportX                ( 0 ), 
         _viewportY                ( 0 ), 
         _viewportWidth            ( 400 ), 
         _viewportHeight           ( 400 ), 
         _isDisplayWindowSizeSet   ( false ),
-        _viewerMode               ( mode )
+        _viewerMode               ( mode ), 
+        _view                     ( view ),
+        _model                    ( model )
       { 
       }
 
@@ -25,6 +27,11 @@ namespace Oge
       Viewer::~Viewer() 
       {
       }  
+
+
+      void Viewer::readConfig( const std::string& config )
+      {
+      }
 
 
       // Initialize model and input devices. 

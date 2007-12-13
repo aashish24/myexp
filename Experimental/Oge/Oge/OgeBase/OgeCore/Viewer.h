@@ -54,8 +54,12 @@ namespace Oge
             typedef Oge::OgeBase::OgeInterfaces::IModel   IModel;
             typedef Oge::OgeBase::OgeInterfaces::IView    IView;
             
-                                                          Viewer( ViewerMode vMode = REGULAR );    
-            
+            Viewer( int argc = 0, char** argv = 0, ViewerMode vMode = REGULAR,
+                    IView* view = 0x00, IModel* model = 0x00 );                                                              
+
+
+            virtual void                                  readConfig( const std::string& config );
+
             virtual void                                  init(); 
 
             virtual void                                  contextInit();
@@ -82,15 +86,21 @@ namespace Oge
           virtual                                        ~Viewer();  
         
 
-        protected: 
+        private: 
         
+          // This should be the part of the view and not the viewer.
+          
           bool                                                _isDisplayWindowSizeSet;
 
+          
           int                                                 _viewportX;
           int                                                 _viewportY;
           int                                                 _viewportWidth;
           int                                                 _viewportHeight;
 
+          //--------------------------------------------------------
+
+          // This is ok. 
           ViewerMode                                          _viewerMode;
 
           IView::RefPtr                                       _view;
