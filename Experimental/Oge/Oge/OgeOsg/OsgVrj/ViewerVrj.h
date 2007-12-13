@@ -9,6 +9,9 @@
 #include "vrj/vrjConfig.h"
 #include "vrj/Draw/OSG/OsgApp.h"
 
+#include <vector>
+#include <string>
+
 namespace Oge
 {
   namespace OgeOsg
@@ -37,8 +40,13 @@ namespace Oge
           OGE_DELCARE_SMART_PTR( ViewerVrj );     
 
           typedef OgeBase::OgeInterfaces::IOsgImpl IOsgImpl;
+          typedef OgeBase::OgeInterfaces::IViewer  IViewer;
 
-                                ViewerVrj( ViewerMode vm =  EMBEDDED );
+          ViewerVrj( int argc = 0, char** argv = 0, IViewer::Mode mode =  EMBEDDED );
+
+          virtual void          readConfig( const std::string& config );
+
+          virtual void          loadConfigs( const std::vector< std::string >& configs );
 
           virtual void          init();
 

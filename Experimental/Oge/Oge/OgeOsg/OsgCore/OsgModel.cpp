@@ -38,7 +38,8 @@ namespace Oge
 
 
       void OsgModel::build()
-      {  
+      { 
+        _rootNav->setMatrix( osg::Matrixf::translate( osg::Vec3f( 0.0, 0.0, 0.0 ) ) );
         _rootNav->addChild( _rootModel.get() );  
         _rootStatic->addChild( _rootScreen.get() );
           

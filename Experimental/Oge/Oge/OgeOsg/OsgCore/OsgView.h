@@ -31,6 +31,7 @@ namespace Oge
 
            virtual                              ~OsgView();
 
+
         protected: 
         
           osg::ref_ptr< osgUtil::SceneView >    _sceneView;

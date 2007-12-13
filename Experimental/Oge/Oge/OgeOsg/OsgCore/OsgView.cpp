@@ -11,7 +11,7 @@ namespace Oge
       OsgView::OsgView( OgeOsg::OsgCore::OsgModel* model ) : 
         View      ( model ),
         _sceneView( new osgUtil::SceneView() )
-      { 
+      {         
         _sceneView->setSceneData( model->root() );
       }
 
@@ -29,6 +29,10 @@ namespace Oge
 
       void OsgView::draw()
       {
+        // Apply camera transformation to the scene. 
+        // Todo: Implement this. 
+
+        // Now start cull and draw traversal. 
         _sceneView->cull();
         _sceneView->draw();
       }

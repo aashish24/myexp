@@ -5,7 +5,7 @@
 
 #include "Oge/OgeBase/OgeInterfaces/IFunctor.h"
 
-#include "Oge/OgeBase/OgeCore/MakeFunctor.h"
+#include "Oge/OgeVrj/VrjCore/LoadConfigFile.h"
 
 #include "boost/bind.hpp" 
 
@@ -17,15 +17,43 @@ namespace Oge
   {
     namespace OsgVrj
     {
-      ViewerVrj::ViewerVrj( ViewerMode vm ) : 
-        OsgCore::OsgViewer( vm ), 
+      ViewerVrj::ViewerVrj( int argc, char** argv, ViewerVrj::IViewer::Mode mode ) : 
+        OsgCore::OsgViewer( argc, argv, mode ), 
         vrj::OsgApp()
       { 
+        // Since we dont have the parser lets just assume that arg 2 
+        // suppose to provide the config file.
+        // Later this would be under readConfig.. 
+        std::vector< std::string > configs;
+        for( int i=2; i < argc; ++i )
+        {
+          configs.push_back( std::string( argv[ i ] ) );
+        }
+
+        this->loadConfigs( configs );
       }
 
 
       ViewerVrj::~ViewerVrj()
       {
+      }
+
+
+      void ViewerVrj::readConfig( const std::string& config )
+      {
+      }
+
+
+      void ViewerVrj::loadConfigs( const std::vector< std::string >& configs )
+      {
+        if( configs.empty() )
+        {
+          //??
+        }
+        else
+        {
+          std::for_each( configs.begin(), configs.end(), OgeVrj::VrjCore::LoadConfigFile() );
+        }
       }
 
 
@@ -58,7 +86,12 @@ namespace Oge
       // Called by the latePreFrame();
       void ViewerVrj::update()
       {
+        // Now call vrjuggler osg update where update traversal of osg
+        // is going to take place.
+        //vrj::OsgApp::update();
+
         OsgCore::OsgViewer::update();
+        vrj::OsgApp::latePreFrame();
       }
 
 
@@ -75,9 +108,6 @@ namespace Oge
         int result( 1 );          
         
         vrj::Kernel* kernel = vrj::Kernel::instance();
-
-        // @Todo: This is hardcoded as of now. 
-        kernel->loadConfigFile( "simstandalone.jconf" );
 
         kernel->start();        
 
@@ -104,7 +134,7 @@ namespace Oge
       void ViewerVrj::latePreFrame()
       {        
         update();
-        vrj::OsgApp::latePreFrame();
+        vrj::OsgApp::latePreFrame();        
       }
 
 
@@ -120,7 +150,9 @@ namespace Oge
 
       void ViewerVrj::configDevices()
       {
-        this->addInputDevice( "Gamepad01", new Oge::OgeBase::OgeDev::Gamepad() );
+        OgeBase::OgeDev::Gamepad::RefPtr gp( new OgeBase::OgeDev::Gamepad() );
+                
+        this->addInputDevice( "Gamepad01", new OgeBase::OgeDev::Gamepad() );
         this->configGamepad();
       }
 

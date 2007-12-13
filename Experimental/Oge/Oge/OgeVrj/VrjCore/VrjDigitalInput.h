@@ -6,7 +6,7 @@
 
 #include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
 #include "Oge/OgeBase/OgeInterfaces/IEvent.h"
-#include "Oge/OgeBase/OgeInterfaces/IInputData.h"
+#include "Oge/OgeBase/OgeInterfaces/IInputGetData.h"
 
 #include "Oge/OgeBase/OgeCore/Input.h"
 
@@ -26,8 +26,8 @@ namespace Oge
       typedef bi::IUnknown                          IUnknown;  
 
       class OGE_EXPORT VrjDigitalInput : 
-        public bc::Input,
-        public bi::IInputData< State >         
+        public bc::Input, 
+        public bi::IInputGetData< State >
       {
         public: 
 

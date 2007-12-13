@@ -15,6 +15,7 @@ namespace Oge
         _proxy = proxy;          
       }
 
+
       void VrjDigitalInput::init()
       {
         _digitalInterface->init( _proxy );

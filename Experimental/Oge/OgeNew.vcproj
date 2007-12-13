@@ -215,6 +215,10 @@
 							>
 						</File>
 						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\InputCallback.h"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeBase\OgeCore\MemberFunctor.cpp"
 							>
 						</File>
@@ -254,18 +258,18 @@
 							RelativePath=".\Oge\OgeBase\OgeCore\View.h"
 							>
 						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeCore\Viewer.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeCore\Viewer.h"
-							>
-						</File>
 					</Filter>
 					<Filter
 						Name="OgeController"
 						>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeController\GamepadController.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeController\GamepadController.h"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="OgeDev"
@@ -303,11 +307,15 @@
 							>
 						</File>
 						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputData.h"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputCallback.h"
 							>
 						</File>
 						<File
 							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputDevice.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputGetData.h"
 							>
 						</File>
 						<File
@@ -339,6 +347,14 @@
 						Name="OsgCore"
 						>
 						<File
+							RelativePath=".\OsgCamera.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgCamera.h"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeOsg\OsgCore\OsgModel.cpp"
 							>
 						</File>
@@ -362,6 +378,14 @@
 							RelativePath=".\Oge\OgeOsg\OsgCore\OsgViewer.h"
 							>
 						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgCore\UpdateNavigation.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgCore\UpdateNavigation.h"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="OsgVrj"
@@ -382,6 +406,10 @@
 					<Filter
 						Name="VrjCore"
 						>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjCore\LoadConfigFile.h"
+							>
+						</File>
 						<File
 							RelativePath=".\Oge\OgeVrj\VrjCore\VrjDigitalInput.cpp"
 							>

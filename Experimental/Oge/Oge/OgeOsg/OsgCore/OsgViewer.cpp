@@ -1,12 +1,12 @@
 
 #include "Oge/OgeOsg/OsgCore/OsgViewer.h"
-
 #include "Oge/OgeOsg/OsgCore/OsgModel.h"
 #include "Oge/OgeOsg/OsgCore/OsgView.h"
 
 #include "osg/MatrixTransform"
-
 #include "osgUtil/SceneView"
+
+#include <algorithm>
 
 using namespace Oge::OgeBase::OgeInterfaces;
 
@@ -16,14 +16,16 @@ namespace Oge
   {
     namespace OsgCore
     {
-      OsgViewer::OsgViewer( ViewerMode mode ) : 
-        OgeBase::OgeCore::Viewer(), 
+      OsgViewer::OsgViewer( int argc, char** argv, IViewer::Mode mode ) :         
         osgViewer::Viewer       (), 
+        _mode                   ( mode ),
         _osgModel               ( new OsgModel() ), 
-        _osgView                ( new OsgView( _osgModel.get() ) )
-      { 
-        _model = _osgModel.get();
-        _view  = _osgView.get();
+        _osgView                ( new OsgView( _osgModel.get() ) ), 
+        _osgCamera              ( new OsgCamera() ), 
+        _inputDevices           () 
+      {   
+        //_osgCamera->assignTo( _osgModel->rootNav() );
+        _osgCamera->set( 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 );
       }
 
 
@@ -45,17 +47,40 @@ namespace Oge
       }
 
 
+      void OsgViewer::readConfig( const std::string& config ) 
+      {
+      }
+
+
       void OsgViewer::init()
       {
-        OgeBase::OgeCore::Viewer::init();
+        // Build the model first. 
+        _osgModel->build();
+
+        // Now initialize all the devices attached.  
+        std::map< const std::string, IInputDevice::RefPtr >::iterator itr;
+        for( itr = _inputDevices.begin(); itr != _inputDevices.end(); ++itr )
+        {
+          itr->second->init();
+        }        
       }
 
 
       void OsgViewer::update()
       {
-        OgeBase::OgeCore::Viewer::update();        
-        
-        _osgModel->rootNav()->setMatrix( osg::Matrix( _osgView->getCamera()->getMatrix() ) );
+        std::map< const std::string, IInputDevice::RefPtr >::iterator itr;
+        for( itr = _inputDevices.begin(); itr != _inputDevices.end(); ++itr )
+        {
+          itr->second->update();
+        }    
+
+        // Update the scene with the new camera pos. 
+        _osgModel->rootNav()->asTransform()->asMatrixTransform()->setMatrix( osg::Matrix( _osgCamera->getMatrix() ) );
+
+        // This has to come after we update the devices. As when we update 
+        // devices all the callbacks attached with the inputs will 
+        // be called that may result in change in the scenegraph. 
+        _osgModel->update();
       }
 
 
@@ -66,7 +91,7 @@ namespace Oge
 
       int OsgViewer::run()
       {
-        if( _viewerMode = EMBEDDED )
+        if( _mode = EMBEDDED )
         {
           this->frame();
         }
@@ -82,6 +107,35 @@ namespace Oge
       {        
         _osgModel->setSceneData( sceneRoot );
       }
+
+
+      IView* OsgViewer::getView() const 
+      {
+        return _osgView.get();
+      }
+
+
+      void OsgViewer::addInputDevice( const std::string& deviceName, IInputDevice *inputDevice )
+      {
+
+        if( _inputDevices.find( deviceName ) == _inputDevices.end() )
+        {
+          _inputDevices[ deviceName ] = inputDevice;
+        }
+      }
+
+
+      IInputDevice* OsgViewer::getInputDevice( const std::string& deviceName ) const
+      {
+        if( _inputDevices.find( deviceName ) != _inputDevices.end() )
+        {
+          return _inputDevices.find( deviceName )->second.get();
+        }
+        else
+        {
+          return 0x00;
+        }
+      }    
     } 
   } 
 } 
