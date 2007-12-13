@@ -12,10 +12,9 @@ namespace Oge
   {
     namespace OgeInterfaces
     { 
-      struct IFunctor;
+      struct IInputCallback;
       
-      // May be instead of event we call it state. 
-      struct IInput : public IUnknown
+      struct IInput : public OgeBase::OgeInterfaces::IUnknown
       {
         OGE_DELCARE_SMART_PTR( IInput );
 
@@ -24,8 +23,8 @@ namespace Oge
         virtual void          init() = 0;                      
         virtual IEvent::Type  getEvent() const = 0;
 
-        virtual void          addActionCallback( IEvent::Type eventType, IFunctor* ftor, bool executeNext ) = 0; 
-        virtual void          setActionCallback( IEvent::Type eventType, IFunctor* ftor, bool executeNext ) = 0; 
+        virtual void          addActionCallback( IEvent::Type eventType, IInputCallback* callback, bool executeNext ) = 0; 
+        virtual void          setActionCallback( IEvent::Type eventType, IInputCallback* callback, bool executeNext ) = 0; 
        
         virtual void          call( IEvent::Type type ) = 0;
       };

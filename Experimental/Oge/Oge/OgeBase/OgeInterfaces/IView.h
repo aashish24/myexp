@@ -18,10 +18,13 @@ namespace Oge
 
         enum                  { IID = 9514518190 };         
 
+#if 0
         virtual void          setCamera( ICamera* camera ) = 0;
         virtual ICamera*      getCamera( const unsigned int& index = 0 ) = 0;
 
         virtual void          addCamera( ICamera* camera ) = 0;
+#endif 
+        virtual void          update() = 0;
 
         virtual void          draw() = 0;
       };      

@@ -47,5 +47,4 @@ namespace Oge
   void class_name::unrefDoNotDelete() { base_class::unrefDoNotDelete(); }
 
 
-
 #endif // __OGE_INTERFACES_I_UNKNOWN_H__

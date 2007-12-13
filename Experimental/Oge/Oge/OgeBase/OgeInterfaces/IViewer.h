@@ -4,6 +4,8 @@
 
 #include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
 
+#include <string>
+
 namespace Oge
 {
   namespace OgeBase
@@ -29,7 +31,9 @@ namespace Oge
 
         enum                  { IID = 2546660797 };
 
-        enum                  ViewerMode{ REGULAR = 0, EMBEDDED = 1 };                
+        enum                  Mode{ REGULAR = 0, EMBEDDED = 1 };                
+
+        virtual void          readConfig( const std::string& config ) = 0;
 
         virtual void          init() = 0;
 
@@ -45,9 +49,7 @@ namespace Oge
 
         virtual void          addInputDevice( const std::string& deviceName, IInputDevice* inputDevice ) = 0;
 
-        virtual IInputDevice* getInputDevice( const std::string& deviceName ) = 0;
-
-        virtual void          setEmbeddedDisplaySize( int x, int y, int width, int height ) = 0;
+        virtual IInputDevice* getInputDevice( const std::string& deviceName ) const = 0;
       };
     } // namespace OgeInterfaces
   } // namespace OgeBase
