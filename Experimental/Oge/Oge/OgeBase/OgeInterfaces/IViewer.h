@@ -14,7 +14,8 @@ namespace Oge
     { 
       struct IView;
       struct IInputDevice;
-
+      struct ICamera;
+      struct IInterfaceContext;
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -29,7 +30,7 @@ namespace Oge
       {
         OGE_DELCARE_SMART_PTR( IViewer );
 
-        enum                  { IID = 2546660797 };
+        enum                  { IID = 3027178794 };
 
         enum                  Mode{ REGULAR = 0, EMBEDDED = 1 };                
 
@@ -47,9 +48,16 @@ namespace Oge
 
         virtual IView*        getView() const = 0;
 
+        virtual ICamera*      getActiveCamera() const = 0;        
+
         virtual void          addInputDevice( const std::string& deviceName, IInputDevice* inputDevice ) = 0;
 
         virtual IInputDevice* getInputDevice( const std::string& deviceName ) const = 0;
+
+        virtual void          addInterfaceContext( IInterfaceContext* context ) = 0;
+        
+        virtual IInterfaceContext* getInterfaceContext( const unsigned int& index ) const = 0;
+
       };
     } // namespace OgeInterfaces
   } // namespace OgeBase

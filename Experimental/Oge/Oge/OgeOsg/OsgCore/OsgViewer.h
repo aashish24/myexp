@@ -7,6 +7,7 @@
 #include "Oge/OgeBase/OgeInterfaces/IView.h"
 #include "Oge/OgeBase/OgeInterfaces/IViewer.h"
 #include "Oge/OgeBase/OgeInterfaces/IInputDevice.h"
+#include "Oge/OgeBase/OgeInterfaces/IInterfaceContext.h"
 
 #include "Oge/OgeBase/OgeCore/Referenced.h"
 
@@ -61,11 +62,13 @@ namespace Oge
           typedef OgeBase::OgeInterfaces::IView         IView;
           typedef OgeBase::OgeInterfaces::IViewer       IViewer;
           typedef OgeBase::OgeInterfaces::IInputDevice  IInputDevice;
+          typedef OgeBase::OgeInterfaces::IInterfaceContext  IInterfaceContext;
+          typedef OgeBase::OgeInterfaces::ICamera       ICamera;
 
           typedef OgeOsg::OsgCore::OsgModel             OsgModel;    
-
           typedef std::map< const std::string, IInputDevice::RefPtr >   
                                                         InputDevices;
+          typedef std::vector< IInterfaceContext::RefPtr >  InterfaceContexts;
 
           OsgViewer( int argc = 0, char** argv = 0, Mode vMode = REGULAR );        
           
@@ -85,10 +88,15 @@ namespace Oge
 
           virtual IView*                                getView() const;
 
+          virtual ICamera*                              getActiveCamera() const;
+
           virtual void                                  addInputDevice( const std::string& deviceName, IInputDevice* inputDevice );
 
           virtual IInputDevice*                         getInputDevice( const std::string& deviceName ) const;
-        
+
+          virtual void                                  addInterfaceContext( IInterfaceContext* context );
+
+          virtual IInterfaceContext*                    getInterfaceContext( const unsigned int& index ) const;        
 
       
       protected: 
@@ -106,6 +114,9 @@ namespace Oge
           OsgCamera::RefPtr                             _osgCamera;
 
           InputDevices                                  _inputDevices;
+          InterfaceContexts                             _interfaceContexts;
+
+
       };
     }
   } 

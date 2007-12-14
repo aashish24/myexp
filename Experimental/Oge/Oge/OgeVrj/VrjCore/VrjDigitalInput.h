@@ -42,6 +42,12 @@ namespace Oge
 
           virtual State                             getData() const; 
 
+          virtual bool                              getDigitalData() const;
+
+          virtual float                             getAnalogData() const;
+
+          virtual const float*                      getPositionalData() const;
+
           virtual Type                              getEvent() const;
 
           IUnknown*                                 queryInterface( const unsigned long& iid );

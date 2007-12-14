@@ -21,14 +21,16 @@ namespace Oge
         OGE_DELCARE_SMART_PTR( IInputDevice );
 
         enum                          { IID = 0 };
-                
+
+        enum InputType                { DIGITAL=0, ANALOG, POSITIONAL };
+
         virtual void                  init() = 0; 
 
         virtual void                  config( const std::string& config ) = 0;
 
         virtual void                  update() = 0;   
 
-        virtual IInput*               getInput( const unsigned int& index ) = 0;        
+        virtual IInput*               getInput( InputType type, const unsigned int& index ) = 0;        
       };
     } // namespace OgeInterfaces. 
   } // namespace OgeBase.

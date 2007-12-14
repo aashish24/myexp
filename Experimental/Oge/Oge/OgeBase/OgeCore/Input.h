@@ -13,6 +13,7 @@
 
 #include <vector>
 #include <map>
+#include <string>
 
 namespace Oge
 {
@@ -26,7 +27,7 @@ namespace Oge
       {
         OGE_DELCARE_SMART_PTR( Input ); 
         
-              
+        IMPLEMENT_IUNKNOWN_MEMBERS( Input, Oge::OgeBase::OgeCore::Referenced );      
 
         typedef OgeInterfaces::IInputCallback               IInputCallback; 
         typedef OgeInterfaces::IEvent                       IEvent;         
@@ -36,71 +37,32 @@ namespace Oge
 
         typedef std::map< Type, std::vector < Pair > >      Callbacks;          
 
-        virtual void ref()
-        {
-          OgeBase::OgeCore::Referenced::ref();
-        }
+        Input( const std::string& id="", const std::string& proxy="", Callbacks& callbacks=Callbacks() );
 
+        virtual void                                        addInputCallback( IEvent::Type type, 
+                                                                              IInputCallback* callback, 
+                                                                              bool executeNext= true );
 
-        virtual void unref()
-        {
-          OgeBase::OgeCore::Referenced::unref();
-        }
+        virtual void                                        setInputCallback( IEvent::Type type, 
+                                                                              IInputCallback* callback, 
+                                                                              bool executeNext= true );
 
+        virtual void                                        call( IEvent::Type type );
 
-        virtual void unrefDoNotDelete()
-        {
-          OgeBase::OgeCore::Referenced::unrefDoNotDelete();
-        }
-
-
-        virtual void addActionCallback( IEvent::Type type, IInputCallback* callback, bool executeNext= true )
-        {        
-          //_callbacks.insert( BasePair( type, Pair( executeNext, ftor ) ) );
-          _callbacks[ type ].push_back( Pair( executeNext, callback ) );
-        }
-
-
-        virtual void setActionCallback( IEvent::Type type, IInputCallback* callback, bool executeNext= true )
-        {
-          /*_callbacks.clear();
-          _callbacks.insert( Pair( executeNext, ftor ) ):*/
-        }
-
-
-        virtual void call( IEvent::Type type )
-        {
-          Callbacks::iterator itr;
-          for( itr = _callbacks.begin(); itr != _callbacks.end(); ++itr )
-          {
-            if( itr->first == type )
-            {
-              bool cont = true;
-              std::vector< Pair >::iterator sItr = itr->second.begin();
-              while( cont && ( sItr != itr->second.end() ) )
-              { 
-                cont = sItr->first;
-                sItr->second->operator ()( this );
-                ++sItr;
-              }
-            }
-          }
-        }
 
         protected: 
           
-          virtual ~Input()
-          {
-          }
+          virtual                                           ~Input();
+
 
         protected:
         
-          std::string         _id;
+          std::string                                       _id;
 
-          std::string         _proxy;
+          std::string                                       _proxy;
 
           // Map of event to callbacks.           
-          Callbacks           _callbacks;
+          Callbacks                                         _callbacks;
       };
     }
   }

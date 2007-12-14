@@ -42,36 +42,66 @@ namespace Oge
         /*Test test;
         Oge::OgeBase::OgeCore::MemberFunctor< Test >* testFtor = new Oge::OgeBase::OgeCore::MemberFunctor< Test >( &test, &Test::print );*/
 
-        for( size_t i = 0; i < 2; ++i )
+        for( size_t i = 0; i < 3; ++i )
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
           oStrStream2 << "VJButton" << i << "\0";
 
-          _inputs.push_back( new OgeVrj::VrjCore::VrjDigitalInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
-          _inputs[ i ]->init();
-          //_inputs[ i ]->addActionCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyPress, testFtor, true );
+          _digitalInputs.push_back( new OgeVrj::VrjCore::VrjDigitalInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
+          _digitalInputs[ i ]->init();
+          //_inputs[ i ]->addInputCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyPress, testFtor, true );
         }
       }
 
 
       void Gamepad::update()
       {
-        for( size_t i = 0; i < 2; ++i )
+        InputsItr itr;
+        for( itr  = _digitalInputs.begin(); itr != _digitalInputs.end(); ++itr )
         {
-          _inputs[ i ]->call( _inputs[ i ]->getEvent() );
+           ( *itr )->call( ( *itr )->getEvent() );
+          //_digitalInputs[ i ]->call( _digitalInputs[ i ]->getEvent() );
+        }
+
+        for( itr  = _analogInputs.begin(); itr != _analogInputs.end(); ++itr )
+        {
+          ( *itr )->call( ( *itr )->getEvent() );
+          //_digitalInputs[ i ]->call( _digitalInputs[ i ]->getEvent() );
+        }
+
+        for( itr  = _positionalInputs.begin(); itr != _positionalInputs.end(); ++itr )
+        {
+          ( *itr )->call( ( *itr )->getEvent() );
+          //_digitalInputs[ i ]->call( _digitalInputs[ i ]->getEvent() );
         }
       }
 
 
-      OgeInterfaces::IInput* Gamepad::getInput( const unsigned int& index )
+      OgeInterfaces::IInput* Gamepad::getInput( IInputDevice::InputType type, const unsigned int& index )
       {
-        if( index >= _inputs.size() )
+        switch( type )
         {
-          return 0x00;
-        }
-
-        return _inputs[ index ];
+          case IInputDevice::DIGITAL :
+          {
+            if( index < _digitalInputs.size() ) { return _digitalInputs.at( index ).get(); }
+            else { return 0x00; }
+          }
+          case IInputDevice::ANALOG : 
+          {
+            if( index < _analogInputs.size() ) { return _analogInputs.at( index ).get(); }
+            else { return 0x00; }
+          }
+          case IInputDevice::POSITIONAL : 
+          {
+            if( index < _positionalInputs.size() ){ return _positionalInputs.at( index ).get(); }
+            else { return 0x00; }
+          }
+          default:
+          {
+            return 0x00;
+          }
+        };
       }
     
 

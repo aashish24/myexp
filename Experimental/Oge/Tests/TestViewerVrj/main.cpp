@@ -25,13 +25,9 @@ int main( int argc, char **argv )
       return 1;
   }
 
-//  Oge::OgeOsg::OsgCore::OsgViewer* viewer1 = new Oge::OgeOsg::OsgCore::OsgViewer( Oge::OgeBase::OgeInterfaces::IViewer::EMBEDDED );
-
   ViewerVrj* viewer = new ViewerVrj( argc, argv );
 
   viewer->setSceneData( loadedModel.get() );    
-
-  //viewer->getView()->getCamera()->set( 0.0, -10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 );
 
   viewer->run();
 }

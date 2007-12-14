@@ -7,8 +7,10 @@ namespace Oge
   {  
     namespace OgeCore
     {
-        
-      };
+      InputCallback::IUnknown* InputCallback::queryInterface( const unsigned long &iid )
+      {
+        return 0x00;
+      }
     }
   }
 }

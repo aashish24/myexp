@@ -45,6 +45,8 @@ namespace Oge
 
           IMPLEMENT_IUNKNOWN_MEMBERS( Gamepad, Oge::OgeBase::OgeCore::Referenced );
 
+          typedef std::vector< OgeInterfaces::IInput::RefPtr >::iterator InputsItr;
+
                                                               Gamepad();
 
 
@@ -54,7 +56,7 @@ namespace Oge
 
           virtual void                                        update();
 
-          virtual OgeInterfaces::IInput*                      getInput( const unsigned int& index );
+          virtual OgeInterfaces::IInput*                      getInput( IInputDevice::InputType type, const unsigned int& index );
 
           virtual OgeInterfaces::IUnknown*                    queryInterface( const unsigned long& iid );
 
@@ -65,7 +67,9 @@ namespace Oge
 
         protected: 
 
-          std::vector< OgeInterfaces::IInput* >                _inputs;
+          std::vector< OgeInterfaces::IInput::RefPtr >                _digitalInputs;
+          std::vector< OgeInterfaces::IInput::RefPtr >                _analogInputs;
+          std::vector< OgeInterfaces::IInput::RefPtr >                _positionalInputs;
       };
     }
   }

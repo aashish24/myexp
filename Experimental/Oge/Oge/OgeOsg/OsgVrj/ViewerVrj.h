@@ -80,8 +80,6 @@ namespace Oge
         private:
         
           void                  configDevices(); 
-
-          void                  configGamepad();
       };
     }
   }

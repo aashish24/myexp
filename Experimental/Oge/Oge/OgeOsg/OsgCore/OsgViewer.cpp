@@ -109,9 +109,15 @@ namespace Oge
       }
 
 
-      IView* OsgViewer::getView() const 
+      OsgViewer::IView* OsgViewer::getView() const 
       {
         return _osgView.get();
+      }
+
+
+      OsgViewer::ICamera* OsgViewer::getActiveCamera() const 
+      {
+        return _osgCamera.get();
       }
 
 
@@ -136,6 +142,30 @@ namespace Oge
           return 0x00;
         }
       }    
+
+      // Lets config the interface context right now. We may have to think about when interface context 
+      // will be confiigred. 
+      void OsgViewer::addInterfaceContext(Oge::OgeOsg::OsgCore::OsgViewer::IInterfaceContext *context)
+      {
+        if( context )
+        {
+          _interfaceContexts.push_back( context );
+          context->config();
+        }
+      }
+
+
+      OsgViewer::IInterfaceContext* OsgViewer::getInterfaceContext(const unsigned int &index) const
+      {
+        if( index < _interfaceContexts.size() )
+        {
+          return _interfaceContexts.at( index ).get();
+        }
+        else
+        {
+          return 0x00;
+        }
+      }
     } 
   } 
 } 

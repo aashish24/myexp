@@ -28,6 +28,40 @@ namespace Oge
       }      
 
 
+      bool VrjDigitalInput::getDigitalData() const 
+      {
+        bool result;
+
+        switch( this->getData() )
+        {
+          case State::TOGGLE_OFF : 
+          {
+            result = 0;
+            break;
+          }
+          case State::TOGGLE_ON :
+          {
+            result = 1;
+            break;
+          }          
+        };
+
+        return result;
+      }
+
+
+      float VrjDigitalInput::getAnalogData() const 
+      {
+        return 0.0f;
+      }
+
+
+      const float* VrjDigitalInput::getPositionalData() const
+      {
+        return 0x00;
+      }
+
+
       Type VrjDigitalInput::getEvent() const 
       {
         IEvent::Type type( IEvent::None );

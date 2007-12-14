@@ -211,7 +211,15 @@
 							>
 						</File>
 						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Input.cpp"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeBase\OgeCore\Input.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\InputCallback.cpp"
 							>
 						</File>
 						<File
@@ -260,14 +268,14 @@
 						</File>
 					</Filter>
 					<Filter
-						Name="OgeController"
+						Name="InterfaceContext"
 						>
 						<File
-							RelativePath=".\Oge\OgeBase\OgeController\GamepadController.cpp"
+							RelativePath=".\Oge\OgeBase\OgeController\DefaultInterfaceContext.cpp"
 							>
 						</File>
 						<File
-							RelativePath=".\Oge\OgeBase\OgeController\GamepadController.h"
+							RelativePath=".\Oge\OgeBase\OgeController\DefaultInterfaceContext.h"
 							>
 						</File>
 					</Filter>
@@ -316,6 +324,10 @@
 						</File>
 						<File
 							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputGetData.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInterfaceContext.h"
 							>
 						</File>
 						<File
