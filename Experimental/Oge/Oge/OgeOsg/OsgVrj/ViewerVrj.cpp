@@ -7,7 +7,7 @@
 
 #include "Oge/OgeVrj/VrjCore/LoadConfigFile.h"
 
-#include "Oge/OgeBase/OgeController/DefaultInterfaceContext.h"
+#include "Oge/OgeBase/InterfaceContexts/DefaultInterfaceContext.h"
 
 #include "boost/bind.hpp" 
 
@@ -155,7 +155,7 @@ namespace Oge
         OgeBase::OgeDev::Gamepad::RefPtr gp( new OgeBase::OgeDev::Gamepad() );
                 
         this->addInputDevice( "Gamepad01", gp.get() );
-        this->addInterfaceContext( new OgeBase::InterfaceContext::DefaultInterfaceContext( this, gp.get() ) );
+        this->addInterfaceContext( new OgeBase::InterfaceContexts::DefaultInterfaceContext( this, gp.get() ) );
       }
     } 
   }
