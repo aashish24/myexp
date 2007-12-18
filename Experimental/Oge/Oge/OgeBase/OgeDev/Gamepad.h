@@ -25,16 +25,7 @@ namespace Oge
     }
 
     namespace OgeDev
-    {
-      class Test
-      {
-        public: 
-          void print()
-          {
-            std::cout <<  "Print: " << std::endl;
-          }
-      };
-
+    { 
       class OGE_EXPORT Gamepad : 
         public Oge::OgeBase::OgeInterfaces::IInputDevice, 
         public Oge::OgeBase::OgeCore::Referenced
@@ -47,23 +38,23 @@ namespace Oge
 
           typedef std::vector< OgeInterfaces::IInput::RefPtr >::iterator InputsItr;
 
-                                                              Gamepad();
+          Gamepad();
 
+          virtual void                                              init();
 
-          virtual void                                        init();
+          virtual void                                              config( const std::string& config );
 
-          virtual void                                        config( const std::string& config );
+          virtual void                                              update();
 
-          virtual void                                        update();
+          virtual OgeInterfaces::IInput*                            getInput( IInputDevice::InputType type, const unsigned int& index );
 
-          virtual OgeInterfaces::IInput*                      getInput( IInputDevice::InputType type, const unsigned int& index );
-
-          virtual OgeInterfaces::IUnknown*                    queryInterface( const unsigned long& iid );
+          virtual OgeInterfaces::IUnknown*                          queryInterface( const unsigned long& iid );
 
         
         protected: 
           
-          virtual                                             ~Gamepad();
+          virtual ~Gamepad();
+
 
         protected: 
 
