@@ -24,8 +24,8 @@ namespace Oge
         
         virtual void  update() = 0;
       };
-    } // namespace OgeInterfaces
-  } // namespace OgeBase
-} // namespace Oge
+    } 
+  } 
+} 
 
 #endif // __OGE_INTERFACES_I_MODEL_H__

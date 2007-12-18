@@ -1,6 +1,6 @@
 
-#ifndef __INPUT_CALLBACK_H__
-#define __INPUT_CALLBACK_H__
+#ifndef __OGE_CORE_INPUT_CALLBACK_H__
+#define __OGE_CORE_INPUT_CALLBACK_H__
 
 #include "Oge/Export.h"
 
@@ -31,7 +31,6 @@ namespace Oge
 
         IUnknown*                                 queryInterface( const unsigned long& iid );
 
-
         protected: 
           
           virtual ~InputCallback(){};
@@ -40,4 +39,4 @@ namespace Oge
   }
 }
 
-#endif // __INPUT_CALLBACK_H__
+#endif // __OGE_CORE_INPUT_CALLBACK_H__

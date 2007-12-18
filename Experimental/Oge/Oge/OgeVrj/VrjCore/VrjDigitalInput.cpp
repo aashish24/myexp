@@ -9,7 +9,9 @@ namespace Oge
     {
       VrjDigitalInput::VrjDigitalInput( const std::string& id, 
         const std::string& proxy ) :
-      _digitalInterface( new gadget::DigitalInterface() )
+        OgeBase::OgeCore::Input( id ),
+        _proxy( proxy ),
+        _digitalInterface( new gadget::DigitalInterface() )
       {
         _id = id;
         _proxy = proxy;          
@@ -22,7 +24,7 @@ namespace Oge
       }
 
 
-      State VrjDigitalInput::getData() const
+      gadget::Digital::State VrjDigitalInput::getData() const
       {        
         return (*_digitalInterface)->getData();
       }      
@@ -62,7 +64,7 @@ namespace Oge
       }
 
 
-      Type VrjDigitalInput::getEvent() const 
+      OgeBase::OgeInterfaces::IEvent::Type VrjDigitalInput::getEvent() const 
       {
         IEvent::Type type( IEvent::None );
 
@@ -93,7 +95,7 @@ namespace Oge
         return type;
       }
 
-      IUnknown* VrjDigitalInput::queryInterface( const unsigned long& iid )
+      OgeBase::OgeInterfaces::IUnknown* VrjDigitalInput::queryInterface( const unsigned long& iid )
       {
         return 0x00;
       }

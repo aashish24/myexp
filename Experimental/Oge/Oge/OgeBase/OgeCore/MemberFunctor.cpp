@@ -29,9 +29,17 @@ namespace Oge
 
 
       template< typename T >
-      OgeInterfaces::IUnknown* MemberFunctor< T >::queryInterface( const unsigned long& iid )
+      OgeBase::OgeInterfaces::IUnknown* MemberFunctor< T >::queryInterface( const unsigned long& iid )
       {
-        return 0x00;
+        case OgeBase::OgeInterfaces::IUnknown::IID:
+        case OgeBase::OgeInterfaces::IFunctor::IID: 
+        {
+          return static_cast< OgeBase::OgeInterfaces::IFunctor* >( this );
+        }
+        default: 
+        {
+          return 0x00;
+        }
       }
     }
   }

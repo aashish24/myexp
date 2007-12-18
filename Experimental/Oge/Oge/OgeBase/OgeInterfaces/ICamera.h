@@ -1,5 +1,4 @@
 
-
 #ifndef __OGE_INTERFACES_I_CAMERA_H__
 #define __OGE_INTERFACES_I_CAMERA_H__
 
@@ -11,11 +10,12 @@ namespace Oge
   {
     namespace OgeInterfaces
     { 
+      // Interface for the camera class is not yet completed. 
       struct ICamera : public IUnknown
       {
         OGE_DELCARE_SMART_PTR( ICamera );
 
-        enum                  { IID = 0 };
+        enum                  { IID = 5267652420 };
 
         virtual void          set( float posX,  float posY,  float posZ, 
                                    float viewX, float viewY, float viewZ, 

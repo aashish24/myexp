@@ -15,28 +15,30 @@ namespace Oge
   {
     namespace OgeCore
     {
-      typedef Oge::OgeBase::OgeInterfaces::IEvent::Type Type;
-
-      struct OGE_EXPORT Event : 
-        public Oge::OgeBase::OgeInterfaces::IEvent, 
-        public Oge::OgeBase::OgeCore::Referenced
+      struct OGE_EXPORT Event : public OgeBase::OgeInterfaces::IEvent, 
+                                public OgeBase::OgeCore::Referenced
       {
         OGE_DELCARE_SMART_PTR( Event );
 
+        IMPLEMENT_IUNKNOWN_MEMBERS( Event, OgeBase::OgeCore::Referenced );
 
-                            Event( Type type );       
+        typedef OgeBase::OgeInterfaces::IEvent    IEvent;
+        typedef OgeBase::OgeInterfaces::IUnknown  IUnknown;
 
-        virtual Type        type() const;
+        Event( IEvent::Type type );       
+
+        virtual IEvent::Type                      type() const;
+
+        virtual IUnknown*                         queryInterface( const unsigned long& iid );
+
+        protected: 
+          
+          virtual ~Event();
 
 
         protected: 
           
-          virtual          ~Event();
-
-
-        protected: 
-          
-          Type             _type;
+          Type                                    _type;
       };
     }
   }

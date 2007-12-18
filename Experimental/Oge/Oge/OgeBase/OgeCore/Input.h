@@ -22,22 +22,25 @@ namespace Oge
     namespace OgeCore
     { 
       struct OGE_EXPORT Input : 
-        public OgeInterfaces::IInput,
-        public Oge::OgeBase::OgeCore::Referenced
+        public OgeBase::OgeInterfaces::IInput,
+        public OgeBase::OgeCore::Referenced
       {
         OGE_DELCARE_SMART_PTR( Input ); 
         
-        IMPLEMENT_IUNKNOWN_MEMBERS( Input, Oge::OgeBase::OgeCore::Referenced );      
+        IMPLEMENT_IUNKNOWN_MEMBERS( Input, OgeBase::OgeCore::Referenced );      
 
-        typedef OgeInterfaces::IInputCallback               IInputCallback; 
-        typedef OgeInterfaces::IEvent                       IEvent;         
-        typedef OgeInterfaces::IEvent::Type                 Type;        
+        typedef OgeBase::OgeInterfaces::IUnknown            IUnknown;
+        typedef OgeBase::OgeInterfaces::IInputCallback      IInputCallback; 
+        typedef OgeBase::OgeInterfaces::IEvent              IEvent;         
+        typedef OgeBase::OgeInterfaces::IEvent::Type        Type;        
+
         typedef std::pair< bool, IInputCallback* >          Pair;
         typedef std::pair< Type, std::vector< Pair > >      BasePair;   
-
         typedef std::map< Type, std::vector < Pair > >      Callbacks;          
 
-        Input( const std::string& id="", const std::string& proxy="", Callbacks& callbacks=Callbacks() );
+        Input( const std::string& id="" );
+
+        virtual IUnknown*                                   queryInterface( const unsigned long& iid );
 
         virtual void                                        addInputCallback( IEvent::Type type, 
                                                                               IInputCallback* callback, 
@@ -52,16 +55,12 @@ namespace Oge
 
         protected: 
           
-          virtual                                           ~Input();
+          virtual ~Input();
 
 
         protected:
         
           std::string                                       _id;
-
-          std::string                                       _proxy;
-
-          // Map of event to callbacks.           
           Callbacks                                         _callbacks;
       };
     }

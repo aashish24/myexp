@@ -22,40 +22,42 @@ namespace Oge
     namespace OgeCore
     {
       class OGE_EXPORT Camera : 
-        public Oge::OgeBase::OgeInterfaces::ICamera, 
-        public Oge::OgeBase::OgeCore::Referenced
+        public OgeBase::OgeInterfaces::ICamera, 
+        public OgeBase::OgeCore::Referenced
       {
         public:
                 
           OGE_DELCARE_SMART_PTR( Camera );
 
-          IMPLEMENT_IUNKNOWN_MEMBERS( Camera, Oge::OgeBase::OgeCore::Referenced );
+          IMPLEMENT_IUNKNOWN_MEMBERS( Camera, OgeBase::OgeCore::Referenced );
           
-          virtual OgeInterfaces::IUnknown*  queryInterface( const unsigned long& iid );
+          typedef OgeBase::OgeInterfaces::IUnknown  IUnknown;
+
+          virtual IUnknown*                         queryInterface( const unsigned long& iid );
           
-          void                              set( float posX,  float posY,   float posZ, 
-                                                 float viewX, float viewY,  float viewZ, 
-                                                 float upX,   float upY,    float upZ );
+          void                                      set( float posX,  float posY,   float posZ, 
+                                                         float viewX, float viewY,  float viewZ, 
+                                                         float upX,   float upY,    float upZ );
 
-          float                             move( float speed );
+          float                                     move( float speed );
 
-          void                              moveWorld( float delX, float delY, float delZ  );
+          void                                      moveWorld( float delX, float delY, float delZ  );
 
-          const float*                      getMatrix();
+          const float*                              getMatrix();
 
 
         protected:
         
-          virtual                          ~Camera(){;}
+          virtual ~Camera(){;}
         
 
         protected: 
 
-          gmtl::Vec3f                       _pos;
-          gmtl::Vec3f                       _view;
-          gmtl::Vec3f                       _up;
+          gmtl::Vec3f                               _pos;
+          gmtl::Vec3f                               _view;
+          gmtl::Vec3f                               _up;
 
-          gmtl::Matrix44f                   _matrix;
+          gmtl::Matrix44f                           _matrix;
         
       };
     }

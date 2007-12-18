@@ -1,6 +1,6 @@
 
-#ifndef __MODEL_H__
-#define __MODEL_H__
+#ifndef __OGE_CORE_MODEL_H__
+#define __OGE_CORE_MODEL_H__
 
 #include "Oge/OgeBase/OgeInterfaces/IModel.h"
 #include "Oge/OgeBase/OgeInterfaces/IView.h"
@@ -25,29 +25,34 @@ namespace Oge
 
           IMPLEMENT_IUNKNOWN_MEMBERS( Model, OgeBase::OgeCore::Referenced );
 
-          typedef OgeBase::OgeInterfaces::IView IView;
+          typedef OgeBase::OgeInterfaces::IView                 IView;
+          typedef OgeBase::OgeInterfaces::IUnknown              IUnknown;
 
-                                                Model();
+          typedef std::vector< IView::RefPtr >::const_iterator  ViewsItr;
+
+          Model();
           
-          virtual void                          build();
+          virtual IUnknown*                                     queryInterface( const unsigned long& iid ) = 0;
 
-          virtual void                          attach( IView* view );
+          virtual void                                          build();
 
-          virtual void                          update();
+          virtual void                                          attach( IView* view );
+
+          virtual void                                          update();
 
 
         protected: 
-        
-                                                ~Model();
+          
+          virtual ~Model();
 
 
         protected: 
                     
-          std::vector< IView::RefPtr >          _views;                 
+          std::vector< IView::RefPtr >                          _views;                 
 
       };
     }
   }
 }
 
-#endif // __MODEL_H__
+#endif // __OGE_CORE_MODEL_H__

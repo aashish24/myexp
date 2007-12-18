@@ -3,7 +3,6 @@
 #define __OGE_INTERFACES_I_INPUT_GET_DATA_H__
 
 #include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
-
 #include "Oge/OgeBase/OgeInterfaces/IEvent.h"
 
 namespace Oge
@@ -17,7 +16,7 @@ namespace Oge
       {
         OGE_DELCARE_SMART_PTR( IInputGetData );
 
-        enum                  { IID = 0222 };
+        enum                  { IID = 4203930035 };
 
         virtual DataType      getData() const = 0;
       };

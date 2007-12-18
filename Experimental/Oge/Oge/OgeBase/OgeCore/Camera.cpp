@@ -7,10 +7,22 @@ namespace Oge
   {
     namespace OgeCore
     {
-      OgeInterfaces::IUnknown* Camera::queryInterface( const unsigned long& iid )
-      {        
-        return 0x00;
+      OgeBase::OgeInterfaces::IUnknown* Camera::queryInterface( const unsigned long& iid )
+      {    
+        switch( iid )
+        {
+          case OgeBase::OgeInterfaces::IUnknown::IID :
+          case OgeBase::OgeInterfaces::ICamera::IID: 
+          {
+            return static_cast< OgeBase::OgeInterfaces::ICamera* >( this );
+          }
+          default:
+          {
+            return 0x00;
+          }
+        };
       }
+
 
       void Camera::set( float posX,  float posY,   float posZ, 
                            float viewX, float viewY,  float viewZ, 

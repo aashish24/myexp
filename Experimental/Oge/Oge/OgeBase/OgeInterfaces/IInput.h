@@ -14,16 +14,17 @@ namespace Oge
     { 
       struct IInputCallback;
       
-      struct IInput : public OgeBase::OgeInterfaces::IUnknown
+      struct IInput : public IUnknown
       {
         OGE_DELCARE_SMART_PTR( IInput );
 
-        enum                  { IID = 0 };
+        enum                  { IID = 1237951858 };
 
-        virtual void          init() = 0;                      
+        virtual void          init() = 0;    
+
         virtual IEvent::Type  getEvent() const = 0;
 
-        // Generic ( not in terms of prrogramming )...functions. 
+        // Generic ( not in terms of programming )...functions. 
         virtual bool          getDigitalData() const = 0;
 
         virtual float         getAnalogData() const = 0;

@@ -14,7 +14,7 @@ namespace Oge
       {
         OGE_DELCARE_SMART_PTR( IFunctor );
 
-        enum          { IID = 0 };
+        enum          { IID = 1822840908 };
 
         virtual void  operator()( )  = 0;
       };

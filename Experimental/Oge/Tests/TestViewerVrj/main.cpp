@@ -25,7 +25,7 @@ int main( int argc, char **argv )
       return 1;
   }
 
-  ViewerVrj* viewer = new ViewerVrj( argc, argv );
+  ViewerVrj::RefPtr viewer = new ViewerVrj( argc, argv );
 
   viewer->setSceneData( loadedModel.get() );    
 

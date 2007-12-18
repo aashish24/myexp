@@ -9,7 +9,8 @@ namespace Oge
   {
     namespace OgeCore
     {
-      Model::Model()
+      Model::Model() :
+        _views()
       {
       }
 
@@ -19,7 +20,24 @@ namespace Oge
       }
 
 
-      void Model::attach( Model::IView* view )
+      OgeBase::OgeInterfaces::IUnknown* Model::queryInterface( const unsigned long &iid )
+      {
+        switch( iid )
+        {
+          case OgeBase::OgeInterfaces::IUnknown::IID : 
+          case OgeBase::OgeInterfaces::IModel::IID : 
+          {
+            return static_cast< OgeBase::OgeInterfaces::IModel* >( this );
+          }
+          default: 
+          {
+            return 0x00;
+          }
+        };
+      }
+
+
+      void Model::attach( OgeBase::OgeInterfaces::IView* view )
       {
         if( std::find( _views.begin(), _views.end(), view ) != _views.end() )
         {
@@ -32,10 +50,11 @@ namespace Oge
       {
       }
 
+
       // Update all the views attached with this model. 
       void Model::update()
       {
-        std::vector< IView::RefPtr >::const_iterator itr;
+        ViewsItr itr;
         for( itr = _views.begin(); itr != _views.end(); ++itr )
         {
           (*itr)->update();

@@ -20,9 +20,9 @@ namespace Oge
       {
         OGE_DELCARE_SMART_PTR( IInputDevice );
 
-        enum                          { IID = 0 };
+        enum                          { IID =  3262838957 };
 
-        enum InputType                { DIGITAL=0, ANALOG, POSITIONAL };
+        enum InputType                { DIGITAL = 0, ANALOG = 1 , POSITIONAL = 2 };
 
         virtual void                  init() = 0; 
 

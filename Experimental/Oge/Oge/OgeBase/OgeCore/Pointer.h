@@ -11,10 +11,10 @@ namespace Oge
     namespace OgeCore
     {
 #define OGE_SMART_PTR( class_name ) \
-      Oge::OgeBase::OgeCore::SmartPointer< class_name > 
+  Oge::OgeBase::OgeCore::SmartPointer< class_name > 
 
 #define OGE_DELCARE_SMART_PTR( class_name ) \
-      typedef OGE_SMART_PTR( class_name ) RefPtr; 
+  typedef OGE_SMART_PTR( class_name ) RefPtr; 
     }
   }
 }

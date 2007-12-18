@@ -12,11 +12,13 @@ namespace Oge
     {
       struct IInput;
 
-      struct IInputCallback : public OgeBase::OgeInterfaces::IUnknown
+      struct IInputCallback : public IUnknown
       {
         OGE_DELCARE_SMART_PTR( IInputCallback );
 
-        virtual void operator()( IInput* ) = 0;
+        enum                  { IID = 2961639404 };
+
+        virtual void          operator()( IInput* ) = 0;
       };
     }
   }

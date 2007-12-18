@@ -18,39 +18,37 @@ namespace Oge
   {
     namespace VrjCore
     {
-      namespace bi = Oge::OgeBase::OgeInterfaces;      
-      namespace bc = Oge::OgeBase::OgeCore;
-
-      typedef gadget::Digital::State                State;
-      typedef OgeBase::OgeInterfaces::IEvent::Type  Type;
-      typedef bi::IUnknown                          IUnknown;  
+      
 
       class OGE_EXPORT VrjDigitalInput : 
-        public bc::Input, 
-        public bi::IInputGetData< State >
+        public OgeBase::OgeCore::Input, 
+        public OgeBase::OgeInterfaces::IInputGetData< gadget::Digital::State >
       {
         public: 
 
           OGE_DELCARE_SMART_PTR( VrjDigitalInput );          
 
           IMPLEMENT_IUNKNOWN_MEMBERS( VrjDigitalInput, Oge::OgeBase::OgeCore::Input );
+          
+          typedef OgeBase::OgeInterfaces::IEvent::Type  Type;
+          typedef OgeBase::OgeInterfaces::IUnknown      IUnknown;  
+          typedef gadget::Digital::State                State;
 
-                                                    VrjDigitalInput( const std::string& id, 
-                                                                     const std::string& proxy );
+          VrjDigitalInput( const std::string& id, const std::string& proxy );
                   
-          virtual void                              init(); 
+          virtual void                                  init(); 
 
-          virtual State                             getData() const; 
+          virtual State                                 getData() const; 
 
-          virtual bool                              getDigitalData() const;
+          virtual bool                                  getDigitalData() const;
 
-          virtual float                             getAnalogData() const;
+          virtual float                                 getAnalogData() const;
 
-          virtual const float*                      getPositionalData() const;
+          virtual const float*                          getPositionalData() const;
 
-          virtual Type                              getEvent() const;
+          virtual Type                                  getEvent() const;
 
-          IUnknown*                                 queryInterface( const unsigned long& iid );
+          IUnknown*                                     queryInterface( const unsigned long& iid );
 
         protected: 
           
@@ -60,7 +58,9 @@ namespace Oge
 
         private: 
 
-          gadget::DigitalInterface*                _digitalInterface;
+          std::string                                   _proxy;
+
+          gadget::DigitalInterface*                     _digitalInterface;
 
       };
     }

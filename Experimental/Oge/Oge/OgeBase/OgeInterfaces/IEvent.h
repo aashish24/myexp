@@ -14,7 +14,7 @@ namespace Oge
       {
         OGE_DELCARE_SMART_PTR( IEvent );
 
-        enum { IID = 0 };
+        enum { IID = 3162216114 };
 
         enum Type
         {
