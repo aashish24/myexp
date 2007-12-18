@@ -105,15 +105,16 @@ namespace Oge
           {
             return OgeBase::OgeCore::Input::queryInterface( iid );
           }
-          case OgeBase::OgeInterfaces::IInputGetData::IID :
+          case OgeBase::OgeInterfaces::IInputGetData< State >::IID :
           {
             return static_cast< OgeBase::OgeInterfaces::IInputGetData< gadget::Digital::State >* >( this );
           }
-          default
+          default :
           {
             0x00;
           }
         };
+      }
     }
   }
 }

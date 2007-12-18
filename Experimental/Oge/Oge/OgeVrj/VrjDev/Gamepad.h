@@ -36,11 +36,13 @@ namespace Oge
 
           IMPLEMENT_IUNKNOWN_MEMBERS( Gamepad, Oge::OgeBase::OgeCore::Referenced );
 
-          typedef OgeBase::OgeInterfaces::IUnknown                IUnknown;
-          typedef OgeBase::OgeInterfaces::IInput                  IInput;
-          typedef std::vector< IInput::RefPtr >::iterator         InputsItr;
+          typedef OgeBase::OgeInterfaces::IUnknown                  IUnknown;
+          typedef OgeBase::OgeInterfaces::IInput                    IInput;
+          typedef std::vector< IInput::RefPtr >::iterator           InputsItr;
 
-          Gamepad();
+          Gamepad( const unsigned int& digitalsCount     = 12, 
+                   const unsigned int& analogsCount      = 6, 
+                   const unsigned int& positionalsCount  = 0  );
 
           virtual void                                              init();
 

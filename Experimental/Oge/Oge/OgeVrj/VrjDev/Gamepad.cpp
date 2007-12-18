@@ -12,7 +12,12 @@ namespace Oge
   {
     namespace VrjDev
     {
-      Gamepad::Gamepad()
+      Gamepad::Gamepad( const unsigned int& digitalsCount, 
+                        const unsigned int& analogsCount, 
+                        const unsigned int& positionalsCount ) :
+        _digitalInputs    ( digitalsCount ), 
+        _analogInputs     ( analogsCount ), 
+        _positionalInputs ( positionalsCount )
       {
         init();
       }
@@ -38,7 +43,7 @@ namespace Oge
         // How do we do the binding? 
         // We need to know what kind of interface they are using? 
         // such as VRJ or SDL. Is it worth the effort? 
-        for( size_t i = 0; i < 2; ++i )
+        for( size_t i = 0; i < _digitalInputs.size(); ++i )
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;

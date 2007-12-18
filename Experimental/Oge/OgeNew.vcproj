@@ -182,6 +182,10 @@
 			<Filter
 				Name="Oge"
 				>
+				<File
+					RelativePath=".\Oge\Export.h"
+					>
+				</File>
 				<Filter
 					Name="OgeBase"
 					>
@@ -398,6 +402,14 @@
 						>
 						<File
 							RelativePath=".\Oge\OgeVrj\VrjCore\LoadConfigFile.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjCore\VrjAnalogInput.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjCore\VrjAnalogInput.h"
 							>
 						</File>
 						<File
