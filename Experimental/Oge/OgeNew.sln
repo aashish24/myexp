@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OgeNew", "OgeNew.vcproj", "{950450AE-616E-453E-BB50-78CDBE50BF84}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Oge", "OgeNew.vcproj", "{950450AE-616E-453E-BB50-78CDBE50BF84}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestViewerVrj", "Tests\TestViewerVrj\TestViewerVrj.vcproj", "{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test1_VrjViewer", "Tests\Test1_VrjViewer\Test1_ViewerVrj.vcproj", "{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{950450AE-616E-453E-BB50-78CDBE50BF84} = {950450AE-616E-453E-BB50-78CDBE50BF84}
 	EndProjectSection
