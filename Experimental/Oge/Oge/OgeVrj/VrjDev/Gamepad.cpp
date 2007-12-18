@@ -1,5 +1,5 @@
 
-#include "Oge/OgeBase/OgeDev/Gamepad.h"
+#include "Oge/OgeVrj/VrjDev/Gamepad.h"
 
 // @Temp
 #include "Oge/OgeVrj/VrjCore/VrjDigitalInput.h"
@@ -8,9 +8,9 @@
 
 namespace Oge
 {
-  namespace OgeBase
+  namespace OgeVrj
   {
-    namespace OgeDev
+    namespace VrjDev
     {
       Gamepad::Gamepad()
       {
@@ -74,7 +74,7 @@ namespace Oge
       }
 
 
-      OgeInterfaces::IInput* Gamepad::getInput( IInputDevice::InputType type, const unsigned int& index ) const
+      OgeBase::OgeInterfaces::IInput* Gamepad::getInput( IInputDevice::InputType type, const unsigned int& index ) const
       {
         switch( type )
         {
@@ -126,7 +126,7 @@ namespace Oge
       }
 
 
-      OgeInterfaces::IUnknown* Gamepad::queryInterface( const unsigned long& iid )
+      OgeBase::OgeInterfaces::IUnknown* Gamepad::queryInterface( const unsigned long& iid )
       {
         return 0x00;
       }

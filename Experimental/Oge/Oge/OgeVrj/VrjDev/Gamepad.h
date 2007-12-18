@@ -15,7 +15,7 @@
 
 namespace Oge
 {
-  namespace OgeBase
+  namespace OgeVrj
   {
     
     namespace OgeInterfaces
@@ -24,7 +24,7 @@ namespace Oge
       struct IInput;        
     }
 
-    namespace OgeDev
+    namespace VrjDev
     { 
       class OGE_EXPORT Gamepad : 
         public Oge::OgeBase::OgeInterfaces::IInputDevice, 
@@ -36,7 +36,9 @@ namespace Oge
 
           IMPLEMENT_IUNKNOWN_MEMBERS( Gamepad, Oge::OgeBase::OgeCore::Referenced );
 
-          typedef std::vector< OgeInterfaces::IInput::RefPtr >::iterator InputsItr;
+          typedef OgeBase::OgeInterfaces::IUnknown                IUnknown;
+          typedef OgeBase::OgeInterfaces::IInput                  IInput;
+          typedef std::vector< IInput::RefPtr >::iterator         InputsItr;
 
           Gamepad();
 
@@ -46,11 +48,11 @@ namespace Oge
 
           virtual void                                              update();
 
-          virtual OgeInterfaces::IInput*                            getInput( IInputDevice::InputType type, const unsigned int& index ) const;
+          virtual OgeBase::OgeInterfaces::IInput*                   getInput( IInputDevice::InputType type, const unsigned int& index ) const;
 
           virtual unsigned int                                      getCount( IInputDevice::InputType type ) const;
 
-          virtual OgeInterfaces::IUnknown*                          queryInterface( const unsigned long& iid );
+          virtual IUnknown*                                         queryInterface( const unsigned long& iid );
 
         
         protected: 
@@ -60,9 +62,9 @@ namespace Oge
 
         protected: 
 
-          std::vector< OgeInterfaces::IInput::RefPtr >                _digitalInputs;
-          std::vector< OgeInterfaces::IInput::RefPtr >                _analogInputs;
-          std::vector< OgeInterfaces::IInput::RefPtr >                _positionalInputs;
+          std::vector< IInput::RefPtr >                           _digitalInputs;
+          std::vector< IInput::RefPtr >                           _analogInputs;
+          std::vector< IInput::RefPtr >                           _positionalInputs;
       };
     }
   }
