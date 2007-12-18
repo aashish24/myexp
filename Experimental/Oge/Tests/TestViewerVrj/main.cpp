@@ -7,13 +7,11 @@
 
 #include "osgDB/ReadFile"
 
-#include "Oge/OgeOsg/OsgVrj/ViewerVrj.h"
-
-#include "Oge/OgeBase/OgeDev/Gamepad.h"
+#include "Oge/OgeVrj/VrjOsg/VrjViewer.h"
 
 int main( int argc, char **argv )
 {
-  typedef Oge::OgeOsg::OsgVrj::ViewerVrj ViewerVrj;
+  typedef Oge::OgeVrj::VrjOsg::VrjViewer VrjViewer;
    
   osg::ArgumentParser arguments(&argc, argv);
 
@@ -25,7 +23,7 @@ int main( int argc, char **argv )
       return 1;
   }
 
-  ViewerVrj::RefPtr viewer = new ViewerVrj( argc, argv );
+  VrjViewer::RefPtr viewer = new VrjViewer( argc, argv );
 
   viewer->setSceneData( loadedModel.get() );    
 

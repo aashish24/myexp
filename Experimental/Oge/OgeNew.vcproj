@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="OgeNew"
+	Name="Oge"
 	ProjectGUID="{950450AE-616E-453E-BB50-78CDBE50BF84}"
 	RootNamespace="OgeNew"
 	Keyword="Win32Proj"
@@ -62,10 +62,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="osgd.lib osgUtild.lib osgViewerd.lib opengl32.lib"
+				OutputFile="./bin/Oge_d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="1"
+				ImportLibrary="../bin/Oge_d.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -280,18 +282,6 @@
 						</File>
 					</Filter>
 					<Filter
-						Name="OgeDev"
-						>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeDev\Gamepad.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeDev\Gamepad.h"
-							>
-						</File>
-					</Filter>
-					<Filter
 						Name="OgeInterfaces"
 						>
 						<File
@@ -399,18 +389,6 @@
 							>
 						</File>
 					</Filter>
-					<Filter
-						Name="OsgVrj"
-						>
-						<File
-							RelativePath=".\Oge\OgeOsg\OsgVrj\ViewerVrj.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeOsg\OsgVrj\ViewerVrj.h"
-							>
-						</File>
-					</Filter>
 				</Filter>
 				<Filter
 					Name="OgeVrj"
@@ -428,6 +406,66 @@
 						</File>
 						<File
 							RelativePath=".\Oge\OgeVrj\VrjCore\VrjDigitalInput.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="VrjDev"
+						>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjDev\Gamepad.cpp"
+							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									ObjectFile="$(IntDir)\$(InputName)1.obj"
+									XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									ObjectFile="$(IntDir)\$(InputName)1.obj"
+									XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+								/>
+							</FileConfiguration>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjDev\Gamepad.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="VrjOsg"
+						>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjOsg\VrjViewer.cpp"
+							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									ObjectFile="$(IntDir)\$(InputName)1.obj"
+									XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									ObjectFile="$(IntDir)\$(InputName)1.obj"
+									XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+								/>
+							</FileConfiguration>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjOsg\VrjViewer.h"
 							>
 						</File>
 					</Filter>

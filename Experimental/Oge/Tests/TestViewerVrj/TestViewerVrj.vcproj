@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="TestViewerVrj"
+	Name="Test1_VrjViewer"
 	ProjectGUID="{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}"
 	RootNamespace="TestViewerVrjcpp"
 	Keyword="Win32Proj"
@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib OpenThreadsd.lib osgd.lib osgDBd.lib osgUtild.lib osgGAd.lib osgViewerd.lib osgTextd.lib glu32.lib opengl32.lib QtOpenGLd4.lib qtmaind.lib QtGuid4.lib QtCored4.lib $(NOINHERIT)"
-				OutputFile="$(OutDir)\$(ProjectName)_d.exe"
+				OutputFile="../../bin/$(ProjectName)_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(QT_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);$(NSPR_LIB_DIR);"
 				GenerateDebugInformation="true"
