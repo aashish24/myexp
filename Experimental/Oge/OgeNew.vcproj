@@ -349,7 +349,7 @@
 						Name="OsgCore"
 						>
 						<File
-							RelativePath=".\OsgCamera.cpp"
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgCamera.cpp"
 							>
 						</File>
 						<File
