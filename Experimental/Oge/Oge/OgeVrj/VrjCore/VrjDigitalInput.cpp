@@ -95,10 +95,25 @@ namespace Oge
         return type;
       }
 
+      
       OgeBase::OgeInterfaces::IUnknown* VrjDigitalInput::queryInterface( const unsigned long& iid )
       {
-        return 0x00;
-      }
+        switch( iid )
+        {
+          case OgeBase::OgeInterfaces::IUnknown::IID :          
+          case OgeBase::OgeInterfaces::IInput::IID:
+          {
+            return OgeBase::OgeCore::Input::queryInterface( iid );
+          }
+          case OgeBase::OgeInterfaces::IInputGetData::IID :
+          {
+            return static_cast< OgeBase::OgeInterfaces::IInputGetData< gadget::Digital::State >* >( this );
+          }
+          default
+          {
+            0x00;
+          }
+        };
     }
   }
 }
