@@ -30,7 +30,9 @@ namespace Oge
 
         virtual void                  update() = 0;   
 
-        virtual IInput*               getInput( InputType type, const unsigned int& index ) = 0;        
+        virtual IInput*               getInput( InputType type, const unsigned int& index ) const = 0;        
+
+        virtual unsigned int          getCount( InputType type ) const = 0;
       };
     } // namespace OgeInterfaces. 
   } // namespace OgeBase.

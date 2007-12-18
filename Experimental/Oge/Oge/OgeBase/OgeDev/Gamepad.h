@@ -46,7 +46,9 @@ namespace Oge
 
           virtual void                                              update();
 
-          virtual OgeInterfaces::IInput*                            getInput( IInputDevice::InputType type, const unsigned int& index );
+          virtual OgeInterfaces::IInput*                            getInput( IInputDevice::InputType type, const unsigned int& index ) const;
+
+          virtual unsigned int                                      getCount( IInputDevice::InputType type ) const;
 
           virtual OgeInterfaces::IUnknown*                          queryInterface( const unsigned long& iid );
 

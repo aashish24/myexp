@@ -34,7 +34,7 @@ namespace Oge
         typedef OgeBase::OgeInterfaces::IEvent              IEvent;         
         typedef OgeBase::OgeInterfaces::IEvent::Type        Type;        
 
-        typedef std::pair< bool, IInputCallback* >          Pair;
+        typedef std::pair< bool, IInputCallback::RefPtr >   Pair;
         typedef std::pair< Type, std::vector< Pair > >      BasePair;   
         typedef std::map< Type, std::vector < Pair > >      Callbacks;          
 

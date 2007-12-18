@@ -38,11 +38,7 @@ namespace Oge
         // How do we do the binding? 
         // We need to know what kind of interface they are using? 
         // such as VRJ or SDL. Is it worth the effort? 
-
-        /*Test test;
-        Oge::OgeBase::OgeCore::MemberFunctor< Test >* testFtor = new Oge::OgeBase::OgeCore::MemberFunctor< Test >( &test, &Test::print );*/
-
-        for( size_t i = 0; i < 3; ++i )
+        for( size_t i = 0; i < 2; ++i )
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
@@ -78,7 +74,7 @@ namespace Oge
       }
 
 
-      OgeInterfaces::IInput* Gamepad::getInput( IInputDevice::InputType type, const unsigned int& index )
+      OgeInterfaces::IInput* Gamepad::getInput( IInputDevice::InputType type, const unsigned int& index ) const
       {
         switch( type )
         {
@@ -104,6 +100,31 @@ namespace Oge
         };
       }
     
+
+      unsigned int Gamepad::getCount( IInputDevice::InputType type ) const 
+      {
+        switch( type )
+        {
+          case DIGITAL: 
+          {
+            return _digitalInputs.size();
+          }
+          case ANALOG:
+          {
+            return _analogInputs.size();
+          }
+          case POSITIONAL:
+          {
+            return _positionalInputs.size();
+          }
+          default: 
+          {
+            // Error message here... 
+            return 0;
+          }
+        };
+      }
+
 
       OgeInterfaces::IUnknown* Gamepad::queryInterface( const unsigned long& iid )
       {
