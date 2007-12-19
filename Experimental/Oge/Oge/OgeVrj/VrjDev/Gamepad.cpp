@@ -3,6 +3,8 @@
 
 // @Temp
 #include "Oge/OgeVrj/VrjCore/VrjDigitalInput.h"
+#include "Oge/OgeVrj/VrjCore/VrjAnalogInput.h"
+#include "Oge/OgeVrj/VrjCore/VrjPositionInput.h"
 
 #include <ostream>
 
@@ -31,7 +33,7 @@ namespace Oge
       void Gamepad::init()
       {
         // Can we query hardware here? 
-        // Also we need to have default config that program will look for. 
+        // Also we test123need to have default config that program will look for. 
         config( "" );
       }
 
@@ -47,11 +49,32 @@ namespace Oge
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
-          oStrStream2 << "VJButton" << i << "\0";
+          oStrStream2 << "Gamepad01Button" << i << "\0";
 
           _digitalInputs.push_back( new OgeVrj::VrjCore::VrjDigitalInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
           _digitalInputs[ i ]->init();
-          //_inputs[ i ]->addInputCallback( Oge::OgeBase::OgeInterfaces::IEvent::KeyPress, testFtor, true );
+        }
+
+        // Analog inputs. 
+        for( size_t i = 0; i < _analogInputs.size(); ++i )
+        {
+          std::ostringstream oStrStream1, oStrStream2; 
+          oStrStream1 << i << std::endl;
+          oStrStream2 << "Gamepad01Analog" << i << "\0";
+
+          _analogInputs.push_back( new OgeVrj::VrjCore::VrjAnalogInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
+          _analogInputs[ i ]->init();
+        }
+
+        // Position inputs. 
+        for( size_t i = 0; i < _digitalInputs.size(); ++i )
+        {
+          std::ostringstream oStrStream1, oStrStream2; 
+          oStrStream1 << i << std::endl;
+          oStrStream2 << "Gamepad01Position" << i << "\0";
+
+          _positionalInputs.push_back( new OgeVrj::VrjCore::VrjPositionInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
+          _positionalInputs[ i ]->init();          
         }
       }
 
@@ -61,20 +84,17 @@ namespace Oge
         InputsItr itr;
         for( itr  = _digitalInputs.begin(); itr != _digitalInputs.end(); ++itr )
         {
-           ( *itr )->call( ( *itr )->getEvent() );
-          //_digitalInputs[ i ]->call( _digitalInputs[ i ]->getEvent() );
+           ( *itr )->call( ( *itr )->getEvent() );          
         }
 
         for( itr  = _analogInputs.begin(); itr != _analogInputs.end(); ++itr )
         {
           ( *itr )->call( ( *itr )->getEvent() );
-          //_digitalInputs[ i ]->call( _digitalInputs[ i ]->getEvent() );
         }
 
         for( itr  = _positionalInputs.begin(); itr != _positionalInputs.end(); ++itr )
         {
-          ( *itr )->call( ( *itr )->getEvent() );
-          //_digitalInputs[ i ]->call( _digitalInputs[ i ]->getEvent() );
+          ( *itr )->call( ( *itr )->getEvent() );          
         }
       }
 

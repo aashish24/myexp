@@ -420,6 +420,14 @@
 							RelativePath=".\Oge\OgeVrj\VrjCore\VrjDigitalInput.h"
 							>
 						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjCore\VrjPositionInput.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjCore\VrjPositionInput.h"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="VrjDev"
