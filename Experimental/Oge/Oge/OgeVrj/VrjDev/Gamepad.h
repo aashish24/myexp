@@ -38,11 +38,12 @@ namespace Oge
 
           typedef OgeBase::OgeInterfaces::IUnknown                  IUnknown;
           typedef OgeBase::OgeInterfaces::IInput                    IInput;
-          typedef std::vector< IInput::RefPtr >::iterator           InputsItr;
+          typedef std::vector< IInput::RefPtr >                     IInputs;
+          typedef IInputs::iterator                                 InputsItr;
 
-          Gamepad( const unsigned int& digitalsCount     = 12, 
-                   const unsigned int& analogsCount      = 6, 
-                   const unsigned int& positionalsCount  = 0  );
+          Gamepad( const unsigned int& digitalsCount  = 12, 
+                   const unsigned int& analogsCount   = 6, 
+                   const unsigned int& positionsCount = 0  );
 
           virtual void                                              init();
 
@@ -51,6 +52,8 @@ namespace Oge
           virtual void                                              update();
 
           virtual OgeBase::OgeInterfaces::IInput*                   getInput( IInputDevice::InputType type, const unsigned int& index ) const;
+
+          virtual IInputs&                                          getInputs( IInputDevice::InputType type );
 
           virtual unsigned int                                      getCount( IInputDevice::InputType type ) const;
 
@@ -64,9 +67,9 @@ namespace Oge
 
         protected: 
 
-          std::vector< IInput::RefPtr >                           _digitalInputs;
-          std::vector< IInput::RefPtr >                           _analogInputs;
-          std::vector< IInput::RefPtr >                           _positionalInputs;
+          IInputs                                                   _digitalInputs;
+          IInputs                                                   _analogInputs;
+          IInputs                                                   _positionInputs;
       };
     }
   }

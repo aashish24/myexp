@@ -1,6 +1,6 @@
 
 #include "Oge/OgeOsg/OsgCore/OsgView.h"
-#include "Oge/OgeBase/OgeInterfaces/IOsgImpl.h"
+#include "Oge/OgeBase/OgeInterfaces/IOsgScene.h"
 
 namespace Oge
 {

@@ -329,7 +329,7 @@
 							>
 						</File>
 						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IOsgImpl.h"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IOsgScene.h"
 							>
 						</File>
 						<File

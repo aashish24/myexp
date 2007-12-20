@@ -16,10 +16,10 @@ namespace Oge
     {
       Gamepad::Gamepad( const unsigned int& digitalsCount, 
                         const unsigned int& analogsCount, 
-                        const unsigned int& positionalsCount ) :
+                        const unsigned int& positionsCount ) :
         _digitalInputs    ( digitalsCount ), 
         _analogInputs     ( analogsCount ), 
-        _positionalInputs ( positionalsCount )
+        _positionInputs   ( positionsCount )
       {
         init();
       }
@@ -73,8 +73,8 @@ namespace Oge
           oStrStream1 << i << std::endl;
           oStrStream2 << "Gamepad01Position" << i << "\0";
 
-          _positionalInputs.push_back( new OgeVrj::VrjCore::VrjPositionInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
-          _positionalInputs[ i ]->init();          
+          _positionInputs.push_back( new OgeVrj::VrjCore::VrjPositionInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
+          _positionInputs[ i ]->init();          
         }
       }
 
@@ -92,7 +92,7 @@ namespace Oge
           ( *itr )->call( ( *itr )->getEvent() );
         }
 
-        for( itr  = _positionalInputs.begin(); itr != _positionalInputs.end(); ++itr )
+        for( itr  = _positionInputs.begin(); itr != _positionInputs.end(); ++itr )
         {
           ( *itr )->call( ( *itr )->getEvent() );          
         }
@@ -103,24 +103,48 @@ namespace Oge
       {
         switch( type )
         {
-          case IInputDevice::DIGITAL :
+          case IInputDevice::Digital :
           {
             if( index < _digitalInputs.size() ) { return _digitalInputs.at( index ).get(); }
             else { return 0x00; }
           }
-          case IInputDevice::ANALOG : 
+          case IInputDevice::Analog : 
           {
             if( index < _analogInputs.size() ) { return _analogInputs.at( index ).get(); }
             else { return 0x00; }
           }
-          case IInputDevice::POSITIONAL : 
+          case IInputDevice::Position : 
           {
-            if( index < _positionalInputs.size() ){ return _positionalInputs.at( index ).get(); }
+            if( index < _positionInputs.size() ){ return _positionInputs.at( index ).get(); }
             else { return 0x00; }
           }
           default:
           {
             return 0x00;
+          }
+        };
+      }
+
+
+      Gamepad::IInputs& Gamepad::getInputs( IInputDevice::InputType type )
+      {
+        switch( type )
+        {
+          case IInputDevice::Digital : 
+          {
+            return _digitalInputs;
+          }
+          case IInputDevice::Analog:
+          {
+            return _analogInputs;
+          }
+          case IInputDevice::Position: 
+          {
+            return _positionInputs;
+          }          
+          default :
+          {
+            throw "Error 1127219602 InputType not recognized: ";
           }
         };
       }
@@ -130,17 +154,17 @@ namespace Oge
       {
         switch( type )
         {
-          case DIGITAL: 
+          case Digital: 
           {
             return _digitalInputs.size();
           }
-          case ANALOG:
+          case Analog:
           {
             return _analogInputs.size();
           }
-          case POSITIONAL:
+          case Position:
           {
-            return _positionalInputs.size();
+            return _positionInputs.size();
           }
           default: 
           {

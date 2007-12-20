@@ -3,7 +3,7 @@
 
 #include "Oge/OgeOsg/OsgCore/OsgViewer.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IOsgImpl.h"
+#include "Oge/OgeBase/OgeInterfaces/IOsgScene.h"
 
 #include "vrj/vrjConfig.h"
 #include "vrj/Draw/OSG/OsgApp.h"
@@ -30,8 +30,6 @@ namespace Oge
       // How we add the devices? 
       // How we add functions that needs to be called? 
 
-      namespace bi = Oge::OgeBase::OgeInterfaces;
-
       class OGE_EXPORT VrjViewer : public OgeOsg::OsgCore::OsgViewer, 
                                    public vrj::OsgApp
       {
@@ -39,8 +37,8 @@ namespace Oge
           
           OGE_DELCARE_SMART_PTR( VrjViewer );     
 
-          typedef OgeBase::OgeInterfaces::IOsgImpl IOsgImpl;
-          typedef OgeBase::OgeInterfaces::IViewer  IViewer;
+          typedef OgeBase::OgeInterfaces::IOsgScene IOsgScene;
+          typedef OgeBase::OgeInterfaces::IViewer   IViewer;
 
           VrjViewer( int argc = 0, char** argv = 0, IViewer::Mode mode =  IViewer::EMBEDDED );
 

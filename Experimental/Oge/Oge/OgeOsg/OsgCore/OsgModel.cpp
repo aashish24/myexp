@@ -29,9 +29,9 @@ namespace Oge
           {
             return static_cast< IModel* >( this );
           }
-          case IOsgImpl::IID : 
+          case IOsgScene::IID : 
           {
-            return static_cast< IOsgImpl* >( this );
+            return static_cast< IOsgScene* >( this );
           }
         };
       }

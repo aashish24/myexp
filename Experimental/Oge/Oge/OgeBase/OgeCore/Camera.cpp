@@ -34,22 +34,31 @@ namespace Oge
       }
 
 
-      float Camera::move( float speed ) 
+      void Camera::move( float speed ) 
       {
         gmtl::Vec3f dir = _view - _pos;
         gmtl::normalize( dir );
 
-        _pos = _pos + dir * speed;
-
-        return 1.0;
+        _pos  = _pos + dir * speed;
+        _view = _view + dir * speed;
       }
 
 
-      void Camera::moveWorld( float delX, float delY, float delZ )
+      void Camera::rotateView( float speed )
       {
-        gmtl::Vec3f dir = gmtl::Vec3f( 1.0 * delX, 1.0 * delY, 1.0 * delZ ); 
-        _view = _view + dir;
-        _pos  = _pos + dir;
+        gmtl::Vec3f dir = _view - _pos;
+
+        _view[ 2 ] = _pos[ 2 ] + ( sin( speed ) * dir[ 0 ] + cos( speed ) * dir[ 2 ] );
+        _view[ 0 ] = _pos[ 0 ] + ( cos( speed ) * dir[ 0 ] + cos( speed ) * dir[ 2 ] );
+      }
+
+
+      void Camera::rotatePos( float speed )
+      {
+        gmtl::Vec3f dir = _pos - _view;
+      
+        _pos[ 2 ] = _view[ 2 ] + ( sin( speed ) * dir[ 0 ] + cos( speed ) * dir[ 2 ] );
+        _pos[ 0 ] = _view[ 0 ] + ( cos( speed ) * dir[ 0 ] + cos( speed ) * dir[ 2 ] );
       }
 
 

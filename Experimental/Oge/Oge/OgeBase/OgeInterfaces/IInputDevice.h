@@ -3,8 +3,10 @@
 #define __OGE_INTERFACES_I_INPUT_DEVICE_H__
 
 #include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
+#include "Oge/OgeBase/OgeInterfaces/IInput.h"
 
 #include <string>
+#include <vector>
 
 namespace Oge 
 {
@@ -20,19 +22,23 @@ namespace Oge
       {
         OGE_DELCARE_SMART_PTR( IInputDevice );
 
-        enum                          { IID =  3262838957 };
+        enum                                  { IID =  3262838957 };
 
-        enum InputType                { DIGITAL = 0, ANALOG = 1 , POSITIONAL = 2 };
+        enum InputType                        { Digital = 0, Analog = 1 , Position = 2 };
 
-        virtual void                  init() = 0; 
+        typedef std::vector< IInput::RefPtr > IInputs;
 
-        virtual void                  config( const std::string& config ) = 0;
+        virtual void                          init() = 0; 
 
-        virtual void                  update() = 0;   
+        virtual void                          config( const std::string& config ) = 0;
 
-        virtual IInput*               getInput( InputType type, const unsigned int& index ) const = 0;        
+        virtual void                          update() = 0;   
 
-        virtual unsigned int          getCount( InputType type ) const = 0;
+        virtual IInput*                       getInput( InputType type, const unsigned int& index ) const = 0;        
+
+        virtual IInputs&                      getInputs( InputType type ) = 0;
+
+        virtual unsigned int                  getCount( InputType type ) const = 0;
       };
     } // namespace OgeInterfaces. 
   } // namespace OgeBase.

@@ -6,7 +6,7 @@
 
 #include "Oge/OgeBase/OgeCore/Model.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IOsgImpl.h"
+#include "Oge/OgeBase/OgeInterfaces/IOsgScene.h"
 
 #include "osg/Node"
 #include "osg/Group"
@@ -20,7 +20,7 @@ namespace Oge
     {
       class OGE_EXPORT OsgModel : 
         public OgeBase::OgeCore::Model, 
-        public OgeBase::OgeInterfaces::IOsgImpl
+        public OgeBase::OgeInterfaces::IOsgScene
       {
         public: 
           

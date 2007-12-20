@@ -62,9 +62,10 @@ namespace Oge
       void VrjViewer::init()
       {
         vrj::OsgApp::init();
+        
         OgeOsg::OsgCore::OsgViewer::init();
 
-        configDevices();
+        this->configDevices();
       }
 
 
@@ -87,13 +88,7 @@ namespace Oge
 
       // Called by the latePreFrame();
       void VrjViewer::update()
-      {
-        // Now call vrjuggler osg update where update traversal of osg
-        // is going to take place.
-        //vrj::OsgApp::update();
-
-        OgeOsg::OsgCore::OsgViewer::update();
-        vrj::OsgApp::latePreFrame();
+      { 
       }
 
 
@@ -134,8 +129,11 @@ namespace Oge
 
 
       void VrjViewer::latePreFrame()
-      {        
-        update();
+      { 
+        this->update();
+
+        OgeOsg::OsgCore::OsgViewer::update();
+        
         vrj::OsgApp::latePreFrame();        
       }
 

@@ -19,11 +19,14 @@ namespace Oge
 
         virtual void          set( float posX,  float posY,  float posZ, 
                                    float viewX, float viewY, float viewZ, 
-                                   float upX,   float upY,   float upZ ) = 0;
+                                   float upX,   float upY,   float upZ ) = 0;        
 
-        virtual float         move( float speed ) = 0; 
+        virtual void                              move( float speed ) = 0;
 
-        virtual void          moveWorld( float delX, float delY, float delZ ) = 0;
+        virtual void                              rotateView( float speed ) = 0;
+
+        virtual void                              rotatePos( float speed ) = 0;
+
 
         virtual const float*  getMatrix() = 0;
       };

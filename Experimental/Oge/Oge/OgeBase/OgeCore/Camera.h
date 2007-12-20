@@ -35,13 +35,16 @@ namespace Oge
 
           virtual IUnknown*                         queryInterface( const unsigned long& iid );
           
-          void                                      set( float posX,  float posY,   float posZ, 
+          virtual void                              set( float posX,  float posY,   float posZ, 
                                                          float viewX, float viewY,  float viewZ, 
                                                          float upX,   float upY,    float upZ );
 
-          float                                     move( float speed );
+          
+          virtual void                              move( float speed );
 
-          void                                      moveWorld( float delX, float delY, float delZ  );
+          virtual void                              rotateView( float speed );
+
+          virtual void                              rotatePos( float speed );
 
           const float*                              getMatrix();
 
