@@ -21,11 +21,11 @@ namespace Oge
           // Is this callback used by a digital input? 
           if( input->getAnalogData() == 0.0 )
           {
-            _camera->move( -1.0 );
+            //_camera->move( -1.0 );
           }
           else
           {
-            _camera->move( input->getAnalogData() );
+            _camera->move( input->getAnalogData() * 0.1 );
           }
         }
 
@@ -42,7 +42,7 @@ namespace Oge
         
         virtual void operator()( OgeInterfaces::IInput* input )
         {
-          _camera->rotatePos( 1.0 );
+          _camera->rotateView( input->getAnalogData() * 0.01 );
         }
 
         OgeInterfaces::ICamera::RefPtr _camera;
@@ -81,12 +81,12 @@ namespace Oge
         dInputCallbacks.push_back( cmCallback.get() );
         dInputCallbacks.push_back( cmCallback.get() );
 
-        aInputCallbacks.push_back( crpCallback.get() );
-        aInputCallbacks.push_back( crpCallback.get() );
-        aInputCallbacks.push_back( crpCallback.get() );
-        aInputCallbacks.push_back( crpCallback.get() );     
-        aInputCallbacks.push_back( crpCallback.get() );
-        aInputCallbacks.push_back( crpCallback.get() );
+        aInputCallbacks.push_back( 0x00 );
+        aInputCallbacks.push_back( crpCallback.get()  );
+        aInputCallbacks.push_back( 0x00 );
+        aInputCallbacks.push_back( cmCallback.get() );     
+        aInputCallbacks.push_back( 0x00 );
+        aInputCallbacks.push_back( 0x00 );
 
 
         for( size_t i = 0; i < _inputDevice->getCount( OgeBase::OgeInterfaces::IInputDevice::Digital ); ++i ) 
@@ -98,7 +98,7 @@ namespace Oge
         for( size_t i = 0; i < _inputDevice->getCount( OgeBase::OgeInterfaces::IInputDevice::Analog ); ++i ) 
         {
           _inputDevice->getInput( OgeBase::OgeInterfaces::IInputDevice::Analog, i )->addInputCallback
-            ( OgeBase::OgeInterfaces::IEvent::KeyPress, aInputCallbacks[ i ].get(), false );
+            ( OgeBase::OgeInterfaces::IEvent::JoystickTilt, aInputCallbacks[ i ].get(), false );
         }
 
         for( size_t i = 0; i < _inputDevice->getCount( OgeBase::OgeInterfaces::IInputDevice::Position ); ++i ) 

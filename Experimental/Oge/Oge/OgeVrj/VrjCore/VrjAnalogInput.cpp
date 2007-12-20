@@ -46,7 +46,12 @@ namespace Oge
 
       float VrjAnalogInput::getAnalogData() const 
       {
-        return ( *_analogInterface )->getData();
+        float data = ( *_analogInterface )->getData();
+        
+        // normalize. 
+        data = ( 2.0f * data ) - 1.0;
+
+        return data;
       }
 
 
@@ -59,21 +64,16 @@ namespace Oge
       OgeBase::OgeInterfaces::IEvent::Type VrjAnalogInput::getEvent() const 
       {
         IEvent::Type type( IEvent::None );
-
-        switch( this->getDigitalData() )
-        {
-          case 0 : 
-          {
-            type = IEvent::Type::KeyUp;
-            break;
-          }
-          case 1 : 
-          {
-            type = IEvent::Type::KeyDown;
-            break;
-          }
-        };
         
+        // @Todo
+        // A way to set thresh hold.. and normalization?
+
+        float data = this->getAnalogData();
+        if( data <= -0.1 || data >= 0.1 )
+        {
+          type = IEvent::JoystickTilt;
+        }
+
         return type;
       }
 

@@ -49,9 +49,9 @@ namespace Oge
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
-          oStrStream2 << "Gamepad01Button" << i << "\0";
+          oStrStream2 << "Gamepad01Digital" << i+1 << "\0";
 
-          _digitalInputs.push_back( new OgeVrj::VrjCore::VrjDigitalInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
+          _digitalInputs[ i ] = new OgeVrj::VrjCore::VrjDigitalInput( oStrStream1.str(), oStrStream2.str().c_str() ) ;
           _digitalInputs[ i ]->init();
         }
 
@@ -60,20 +60,20 @@ namespace Oge
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
-          oStrStream2 << "Gamepad01Analog" << i << "\0";
+          oStrStream2 << "Gamepad01Analog" << i + 1 << "\0";
 
-          _analogInputs.push_back( new OgeVrj::VrjCore::VrjAnalogInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
+          _analogInputs[ i ] = new OgeVrj::VrjCore::VrjAnalogInput( oStrStream1.str(), oStrStream2.str().c_str() );
           _analogInputs[ i ]->init();
         }
 
         // Position inputs. 
-        for( size_t i = 0; i < _digitalInputs.size(); ++i )
+        for( size_t i = 0; i < _positionInputs.size(); ++i )
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
-          oStrStream2 << "Gamepad01Position" << i << "\0";
+          oStrStream2 << "Gamepad01Position" << i + 1 << "\0";
 
-          _positionInputs.push_back( new OgeVrj::VrjCore::VrjPositionInput( oStrStream1.str(), oStrStream2.str().c_str() ) );
+          _positionInputs[ i ] = new OgeVrj::VrjCore::VrjPositionInput( oStrStream1.str(), oStrStream2.str().c_str() );
           _positionInputs[ i ]->init();          
         }
       }

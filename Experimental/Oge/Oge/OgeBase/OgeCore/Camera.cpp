@@ -37,7 +37,7 @@ namespace Oge
       void Camera::move( float speed ) 
       {
         gmtl::Vec3f dir = _view - _pos;
-        gmtl::normalize( dir );
+        //gmtl::normalize( dir );
 
         _pos  = _pos + dir * speed;
         _view = _view + dir * speed;

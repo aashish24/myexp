@@ -43,7 +43,7 @@ namespace Oge
 
           virtual const float*                          getPositionalData() const;
 
-          virtual IEvent::Type                           getEvent() const;
+          virtual IEvent::Type                          getEvent() const;
 
           IUnknown*                                     queryInterface( const unsigned long& iid );
 

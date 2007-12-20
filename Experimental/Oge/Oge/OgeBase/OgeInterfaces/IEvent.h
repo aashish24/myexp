@@ -101,8 +101,11 @@ namespace Oge
           JoystickTiltDownLeft = 104,
           JoystickTiltDownRight = 105,
           JoystickTiltStickClick = 106,
-          KeyUp = 107, 
-          KeyDown = 108,
+          JoystickTilt = 107, 
+          JoystickTiltPos = 108, 
+          JoystickTiltNeg = 109, 
+          KeyUp = 110, 
+          KeyDown = 111,
           User = 1000, 
           MaxUser = 65535          
         };

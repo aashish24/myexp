@@ -64,7 +64,10 @@ namespace Oge
             while( cont && ( sItr != itr->second.end() ) )
             { 
               cont = sItr->first;
-              sItr->second->operator ()( this );
+              if( sItr->second.valid() )
+              {
+                sItr->second->operator ()( this );
+              }
               ++sItr;
             }
           }
