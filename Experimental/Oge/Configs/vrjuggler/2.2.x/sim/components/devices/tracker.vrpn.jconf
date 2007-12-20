@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?org-vrjuggler-jccl-settings configuration.version="3.0"?>
+<configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="/store/toolkit/VRJFiles/final/flex/flex.trackd.jconf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
+   <elements>
+      <digital_proxy name="VJTrackerButton0" version="1">
+         <device>Track Server</device>
+         <unit>0</unit>
+      </digital_proxy>
+      <digital_proxy name="VJTrackerButton1" version="1">
+         <device>Track Server</device>
+         <unit>1</unit>
+      </digital_proxy>
+      <digital_proxy name="VJTrackerButton2" version="1">
+         <device>Track Server</device>
+         <unit>2</unit>
+      </digital_proxy>
+      <digital_proxy name="VJTrackerButton3" version="1">
+         <device>Track Server</device>
+         <unit>3</unit>
+      </digital_proxy>
+      <analog_proxy name="VJTrackerAxis0" version="1">
+         <device>Track Server</device>
+         <unit>0</unit>
+      </analog_proxy>
+      <analog_proxy name="VJTrackerAxis1" version="1">
+         <device>Track Server</device>
+         <unit>1</unit>
+      </analog_proxy>
+      <input_manager name="VRPNInputManager" version="2">
+         <driver>VRPN_drv</driver>
+      </input_manager>
+      <vrpn name="Track Server" version="2">
+         <tracker_server>tracker@172.20.26.254</tracker_server>
+         <button_server>button@172.20.26.254</button_server>
+         <analog_server>button@172.20.26.254</analog_server>
+         <tracker_count>2</tracker_count>
+         <button_count>6</button_count>
+         <analog_count>2</analog_count>
+         <min>-1.0</min>
+         <max>1.0</max>
+         <position_filters>
+            <position_transform_filter name="CHANGEME" version="1">
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>1.4478</pre_translate>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>-90.0</pre_rotation>
+               <pre_rotation>90.0</pre_rotation>
+               <custom_scale>1.0</custom_scale>
+               <device_units>1.0</device_units>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>0.0</post_rotation>
+            </position_transform_filter>
+         </position_filters>
+         <device_host/>
+      </vrpn>
+      <position_proxy name="Head Proxy" version="1">
+         <device>Track Server</device>
+         <unit>0</unit>
+         <position_filters>
+            <position_transform_filter name="Default" version="1">
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>0.0</pre_translate>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <custom_scale>1.0</custom_scale>
+               <device_units>1.0</device_units>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>90.0</post_rotation>
+            </position_transform_filter>
+         </position_filters>
+      </position_proxy>
+      <position_proxy name="Wand Proxy" version="1">
+         <device>Track Server</device>
+         <unit>1</unit>
+         <position_filters>
+            <position_transform_filter name="Default" version="1">
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>0.0</pre_translate>
+               <pre_translate>0.0</pre_translate>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <pre_rotation>0.0</pre_rotation>
+               <custom_scale>1.0</custom_scale>
+               <device_units>1.0</device_units>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_translate>0.0</post_translate>
+               <post_rotation>0.0</post_rotation>
+               <post_rotation>-90.0</post_rotation>
+               <post_rotation>90.0</post_rotation>
+            </position_transform_filter>
+         </position_filters>
+      </position_proxy>
+      <digital_proxy name="VJTrackerButton4" version="1">
+         <device>Track Server</device>
+         <unit>4</unit>
+      </digital_proxy>
+      <digital_proxy name="VJTrackerButton5" version="1">
+         <device>Track Server</device>
+         <unit>5</unit>
+      </digital_proxy>
+   </elements>
+</configuration>
+
