@@ -25,7 +25,7 @@ namespace Oge
         _inputDevices           () 
       {   
         //_osgCamera->assignTo( _osgModel->rootNav() );
-        _osgCamera->set( 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 );
+        _osgCamera->set( 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 );
       }
 
 

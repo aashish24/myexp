@@ -42,7 +42,7 @@ namespace Oge
         
         virtual void operator()( OgeInterfaces::IInput* input )
         {
-          _camera->rotateView( input->getAnalogData() * 0.01 );
+          _camera->rotatePos( input->getAnalogData() * 0.01 );
         }
 
         OgeInterfaces::ICamera::RefPtr _camera;

@@ -58,7 +58,7 @@ namespace Oge
         gmtl::Vec3f dir = _pos - _view;
       
         _pos[ 2 ] = _view[ 2 ] + ( sin( speed ) * dir[ 0 ] + cos( speed ) * dir[ 2 ] );
-        _pos[ 0 ] = _view[ 0 ] + ( cos( speed ) * dir[ 0 ] + cos( speed ) * dir[ 2 ] );
+        _pos[ 0 ] = _view[ 0 ] + ( cos( speed ) * dir[ 0 ] - sin( speed ) * dir[ 2 ] );
       }
 
 
