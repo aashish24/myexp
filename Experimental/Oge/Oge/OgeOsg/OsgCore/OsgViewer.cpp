@@ -20,7 +20,7 @@ namespace Oge
         osgViewer::Viewer       (), 
         _mode                   ( mode ),
         _osgModel               ( new OsgModel() ), 
-        _osgView                ( new OsgView( _osgModel.get() ) ), 
+      _osgView                ( new OsgView( _osgModel.get() ) ), 
         _osgCamera              ( new OsgCamera() ), 
         _inputDevices           () 
       {   
