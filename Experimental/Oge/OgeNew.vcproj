@@ -274,14 +274,18 @@
 						</File>
 					</Filter>
 					<Filter
-						Name="InterfaceContexts"
+						Name="OgeContexts"
 						>
 						<File
-							RelativePath=".\Oge\OgeBase\InterfaceContexts\DefaultInterfaceContext.cpp"
+							RelativePath=".\Oge\OgeBase\OgeContexts\DefaultInterfaceContext.cpp"
 							>
 						</File>
 						<File
-							RelativePath=".\Oge\OgeBase\InterfaceContexts\DefaultInterfaceContext.h"
+							RelativePath=".\Oge\OgeBase\OgeContexts\DefaultInterfaceContext.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeContexts\InputElement.h"
 							>
 						</File>
 					</Filter>
