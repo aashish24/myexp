@@ -41,3 +41,4 @@ namespace Oge
 }
 
 #endif // __OSG_VIEW_H__
+

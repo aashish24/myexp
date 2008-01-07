@@ -57,12 +57,12 @@ namespace Oge
         {
           case 0 : 
           {
-            type = IEvent::Type::KeyUp;
+            type = IEvent::KeyUp;
             break;
           }
           case 1 : 
           {
-            type = IEvent::Type::KeyDown;
+            type = IEvent::KeyDown;
             break;
           }
         };

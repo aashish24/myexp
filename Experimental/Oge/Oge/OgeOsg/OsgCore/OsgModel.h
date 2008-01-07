@@ -60,4 +60,5 @@ namespace Oge
   }
 }
 
-#endif // __OSG_MODEL_H__
+#endif // __OSG_MODEL_H_
+

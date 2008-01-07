@@ -32,9 +32,9 @@ namespace Oge
 
         virtual void                        operator()( );
 
-        virtual void                        ref(){ OgeBase::OgeCore::Referenced::ref() };
-        virtual void                        unref(){ OgeBase::OgeCore::Referenced::unref() };
-        virtual void                        unrefDoNotDelete(){ OgeBase::OgeCore::Referenced::unrefDoNotDelete() };
+        virtual void                        ref(){ OgeBase::OgeCore::Referenced::ref(); }
+        virtual void                        unref(){ OgeBase::OgeCore::Referenced::unref(); }
+        virtual void                        unrefDoNotDelete(){ OgeBase::OgeCore::Referenced::unrefDoNotDelete(); }
 
         OgeBase::OgeInterfaces::IUnknown*   queryInterface( const unsigned long& iid );
       

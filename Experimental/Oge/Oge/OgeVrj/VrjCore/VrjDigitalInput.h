@@ -30,7 +30,7 @@ namespace Oge
 
           IMPLEMENT_IUNKNOWN_MEMBERS( VrjDigitalInput, Oge::OgeBase::OgeCore::Input );
           
-          typedef OgeBase::OgeInterfaces::IEvent::Type  Type;
+          typedef OgeBase::OgeInterfaces::IEvent        IEvent;
           typedef OgeBase::OgeInterfaces::IUnknown      IUnknown;  
           typedef gadget::Digital::State                State;
 
@@ -46,7 +46,7 @@ namespace Oge
 
           virtual const float*                          getPositionalData() const;
 
-          virtual Type                                  getEvent() const;
+          virtual IEvent::Type                          getEvent() const;
 
           IUnknown*                                     queryInterface( const unsigned long& iid );
 

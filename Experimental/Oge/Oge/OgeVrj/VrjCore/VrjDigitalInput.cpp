@@ -36,12 +36,12 @@ namespace Oge
 
         switch( this->getData() )
         {
-          case State::TOGGLE_OFF : 
+          case gadget::Digital::TOGGLE_OFF : 
           {
             result = 0;
             break;
           }
-          case State::TOGGLE_ON :
+          case gadget::Digital::TOGGLE_ON :
           {
             result = 1;
             break;
@@ -70,24 +70,24 @@ namespace Oge
 
         switch( getData() )
         {
-          case State::TOGGLE_ON : 
+          case gadget::Digital::TOGGLE_ON : 
           {
-            type = IEvent::Type::KeyPress;
+            type = IEvent::KeyPress;
             break;
           }
-          case State::TOGGLE_OFF : 
+          case gadget::Digital::TOGGLE_OFF : 
           {
-            type = IEvent::Type::KeyRelease;
+            type = IEvent::KeyRelease;
             break;
           }
-          case State::ON : 
+          case gadget::Digital::ON : 
           {
-            type = IEvent::Type::KeyDown;
+            type = IEvent::KeyDown;
             break;
           }
-          case State::OFF : 
+          case gadget::Digital::OFF : 
           {
-            type = IEvent::Type::KeyUp;
+            type = IEvent::KeyUp;
             break;
           }
         };

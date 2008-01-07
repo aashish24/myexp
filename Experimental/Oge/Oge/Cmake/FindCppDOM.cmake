@@ -3,6 +3,7 @@ SET( CPPDOM_INC $ENV{CPPDOM_INC_DIR} )
 SET( CPPDOM_LIB_DIR $ENV{CPPDOM_LIB_DIR} )
 
 FIND_PATH( CPPDOM_INC_DIR cppdom/cppdom.h 
+           ${CPPDOM_INC}
            ${CPPDOM_INC}/*
            /usr/local/include/* )
                 

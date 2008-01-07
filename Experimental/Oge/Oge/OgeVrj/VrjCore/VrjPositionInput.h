@@ -32,7 +32,7 @@ namespace Oge
 
           IMPLEMENT_IUNKNOWN_MEMBERS( VrjPositionInput, Oge::OgeBase::OgeCore::Input );
           
-          typedef OgeBase::OgeInterfaces::IEvent::Type  Type;
+          typedef OgeBase::OgeInterfaces::IEvent        IEvent;
           typedef OgeBase::OgeInterfaces::IUnknown      IUnknown;            
 
           VrjPositionInput( const std::string& id, const std::string& proxy );
@@ -47,7 +47,7 @@ namespace Oge
 
           virtual const float*                          getPositionalData() const;
 
-          virtual Type                                  getEvent() const;
+          virtual IEvent::Type                          getEvent() const;
 
           IUnknown*                                     queryInterface( const unsigned long& iid );
 

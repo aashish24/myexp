@@ -94,3 +94,6 @@ namespace Oge
 
 
 #endif // __OSG_CAMERA_H__
+
+
+
