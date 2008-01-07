@@ -1,4 +1,6 @@
 
+#ifdef USE_OSG
+
 #include "Oge/OgeVrj/VrjOsg/VrjViewer.h" 
 
 #include "Oge/OgeVrj/VrjDev/Gamepad.h"
@@ -159,4 +161,5 @@ namespace Oge
   }
 }
 
+#endif // USE_OSG.
     

@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=".\;$(OSG_INC_DIR);$(VJ_BASE_DIR)\include;$(GMTL_INC_DIR);$(CPPDOM_INC_DIR);$(NSPR_INC_DIR);$(BOOST_INC_DIR);"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;OGE_BUILD_SHARED_LIBRARY;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;OGE_BUILD_SHARED_LIBRARY;USE_OSG;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

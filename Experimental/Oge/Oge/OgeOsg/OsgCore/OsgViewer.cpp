@@ -1,4 +1,6 @@
 
+#ifdef USE_OSG
+
 #include "Oge/OgeOsg/OsgCore/OsgViewer.h"
 #include "Oge/OgeOsg/OsgCore/OsgModel.h"
 #include "Oge/OgeOsg/OsgCore/OsgView.h"
@@ -169,3 +171,5 @@ namespace Oge
     } 
   } 
 } 
+
+#endif // USE_OSG
