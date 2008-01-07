@@ -1,5 +1,5 @@
 
-#include "Oge/OgeBase/InterfaceContexts/DefaultInterfaceContext.h"
+#include "Oge/OgeBase/OgeContexts/DefaultInterfaceContext.h"
 
 #include <vector>
 
@@ -7,7 +7,7 @@ namespace Oge
 {
   namespace OgeBase
   {
-    namespace InterfaceContexts
+    namespace OgeContexts
     {
       OgeInterfaces::ICamera::RefPtr ActiveCamera::_camera = 0x00;
 

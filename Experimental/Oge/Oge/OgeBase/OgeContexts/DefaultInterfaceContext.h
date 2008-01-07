@@ -20,7 +20,7 @@ namespace Oge
 {
   namespace OgeBase
   {
-    namespace InterfaceContexts 
+    namespace OgeContexts 
     {
       struct ActiveCamera : public OgeCore::Referenced
       {
