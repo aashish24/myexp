@@ -18,8 +18,6 @@ namespace Oge
   {
     namespace VrjCore
     {
-      
-
       class OGE_EXPORT VrjDigitalInput : 
         public OgeBase::OgeCore::Input, 
         public OgeBase::OgeInterfaces::IInputGetData< gadget::Digital::State >
@@ -49,6 +47,7 @@ namespace Oge
           virtual IEvent::Type                          getEvent() const;
 
           IUnknown*                                     queryInterface( const unsigned long& iid );
+
 
         protected: 
           
