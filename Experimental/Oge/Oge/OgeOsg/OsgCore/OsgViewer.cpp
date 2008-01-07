@@ -20,12 +20,12 @@ namespace Oge
         osgViewer::Viewer       (), 
         _mode                   ( mode ),
         _osgModel               ( new OsgModel() ), 
-      _osgView                ( new OsgView( _osgModel.get() ) ), 
+        _osgView                ( new OsgView( _osgModel.get() ) ), 
         _osgCamera              ( new OsgCamera() ), 
         _inputDevices           () 
       {   
         //_osgCamera->assignTo( _osgModel->rootNav() );
-        _osgCamera->set( 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 );
+        _osgCamera->set( 0.0, -50.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 );
       }
 
 

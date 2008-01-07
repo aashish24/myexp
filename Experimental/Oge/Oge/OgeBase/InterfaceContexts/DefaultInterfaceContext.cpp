@@ -9,43 +9,67 @@ namespace Oge
   {
     namespace InterfaceContexts
     {
-      struct CameraMove : public OgeCore::InputCallback
+      OgeInterfaces::ICamera::RefPtr ActiveCamera::_camera = 0x00;
+
+      struct CameraMoveX : public OgeCore::InputCallback
       {
-        CameraMove( OgeInterfaces::ICamera* camera ) : 
-          _camera( camera ) 
-        {
-        }
-        
         virtual void operator()( OgeInterfaces::IInput* input )
         {
           // Is this callback used by a digital input? 
           if( input->getAnalogData() == 0.0 )
           {
-            //_camera->move( -1.0 );
+            // Don't do anything. 
           }
           else
           {
-            _camera->move( input->getAnalogData() * 0.1 );
+            ActiveCamera::getActiveCamera()->slide( input->getAnalogData(), 0.0, 0.0 );
           }
         }
-
-        OgeInterfaces::ICamera::RefPtr _camera;
       };
 
 
-      struct CameraRotatePos : public OgeCore::InputCallback
-      { 
-        CameraRotatePos( OgeInterfaces::ICamera* camera ) : 
-          _camera( camera ) 
-        {
-        }
-        
+      struct CameraMoveY : public OgeCore::InputCallback
+      {
         virtual void operator()( OgeInterfaces::IInput* input )
         {
-          _camera->rotatePos( input->getAnalogData() * 0.01 );
+          // Is this callback used by a digital input? 
+          if( input->getAnalogData() == 0.0 )
+          {
+            // Don't do anything. 
+          }
+          else
+          {
+            ActiveCamera::getActiveCamera()->slide( 0.0, input->getAnalogData(), 0.0 );
+          }
         }
+      };
 
-        OgeInterfaces::ICamera::RefPtr _camera;
+
+      struct CameraMoveZ : public OgeCore::InputCallback
+      {
+        virtual void operator()( OgeInterfaces::IInput* input )
+        {
+          ActiveCamera::getActiveCamera()->slide( 0.0, 0.0, input->getAnalogData() );
+        }
+      };
+
+
+      struct CameraYaw : public OgeCore::InputCallback
+      { 
+        virtual void operator()( OgeInterfaces::IInput* input )
+        {
+          // Flip of coordinate systems. 
+          ActiveCamera::getActiveCamera()->yaw( input->getAnalogData() );
+        }
+      };     
+
+
+      struct CameraPitch : public OgeCore::InputCallback
+      { 
+        virtual void operator()( OgeInterfaces::IInput* input )
+        {
+          ActiveCamera::getActiveCamera()->pitch( input->getAnalogData() );
+        }
       };     
 
 
@@ -64,43 +88,52 @@ namespace Oge
         std::vector< OgeBase::OgeInterfaces::IInputCallback::RefPtr > aInputCallbacks;
         std::vector< OgeBase::OgeInterfaces::IInputCallback::RefPtr > pInputCallbacks;
 
-        CameraMove::RefPtr cmCallback ( new CameraMove( _camera.get()  ) );
-        CameraMove::RefPtr crpCallback( new CameraRotatePos( _camera.get() ) );
+        ActiveCamera::setActiveCamera( _camera.get() );
+
+        CameraMoveX::RefPtr cmxCallback ( new CameraMoveX() );
+        CameraMoveY::RefPtr cmyCallback ( new CameraMoveY() );
+        CameraMoveZ::RefPtr cmzCallback ( new CameraMoveZ() );
+
+        CameraYaw::RefPtr   cryCallback( new CameraYaw() );
+        CameraPitch::RefPtr crpCallback( new CameraPitch() );
 
         // Configuring each callback that corresponds to digital inputs now. 
-        dInputCallbacks.push_back( cmCallback.get() );
-        dInputCallbacks.push_back( cmCallback.get() );
-        dInputCallbacks.push_back( cmCallback.get() );
-        dInputCallbacks.push_back( cmCallback.get() );
-        dInputCallbacks.push_back( cmCallback.get() );
-        dInputCallbacks.push_back( cmCallback.get() );
-        dInputCallbacks.push_back( cmCallback.get() );
-        dInputCallbacks.push_back( cmCallback.get() );
-        dInputCallbacks.push_back( cmCallback.get() );
-        dInputCallbacks.push_back( cmCallback.get() );
-        dInputCallbacks.push_back( cmCallback.get() );
-        dInputCallbacks.push_back( cmCallback.get() );
+        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( 0x00 );
 
-        aInputCallbacks.push_back( 0x00 );
+        aInputCallbacks.push_back( cryCallback.get() );
         aInputCallbacks.push_back( crpCallback.get()  );
-        aInputCallbacks.push_back( 0x00 );
-        aInputCallbacks.push_back( cmCallback.get() );     
+        aInputCallbacks.push_back( cmxCallback.get() );
+        aInputCallbacks.push_back( cmzCallback.get() );     
         aInputCallbacks.push_back( 0x00 );
         aInputCallbacks.push_back( 0x00 );
 
 
+        // Digital. 
         for( size_t i = 0; i < _inputDevice->getCount( OgeBase::OgeInterfaces::IInputDevice::Digital ); ++i ) 
         {
           _inputDevice->getInput( OgeBase::OgeInterfaces::IInputDevice::Digital, i )->addInputCallback
             ( OgeBase::OgeInterfaces::IEvent::KeyPress, dInputCallbacks[ i ].get(), false );
         }
 
+        // Analog. 
         for( size_t i = 0; i < _inputDevice->getCount( OgeBase::OgeInterfaces::IInputDevice::Analog ); ++i ) 
         {
           _inputDevice->getInput( OgeBase::OgeInterfaces::IInputDevice::Analog, i )->addInputCallback
             ( OgeBase::OgeInterfaces::IEvent::JoystickTilt, aInputCallbacks[ i ].get(), false );
         }
 
+        // Position. 
         for( size_t i = 0; i < _inputDevice->getCount( OgeBase::OgeInterfaces::IInputDevice::Position ); ++i ) 
         {
           _inputDevice->getInput( OgeBase::OgeInterfaces::IInputDevice::Position, i )->addInputCallback

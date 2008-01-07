@@ -22,6 +22,21 @@ namespace Oge
   {
     namespace InterfaceContexts 
     {
+      struct ActiveCamera : public OgeCore::Referenced
+      {
+        static OgeInterfaces::ICamera* getActiveCamera()
+        {
+          return _camera.get();
+        }
+
+        static void setActiveCamera( OgeInterfaces::ICamera* camera )
+        {
+          _camera = camera;
+        }
+
+        static OgeInterfaces::ICamera::RefPtr _camera;
+      };
+
       // We should be able to have multiple context active at the same time. 
       // Or able to switch between the contexts.. 
       // Also the question would be whether a context can handle more than 

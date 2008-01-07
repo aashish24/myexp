@@ -33,19 +33,32 @@ namespace Oge
           
           typedef OgeBase::OgeInterfaces::IUnknown  IUnknown;
 
+          Camera();
+
           virtual IUnknown*                         queryInterface( const unsigned long& iid );
           
           virtual void                              set( float posX,  float posY,   float posZ, 
                                                          float viewX, float viewY,  float viewZ, 
                                                          float upX,   float upY,    float upZ );
 
+          virtual const float&                      getSpeed() const;
+          virtual void                              setSpeed( const float& speed );
+
+          virtual const float&                      getRotationSpeed() const;
+          virtual void                              setRotationSpeed( const float& rotationSpeed );
+
+          virtual void                              move( float delX, float delY, float delZ ); 
+
+          virtual void                              slide( float delX, float delY, float delZ ); 
+
+          virtual void                              rotate( float angle, float vecX, float VecY, float vecZ );
+
+          virtual void                              pitch( float angleX );
+
+          virtual void                              yaw( float angleY );
+
+          virtual void                              roll( float angleZ );
           
-          virtual void                              move( float speed );
-
-          virtual void                              rotateView( float speed );
-
-          virtual void                              rotatePos( float speed );
-
           const float*                              getMatrix();
 
 
@@ -56,9 +69,17 @@ namespace Oge
 
         protected: 
 
+          float                                     _speed;
+
+          float                                     _rotationSpeed;
+
           gmtl::Vec3f                               _pos;
           gmtl::Vec3f                               _view;
           gmtl::Vec3f                               _up;
+
+          gmtl::Vec3f                               _u;
+          gmtl::Vec3f                               _v;
+          gmtl::Vec3f                               _n;
 
           gmtl::Matrix44f                           _matrix;
         

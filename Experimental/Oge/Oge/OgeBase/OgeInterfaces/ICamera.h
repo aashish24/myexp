@@ -21,12 +21,26 @@ namespace Oge
                                    float viewX, float viewY, float viewZ, 
                                    float upX,   float upY,   float upZ ) = 0;        
 
-        virtual void                              move( float speed ) = 0;
+        virtual const float&  getSpeed() const = 0;
+        virtual void          setSpeed( const float& speed ) = 0;
 
-        virtual void                              rotateView( float speed ) = 0;
+        virtual const float&  getRotationSpeed() const = 0;
+        virtual void          setRotationSpeed( const float& rotationSpeed ) = 0;
+        
+        virtual void          move( float delX, float delY, float delZ ) = 0; 
+        virtual void          slide( float delX, float delY, float delZ ) = 0; 
 
-        virtual void                              rotatePos( float speed ) = 0;
+        // Camera will rotate about its own axis. 
+        virtual void          rotate( float angleX, float vecX, float vecY, float vecZ ) = 0;
 
+        // For this we would need an angle and a vector about which camera will rotate. 
+        virtual void          pitch( float angleX ) = 0; 
+
+        // For this we would need an angle and a vector about which camera will rotate. 
+        virtual void          yaw( float angleY ) = 0; 
+
+        // For this we would need an angle and a vector about which camera will rotate. 
+        virtual void          roll( float angleZ ) = 0; 
 
         virtual const float*  getMatrix() = 0;
       };
