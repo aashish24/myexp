@@ -1,0 +1,8 @@
+
+PROJECT(OGE_ROOT)
+
+SET( CMAKE_MODULES_DIR ${PROJECT_SOURCE_DIR}/Oge/Cmake )
+
+# Add modules as of now. 
+ADD_SUBDIRECTORY( Oge )
+ 
