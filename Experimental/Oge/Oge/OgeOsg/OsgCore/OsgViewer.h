@@ -68,7 +68,7 @@ namespace Oge
           typedef OgeOsg::OsgCore::OsgModel             OsgModel;    
           typedef std::map< const std::string, IInputDevice::RefPtr >   
                                                         InputDevices;
-          typedef std::vector< IInterfaceContext::RefPtr >  InterfaceContexts;
+          typedef std::vector< IInterfaceContext::RefPtr >  OgeContexts;
 
           OsgViewer( int argc = 0, char** argv = 0, Mode vMode = REGULAR );        
           
@@ -114,7 +114,7 @@ namespace Oge
           OsgCamera::RefPtr                             _osgCamera;
 
           InputDevices                                  _inputDevices;
-          InterfaceContexts                             _interfaceContexts;
+          OgeContexts                             _interfaceContexts;
 
 
       };
