@@ -1,6 +1,8 @@
 
 #include "Oge/OgeBase/OgeCore/Camera.h"
 
+
+
 namespace Oge
 {
   namespace OgeBase
@@ -9,12 +11,16 @@ namespace Oge
     {
       Camera::Camera() : 
         _speed          ( 1.0 ), 
-        _rotationSpeed  ( gmtl::Math::deg2Rad( 1.0 ) ),
+        _rotationSpeed  ( gmtl::Math::deg2Rad( 1.0 ) ),        
         _pos            ( 0.0, 0.0, 50.0 ), 
         _view           ( 0.0, 0.0, 0.0 ), 
-        _up             ( 0.0, 1.0, 0.0 )
-      {
+        _up             ( 0.0, 1.0, 0.0 ), 
+        _u              ( 1.0, 0.0, 0.0 ), 
+        _v              ( 0.0, 1.0, 0.0 ), 
+        _n              ( 0.0, 0.0, -1.0 ) 
+      { 
       }
+
 
       OgeBase::OgeInterfaces::IUnknown* Camera::queryInterface( const unsigned long& iid )
       {    
@@ -42,6 +48,12 @@ namespace Oge
         _up   = gmtl::Vec3f( upX, upY, upZ );
 
 
+        this->setModelViewMatrix();
+      }
+
+
+      void Camera::setModelViewMatrix()
+      {
         _n = _pos - _view;
         
         gmtl::cross( _u, _up, _n );
@@ -49,7 +61,7 @@ namespace Oge
         gmtl::normalize( _n );
         gmtl::normalize( _u );
 
-        gmtl::cross( _v, _n, _u );      
+        gmtl::cross( _v, _n, _u );             
       }
 
 
@@ -86,9 +98,15 @@ namespace Oge
 
       void Camera::slide( float delX, float delY, float delZ )
       { 
-        _pos[ 0 ] = _pos[ 0 ] + ( delX * _u[ 0 ] + delY * _v[ 0 ] + delZ * _n[ 0 ] ) * _speed;  
-        _pos[ 1 ] = _pos[ 1 ] + ( delX * _u[ 1 ] + delY * _v[ 1 ] + delZ * _n[ 1 ] ) * _speed;  
-        _pos[ 2 ] = _pos[ 2 ] + ( delX * _u[ 2 ] + delY * _v[ 2 ] + delZ * _n[ 2 ] ) * _speed;    
+        gmtl::Matrix44f invMat;
+        gmtl::Vec3f tempN = _n;
+        gmtl::invertFull( invMat, _pitchMatrix );
+
+        tempN = invMat * _n;
+
+        _pos[ 0 ] = _pos[ 0 ] + ( delX * _u[ 0 ] + delY * _v[ 0 ] + delZ * tempN[ 0 ] ) * _speed;  
+        _pos[ 1 ] = _pos[ 1 ] + ( delX * _u[ 1 ] + delY * _v[ 1 ] + delZ * tempN[ 1 ] ) * _speed;  
+        _pos[ 2 ] = _pos[ 2 ] + ( delX * _u[ 2 ] + delY * _v[ 2 ] + delZ * tempN[ 2 ] ) * _speed; 
       }
 
 
@@ -102,16 +120,27 @@ namespace Oge
       {   
         angleX = gmtl::Math::deg2Rad( angleX );
 
-        gmtl::Vec3f temp = _v;
+        gmtl::Vec3f temp = _v;       
 
-        // Rotate around z. 
-        _v.set( ( cos( angleX ) * temp[ 0 ] - sin( angleX ) * _n[ 0 ] ), 
+       /* _v.set( ( cos( angleX ) * temp[ 0 ] - sin( angleX ) * _n[ 0 ] ), 
                 ( cos( angleX ) * temp[ 1 ] - sin( angleX ) * _n[ 1 ] ),
                 ( cos( angleX ) * temp[ 2 ] - sin( angleX ) * _n[ 2 ] ) );
 
         _n.set( ( sin( angleX ) * temp[ 0 ] + cos( angleX ) * _n[ 0 ] ), 
                 ( sin( angleX ) * temp[ 1 ] + cos( angleX ) * _n[ 1 ] ),
-                ( sin( angleX ) * temp[ 2 ] + cos( angleX ) * _n[ 2 ] ) );
+                ( sin( angleX ) * temp[ 2 ] + cos( angleX ) * _n[ 2 ] ) );*/
+
+        gmtl::Vec3f tempU = _u;
+        gmtl::normalize( tempU );
+
+        gmtl::Matrix44f  rotMat;
+        gmtl::AxisAnglef aa( angleX, tempU );
+        gmtl::set( rotMat, aa );
+
+        _v = rotMat * _v;
+        _n = rotMat * _n;
+
+        _pitchMatrix *= rotMat;
       }
 
 
@@ -121,13 +150,33 @@ namespace Oge
 
         gmtl::Vec3f temp = _n;
         
-        _n.set( ( cos( angleY ) * temp[ 0 ] - sin( angleY ) * _u[ 0 ] ), 
+        /*_n.set( ( cos( angleY ) * temp[ 0 ] - sin( angleY ) * _u[ 0 ] ), 
                 ( cos( angleY ) * temp[ 1 ] - sin( angleY ) * _u[ 1 ] ),
                 ( cos( angleY ) * temp[ 2 ] - sin( angleY ) * _u[ 2 ] ) );
-
+        
         _u.set( ( sin( angleY ) * temp[ 0 ] + cos( angleY ) * _u[ 0 ] ), 
                 ( sin( angleY ) * temp[ 1 ] + cos( angleY ) * _u[ 1 ] ),
-                ( sin( angleY ) * temp[ 2 ] + cos( angleY ) * _u[ 2 ] ) );
+                ( sin( angleY ) * temp[ 2 ] + cos( angleY ) * _u[ 2 ] ) );       */
+
+        gmtl::Matrix44f invMat;
+        gmtl::invertFull( invMat, _pitchMatrix );
+
+        gmtl::Vec3f tempV = invMat * _v;
+        gmtl::normalize( tempV );
+
+        gmtl::Matrix44f  rotMat;
+        gmtl::AxisAnglef aa( angleY, tempV );
+        gmtl::set( rotMat, aa );
+
+        _n = invMat * _n;
+        _n = rotMat * _n;
+        _n = _pitchMatrix * _n;
+
+        _u = rotMat * _u;
+
+
+        //_v = invMat * _v;
+        //gmtl::identity( _pitchMatrix );
       }
 
 
@@ -165,6 +214,7 @@ namespace Oge
         }
       */
 
+
       const float* Camera::getMatrix()
       {
        /* gmtl::Vec3f pos;
@@ -179,6 +229,10 @@ namespace Oge
 
         gmtl::cross( _v, _n, _u );
         */
+
+        /*gmtl::normalize( _n );
+        gmtl::normalize( _u );        
+        gmtl::normalize( _v ); */       
 
         gmtl::Vec3f pos;
         float temp = gmtl::dot( -_pos, _u );

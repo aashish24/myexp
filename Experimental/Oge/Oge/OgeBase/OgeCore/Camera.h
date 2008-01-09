@@ -9,11 +9,14 @@
 #include "Oge/OgeBase/OgeCore/Referenced.h"
 #include "Oge/OgeBase/OgeCore/Pointer.h"
 
+#include "gmtl/Math.h"
 #include "gmtl/Vec.h"
 #include "gmtl/VecOps.h"
 #include "gmtl/Matrix.h"
 #include "gmtl/MatrixOps.h"
-#include "gmtl/Math.h"
+#include "gmtl/AxisAngleOps.h"
+#include "gmtl/AxisAngle.h"
+#include "gmtl/Generate.h"
 
 namespace Oge
 {
@@ -40,6 +43,10 @@ namespace Oge
           virtual void                              set( float posX,  float posY,   float posZ, 
                                                          float viewX, float viewY,  float viewZ, 
                                                          float upX,   float upY,    float upZ );
+
+          
+          virtual void                              setModelViewMatrix();
+
 
           virtual const float&                      getSpeed() const;
           virtual void                              setSpeed( const float& speed );
@@ -73,6 +80,9 @@ namespace Oge
 
           float                                     _rotationSpeed;
 
+          float                                     _pitch;
+
+
           gmtl::Vec3f                               _pos;
           gmtl::Vec3f                               _view;
           gmtl::Vec3f                               _up;
@@ -81,8 +91,9 @@ namespace Oge
           gmtl::Vec3f                               _v;
           gmtl::Vec3f                               _n;
 
+
           gmtl::Matrix44f                           _matrix;
-        
+          gmtl::Matrix44f                           _pitchMatrix;
       };
     }
   }
