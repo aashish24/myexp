@@ -168,13 +168,12 @@ namespace Oge
                 ( sin( angleY ) * temp[ 1 ] + cos( angleY ) * _u[ 1 ] ),
                 ( sin( angleY ) * temp[ 2 ] + cos( angleY ) * _u[ 2 ] ) );       */
 
-        // Second approach where camera rotateds around the axis before tilt. 
+        // Second approach where camera rotates around the axis before tilt. 
         gmtl::Matrix44f invMat;
         gmtl::invertFull( invMat, _pitchMatrix );
 
         gmtl::Vec3f tempV = invMat * _v;
         gmtl::normalize( tempV );
-
         
         gmtl::Matrix44f  rotMat;
         gmtl::AxisAnglef aa( angleY, tempV );
@@ -195,7 +194,7 @@ namespace Oge
         _n = rotMat * _n;
         _n = tempMat * _n;
 
-        // Do we need this step?
+        // Now we need to form our new _v. 
         _v = invMat * _v;
         _v = tempMat * _v;
 
