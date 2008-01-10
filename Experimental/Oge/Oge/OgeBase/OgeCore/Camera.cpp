@@ -18,7 +18,8 @@ namespace Oge
         _u              ( 1.0, 0.0, 0.0 ), 
         _v              ( 0.0, 1.0, 0.0 ), 
         _n              ( 0.0, 0.0, -1.0 ) 
-      { 
+      {
+        _pitch = 0.0;
       }
 
 
@@ -98,6 +99,10 @@ namespace Oge
 
       void Camera::slide( float delX, float delY, float delZ )
       { 
+        // @todo
+        // We should not be manipulating _n here. This should be done by the move. 
+        // slide should translate in the direction of _u, _v, _n. 
+
         gmtl::Matrix44f invMat;
         gmtl::Vec3f tempN = _n;
         gmtl::invertFull( invMat, _pitchMatrix );
@@ -122,6 +127,7 @@ namespace Oge
 
         gmtl::Vec3f temp = _v;       
 
+        // First approach. 
        /* _v.set( ( cos( angleX ) * temp[ 0 ] - sin( angleX ) * _n[ 0 ] ), 
                 ( cos( angleX ) * temp[ 1 ] - sin( angleX ) * _n[ 1 ] ),
                 ( cos( angleX ) * temp[ 2 ] - sin( angleX ) * _n[ 2 ] ) );
@@ -130,6 +136,7 @@ namespace Oge
                 ( sin( angleX ) * temp[ 1 ] + cos( angleX ) * _n[ 1 ] ),
                 ( sin( angleX ) * temp[ 2 ] + cos( angleX ) * _n[ 2 ] ) );*/
 
+        // Second approach. 
         gmtl::Vec3f tempU = _u;
         gmtl::normalize( tempU );
 
@@ -141,6 +148,8 @@ namespace Oge
         _n = rotMat * _n;
 
         _pitchMatrix *= rotMat;
+
+        _pitch += angleX;
       }
 
 
@@ -150,6 +159,7 @@ namespace Oge
 
         gmtl::Vec3f temp = _n;
         
+        // First approach. Camera rotates around the tilted _v axis. 
         /*_n.set( ( cos( angleY ) * temp[ 0 ] - sin( angleY ) * _u[ 0 ] ), 
                 ( cos( angleY ) * temp[ 1 ] - sin( angleY ) * _u[ 1 ] ),
                 ( cos( angleY ) * temp[ 2 ] - sin( angleY ) * _u[ 2 ] ) );
@@ -158,22 +168,40 @@ namespace Oge
                 ( sin( angleY ) * temp[ 1 ] + cos( angleY ) * _u[ 1 ] ),
                 ( sin( angleY ) * temp[ 2 ] + cos( angleY ) * _u[ 2 ] ) );       */
 
+        // Second approach where camera rotateds around the axis before tilt. 
         gmtl::Matrix44f invMat;
         gmtl::invertFull( invMat, _pitchMatrix );
 
         gmtl::Vec3f tempV = invMat * _v;
         gmtl::normalize( tempV );
 
+        
         gmtl::Matrix44f  rotMat;
         gmtl::AxisAnglef aa( angleY, tempV );
         gmtl::set( rotMat, aa );
 
-        _n = invMat * _n;
-        _n = rotMat * _n;
-        _n = _pitchMatrix * _n;
-
         _u = rotMat * _u;
 
+        gmtl::Vec3f tempU = _u;
+        gmtl::normalize( tempU );
+
+        gmtl::AxisAnglef aa2( _pitch, tempU );
+        gmtl::Matrix44f tempMat;
+
+        gmtl::set( tempMat, aa2 );
+
+        // Nullify the last and now rotate _n with new _u and last pitch angle. 
+        _n = invMat * _n;
+        _n = rotMat * _n;
+        _n = tempMat * _n;
+
+        // Do we need this step?
+        _v = invMat * _v;
+        _v = tempMat * _v;
+
+
+        // Since we nullify the last pitch we have to reset the pitchMatrix now. 
+        _pitchMatrix = tempMat;
 
         //_v = invMat * _v;
         //gmtl::identity( _pitchMatrix );
