@@ -124,7 +124,10 @@ namespace Oge
         dInputCallbacks.push_back( 0x00 );
         dInputCallbacks.push_back( 0x00 );
         dInputCallbacks.push_back( 0x00 );
+
+        // Assuming we are using button no 10 to start. 
         dInputCallbacks.push_back( new Start( _inputDevice.get() ) ) ;
+
         dInputCallbacks.push_back( 0x00 );
         dInputCallbacks.push_back( 0x00 );
 
