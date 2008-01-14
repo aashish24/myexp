@@ -63,6 +63,7 @@ namespace Oge
         return 0x00;
       }
 
+
       OgeBase::OgeInterfaces::IEvent::Type VrjDigitalInput::getEvent() const 
       {
         IEvent::Type type( IEvent::None );

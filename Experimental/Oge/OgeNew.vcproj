@@ -462,6 +462,14 @@
 							RelativePath=".\Oge\OgeVrj\VrjDev\Gamepad.h"
 							>
 						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjDev\Tracker.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjDev\Tracker.h"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="VrjOsg"
