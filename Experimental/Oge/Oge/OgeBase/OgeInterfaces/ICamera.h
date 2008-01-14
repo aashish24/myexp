@@ -43,6 +43,8 @@ namespace Oge
         virtual void          roll( float angleZ ) = 0; 
 
         virtual const float*  getMatrix() = 0;
+
+        virtual void          reset() = 0;  
       };
     }
   }

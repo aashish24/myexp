@@ -12,14 +12,17 @@ namespace Oge
       Camera::Camera() : 
         _speed          ( 1.0 ), 
         _rotationSpeed  ( gmtl::Math::deg2Rad( 1.0 ) ),        
+        _pitch          ( 0.0 ),
         _pos            ( 0.0, 0.0, 50.0 ), 
         _view           ( 0.0, 0.0, 0.0 ), 
         _up             ( 0.0, 1.0, 0.0 ), 
         _u              ( 1.0, 0.0, 0.0 ), 
         _v              ( 0.0, 1.0, 0.0 ), 
-        _n              ( 0.0, 0.0, -1.0 ) 
-      {
-        _pitch = 0.0;
+        _n              ( 0.0, 0.0, -1.0 ), 
+        _uOrig          ( _u ),
+        _vOrig          ( _v ), 
+        _nOrig          ( _n )
+      {        
       }
 
 
@@ -62,7 +65,11 @@ namespace Oge
         gmtl::normalize( _n );
         gmtl::normalize( _u );
 
-        gmtl::cross( _v, _n, _u );             
+        gmtl::cross( _v, _n, _u );     
+
+        _uOrig = _u;
+        _vOrig = _v;
+        _nOrig = _n;
       }
 
 
@@ -202,8 +209,26 @@ namespace Oge
         // Since we nullify the last pitch we have to reset the pitchMatrix now. 
         _pitchMatrix = tempMat;
 
-        //_v = invMat * _v;
-        //gmtl::identity( _pitchMatrix );
+       /* gmtl::Matrix44f  rotMat;
+        gmtl::AxisAnglef aa( angleY, _vOrig );
+        gmtl::set( rotMat, aa );
+
+        _u = rotMat * _u;
+
+        gmtl::Vec3f tempU = _u;
+        gmtl::normalize( tempU );
+
+        gmtl::AxisAnglef aa2( _pitch, tempU );
+        gmtl::Matrix44f tempMat;
+
+        gmtl::set( tempMat, aa2 );
+        _n = rotMat * _nOrig;
+        _n = tempMat * _n;
+
+        _v = _vOrig;
+        _v = tempMat * _v;
+
+        _pitchMatrix = tempMat;*/
       }
 
 
@@ -279,6 +304,14 @@ namespace Oge
                      0.0,  0.0,  0.0,  1.0 );
        
         return _matrix.getData();
+      }
+
+
+      void Camera::reset() 
+      {
+        _u = _uOrig;
+        _v = _vOrig;
+        _n = _nOrig;
       }
     }
   }

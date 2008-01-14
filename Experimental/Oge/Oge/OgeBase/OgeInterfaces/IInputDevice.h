@@ -32,6 +32,8 @@ namespace Oge
 
         virtual void                          config( const std::string& config ) = 0;
 
+        virtual void                          start() = 0;
+
         virtual void                          update() = 0;   
 
         virtual IInput*                       getInput( InputType type, const unsigned int& index ) const = 0;        

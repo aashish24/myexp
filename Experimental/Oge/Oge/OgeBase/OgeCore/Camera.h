@@ -66,7 +66,9 @@ namespace Oge
 
           virtual void                              roll( float angleZ );
           
-          const float*                              getMatrix();
+          virtual const float*                      getMatrix();
+
+          virtual void                              reset();
 
 
         protected:
@@ -91,6 +93,9 @@ namespace Oge
           gmtl::Vec3f                               _v;
           gmtl::Vec3f                               _n;
 
+          gmtl::Vec3f                               _uOrig;
+          gmtl::Vec3f                               _vOrig;
+          gmtl::Vec3f                               _nOrig;
 
           gmtl::Matrix44f                           _matrix;
           gmtl::Matrix44f                           _pitchMatrix;

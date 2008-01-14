@@ -17,6 +17,7 @@ namespace Oge
       Gamepad::Gamepad( const unsigned int& digitalsCount, 
                         const unsigned int& analogsCount, 
                         const unsigned int& positionsCount ) :
+        _start            ( false ),
         _digitalInputs    ( digitalsCount ), 
         _analogInputs     ( analogsCount ), 
         _positionInputs   ( positionsCount )
@@ -79,6 +80,12 @@ namespace Oge
       }
 
 
+      void Gamepad::start()
+      {
+        _start = true;
+      }
+
+
       void Gamepad::update()
       {
         InputsItr itr;
@@ -87,14 +94,17 @@ namespace Oge
            ( *itr )->call( ( *itr )->getEvent() );          
         }
 
-        for( itr  = _analogInputs.begin(); itr != _analogInputs.end(); ++itr )
+        if( _start )
         {
-          ( *itr )->call( ( *itr )->getEvent() );
-        }
+          for( itr  = _analogInputs.begin(); itr != _analogInputs.end(); ++itr )
+          {
+            ( *itr )->call( ( *itr )->getEvent() );
+          }
 
-        for( itr  = _positionInputs.begin(); itr != _positionInputs.end(); ++itr )
-        {
-          ( *itr )->call( ( *itr )->getEvent() );          
+          for( itr  = _positionInputs.begin(); itr != _positionInputs.end(); ++itr )
+          {
+            ( *itr )->call( ( *itr )->getEvent() );          
+          }
         }
       }
 

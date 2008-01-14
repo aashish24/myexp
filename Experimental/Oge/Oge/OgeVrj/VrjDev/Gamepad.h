@@ -59,6 +59,8 @@ namespace Oge
 
           virtual IUnknown*                                         queryInterface( const unsigned long& iid );
 
+          virtual void                                              start();
+
         
         protected: 
           
@@ -66,6 +68,8 @@ namespace Oge
 
 
         protected: 
+
+          bool                                                      _start;
 
           IInputs                                                   _digitalInputs;
           IInputs                                                   _analogInputs;

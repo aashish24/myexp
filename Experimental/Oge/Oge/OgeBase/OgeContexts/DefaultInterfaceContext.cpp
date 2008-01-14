@@ -11,6 +11,23 @@ namespace Oge
     {
       OgeInterfaces::ICamera::RefPtr ActiveCamera::_camera = 0x00;
 
+
+      struct Start : public OgeCore::InputCallback
+      {
+        Start( OgeInterfaces::IInputDevice*  inputDevice ) :
+          _inputDevice( inputDevice )
+        {
+        }
+
+        virtual void operator()( OgeInterfaces::IInput* input )
+        {
+          _inputDevice->start();
+        }
+
+        OgeInterfaces::IInputDevice::RefPtr  _inputDevice;
+      };
+
+
       struct CameraMoveX : public OgeCore::InputCallback
       {
         virtual void operator()( OgeInterfaces::IInput* input )
@@ -107,7 +124,7 @@ namespace Oge
         dInputCallbacks.push_back( 0x00 );
         dInputCallbacks.push_back( 0x00 );
         dInputCallbacks.push_back( 0x00 );
-        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( new Start( _inputDevice.get() ) ) ;
         dInputCallbacks.push_back( 0x00 );
         dInputCallbacks.push_back( 0x00 );
 
