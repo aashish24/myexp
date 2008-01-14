@@ -55,7 +55,7 @@ namespace Oge
       }
 
 
-      const float* VrjAnalogInput::getPositionalData() const
+      float* VrjAnalogInput::getPositionData() const
       {
         return 0x00;
       }

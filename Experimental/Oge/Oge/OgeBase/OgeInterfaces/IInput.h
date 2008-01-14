@@ -29,7 +29,7 @@ namespace Oge
 
         virtual float         getAnalogData() const = 0;
 
-        virtual const float*  getPositionalData() const = 0;
+        virtual float*        getPositionData() const = 0;
 
         virtual void          addInputCallback( IEvent::Type eventType, IInputCallback* callback, bool executeNext ) = 0; 
         virtual void          setInputCallback( IEvent::Type eventType, IInputCallback* callback, bool executeNext ) = 0; 

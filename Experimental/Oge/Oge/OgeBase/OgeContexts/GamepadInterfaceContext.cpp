@@ -1,5 +1,5 @@
 
-#include "Oge/OgeBase/OgeContexts/DefaultInterfaceContext.h"
+#include "Oge/OgeBase/OgeContexts/GamepadInterfaceContext.h"
 
 #include <vector>
 
@@ -9,7 +9,7 @@ namespace Oge
   {
     namespace OgeContexts
     {
-      OgeInterfaces::ICamera::RefPtr ActiveCamera::_camera = 0x00;
+      OgeInterfaces::ICamera::RefPtr ActiveCamera::_gamepadCamera = 0x00;
 
 
       struct Start : public OgeCore::InputCallback
@@ -90,7 +90,7 @@ namespace Oge
       };     
 
 
-      DefaultInterfaceContext::DefaultInterfaceContext( OgeBase::OgeInterfaces::IViewer *viewer, 
+      GamepadInterfaceContext::GamepadInterfaceContext( OgeBase::OgeInterfaces::IViewer *viewer, 
                                                         IInputDevice *inputDevice) :
         _viewer( viewer ), 
         _inputDevice( inputDevice )
@@ -99,7 +99,7 @@ namespace Oge
       }
 
 
-      void DefaultInterfaceContext::config()
+      void GamepadInterfaceContext::config()
       {
         std::vector< OgeBase::OgeInterfaces::IInputCallback::RefPtr > dInputCallbacks;
         std::vector< OgeBase::OgeInterfaces::IInputCallback::RefPtr > aInputCallbacks;

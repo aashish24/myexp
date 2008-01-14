@@ -45,7 +45,7 @@ namespace Oge
 
           virtual float                                 getAnalogData() const;
 
-          virtual const float*                          getPositionalData() const;
+          virtual float*                                getPositionData() const;
 
           virtual IEvent::Type                          getEvent() const;
 

@@ -26,37 +26,37 @@ namespace Oge
       {
         static OgeInterfaces::ICamera* getActiveCamera()
         {
-          return _camera.get();
+          return _gamepadCamera.get();
         }
 
         static void setActiveCamera( OgeInterfaces::ICamera* camera )
         {
-          _camera = camera;
+          _gamepadCamera = camera;
         }
 
-        static OgeInterfaces::ICamera::RefPtr _camera;
+        static OgeInterfaces::ICamera::RefPtr _gamepadCamera;
       };
 
       // We should be able to have multiple context active at the same time. 
       // Or able to switch between the contexts.. 
       // Also the question would be whether a context can handle more than 
       // one input device? I think 
-      class DefaultInterfaceContext : 
+      class GamepadInterfaceContext : 
         public OgeBase::OgeInterfaces::IInterfaceContext, 
         public OgeBase::OgeCore::Referenced
       {
         public: 
           
-          OGE_DELCARE_SMART_PTR( DefaultInterfaceContext );
+          OGE_DELCARE_SMART_PTR( GamepadInterfaceContext );
           
-          IMPLEMENT_IUNKNOWN_MEMBERS( DefaultInterfaceContext, OgeBase::OgeCore::Referenced );
+          IMPLEMENT_IUNKNOWN_MEMBERS( GamepadInterfaceContext, OgeBase::OgeCore::Referenced );
           
   
           typedef OgeBase::OgeInterfaces::IViewer       IViewer;
           typedef OgeBase::OgeInterfaces::IInputDevice  IInputDevice;
           typedef OgeBase::OgeInterfaces::ICamera       ICamera;
 
-          DefaultInterfaceContext( IViewer* viewer, IInputDevice* inputDevice );
+          GamepadInterfaceContext( IViewer* viewer, IInputDevice* inputDevice );
 
           virtual IUnknown* queryInterface( const unsigned long& iid ){ return 0x00; }
 

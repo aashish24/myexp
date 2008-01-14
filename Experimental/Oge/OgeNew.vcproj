@@ -277,15 +277,19 @@
 						Name="OgeContexts"
 						>
 						<File
-							RelativePath=".\Oge\OgeBase\OgeContexts\DefaultInterfaceContext.cpp"
+							RelativePath=".\Oge\OgeBase\OgeContexts\GamepadInterfaceContext.cpp"
 							>
 						</File>
 						<File
-							RelativePath=".\Oge\OgeBase\OgeContexts\DefaultInterfaceContext.h"
+							RelativePath=".\Oge\OgeBase\OgeContexts\GamepadInterfaceContext.h"
 							>
 						</File>
 						<File
-							RelativePath=".\Oge\OgeBase\OgeContexts\InputElement.h"
+							RelativePath=".\Oge\OgeBase\OgeContexts\TrackerInterfaceContext.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeContexts\TrackerInterfaceContext.h"
 							>
 						</File>
 					</Filter>

@@ -43,7 +43,7 @@ namespace Oge
       }
 
 
-      const float* VrjPositionInput::getPositionalData() const
+      float* VrjPositionInput::getPositionData() const
       {
         return ( *_positionInterface )->getData().mData;
       }
