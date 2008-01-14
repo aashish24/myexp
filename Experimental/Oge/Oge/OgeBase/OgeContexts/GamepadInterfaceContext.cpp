@@ -9,7 +9,7 @@ namespace Oge
   {
     namespace OgeContexts
     {
-      OgeInterfaces::ICamera::RefPtr ActiveCamera::_gamepadCamera = 0x00;
+      OgeInterfaces::ICamera::RefPtr GamepadActiveCamera::_gamepadCamera = 0x00;
 
 
       struct Start : public OgeCore::InputCallback
@@ -39,7 +39,7 @@ namespace Oge
           }
           else
           {
-            ActiveCamera::getActiveCamera()->slide( input->getAnalogData(), 0.0, 0.0 );
+            GamepadActiveCamera::getActiveCamera()->slide( input->getAnalogData(), 0.0, 0.0 );
           }
         }
       };
@@ -56,7 +56,7 @@ namespace Oge
           }
           else
           {
-            ActiveCamera::getActiveCamera()->slide( 0.0, input->getAnalogData(), 0.0 );
+            GamepadActiveCamera::getActiveCamera()->slide( 0.0, input->getAnalogData(), 0.0 );
           }
         }
       };
@@ -66,7 +66,7 @@ namespace Oge
       {
         virtual void operator()( OgeInterfaces::IInput* input )
         {
-          ActiveCamera::getActiveCamera()->slide( 0.0, 0.0, input->getAnalogData() );
+          GamepadActiveCamera::getActiveCamera()->slide( 0.0, 0.0, input->getAnalogData() );
         }
       };
 
@@ -76,7 +76,7 @@ namespace Oge
         virtual void operator()( OgeInterfaces::IInput* input )
         {
           // Flip of coordinate systems. 
-          ActiveCamera::getActiveCamera()->yaw( input->getAnalogData() );
+          GamepadActiveCamera::getActiveCamera()->yaw( input->getAnalogData() );
         }
       };     
 
@@ -85,7 +85,7 @@ namespace Oge
       { 
         virtual void operator()( OgeInterfaces::IInput* input )
         {
-          ActiveCamera::getActiveCamera()->pitch( input->getAnalogData() );
+          GamepadActiveCamera::getActiveCamera()->pitch( input->getAnalogData() );
         }
       };     
 
@@ -105,7 +105,7 @@ namespace Oge
         std::vector< OgeBase::OgeInterfaces::IInputCallback::RefPtr > aInputCallbacks;
         std::vector< OgeBase::OgeInterfaces::IInputCallback::RefPtr > pInputCallbacks;
 
-        ActiveCamera::setActiveCamera( _camera.get() );
+        GamepadActiveCamera::setActiveCamera( _camera.get() );
 
         CameraMoveX::RefPtr cmxCallback ( new CameraMoveX() );
         CameraMoveY::RefPtr cmyCallback ( new CameraMoveY() );

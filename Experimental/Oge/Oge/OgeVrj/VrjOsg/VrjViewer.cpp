@@ -4,12 +4,14 @@
 #include "Oge/OgeVrj/VrjOsg/VrjViewer.h" 
 
 #include "Oge/OgeVrj/VrjDev/Gamepad.h"
+#include "Oge/OgeVrj/VrjDev/Tracker.h"
 
 #include "Oge/OgeBase/OgeInterfaces/IFunctor.h"
 
 #include "Oge/OgeVrj/VrjCore/LoadConfigFile.h"
 
 #include "Oge/OgeBase/OgeContexts/GamepadInterfaceContext.h"
+#include "Oge/OgeBase/OgeContexts/TrackerInterfaceContext.h"
 
 #include "boost/bind.hpp" 
 
@@ -152,10 +154,14 @@ namespace Oge
 
       void VrjViewer::configDevices()
       {
-        OgeVrj::VrjDev::Gamepad::RefPtr gp( new OgeVrj::VrjDev::Gamepad() );
+        OgeVrj::VrjDev::Gamepad::RefPtr gamepad( new OgeVrj::VrjDev::Gamepad() );
+        OgeVrj::VrjDev::Gamepad::RefPtr tracker( new OgeVrj::VrjDev::Gamepad() );
                 
-        this->addInputDevice( "Gamepad01", gp.get() );
-        this->addInterfaceContext( new OgeBase::OgeContexts::GamepadInterfaceContext( this, gp.get() ) );
+        this->addInputDevice( "Gamepad01", gamepad.get() );
+        this->addInterfaceContext( new OgeBase::OgeContexts::GamepadInterfaceContext( this, gamepad.get() ) );
+
+        this->addInputDevice( "Tracker01", tracker.get() );        
+        this->addInterfaceContext( new OgeBase::OgeContexts::TrackerInterfaceContext( this, tracker.get() ) );
       }
     } 
   }

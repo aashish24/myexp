@@ -22,7 +22,7 @@ namespace Oge
   {
     namespace OgeContexts 
     {
-      struct ActiveCamera : public OgeCore::Referenced
+      struct GamepadActiveCamera : public OgeCore::Referenced
       {
         static OgeInterfaces::ICamera* getActiveCamera()
         {
