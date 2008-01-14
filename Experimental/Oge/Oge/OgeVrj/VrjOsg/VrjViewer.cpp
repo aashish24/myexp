@@ -155,7 +155,7 @@ namespace Oge
       void VrjViewer::configDevices()
       {
         OgeVrj::VrjDev::Gamepad::RefPtr gamepad( new OgeVrj::VrjDev::Gamepad() );
-        OgeVrj::VrjDev::Gamepad::RefPtr tracker( new OgeVrj::VrjDev::Gamepad() );
+        OgeVrj::VrjDev::Tracker::RefPtr tracker( new OgeVrj::VrjDev::Tracker() );
                 
         this->addInputDevice( "Gamepad01", gamepad.get() );
         this->addInterfaceContext( new OgeBase::OgeContexts::GamepadInterfaceContext( this, gamepad.get() ) );
