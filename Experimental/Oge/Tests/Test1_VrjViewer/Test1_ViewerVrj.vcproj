@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="./../../;&quot;$(OSG_INC_DIR)&quot;;&quot;$(QT_INC_DIR)\Qt&quot;;&quot;$(QT_INC_DIR)\QtGui&quot;;&quot;$(QT_INC_DIR)\QtOpenGL&quot;;&quot;$(QT_INC_DIR)&quot;;&quot;$(VJ_BASE_DIR)/include&quot;;&quot;$(GMTL_INC_DIR)&quot;;$(BOOST_INC_DIR);$(NSPR_INC_DIR);"
+				AdditionalIncludeDirectories="./../../;$(OSG_INC_DIR);$(VJ_BASE_DIR)/include;$(GMTL_INC_DIR);$(BOOST_INC_DIR);$(NSPR_INC_DIR);"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -119,6 +119,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="./../../;$(OSG_INC_DIR);$(VJ_BASE_DIR)/include;$(GMTL_INC_DIR);$(BOOST_INC_DIR);$(NSPR_INC_DIR);"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -137,7 +138,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib OpenThreads.lib osg.lib osgDB.lib osgUtil.lib osgGA.lib osgViewer.lib osgText.lib glu32.lib opengl32.lib $(NOINHERIT)"
+				OutputFile="../../bin/$(ProjectName).exe"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);$(NSPR_LIB_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

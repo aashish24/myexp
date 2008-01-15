@@ -99,7 +99,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -120,7 +120,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				AdditionalIncludeDirectories=".\;$(OSG_INC_DIR);$(VJ_BASE_DIR)\include;$(GMTL_INC_DIR);$(CPPDOM_INC_DIR);$(NSPR_INC_DIR);$(BOOST_INC_DIR);"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;OGE_BUILD_SHARED_LIBRARY;USE_OSG;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -138,7 +139,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="osg.lib osgUtil.lib osgViewer.lib opengl32.lib"
+				OutputFile="./bin/Oge.dll"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
