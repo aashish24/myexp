@@ -34,8 +34,10 @@ Build steps for Unix / Linux system:
 ====================================
 
 
+
 Build steps for Windows system: 
 ====================================
 
-
-
+Requirements: 
+1. VS2005 with SP1 installed. 
+2. DirectX SDK ( version 9.0 or 10.0 ) installed if using gamepad / others ?? as input device. 
