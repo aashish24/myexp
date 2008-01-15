@@ -21,22 +21,7 @@ namespace Oge
   namespace OgeBase
   {
     namespace OgeContexts 
-    {
-      struct GamepadActiveCamera : public OgeCore::Referenced
-      {
-        static OgeInterfaces::ICamera* getActiveCamera()
-        {
-          return _gamepadCamera.get();
-        }
-
-        static void setActiveCamera( OgeInterfaces::ICamera* camera )
-        {
-          _gamepadCamera = camera;
-        }
-
-        static OgeInterfaces::ICamera::RefPtr _gamepadCamera;
-      };
-
+    {      
       // We should be able to have multiple context active at the same time. 
       // Or able to switch between the contexts.. 
       // Also the question would be whether a context can handle more than 
@@ -65,8 +50,7 @@ namespace Oge
         private:
 
           IViewer::RefPtr       _viewer;
-          IInputDevice::RefPtr  _inputDevice;
-          ICamera::RefPtr       _camera;
+          IInputDevice::RefPtr  _inputDevice;        
       };
     }
   }

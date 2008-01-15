@@ -27,7 +27,10 @@ namespace Oge
         _inputDevices           () 
       {   
         //_osgCamera->assignTo( _osgModel->rootNav() );
-        _osgCamera->set( 0.0, 0.0, 5.5, 0.0, 1.0, 5.5, 0.0, 0.0, 1.0 );
+        
+        // Assuming that the units of model are in meters.
+        // @Todo: Somehow write a method that determines the unit setup.
+        _osgCamera->set( 0.0, 0.0, 2, 0.0, 1.0, 2, 0.0, 0.0, 1.0 );
       }
 
 

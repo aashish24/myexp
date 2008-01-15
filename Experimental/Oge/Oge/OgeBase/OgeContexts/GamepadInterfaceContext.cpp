@@ -9,9 +9,7 @@ namespace Oge
   {
     namespace OgeContexts
     {
-      OgeInterfaces::ICamera::RefPtr GamepadActiveCamera::_gamepadCamera = 0x00;
-
-
+      // Start callback. 
       struct Start : public OgeCore::InputCallback
       {
         Start( OgeInterfaces::IInputDevice*  inputDevice ) :
@@ -19,74 +17,106 @@ namespace Oge
         {
         }
 
+
         virtual void operator()( OgeInterfaces::IInput* input )
         {
           _inputDevice->start();
         }
 
+
         OgeInterfaces::IInputDevice::RefPtr  _inputDevice;
       };
 
-
+      
+      // Camera move in x axis callback. 
       struct CameraMoveX : public OgeCore::InputCallback
       {
+        CameraMoveX( OgeInterfaces::IViewer* viewer ) :
+          _viewer( viewer )
+        {
+        }
+
+
         virtual void operator()( OgeInterfaces::IInput* input )
         {
-          // Is this callback used by a digital input? 
-          if( input->getAnalogData() == 0.0 )
-          {
-            // Don't do anything. 
-          }
-          else
-          {
-            GamepadActiveCamera::getActiveCamera()->slide( input->getAnalogData(), 0.0, 0.0 );
-          }
+          _viewer->getActiveCamera()->slide( input->getAnalogData(), 0.0, 0.0 );
         }
+
+
+        OgeInterfaces::IViewer::RefPtr  _viewer;
       };
 
 
+      // Camera move in Y axis callback.
       struct CameraMoveY : public OgeCore::InputCallback
       {
+        CameraMoveY( OgeInterfaces::IViewer* viewer ) :
+          _viewer( viewer )
+        {
+        }
+
+
         virtual void operator()( OgeInterfaces::IInput* input )
         {
-          // Is this callback used by a digital input? 
-          if( input->getAnalogData() == 0.0 )
-          {
-            // Don't do anything. 
-          }
-          else
-          {
-            GamepadActiveCamera::getActiveCamera()->slide( 0.0, input->getAnalogData(), 0.0 );
-          }
+         _viewer->getActiveCamera()->slide( 0.0, input->getAnalogData(), 0.0 );
         }
+
+
+        OgeInterfaces::IViewer::RefPtr  _viewer;
       };
 
 
       struct CameraMoveZ : public OgeCore::InputCallback
       {
+        CameraMoveZ( OgeInterfaces::IViewer* viewer ) :
+          _viewer( viewer )
+        {
+        }
+
+
         virtual void operator()( OgeInterfaces::IInput* input )
         {
-          GamepadActiveCamera::getActiveCamera()->slide( 0.0, 0.0, input->getAnalogData() );
+          _viewer->getActiveCamera()->slide( 0.0, 0.0, input->getAnalogData() );
         }
+
+
+        OgeInterfaces::IViewer::RefPtr  _viewer;
       };
 
 
       struct CameraYaw : public OgeCore::InputCallback
       { 
-        virtual void operator()( OgeInterfaces::IInput* input )
+        CameraYaw( OgeInterfaces::IViewer* viewer ) :
+          _viewer( viewer )
         {
-          // Flip of coordinate systems. 
-          GamepadActiveCamera::getActiveCamera()->yaw( input->getAnalogData() );
         }
+
+
+        virtual void operator()( OgeInterfaces::IInput* input )
+        {          
+          _viewer->getActiveCamera()->yaw( input->getAnalogData() );
+        }
+
+
+        OgeInterfaces::IViewer::RefPtr  _viewer;
       };     
 
 
       struct CameraPitch : public OgeCore::InputCallback
       { 
+        CameraPitch( OgeInterfaces::IViewer* viewer ) :
+          _viewer( viewer )
+        {
+        }
+
+
         virtual void operator()( OgeInterfaces::IInput* input )
         {
-          GamepadActiveCamera::getActiveCamera()->pitch( input->getAnalogData() );
+          _viewer->getActiveCamera()->pitch( input->getAnalogData() );
         }
+
+
+        OgeInterfaces::IViewer::RefPtr  _viewer;
       };     
 
 
@@ -94,8 +124,7 @@ namespace Oge
                                                         IInputDevice *inputDevice) :
         _viewer( viewer ), 
         _inputDevice( inputDevice )
-      {
-        _camera = _viewer->getActiveCamera();
+      {        
       }
 
 
@@ -103,16 +132,14 @@ namespace Oge
       {
         std::vector< OgeBase::OgeInterfaces::IInputCallback::RefPtr > dInputCallbacks;
         std::vector< OgeBase::OgeInterfaces::IInputCallback::RefPtr > aInputCallbacks;
-        std::vector< OgeBase::OgeInterfaces::IInputCallback::RefPtr > pInputCallbacks;
+        std::vector< OgeBase::OgeInterfaces::IInputCallback::RefPtr > pInputCallbacks;        
 
-        GamepadActiveCamera::setActiveCamera( _camera.get() );
+        CameraMoveX::RefPtr cmxCallback ( new CameraMoveX( _viewer.get() ) );
+        CameraMoveY::RefPtr cmyCallback ( new CameraMoveY( _viewer.get() ) );
+        CameraMoveZ::RefPtr cmzCallback ( new CameraMoveZ( _viewer.get() ) );
 
-        CameraMoveX::RefPtr cmxCallback ( new CameraMoveX() );
-        CameraMoveY::RefPtr cmyCallback ( new CameraMoveY() );
-        CameraMoveZ::RefPtr cmzCallback ( new CameraMoveZ() );
-
-        CameraYaw::RefPtr   cryCallback( new CameraYaw() );
-        CameraPitch::RefPtr crpCallback( new CameraPitch() );
+        CameraYaw::RefPtr   cryCallback( new CameraYaw( _viewer.get() ) );
+        CameraPitch::RefPtr crpCallback( new CameraPitch( _viewer.get() ) );
 
         // Configuring each callback that corresponds to digital inputs now. 
         dInputCallbacks.push_back( 0x00 );
