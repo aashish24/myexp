@@ -3,8 +3,8 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Oge"
-	ProjectGUID="{A10E0CC9-08B6-4628-87E5-7FF927E45F95}"
-	RootNamespace="TestMVC"
+	ProjectGUID="{950450AE-616E-453E-BB50-78CDBE50BF84}"
+	RootNamespace="OgeNew"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -21,7 +21,6 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
-			ManagedExtensions="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -40,19 +39,16 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="4"
-				AdditionalIncludeDirectories=".\;$(OSG_INC_DIR);$(QT_INC_DIR)\Qt;$(QT_INC_DIR)\QtGui;$(QT_INC_DIR)\QtOpenGL;$(QT_INC_DIR);$(VJ_BASE_DIR)/include;$(GMTL_INC_DIR);$(BOOST_INC_DIR);$(NSPR_INC_DIR);"
-				PreprocessorDefinitions="WIN32;UNICODE;_DEBUG;_CONSOLE;OGE_BUILD_SHARED_LIBRARY;__WIN32__=1;__x86__=1;__NT__=1;__OSVERSION__=5;USE_core_stub_in_nt_dll;USE_core_stub_in_nt_dll_NOT_DEFINED_Subject"
-				MinimalRebuild="false"
-				BasicRuntimeChecks="0"
+				Optimization="0"
+				AdditionalIncludeDirectories=".\;$(OSG_INC_DIR);$(VJ_BASE_DIR)\include;$(GMTL_INC_DIR);$(CPPDOM_INC_DIR);$(NSPR_INC_DIR);$(BOOST_INC_DIR);"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;OGE_BUILD_SHARED_LIBRARY;USE_OSG;"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				BufferSecurityCheck="false"
-				TreatWChar_tAsBuiltInType="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
-				DisableSpecificWarnings="4275"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -65,13 +61,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib OpenThreadsd.lib osgd.lib osgDBd.lib osgUtild.lib osgGAd.lib osgViewerd.lib osgTextd.lib glu32.lib opengl32.lib QtOpenGLd4.lib qtmaind.lib QtGuid4.lib QtCored4.lib $(NOINHERIT)"
-				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
+				AdditionalDependencies="osgd.lib osgUtild.lib osgViewerd.lib opengl32.lib"
+				OutputFile="./bin/Oge_d.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(QT_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);$(NSPR_LIB_DIR);"
+				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);"
 				GenerateDebugInformation="true"
-				AssemblyDebug="1"
-				SubSystem="2"
+				SubSystem="1"
+				ImportLibrary="../bin/Oge_d.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -194,74 +190,6 @@
 					Name="OgeBase"
 					>
 					<Filter
-						Name="OgeInterfaces"
-						>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\ICamera.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IEvent.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IFindNode.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IFunctor.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInput.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputData.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputDevice.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IModel.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IOsgModel.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IOsgView.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IUnknown.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IView.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeInterfaces\IViewer.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="OgeController"
-						>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeController\GamepadController.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeBase\OgeController\GamepadController.h"
-							>
-						</File>
-					</Filter>
-					<Filter
 						Name="OgeCore"
 						>
 						<File
@@ -273,6 +201,14 @@
 							>
 						</File>
 						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Config.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\ConfigLoader.h"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeBase\OgeCore\Event.cpp"
 							>
 						</File>
@@ -281,7 +217,19 @@
 							>
 						</File>
 						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Input.cpp"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeBase\OgeCore\Input.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\InputCallback.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\InputCallback.h"
 							>
 						</File>
 						<File
@@ -290,6 +238,14 @@
 						</File>
 						<File
 							RelativePath=".\Oge\OgeBase\OgeCore\MemberFunctor.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Model.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\Model.h"
 							>
 						</File>
 						<File
@@ -316,24 +272,84 @@
 							RelativePath=".\Oge\OgeBase\OgeCore\View.h"
 							>
 						</File>
+					</Filter>
+					<Filter
+						Name="OgeContexts"
+						>
 						<File
-							RelativePath=".\Oge\OgeBase\OgeCore\Viewer.cpp"
+							RelativePath=".\Oge\OgeBase\OgeContexts\GamepadInterfaceContext.cpp"
 							>
 						</File>
 						<File
-							RelativePath=".\Oge\OgeBase\OgeCore\Viewer.h"
+							RelativePath=".\Oge\OgeBase\OgeContexts\GamepadInterfaceContext.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeContexts\TrackerInterfaceContext.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeContexts\TrackerInterfaceContext.h"
 							>
 						</File>
 					</Filter>
 					<Filter
-						Name="OgeDev"
+						Name="OgeInterfaces"
 						>
 						<File
-							RelativePath=".\Oge\OgeBase\OgeDev\Gamepad.cpp"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\ICamera.h"
 							>
 						</File>
 						<File
-							RelativePath=".\Oge\OgeBase\OgeDev\Gamepad.h"
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IEvent.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IFindNode.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IFunctor.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInput.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputCallback.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputDevice.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInputGetData.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IInterfaceContext.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IModel.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IOsgScene.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IUnknown.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IView.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IViewer.h"
 							>
 						</File>
 					</Filter>
@@ -345,6 +361,30 @@
 						Name="OsgCore"
 						>
 						<File
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgCamera.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgCamera.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgModel.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgModel.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgView.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgView.h"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeOsg\OsgCore\OsgViewer.cpp"
 							>
 						</File>
@@ -352,32 +392,12 @@
 							RelativePath=".\Oge\OgeOsg\OsgCore\OsgViewer.h"
 							>
 						</File>
-					</Filter>
-					<Filter
-						Name="OsgQt"
-						>
 						<File
-							RelativePath=".\Oge\OgeOsg\OsgQT\AdapterWidget.cpp"
+							RelativePath=".\Oge\OgeOsg\OsgCore\UpdateNavigation.cpp"
 							>
 						</File>
 						<File
-							RelativePath=".\Oge\OgeOsg\OsgQT\AdapterWidget.h"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeOsg\OsgQt\ViewerQt.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="OsgVrj"
-						>
-						<File
-							RelativePath=".\Oge\OgeOsg\OsgVrj\ViewerVrj.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeOsg\OsgVrj\ViewerVrj.h"
+							RelativePath=".\Oge\OgeOsg\OsgCore\UpdateNavigation.h"
 							>
 						</File>
 					</Filter>
@@ -389,11 +409,99 @@
 						Name="VrjCore"
 						>
 						<File
+							RelativePath=".\Oge\OgeVrj\VrjCore\LoadConfigFile.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjCore\VrjAnalogInput.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjCore\VrjAnalogInput.h"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeVrj\VrjCore\VrjDigitalInput.cpp"
 							>
 						</File>
 						<File
 							RelativePath=".\Oge\OgeVrj\VrjCore\VrjDigitalInput.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjCore\VrjPositionInput.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjCore\VrjPositionInput.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="VrjDev"
+						>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjDev\Gamepad.cpp"
+							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									ObjectFile="$(IntDir)\$(InputName)1.obj"
+									XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									ObjectFile="$(IntDir)\$(InputName)1.obj"
+									XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+								/>
+							</FileConfiguration>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjDev\Gamepad.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjDev\Tracker.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjDev\Tracker.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="VrjOsg"
+						>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjOsg\VrjViewer.cpp"
+							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									ObjectFile="$(IntDir)\$(InputName)1.obj"
+									XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									ObjectFile="$(IntDir)\$(InputName)1.obj"
+									XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+								/>
+							</FileConfiguration>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeVrj\VrjOsg\VrjViewer.h"
 							>
 						</File>
 					</Filter>
