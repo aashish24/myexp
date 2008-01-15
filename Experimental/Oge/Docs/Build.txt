@@ -33,11 +33,15 @@ BOOST_INC_DIR
 Build steps for Unix / Linux system: 
 ====================================
 
+Requirements:
+----------------
+1. CMake version 2.4.6 or higher ( http://www.cmake.org )	
 
 
 Build steps for Windows system: 
 ====================================
 
 Requirements: 
+----------------
 1. VS2005 with SP1 installed. 
-2. DirectX SDK ( version 9.0 or 10.0 ) installed if using gamepad / others ?? as input device. 
+2. DirectX SDK version 9.0 or higher, installed if using gamepad / others ?? as input device. 
