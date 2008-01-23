@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="lib: Prithvi"
+	Name="OgePrithvi"
 	ProjectGUID="{94317236-BEBD-4A80-A008-F9D5D1D5A842}"
 	RootNamespace="lib: Prithvi"
 	Keyword="Win32Proj"
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\modules;$(OSSIM_INC_DIR); $(OSSIMPLANET_INC_DIR);$(OSG_INC_DIR);$(LIBWMS_INC_DIR);"
+				AdditionalIncludeDirectories="..\..\modules;&quot;$(OSSIM_INC_DIR)&quot;;&quot;$(OSG_INC_DIR)&quot;;&quot;$(WMS_INC_DIR)&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PRITHVI_EXPORTS;HAVE_OSSIM;PRITHVI_SHARED;PRITHVI_BUILD;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -196,16 +196,20 @@
 				>
 			</File>
 			<Filter
-				Name="Core"
+				Name="OgePrithvi"
 				>
-				<File
-					RelativePath=".\Core\Planet.cpp"
+				<Filter
+					Name="PrithviCore"
 					>
-				</File>
-				<File
-					RelativePath=".\Core\Planet.h"
-					>
-				</File>
+					<File
+						RelativePath=".\Core\Planet.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Core\Planet.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
