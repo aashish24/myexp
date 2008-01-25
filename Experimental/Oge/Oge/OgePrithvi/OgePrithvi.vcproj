@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\modules;&quot;$(OSSIM_INC_DIR)&quot;;&quot;$(OSG_INC_DIR)&quot;;&quot;$(WMS_INC_DIR)&quot;"
+				AdditionalIncludeDirectories=".\..\..\;$(OSSIM_INC_DIR);$(OSG_INC_DIR);$(WMS_INC_DIR);"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PRITHVI_EXPORTS;HAVE_OSSIM;PRITHVI_SHARED;PRITHVI_BUILD;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,11 +62,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="ossimd.lib ossimPlanetd.lib osgd.lib osgDBd.lib osgGAd.lib OpenThreadsd.lib"
-				OutputFile="..\..\bin\Prithvid.dll"
+				OutputFile="..\..\bin\OgePrithvi_d.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(OSSIM_LIB_DIR);$(OSSIMPLANET_LIB_DIR);$(LOCAL_SRC_DIR)\bin;"
+				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(OSSIM_BIN_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				ImportLibrary="..\..\bin\OgePrithvi_d.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -139,7 +140,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="ossim.lib ossimPlanet.lib osg.lib osgDB.lib osgGA.lib OpenThreads.lib"
-				OutputFile="..\..\bin\Prithvi.dll"
+				OutputFile="..\..\bin\OgePrithvi.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(OSSIM_LIB_DIR);$(OSSIMPLANET_LIB_DIR);$(LOCAL_SRC_DIR)\bin;"
 				GenerateDebugInformation="true"
@@ -202,11 +203,11 @@
 					Name="PrithviCore"
 					>
 					<File
-						RelativePath=".\Core\Planet.cpp"
+						RelativePath=".\PrithviCore\Planet.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Core\Planet.h"
+						RelativePath=".\PrithviCore\Planet.h"
 						>
 					</File>
 				</Filter>

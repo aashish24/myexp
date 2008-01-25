@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="example: VirtualPlanet"
+	Name="Example_VirtualPlanet"
 	ProjectGUID="{5B5C1EA2-BC5A-42ED-BEF2-6015C6D9A4D5}"
 	RootNamespace="example: VirtualPlanet"
 	Keyword="Win32Proj"
@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(VJ_DEPS_DIR)\include;$(VJ_BASE_DIR)\include\tweek\idl;$(VJ_BASE_DIR)\include;$(OSG_INC_DIR);..\..\..\;$(OSSIM_INC_DIR);$(OSSIMPLANET_INC_DIR);$(LIBWMS_INC_DIR);"
+				AdditionalIncludeDirectories="$(OSG_INC_DIR);$(VJ_BASE_DIR)\include;$(GMTL_INC_DIR);$(CPPDOM_INC_DIR);$(NSPR_INC_DIR);$(BOOST_INC_DIR);..\..\..\..\;$(OSSIM_INC_DIR);"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;__WIN32__=1;__x86__=1;__NT__=1;__OSVERSION__=5;USE_core_stub_in_nt_dll;USE_core_stub_in_nt_dll_NOT_DEFINED_Subject;HAVE_OSSIM;HAVE_OSG;$(NOINHERIT)"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -66,8 +66,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="openGL32.lib omnithread33_rtd.lib omniORB410_rtd.lib omniDynamic410_rtd.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
-				OutputFile="..\..\..\..\bin\virtualplanetd.exe"
+				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib OpenThreadsd.lib osgd.lib osgDBd.lib osgUtild.lib osgGAd.lib osgViewerd.lib osgTextd.lib glu32.lib opengl32.lib $(NOINHERIT)"
+				OutputFile="..\..\..\..\bin\$(ProjectName)_d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR);$(OSSIM_LIB_DIR);$(OSSIMPLANET_LIB_DIR);..\..\..\..\bin;"
@@ -127,7 +127,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(VJ_DEPS_DIR)\include;$(VJ_BASE_DIR)\include\tweek\idl;$(VJ_BASE_DIR)\include;$(OSG_INC_DIR);..\..\..\;$(OSSIM_INC_DIR);$(OSSIMPLANET_INC_DIR);$(LIBWMS_INC_DIR);"
+				AdditionalIncludeDirectories="$(OSG_INC_DIR);$(VJ_BASE_DIR)\include;$(GMTL_INC_DIR);$(CPPDOM_INC_DIR);$(NSPR_INC_DIR);$(BOOST_INC_DIR);..\..\..\..\;$(OSSIM_INC_DIR);"
 				PreprocessorDefinitions="WIN32;_OPT;NDEBUG;_CONSOLE;__WIN32__=1;__x86__=1;__NT__=1;__OSVERSION__=5;USE_core_stub_in_nt_dll;USE_core_stub_in_nt_dll_NOT_DEFINED_Subject;HAVE_OSSIM;HAVE_OSG;$(NOINHERIT)"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -150,7 +150,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="openGL32.lib omnithread33_rt.lib omniDynamic410_rt.lib omniORB410_rt.lib libnspr4.lib libplc4.lib comctl32.lib ws2_32.lib $(NOINHERIT)"
-				OutputFile="..\..\..\..\bin\virtualplanet.exe"
+				OutputFile="..\..\..\..\bin\$(ProjectName).exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VJ_BASE_DIR)\lib;$(OSG_LIB_DIR);$(OSSIM_LIB_DIR);$(OSSIMPLANET_LIB_DIR);..\..\..\..\bin;"
@@ -195,15 +195,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\App.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\App.h"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MyApp.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MyApp.h"
 				>
 			</File>
 		</Filter>

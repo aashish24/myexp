@@ -1,13 +1,13 @@
 
 #ifdef HAVE_OSSIM
 
-#include "Prithvi/Core/Planet.h"
+#include "Oge/OgePrithvi/PrithviCore/Planet.h"
 
 namespace Oge
 {
   namespace OgePrithvi
   {
-    namespace Core
+    namespace PrithviCore
     {
       ///////////////////////////////////////////////////////////////////////////
       //
@@ -15,7 +15,7 @@ namespace Oge
       //
       ///////////////////////////////////////////////////////////////////////////
       
-      Planet::Planet() : Neiv::Base::Referenced(), 
+      Planet::Planet() : OgeBase::OgeCore::Referenced(), 
         mEnableElevation    ( true ),
         mEnableHud          ( false ),
         mEnableEphemeris    ( false ), 
@@ -60,25 +60,29 @@ namespace Oge
           osgDB::Registry::instance()->setDatabasePager( mDatabasePager.get() );
 
           mOssimPlanet = new ossimPlanet();
+          mOssimPlanet->setupDefaults();
+
           mTextureLayerGroup =  new ossimPlanetTextureLayerGroup();
 
-          mOssimPlanet->getLand()->setLandType( mLandType );
-          mOssimPlanet->getLand()->setElevationEnabledFlag( mEnableElevation );
-          mOssimPlanet->getLand()->setHeightExag( mElevationScale );
-          mOssimPlanet->getLand()->setElevationPatchSize( mElevationEstimate );
-          mOssimPlanet->getLand()->setMaxLevelDetail( mLevelDetail );
-          mOssimPlanet->getLand()->setElevationCacheDir( mElevationCache );
+          //mOssimPlanet->land()->setLandType( mLandType );
+          mOssimPlanet->land()->setElevationEnabledFlag( mEnableElevation );
+          mOssimPlanet->land()->setHeightExag( mElevationScale );
+          mOssimPlanet->land()->setElevationPatchSize( mElevationEstimate );
+          mOssimPlanet->land()->setMaxLevelDetail( mLevelDetail );
+          mOssimPlanet->land()->setElevationCacheDir( mElevationCache );
           
           if ( mSplitMetricRatio != 0 )
           {
-	          mOssimPlanet->getLand()->setSplitMetricRatio( mSplitMetricRatio );
+	          mOssimPlanet->land()->setSplitMetricRatio( mSplitMetricRatio );
           }
 
-          mOssimPlanet->getLand()->setMipMappingFlag( mEnableMipMap );        
-          mOssimPlanet->setEnableHudFlag( mEnableHud );     
+          mOssimPlanet->land()->setMipMappingFlag( mEnableMipMap );        
+          //mOssimPlanet->setEnableHudFlag( mEnableHud );     
 
           // Add texture layers. 
-          mOssimPlanet->getLand()->setTextureLayer( mTextureLayerGroup.get(), 0 );
+          // As the API has changed we cannot add the texture layer group. 
+          // So this is the work around for this for time being. 
+          addLayersToPlanet();
 
           mDatabasePager->setExpiryDelay( 0 );
         }
@@ -100,11 +104,12 @@ namespace Oge
         return mOssimPlanet.release();
       }
 
+
       void Planet::initShaders()
       {
         if( mOssimPlanet.valid() )
         {
-          mOssimPlanet->getLand()->initShaders();
+          mOssimPlanet->land()->initShaders();
         }
       }
 
@@ -133,7 +138,12 @@ namespace Oge
 
         if( 0x00 != layer )
         {
+          // Add ref to local group. 
           mTextureLayerGroup->addTop( layer );
+
+          // Now actually add it to the planet. 
+          mOssimPlanet->land()->referenceLayer()->addTop( layer );
+
           index = mTextureLayerGroup->findLayerIndex( layer );
           return index;
         }
@@ -206,7 +216,7 @@ namespace Oge
 
       ossimPlanetTextureLayer* Planet::getLayer( const unsigned int& id ) const
       {
-        return ( mTextureLayerGroup->getLayer( id ) ).get();
+        return ( mTextureLayerGroup->layer( id ) ).get();
       }
 
 
@@ -235,7 +245,7 @@ namespace Oge
 
       void Planet::setElevationScale( const float& scale )
       {
-        mOssimPlanet->getLand()->setHeightExag( scale );
+        mOssimPlanet->land()->setHeightExag( scale );
       }
 
 
@@ -247,7 +257,17 @@ namespace Oge
 
       float Planet::getElevationScale() 
       {
-        return mOssimPlanet->getLand()->getHeightExag();
+        return mOssimPlanet->land()->getHeightExag();
+      }
+
+
+      void Planet::addLayersToPlanet()
+      {
+        size_t count = ( size_t )( mTextureLayerGroup->numberOfLayers() );
+        for( size_t i = 0; i < count; ++i )
+        {
+          mOssimPlanet->land()->referenceLayer()->addTop( mTextureLayerGroup->layer( i ) );
+        }
       }
     }
   }

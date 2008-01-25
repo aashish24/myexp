@@ -1,7 +1,4 @@
-
-#include "MyApp.h"
-
-#include "vrj/Kernel/Kernel.h"
+#include "App.h"
 
 #if defined _MSC_VER && _DEBUG
 # pragma comment( lib, "osgd.lib" )
@@ -17,25 +14,15 @@
 # pragma comment( lib, "osgText.lib" )  
 #endif
 
-int main( int argc, char** argv )
+int main( int argc, char **argv )
 {
-	vrj::Kernel* kernel		= vrj::Kernel::instance();
-	MyApp* application	= new MyApp( kernel, argc, argv );	
-	
-	// Number of argumets should be more than 1 :: Needs atleast one config file ::
-	if( argc < 2 )
-	{	
-		std::exit(1);
-	}
+  typedef Oge::OgeVrj::VrjOsg::VrjViewer VrjViewer;
+   
+  osg::ArgumentParser arguments(&argc, argv);
 
-	for( int i = 2; i < argc; ++i )
-	{
-			 kernel->loadConfigFile( argv[ i ] );
-	}
-	kernel->start();
-	kernel->setApplication( application );
-	kernel->waitForKernelStop();
-	return 0;
+  // Create new App here. 
+  App::RefPtr app( new App( argc, argv ) );
+
+  app->run();
 }
-
 

@@ -3,7 +3,7 @@
 #define __PRITHVI_CORE_PLANET_H__
 
 // This should be the first include. 
-#include "Prithvi/PrithviConfig.h"
+#include "Oge/OgePrithvi/PrithviConfig.h"
 
 // Adding this fixes the ossim::min ossim::max problem.
 #ifdef _WIN32
@@ -39,7 +39,9 @@
 
 #include "osg/Group"
 
-#include "Prithvi/Export.h"
+#include "osgDB/Registry"
+
+#include "Oge/OgePrithvi/Export.h"
 
 #include "Oge/OgeBase/OgeCore/Referenced.h"
 #include "Oge/OgeBase/OgeCore/Pointer.h"
@@ -52,11 +54,11 @@ namespace Oge
   {
     namespace PrithviCore
     {
-      class PRITHVI_EXPORT Planet : public Neiv::Base::Referenced
+      class PRITHVI_EXPORT Planet : public OgeBase::OgeCore::Referenced
       {
         public: 
           
-          NEIV_DELCARE_SMART_PTR( Planet );
+          OGE_DELCARE_SMART_PTR( Planet );
 
           Planet();
 
@@ -83,6 +85,8 @@ namespace Oge
         protected:
          
           virtual void 				                          init();
+
+          virtual void                                  addLayersToPlanet();
 
           virtual ~Planet(); 
 
