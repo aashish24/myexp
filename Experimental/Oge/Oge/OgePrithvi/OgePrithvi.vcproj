@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=".\..\..\;$(OSSIM_INC_DIR);$(OSG_INC_DIR);$(WMS_INC_DIR);"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PRITHVI_EXPORTS;HAVE_OSSIM;PRITHVI_SHARED;PRITHVI_BUILD;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PRITHVI_EXPORTS;USE_OSSIM;PRITHVI_SHARED;PRITHVI_BUILD"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -121,7 +121,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\..\modules;$(OSSIM_INC_DIR); $(OSSIMPLANET_INC_DIR);$(OSG_INC_DIR);$(LIBWMS_INC_DIR);"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PRITHVI_EXPORTS;HAVE_OSSIM;PRITHVI_SHARED;PRITHVI_BUILD;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PRITHVI_EXPORTS;USE_OSSIM;PRITHVI_SHARED;PRITHVI_BUILD"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
