@@ -62,12 +62,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="osgd.lib osgUtild.lib osgViewerd.lib opengl32.lib"
-				OutputFile="./bin/Oge_d.dll"
+				OutputFile=".\bin\Oge_d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="1"
-				ImportLibrary="../bin/Oge_d.lib"
+				ImportLibrary="./bin/Oge_d.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -147,6 +147,7 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				ImportLibrary="./bin/Oge.lib"
 				TargetMachine="1"
 			/>
 			<Tool
