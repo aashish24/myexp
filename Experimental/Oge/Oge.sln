@@ -30,6 +30,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Example1_VirtualPlanet", "O
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{94317236-BEBD-4A80-A008-F9D5D1D5A842} = {94317236-BEBD-4A80-A008-F9D5D1D5A842}
+		{950450AE-616E-453E-BB50-78CDBE50BF84} = {950450AE-616E-453E-BB50-78CDBE50BF84}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
