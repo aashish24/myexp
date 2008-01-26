@@ -23,8 +23,7 @@ namespace Oge
         _mode                   ( mode ),
         _osgModel               ( new OsgModel() ), 
         _osgView                ( new OsgView( _osgModel.get() ) ), 
-        _osgCamera              ( new OsgCamera() ), 
-        _inputDevices           () 
+        _osgCamera              ( new OsgCamera() )         
       {   
         //_osgCamera->assignTo( _osgModel->rootNav() );
         
@@ -44,6 +43,14 @@ namespace Oge
         switch( iid )
         {
           case IUnknown::IID :          
+          case IViewer::IID: 
+          {
+            return static_cast< IViewer* >( this );
+          }
+          case IBaseViewer::IID :
+          {
+            return static_cast< IBaseViewer* >( this );
+          }
           default :
           {
             return 0x00;
@@ -59,25 +66,16 @@ namespace Oge
 
       void OsgViewer::init()
       {
+        BaseViewer::init();
+
         // Build the model first. 
         _osgModel->build();
-
-        // Now initialize all the devices attached.  
-        std::map< const std::string, IInputDevice::RefPtr >::iterator itr;
-        for( itr = _inputDevices.begin(); itr != _inputDevices.end(); ++itr )
-        {
-          itr->second->init();
-        }        
       }
 
 
       void OsgViewer::update()
       {
-        std::map< const std::string, IInputDevice::RefPtr >::iterator itr;
-        for( itr = _inputDevices.begin(); itr != _inputDevices.end(); ++itr )
-        {
-          itr->second->update();
-        }    
+        BaseViewer::update();
 
         // Update the scene with the new camera pos. 
         _osgModel->rootNav()->setMatrix( osg::Matrix( _osgCamera->getMatrix() ) );
@@ -123,54 +121,6 @@ namespace Oge
       OsgViewer::ICamera* OsgViewer::getActiveCamera() const 
       {
         return _osgCamera.get();
-      }
-
-
-      void OsgViewer::addInputDevice( const std::string& deviceName, IInputDevice *inputDevice )
-      {
-
-        if( _inputDevices.find( deviceName ) == _inputDevices.end() )
-        {
-          _inputDevices[ deviceName ] = inputDevice;
-        }
-      }
-
-
-      IInputDevice* OsgViewer::getInputDevice( const std::string& deviceName ) const
-      {
-        if( _inputDevices.find( deviceName ) != _inputDevices.end() )
-        {
-          return _inputDevices.find( deviceName )->second.get();
-        }
-        else
-        {
-          return 0x00;
-        }
-      }    
-
-
-      // Lets config the interface context right now. We may have to think about when interface context 
-      // will be confiigred. 
-      void OsgViewer::addInterfaceContext(Oge::OgeOsg::OsgCore::OsgViewer::IInterfaceContext *context)
-      {
-        if( context )
-        {
-          _interfaceContexts.push_back( context );
-          context->config();
-        }
-      }
-
-
-      OsgViewer::IInterfaceContext* OsgViewer::getInterfaceContext(const unsigned int &index) const
-      {
-        if( index < _interfaceContexts.size() )
-        {
-          return _interfaceContexts.at( index ).get();
-        }
-        else
-        {
-          return 0x00;
-        }
       }
     } 
   } 

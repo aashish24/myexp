@@ -16,7 +16,7 @@ namespace Oge
         _rootScreen ( new osg::Group() ), 
         _rootModel  ( new osg::Group() )
       {
-        this->build();
+        //this->build();
       }
 
 
@@ -48,7 +48,7 @@ namespace Oge
         _rootScreen->setName( "_rootScreen" );
         _rootModel->setName( "_rootModel" );
 
-        _rootNav->setMatrix( osg::Matrixf::translate( osg::Vec3f( 0.0, 0.0, 0.0 ) ) );
+        //_rootNav->setMatrix( osg::Matrixf::translate( osg::Vec3f( 0.0, 0.0, 0.0 ) ) );
         _rootNav->addChild( _rootModel.get() );  
         _rootStatic->addChild( _rootScreen.get() );
           
