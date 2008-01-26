@@ -80,7 +80,7 @@ namespace Oge
         }    
 
         // Update the scene with the new camera pos. 
-        _osgModel->rootNav()->asTransform()->asMatrixTransform()->setMatrix( osg::Matrix( _osgCamera->getMatrix() ) );
+        _osgModel->rootNav()->setMatrix( osg::Matrix( _osgCamera->getMatrix() ) );
 
         // This has to come after we update the devices. As when we update 
         // devices all the callbacks attached with the inputs will 

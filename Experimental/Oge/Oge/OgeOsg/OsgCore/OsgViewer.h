@@ -114,7 +114,7 @@ namespace Oge
           OsgCamera::RefPtr                             _osgCamera;
 
           InputDevices                                  _inputDevices;
-          OgeContexts                             _interfaceContexts;
+          OgeContexts                                   _interfaceContexts;
 
 
       };

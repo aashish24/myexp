@@ -41,6 +41,13 @@ namespace Oge
 
       void OsgModel::build()
       { 
+        // Assign names. 
+        _root->setName( "_root" );
+        _rootStatic->setName( "_rootStatic" );
+        _rootNav->setName( "_rootNav" );
+        _rootScreen->setName( "_rootScreen" );
+        _rootModel->setName( "_rootModel" );
+
         _rootNav->setMatrix( osg::Matrixf::translate( osg::Vec3f( 0.0, 0.0, 0.0 ) ) );
         _rootNav->addChild( _rootModel.get() );  
         _rootStatic->addChild( _rootScreen.get() );
