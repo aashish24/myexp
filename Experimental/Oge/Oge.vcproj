@@ -198,6 +198,14 @@
 						Name="OgeCore"
 						>
 						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\BaseViewer.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeCore\BaseViewer.h"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeBase\OgeCore\Camera.cpp"
 							>
 						</File>
@@ -301,6 +309,10 @@
 					<Filter
 						Name="OgeInterfaces"
 						>
+						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IBaseViewer.h"
+							>
+						</File>
 						<File
 							RelativePath=".\Oge\OgeBase\OgeInterfaces\ICamera.h"
 							>
