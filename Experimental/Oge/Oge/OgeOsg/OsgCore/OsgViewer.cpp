@@ -30,7 +30,7 @@ namespace Oge
         
         // Assuming that the units of model are in meters.
         // @Todo: Somehow write a method that determines the unit setup.
-        _osgCamera->set( 0.0, 0.0, 2, 0.0, 1.0, 2, 0.0, 0.0, 1.0 );
+        _osgCamera->set( 0.0, 0.0, 2.0, 0.0, 1.0, 2.0, 0.0, 0.0, 1.0 );
       }
 
 
@@ -147,6 +147,7 @@ namespace Oge
           return 0x00;
         }
       }    
+
 
       // Lets config the interface context right now. We may have to think about when interface context 
       // will be confiigred. 

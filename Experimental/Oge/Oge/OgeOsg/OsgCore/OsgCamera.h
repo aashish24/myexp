@@ -31,7 +31,7 @@ namespace Oge
       };
 
 
-      class OGE_EXPORT OsgCamera : public OgeBase::OgeCore::Camera 
+      class OGE_EXPORT OsgCamera : public OgeBase::OgeCore::Camera, public osg::MatrixTransform 
       {
         public: 
           

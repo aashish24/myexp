@@ -397,14 +397,6 @@
 							RelativePath=".\Oge\OgeOsg\OsgCore\OsgViewer.h"
 							>
 						</File>
-						<File
-							RelativePath=".\Oge\OgeOsg\OsgCore\UpdateNavigation.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\Oge\OgeOsg\OsgCore\UpdateNavigation.h"
-							>
-						</File>
 					</Filter>
 				</Filter>
 				<Filter
