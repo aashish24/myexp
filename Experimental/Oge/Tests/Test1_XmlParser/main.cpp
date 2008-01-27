@@ -2,7 +2,10 @@
 #include "cppdom/cppdom.h"
 
 #include <iostream>
+#include <fstream>
 #include <string>
+
+using namespace std;
 
 void parseLight( cppdom::NodeList& nl, cppdom::NodeListIterator& itr )
 {
@@ -14,11 +17,12 @@ void parseLight( cppdom::NodeList& nl, cppdom::NodeListIterator& itr )
     
     if( name == "cdata" )
     {
-      std::cout << "data is: " << ( *itr )->getCdata() << std::endl;
+      cout << "Data of this node is: " << ( *itr )->getCdata() << std::endl;
+      cout << std::endl;
     }
     else
     {
-      std::cout << "Name of this node is: " << name << std::endl;
+      cout << "Name of this node is: " << name << std::endl;      
     }
 
     if( !( *itr )->getChildren().empty() )
@@ -44,10 +48,8 @@ void readConfig( const std::string& filename )
   }
   catch( cppdom::Error e )
   {
-    std::cout << e.what() << std::endl;
+    cout << e.what() << std::endl;
   } 
-
-  std::cout << "test: " << std::endl;
 
   cppdom::NodePtr  np = doc.getChild( "scene" );
   if( np.get() )
@@ -72,13 +74,21 @@ void readConfig( const std::string& filename )
   }
 }
 
-
 int main( int argc, char** argv )
 {
+  ofstream file;
+  file.open( "Test1_Output.txt" );
+
   if( argc > 1 )
   {
+    streambuf* sbuf = cout.rdbuf();  
+    cout.rdbuf( file.rdbuf() );  
+    cout << "Parsing.......... " << std::endl;
     readConfig( argv[ 1 ] );
+    cout.rdbuf( sbuf );    
   }
+
+  file.close();
 
   return 1;
 }
