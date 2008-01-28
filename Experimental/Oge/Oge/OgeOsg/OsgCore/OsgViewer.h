@@ -49,7 +49,6 @@ namespace Oge
     { 
       class OGE_EXPORT OsgViewer :                 
         public Oge::OgeBase::OgeInterfaces::IViewer,
-        public Oge::OgeBase::OgeCore::Referenced,
         public osgViewer::Viewer,
         public Oge::OgeBase::OgeCore::BaseViewer
       {
@@ -58,7 +57,7 @@ namespace Oge
 
           OGE_DELCARE_SMART_PTR( OsgViewer );     
 
-          IMPLEMENT_IUNKNOWN_MEMBERS( OsgViewer, Oge::OgeBase::OgeCore::Referenced );
+          IMPLEMENT_IUNKNOWN_MEMBERS( OsgViewer, Oge::OgeBase::OgeCore::BaseViewer );
 
           typedef OgeBase::OgeInterfaces::IUnknown      IUnknown;
           typedef OgeBase::OgeInterfaces::IView         IView;

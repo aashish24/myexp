@@ -46,24 +46,27 @@ namespace Oge
         // How do we do the binding? 
         // We need to know what kind of interface they are using? 
         // such as VRJ or SDL. Is it worth the effort? 
+	std::cout << "Initializing digital inputs: " << std::endl; 
         for( size_t i = 0; i < _digitalInputs.size(); ++i )
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
-          oStrStream2 << "Gamepad01Digital" << i+1 << "\0";
+          oStrStream2 << "Gamepad01Digital0" << i+1 << "\0";
 
           _digitalInputs[ i ] = new OgeVrj::VrjCore::VrjDigitalInput( oStrStream1.str(), oStrStream2.str().c_str() ) ;
           _digitalInputs[ i ]->init();
         }
 
-        // Analog inputs. 
+        // Analog inputs.
+	std::cout << "Initializing analog inputs: " << std::endl; 
         for( size_t i = 0; i < _analogInputs.size(); ++i )
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
-          oStrStream2 << "Gamepad01Analog" << i + 1 << "\0";
+          oStrStream2 << "Gamepad01Analog0" << i + 1 << "\0";
 
           _analogInputs[ i ] = new OgeVrj::VrjCore::VrjAnalogInput( oStrStream1.str(), oStrStream2.str().c_str() );
+	  std::cout << "Initializing analog inputs: " << i << std::endl; 
           _analogInputs[ i ]->init();
         }
 
@@ -94,7 +97,7 @@ namespace Oge
            ( *itr )->call( ( *itr )->getEvent() );          
         }
 
-        if( _start )
+        if( _start  )
         {
           for( itr  = _analogInputs.begin(); itr != _analogInputs.end(); ++itr )
           {

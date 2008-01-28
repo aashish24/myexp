@@ -33,7 +33,9 @@ INCLUDE_DIRECTORIES( ${VRJUGGLER_INCS} )
 
 
 SET( SOURCES 
- ./OgeBase/OgeContexts/DefaultInterfaceContext.cpp
+ ./OgeBase/OgeContexts/GamepadInterfaceContext.cpp
+ ./OgeBase/OgeContexts/TrackerInterfaceContext.cpp
+ ./OgeBase/OgeCore/BaseViewer.cpp
  ./OgeBase/OgeCore/Camera.cpp
  ./OgeBase/OgeCore/Event.cpp
  ./OgeBase/OgeCore/Input.cpp
@@ -50,6 +52,7 @@ SET( SOURCES
  ./OgeVrj/VrjCore/VrjAnalogInput.cpp
  ./OgeVrj/VrjCore/VrjPositionInput.cpp
  ./OgeVrj/VrjDev/Gamepad.cpp
+ ./OgeVrj/VrjDev/Tracker.cpp
  ./OgeVrj/VrjOsg/VrjViewer.cpp )
 
 

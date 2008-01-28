@@ -50,7 +50,7 @@ namespace Oge
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
-          oStrStream2 << "Tracker01Digital" << i+1 << "\0";
+          oStrStream2 << "Tracker01Digital0" << i+1 << "\0";
 
           _digitalInputs[ i ] = new OgeVrj::VrjCore::VrjDigitalInput( oStrStream1.str(), oStrStream2.str().c_str() ) ;
           _digitalInputs[ i ]->init();
@@ -61,7 +61,7 @@ namespace Oge
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
-          oStrStream2 << "Tracker01Analog" << i + 1 << "\0";
+          oStrStream2 << "Tracker01Analog0" << i + 1 << "\0";
 
           _analogInputs[ i ] = new OgeVrj::VrjCore::VrjAnalogInput( oStrStream1.str(), oStrStream2.str().c_str() );
           _analogInputs[ i ]->init();
@@ -72,7 +72,10 @@ namespace Oge
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
-          oStrStream2 << "Tracker01Position" << i + 1 << "\0";
+	  if( i == 0 )
+            oStrStream2 << "Tracker01Head01Proxy" << "\0";
+	   else
+            oStrStream2 << "Tracker01Wand01Proxy" << "\0";
 
           _positionInputs[ i ] = new OgeVrj::VrjCore::VrjPositionInput( oStrStream1.str(), oStrStream2.str().c_str() );
           _positionInputs[ i ]->init();          
