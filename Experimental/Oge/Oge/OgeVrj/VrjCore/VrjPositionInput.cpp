@@ -20,6 +20,8 @@ namespace Oge
 
       void VrjPositionInput::init()
       {
+	std::cout << "[ Initializing Position Input: " << _id  
+                  << " using Proxy: " << _proxy << std::endl; 
         _positionInterface->init( _proxy );
       }
 

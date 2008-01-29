@@ -41,7 +41,7 @@ namespace Oge
           typedef std::vector< IInput::RefPtr >                     IInputs;
           typedef IInputs::iterator                                 InputsItr;
 
-          Tracker( const unsigned int& digitalsCount  = 8, 
+          Tracker( const unsigned int& digitalsCount  = 6, 
                    const unsigned int& analogsCount   = 2, 
                    const unsigned int& positionsCount = 2  );
 

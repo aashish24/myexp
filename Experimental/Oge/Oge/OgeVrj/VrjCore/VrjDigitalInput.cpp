@@ -20,6 +20,8 @@ namespace Oge
 
       void VrjDigitalInput::init()
       {
+	std::cout << "[ Initializing Digital Input : " << _id  
+                  << " with Proxy: " << _proxy << std::endl; 
         _digitalInterface->init( _proxy );
       }
 

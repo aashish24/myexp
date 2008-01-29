@@ -10,15 +10,16 @@ namespace Oge
     namespace OgeContexts
     {
       // Start callback.
-      struct Start : public OgeCore::InputCallback
+      struct PushStart : public OgeCore::InputCallback
       {
-        Start( OgeInterfaces::IInputDevice*  inputDevice ) :
+        PushStart( OgeInterfaces::IInputDevice*  inputDevice ) :
           _inputDevice( inputDevice )
         {
         }
 
         virtual void operator()( OgeInterfaces::IInput* input )
         {
+	   std::cout << "[ Ready to take user inputs ]" << std::endl;
           _inputDevice->start();
         }
 
@@ -42,8 +43,9 @@ namespace Oge
           gmtl::Matrix44f mat;
           mat.set( _wand->getPositionData() );
 
-          gmtl::Vec3f dir = mat * gmtl::Vec3f( 0.0, 0.0, -1.0 );
-          _viewer->getActiveCamera()->slide( dir[ 0 ], dir[ 1 ], dir[ 2 ] );          
+          gmtl::Vec3f dir = mat * gmtl::Vec3f( 0.0, 1.0, 0.0 );
+          
+	  _viewer->getActiveCamera()->slide( dir[ 0 ], dir[ 1 ], dir[ 2 ] );          
         }
 
 
@@ -112,8 +114,10 @@ namespace Oge
         CameraYaw::RefPtr   cryCallback( new CameraYaw( _viewer.get() ) );
         CameraPitch::RefPtr crpCallback( new CameraPitch( _viewer.get() ) );
 
+	PushStart::RefPtr   startCallback( new PushStart( _inputDevice.get() ) );		
+
         // Configuring each callback that corresponds to digital inputs now. 
-        dInputCallbacks.push_back( 0x00 );
+        dInputCallbacks.push_back( startCallback.get() );
         dInputCallbacks.push_back( 0x00 );
         dInputCallbacks.push_back( 0x00 );
         dInputCallbacks.push_back( 0x00 );
@@ -134,7 +138,7 @@ namespace Oge
         // Digital. 
         for( size_t i = 0; i < _inputDevice->getCount( OgeBase::OgeInterfaces::IInputDevice::Digital ); ++i ) 
         {
-          if( i != _navigateButtonIndex )
+          if( i != ( _navigateButtonIndex  ) )
           {
             _inputDevice->getInput( OgeBase::OgeInterfaces::IInputDevice::Digital, i )->addInputCallback
               ( OgeBase::OgeInterfaces::IEvent::KeyPress, dInputCallbacks[ i ].get(), false );

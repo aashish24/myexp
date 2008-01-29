@@ -51,7 +51,7 @@ namespace Oge
         {
           std::ostringstream oStrStream1, oStrStream2; 
           oStrStream1 << i << std::endl;
-          oStrStream2 << "Gamepad01Digital0" << i+1 << "\0";
+          oStrStream2 << "Gamepad01Button0" << i+1 << "\0";
 
           _digitalInputs[ i ] = new OgeVrj::VrjCore::VrjDigitalInput( oStrStream1.str(), oStrStream2.str().c_str() ) ;
           _digitalInputs[ i ]->init();

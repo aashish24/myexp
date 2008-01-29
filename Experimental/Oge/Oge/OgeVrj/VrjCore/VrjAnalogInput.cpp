@@ -21,7 +21,8 @@ namespace Oge
 
       void VrjAnalogInput::init()
       {
-	std::cout << "Analog Input id: " << _id  <<  "Proxy: " << _proxy << std::endl; 
+	std::cout << "[ Initializing Analog Input: " << _id  
+                  << " using Proxy: " << _proxy << std::endl; 
         _analogInterface->init( _proxy );
       }
 
