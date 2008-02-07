@@ -27,11 +27,14 @@ namespace Oge
         OgeOsg::OsgCore::OsgViewer( argc, argv, mode ), 
         vrj::OsgApp()
       { 
-        // Since we dont have the parser lets just assume that arg 2 
+        // Since we dont have the parser lets just assume that arg 3 
         // suppose to provide the config file.
         // Later this would be under readConfig.. 
+        
+        this->readConfig( argv[ 2 ] );
+        
         std::vector< std::string > configs;
-        for( int i=2; i < argc; ++i )
+        for( int i=3; i < argc; ++i )
         {
           configs.push_back( std::string( argv[ i ] ) );
         }
@@ -47,6 +50,7 @@ namespace Oge
 
       void VrjViewer::readConfig( const std::string& config )
       {
+        OgeOsg::OsgCore::OsgViewer::readConfig( config );
       }
 
 

@@ -4,6 +4,7 @@
 #include "Oge/OgeOsg/OsgCore/OsgViewer.h"
 #include "Oge/OgeOsg/OsgCore/OsgModel.h"
 #include "Oge/OgeOsg/OsgCore/OsgView.h"
+#include "Oge/OgeOsg/OsgCore/OsgParser.h"
 
 #include "osg/MatrixTransform"
 #include "osgUtil/SceneView"
@@ -61,6 +62,10 @@ namespace Oge
 
       void OsgViewer::readConfig( const std::string& config ) 
       {
+        // Create a OsgParser her. 
+        OgeOsg::OsgCore::OsgParser::RefPtr parser( new OgeOsg::OsgCore::OsgParser() );
+
+        parser->parse( config, _osgModel.get() );
       }
 
 

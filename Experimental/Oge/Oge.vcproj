@@ -61,10 +61,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="osgd.lib osgUtild.lib osgViewerd.lib opengl32.lib"
+				AdditionalDependencies="cppdom_d-0_7_10.lib osgd.lib osgUtild.lib osgViewerd.lib opengl32.lib"
 				OutputFile=".\bin\Oge_d.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);"
+				AdditionalLibraryDirectories="$(CPPDOM_LIB_DIR);$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				ImportLibrary="./bin/Oge_d.lib"
@@ -358,6 +358,10 @@
 							>
 						</File>
 						<File
+							RelativePath=".\Oge\OgeBase\OgeInterfaces\IParser.h"
+							>
+						</File>
+						<File
 							RelativePath=".\Oge\OgeBase\OgeInterfaces\IUnknown.h"
 							>
 						</File>
@@ -391,6 +395,14 @@
 						</File>
 						<File
 							RelativePath=".\Oge\OgeOsg\OsgCore\OsgModel.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgParser.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Oge\OgeOsg\OsgCore\OsgParser.h"
 							>
 						</File>
 						<File

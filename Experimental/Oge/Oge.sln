@@ -35,6 +35,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Example1_VirtualPlanet", "O
 		{950450AE-616E-453E-BB50-78CDBE50BF84} = {950450AE-616E-453E-BB50-78CDBE50BF84}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test1_XmlParser", "Tests\Test1_XmlParser\Test1_XmlParser.vcproj", "{81BCA42F-7788-4912-B59E-DC2FD31E7DDC}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -57,6 +63,10 @@ Global
 		{5B5C1EA2-BC5A-42ED-BEF2-6015C6D9A4D5}.Debug|Win32.Build.0 = Debug|Win32
 		{5B5C1EA2-BC5A-42ED-BEF2-6015C6D9A4D5}.Release|Win32.ActiveCfg = Release|Win32
 		{5B5C1EA2-BC5A-42ED-BEF2-6015C6D9A4D5}.Release|Win32.Build.0 = Release|Win32
+		{81BCA42F-7788-4912-B59E-DC2FD31E7DDC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{81BCA42F-7788-4912-B59E-DC2FD31E7DDC}.Debug|Win32.Build.0 = Debug|Win32
+		{81BCA42F-7788-4912-B59E-DC2FD31E7DDC}.Release|Win32.ActiveCfg = Release|Win32
+		{81BCA42F-7788-4912-B59E-DC2FD31E7DDC}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

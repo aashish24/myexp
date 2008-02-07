@@ -1,12 +1,14 @@
-<? xml version="1.0" ?>
+<?xml version="1.0" ?>
 <scene>
   <light_group>
-    <id>light_group0</id>
+    <id>_lightGroup0</id>
     <parent>_rootModel</parent>
     <light_source>
-      <id>light_source0</id>
+      <id>_lightSource0</id>
+      <parent>_lightGroup0</parent>
       <light>
         <id>light0</id>
+        <parent>_lightSource0</parent>
         <number>0</number>
         <position>
           <x>0.0</x>
@@ -15,22 +17,22 @@
           <reference>relative</reference>
         </position>
         <ambient>
-          <s>0.5</s>
-          <t>0.5</t>
-          <r>0.5</r>
-          <w>0.5</w>
+          <s>0.0</s>
+          <t>0.0</t>
+          <r>1.0</r>
+          <w>1.0</w>
         </ambient>
         <diffuse>
           <s>0.5</s>
-          <t>0.5</t>
-          <r>0.5</r>
-          <w>0.5</w>
+          <t>0.0</t>
+          <r>1.0</r>
+          <w>1.0</w>
         </diffuse>
         <specular>
-          <s>0.5</s>
-          <t>0.5</t>
-          <r>0.5</r>
-          <w>0.5</w>
+          <s>0.0</s>
+          <t>0.0</t>
+          <r>1.0</r>
+          <w>1.0</w>
         </specular>
       </light>
     </light_source>
