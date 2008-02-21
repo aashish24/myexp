@@ -1,41 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Oge", "Oge.vcproj", "{950450AE-616E-453E-BB50-78CDBE50BF84}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OgeBase", "Modules\OgeBase\OgeBase.vcproj", "{950450AE-616E-453E-BB50-78CDBE50BF84}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test1_VrjViewer", "Tests\Test1_VrjViewer\Test1_ViewerVrj.vcproj", "{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OgeOsg", "Modules\OgeOsg\OgeOsg.vcproj", "{0DC12601-084C-45FF-8064-5A8754D2DA1B}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{950450AE-616E-453E-BB50-78CDBE50BF84} = {950450AE-616E-453E-BB50-78CDBE50BF84}
-	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OgePrithvi", "Oge\OgePrithvi\OgePrithvi.vcproj", "{94317236-BEBD-4A80-A008-F9D5D1D5A842}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OgePrithvi", "Modules\OgePrithvi\OgePrithvi.vcproj", "{94317236-BEBD-4A80-A008-F9D5D1D5A842}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{950450AE-616E-453E-BB50-78CDBE50BF84} = {950450AE-616E-453E-BB50-78CDBE50BF84}
-	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Example1_VirtualPlanet", "Oge\OgePrithvi\Examples\Example1_VirtualPlanet\Example1_VirtualPlanet.vcproj", "{5B5C1EA2-BC5A-42ED-BEF2-6015C6D9A4D5}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{94317236-BEBD-4A80-A008-F9D5D1D5A842} = {94317236-BEBD-4A80-A008-F9D5D1D5A842}
-		{950450AE-616E-453E-BB50-78CDBE50BF84} = {950450AE-616E-453E-BB50-78CDBE50BF84}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test1_XmlParser", "Tests\Test1_XmlParser\Test1_XmlParser.vcproj", "{81BCA42F-7788-4912-B59E-DC2FD31E7DDC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OgeVrj", "Modules\OgeVrj\OgeVrj.vcproj", "{2152CB08-EA4B-46EF-9626-6C9B40320FAB}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
@@ -51,22 +35,18 @@ Global
 		{950450AE-616E-453E-BB50-78CDBE50BF84}.Debug|Win32.Build.0 = Debug|Win32
 		{950450AE-616E-453E-BB50-78CDBE50BF84}.Release|Win32.ActiveCfg = Release|Win32
 		{950450AE-616E-453E-BB50-78CDBE50BF84}.Release|Win32.Build.0 = Release|Win32
-		{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}.Debug|Win32.ActiveCfg = Debug|Win32
-		{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}.Debug|Win32.Build.0 = Debug|Win32
-		{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}.Release|Win32.ActiveCfg = Release|Win32
-		{ABC118FC-BF20-4B3B-A5E0-C3A257DE1F52}.Release|Win32.Build.0 = Release|Win32
+		{0DC12601-084C-45FF-8064-5A8754D2DA1B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0DC12601-084C-45FF-8064-5A8754D2DA1B}.Debug|Win32.Build.0 = Debug|Win32
+		{0DC12601-084C-45FF-8064-5A8754D2DA1B}.Release|Win32.ActiveCfg = Release|Win32
+		{0DC12601-084C-45FF-8064-5A8754D2DA1B}.Release|Win32.Build.0 = Release|Win32
 		{94317236-BEBD-4A80-A008-F9D5D1D5A842}.Debug|Win32.ActiveCfg = Debug|Win32
 		{94317236-BEBD-4A80-A008-F9D5D1D5A842}.Debug|Win32.Build.0 = Debug|Win32
 		{94317236-BEBD-4A80-A008-F9D5D1D5A842}.Release|Win32.ActiveCfg = Release|Win32
 		{94317236-BEBD-4A80-A008-F9D5D1D5A842}.Release|Win32.Build.0 = Release|Win32
-		{5B5C1EA2-BC5A-42ED-BEF2-6015C6D9A4D5}.Debug|Win32.ActiveCfg = Debug|Win32
-		{5B5C1EA2-BC5A-42ED-BEF2-6015C6D9A4D5}.Debug|Win32.Build.0 = Debug|Win32
-		{5B5C1EA2-BC5A-42ED-BEF2-6015C6D9A4D5}.Release|Win32.ActiveCfg = Release|Win32
-		{5B5C1EA2-BC5A-42ED-BEF2-6015C6D9A4D5}.Release|Win32.Build.0 = Release|Win32
-		{81BCA42F-7788-4912-B59E-DC2FD31E7DDC}.Debug|Win32.ActiveCfg = Debug|Win32
-		{81BCA42F-7788-4912-B59E-DC2FD31E7DDC}.Debug|Win32.Build.0 = Debug|Win32
-		{81BCA42F-7788-4912-B59E-DC2FD31E7DDC}.Release|Win32.ActiveCfg = Release|Win32
-		{81BCA42F-7788-4912-B59E-DC2FD31E7DDC}.Release|Win32.Build.0 = Release|Win32
+		{2152CB08-EA4B-46EF-9626-6C9B40320FAB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2152CB08-EA4B-46EF-9626-6C9B40320FAB}.Debug|Win32.Build.0 = Debug|Win32
+		{2152CB08-EA4B-46EF-9626-6C9B40320FAB}.Release|Win32.ActiveCfg = Release|Win32
+		{2152CB08-EA4B-46EF-9626-6C9B40320FAB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
