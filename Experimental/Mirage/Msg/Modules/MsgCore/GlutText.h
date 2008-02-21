@@ -1,8 +1,8 @@
 #ifndef __GLUT_TEXT_H__
 #define __GLUT_TEXT_H__
 
-#include<glCore/Text.h>
-#include<glCore/GLTextFactory.h>
+#include<glCore/Text"
+#include<glCore/GLTextFactory"
 
 namespace glCore
 {

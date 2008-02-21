@@ -1,16 +1,16 @@
 #ifndef __GEOMETRY_H__
 #define __GEOMETRY_H__
 
-#include <oge/Export.h>
-#include <oge/core/Drawable.h>
-#include <oge/core/Array.h>
-#include <oge/core/PrimitiveSet.h>
+#include "Export.h"
+#include "MsgCore/Drawable.h"
+#include "MsgCore/Array.h"
+#include "MsgCore/PrimitiveSet.h"
 
 #include <vector>
 
-namespace oge
+namespace Msg
 {
-	namespace core
+	namespace MsgCore
 	{		
 		class PrimitiveSet;
 

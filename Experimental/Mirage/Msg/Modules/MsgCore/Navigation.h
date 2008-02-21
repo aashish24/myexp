@@ -1,7 +1,7 @@
 #ifndef __NAVIGATION_H__
 #define __NAVIGATION_H__
 
-#include <glMath/Vector.h>
+#include <glMath/Vector"
 
 using namespace glMath;
 

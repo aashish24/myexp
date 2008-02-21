@@ -1,10 +1,11 @@
-#include <oge/core/Geometry.h>
-#include <oge/core/PrimitiveSet.h>
+
+#include "MsgCore/Geometry.h"
+#include "MsgCore/PrimitiveSet.h"
 
 #include <map>
 #include <vector>
 
-using namespace oge::core;
+using namespace Msg::MsgCore;
 
 Geometry::Geometry() :
 	mAttrBinding( Geometry::BIND_PER_VERTEX )

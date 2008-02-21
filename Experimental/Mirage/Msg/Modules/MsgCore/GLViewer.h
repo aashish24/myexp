@@ -8,28 +8,28 @@
 #ifndef __GL_VIEWER_H__
 #define __GL_VIEWER_H__
 
-#include <windows.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+#include <windows"
+#include <GL/gl"
+#include <GL/glu"
+#include <GL/glut"
 
-#include <glCore/Navigation.h>
+#include <glCore/Navigation"
 
-#include <glControl/Keys.h>
-#include <glControl/Action.h>
-#include <glControl/ActionHandler.h>
+#include <glControl/Keys"
+#include <glControl/Action"
+#include <glControl/ActionHandler"
 
-#include <glUtil/AnimationManager.h>
-#include <glUtil/Animation.h>
+#include <glUtil/AnimationManager"
+#include <glUtil/Animation"
 
-#include <glCore/Navigation.h>
+#include <glCore/Navigation"
 
-#include <gmtl/Math.h>
-#include <gmtl/MatrixOps.h>
-#include <gmtl/gmtl.h>
-#include <gmtl/Math.h>
-#include <gmtl/Vec.h>
-#include <gmtl/VecOps.h>
+#include <gmtl/Math"
+#include <gmtl/MatrixOps"
+#include <gmtl/gmtl"
+#include <gmtl/Math"
+#include <gmtl/Vec"
+#include <gmtl/VecOps"
 
 namespace glCore
 {

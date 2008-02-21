@@ -1,9 +1,9 @@
 #ifndef __RENDERER_H__
 #define __RENDERER_H__
 
-namespace oge
+namespace Msg
 {
-	namespace core
+	namespace MsgCore
 	{
 		class OGE_EXPORT Renderer
 		{

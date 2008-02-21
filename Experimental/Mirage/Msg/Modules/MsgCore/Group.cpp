@@ -1,6 +1,7 @@
-#include <oge/core/Group.h>
 
-using namespace oge::core;
+#include "MsgCore/Group.h"
+
+using namespace Msg::MsgCore;
 
 void Group::traverse( NodeVisitor &nv )
 {

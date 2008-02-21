@@ -1,8 +1,9 @@
-#include <oge/core/Referenced.h>
+
+#include "MsgCore/Referenced.h"
 
 #include <iostream>
 
-using namespace oge::core;
+using namespace Msg::MsgCore;
 
 Referenced::Referenced() :
 	mRefCount( 0 )
@@ -10,7 +11,7 @@ Referenced::Referenced() :
 
 }
 
-Referenced::Referenced( const oge::core::Referenced &ref ) :
+Referenced::Referenced( const Msg::MsgCore::Referenced &ref ) :
 	mRefCount( 0 )
 {
 

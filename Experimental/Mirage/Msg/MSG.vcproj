@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="oge"
+	Name="Msg"
 	ProjectGUID="{44940738-98ED-45C6-8943-389ACB8E18C4}"
 	RootNamespace="oge"
 	Keyword="ManagedCProj"
@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../src;../../smtl/src;"
+				AdditionalIncludeDirectories=".\Modules;.\..\Smtl\Modules;"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -195,170 +195,166 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<Filter
-				Name="core"
+				Name="MsgCore"
 				>
 				<File
-					RelativePath="..\src\oge\core\Array.h"
+					RelativePath=".\Modules\MsgCore\Array.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\BoundingBox.h"
+					RelativePath=".\Modules\MsgCore\BoundingBox.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Drawable.cpp"
+					RelativePath=".\Modules\MsgCore\Drawable.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Drawable.h"
+					RelativePath=".\Modules\MsgCore\Drawable.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Geode.cpp"
+					RelativePath=".\Modules\MsgCore\Geode.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Geode.h"
+					RelativePath=".\Modules\MsgCore\Geode.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Geometry.cpp"
+					RelativePath=".\Modules\MsgCore\Geometry.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Geometry.h"
+					RelativePath=".\Modules\MsgCore\Geometry.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Group.cpp"
+					RelativePath=".\Modules\MsgCore\GlutText.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Group.h"
+					RelativePath=".\Modules\MsgCore\Group.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Image.h"
+					RelativePath=".\Modules\MsgCore\Group.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\MatDef.h"
+					RelativePath=".\Modules\MsgCore\Image.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Material.cpp"
+					RelativePath=".\Modules\MsgCore\MatDef.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Material.h"
+					RelativePath=".\Modules\MsgCore\Material.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Navigation.h"
+					RelativePath=".\Modules\MsgCore\Material.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Node.cpp"
+					RelativePath=".\Modules\MsgCore\Msg.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Node.h"
+					RelativePath=".\Modules\MsgCore\Msg.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\NodeVisitor.h"
+					RelativePath=".\Modules\MsgCore\Navigation.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Object.h"
+					RelativePath=".\Modules\MsgCore\Node.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\oge.cpp"
+					RelativePath=".\Modules\MsgCore\Node.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\oge.h"
+					RelativePath=".\Modules\MsgCore\NodeVisitor.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\ParticleSystem.h"
+					RelativePath=".\Modules\MsgCore\Object.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\PrimitiveSet.h"
+					RelativePath=".\Modules\MsgCore\ParticleSystem.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Referenced.cpp"
+					RelativePath=".\Modules\MsgCore\PrimitiveSet.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Referenced.h"
+					RelativePath=".\Modules\MsgCore\Referenced.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Render.h"
+					RelativePath=".\Modules\MsgCore\Referenced.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\SmartPtr.h"
+					RelativePath=".\Modules\MsgCore\Render.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\StateSet.h"
+					RelativePath=".\Modules\MsgCore\SmartPtr.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\Texture.h"
+					RelativePath=".\Modules\MsgCore\StateSet.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\core\User.h"
+					RelativePath=".\Modules\MsgCore\Texture.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\User.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="db"
+				Name="MsgDB"
 				>
 				<File
-					RelativePath="..\src\oge\db\ObjReader.cpp"
+					RelativePath=".\Modules\MsgDb\FileRead.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\db\ObjReader.h"
+					RelativePath=".\Modules\MsgDb\FileRead.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\db\OgeDB.cpp"
+					RelativePath=".\Modules\MsgDb\ObjReader.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\db\OgeDB.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\oge\db\TGA.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\oge\db\TGALoader.cpp"
+					RelativePath=".\Modules\MsgDb\ObjReader.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="net"
+				Name="MsgNet"
 				>
 			</Filter>
 			<Filter
-				Name="util"
+				Name="MsgUtil"
 				>
 				<File
-					RelativePath="..\src\oge\util\DataTime.h"
+					RelativePath=".\Modules\MsgUtil\DataTime.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\oge\util\String.h"
+					RelativePath=".\Modules\MsgUtil\String.h"
 					>
 				</File>
 			</Filter>

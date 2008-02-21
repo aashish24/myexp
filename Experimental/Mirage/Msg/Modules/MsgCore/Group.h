@@ -7,11 +7,11 @@
 #ifndef __GROUP_H__
 #define __GROUP_H__
 
-#include <oge/core/Node.h>
+#include "MsgCore/Node.h"
 
-namespace oge
+namespace Msg
 {
-	namespace core
+	namespace MsgCore
 	{		
 		class OGE_EXPORT Group : public Node 
 		{

@@ -12,7 +12,7 @@
 #include <math.h>
 #include <assert.h>
 
-namespace smtl
+namespace Smtl
 {
 	template< class DATA_TYPE, unsigned int SIZE >
 	class Vector

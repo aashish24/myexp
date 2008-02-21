@@ -7,14 +7,14 @@
 #ifndef __NODE_H__
 #define __NODE_H__
 
-#include <oge/core/Object.h>
-#include <oge/core/StateSet.h>
+#include "MsgCore/Object.h"
+#include "MsgCore/StateSet.h"
 
 #include <vector>
 
-namespace oge
+namespace Msg
 {
-	namespace core
+	namespace MsgCore
 	{
 		class StateSet;
 		class Group;

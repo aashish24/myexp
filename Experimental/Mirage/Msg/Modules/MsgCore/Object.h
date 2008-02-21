@@ -3,14 +3,14 @@
 
 #include <string>
 
-#include "oge/Export.h"
+#include "Export.h"
 
-#include "oge/core/SmartPtr.h"
-#include "oge/core/Referenced.h"
+#include "MsgCore/SmartPtr.h"
+#include "MsgCore/Referenced.h"
 
-namespace oge
+namespace Msg
 {
-	namespace core
+	namespace MsgCore
 	{
 		class OGE_EXPORT Object : public Referenced
 		{

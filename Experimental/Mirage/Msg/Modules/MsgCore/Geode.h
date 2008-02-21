@@ -7,17 +7,17 @@
 #ifndef __GEODE_H__
 #define __GEODE_H__
 
-#include <oge/Export.h>
+#include "Export.h"
 
-#include <oge/core/BoundingBox.h>
-#include <oge/core/Node.h>
-#include <oge/core/Drawable.h>
+#include "MsgCore/BoundingBox.h"
+#include "MsgCore/Node.h"
+#include "MsgCore/Drawable.h"
 
 #include <assert.h>
 
-namespace oge
+namespace Msg
 {
-	namespace core 
+	namespace MsgCore 
 	{
 		class Drawable; 
 

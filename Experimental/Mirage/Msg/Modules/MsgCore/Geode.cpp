@@ -1,6 +1,7 @@
-#include <oge/core/Geode.h>
 
-using namespace oge::core;
+#include "MsgCore/Geode.h"
+
+using namespace Msg::MsgCore;
 
 void Geode::compileDrawables()
 {

@@ -1,22 +1,22 @@
 #ifndef __DRAWABLE_H__
 #define __DRAWABLE_H__
 
-#include <oge/Export.h>
-#include <oge/core/Object.h>
-#include <oge/core/StateSet.h>
+#include "Export.h"
+#include "MsgCore/Object.h"
+#include "MsgCore/StateSet.h"
 
 #ifdef WIN32
 	#include <windows.h>
 #endif 
 
-#include <GL/gl.h>
+#include "GL/gl.h"
 
 #include <iostream>
 #include <vector>
 
-namespace oge
+namespace Msg
 {
-	namespace core
+	namespace MsgCore
 	{
 		class Geode;			
 

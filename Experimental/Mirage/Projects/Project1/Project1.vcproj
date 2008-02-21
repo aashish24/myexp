@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="project1"
+	Name="Project1"
 	ProjectGUID="{F4C320B3-F79F-457E-9272-F6151D7D75C1}"
 	RootNamespace="Project1"
 	Keyword="Win32Proj"
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../src;$(GLUI_INC_DIR);$(VJ_DEPS_DIR)/include;$(GLEW_INC_DIR);$(LOCAL_SRC_DIR)/vrmirage/trunk/oge/src;$(LOCAL_SRC_DIR)/vrmirage/trunk/smtl/src;D:\aashish\sdk\sh\libsh-0.8.0rc1\src;"
+				AdditionalIncludeDirectories="$(GMTL_INC_DIR);$(GLUI_INC_DIR);..\..\Msg\Modules;..\..\Smtl\Modules;$(VJ_DEPS_DIR)/include;$(GLEW_INC_DIR);.\Modules;$(LIBSH_INC_DIR);"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,10 +61,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glew32.lib  glui32d.lib oged.lib  libsh_debug.lib libshutil_debug.lib"
-				OutputFile="../bin/$(ProjectName)d.exe"
+				AdditionalDependencies="glew32d.lib  glui32.lib libsh_debug.lib libshutil_debug.lib"
+				OutputFile="../../bin/$(ProjectName)d.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(GLUI_LIB_DIR);$(GLUT_LIB_DIR);$(GLEW_LIB_DIR);$(LOCAL_SRC_DIR)/vrmirage/trunk/oge/bin;D:\aashish\sdk\sh\libsh-0.8.0rc1\win32\vc8\Debug;"
+				AdditionalLibraryDirectories="$(GLUI_LIB_DIR);$(GLUT_LIB_DIR);D:\aashish\sdk\sh\libsh-0.8.0rc1\win32\vc8\Debug;C:\aashish\src\glew\glew-1.5.0\include;C:\aashish\src\glew\glew-1.5.0\lib;E:\aashish\src\glui\glui-2.35\archive\src\msvc\lib;E:\aashish\src\libsh\archive\install\vc8\lib;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -183,280 +183,164 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<Filter
-				Name="image"
+				Name="Image"
 				>
 				<File
-					RelativePath="..\src\Image\IMAGE.h"
+					RelativePath=".\Modules\Image\IMAGE.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Image\IMAGE_CalculateStride.cpp"
+					RelativePath=".\Modules\Image\IMAGE_CalculateStride.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Image\IMAGE_ExpandPalette.cpp"
+					RelativePath=".\Modules\Image\IMAGE_ExpandPalette.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Image\IMAGE_Load.cpp"
+					RelativePath=".\Modules\Image\IMAGE_Load.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Image\IMAGE_Load24BitBMP.cpp"
+					RelativePath=".\Modules\Image\IMAGE_Load24BitBMP.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Image\IMAGE_Load8BitBMP.cpp"
+					RelativePath=".\Modules\Image\IMAGE_Load8BitBMP.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Image\IMAGE_LoadAlpha.cpp"
+					RelativePath=".\Modules\Image\IMAGE_LoadAlpha.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Image\IMAGE_LoadBMP.cpp"
+					RelativePath=".\Modules\Image\IMAGE_LoadBMP.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Image\IMAGE_LoadCompressedTrueColorTGA.cpp"
+					RelativePath=".\Modules\Image\IMAGE_LoadCompressedTrueColorTGA.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Image\IMAGE_LoadTGA.cpp"
+					RelativePath=".\Modules\Image\IMAGE_LoadTGA.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Image\IMAGE_LoadUncompressed8BitTGA.cpp"
+					RelativePath=".\Modules\Image\IMAGE_LoadUncompressed8BitTGA.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Image\IMAGE_LoadUncompressedTrueColorTGA.cpp"
+					RelativePath=".\Modules\Image\IMAGE_LoadUncompressedTrueColorTGA.cpp"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="maths"
+				Name="Maths"
 				>
 				<File
-					RelativePath="..\src\Maths\COLOR.cpp"
+					RelativePath=".\Modules\Maths\COLOR.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\COLOR.h"
+					RelativePath=".\Modules\Maths\COLOR.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\Maths.h"
+					RelativePath=".\Modules\Maths\Maths.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\MATRIX4X4.cpp"
+					RelativePath=".\Modules\Maths\MATRIX4X4.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\MATRIX4X4.h"
+					RelativePath=".\Modules\Maths\MATRIX4X4.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\PLANE.cpp"
+					RelativePath=".\Modules\Maths\PLANE.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\PLANE.h"
+					RelativePath=".\Modules\Maths\PLANE.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\VECTOR2D.cpp"
+					RelativePath=".\Modules\Maths\VECTOR2D.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\VECTOR2D.h"
+					RelativePath=".\Modules\Maths\VECTOR2D.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\VECTOR3D.cpp"
+					RelativePath=".\Modules\Maths\VECTOR3D.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\vector3d.h"
+					RelativePath=".\Modules\Maths\vector3d.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\VECTOR4D.cpp"
+					RelativePath=".\Modules\Maths\VECTOR4D.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Maths\VECTOR4D.h"
+					RelativePath=".\Modules\Maths\VECTOR4D.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="shaders"
+				Name="Shaders"
 				>
-				<File
-					RelativePath="..\shaders\BlinnPhongShading.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\BlinnPhongShading.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\BumpMap.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\BumpMap.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\BumpMapEnvMap.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\BumpMapEnvMap.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\CubeMapRefraction.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\CubeMapRefraction.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\CubeMapRefractionWithDispersion.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\CubeMapRefractionWithDispersion.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\CubeMapsReflection.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\CubeMapsReflection.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\CubeMapsRefraction.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\CubeMapsRefraction.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\Displacement.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\Displacement.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\PerPixelDisplacement.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\PerPixelDisplacement.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\PhongLighting.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\PhongLighting.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\PhongShading.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\PhongShading.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\ProjectionShadows.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\ProjectionShadows.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\SchlickShading.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\SchlickShading.vert"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\SphereMapReflection.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\shaders\SphereMapReflection.vert"
-					>
-				</File>
-				<Filter
-					Name="distancemap"
-					>
-					<File
-						RelativePath="..\src\distancemap\distance.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\distancemap\distance.hpp"
-						>
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
-				Name="app"
+				Name="App"
 				>
 				<File
-					RelativePath="..\src\App\Light.h"
+					RelativePath=".\Modules\App\Light.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\App\main.cpp"
+					RelativePath=".\Modules\App\main.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\App\ShaderDebug.h"
+					RelativePath=".\Modules\App\ShaderDebug.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\App\TextFile.cpp"
+					RelativePath=".\Modules\App\TextFile.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\App\TextFile.h"
+					RelativePath=".\Modules\App\TextFile.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\App\Torus.cpp"
+					RelativePath=".\Modules\App\Torus.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\App\Torus.h"
+					RelativePath=".\Modules\App\Torus.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="config"
+				Name="Config"
 				>
 				<File
 					RelativePath="..\data\oge.config"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Util"
+				>
+				<Filter
+					Name="DistanceMap"
+					>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

@@ -1,10 +1,10 @@
 #ifndef __MAT_DEF_H__
 #define __MAT_DEF_H__
 
-#include <windows.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+#include <windows"
+#include <GL/gl"
+#include <GL/glu"
+#include <GL/glut"
 
 namespace glCore
 {

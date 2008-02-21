@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oge", "oge.vcproj", "{44940738-98ED-45C6-8943-389ACB8E18C4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Msg", "MSG.vcproj", "{44940738-98ED-45C6-8943-389ACB8E18C4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "project1", "..\..\projects\Project1\msvc\Project1.vcproj", "{F4C320B3-F79F-457E-9272-F6151D7D75C1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project1", "..\Projects\Project1\Project1.vcproj", "{F4C320B3-F79F-457E-9272-F6151D7D75C1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{44940738-98ED-45C6-8943-389ACB8E18C4} = {44940738-98ED-45C6-8943-389ACB8E18C4}
 	EndProjectSection

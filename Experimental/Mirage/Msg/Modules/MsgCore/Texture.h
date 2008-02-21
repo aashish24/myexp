@@ -1,9 +1,9 @@
 #ifndef __TEXTURE_H__
 #define __TEXTURE_H__
 
-#include <windows.h>									
-#include <stdio.h>										
-#include <GL/gl.h>										
+#include <windows"									
+#include <stdio"										
+#include <GL/gl"										
 
 typedef	struct									
 {

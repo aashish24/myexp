@@ -1,12 +1,13 @@
-#include <oge/core/Drawable.h>
 
-using namespace oge::core;
+#include "MsgCore/Drawable.h"
+
+using namespace Msg::MsgCore;
 
 Drawable::Drawable()
 {
 }
 
-Drawable::Drawable( const oge::core::Drawable &drawable )
+Drawable::Drawable( const Msg::MsgCore::Drawable &drawable )
 {
 }
 

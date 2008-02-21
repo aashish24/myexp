@@ -1,14 +1,15 @@
-#include <oge/db/ObjReader.h>
 
-#include <oge/core/Node.h>
-#include <oge/core/Geode.h>
-#include <oge/core/Geometry.h>
-#include <oge/core/Array.h>
+#include "MsgDB/ObjReader.h"
+
+#include "MsgCore/Node.h"
+#include "MsgCore/Geode.h"
+#include "MsgCore/Geometry.h"
+#include "MsgCore/Array.h"
 
 #include <fstream>
 
-using namespace oge::db;
-using namespace oge::core;
+using namespace Msg::MsgDB;
+using namespace Msg::MsgCore;
 
 Node* ObjReader::readFile( std::istream& fin, const char *fileName, const bool& ignoreNormals  )
 {
@@ -35,10 +36,10 @@ Node* ObjReader::readFile( std::istream& fin, const char *fileName, const bool& 
 		{
 			// Read all the vertices here. 
 			unsigned int fieldsRead = sscanf_s( line+2,"%f %f %f %f", &x, &y, &z, &w );
-			if ( fieldsRead==1 ) vertices->push_back( smtl::Vec3f( x,0.0f,0.0f ) );
-			else if ( fieldsRead==2 ) vertices->push_back( smtl::Vec3f( x,y,0.0f ) );
-			else if ( fieldsRead==3 ) vertices->push_back( smtl::Vec3f( x,y,z ) );
-			else if ( fieldsRead>=4 ) vertices->push_back( smtl::Vec3f( x/w,y/w,z/w ) );
+			if ( fieldsRead==1 ) vertices->push_back( Smtl::Vec3f( x,0.0f,0.0f ) );
+			else if ( fieldsRead==2 ) vertices->push_back( Smtl::Vec3f( x,y,0.0f ) );
+			else if ( fieldsRead==3 ) vertices->push_back( Smtl::Vec3f( x,y,z ) );
+			else if ( fieldsRead>=4 ) vertices->push_back( Smtl::Vec3f( x/w,y/w,z/w ) );
 		}	
 
 		if( strncmp( line, "f ", 2 ) == 0 )
@@ -102,19 +103,19 @@ Node* ObjReader::readFile( std::istream& fin, const char *fileName, const bool& 
 		if( strncmp( line, "vn ", 3 ) == 0 )
 		{
 			unsigned int fieldsRead = sscanf_s( line+3 , "%f %f %f %f", &x, &y, &z, &w );
-			if( fieldsRead == 1 ) normals->push_back( smtl::Vec3f( x, 0.0, 0.0 ) );
-			else if( fieldsRead == 1 ) normals->push_back( smtl::Vec3f( x, 0.0, 0.0 ) );
-			else if( fieldsRead == 2 ) normals->push_back( smtl::Vec3f( x, y, 0.0 ) );
-			else if( fieldsRead == 3 ) normals->push_back( smtl::Vec3f( x, y, z ) );
+			if( fieldsRead == 1 ) normals->push_back( Smtl::Vec3f( x, 0.0, 0.0 ) );
+			else if( fieldsRead == 1 ) normals->push_back( Smtl::Vec3f( x, 0.0, 0.0 ) );
+			else if( fieldsRead == 2 ) normals->push_back( Smtl::Vec3f( x, y, 0.0 ) );
+			else if( fieldsRead == 3 ) normals->push_back( Smtl::Vec3f( x, y, z ) );
 		}
 
     if( strncmp( line, "vt ", 3 ) == 0 )
 		{
 			unsigned int fieldsRead = sscanf_s( line+3 , "%f %f %f %f", &x, &y, &z, &w );
-			if( fieldsRead == 1 )       texcoords->push_back( smtl::Vec3f( x, 0.0, 0.0 ) );
-			else if( fieldsRead == 1 )  texcoords->push_back( smtl::Vec3f( x, 0.0, 0.0 ) );
-			else if( fieldsRead == 2 )  texcoords->push_back( smtl::Vec3f( x, y, 0.0 ) );
-			else if( fieldsRead == 3 )  texcoords->push_back( smtl::Vec3f( x, y, z ) );
+			if( fieldsRead == 1 )       texcoords->push_back( Smtl::Vec3f( x, 0.0, 0.0 ) );
+			else if( fieldsRead == 1 )  texcoords->push_back( Smtl::Vec3f( x, 0.0, 0.0 ) );
+			else if( fieldsRead == 2 )  texcoords->push_back( Smtl::Vec3f( x, y, 0.0 ) );
+			else if( fieldsRead == 3 )  texcoords->push_back( Smtl::Vec3f( x, y, z ) );
 		}
 	}
 

@@ -1,9 +1,9 @@
 
 #include "Animation.h"
 
-#include "oge/core/SceneManager.h"
+#include "MsgCore/SceneManager.h"
 
-#include <math.h>
+#include <math"
 #include <iostream>
 
 using namespace glUtil;

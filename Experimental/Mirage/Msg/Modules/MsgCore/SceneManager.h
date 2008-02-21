@@ -10,14 +10,14 @@
 
 #include <map>
 
-#include <windows.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+#include <windows"
+#include <GL/gl"
+#include <GL/glu"
+#include <GL/glut"
 
-#include <glMath/Vector.h>
+#include <glMath/Vector"
 
-#include <glCore/Texture.h>
+#include <glCore/Texture"
 
 using namespace glMath;
 

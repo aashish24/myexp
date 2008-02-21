@@ -7,10 +7,10 @@
 #ifndef __MATERIAL_H__
 #define __MATERIAL_H__
 
-#include "oge/Export.h"
-#include "oge/core/Object.h"
+#include "Export.h"
+#include "MsgCore/Object.h"
 
-#include "smtl/Vector.h"
+#include "Smtl/Vector.h"
 
 #ifdef _WIN32
 	#include <windows.h>
@@ -18,11 +18,11 @@
 
 #include "GL/gl.h"
 
-using namespace smtl;
+using namespace Smtl;
 
-namespace oge 
+namespace Msg 
 {
-	namespace core
+	namespace MsgCore
 	{
 		class OGE_EXPORT Material : public Object
 		{

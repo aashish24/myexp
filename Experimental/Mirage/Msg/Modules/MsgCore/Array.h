@@ -1,18 +1,18 @@
 #ifndef __ARRAY_H__
 #define __ARRAY_H__
 
-#include <oge/Export.h>
-#include <oge/core/Object.h>
+#include "Export.h"
+#include "MsgCore/Object.h"
 
-#include <smtl/Vector.h>
+#include "Smtl/Vector.h"
 
 #include <vector>
 
-using namespace smtl;
+using namespace Smtl;
 
-namespace oge
+namespace Msg
 {
-	namespace core
+	namespace MsgCore
 	{
 		template< class T, unsigned int SIZE >
 		class OGE_EXPORT Array : public Object, public std::vector< T >

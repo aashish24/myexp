@@ -1,15 +1,15 @@
 #ifndef __NODE_VISITOR_H__
 #define __NODE_VISITOR_H__
 
-#include "oge/Export.h"
+#include "Export.h"
 
-#include "oge/core/Node.h"
-#include "oge/core/Group.h"
-#include "oge/core/Object.h"
+#include "MsgCore/Node.h"
+#include "MsgCore/Group.h"
+#include "MsgCore/Object.h"
 
-namespace oge 
+namespace Msg 
 {
-	namespace core
+	namespace MsgCore
 	{
 		class Node;
 		class Group;
@@ -53,16 +53,16 @@ namespace oge
 	}
 }
 
-inline void oge::core::NodeVisitor::apply( oge::core::Node& node )
+inline void Msg::MsgCore::NodeVisitor::apply( Msg::MsgCore::Node& node )
 {
 	traverse( node );
 }
 
-inline void oge::core::NodeVisitor::apply( oge::core::Group& group )
+inline void Msg::MsgCore::NodeVisitor::apply( Msg::MsgCore::Group& group )
 {
-  oge::core::Group::Children children = group.getChildren();
+  Msg::MsgCore::Group::Children children = group.getChildren();
 
-  oge::core::Group::Children::const_iterator itr = children.begin();
+  Msg::MsgCore::Group::Children::const_iterator itr = children.begin();
 
   for( itr; itr != children.end(); ++itr )
   {
@@ -70,22 +70,22 @@ inline void oge::core::NodeVisitor::apply( oge::core::Group& group )
   }
 }
 
-inline void oge::core::NodeVisitor::apply( oge::core::Geode& geode )
+inline void Msg::MsgCore::NodeVisitor::apply( Msg::MsgCore::Geode& geode )
 {
 	apply( ( Node& )geode ); 
 }
 
-inline void oge::core::NodeVisitor::traverse( Node& node )
+inline void Msg::MsgCore::NodeVisitor::traverse( Node& node )
 {
 	node.traverse( *this );
 }
 
-inline void oge::core::NodeVisitor::push( Node* node )
+inline void Msg::MsgCore::NodeVisitor::push( Node* node )
 {
 	mNodePath.push_back( node );
 }
 
-inline void oge::core::NodeVisitor::pop()
+inline void Msg::MsgCore::NodeVisitor::pop()
 {
 	mNodePath.pop_back();
 }

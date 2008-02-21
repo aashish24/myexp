@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace oge
+namespace Msg
 {
 	namespace util
 	{

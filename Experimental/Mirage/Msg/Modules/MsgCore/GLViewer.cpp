@@ -1,13 +1,14 @@
-//#include <glCore/LightDef.h>
-#include<glCore/GLViewer.h>
-#include<glCore/SceneManager.h>
-#include<glCore/Text.h>
-#include<glCore/User.h>
 
-#include<glUtil/Animation.h>
-#include<glUtil/Timer.h>
 
-#include <glControl/Action.h>
+#include<glCore/GLViewer"
+#include<glCore/SceneManager"
+#include<glCore/Text"
+#include<glCore/User"
+
+#include<glUtil/Animation"
+#include<glUtil/Timer"
+
+#include <glControl/Action"
 
 using namespace glUtil;
 using namespace glCore;

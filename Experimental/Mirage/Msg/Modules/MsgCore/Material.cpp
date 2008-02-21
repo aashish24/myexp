@@ -1,6 +1,7 @@
-#include <oge/core/Material.h>
 
-using namespace oge::core;
+#include "MsgCore/Material.h"
+
+using namespace Msg::MsgCore;
 
 void	Material::setAmbient( const Vec4f& ambient, Face face )
 {

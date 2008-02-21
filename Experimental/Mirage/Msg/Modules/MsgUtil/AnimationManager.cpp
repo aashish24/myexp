@@ -2,10 +2,10 @@
 #include "AnimationManager.h"
 #include "Animation.h"
 
-#include "oge/core/SceneManager.h"
+#include "MsgCore/SceneManager.h"
 
 using namespace util;
-using namespace core;
+using namespace MsgCore;
 
 
 AnimationManager::AnimationManager( SceneManager *sceneManager )

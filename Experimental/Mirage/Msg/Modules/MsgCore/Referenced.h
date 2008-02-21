@@ -1,11 +1,11 @@
 #ifndef __REFERENCED_H__
 #define __REFERENCED_H__
 
-#include <oge/Export.h>
+#include "Export.h"
 
-namespace oge
+namespace Msg
 {
-	namespace core
+	namespace MsgCore
 	{
 		class OGE_EXPORT Referenced
 		{

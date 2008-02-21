@@ -1,8 +1,9 @@
-#include <oge/core/Node.h>
-#include <oge/core/NodeVisitor.h>
 
-using namespace oge;
-using namespace core;
+#include "MsgCore/Node.h"
+#include "MsgCore/NodeVisitor.h"
+
+using namespace Msg;
+using namespace MsgCore;
  
 void Node::accept( NodeVisitor& nv )
 {

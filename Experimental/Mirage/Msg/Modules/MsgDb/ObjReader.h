@@ -3,16 +3,16 @@
 
 #include <istream>
 
-#include <oge/core/Referenced.h>
-#include <oge/Export.h>
+#include "MsgCore/Referenced.h"
+#include "Export.h"
 
-using namespace oge::core;
+using namespace Msg::MsgCore;
 
-namespace oge { namespace core { class Node; } }
+namespace Msg { namespace MsgCore { class Node; } }
 
-namespace oge
+namespace Msg
 {
-	namespace db
+	namespace MsgDB
 	{
 		class OGE_EXPORT ObjReader : public Referenced
 		{

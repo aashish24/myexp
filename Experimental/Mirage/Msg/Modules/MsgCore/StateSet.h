@@ -1,11 +1,11 @@
 #ifndef __STATE_SET_H__
 #define __STATE_SET_H__
 
-#include <oge/core/Material.h>
+#include "MsgCore/Material.h"
 
-namespace oge
+namespace Msg
 {
-	namespace core
+	namespace MsgCore
 	{
 		class OGE_EXPORT StateSet : public Object 
 		{

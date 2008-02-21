@@ -3,11 +3,11 @@
 
 #include <vector>
 
-#include <oge/core/Object.h>
+#include "MsgCore/Object.h"
 
-namespace oge 
+namespace Msg 
 {
-	namespace core 
+	namespace MsgCore 
 	{
 		class OGE_EXPORT VectorGLubyte: public std::vector< GLubyte >
 		{

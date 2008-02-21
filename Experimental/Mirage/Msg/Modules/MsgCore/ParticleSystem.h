@@ -1,9 +1,9 @@
 #ifndef __PARTICLE_SYSTEM_H__
 #define __PARTICLE_SYSTEM_H__
 
-namespace oge 
+namespace Msg 
 {
-	namespace core
+	namespace MsgCore
 	{
 		class OGE_EXPORT ParticleSystem : public Drawable 
 		{

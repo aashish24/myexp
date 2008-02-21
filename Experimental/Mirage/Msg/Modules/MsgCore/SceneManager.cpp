@@ -1,10 +1,11 @@
-#include<glCore/SceneManager.h>
-#include<glCore/MatDef.h>
-#include<glCore/GLTextFactory.h>
-#include<glCore/Text.h>
-#include<glCore/GlutText.h>
 
-#include<math.h>
+#include<glCore/SceneManager"
+#include<glCore/MatDef"
+#include<glCore/GLTextFactory"
+#include<glCore/Text"
+#include<glCore/GlutText"
+
+#include<math"
 
 using namespace glCore;
 
