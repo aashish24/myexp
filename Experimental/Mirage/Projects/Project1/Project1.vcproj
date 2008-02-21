@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glew32d.lib  glui32.lib libsh_debug.lib libshutil_debug.lib"
+				AdditionalDependencies="glew32d.lib  glui32d.lib libsh_debug.lib libshutil_debug.lib"
 				OutputFile="../../bin/$(ProjectName)d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(GLUI_LIB_DIR);$(GLUT_LIB_DIR);D:\aashish\sdk\sh\libsh-0.8.0rc1\win32\vc8\Debug;C:\aashish\src\glew\glew-1.5.0\include;C:\aashish\src\glew\glew-1.5.0\lib;E:\aashish\src\glui\glui-2.35\archive\src\msvc\lib;E:\aashish\src\libsh\archive\install\vc8\lib;"

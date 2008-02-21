@@ -5,7 +5,7 @@ namespace Msg
 {
 	namespace MsgCore
 	{
-		class OGE_EXPORT ParticleSystem : public Drawable 
+		class MSG_EXPORT ParticleSystem : public Drawable 
 		{
 		};
 	}

@@ -1,5 +1,6 @@
-#ifndef __BOUNDING_BOX_H__
-#define __BOUNDING_BOX_H__
+
+#ifndef __MSG_CORE_BOUNDING_BOX_H__
+#define __MSG_CORE_BOUNDING_BOX_H__
 
 #include "Export.h"
 
@@ -7,10 +8,10 @@ namespace Msg
 {
 	namespace MsgCore
 	{
-		class OGE_EXPORT BoundingBox
+		class MSG_EXPORT BoundingBox
 		{		
 		};
 	}
 }
 
-#endif // __BOUNDING_BOX_H__
+#endif // __MSG_CORE_BOUNDING_BOX_H__

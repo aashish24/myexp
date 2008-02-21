@@ -24,7 +24,7 @@ namespace Msg
 		// Typedefs. 
 		typedef std::vector< SmartPtr< Drawable > > DrawableList;
 
-		class OGE_EXPORT Geode : public Node 
+		class MSG_EXPORT Geode : public Node 
 		{
 			public:
 				Geode() :

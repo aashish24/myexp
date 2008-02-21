@@ -1,5 +1,6 @@
-#ifndef __DRAWABLE_H__
-#define __DRAWABLE_H__
+
+#ifndef __MSG_CORE_DRAWABLE_H__
+#define __MSG_CORE_DRAWABLE_H__
 
 #include "Export.h"
 #include "MsgCore/Object.h"
@@ -20,120 +21,135 @@ namespace Msg
 	{
 		class Geode;			
 
-		class OGE_EXPORT Drawable : public Object
+		class MSG_EXPORT Drawable : public Object
 		{
 			public:
 				typedef std::vector< Geode* > Parents; 
 				typedef std::vector< GLuint > GLObjectList;
 
 				Drawable();
-
 				Drawable( const Drawable& drawable );
 
-				void addParent( Geode* parent )
-				{
-					mParents.push_back( parent );
-				}
+        void                          addParent( Geode* parent );
+        const Parents                 getParents() const ;
+        Parents                       getParents();
+        unsigned int                  getNumParents();
 
-				const Parents getParents() const
-				{
-					return mParents;
-				}
+        const StateSet*               getStateSet() const;
+        StateSet*                     getStateSet();
+          
+			  void                          setUseDisplayList( bool flag );
+        bool                          getUseDisplayList( unsigned int contextID );
+        bool                          getUseDisplayList();
+        GLuint&                       getDisplayList( unsigned int contextID );
 
-				Parents getParents()
-				{
-					return mParents;
-				}
-
-				unsigned int getNumParents()
-				{
-					return ( unsigned int )mParents.size();
-				}
+        void                          draw();
+				virtual void                  drawImplementation() const;
 				
-				const StateSet* getStateSet() const
-				{
-					return mStateSet.get();
-				}
-
-				StateSet* getStateSet() 
-				{
-					return mStateSet.get();
-				}
-
-				/*
-					const BoundingBox getBound() const 
-					{
-
-					}
-
-					void computeBound()
-					{
-
-					}
-				*/
-
-				void setUseDisplayList( bool flag )
-				{
-					mUseDisplayList = flag;
-				}
-
-				bool getUseDisplayList()
-				{
-					return mUseDisplayList;
-				}
-
-				GLuint& getDisplayList( unsigned int contextID )
-				{
-					// Only once display list is associated as of now. 
-					return mGLObjectList[0];
-				}
-
-				virtual void drawImplementation() const 
-				{					
-				}
-
-				void draw()
-				{
-					if( mStateSet.valid() )
-					{
-						mStateSet->drawGLState();
-					}
-
-					// If this is not the first time. 
-					if( !mGLObjectList.empty() )
-					{						
-						for( size_t i=0; i < mGLObjectList.size(); ++i )
-						{
-							glCallList( mGLObjectList[i] );
-						}
-					}
-					else
-					{
-						GLuint globj;
-						std::cout << "[draw] New display list generated" << std::endl;
-						globj = glGenLists( 1 );
-						mGLObjectList.clear();
-						mGLObjectList.push_back( globj );
-						glNewList( globj, GL_COMPILE );
-							drawImplementation();
-						glEndList();
-					}
-					return;
-				}
 
 			protected:
-				virtual ~Drawable() 
-				{}
+
+        virtual ~Drawable()
+        {
+          // Do nothing. 
+        }
+
 
 			protected:
-				Parents					mParents;
 
-				SmartPtr< StateSet >	mStateSet; 
+        bool					                _useDisplayList;
 
-				bool					mUseDisplayList;				
+				Parents					              _parents;
 
-				mutable GLObjectList	mGLObjectList;
+				SmartPtr< StateSet >	        _stateSet;
+
+				mutable GLObjectList	        _glObjectList;
 		};
+
+    
+    inline void Drawable::addParent( Geode* parent )
+		{
+			_parents.push_back( parent );
+		}
+
+
+    inline const Drawable::Parents Drawable::getParents() const
+		{
+			return _parents;
+		}
+
+
+    inline Drawable::Parents Drawable::getParents()
+		{
+			return _parents;
+		}
+
+
+    inline unsigned int Drawable::getNumParents()
+		{
+			return ( unsigned int )_parents.size();
+		}
+		
+
+		inline const StateSet* Drawable::getStateSet() const
+		{
+			return _stateSet.get();
+		}
+
+		
+    inline StateSet* Drawable::getStateSet() 
+		{
+			return _stateSet.get();
+		}
+
+
+    inline void Drawable::setUseDisplayList( bool flag )
+		{
+			_useDisplayList = flag;
+		}
+
+
+		inline bool Drawable::getUseDisplayList()
+		{
+			return _useDisplayList;
+		}
+
+
+		inline GLuint& Drawable::getDisplayList( unsigned int contextID )
+		{
+			// Only once display list is associated as of now. 
+			return _glObjectList[0];
+		}
+     
+
+    inline void Drawable::draw()
+	  {
+		  if( _stateSet.valid() )
+		  {
+			  _stateSet->drawGLState();
+		  }
+
+		  // If this is not the first time. 
+		  if( !_glObjectList.empty() )
+		  {						
+			  for( size_t i=0; i < _glObjectList.size(); ++i )
+			  {
+				  glCallList( _glObjectList[i] );
+			  }
+		  }
+		  else
+		  {
+			  GLuint globj;
+			  std::cout << "[draw] New display list generated" << std::endl;
+			  globj = glGenLists( 1 );
+			  _glObjectList.clear();
+			  _glObjectList.push_back( globj );
+			  glNewList( globj, GL_COMPILE );
+				  drawImplementation();
+			  glEndList();
+		  }
+		  return;
+	  }   
 	}
 }
 

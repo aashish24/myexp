@@ -15,7 +15,7 @@ namespace Msg
 		class Group;
 		class Geode;
 
-		class OGE_EXPORT NodeVisitor : public Object 
+		class MSG_EXPORT NodeVisitor : public Object 
 		{
 			public:
 				typedef std::vector< Node* > NodePath;

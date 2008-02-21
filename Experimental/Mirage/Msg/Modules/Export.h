@@ -8,9 +8,9 @@
 #endif
 
 #if defined( _MSC_VER )
-	#define OGE_EXPORT __declspec(dllexport)
+	#define MSG_EXPORT __declspec(dllexport)
 #else
-	#define	OGE_EXPORT
+	#define	MSG_EXPORT
 #endif
 
 #endif // __OGE_EXPORT_H__

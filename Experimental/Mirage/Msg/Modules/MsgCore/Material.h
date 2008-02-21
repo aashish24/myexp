@@ -24,7 +24,7 @@ namespace Msg
 {
 	namespace MsgCore
 	{
-		class OGE_EXPORT Material : public Object
+		class MSG_EXPORT Material : public Object
 		{
 			public:
 				enum Face

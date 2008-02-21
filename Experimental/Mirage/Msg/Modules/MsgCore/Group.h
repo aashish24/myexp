@@ -13,7 +13,7 @@ namespace Msg
 {
 	namespace MsgCore
 	{		
-		class OGE_EXPORT Group : public Node 
+		class MSG_EXPORT Group : public Node 
 		{
 			public:
         

@@ -1,14 +1,28 @@
 
 #include "MsgCore/Drawable.h"
 
-using namespace Msg::MsgCore;
-
-Drawable::Drawable()
+namespace Msg
 {
-}
+  namespace MsgCore
+  {
+    Drawable::Drawable() :
+      _useDisplayList( false ), 
+      _parents       ( 0x00 ), 
+      _stateSet      ( 0x00 ), 
+      _glObjectList  ( 0x00 )
+    {
+    }
 
-Drawable::Drawable( const Msg::MsgCore::Drawable &drawable )
-{
+
+    Drawable::Drawable( const Msg::MsgCore::Drawable &drawable )      
+    {
+    }
+
+
+    void Drawable::drawImplementation() const 
+		{					
+		}
+  }
 }
 
 

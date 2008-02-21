@@ -14,7 +14,7 @@ namespace Msg
 {
 	namespace MsgDB
 	{
-		class OGE_EXPORT ObjReader : public Referenced
+		class MSG_EXPORT ObjReader : public Referenced
 		{
 			public:
 				ObjReader()

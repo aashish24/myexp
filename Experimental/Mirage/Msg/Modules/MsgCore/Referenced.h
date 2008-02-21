@@ -7,7 +7,7 @@ namespace Msg
 {
 	namespace MsgCore
 	{
-		class OGE_EXPORT Referenced
+		class MSG_EXPORT Referenced
 		{
 			public:
 				Referenced();

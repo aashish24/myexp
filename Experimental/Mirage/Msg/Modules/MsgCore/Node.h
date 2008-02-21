@@ -20,7 +20,7 @@ namespace Msg
 		class Group;
 		class NodeVisitor;
 
-		class OGE_EXPORT Node : public Object
+		class MSG_EXPORT Node : public Object
 		{
 			public:
 				// Typedefs. 

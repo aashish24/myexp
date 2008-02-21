@@ -5,7 +5,7 @@ namespace Msg
 {
 	namespace MsgCore
 	{
-		class OGE_EXPORT Renderer
+		class MSG_EXPORT Renderer
 		{
 			virtual void draw() = 0;
 		};

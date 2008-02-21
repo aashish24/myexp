@@ -9,7 +9,7 @@ namespace Msg
 {
 	namespace MsgCore 
 	{
-		class OGE_EXPORT VectorGLubyte: public std::vector< GLubyte >
+		class MSG_EXPORT VectorGLubyte: public std::vector< GLubyte >
 		{
 			typedef std::vector< value_type > vector_type;
 			
@@ -34,7 +34,7 @@ namespace Msg
 				}
 		};
 
-		class OGE_EXPORT VectorGLushort: public std::vector< GLushort >
+		class MSG_EXPORT VectorGLushort: public std::vector< GLushort >
 		{
 			typedef std::vector< value_type > vector_type;
 			
@@ -60,7 +60,7 @@ namespace Msg
 				}
 		};
 
-		class OGE_EXPORT VectorGLuint: public std::vector< GLuint >
+		class MSG_EXPORT VectorGLuint: public std::vector< GLuint >
 		{
 			typedef std::vector< value_type > vector_type;
 			
@@ -87,7 +87,7 @@ namespace Msg
 		};
 
 		// As of now it will draw only use the glDrawElements. 
-		class  OGE_EXPORT PrimitiveSet : public Object
+		class  MSG_EXPORT PrimitiveSet : public Object
 		{
 			public:
 				enum Type
@@ -148,7 +148,7 @@ namespace Msg
 				Type	mType;				
 		};
 
-		class OGE_EXPORT DrawElementsUByte : public PrimitiveSet, public VectorGLubyte 
+		class MSG_EXPORT DrawElementsUByte : public PrimitiveSet, public VectorGLubyte 
 		{
 			public:
 				DrawElementsUByte( GLenum mode=0 ) :
@@ -178,7 +178,7 @@ namespace Msg
 
 		};
 
-		class OGE_EXPORT DrawElementsUShort : public PrimitiveSet, public VectorGLushort 
+		class MSG_EXPORT DrawElementsUShort : public PrimitiveSet, public VectorGLushort 
 		{
 			public:
 				DrawElementsUShort( GLenum mode=0 ) :
@@ -207,7 +207,7 @@ namespace Msg
 				}
 		};
 
-		class OGE_EXPORT DrawElementUInt : public PrimitiveSet, public VectorGLuint 
+		class MSG_EXPORT DrawElementUInt : public PrimitiveSet, public VectorGLuint 
 		{
 			public:				
 				DrawElementUInt( GLenum mode=0 ) :

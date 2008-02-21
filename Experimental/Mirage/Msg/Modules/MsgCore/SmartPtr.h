@@ -10,7 +10,7 @@ namespace Msg
   namespace MsgCore
   {
 	  template< class T >
-	  class OGE_EXPORT SmartPtr 
+	  class MSG_EXPORT SmartPtr 
 	  {
 		  public:
 			  SmartPtr() :

@@ -7,7 +7,7 @@ namespace Msg
 {
 	namespace MsgCore
 	{
-		class OGE_EXPORT Image : public Referenced
+		class MSG_EXPORT Image : public Referenced
 		{
 			public:
 				Image()

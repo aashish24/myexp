@@ -7,7 +7,7 @@ namespace Msg
 {
 	namespace MsgCore
 	{
-		class OGE_EXPORT StateSet : public Object 
+		class MSG_EXPORT StateSet : public Object 
 		{
 			public:
 				StateSet() : 

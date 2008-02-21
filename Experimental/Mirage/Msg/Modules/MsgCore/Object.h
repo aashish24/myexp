@@ -12,7 +12,7 @@ namespace Msg
 {
 	namespace MsgCore
 	{
-		class OGE_EXPORT Object : public Referenced
+		class MSG_EXPORT Object : public Referenced
 		{
 			public:
 				///////////////////////////////////////////////////////////////
