@@ -1,5 +1,5 @@
 
-#include "Oge/OgeBase/OgeCore/InputCallback.h"
+#include "OgeBase/OgeCore/InputCallback.h"
 
 namespace Oge 
 {

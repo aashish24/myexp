@@ -2,12 +2,12 @@
 #ifndef __OGE_CORE_VIEW_H__
 #define __OGE_CORE_VIEW_H__
 
-#include "Oge/Export.h"
+#include "OgeBase/Export.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IView.h"
-#include "Oge/OgeBase/OgeInterfaces/IModel.h"
+#include "OgeBase/OgeInterfaces/IView.h"
+#include "OgeBase/OgeInterfaces/IModel.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h" 
+#include "OgeBase/OgeCore/Referenced.h" 
 
 #include <vector>
 
@@ -17,7 +17,7 @@ namespace Oge
   {
     namespace OgeCore
     { 
-      struct OGE_EXPORT View : 
+      struct OGE_BASE_EXPORT View : 
         public OgeBase::OgeInterfaces::IView, 
         public OgeBase::OgeCore::Referenced
       {

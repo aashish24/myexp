@@ -2,14 +2,14 @@
 #ifndef __OGE_CORE_INPUT_H__
 #define __OGE_CORE_INPUT_H__
 
-#include "Oge/Export.h"
+#include "OgeBase/Export.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IInputCallback.h"
-#include "Oge/OgeBase/OgeInterfaces/IInput.h"
-#include "Oge/OgeBase/OgeInterfaces/IEvent.h"
+#include "OgeBase/OgeInterfaces/IInputCallback.h"
+#include "OgeBase/OgeInterfaces/IInput.h"
+#include "OgeBase/OgeInterfaces/IEvent.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
-#include "Oge/OgeBase/OgeCore/Pointer.h"
+#include "OgeBase/OgeCore/Referenced.h"
+#include "OgeBase/OgeCore/Pointer.h"
 
 #include <vector>
 #include <map>
@@ -21,7 +21,7 @@ namespace Oge
   {
     namespace OgeCore
     { 
-      struct OGE_EXPORT Input : 
+      struct OGE_BASE_EXPORT Input : 
         public OgeBase::OgeInterfaces::IInput,
         public OgeBase::OgeCore::Referenced
       {

@@ -1,7 +1,5 @@
 
-#include "Oge/OgeBase/OgeCore/Camera.h"
-
-
+#include "OgeBase/OgeCore/Camera.h"
 
 namespace Oge
 {

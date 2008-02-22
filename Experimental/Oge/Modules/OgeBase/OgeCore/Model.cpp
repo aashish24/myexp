@@ -1,5 +1,5 @@
 
-#include "Oge/OgeBase/OgeCore/Model.h"
+#include "OgeBase/OgeCore/Model.h"
 
 #include <algorithm>
 

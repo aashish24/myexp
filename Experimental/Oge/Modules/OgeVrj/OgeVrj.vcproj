@@ -191,31 +191,31 @@
 					Name="VrjCore"
 					>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjCore\LoadConfigFile.h"
+						RelativePath=".\VrjCore\LoadConfigFile.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjCore\VrjAnalogInput.cpp"
+						RelativePath=".\VrjCore\VrjAnalogInput.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjCore\VrjAnalogInput.h"
+						RelativePath=".\VrjCore\VrjAnalogInput.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjCore\VrjDigitalInput.cpp"
+						RelativePath=".\VrjCore\VrjDigitalInput.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjCore\VrjDigitalInput.h"
+						RelativePath=".\VrjCore\VrjDigitalInput.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjCore\VrjPositionInput.cpp"
+						RelativePath=".\VrjCore\VrjPositionInput.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjCore\VrjPositionInput.h"
+						RelativePath=".\VrjCore\VrjPositionInput.h"
 						>
 					</File>
 				</Filter>
@@ -223,37 +223,19 @@
 					Name="VrjDev"
 					>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjDev\Gamepad.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\Oge\OgeVrj\VrjDev\Gamepad.h"
+						RelativePath=".\VrjDev\Gamepad.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjDev\Tracker.cpp"
+						RelativePath=".\VrjDev\Gamepad.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjDev\Tracker.h"
+						RelativePath=".\VrjDev\Tracker.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\VrjDev\Tracker.h"
 						>
 					</File>
 				</Filter>
@@ -261,29 +243,11 @@
 					Name="VrjOsg"
 					>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjOsg\VrjViewer.cpp"
+						RelativePath=".\VrjOsg\VrjViewer.cpp"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
 					</File>
 					<File
-						RelativePath=".\Oge\OgeVrj\VrjOsg\VrjViewer.h"
+						RelativePath=".\VrjOsg\VrjViewer.h"
 						>
 					</File>
 				</Filter>

@@ -2,7 +2,7 @@
 #ifndef __OGE_CORE_REFERENCED_H__
 #define __OGE_CORE_REFERENCED_H__
 
-#include "Oge/Export.h"
+#include "OgeBase/Export.h"
 
 namespace Oge
 {
@@ -10,7 +10,7 @@ namespace Oge
 	{
     namespace OgeCore
     {
-		  class OGE_EXPORT Referenced
+		  class OGE_BASE_EXPORT Referenced
 		  {
 			  public:
 

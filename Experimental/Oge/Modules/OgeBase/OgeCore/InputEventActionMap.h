@@ -1,5 +1,5 @@
 
-#include "Oge/OgeBase/OgeInterfaces/IInputEventActionMap.h"
+#include "OgeBase/OgeInterfaces/IInputEventActionMap.h"
 
 template< typename T1, typename T2 >
 struct InputEventActionMap : public IInputEventActionMap< T1, T2 >

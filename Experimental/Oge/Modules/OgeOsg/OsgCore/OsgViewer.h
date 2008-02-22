@@ -2,19 +2,19 @@
 #ifndef __OSG_CORE_OSG_VIEWER_H__
 #define __OSG_CORE_OSG_VIEWER_H__
 
-#include "Oge/Export.h"
+#include "OgeOsg/Export.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IView.h"
-#include "Oge/OgeBase/OgeInterfaces/IViewer.h"
-#include "Oge/OgeBase/OgeInterfaces/IInputDevice.h"
-#include "Oge/OgeBase/OgeInterfaces/IInterfaceContext.h"
+#include "OgeBase/OgeInterfaces/IView.h"
+#include "OgeBase/OgeInterfaces/IViewer.h"
+#include "OgeBase/OgeInterfaces/IInputDevice.h"
+#include "OgeBase/OgeInterfaces/IInterfaceContext.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
-#include "Oge/OgeBase/OgeCore/BaseViewer.h"
+#include "OgeBase/OgeCore/Referenced.h"
+#include "OgeBase/OgeCore/BaseViewer.h"
 
-#include "Oge/OgeOsg/OsgCore/OsgView.h"
-#include "Oge/OgeOsg/OsgCore/OsgModel.h"
-#include "Oge/OgeOsg/OsgCore/OsgCamera.h"
+#include "OgeOsg/OsgCore/OsgView.h"
+#include "OgeOsg/OsgCore/OsgModel.h"
+#include "OgeOsg/OsgCore/OsgCamera.h"
 
 #include "osgViewer/Viewer"
 #include "osg/Node"
@@ -47,7 +47,7 @@ namespace Oge
   {
     namespace OsgCore
     { 
-      class OGE_EXPORT OsgViewer :                 
+      class OGE_OSG_EXPORT OsgViewer :                 
         public Oge::OgeBase::OgeInterfaces::IViewer,
         public osgViewer::Viewer,
         public Oge::OgeBase::OgeCore::BaseViewer

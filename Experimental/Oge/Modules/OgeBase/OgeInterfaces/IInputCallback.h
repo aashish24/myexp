@@ -2,7 +2,7 @@
 #ifndef __I_INPUT_CALLBACK_H__
 #define __I_INPUT_CALLBACK_H__
 
-#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
+#include "OgeBase/OgeInterfaces/IUnknown.h"
 
 namespace Oge
 {

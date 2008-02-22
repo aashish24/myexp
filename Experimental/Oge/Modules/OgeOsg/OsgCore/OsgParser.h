@@ -4,11 +4,11 @@
 
 #include "cppdom/cppdom.h"
 
-#include "Oge/Export.h"
+#include "OgeOsg/Export.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IParser.h"
+#include "OgeBase/OgeInterfaces/IParser.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
+#include "OgeBase/OgeCore/Referenced.h"
 
 #include "osg/Group"
 #include "osg/Light"
@@ -31,8 +31,8 @@ namespace Oge
   {
     namespace OsgCore
     {
-      class OGE_EXPORT OsgParser : public OgeBase::OgeInterfaces::IParser, 
-                                   public OgeBase::OgeCore::Referenced
+      class OGE_OSG_EXPORT OsgParser : public OgeBase::OgeInterfaces::IParser, 
+                                       public OgeBase::OgeCore::Referenced
       {
         public: 
 

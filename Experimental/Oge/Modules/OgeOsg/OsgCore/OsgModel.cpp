@@ -1,7 +1,5 @@
 
-#ifdef USE_OSG
-
-#include "Oge/OgeOsg/OsgCore/OsgModel.h" 
+#include "OgeOsg/OsgCore/OsgModel.h" 
 
 namespace Oge
 {
@@ -94,6 +92,4 @@ namespace Oge
     }
   }
 }
-
-#endif // USE_OSG
 

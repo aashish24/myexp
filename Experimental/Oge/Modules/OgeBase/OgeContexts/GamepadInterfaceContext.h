@@ -2,18 +2,18 @@
 #ifndef __DEFAULT_INTERFACE_CONTEXT_H__
 #define __DEFAULT_INTERFACE_CONTEXT_H__
 
-#include "Oge/Export.h"
+#include "OgeBase/Export.h"
 
-#include "Oge/OgeBase/OgeCore/InputCallback.h"
+#include "OgeBase/OgeCore/InputCallback.h"
 
 
-#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
-#include "Oge/OgeBase/OgeInterfaces/IViewer.h"
-#include "Oge/OgeBase/OgeInterfaces/IInput.h"
-#include "Oge/OgeBase/OgeInterfaces/IInputDevice.h"
-#include "Oge/OgeBase/OgeInterfaces/IInterfaceContext.h"
+#include "OgeBase/OgeInterfaces/IUnknown.h"
+#include "OgeBase/OgeInterfaces/IViewer.h"
+#include "OgeBase/OgeInterfaces/IInput.h"
+#include "OgeBase/OgeInterfaces/IInputDevice.h"
+#include "OgeBase/OgeInterfaces/IInterfaceContext.h"
 
-#include "Oge/OgeBase/OgeCore/Camera.h"
+#include "OgeBase/OgeCore/Camera.h"
 
 
 namespace Oge

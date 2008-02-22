@@ -2,11 +2,11 @@
 #ifndef __OSG_MODEL_H__
 #define __OSG_MODEL_H__
 
-#include "Oge/Export.h"
+#include "OgeOsg/Export.h"
 
-#include "Oge/OgeBase/OgeCore/Model.h"
+#include "OgeBase/OgeCore/Model.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IOsgScene.h"
+#include "OgeBase/OgeInterfaces/IOsgScene.h"
 
 #include "osg/Node"
 #include "osg/Group"
@@ -18,7 +18,7 @@ namespace Oge
   {
     namespace OsgCore
     {
-      class OGE_EXPORT OsgModel : 
+      class OGE_OSG_EXPORT OsgModel : 
         public OgeBase::OgeCore::Model, 
         public OgeBase::OgeInterfaces::IOsgScene
       {

@@ -2,11 +2,11 @@
 #ifndef __OSG_CAMERA_H__
 #define __OSG_CAMERA_H__
 
-#include "Oge/Export.h"
+#include "OgeOsg/Export.h"
 
-#include "Oge/OgeBase/OgeCore/Camera.h"
+#include "OgeBase/OgeCore/Camera.h"
 
-#include "Oge/OgeOsg/OsgCore/UpdateNavigation.h"
+#include "OgeOsg/OsgCore/UpdateNavigation.h"
 
 #include "osg/NodeCallback"
 #include "osg/Node"
@@ -31,7 +31,7 @@ namespace Oge
       };
 
 
-      class OGE_EXPORT OsgCamera : public OgeBase::OgeCore::Camera, public osg::MatrixTransform 
+      class OGE_OSG_EXPORT OsgCamera : public OgeBase::OgeCore::Camera, public osg::MatrixTransform 
       {
         public: 
           

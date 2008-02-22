@@ -2,7 +2,7 @@
 #ifndef __OGE_CORE_POINTER_H__
 #define __OGE_CORE_POINTER_H__
 
-#include "Oge/OgeBase/OgeCore/SmartPointer.h"
+#include "OgeBase/OgeCore/SmartPointer.h"
 
 namespace Oge
 {

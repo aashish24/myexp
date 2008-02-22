@@ -2,9 +2,9 @@
 #ifndef __OSG_VIEW_H__
 #define __OSG_VIEW_H__
 
-#include "Oge/OgeBase/OgeCore/View.h"
+#include "OgeBase/OgeCore/View.h"
 
-#include "Oge/OgeOsg/OsgCore/OsgModel.h"
+#include "OgeOsg/OsgCore/OsgModel.h"
 
 #include "osgUtil/SceneView"
 
@@ -14,7 +14,7 @@ namespace Oge
   {
     namespace OsgCore
     {
-      class OGE_EXPORT OsgView : public OgeBase::OgeCore::View
+      class OGE_OSG_EXPORT OsgView : public OgeBase::OgeCore::View
       {
         public: 
         

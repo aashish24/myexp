@@ -1,5 +1,5 @@
 
-#include "Oge/OgeBase/OgeCore/MemberFunctor.h"
+#include "OgeBase/OgeCore/MemberFunctor.h"
 
 namespace Oge
 {

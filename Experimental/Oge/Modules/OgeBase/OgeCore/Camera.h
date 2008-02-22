@@ -2,12 +2,12 @@
 #ifndef  __OGE_CORE_CAMERA_H__
 #define  __OGE_CORE_CAMERA_H__
 
-#include "Oge/Export.h"
+#include "OgeBase/Export.h"
 
-#include "Oge/OgeBase/OgeInterfaces/ICamera.h"
+#include "OgeBase/OgeInterfaces/ICamera.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
-#include "Oge/OgeBase/OgeCore/Pointer.h"
+#include "OgeBase/OgeCore/Referenced.h"
+#include "OgeBase/OgeCore/Pointer.h"
 
 #include "gmtl/Math.h"
 #include "gmtl/Vec.h"
@@ -24,7 +24,7 @@ namespace Oge
   {
     namespace OgeCore
     {
-      class OGE_EXPORT Camera : 
+      class OGE_BASE_EXPORT Camera : 
         public OgeBase::OgeInterfaces::ICamera, 
         public OgeBase::OgeCore::Referenced
       {

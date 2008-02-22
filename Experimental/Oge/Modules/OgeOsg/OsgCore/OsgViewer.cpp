@@ -1,10 +1,8 @@
 
-#ifdef USE_OSG
-
-#include "Oge/OgeOsg/OsgCore/OsgViewer.h"
-#include "Oge/OgeOsg/OsgCore/OsgModel.h"
-#include "Oge/OgeOsg/OsgCore/OsgView.h"
-#include "Oge/OgeOsg/OsgCore/OsgParser.h"
+#include "OgeOsg/OsgCore/OsgViewer.h"
+#include "OgeOsg/OsgCore/OsgModel.h"
+#include "OgeOsg/OsgCore/OsgView.h"
+#include "OgeOsg/OsgCore/OsgParser.h"
 
 #include "osg/MatrixTransform"
 #include "osgUtil/SceneView"
@@ -130,5 +128,3 @@ namespace Oge
     } 
   } 
 } 
-
-#endif // USE_OSG

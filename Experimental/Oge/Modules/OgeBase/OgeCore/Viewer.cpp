@@ -1,8 +1,8 @@
 
-#include "Oge/OgeBase/OgeCore/Viewer.h"
-#include "Oge/OgeBase/OgeCore/View.h"
+#include "OgeBase/OgeCore/Viewer.h"
+#include "OgeBase/OgeCore/View.h"
 
-#include "oge/OgeBase/OgeInterfaces/IInputDevice.h"
+#include "OgeBase/OgeInterfaces/IInputDevice.h"
 
 namespace Oge
 {
@@ -11,7 +11,7 @@ namespace Oge
     namespace OgeCore
     {
 
-      Viewer::Viewer( int argc, char** argv, ViewerMode mode, IView* view, IModel* model ) :         
+      Viewer::Viewer( int argc, char** argv, Mode mode, IView* view, IModel* model ) :         
         _viewportX                ( 0 ), 
         _viewportY                ( 0 ), 
         _viewportWidth            ( 400 ), 

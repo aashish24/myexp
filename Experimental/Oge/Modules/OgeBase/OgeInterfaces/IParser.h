@@ -2,8 +2,8 @@
 #ifndef __OGE_INTERFACES_I_PARSER_H__
 #define __OGE_INTERFACES_I_PARSER_H__
 
-#include "Oge/Export.h"
-#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
+#include "OgeBase/Export.h"
+#include "OgeBase/OgeInterfaces/IUnknown.h"
 
 #include <string>
 
@@ -15,7 +15,7 @@ namespace Oge
     {
       class IModel;
 
-      class OGE_EXPORT IParser : public IUnknown
+      class IParser : public IUnknown
       {
         public: 
           

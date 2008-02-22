@@ -1,8 +1,6 @@
 
-#ifdef USE_OSG
-
-#include "Oge/OgeOsg/OsgCore/OsgView.h"
-#include "Oge/OgeBase/OgeInterfaces/IOsgScene.h"
+#include "OgeOsg/OsgCore/OsgView.h"
+#include "OgeBase/OgeInterfaces/IOsgScene.h"
 
 namespace Oge
 {
@@ -41,6 +39,4 @@ namespace Oge
     }
   }
 }
-
-#endif // USE_OSG
 

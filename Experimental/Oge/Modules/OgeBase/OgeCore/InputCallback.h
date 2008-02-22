@@ -2,12 +2,12 @@
 #ifndef __OGE_CORE_INPUT_CALLBACK_H__
 #define __OGE_CORE_INPUT_CALLBACK_H__
 
-#include "Oge/Export.h"
+#include "OgeBase/Export.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IInputCallback.h"
-#include "Oge/OgeBase/OgeInterfaces/IInput.h"
+#include "OgeBase/OgeInterfaces/IInputCallback.h"
+#include "OgeBase/OgeInterfaces/IInput.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
+#include "OgeBase/OgeCore/Referenced.h"
 
 namespace Oge 
 {
@@ -15,7 +15,7 @@ namespace Oge
   {  
     namespace OgeCore
     {
-      struct OGE_EXPORT InputCallback : 
+      struct OGE_BASE_EXPORT InputCallback : 
         public OgeBase::OgeInterfaces::IInputCallback, 
         public OgeBase::OgeCore::Referenced
       {

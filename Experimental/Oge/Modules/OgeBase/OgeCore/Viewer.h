@@ -2,17 +2,17 @@
 #ifndef __OGE_CORE_VIEWER_H__
 #define __OGE_CORE_VIEWER_H__
 
-#include "Oge/Export.h"
+#include "OgeBase/Export.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
-#include "Oge/OgeBase/OgeInterfaces/IFindNode.h"
-#include "Oge/OgeBase/OgeInterfaces/IView.h"
-#include "Oge/OgeBase/OgeInterfaces/IModel.h"
-#include "Oge/OgeBase/OgeInterfaces/IViewer.h"
-#include "Oge/OgeBase/OgeInterfaces/IInputDevice.h"
+#include "OgeBase/OgeInterfaces/IUnknown.h"
+#include "OgeBase/OgeInterfaces/IFindNode.h"
+#include "OgeBase/OgeInterfaces/IView.h"
+#include "OgeBase/OgeInterfaces/IModel.h"
+#include "OgeBase/OgeInterfaces/IViewer.h"
+#include "OgeBase/OgeInterfaces/IInputDevice.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
-#include "Oge/OgeBase/OgeCore/Pointer.h"
+#include "OgeBase/OgeCore/Referenced.h"
+#include "OgeBase/OgeCore/Pointer.h"
 
 #include <map>
 #include <vector>
@@ -40,7 +40,7 @@ namespace Oge
       //  
       /////////////////////////////////////////////////////////////////////////
 
-      class OGE_EXPORT Viewer : 
+      class OGE_BASE_EXPORT Viewer : 
         public Oge::OgeBase::OgeInterfaces::IViewer,         
         public Oge::OgeBase::OgeCore::Referenced
       {
@@ -54,7 +54,7 @@ namespace Oge
             typedef Oge::OgeBase::OgeInterfaces::IModel   IModel;
             typedef Oge::OgeBase::OgeInterfaces::IView    IView;
             
-            Viewer( int argc = 0, char** argv = 0, ViewerMode vMode = REGULAR,
+            Viewer( int argc = 0, char** argv = 0, Mode mode = REGULAR,
                     IView* view = 0x00, IModel* model = 0x00 );                                                              
 
 
@@ -101,7 +101,7 @@ namespace Oge
           //--------------------------------------------------------
 
           // This is ok. 
-          ViewerMode                                          _viewerMode;
+          Mode                                                 _viewerMode;
 
           IView::RefPtr                                       _view;
           IModel::RefPtr                                      _model;

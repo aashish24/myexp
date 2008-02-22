@@ -2,7 +2,7 @@
 #ifndef __OGE_INTERFACES_I_UNKNOWN_H__
 #define __OGE_INTERFACES_I_UNKNOWN_H__
 
-#include "Oge/OgeBase/OgeCore/Pointer.h"
+#include "OgeBase/OgeCore/Pointer.h"
 
 namespace Oge
 { 

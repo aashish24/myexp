@@ -40,8 +40,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\;$(OSG_INC_DIR);$(VJ_BASE_DIR)\include;$(GMTL_INC_DIR);$(CPPDOM_INC_DIR);$(NSPR_INC_DIR);$(BOOST_INC_DIR);"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;OGE_BUILD_SHARED_LIBRARY;USE_OSG;"
+				AdditionalIncludeDirectories=".\..\;$(OSG_INC_DIR);$(VJ_BASE_DIR)\include;$(GMTL_INC_DIR);$(CPPDOM_INC_DIR);$(NSPR_INC_DIR);$(BOOST_INC_DIR);"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;OGE_OSG_BUILD_SHARED_LIBRARY;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -62,12 +62,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="cppdom_d-0_7_10.lib osgd.lib osgUtild.lib osgViewerd.lib opengl32.lib"
-				OutputFile=".\bin\Oge_d.dll"
+				OutputFile=".\..\..\bin\OgeOsg_d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(CPPDOM_LIB_DIR);$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="1"
-				ImportLibrary="./bin/Oge_d.lib"
+				ImportLibrary=".\..\..\bin\OgeOsg_d.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -121,7 +121,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories=".\;$(OSG_INC_DIR);$(VJ_BASE_DIR)\include;$(GMTL_INC_DIR);$(CPPDOM_INC_DIR);$(NSPR_INC_DIR);$(BOOST_INC_DIR);"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;OGE_BUILD_SHARED_LIBRARY;USE_OSG;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;OGE_OSG_BUILD_SHARED_LIBRARY;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -140,14 +140,14 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="osg.lib osgUtil.lib osgViewer.lib opengl32.lib"
-				OutputFile="./bin/Oge.dll"
+				OutputFile=".\..\..\bin\OgeOsg.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary="./bin/Oge.lib"
+				ImportLibrary=".\..\..\bin\OgeOsg.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -184,53 +184,53 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<Filter
-				Name="OgeOsg"
+			<File
+				RelativePath=".\Export.h"
 				>
-				<Filter
-					Name="OsgCore"
+			</File>
+			<Filter
+				Name="OsgCore"
+				>
+				<File
+					RelativePath=".\OsgCore\OsgCamera.cpp"
 					>
-					<File
-						RelativePath=".\Oge\OgeOsg\OsgCore\OsgCamera.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Oge\OgeOsg\OsgCore\OsgCamera.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Oge\OgeOsg\OsgCore\OsgModel.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Oge\OgeOsg\OsgCore\OsgModel.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Oge\OgeOsg\OsgCore\OsgParser.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Oge\OgeOsg\OsgCore\OsgParser.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Oge\OgeOsg\OsgCore\OsgView.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Oge\OgeOsg\OsgCore\OsgView.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Oge\OgeOsg\OsgCore\OsgViewer.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Oge\OgeOsg\OsgCore\OsgViewer.h"
-						>
-					</File>
-				</Filter>
+				</File>
+				<File
+					RelativePath=".\OsgCore\OsgCamera.h"
+					>
+				</File>
+				<File
+					RelativePath=".\OsgCore\OsgModel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OsgCore\OsgModel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\OsgCore\OsgParser.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OsgCore\OsgParser.h"
+					>
+				</File>
+				<File
+					RelativePath=".\OsgCore\OsgView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OsgCore\OsgView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\OsgCore\OsgViewer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OsgCore\OsgViewer.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>

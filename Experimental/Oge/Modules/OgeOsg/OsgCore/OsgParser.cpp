@@ -1,8 +1,8 @@
 
-#include "Oge/OgeOsg/OsgCore/OsgParser.h"
-#include "Oge/OgeOsg/OsgCore/OsgModel.h"
+#include "OgeOsg/OsgCore/OsgParser.h"
+#include "OgeOsg/OsgCore/OsgModel.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
+#include "OgeBase/OgeInterfaces/IUnknown.h"
 
 namespace Oge
 {
@@ -14,6 +14,7 @@ namespace Oge
       {
         return 0x00;
       } 
+
 
       float OsgParser::convert( const std::string& data )
       {

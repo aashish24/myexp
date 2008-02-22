@@ -2,18 +2,18 @@
 #ifndef __TRACKER_INTERFACE_CONTEXT_H__
 #define __TRACKER_INTERFACE_CONTEXT_H__
 
-#include "Oge/Export.h"
+#include "OgeBase/Export.h"
 
-#include "Oge/OgeBase/OgeCore/InputCallback.h"
+#include "OgeBase/OgeCore/InputCallback.h"
 
 
-#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
-#include "Oge/OgeBase/OgeInterfaces/IViewer.h"
-#include "Oge/OgeBase/OgeInterfaces/IInput.h"
-#include "Oge/OgeBase/OgeInterfaces/IInputDevice.h"
-#include "Oge/OgeBase/OgeInterfaces/IInterfaceContext.h"
+#include "OgeBase/OgeInterfaces/IUnknown.h"
+#include "OgeBase/OgeInterfaces/IViewer.h"
+#include "OgeBase/OgeInterfaces/IInput.h"
+#include "OgeBase/OgeInterfaces/IInputDevice.h"
+#include "OgeBase/OgeInterfaces/IInterfaceContext.h"
 
-#include "Oge/OgeBase/OgeCore/Camera.h"
+#include "OgeBase/OgeCore/Camera.h"
 
 
 namespace Oge
@@ -26,7 +26,7 @@ namespace Oge
       // Or able to switch between the contexts.. 
       // Also the question would be whether a context can handle more than 
       // one input device? I think 
-      class TrackerInterfaceContext : 
+      class OGE_BASE_EXPORT TrackerInterfaceContext : 
         public OgeBase::OgeInterfaces::IInterfaceContext, 
         public OgeBase::OgeCore::Referenced
       {

@@ -2,12 +2,12 @@
 #ifndef __OGE_CORE_EVENT_H__
 #define __OGE_CORE_EVENT_H__
 
-#include "Oge/Export.h"
+#include "OgeBase/Export.h"
 
-#include "Oge/OgeBase/OgeInterfaces/IEvent.h"
+#include "OgeBase/OgeInterfaces/IEvent.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
-#include "Oge/OgeBase/OgeCore/Pointer.h"
+#include "OgeBase/OgeCore/Referenced.h"
+#include "OgeBase/OgeCore/Pointer.h"
 
 namespace Oge
 {
@@ -15,7 +15,7 @@ namespace Oge
   {
     namespace OgeCore
     {
-      struct OGE_EXPORT Event : public OgeBase::OgeInterfaces::IEvent, 
+      struct OGE_BASE_EXPORT Event : public OgeBase::OgeInterfaces::IEvent, 
                                 public OgeBase::OgeCore::Referenced
       {
         OGE_DELCARE_SMART_PTR( Event );

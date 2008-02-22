@@ -2,7 +2,7 @@
 #ifndef __OGE_INTERFACES_I_MODEL_H__
 #define __OGE_INTERFACES_I_MODEL_H__
 
-#include "Oge/OgeBase/OgeInterfaces/IUnknown.h"
+#include "OgeBase/OgeInterfaces/IUnknown.h"
 
 namespace Oge
 { 

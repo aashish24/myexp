@@ -2,10 +2,12 @@
 #ifndef __OGE_CORE_MODEL_H__
 #define __OGE_CORE_MODEL_H__
 
-#include "Oge/OgeBase/OgeInterfaces/IModel.h"
-#include "Oge/OgeBase/OgeInterfaces/IView.h"
+#include "OgeBase/OgeInterfaces/IModel.h"
+#include "OgeBase/OgeInterfaces/IView.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
+#include "OgeBase/OgeCore/Referenced.h"
+
+#include "OgeBase/Export.h"
 
 #include <vector>
 
@@ -15,7 +17,7 @@ namespace Oge
   {
     namespace OgeCore
     {
-      class Model : 
+      class OGE_BASE_EXPORT Model : 
         public OgeBase::OgeInterfaces::IModel,
         public OgeBase::OgeCore::Referenced
       {

@@ -1,5 +1,5 @@
 
-#include "Oge/OgeBase/OgeCore/BaseViewer.h"
+#include "OgeBase/OgeCore/BaseViewer.h"
 
 #include <algorithm>
 
