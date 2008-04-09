@@ -147,6 +147,7 @@ namespace Msg
 			  glNewList( globj, GL_COMPILE );
 				  drawImplementation();
 			  glEndList();
+        glCallList( globj );
 		  }
 		  return;
 	  }   
