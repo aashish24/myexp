@@ -6,6 +6,7 @@
 #include "ShaderFactory.h"
 
 #include "MsgCore/Node.h"
+#include "MsgCore/Group.h"
 #include "MsgCore/NodeVisitor.h"
 #include "MsgDB/FileRead.h"
 
@@ -61,10 +62,10 @@ namespace Project2
 
     // Initialize shaders now. 
     _shader = ShaderFactory::instance()->create( "PhongShader" );
-    _shader->set();
+    _shader->apply( _root.get() );
 
     // Load data and build scene graph.
-    Msg:: MsgCore::SmartPtr< Msg::MsgCore::Node > node = Msg::MsgDB::FileRead::readFile( "./Data/Models/bunnyUVW.obj", false );
+    Msg::MsgCore::SmartPtr< Msg::MsgCore::Node > node = Msg::MsgDB::FileRead::readFile( "./Data/Models/bunnyUVW.obj", false );
 
     if( node.valid() )
     {

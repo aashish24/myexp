@@ -2,6 +2,14 @@
 #ifndef __PROJECT2_SHADER_H__
 #define __PROJECT2_SHADER_H__
 
+namespace Msg
+{
+  namespace MsgCore
+  {
+    class Node; 
+  }
+}
+
 namespace Project2
 {
   class Shader 
@@ -14,7 +22,7 @@ namespace Project2
       // 
       /////////////////////////////////////////////////////////////////////////
 
-      virtual void set() = 0;     
+      virtual void apply( Msg::MsgCore::Node* node ) = 0;     
   };
 }
 

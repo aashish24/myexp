@@ -16,9 +16,9 @@ namespace Project2
   }
 
 
-  void PhongShader::set()
+  void PhongShader::apply( Msg::MsgCore::Node* node )
   {
-    this->setShader( "./Data/Shaders/PhongShading.vert", "./Data/Shaders/PhongShading.frag" );
+    this->setShader( "./Data/Shaders/PhongShader.vert", "./Data/Shaders/PhongShader.frag" );
   }
 
 
@@ -29,10 +29,10 @@ namespace Project2
     delete shUtil;
   }
 
-  Shader* create()
+  Shader* createPhongShader()
   {
     return new PhongShader();
   }
 
-  bool val = ShaderFactory::instance()->registerCreator( "PhongShader", create );
+  static bool val = ShaderFactory::instance()->registerCreator( "PhongShader", createPhongShader );
 }

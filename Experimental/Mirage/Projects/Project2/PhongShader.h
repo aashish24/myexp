@@ -1,6 +1,6 @@
 
-#ifndef __PHONG_SHADER_H__
-#define __PHONG_SHADER_H__
+#ifndef __PROJECT2_PHONG_SHADER_H__
+#define __PROJECT2_PHONG_SHADER_H__
 
 #ifdef _MSC_VER
 #include <windows.h>
@@ -13,8 +13,16 @@
 
 #include <string >
 
-namespace Project2 
+namespace Msg
 {
+  namespace MsgCore
+  {
+    class Node;
+  }
+}
+
+namespace Project2 
+{  
   /////////////////////////////////////////////////////////////////////////////
   //
   // Class that implement Phong Shading. 
@@ -51,7 +59,7 @@ namespace Project2
       // 
       /////////////////////////////////////////////////////////////////////////
 
-      void          set();
+      void          apply( Msg::MsgCore::Node* node );
 
 
       /////////////////////////////////////////////////////////////////////////
@@ -69,4 +77,4 @@ namespace Project2
   };  
 }
 
-#endif // __PHONG_SHADER_H__
+#endif // __PROJECT2_PHONG_SHADER_H__
