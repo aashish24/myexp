@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(GLEW_INC_DIR)"
+				AdditionalIncludeDirectories="$(GLEW_INC_DIR);..\..\Msg\Modules;..\..\Smtl\Modules;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,6 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glew32d.lib"
+				OutputFile="../../bin/$(ProjectName)d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
 				GenerateDebugInformation="true"
@@ -190,15 +191,27 @@
 				>
 			</File>
 			<File
-				RelativePath=".\PhongShading.cpp"
+				RelativePath=".\PhongShader.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\PhongShading.h"
+				RelativePath=".\PhongShader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Shader.h"
 				>
 			</File>
 			<File
 				RelativePath=".\ShaderDebug.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ShaderFactory.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ShaderFactory.h"
 				>
 			</File>
 			<File
@@ -207,6 +220,14 @@
 			</File>
 			<File
 				RelativePath=".\ShadersUtil.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TextFile.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TextFile.h"
 				>
 			</File>
 		</Filter>

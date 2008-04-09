@@ -7,14 +7,27 @@
 #include "GL/gl.h"
 #include "GL/glut.h"
 
+#include "App.h"
+
+// Application object. 
+Project2::App _gApp;
+
 void display()
 {
+  _gApp.display();
   glutSwapBuffers();
+}
+
+
+void reshape( int w, int h )
+{
+  _gApp.reshape( w, h );
 }
 
 
 void init()
 {
+  _gApp.init();
 }
 
 
@@ -28,6 +41,12 @@ int main( int argc, char** argv )
   // Application initialization function. 
   init(); 
 
+  // Set display function. 
   glutDisplayFunc( display );
+
+  // Reshape function.
+  glutReshapeFunc( reshape );
+
+  // Run the loop. 
   glutMainLoop();
 }

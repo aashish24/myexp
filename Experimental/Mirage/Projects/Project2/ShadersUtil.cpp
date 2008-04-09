@@ -2,7 +2,9 @@
 #include "ShadersUtil.h"
 #include "ShaderDebug.h"
 
-namespace Project
+#include "TextFile.h"
+
+namespace Project2
 {
   ShadersUtil::ShadersUtil()
   {
@@ -14,7 +16,7 @@ namespace Project
   }
 
 
-  GLint ShadersUtil::setShaders( const std::string &vert, const std::string &frag )
+  GLint ShadersUtil::setAndLoadShaders( const std::string &vert, const std::string &frag )
   {
     if( vert.empty() && frag.empty() )
     {
@@ -25,9 +27,9 @@ namespace Project
     GLint vertexShader    = glCreateShader( GL_VERTEX_SHADER ); 
   	GLint fragmentShader  = glCreateShader( GL_FRAGMENT_SHADER );	
     GLint program         = glCreateProgram();	
-	
-    const char* vs = vert.c_str();
-    const char* fs = frag.c_str();
+
+    const char* vs = textFileRead( _strdup( vert.c_str() ) );
+    const char* fs = textFileRead( _strdup( frag.c_str() ) );
 
 	  glShaderSource( vertexShader, 1, &vs, NULL );
 	  glShaderSource( fragmentShader, 1, &fs, NULL );
