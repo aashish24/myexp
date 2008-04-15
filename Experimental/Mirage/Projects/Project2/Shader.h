@@ -22,7 +22,11 @@ namespace Project2
       // 
       /////////////////////////////////////////////////////////////////////////
 
+      virtual GLint program() const = 0;
+
       virtual void apply( Msg::MsgCore::Node* node ) = 0;     
+
+      virtual void draw() = 0;
   };
 }
 

@@ -2,6 +2,9 @@
 #include "MsgCore/Geometry.h"
 #include "MsgCore/PrimitiveSet.h"
 
+#include "GL/glew.h"
+#include "GL/gl.h"
+
 #include <map>
 #include <vector>
 
@@ -12,90 +15,132 @@ Geometry::Geometry() :
 {
 }
 
+
 Geometry::Geometry( const Geometry& geom ) :
 	mAttrBinding( Geometry::BIND_PER_VERTEX )
 {
 }
+
 
 Vec3Array* Geometry::getVertexArray()
 {	
 	return mVertices.get();
 }
 
+
 void Geometry::setVertexArray( Vec3Array* vArray )
 {
 	mVertices = vArray;
 }
+
 
 Vec3Array* Geometry::getNormalArray()
 {
 	return mNormals.get();
 }
 
+
 void Geometry::setNormalArray(  Vec3Array* nArray )
 {
 	mNormals = nArray;
 }
+
 
 Vec3Array* Geometry::getTexCoordArray()
 {
 	return mTexCoords.get();
 }
 
+
 void Geometry::setTexCoordArray( Vec3Array* texCoordArray )
 {
 	mTexCoords = texCoordArray;
 }
-				
+
+
 Vec4Array* Geometry::getColorArray()
 {
 	return mColors.get();
 }
+
 
 void Geometry::setColorArray( Vec4Array* colorArray )
 {
 	mColors = colorArray;
 }
 
+
+Vec3Array* Geometry::getTangentArray() 
+{
+  return mTangets.get();
+}
+
+
+void Geometry::setTangetArray( Vec3Array* tangentArray )
+{
+  mTangets = tangentArray;
+}
+
+
+Vec3Array* Geometry::getBinormalArray() 
+{
+  return mBinormals.get();
+}
+
+
+void Geometry::setBinormalArray( Vec3Array* binormalArray )
+{
+  mBinormals = binormalArray;
+}
+
+
 Geometry::AttributeBinding Geometry::getAttrBinding()
 {
 	return mAttrBinding;
 }
+
 
 void Geometry::setAttrBinding( const Geometry::AttributeBinding& attrBinding )
 {
 	mAttrBinding = attrBinding;
 }
 
+
 Vec3iArray* Geometry::getVertexIndices()
 {
 	return mVertexIndices.get();
 }
+
 
 void Geometry::setVertexIndices( Vec3iArray* viArray )
 {
 	mVertexIndices = viArray;
 }
 
+
 Vec3iArray* Geometry::getNormalIndices()
 {
 	return mNormalIndices.get();
 }
+
 
 void Geometry::setNormalIndices( Vec3iArray* niArray )
 {
 	mNormalIndices = niArray;
 }
 
+
 Vec3iArray* Geometry::getTextureIndices()
 {
   return mTextureIndices.get();
 }
 
+
 void Geometry::setTextureIndices( Vec3iArray* niArray )
 {
   mTextureIndices = niArray;
 }
+
 
 void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 {
@@ -180,6 +225,7 @@ void Geometry::addPrimitiveSet( PrimitiveSet* primitiveSet )
 	mPrimitiveSets.push_back( primitiveSet );
 }
 
+
 void Geometry::drawImplementation() const
 {
 	glBegin( GL_TRIANGLES );
@@ -247,6 +293,16 @@ void Geometry::drawImplementation() const
 		}
 	}
 	glEnd();
+
+  if( mTangets.valid() )
+  {
+     //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, mTangets->getDataPointer() );        
+  }
+
+  if( mBinormals.valid() )
+  {
+    //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, mBinormals->getDataPointer() ); 
+  }
 
 
 	/*

@@ -65,9 +65,11 @@ namespace Msg
 
 				virtual void traverse( NodeVisitor& nv );
 
+
 			protected:
 				virtual ~Group()
 				{}
+
 
 			protected:
 				Children mChildren;

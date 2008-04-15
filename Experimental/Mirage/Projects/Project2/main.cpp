@@ -37,15 +37,15 @@ int main( int argc, char** argv )
   glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
   glutInitWindowSize( 800, 800 );
   glutCreateWindow( "Project 2" ); 
-
-  // Application initialization function. 
-  init(); 
-
+ 
   // Set display function. 
   glutDisplayFunc( display );
 
   // Reshape function.
   glutReshapeFunc( reshape );
+
+  // Application initialization function. 
+  init(); 
 
   // Run the loop. 
   glutMainLoop();

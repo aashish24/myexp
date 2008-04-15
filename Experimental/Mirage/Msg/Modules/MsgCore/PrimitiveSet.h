@@ -130,6 +130,7 @@ namespace Msg
 					return mType;
 				}
 
+
 				GLenum getMode()
 				{
 					return mMode;
@@ -148,6 +149,7 @@ namespace Msg
 				Type	mType;				
 		};
 
+
 		class MSG_EXPORT DrawElementsUByte : public PrimitiveSet, public VectorGLubyte 
 		{
 			public:
@@ -156,15 +158,18 @@ namespace Msg
 				{
 				}
 
+
 				DrawElementsUByte( const DrawElementsUByte& drawElemUByte ) :
 					PrimitiveSet( drawElemUByte )
 				{
 				}
 
+
 				virtual void draw() const 
 				{
 					glDrawElements( mMode, ( GLsizei )size(), mType,  &front() );
 				}
+
 		
 				virtual size_t getSize() const
 				{
@@ -177,6 +182,7 @@ namespace Msg
 				}
 
 		};
+
 
 		class MSG_EXPORT DrawElementsUShort : public PrimitiveSet, public VectorGLushort 
 		{
@@ -191,6 +197,7 @@ namespace Msg
 				{
 				}
 
+
 				virtual void draw() const 
 				{
 					glDrawElements( mMode, ( GLsizei )size(), mType,  &front() );
@@ -201,11 +208,13 @@ namespace Msg
 				{
 					return size();
 				}
+
 			protected:
 				virtual ~DrawElementsUShort()
 				{
 				}
 		};
+
 
 		class MSG_EXPORT DrawElementUInt : public PrimitiveSet, public VectorGLuint 
 		{
@@ -215,10 +224,12 @@ namespace Msg
 				{
 				}
 
+
 				DrawElementUInt( const DrawElementUInt& drawElementUInt )
 					: PrimitiveSet( drawElementUInt )
 				{
 				}
+
 
 				virtual void draw() const 
 				{

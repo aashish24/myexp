@@ -16,16 +16,27 @@ namespace Project2
   }
 
 
+  GLint PhongShader::program() const
+  {
+    return _program;
+  }
+
+
   void PhongShader::apply( Msg::MsgCore::Node* node )
   {
     this->setShader( "./Data/Shaders/PhongShader.vert", "./Data/Shaders/PhongShader.frag" );
   }
 
 
-  void PhongShader::setShader( const std::string &vert, const std::string &frag )
+  void PhongShader::draw()
   {
+  }
+
+
+  void PhongShader::setShader( const std::string &vert, const std::string &frag )
+  {    
     ShadersUtil* shUtil = new ShadersUtil();
-    shUtil->setAndLoadShaders( vert, frag );
+    _program = shUtil->setAndLoadShaders( vert, frag );
     delete shUtil;
   }
 

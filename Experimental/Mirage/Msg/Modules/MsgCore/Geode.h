@@ -37,6 +37,7 @@ namespace Msg
 				{
 				}
 
+
 				virtual void addDrawable( Drawable* drawable )
 				{
 					mDrawables.push_back( drawable );
@@ -47,23 +48,28 @@ namespace Msg
 					// @Todo: implement this. 
 				}
 
+
 				virtual Drawable* getDrawable( const unsigned int& index )
 				{
 					assert( index < mDrawables.size() );
 					return mDrawables[index].get();
 				}
 
+
 				virtual DrawableList getDrawableList()
 				{
 					return mDrawables;
 				}
 
+
 				void compileDrawables();
+
 
 				const BoundingBox& getBoundingBox() const
 				{
 					return mBBox;
 				}		
+
 
 				virtual void traverse( NodeVisitor& nv );
 

@@ -23,14 +23,16 @@ namespace Project2
   {
     std::map< std::string, FPtr >::iterator itr = _creators.begin();
 
-    if( itr != _creators.end() )
+    while( itr != _creators.end() )
     {
-      return ( itr->second )();
+      if( itr->first == id )
+      {
+        return ( *( *itr ).second )();
+      }
+      ++itr;
     }
-    else
-    {
-      return 0x00;
-    }
+
+    return 0x00;
   }
 
 

@@ -34,7 +34,7 @@ namespace Msg
 				{
 					if( mMaterial.valid() )
 					{
-						glMaterialfv( GL_FRONT,	GL_AMBIENT,		
+						/*glMaterialfv( GL_FRONT,	GL_AMBIENT,		
 									  mMaterial->getAmbient().front() );
 						glMaterialfv( GL_FRONT,	GL_DIFFUSE,		
 									  mMaterial->getDiffuse().front() );
@@ -46,7 +46,7 @@ namespace Msg
 						glMaterialfv( GL_BACK,	GL_DIFFUSE,		
 									  mMaterial->getDiffuse( Material::BACK ).front() );
 						glMaterialfv( GL_BACK, GL_SPECULAR,	
-									  mMaterial->getSpecular( Material::BACK ).front() );
+									  mMaterial->getSpecular( Material::BACK ).front() );*/
 					}					
 				}
 	

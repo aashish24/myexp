@@ -16,6 +16,7 @@
 	#include <windows.h>
 #endif 
 
+#include "GL/glew.h"
 #include "GL/gl.h"
 
 using namespace Smtl;

@@ -32,6 +32,11 @@ namespace Msg
 
 				}
 
+        Array( size_t count ) : 
+        std::vector< T >( count ), 
+          _dataSize( SIZE )
+        {
+        }
 
 				virtual const GLvoid* getDataPointer() const
 				{
@@ -53,7 +58,7 @@ namespace Msg
 			
 			protected: 
 				
-        GLint	_dataSize;								
+        size_t	_dataSize;								
 		};
 	
 		// Typedefs. 

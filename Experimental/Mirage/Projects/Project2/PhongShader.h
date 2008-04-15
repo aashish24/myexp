@@ -52,6 +52,8 @@ namespace Project2
       virtual ~PhongShader();
 
 
+      GLint         program() const;
+
       /////////////////////////////////////////////////////////////////////////
       //
       // Calls setShader( const std::string& vert, const std::string& frag ).
@@ -61,6 +63,8 @@ namespace Project2
 
       void          apply( Msg::MsgCore::Node* node );
 
+
+      void          draw(); 
 
       /////////////////////////////////////////////////////////////////////////
       //

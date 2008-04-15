@@ -11,6 +11,8 @@
 
 #include "Shader.h"
 
+#include "MsgCore/Array.h"
+
 #include <string >
 
 namespace Msg
@@ -18,6 +20,7 @@ namespace Msg
   namespace MsgCore
   {
     class Node;
+    class Geometry;
   }
 }
 
@@ -59,7 +62,17 @@ namespace Project2
       // 
       /////////////////////////////////////////////////////////////////////////
 
+      GLint         program() const;
+
       void          apply( Msg::MsgCore::Node* node );
+
+      void          draw();
+
+      void          loadBumpMap( const std::string& filename );
+
+
+      void          calculateTBN( Msg::MsgCore::Geometry* geom, Msg::MsgCore::Vec3Array* tangent,
+                                  Msg::MsgCore::Vec3Array* binormal );
 
 
       /////////////////////////////////////////////////////////////////////////

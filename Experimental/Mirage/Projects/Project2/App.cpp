@@ -7,6 +7,8 @@
 
 #include "MsgCore/Node.h"
 #include "MsgCore/Group.h"
+#include "MsgCore/Geode.h"
+#include "MsgCore/Geometry.h"
 #include "MsgCore/NodeVisitor.h"
 #include "MsgDB/FileRead.h"
 
@@ -21,6 +23,9 @@ namespace Project2
 
   App::~App()
   {
+    // Delete current shader and free the memory ( as the shader is created using new operator ). 
+    delete _shader;
+    _shader = 0x00;
   }
 
 
@@ -56,24 +61,24 @@ namespace Project2
     
     // Initialize scene graph now. 
     _root = new Msg::MsgCore::Group();
-
-    // Initialize glew before any calls to compile shaders. 
-    glewInit();
-
-    // Initialize shaders now. 
-    _shader = ShaderFactory::instance()->create( "PhongShader" );
-    _shader->apply( _root.get() );
-
+    
     // Load data and build scene graph.
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Node > node = Msg::MsgDB::FileRead::readFile( "./Data/Models/bunnyUVW.obj", false );
+    Msg::MsgCore::SmartPtr< Msg::MsgCore::Node > node = Msg::MsgDB::FileRead::readFile( "./Data/Models/plane.obj", false );
 
     if( node.valid() )
     {
       _root->addChild( node.get() );
     }
+
+    // Glew initialization. 
+    glewInit();
+
+    // Initialize shaders now. 
+    _shader = ShaderFactory::instance()->create( "BumpMapShader" );
+    
+    _shader->apply( _root.get() );   
   }
-
-
+  
   
   void App::reshape( int w, int h )
   {  
@@ -89,15 +94,42 @@ namespace Project2
 
   void App::display()
   {
+    glPushMatrix();
     glClearColor( 0.5, 0.5, 0.5, 1.0 );
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 
     glMatrixMode( GL_MODELVIEW );   
     glLoadIdentity(); 
-    gluLookAt( 0.0, 0.0, 10.0, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f );   
+    gluLookAt( 0.0, 0.0, 20.0, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f );   
 
-    // Lets draw a bunny. 
-    _nodeVisitor->apply( *( _root.get() ) );
+    // Call shader draw here. 
+    _shader->draw();  
+
+    Msg::MsgCore::SmartPtr< Msg::MsgCore::Geode > ge = dynamic_cast< Msg::MsgCore::Geode* >( _root->getChild( 0 ) );
+    Msg::MsgCore::SmartPtr< Msg::MsgCore::Geometry > geom = dynamic_cast< Msg::MsgCore::Geometry* >( ge->getDrawable( 0 ) );
+
+    GLint program = _shader->program();
+
+    //GLint locT  = glGetAttribLocation( program, "tangent" );
+    ////glEnableVertexAttribArray( locT );
+    //glBindAttribLocation( program, locT, "tangent" );
+    //glVertexAttribPointer( locT, 3, GL_FLOAT, false, 0, geom->getTangentArray()->getDataPointer() );  
+
+    GLint locB  = glGetAttribLocation( program, "binormal" );
+    glEnableVertexAttribArray( locB );
+    //glBindAttribLocation( program, locB, "binormal" );
+    glVertexAttribPointer( locB, 3, GL_FLOAT, false, 0, geom->getBinormalArray()->getDataPointer() );  
+
+   // // Locate uniform for BumpMap sampler. 
+   // GLint loc = glGetUniformLocation( program, "test" ); 
+   // glUniform1f ( loc, 0.3 );  
+
+    _root->accept( *( _nodeVisitor ) );    
+
+   // glDisableVertexAttribArray( locB );
+   // glDisableVertexAttribArray( locT );
+
+    glPopMatrix();
   }
 
 

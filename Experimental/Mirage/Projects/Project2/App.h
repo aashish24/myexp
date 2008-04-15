@@ -47,7 +47,7 @@ namespace Project2
       
       virtual void  init(); 
       
-
+      
       /////////////////////////////////////////////////////////////////////////
       //
       // Funtion to handle correct aspect based off Window width and height. 
