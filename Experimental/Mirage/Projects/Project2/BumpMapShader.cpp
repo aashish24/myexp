@@ -135,10 +135,13 @@ namespace Project2
 
     Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > tan1 = new Msg::MsgCore::Vec3Array( vertices->size() );
     Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > tan2 = new Msg::MsgCore::Vec3Array( vertices->size() );
-
+    
     // For this algorithm see "Mathematics for 3D Game Programming & Computer Graphics", 
     // Section 6.8.3.
-    for( size_t i = 0; i < ( vertices->size() ); ++i )
+    // @Precondition: 
+    // Geometry has indices which defines how many faces / triangles are 
+    // there in the geometry. 
+    for( size_t i = 0; i < ( indices->size()  ); ++i )
     {
       long i1 = indices->at( i )[0];
       long i2 = indices->at( i )[1];
@@ -158,17 +161,22 @@ namespace Project2
       float t2 = texcoords->at( i1 )[1] - texcoords->at( i1 )[1];          
 
       float denom = 1.0f / ( s2 * t2 - s2 * t1 );
-
-      // Flag to check if we need to average the tangents and binormals. 
-      bool doAvg = false;
-
+      
       if ( denom > -0.001 || denom < 0.001 ) 
-      {
-        // We won't risk a divide by zero, so set the tangent matrix to the
-        // identity matrix. 
-        tangent->push_back( Vec3f( 1.0f, 0.0f, 0.0f ) );
-        binormal->push_back( Vec3f( 0.0f, 1.0f, 0.0f ) );
-        normals->push_back( Vec3f( 0.0f, 0.0f, 1.0f ) );
+      {        
+        Vec3f T, B;
+
+        T = Vec3f( 1.0f, 0.0f, 0.0f );
+        B = Vec3f( 0.0f, 1.0f, 0.0f );
+
+        tan1->at( i1 ) = tan1->at( i1 ) + T;
+        tan1->at( i2 ) = tan1->at( i2 ) + T;
+        tan1->at( i3 ) = tan1->at( i3 ) + T;
+        
+        tan2->at( i1 ) = tan2->at( i1 ) + B;
+        tan2->at( i2 ) = tan2->at( i2 ) + B;
+        tan2->at( i3 ) = tan2->at( i3 ) + B;
+       
       }
       else
       {
@@ -181,39 +189,34 @@ namespace Project2
         tan1->at( i2 ) = tan1->at( i2 ) + T;
         tan1->at( i3 ) = tan1->at( i3 ) + T;
 
-        tan2->at( i1 ) = tan2->at( i1 ) + T;
-        tan2->at( i2 ) = tan2->at( i2 ) + T;
-        tan2->at( i3 ) = tan2->at( i3 ) + T;
-
-        doAvg = true;        
+        tan2->at( i1 ) = tan2->at( i1 ) + B;
+        tan2->at( i2 ) = tan2->at( i2 ) + B;
+        tan2->at( i3 ) = tan2->at( i3 ) + B;       
       }
+    }
 
-      if( doAvg )
-      {
-        for( size_t i = 0; i < ( vertices->size() ); ++i )
-        {
-          Vec3f& n = normals->at( i );
-          Vec3f& t = tan1->at( i );
-          Vec3f& b = tan2->at( i );
+    // Now average and orthogonalize the vectors. 
+    // 1. tangents. 
+    // 2. binormals. 
+    for( size_t i = 0; i < ( vertices->size() ); ++i )
+    {
+      Vec3f& n = normals->at( i );
+      Vec3f& t = tan1->at( i );
+      Vec3f& b = tan2->at( i );
 
-          Vec3f tan3v = ( ( t - n * n.dot( t ) ) );
-          //Vec4f tan4v = Vec4f( tan3v[0], tan3v[1], tan3v[2], 1.0 ); 
-          tan3v.normalize();
-          tan3v = tan3v * ( ( ( n.cross( t ) ).dot( b ) ) < 0.0f ? -1.0f : 1.0f );
-          tangent->push_back( tan3v );
-        }      
+      Vec3f tan3v = ( ( t - n * n.dot( t ) ) );      
+      tan3v.normalize();
+      tan3v = tan3v * ( ( ( n.cross( t ) ).dot( b ) ) < 0.0f ? -1.0f : 1.0f );
+      tangent->push_back( tan3v );
+    }      
 
-        for( size_t j = 0; j < ( vertices->size() ); ++j )
-        {
-          Vec3f& n = normals->at( j );
-          Vec3f& t = tan1->at( j );
+    for( size_t j = 0; j < ( vertices->size() ); ++j )
+    {
+      Vec3f& n = normals->at( j );
+      Vec3f& t = tan1->at( j );
 
-          Vec3f bin3v = n.cross( t ) * 1.0;
-          //Vec4f bin4v = Vec4f( bin3v[0], bin3v[1], bin3v[2], 1.0 ); 
-
-          binormal->push_back( bin3v );
-        }     
-      }
+      Vec3f bin3v = n.cross( t ) * 1.0;
+      binormal->push_back( bin3v );
     }    
   }
 

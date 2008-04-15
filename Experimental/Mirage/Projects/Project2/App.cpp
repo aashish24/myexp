@@ -40,10 +40,10 @@ namespace Project2
     glEnable( GL_LIGHTING );
     glEnable( GL_LIGHT0 );
 
-    GLfloat lambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-    GLfloat ldiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat lambient[] =  { 0.1f, 0.1f, 0.1f, 1.0f };
+    GLfloat ldiffuse[] =  { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat lspecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    GLfloat lposition[] = { 0.0f, 10.0f, 0.0f, 1.0f };
+    GLfloat lposition[] = { 0.0f, 2.0f, 10.0f, 1.0f };
 
     GLfloat mambient[] = { 0.1f, 0.1f, 0.2f, 1.0f };
     GLfloat mdiffuse[] = { 0.1f, 0.1f, 0.9f, 1.0f };
@@ -57,7 +57,7 @@ namespace Project2
     glMaterialfv( GL_FRONT, GL_AMBIENT,   mambient   );
     glMaterialfv( GL_FRONT, GL_DIFFUSE,   mdiffuse   );
     glMaterialfv( GL_FRONT, GL_SPECULAR,  mspecular  );
-    glMaterialf ( GL_FRONT, GL_SHININESS, 1000.0 );  
+    glMaterialf ( GL_FRONT, GL_SHININESS, 100.0 );  
     
     // Initialize scene graph now. 
     _root = new Msg::MsgCore::Group();
@@ -110,24 +110,24 @@ namespace Project2
 
     GLint program = _shader->program();
 
-    //GLint locT  = glGetAttribLocation( program, "tangent" );
-    ////glEnableVertexAttribArray( locT );
-    //glBindAttribLocation( program, locT, "tangent" );
-    //glVertexAttribPointer( locT, 3, GL_FLOAT, false, 0, geom->getTangentArray()->getDataPointer() );  
+    // @Todo: Find a better way set this. 
+    GLint locT  = glGetAttribLocation( program, "tangent" );
+    glEnableVertexAttribArray( locT );    
+    glVertexAttribPointer( locT, 3, GL_FLOAT, false, 0, geom->getTangentArray()->getDataPointer() );  
 
     GLint locB  = glGetAttribLocation( program, "binormal" );
-    glEnableVertexAttribArray( locB );
-    //glBindAttribLocation( program, locB, "binormal" );
+    glEnableVertexAttribArray( locB );    
     glVertexAttribPointer( locB, 3, GL_FLOAT, false, 0, geom->getBinormalArray()->getDataPointer() );  
 
-   // // Locate uniform for BumpMap sampler. 
-   // GLint loc = glGetUniformLocation( program, "test" ); 
-   // glUniform1f ( loc, 0.3 );  
+    // Locate uniform for BumpMap sampler. 
+    GLint loc = glGetUniformLocation( program, "normalMap" ); 
+    glUniform1i ( loc, 0 );  
 
     _root->accept( *( _nodeVisitor ) );    
 
-   // glDisableVertexAttribArray( locB );
-   // glDisableVertexAttribArray( locT );
+    // Disabling generic attribute arrays. 
+    glDisableVertexAttribArray( locB );
+    glDisableVertexAttribArray( locT );
 
     glPopMatrix();
   }
