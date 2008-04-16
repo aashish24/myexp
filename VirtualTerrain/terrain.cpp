@@ -73,7 +73,7 @@ SimpleTexturedMaterialPtr tex = SimpleTexturedMaterial::create();
 {
         Matrix m, modelnodematrix, geometry_tempmatrix, modelnode_tempmatrix;
         Vec3f min, max;
-        osg::Matrix m1, m2, m3, m4, m5; 
+        osg::Matrix m1, m2, m3, m4, m5,m6, m7; 
         
         NodePtr model = OSG::SceneFileHandler::the().read("house1_3.3ds");/////defining the first model
 	model->updateVolume();
@@ -145,20 +145,43 @@ SimpleTexturedMaterialPtr tex = SimpleTexturedMaterial::create();
 	                         }      
 	        }
 	  
-	
+	  
+	std::cout<<"p[0]"<< hit_point[0]<<"p[2]"<< hit_point[2]<<std::endl;  
+	std::cout<< "i"<<i<< "j"<< j << std::endl;
 	
 	beginEditCP(transform, Transform::MatrixFieldMask );	        
                 m1.setIdentity(); 
                 
-                if(event)
-                        m2.setTranslate( hit_point[0], lowestpoint,  hit_point[2] );
-                else
-                        m2.setTranslate( xpoint, lowestpoint, zpoint );
+                if(event)       
+                        m3.setTransform( Vec3f(hit_point[0], lowestpoint,  hit_point[2]),   Quaternion(Vec3f(1,0,0), -((90.0f * 3.14f) / 180.0f)));
                         
-                m3.setRotate(Quaternion(Vec3f(1,0,0), -((90.0f * 3.14f) / 180.0f)));
+                 else 
+                        m3.setTransform( Vec3f(xpoint, lowestpoint, zpoint),  Quaternion(Vec3f(1,0,0), -((90.0f * 3.14f) / 180.0f)));      
+                        
+                  m1.mult(m3);
+                  
+                  
+                         
+                m6.setTransform(Vec3f(10,10,0));
+                 
+                m5.setTransform( Quaternion(Vec3f(0,0,1), -((90.0f * 3.14f) / 180.0f)) );
+                
+               
+                m7.setTransform(Vec3f(-10,-10,0));
+                
+                //m1.mult(m7);
+                m1.mult(m6);
+                m1.mult(m5);
+                //m1.mult(m6);
+                
+                
+                m1.mult(m7);
+                
+                
+                
                 m4.setScale(scale_value,scale_value,scale_value);
-                m1.mult(m2);
-                m1.mult(m3);
+                
+               
                 m1.mult(m4);
                 transform->setMatrix(m1);
 	endEditCP(transform, Transform::MatrixFieldMask );
@@ -585,7 +608,7 @@ GroupNodePtr createScenegraph(void)
 	                                        //std::cout << "Put house at " << height_variable << "," << width_variable << std::endl;
 	                                        ///calling the function to add the model to the desired postion on the terrain
 	                                      
-	                                        if(width_housing_image == 128)
+	                                      /*  if(width_housing_image == 128)
 	                                        {
 	                                                 NodePtr SourceNode = localModel( black_white_image_data, width, height_variable / (float)height_housing_image * height_colour_image, 
 	                                                                                       width_variable / (float)width_housing_image * width_colour_image,  hit_point, 0,
@@ -603,7 +626,7 @@ GroupNodePtr createScenegraph(void)
                                                                         localRoots.push_back(SourceNode);
                                                 }
                                                 
-                                                
+                                                */
                                                 colouring_empty_terrain(z_length, x_length, breadth, length, empty_image_data, width_housing_image);
 	                                
                                                 
