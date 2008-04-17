@@ -25,6 +25,12 @@ void reshape( int w, int h )
 }
 
 
+void idle()
+{
+  _gApp.update();
+  glutPostRedisplay();
+}
+
 void init()
 {
   _gApp.init();
@@ -43,6 +49,9 @@ int main( int argc, char** argv )
 
   // Reshape function.
   glutReshapeFunc( reshape );
+
+  // Idle function. 
+  glutIdleFunc( idle );
 
   // Application initialization function. 
   init(); 

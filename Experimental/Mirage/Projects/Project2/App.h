@@ -77,6 +77,8 @@ namespace Project2
 
     private: 
 
+      Vec4f                       _lightPosition;  
+
       GroupPtr                    _root;
       Shader*                     _shader;
 

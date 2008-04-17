@@ -23,7 +23,7 @@ void main(void)
 	
 	t          		  = normalize( gl_NormalMatrix * tangent );
 	n          		  = normalize( gl_NormalMatrix * gl_Normal );
-	b         		  = cross( n, t );	
+	b         		  = normalize( cross( n, t ) );	
 	
 	gl_Position    	= ftransform();
  }

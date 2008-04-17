@@ -70,9 +70,10 @@ namespace Project2
 
       void          loadBumpMap( const std::string& filename );
 
+      void          loadDecalMap( const std::string& filename );
 
       void          calculateTBN( Msg::MsgCore::Geometry* geom, Msg::MsgCore::Vec3Array* tangent,
-                                  Msg::MsgCore::Vec3Array* binormal );
+                                  Msg::MsgCore::Vec3Array* binormal, Msg::MsgCore::Vec3Array* normal );
 
 
       /////////////////////////////////////////////////////////////////////////

@@ -3,6 +3,8 @@
 #include "ShadersUtil.h"
 #include "ShaderFactory.h"
 
+#include "Image/Image.h"
+
 #include "MsgCore/Geometry.h"
 #include "MsgCore/Group.h"
 #include "MsgCore/Geode.h"
@@ -38,9 +40,9 @@ namespace Project2
    
     //glActiveTexture( GL_TEXTURE0 );        
     
-    // Load texture. 
-    this->loadBumpMap( "./Data/Textures/NormalMap.png" );
-    
+    // Load normal map. 
+    this->loadBumpMap( "./Data/Textures/NormalMap.bmp" );  
+
     if( Msg::MsgCore::Group* gr = dynamic_cast< Msg::MsgCore::Group* >( node ) )
     {
       size_t noOfChildren = gr->getChildren().size();
@@ -59,10 +61,12 @@ namespace Project2
           {
             Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > t( new Msg::MsgCore::Vec3Array() );
             Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > b( new Msg::MsgCore::Vec3Array() );
-            calculateTBN( geom, t.get(), b.get() );
+            Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > n( new Msg::MsgCore::Vec3Array() );
+            calculateTBN( geom, t.get(), b.get(), n.get() );
 
-            geom->setTangetArray( t.get() );
-            geom->setBinormalArray( b.get() );
+            geom->setTangetTBNArray( t.get() );
+            geom->setBinormalTBNArray( b.get() );
+            geom->setNormalTBNArray( n.get() );
 
             //GLint locT  = glGetAttribLocation( _program, "tangent" );
 
@@ -97,16 +101,35 @@ namespace Project2
 
 
   void BumpMapShader::loadBumpMap( const std::string& fileName )
-  {        
-    ShImage normalMap;
-    ShUtil::load_PNG( normalMap, fileName );
+  {
+    // Load normal map. 
+   /* ShImage normalMap;
+    ShUtil::load_PNG( normalMap, fileName );    
     GLuint texIndex;
     glGenTextures( 1,  &texIndex );
     glBindTexture( GL_TEXTURE_2D, texIndex );
     gluBuild2DMipmaps( GL_TEXTURE_2D, GL_RGB,
                        normalMap.width(), normalMap.height(),
                        GL_RGB,
-                       GL_FLOAT, normalMap.data() );
+                       GL_FLOAT, normalMap.data() );    */
+
+    IMAGE image; 
+    image.Load( const_cast< char* >( fileName.c_str() ) );
+    image.ExpandPalette();
+    GLuint texIndex;
+    glGenTextures( 1,  &texIndex );
+    glBindTexture( GL_TEXTURE_2D, texIndex );
+    gluBuild2DMipmaps( GL_TEXTURE_2D, GL_RGBA8,
+                       image.width, image.height,
+                       image.format,
+                       GL_UNSIGNED_BYTE, image.data ); 
+
+  }
+
+
+  void BumpMapShader::loadDecalMap( const std::string& filename ) 
+  {
+    
   }
 
 
@@ -119,7 +142,7 @@ namespace Project2
 
   
   void BumpMapShader::calculateTBN( Msg::MsgCore::Geometry* geom, Msg::MsgCore::Vec3Array* tangent, 
-                                    Msg::MsgCore::Vec3Array* binormal )
+                                    Msg::MsgCore::Vec3Array* binormal, Msg::MsgCore::Vec3Array* normal )
   {
     Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > vertices = geom->getVertexArray();
     Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3iArray > indices = geom->getVertexIndices();
@@ -198,6 +221,12 @@ namespace Project2
     // Now average and orthogonalize the vectors. 
     // 1. tangents. 
     // 2. binormals. 
+    // 3. normals. 
+
+    //Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > tangentsT = new Msg::MsgCore::Vec3Array();
+    //Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > binormalsB = new Msg::MsgCore::Vec3Array();
+    //Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > normalsN = new Msg::MsgCore::Vec3Array();
+
     for( size_t i = 0; i < ( vertices->size() ); ++i )
     {
       Vec3f& n = normals->at( i );
@@ -217,7 +246,43 @@ namespace Project2
 
       Vec3f bin3v = n.cross( t ) * 1.0;
       binormal->push_back( bin3v );
-    }    
+    }
+
+    for( size_t j = 0; j < ( vertices->size() ); ++j )
+    {
+      Vec3f norV = tangent->at(j).cross( binormal->at(j) );
+      norV.normalize();
+      normal->push_back( norV );
+    }
+
+    //// Now find the inverse. 
+    //for( size_t j = 0; j < ( vertices->size() ); ++j )
+    //{
+    //  float fScale2 = 1.0f / (( tangentsT->at(j)[0] * binormalsB->at(j)[1] * normalsN->at(j)[2] - tangentsT->at(j)[2] * binormalsB->at(j)[1] * normalsN->at(j)[0] ) + 
+    //                          ( binormalsB->at(j)[0] * normalsN->at(j)[1] * tangentsT->at(j)[2] - binormalsB->at(j)[2] * normalsN->at(j)[1] * tangentsT->at(j)[0]) + 
+    //                          ( normalsN->at(j)[0] * tangentsT->at(j)[1] * binormalsB->at(j)[2] - normalsN->at(j)[2] * tangentsT->at(j)[1] * binormalsB->at(j)[0] ));
+    //  
+    //  Vec3f T = Vec3f( binormalsB->at(j).cross( normalsN->at(j) )[0] * fScale2, 
+    //                   ( -1.0f * normalsN->at(j).cross( tangentsT->at(j) )[0] * fScale2,
+    //                   tangentsT->at(j).cross( binormalsB->at(j) )[0] * fScale2 ) );
+    //  T.normalize();
+
+    //  tangent->push_back( T );
+    //  
+    //  
+    //  Vec3f B = Vec3f( -1.0f * binormalsB->at(j).cross( normalsN->at(j) )[1] * fScale2, 
+    //                   ( normalsN->at(j) ).cross( tangentsT->at(j) )[1] * fScale2,
+    //                   ( -1.0f * tangentsT->at(j).cross( binormalsB->at(j) )[1] * fScale2 ) );
+    //  B.normalize();
+    //  binormal->push_back( B );
+
+    //  Vec3f N = Vec3f( binormalsB->at(j).cross( normalsN->at(j) )[2] * fScale2, 
+    //                   ( -1.0f * normalsN->at(j).cross( tangentsT->at(j) )[2] * fScale2,
+    //                   tangentsT->at(j).cross( binormalsB->at(j) )[2] * fScale2 ) );
+
+    //  N.normalize();
+    //  normal->push_back( N );
+    //}
   }
 
 

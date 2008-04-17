@@ -3,6 +3,8 @@
 attribute vec3 binormal;
 attribute vec3 tangent;
 
+uniform	  vec3 lightPos;
+
 // Light direction in tangent space. 
 varying vec3 lightDir;
 
@@ -10,9 +12,9 @@ varying vec3 lightDir;
 varying vec3 eyeDir;
 
 // Normalized and interpolated tangent, binormal and normal. 
-varying vec3 t;
-varying vec3 b;
-varying vec3 n;
+vec3 t;
+vec3 b;
+vec3 n;
 
 // Entry function. 
 void main()
@@ -31,15 +33,24 @@ void main()
 	n = normalize( gl_NormalMatrix * gl_Normal );
 	b = normalize( gl_NormalMatrix * binormal );				
 
-	vec3 lightPos =  vec4( gl_LightSource[0].position.xyz, 1.0 ).xyz;
+	//vec3 lightPos =  vec4( gl_LightSource[0].position.xyz, 1.0 ).xyz;
 	
 	// Temporary vector for calculation purposes. 
 	vec3 v;	
 	
 	// Calculating and storing light direction in tangent space. 
-	v.x = dot( t, ( gl_LightSource[0].position.xyz ) );
-	v.y = dot( b, ( gl_LightSource[0].position.xyz ) );
-	v.z = dot( n, ( gl_LightSource[0].position.xyz ) );	
+	vec3 lightPos = normalize( ( gl_LightSource[0].position.xyz ) - eyeDir );
+	
+	//  
+	eyeDir = -normalize( eyeDir );
+	
+	//v.x = dot( t, ( gl_LightSource[0].position.xyz ) );
+	//v.y = dot( b, ( gl_LightSource[0].position.xyz ) );
+	//v.z = dot( n, ( gl_LightSource[0].position.xyz ) );	
+	
+	v.x = dot( t, ( lightPos ) );
+	v.y = dot( b, ( lightPos ) );
+	v.z = dot( n, ( lightPos ) );	
 	
 	//v.x = dot( t, vec3( 0.0, 0.0, 10.0 ) );
 	//v.y = dot( b, vec3( 0.0, 0.0, 10.0 ) );
