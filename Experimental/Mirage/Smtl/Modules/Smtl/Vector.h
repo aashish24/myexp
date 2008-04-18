@@ -218,13 +218,23 @@ namespace Smtl
 				return sqrt( mVal );
 			}
 
+
 			void normalize()
 			{
 				for( size_t i=0; i < SIZE; ++i )
 				{
-					mData[i] = mData[i] / length();
+          DATA_TYPE val = length();
+          if( val != 0.0 )
+          {
+            mData[i] = mData[i] / val;
+          }
+          else
+          {
+            // Do do anything. 
+          }
 				}
 			}
+
 
 			Vector< DATA_TYPE, SIZE > cross( Vector< DATA_TYPE, SIZE > vec2 )
 			{
