@@ -114,15 +114,16 @@ namespace Project2
 
   void BumpMapShader::activate( Msg::MsgCore::Node* node )
   {
+    if( this->dirty() )
+    {
+      init(); 
+      this->dirty( false );
+    }
+
     Msg::MsgCore::SmartPtr< Msg::MsgCore::Geometry > geom = dynamic_cast< Msg::MsgCore::Geometry* >( node );
     
     if( geom.valid() )
-    {
-      //if( this->dirty() )
-      {
-        init(); 
-        //this->dirty( false );
-      }
+    {     
       // Only if we dont have tangent array we will do the calculation. 
       //
       // @Note: Here we are assuming that if we dont have tangent array that means 
@@ -149,7 +150,7 @@ namespace Project2
 
   void BumpMapShader::deActivate( Msg::MsgCore::Node* node )
   {
-    //if( !dirty() )
+    if( !dirty() )
     {
       // Disabling generic attribute arrays.         
       glDisableVertexAttribArray( _locN );
