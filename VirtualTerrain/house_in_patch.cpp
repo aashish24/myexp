@@ -27,7 +27,6 @@ int setupGLUT( int *argc, char *argv[] );
 
 NodePtr localModel (  UInt8* black_white_image_data_recived,  UInt32 width,  int xpoint, int zpoint ,  Pnt3f hit_point, bool event, float scale_value = 1.0);
 
-NodePtr localModel1 (  UInt8* black_white_image_data_recived,  UInt32 width,  int xpoint, int zpoint ,  Pnt3f hit_point, bool event, float scale_value = 1.0);
 const float scale = 0.8; 
 
 GroupNodePtr n ;
@@ -40,18 +39,256 @@ UInt8* black_white_image_data;
  
 std::vector<NodePtr> localRoots;
 
-std::vector<NodePtr> localRoots1;
-
 GeometryPtr geo;
 
 ImageRefPtr colour_image, black_white, housing_image, empty_image ;
  
+/*
+void createTerrainTexture()
+{
+
+SimpleTexturedMaterialPtr tex = SimpleTexturedMaterial::create();
+	        beginEditCP(tex);
+		        tex->setImage( colour_image);
+	        endEditCP(tex);
+	        
+	        
+ SimpleTexturedMaterialPtr tex1 = SimpleTexturedMaterial::create();
+	        beginEditCP(tex1);
+		        tex1->setImage( housing_image);
+	        endEditCP(tex1);	        
 
 
+
+ SimpleTexturedMaterialPtr tex2 = SimpleTexturedMaterial::create();
+	        beginEditCP(tex2);
+		        tex2->setImage( empty_image);
+	        endEditCP(tex2);
+}
+*/
+
  
  
+ NodePtr localModel (  UInt8* black_white_image_data_recived,  UInt32 width,  int xpoint, int zpoint ,  Pnt3f hit_point, bool event, float scale_value)
+{
+        Matrix m, modelnodematrix, geometry_tempmatrix, modelnode_tempmatrix;
+        Vec3f min, max;
+        osg::Matrix m1, m2, m3, m4, m5,m6, m7; 
+        
+        NodePtr model = OSG::SceneFileHandler::the().read("house1_3.3ds");/////defining the first model
+	model->updateVolume();
+	
+		
+	TransformPtr transform = Transform::create();                   ///applying transformation and rotaion and scaling first model//
+	beginEditCP(transform, Transform::MatrixFieldMask );	        
+                m1.setIdentity(); 
+                m2.setTranslate( xpoint, 0, zpoint );
+                m3.setRotate(Quaternion(Vec3f(1,0,0), -((90.0f*3.14f)/180.0f)));
+                m4.setScale(scale_value,scale_value,scale_value);
+                m1.mult(m2);
+                m1.mult(m3);
+                m1.mult(m4);
+                transform->setMatrix(m1);
+	endEditCP(transform, Transform::MatrixFieldMask );
+	
+	
+	NodePtr transformNode = Node::create();                         ///////creating a node pointer to set the core of models as transform and adding model as child////////////
+	beginEditCP(transformNode, Node::CoreFieldMask | Node::ChildrenFieldMask);
+	        transformNode->setCore(transform);
+	        transformNode->addChild(model);
+	       
+	endEditCP(transformNode, Node::CoreFieldMask | Node::ChildrenFieldMask);
  
- ////keyboard fuction to handel all teh keyboard inputs
+	DynamicVolume vol;
+	transformNode->getWorldVolume(vol);
+	vol.getBounds ( min, max );                         //////////////original model bounding box/////////////////
+
+
+  
+                  /******placing the  model on the terrian*************/
+	double  length,breadth, area, lowestpoint=100000.0, variable;
+	UInt32 x, z, j, i;
+
+	length = max[0] - min[0];                                           /////width//
+	breadth = max[2] - min[2];                                          ///height///
+	area = length * breadth;
+      
+	if( event)
+	{
+	        x=( hit_point[0] ) - UInt32(length/2) ;
+	        z=( hit_point[2] ) - UInt32(breadth/2);
+	       
+	}
+	else
+	{
+	        x=( xpoint ) - UInt32(length/2) ;
+	        z=( zpoint ) - UInt32(breadth/2);
+	}
+	
+	
+	////the two for loops for checking the lowest point condition on the terrain
+	////will scan the whole area where the model is going to be placed and then 
+	////will place at the lowest point.
+	
+	
+	        if(((x >= 0) && (x<= width)) && ((z >=0) && (z <= height)))
+	        {
+	
+	                for( j = z; j <= (z + breadth); j++ ) 
+	                        for( i = x ; i <= (x + length); i++)
+	                        {
+	                                variable = *(black_white_image_data_recived + ((i * width)+j)) * scale;
+	                
+	                                if(lowestpoint > variable)
+	                                        lowestpoint = variable;
+	                         
+	                         }      
+	        }
+	  
+	  
+	std::cout<<"p[0]"<< hit_point[0]<<"p[2]"<< hit_point[2]<<std::endl;  
+	std::cout<< "i"<<i<< "j"<< j << std::endl;
+	
+	beginEditCP(transform, Transform::MatrixFieldMask );	        
+                m1.setIdentity(); 
+                
+                if(event)       
+                        m3.setTransform( Vec3f(hit_point[0], lowestpoint,  hit_point[2]),   Quaternion(Vec3f(1,0,0), -((90.0f * 3.14f) / 180.0f)));
+                        
+                 else 
+                        m3.setTransform( Vec3f(xpoint, lowestpoint, zpoint),  Quaternion(Vec3f(1,0,0), -((90.0f * 3.14f) / 180.0f)));      
+                        
+                  m1.mult(m3);
+                  
+                  
+                         
+                m6.setTransform(Vec3f(10,10,0));
+                 
+                m5.setTransform( Quaternion(Vec3f(0,0,1), -((90.0f * 3.14f) / 180.0f)) );
+                
+               
+                m7.setTransform(Vec3f(-10,-10,0));
+                
+                //m1.mult(m7);
+               m1.mult(m7);
+                m1.mult(m5);
+                //m1.mult(m6);
+                 m1.mult(m6);
+                
+                
+                
+                
+                
+                m4.setScale(scale_value,scale_value,scale_value);
+                
+               
+                m1.mult(m4);
+                transform->setMatrix(m1);
+	endEditCP(transform, Transform::MatrixFieldMask );
+
+        return transformNode;
+      
+}
+
+ 
+ 
+ ////the function which is generalized which will check the case like whether any part is 
+ ////a colour completly and will return a boolean value
+ ////it will take the pointer of image and the width and the length and breadth of the model 
+ 
+ bool check_for_not_red(  UInt32 z_length,  UInt32  x_length,   UInt32 breadth,   UInt32 length,   UInt8* test_image_data,   UInt32 width_image)
+ {
+ 
+        bool not_adjacent= false, adjacent =false;
+         for( UInt32 j = z_length; j <= (z_length + breadth); j++ ) 
+	 {
+	        for( UInt32 i = x_length ; i <= (x_length + length); i++)
+	        {
+	              
+	                                                
+	                if( test_image_data[(width_image * i  * 3) + (j  * 3) + 0] != 255)
+	                {              
+	                        not_adjacent = true;                 
+	                }
+	                                                
+	                else
+	                {
+	                        not_adjacent = false;
+	                        adjacent=true;
+	                                                        
+	                        break;
+	                }
+	                                                       
+	                                                
+	          } 
+	                                        
+	          if(adjacent)  
+	          break;
+	   } 
+	   
+	   return not_adjacent;
+ 
+ 
+}
+
+
+///this function will chesk for whetehr the terrain part is blue or not and return true or false
+bool check_for_blue(  UInt32 z_length,  UInt32  x_length,   UInt32 breadth,   UInt32 length,   UInt8* test_image_data,   UInt32 width_image)
+ {
+ 
+        bool not_adjacent= false, adjacent =false;
+         for( UInt32 j = z_length; j <= (z_length + breadth); j++ ) 
+	 {
+	        for( UInt32 i = x_length ; i <= (x_length + length); i++)
+	        {
+	              
+	                                                
+	                if( test_image_data[(width_image * j  * 3) + (i  * 3) + 0] != 255)
+	                {              
+	                        not_adjacent = true;                 
+	                }
+	                                                
+	                else
+	                {
+	                        not_adjacent = false;
+	                        adjacent=true;
+	                                                        
+	                        break;
+	                }
+	                                                       
+	                                                
+	          } 
+	                                        
+	          if(adjacent)  
+	          break;
+	   } 
+	   
+	   return not_adjacent;
+	   
+} 
+ 
+
+
+ void colouring_empty_terrain(UInt32 z_length,  UInt32  x_length,   UInt32 breadth,   UInt32 length,   UInt8* empty_image_data,   UInt32 width_housing_image)
+ {
+ 
+       for( UInt32 i = x_length ; i <= (x_length + length); i++)
+        {
+                
+                 for( UInt32 j = z_length; j <= (z_length + breadth); j++ ) 
+                {
+                        //clouring that part of terrain where the model is been placed 
+                        empty_image_data[(width_housing_image * i  * 3) + (j  * 3) + 0] = 255;
+	                                                       
+                } 
+        }       
+ }
+
+
+
+
+
+////keyboard fuction to handel all teh keyboard inputs
 void keyboard(unsigned char key, int x, int y)
  {
         
@@ -81,8 +318,6 @@ void keyboard(unsigned char key, int x, int y)
                     
                         NodePtr SourceNode = localModel( black_white_image_data, width, 0, 0, hit_point, 1);        ////calling the function //////////////
                         localRoots.push_back(SourceNode);
-                   
-                        
                 }
                 
               
@@ -91,7 +326,6 @@ void keyboard(unsigned char key, int x, int y)
                         for(int i=0; i<localRoots.size(); ++i)
                                 n.node()->addChild( localRoots[i] );
                 
-                        
 	        endEditCP(n, Node::ChildrenFieldMask );
                 
                 
@@ -157,255 +391,6 @@ void keyboard(unsigned char key, int x, int y)
        glutPostRedisplay();   
  }
  
- 
- 
- NodePtr localModel (  UInt8* black_white_image_data_recived,  UInt32 width,  int xpoint, int zpoint ,  Pnt3f hit_point, bool event, float scale_value)
-{
-        Matrix m, modelnodematrix, geometry_tempmatrix, modelnode_tempmatrix;
-        Vec3f min, max,min1, max1;
-        osg::Matrix m1, m2, m3, m4, m5,m6, m7; 
-        
-        NodePtr model = OSG::SceneFileHandler::the().read("house1_3.3ds");/////defining the first model
-	model->updateVolume();
-	
-		
-	TransformPtr transform = Transform::create();                   ///applying transformation and rotaion and scaling first model//
-	beginEditCP(transform, Transform::MatrixFieldMask );	        
-                m1.setIdentity();
-             
-                if(event)       
-                        m3.setTransform( Vec3f(hit_point[0], 0,  hit_point[2]),  Quaternion(Vec3f(1,0,0), -((90.0f * 3.14f) / 180.0f)));
-                        
-                else 
-                        m3.setTransform( Vec3f(hit_point[0], 0,  hit_point[2]),  Quaternion(Vec3f(1,0,0), -((90.0f * 3.14f) / 180.0f)));      
-                        
-                m1.mult(m3);
-                
-               
-               
-                m4.setScale(scale_value,scale_value,scale_value);
-                m1.mult(m4);
-                
-                
-                transform->setMatrix(m1);
-	endEditCP(transform, Transform::MatrixFieldMask );
-	
-	
-	
-	
-	
-	NodePtr transformNode = Node::create();                         ///////creating a node pointer to set the core of models as transform and adding model as child////////////
-	beginEditCP(transformNode, Node::CoreFieldMask | Node::ChildrenFieldMask);
-	        transformNode->setCore(transform);
-	        transformNode->addChild(model);
-	       
-	endEditCP(transformNode, Node::CoreFieldMask | Node::ChildrenFieldMask);
- 
-	DynamicVolume vol;
-	transformNode->getWorldVolume(vol);
-	vol.getBounds ( min, max );                         //////////////original model bounding box/////////////////
-
-
-
-
-        Vec3f center_of_bounding_box;
-	
-	center_of_bounding_box[0] = ((max[0] - min[0])/2.0);
-	center_of_bounding_box[1] = ((max[1] - min[1])/2.0);
-	center_of_bounding_box[2] = ((max[2] - min[2])/2.0);
-
-
-
-  
-                  /******placing the  model on the terrian*************/
-	double  length,breadth, area, lowestpoint=100000.0, variable;
-	UInt32 x, z, j, i,a,b;
-
-	length = max[0] - min[0];                                           /////width//
-	breadth = max[2] - min[2];                                          ///height///
-	area = length * breadth;
-      
-	if( event)
-	{
-	        x=( hit_point[0] ) - UInt32(length/2) ;
-	        z=( hit_point[2] ) - UInt32(breadth/2);
-
-	        
-	}
-	else
-	{
-	        x=( xpoint ) - UInt32(length/2) ;
-	        z=( zpoint ) - UInt32(breadth/2);
-	        a=x;
-	        b=z;
-	        
-	}
-	
-	
-	////the two for loops for checking the lowest point condition on the terrain
-	////will scan the whole area where the model is going to be placed and then 
-	////will place at the lowest point.
-	
-	
-	        if(((x >= 0) && (x<= width)) && ((z >=0) && (z <= height)))
-	        {
-	
-	                for( j = z; j <= (z + breadth); j++ ) 
-	                        for( i = x ; i <= (x + length); i++)
-	                        {
-	                                variable = *(black_white_image_data_recived + ((i * width)+j)) * scale;
-	                
-	                                if(lowestpoint > variable)
-	                                        lowestpoint = variable;
-	                         
-	                         }      
-	        }
-	  
-	
-	
-	//std::cout<<center_of_bounding_box<< std::endl;
-	
-	beginEditCP(transform, Transform::MatrixFieldMask );	        
-                m1.setIdentity(); 
-                
-                 Vec3f trans,translate;
-                 
-                 translate[0]=(a+length)-center_of_bounding_box[0];
-                 translate[1]=0;
-                 translate[2]=(b+breadth)-center_of_bounding_box[2];
-                 
-                 trans[0] = hit_point[0];
-                 trans[1] = lowestpoint;
-                 trans[2] = hit_point[2];
-                 
-                 
-                m1.setTranslate(0,0,0);                
-                m2.setTranslate(translate);
-                m2.mult(m1);
-                
-                m3.setTransform( Quaternion( Vec3f( 1,0,0), -( ( 90.0f * 3.14f ) / 180.0f ))); 
-                    
-                m3.mult(m2);                
-              
-                m6.setTransform( Quaternion(Vec3f(0,1,0), ((90.0f * 3.14f) / 180.0f)));
-                m6.mult(m3);
-
-                
-                m7.setTranslate(-translate);
-                
-                m7.mult(m6);
-                
-                m7.setTranslate( trans );
-                transform->setMatrix(m7);               
-                
-                
-                
-        endEditCP(transform, Transform::MatrixFieldMask );
-          
-	
-	
-        return transformNode;
-      
-}
-
-
-
- 
- ////the function which is generalized which will check the case like whether any part is 
- ////a colour completly and will return a boolean value
- ////it will take the pointer of image and the width and the length and breadth of the model 
- 
- bool check_condition(  UInt32 z_length,  UInt32  x_length,   UInt32 breadth,   UInt32 length,   UInt8* test_image_data,   UInt32 width_image, bool red)
- {
-        //checking for red
-        
-        bool not_adjacent = false, adjacent = false, not_blue = false, blue = false;
-        if(red)
-        {
-                 for( UInt32 j = z_length; j <= (z_length + breadth); j++ ) 
-	         {
-	                for( UInt32 i = x_length ; i <= (x_length + length); i++)
-	                {
-	                      
-	                                                        
-	                        if( test_image_data[(width_image * i  * 3) + (j  * 3) + 0] != 255)
-	                        {              
-	                                not_adjacent = true;                 
-	                        }
-	                                                        
-	                        else
-	                        {
-	                                not_adjacent = false;
-	                                adjacent=true;
-	                                                                
-	                                break;
-	                        }
-	                                                               
-	                                                        
-	                  } 
-	                                                
-	                  if(adjacent)  
-	                  break;
-	           } 
-	   
-	        return not_adjacent;
-	   }
-	   
-	   ///checking for blue
-	   
-	   else
-	   {
-	                    
-                        for( UInt32 j = z_length; j <= (z_length + breadth); j++ ) 
-                        {
-                                for( UInt32 i = x_length ; i <= (x_length + length); i++)
-                                {
-	                                      
-	                                                                        
-                                        if( test_image_data[(width_image * j  * 3) + (i  * 3) + 0] != 255)
-                                        {              
-                                                 not_blue = true;                 
-                                        }
-	                                                                        
-                                        else
-                                        {
-                                                not_blue = false;
-                                                blue=true;
-	                                                                                
-                                                break;
-                                        }
-	                                                                               
-	                                                                        
-                                } 
-	                                                                
-                                if(blue)  
-                                break;
-                        } 
-	   
-                        return not_blue;
-	        
-	   }
- 
- 
-}
-
-
-
- void colouring_empty_terrain(UInt32 z_length,  UInt32  x_length,   UInt32 breadth,   UInt32 length,   UInt8* empty_image_data,   UInt32 width_housing_image)
- {
- 
-       for( UInt32 i = x_length ; i <= (x_length + length); i++)
-        {
-                
-                 for( UInt32 j = z_length; j <= (z_length + breadth); j++ ) 
-                {
-                        //clouring that part of terrain where the model is been placed 
-                        empty_image_data[(width_housing_image * i  * 3) + (j  * 3) + 0] = 255;
-	                                                       
-                } 
-        }       
- }
-
 
 
 
@@ -440,7 +425,7 @@ GroupNodePtr createScenegraph(void)
 	
 	 housing_image = Image::create();
 	housing_image -> read("housing.png");
-	///housing_image -> read("housing_128.png");
+	//housing_image -> read("housing_128.png");
 	UInt32 width_housing_image   =  housing_image->getWidth();
 	UInt32 height_housing_image  =  housing_image->getHeight();
 	UInt8* housing_image_data  =  housing_image->getData();
@@ -579,7 +564,7 @@ GroupNodePtr createScenegraph(void)
 	length = static_cast<int>(max[0] - min[0]);        // should be ceiled                /////width//
 	breadth = static_cast<int>(max[2] - min[2]);                                          ///height///
 	
-        bool inside = false, not_adjacent= false, adjacent = false, outside = false, event = 0;	
+        bool inside = false, not_adjacent= false, adjacent = false, outside = false;	
         
         UInt32 l = length/2;
         UInt32 b = breadth/2;
@@ -606,20 +591,14 @@ GroupNodePtr createScenegraph(void)
 	                              
 	                              
 	                                //// looking whether a model is already there so as to check the if other nodel is placed it does not overlap any other model
-	                                bool not_red = check_condition(z_length, x_length, breadth, length, empty_image_data, width_housing_image, true);           
+	                                bool not_red = check_for_not_red(z_length, x_length, breadth, length, empty_image_data, width_housing_image);           
 	                                
 	                                
 	                                
 	                                ////now checking the condtion whether the are where the model has to be placed is of desired colour or not
-	                                bool blue = check_condition(z_length, x_length, breadth, length, housing_image_data, width_housing_image, false);
+	                                bool blue = check_for_blue(z_length, x_length, breadth, length, housing_image_data, width_housing_image);
 	                               
-	                                /*if(!blue)
-	                                {
-	                                        
-	                                       ///checking which corner is inside the patch
-	                                       bool corner = blue_check( height_variable , width_variable , housing_image_data, width_housing_image);
-	                                        
-	                                }*/
+	                               
 	                               
 	                               
 	                               
@@ -629,10 +608,10 @@ GroupNodePtr createScenegraph(void)
 	                                        //std::cout << "Put house at " << height_variable << "," << width_variable << std::endl;
 	                                        ///calling the function to add the model to the desired postion on the terrain
 	                                      
-	                                       if(width_housing_image == 128)
+	                                      /*  if(width_housing_image == 128)
 	                                        {
 	                                                 NodePtr SourceNode = localModel( black_white_image_data, width, height_variable / (float)height_housing_image * height_colour_image, 
-	                                                                                       width_variable / (float)width_housing_image * width_colour_image,  hit_point, event,
+	                                                                                       width_variable / (float)width_housing_image * width_colour_image,  hit_point, 0,
 	                                                                                       width_colour_image / (float)width_housing_image); 
 	                                                 
 	                                                  localRoots.push_back(SourceNode);
@@ -641,14 +620,17 @@ GroupNodePtr createScenegraph(void)
 	                                                                                       
 	                                        else
 	                                        {
-	                                                NodePtr SourceNode = localModel( black_white_image_data, width, height_variable , width_variable ,  hit_point, event,1.0);        ////calling the function //////////////
+	                                                NodePtr SourceNode = localModel( black_white_image_data, width, height_variable , 
+	                                                                                       width_variable ,  hit_point, 0,1.0);        ////calling the function //////////////
 	                                                                                 
                                                                         localRoots.push_back(SourceNode);
                                                 }
                                                 
-                                                
+                                                */
                                                 colouring_empty_terrain(z_length, x_length, breadth, length, empty_image_data, width_housing_image);
-  
+	                                
+                                                
+	                                         
 	                                                 
 	                                }
 	                                
@@ -668,7 +650,7 @@ GroupNodePtr createScenegraph(void)
 	n.node()->addChild( geonode );
 	for(int i=0; i<localRoots.size(); ++i)
                 n.node()->addChild( localRoots[i] ); 
-               
+                 
 	endEditCP(n, Node::ChildrenFieldMask );
 
 	return n;
