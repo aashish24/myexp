@@ -1,6 +1,7 @@
 
 // 2D texture sampler. 
 uniform sampler2D normalMap;
+uniform sampler2D decalMap;
 
 // Interpolated light and eye directions. 
 varying	vec3 lightDir;
@@ -18,6 +19,9 @@ void main()
 	
 	// Convert perturbed normal information stored as RGB to range [-1.0, 1.0]. 	
     vec3 bump = ( texture2D( normalMap, gl_TexCoord[0].xy ).rgb -  0.5 ) * 2.0 ;    
+	
+	// Read the color value from diffuse map. 
+	vec3 color = ( texture2D( decalMap, gl_TexCoord[0].xy ).rgb );
 	
 	//@Test
 	//vec3 bump = ( texture2D( normalMap, gl_TexCoord[0].xy ).rgb ); 
@@ -47,6 +51,9 @@ void main()
 				
 	// Chop off values greater then 1.0.
 	litColor = min( litColor, vec3( 1.0 ) );
+	
+	//
+	litColor = min( mix( litColor, color, 0.2 ), 1.0 );
 	
 	// Set fragment color.
 	gl_FragColor = vec4( litColor, 1.0 );

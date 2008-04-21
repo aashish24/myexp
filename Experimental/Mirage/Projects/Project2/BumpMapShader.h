@@ -106,6 +106,10 @@ namespace Project2
       GLint         _locB;
       GLint         _locN;
       GLint         _locNormalMap;
+      GLint         _locDecalMap;
+
+      GLuint         _normalMapTexIndex;
+      GLuint         _decalMapTexIndex;
   };  
 }
 

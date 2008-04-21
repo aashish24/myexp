@@ -11,6 +11,8 @@
 #include "MsgCore/Geode.h"
 #include "MsgCore/SmartPtr.h"
 
+#include "GL/gl.h"
+
 #include "sh/sh.hpp"
 #include "shutil/shutil.hpp"
 #include "sh/ShImage.hpp"
@@ -19,10 +21,14 @@ namespace Project2
 {
   BumpMapShader::BumpMapShader() : 
     _dirty( true ),
-    _program( 0x00 ), 
-    _locT( 0x00 ), 
-    _locB( 0x00 ), 
-    _locN( 0x00 )
+    _program( -1 ), 
+    _locT( -1 ), 
+    _locB( -1 ), 
+    _locN( -1 ),
+    _locNormalMap( -1 ), 
+    _locDecalMap( -1 ), 
+    _normalMapTexIndex( -1 ), 
+    _decalMapTexIndex( -1 )
   {
   }
 
@@ -45,6 +51,7 @@ namespace Project2
     _locN  = glGetAttribLocation( _program, "normal" );
         
     _locNormalMap = glGetUniformLocation( _program, "normalMap" ); 
+    _locDecalMap  = glGetUniformLocation( _program, "decalMap" ); 
   }
 
 
@@ -142,8 +149,14 @@ namespace Project2
       glEnableVertexAttribArray( _locN );    
       glVertexAttribPointer( _locN, 3, GL_FLOAT, false, 0, geom->getNormalTBNArray()->getDataPointer() );  
 
-      // Locate uniform for BumpMap sampler.       
+      // Locate uniform for BumpMap sampler.      
+      glActiveTexture( GL_TEXTURE0 );
+      glBindTexture( GL_TEXTURE_2D, _normalMapTexIndex );
       glUniform1i ( _locNormalMap, 0 );           
+        
+      glActiveTexture( GL_TEXTURE1 );
+      glBindTexture( GL_TEXTURE_2D, _decalMapTexIndex );
+      glUniform1i ( _locDecalMap, 1 );           
     }
   }
 
@@ -175,10 +188,10 @@ namespace Project2
 
     IMAGE image; 
     image.Load( const_cast< char* >( fileName.c_str() ) );
-    image.ExpandPalette();
-    GLuint texIndex;
-    glGenTextures( 1,  &texIndex );
-    glBindTexture( GL_TEXTURE_2D, texIndex );
+    image.ExpandPalette();    
+    glActiveTexture( GL_TEXTURE0 );
+    glGenTextures( 1,  &_normalMapTexIndex );
+    glBindTexture( GL_TEXTURE_2D, _normalMapTexIndex );
     gluBuild2DMipmaps( GL_TEXTURE_2D, GL_RGBA8,
                        image.width, image.height,
                        image.format,
@@ -191,10 +204,10 @@ namespace Project2
   {
     IMAGE image; 
     image.Load( const_cast< char* >( fileName.c_str() ) );
-    image.ExpandPalette();
-    GLuint texIndex; 
-    glGenTextures( 1, &texIndex );
-    glBindTexture( GL_TEXTURE_2D, texIndex );
+    image.ExpandPalette();    
+    glActiveTexture( GL_TEXTURE1 );
+    glGenTextures( 1, &_decalMapTexIndex );
+    glBindTexture( GL_TEXTURE_2D, _decalMapTexIndex );
     gluBuild2DMipmaps( GL_TEXTURE_2D, GL_RGBA8, image.width, image.height, image.format, GL_UNSIGNED_BYTE, image.data );
   }
 

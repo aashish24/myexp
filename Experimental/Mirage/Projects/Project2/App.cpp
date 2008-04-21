@@ -47,7 +47,7 @@ namespace Project2
     GLfloat lspecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };   
 
     GLfloat mambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-    GLfloat mdiffuse[] = { 0.1f, 0.1f, 0.9f, 1.0f };
+    GLfloat mdiffuse[] = { 0.2f, 0.2f, 0.2f, 1.0f };
     GLfloat mspecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     
     glLightfv( GL_LIGHT0, GL_AMBIENT, lambient );	
