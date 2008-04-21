@@ -1,9 +1,9 @@
 
 // Precalculated binormal and tangent vectors. 
-attribute vec3 binormal;
-attribute vec3 tangent;
 
-uniform	  vec3 lightPos;
+attribute vec3 tangent;
+attribute vec3 binormal;
+attribute vec3 normal;
 
 // Light direction in tangent space. 
 varying vec3 lightDir;
@@ -12,9 +12,9 @@ varying vec3 lightDir;
 varying vec3 eyeDir;
 
 // Normalized and interpolated tangent, binormal and normal. 
-vec3 t;
-vec3 b;
-vec3 n;
+varying vec3 t;
+varying vec3 b;
+varying vec3 n;
 
 // Entry function. 
 void main()
@@ -29,9 +29,9 @@ void main()
 	eyeDir = vec3( gl_ModelViewMatrix * gl_Vertex );
 
 	// Normalized t, b and n vector. 	
-	t = normalize( gl_NormalMatrix * tangent );
-	n = normalize( gl_NormalMatrix * gl_Normal );
-	b = normalize( gl_NormalMatrix * binormal );				
+	t = normalize( gl_NormalMatrix * tangent );	
+	b = normalize( gl_NormalMatrix * binormal );
+	n = normalize( gl_NormalMatrix * normal );				
 
 	//vec3 lightPos =  vec4( gl_LightSource[0].position.xyz, 1.0 ).xyz;
 	

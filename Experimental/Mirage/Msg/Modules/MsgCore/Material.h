@@ -9,6 +9,7 @@
 
 #include "Export.h"
 #include "MsgCore/Object.h"
+#include "MsgCore/StateAttribute.h"
 
 #include "Smtl/Vector.h"
 
@@ -25,84 +26,156 @@ namespace Msg
 {
 	namespace MsgCore
 	{
-		class MSG_EXPORT Material : public Object
+    class MSG_EXPORT Material : public StateAttribute
 		{
 			public:
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Define types of face. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
 				enum Face
 				{
-					FRONT			= GL_FRONT, 
-					BACK			= GL_BACK, 
+					FRONT			      = GL_FRONT, 
+					BACK			      = GL_BACK, 
 					FRONT_AND_BACK  = GL_FRONT_AND_BACK
 				};
 
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Define types of ColorMode. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
 				enum ColorMode
 				{
-					AMBIENT				= GL_AMBIENT,
-					DIFFUSE				= GL_DIFFUSE, 
-					SPECULAR			= GL_SPECULAR, 
-					AMBIENT_AND_DIFFUSE	= GL_AMBIENT_AND_DIFFUSE
+					AMBIENT				      = GL_AMBIENT,
+					DIFFUSE				      = GL_DIFFUSE, 
+					SPECULAR			      = GL_SPECULAR, 
+					AMBIENT_AND_DIFFUSE	= GL_AMBIENT_AND_DIFFUSE,
+          SHININESS           = GL_SHININESS
 				};
 
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Constructor. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
 				Material() : 
-					Object				(), 
-					mFrontAmbientCom	( Vec4f() ), 
-					mFrontDiffuseCom	( Vec4f() ), 
-					mFrontSpecularCom	( Vec4f() ), 
-					mFrontShininess		( 0.0 ), 
-					mBackAmbientCom		( Vec4f() ),
-					mBackDiffuseCom		( Vec4f() ), 
-					mBackSpecularCom	( Vec4f() ),
-					mBackShininess		( 0.0 ), 
+          StateAttribute  ( ),
+					mFrontAmbient	  ( Vec4f() ), 
+					mFrontDiffuse	  ( Vec4f() ), 
+					mFrontSpecular	( Vec4f() ), 
+					mFrontShininess	( 0.0 ), 
+					mBackAmbient		( Vec4f() ),
+					mBackDiffuse		( Vec4f() ), 
+					mBackSpecular	  ( Vec4f() ),
+					mBackShininess	( 0.0 ), 
 					mFrontAndBack		( false )
 				{
 				}
-				
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Copy constructor. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
 				Material( const Material& mat ) :
-					Object			 ( mat ), 
-					mFrontAmbientCom ( mat.mFrontAmbientCom ), 
-					mFrontDiffuseCom ( mat.mFrontDiffuseCom ), 
-					mFrontSpecularCom( mat.mFrontSpecularCom ), 
-					mFrontShininess  ( mat.mFrontShininess ), 
-					mBackAmbientCom  ( mat.mBackAmbientCom ),
-					mBackDiffuseCom  ( mat.mBackDiffuseCom ), 
-					mBackSpecularCom ( mat.mBackSpecularCom ),
-					mBackShininess   ( mat.mBackShininess ), 
-					mFrontAndBack    ( mat.mFrontAndBack )
+					StateAttribute  ( mat ), 
+					mFrontAmbient   ( mat.mFrontAmbient ), 
+					mFrontDiffuse   ( mat.mFrontDiffuse ), 
+					mFrontSpecular  ( mat.mFrontSpecular ), 
+					mFrontShininess ( mat.mFrontShininess ), 
+					mBackAmbient    ( mat.mBackAmbient ),
+					mBackDiffuse    ( mat.mBackDiffuse ), 
+					mBackSpecular   ( mat.mBackSpecular ),
+					mBackShininess  ( mat.mBackShininess ), 
+					mFrontAndBack   ( mat.mFrontAndBack )
 				{
 				}
 
-				void	setAmbient( const Vec4f& ambient, Face face=FRONT );
-				Vec4f	getAmbient( Face face=FRONT ) const;
+        
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Set color components.  
+        //
+        ///////////////////////////////////////////////////////////////////////
 
-				void	setDiffuse( const Vec4f diffuse, Face face=FRONT );
-				Vec4f	getDiffuse( Face face=FRONT ) const;
+        void	getProperty( ColorMode mode, Vec4f& val, Face face=FRONT ) const;
+				void	setProperty( ColorMode mode, const Vec4f& val, Face face=FRONT );								
+ 
+        void	getProperty( ColorMode mode, float& val, Face face=FRONT ) const;
+				void	setProperty( ColorMode mode, const float& val, Face face=FRONT );								
 
-				void	setSpecular( const Vec4f specular, Face face=FRONT );
-				Vec4f	getSpecular( Face face=FRONT ) const;
-				
-				void	setShininess( float shininess, Face face=FRONT );
-				float	getShininess( Face face=FRONT ) const;				
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Check if both FRONT and BACK faces open to material property. 
+        //
+        ///////////////////////////////////////////////////////////////////////
 
-				bool	frontAndBack();
+				bool	enabledFrontAndBack();
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Uniquely identify this attribute.
+        //
+        ///////////////////////////////////////////////////////////////////////
+
+        std::string id() const
+        {
+          return std::string( "Material" );
+        }
 
 			
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Draw function. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
+        virtual void activateStateSet( Node*  node );
+
+
 			protected:
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Destructor.
+        //
+        ///////////////////////////////////////////////////////////////////////
+
 				virtual	~Material()
 				{
 				}
 
+
 			protected:
-				Vec4f	mFrontAmbientCom;
-				Vec4f	mFrontDiffuseCom;
-				Vec4f	mFrontSpecularCom;
-				float	mFrontShininess;
 
-				Vec4f	mBackAmbientCom;
-				Vec4f	mBackDiffuseCom;
-				Vec4f	mBackSpecularCom;
-				float	mBackShininess;
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Data members. 
+        //
+        ///////////////////////////////////////////////////////////////////////
 
-				bool	mFrontAndBack;
+				Vec4f	    mFrontAmbient;
+				Vec4f	    mFrontDiffuse;
+				Vec4f	    mFrontSpecular;
+				float	    mFrontShininess;
+
+				Vec4f	    mBackAmbient;
+				Vec4f	    mBackDiffuse;
+				Vec4f	    mBackSpecular;
+				float	    mBackShininess;
+
+				bool	    mFrontAndBack;
 		};
 	}
 }

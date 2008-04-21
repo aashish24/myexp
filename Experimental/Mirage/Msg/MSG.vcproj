@@ -311,6 +311,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Modules\MsgCore\StateAttribute.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\StateSet.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Modules\MsgCore\StateSet.h"
 					>
 				</File>

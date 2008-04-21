@@ -1,62 +1,66 @@
+
 #ifndef __STATE_SET_H__
 #define __STATE_SET_H__
 
-#include "MsgCore/Material.h"
+#include "MsgCore/Object.h"
+#include "MsgCore/StateAttribute.h"
+
+#include <list>
+#include <map>
 
 namespace Msg
 {
 	namespace MsgCore
 	{
+    class Node; 
+
 		class MSG_EXPORT StateSet : public Object 
 		{
 			public:
-				StateSet() : 
-					Object()
-				{
-				}
 
-				StateSet( const StateSet& stateset ) :
-					Object( stateset )
-				{
-				}
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Define easy to remember names. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+        
+        typedef std::list< std::pair< SmartPtr< StateAttribute >, bool > > Attributes;
+        typedef std::map< unsigned int, std::pair< SmartPtr< StateAttribute >, bool > > TextureAttributes;
 
-				void setMaterial( Material* mat )
-				{
-					mMaterial = mat;
-				}
+				StateSet();
 
-				Material* getMaterial()
-				{
-					return mMaterial.get();
-				}
+				StateSet( const StateSet& stateset );
 
-				void drawGLState()
-				{
-					if( mMaterial.valid() )
-					{
-						/*glMaterialfv( GL_FRONT,	GL_AMBIENT,		
-									  mMaterial->getAmbient().front() );
-						glMaterialfv( GL_FRONT,	GL_DIFFUSE,		
-									  mMaterial->getDiffuse().front() );
-						glMaterialfv( GL_FRONT, GL_SPECULAR,	
-									  mMaterial->getSpecular().front() );					
+        bool dirty() const;
 
-						glMaterialfv( GL_BACK, GL_AMBIENT,		
-									  mMaterial->getAmbient( Material::BACK ).front() );
-						glMaterialfv( GL_BACK,	GL_DIFFUSE,		
-									  mMaterial->getDiffuse( Material::BACK ).front() );
-						glMaterialfv( GL_BACK, GL_SPECULAR,	
-									  mMaterial->getSpecular( Material::BACK ).front() );*/
-					}					
-				}
-	
-			protected:
-				virtual ~StateSet()
-				{
-				}
+        void dirty( bool flag ); 
+
+        void getAttribute( const std::string& id );
+
+        Attributes& getAttributes();
+
+        void setAttribute( StateAttribute* attr, const bool& state = 1 );
+
+        TextureAttributes& getTextureAttributes();
+
+        void setTextureAttribute( unsigned int unit, StateAttribute* attr, const bool& state = 1 );
+
+				void activateStateSet( Node* node );
+
+        void deActivateStateSet( Node* node );
+
 
 			protected:
-				SmartPtr< Material >	mMaterial;
+				
+        virtual ~StateSet();
+      
+
+      protected: 
+
+        bool              _dirty;
+
+        Attributes        _attributes;
+        TextureAttributes _textureAttributes;      
 		};
 	}
 }

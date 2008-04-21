@@ -4,6 +4,9 @@
 
 #include "MsgCore/Node.h"
 #include "MsgCore/Group.h"
+#include "MsgCore/NodeVisitor.h"
+
+#include "Smtl/Vector.h"
 
 namespace Project2
 {
@@ -37,6 +40,24 @@ namespace Project2
       /////////////////////////////////////////////////////////////////////////
       
       virtual ~App();
+
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // Set arguments. 
+      //
+      /////////////////////////////////////////////////////////////////////////
+      
+      virtual void arguments( int& argc, char** argv );   
+
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // Parse arguments. 
+      // 
+      /////////////////////////////////////////////////////////////////////////
+
+      virtual void parseArguments(); 
 
 
       /////////////////////////////////////////////////////////////////////////
@@ -77,12 +98,14 @@ namespace Project2
 
     private: 
 
-      Vec4f                       _lightPosition;  
+      std::vector< std::string >                          _arguments; 
 
-      GroupPtr                    _root;
-      Shader*                     _shader;
+      Smtl::Vec4f                                         _lightPosition;  
 
-      Msg::MsgCore::NodeVisitor*  _nodeVisitor;  
+      GroupPtr                                            _root;
+      Msg::MsgCore::SmartPtr< Shader >                    _shader;
+
+      Msg::MsgCore::SmartPtr< Msg::MsgCore::NodeVisitor > _nodeVisitor;  
   };
 }
 

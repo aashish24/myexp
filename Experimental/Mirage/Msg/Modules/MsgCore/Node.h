@@ -1,8 +1,3 @@
-///////////////////////////////////////////////////////////////////////////////
-//
-// 
-//
-///////////////////////////////////////////////////////////////////////////////				
 
 #ifndef __NODE_H__
 #define __NODE_H__
@@ -15,15 +10,15 @@
 namespace Msg
 {
 	namespace MsgCore
-	{
-		class StateSet;
+	{		
 		class Group;
 		class NodeVisitor;
 
 		class MSG_EXPORT Node : public Object
 		{
 			public:
-				// Typedefs. 
+				
+        // Typedefs. 
 				typedef std::vector< Group* > Parents;
 
 				///////////////////////////////////////////////////////////////
@@ -31,7 +26,8 @@ namespace Msg
 				// Constructor. 
 				//
 				///////////////////////////////////////////////////////////////				
-				Node() :
+				
+        Node() :
 					Object(),
 					mStateSet( new StateSet() )
 				{
@@ -44,18 +40,21 @@ namespace Msg
 				// Copy constructor ( only implementing DEEP_COPY_ALL ). 
 				//
 				///////////////////////////////////////////////////////////////				
-				Node( const Node& node ) :
+				
+        Node( const Node& node ) :
 					Object( node ), 
 					mParents(), 
 					mStateSet( node.mStateSet )
 				{}				
+
 
 				///////////////////////////////////////////////////////////////
 				//
 				// 
 				//
 				///////////////////////////////////////////////////////////////				
-				virtual Group* getParent( unsigned int index )
+				
+        virtual Group* getParent( unsigned int index )
 				{
 					if( index < mParents.size() )
 					{
@@ -67,22 +66,26 @@ namespace Msg
 					}
 				}
 
-				///////////////////////////////////////////////////////////////
-				//
-				// 
-				//
-				///////////////////////////////////////////////////////////////				
-				virtual Parents getParents()
-				{
-					return mParents;
-				}
 
 				///////////////////////////////////////////////////////////////
 				//
 				// 
 				//
 				///////////////////////////////////////////////////////////////				
-				virtual void  addParent( Group* parent )
+				
+        virtual Parents getParents()
+				{
+					return mParents;
+				}
+
+
+				///////////////////////////////////////////////////////////////
+				//
+				// 
+				//
+				///////////////////////////////////////////////////////////////				
+				
+        virtual void addParent( Group* parent )
 				{
 					mParents.push_back( parent );
 				}
@@ -92,7 +95,8 @@ namespace Msg
 				// 
 				//
 				///////////////////////////////////////////////////////////////				
-				virtual StateSet* getStateSet() const
+				
+        virtual StateSet* getOrCreateStateSet() 
 				{
 					if( mStateSet.valid() )
 					{
@@ -100,16 +104,19 @@ namespace Msg
 					}
 					else
 					{
-						return 0;
+            mStateSet = new StateSet();
+            return mStateSet.get();
 					}
 				}
+
 
 				///////////////////////////////////////////////////////////////
 				//
 				// 
 				//
 				///////////////////////////////////////////////////////////////				
-				virtual void setStateSet( StateSet* stateset )
+				
+        virtual void setStateSet( StateSet* stateset )
 				{
 					if( mStateSet.valid() )
 					{
@@ -122,12 +129,41 @@ namespace Msg
 					}
 				}
 
+
+         
+				///////////////////////////////////////////////////////////////
+				//
+				// Call drawGLStateSet. 
+        // @Note:
+        // We are missing the case of over-riding the parent state sets. 
+				//
+				///////////////////////////////////////////////////////////////				 
+
+        virtual void activateStateSet()
+        {
+          if( mStateSet.valid() )
+					{
+						mStateSet->activateStateSet( this );
+					}
+        }
+
+
+        virtual void deActivateStateSet()
+        {
+          if( mStateSet.valid() )
+					{
+						mStateSet->deActivateStateSet( this );
+					}
+        }
+        
+        
 				///////////////////////////////////////////////////////////////
 				//
 				// Start update and draw traversal. 
 				//
 				///////////////////////////////////////////////////////////////
-				virtual void accept( NodeVisitor& nv );
+				
+        virtual void accept( NodeVisitor& nv );
 
 			
 				///////////////////////////////////////////////////////////////
@@ -135,30 +171,34 @@ namespace Msg
 				//
 				//
 				///////////////////////////////////////////////////////////////
-				virtual void traverse( NodeVisitor& nv ) 
-				{
-					if( mStateSet.valid() )
-					{
-						mStateSet->drawGLState();
-					}
+				
+        virtual void traverse( NodeVisitor& nv ) 
+				{			
+          //this->activateStateSet();
 				}
 
+
 			protected:
-				///////////////////////////////////////////////////////////////
+				
+        ///////////////////////////////////////////////////////////////
 				//
 				// Destructor. 
 				//
-				///////////////////////////////////////////////////////////////				
+				///////////////////////////////////////////////////////////////	
+
 				virtual ~Node()
 				{ 
         }
 
+
 			protected:
+
 				///////////////////////////////////////////////////////////////
 				//
 				// 
 				//
-				///////////////////////////////////////////////////////////////				
+				///////////////////////////////////////////////////////////////		
+
 				Parents					mParents;
 
 		
@@ -166,7 +206,8 @@ namespace Msg
 				//
 				// 
 				//
-				///////////////////////////////////////////////////////////////				
+				///////////////////////////////////////////////////////////////	
+
 				SmartPtr< StateSet >	mStateSet;
 		};
 	}

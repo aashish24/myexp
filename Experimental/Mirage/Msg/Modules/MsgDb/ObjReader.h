@@ -30,7 +30,9 @@ namespace Msg
 
 				Node*	readFile( std::istream& fin, const std::string& fileName, const bool& ignoreNormals=false );
 
+
 			protected:
+
 				virtual ~ObjReader()
 				{
 				}

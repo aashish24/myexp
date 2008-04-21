@@ -31,11 +31,6 @@ void idle()
   glutPostRedisplay();
 }
 
-void init()
-{
-  _gApp.init();
-}
-
 
 int main( int argc, char** argv )
 {
@@ -53,8 +48,11 @@ int main( int argc, char** argv )
   // Idle function. 
   glutIdleFunc( idle );
 
+  // Pass arguments to the application. 
+  _gApp.arguments( argc, argv );
+
   // Application initialization function. 
-  init(); 
+  _gApp.init();
 
   // Run the loop. 
   glutMainLoop();

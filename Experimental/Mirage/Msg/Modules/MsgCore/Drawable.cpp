@@ -7,8 +7,8 @@ namespace Msg
   {
     Drawable::Drawable() :
       _useDisplayList( false ), 
-      _parents       ( 0x00 ), 
-      _stateSet      ( 0x00 ), 
+//    _parents       ( 0x00 ), 
+//    _stateSet      ( 0x00 ), 
       _glObjectList  ( 0x00 )
     {
     }

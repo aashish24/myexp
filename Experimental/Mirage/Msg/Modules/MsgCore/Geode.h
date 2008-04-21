@@ -11,6 +11,7 @@
 
 #include "MsgCore/BoundingBox.h"
 #include "MsgCore/Node.h"
+#include "MsgCore/Group.h"
 #include "MsgCore/Drawable.h"
 
 #include <assert.h>
@@ -24,24 +25,29 @@ namespace Msg
 		// Typedefs. 
 		typedef std::vector< SmartPtr< Drawable > > DrawableList;
 
-		class MSG_EXPORT Geode : public Node 
+		class MSG_EXPORT Geode : public Group 
 		{
 			public:
 				Geode() :
-					Node()
+					Group()
 				{
 				}
 
 				Geode( const Geode& geode ) :
-					Node( geode )
+					Group( geode )
 				{
 				}
 
 
 				virtual void addDrawable( Drawable* drawable )
 				{
-					mDrawables.push_back( drawable );
+          if( drawable )
+          {
+            mDrawables.push_back( drawable );
+            drawable->addParent( static_cast< Group* >( this ) );
+          }
 				}
+
 				
 				virtual void removeDrawable( Drawable* drawable )
 				{

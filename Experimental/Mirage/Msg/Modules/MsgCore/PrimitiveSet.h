@@ -34,6 +34,7 @@ namespace Msg
 				}
 		};
 
+
 		class MSG_EXPORT VectorGLushort: public std::vector< GLushort >
 		{
 			typedef std::vector< value_type > vector_type;
@@ -59,6 +60,7 @@ namespace Msg
 				{
 				}
 		};
+
 
 		class MSG_EXPORT VectorGLuint: public std::vector< GLuint >
 		{
@@ -86,6 +88,7 @@ namespace Msg
 				}
 		};
 
+
 		// As of now it will draw only use the glDrawElements. 
 		class  MSG_EXPORT PrimitiveSet : public Object
 		{
@@ -99,17 +102,18 @@ namespace Msg
 
 				enum Mode
 				{
-					POINTS			= GL_POINTS,
-					LINES			= GL_LINES,
-					LINE_STRIP		= GL_LINE_STRIP,
-					LINE_LOOP		= GL_LINE_LOOP,					
-					TRIANGLES		= GL_TRIANGLES,
+					POINTS			    = GL_POINTS,
+					LINES			      = GL_LINES,
+					LINE_STRIP		  = GL_LINE_STRIP,
+					LINE_LOOP		    = GL_LINE_LOOP,					
+					TRIANGLES		    = GL_TRIANGLES,
 					TRIANGLE_STRIP	= GL_TRIANGLE_STRIP,
-					TRIANGLE_FAN	= GL_TRIANGLE_FAN,					
-					QUADS			= GL_QUADS,
-					QUAD_STRIP		= GL_QUAD_STRIP,
-					POLYGON			= GL_POLYGON
+					TRIANGLE_FAN  	= GL_TRIANGLE_FAN,					
+					QUADS			      = GL_QUADS,
+					QUAD_STRIP		  = GL_QUAD_STRIP,
+					POLYGON			    = GL_POLYGON
 				};
+
 
 				PrimitiveSet( GLenum mode, Type type ) :
 					mMode( mode ), 
@@ -117,13 +121,16 @@ namespace Msg
 				{
 				}
 
+
 				PrimitiveSet( const PrimitiveSet& primitiveSet ) :
 					Object( primitiveSet )
 				{
 				}
 
+
 				// This should be overridden in the derived class. 
 				virtual void draw() const = 0;
+
 
 				Type getType()
 				{
@@ -136,15 +143,20 @@ namespace Msg
 					return mMode;
 				}
 
+
 				virtual unsigned int getSize() const = 0;
 
+
 			protected:
-				virtual ~PrimitiveSet()
+				
+        virtual ~PrimitiveSet()
 				{
 				}
 
+
 			protected:
-				GLenum	mMode;
+				
+        GLenum	mMode;
 
 				Type	mType;				
 		};
@@ -233,10 +245,9 @@ namespace Msg
 
 				virtual void draw() const 
 				{
-					std::cout << " testing: " << std::endl;
-					std::cout << " size is: " << size() << std::endl;					
 					glDrawElements( mMode, ( GLsizei ) size(), mType,  &front() );
-				}				
+				}		
+
 
 				virtual size_t getSize() const
 				{
@@ -244,6 +255,7 @@ namespace Msg
 				}
 
 			protected:
+
 				virtual ~DrawElementUInt()
 				{
 				}

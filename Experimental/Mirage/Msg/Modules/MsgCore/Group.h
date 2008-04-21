@@ -49,6 +49,7 @@ namespace Msg
 					return mChildren;
 				}	
 	
+
 				virtual	void addChild( Node* child )
 				{
 					// As of now the a child can be 

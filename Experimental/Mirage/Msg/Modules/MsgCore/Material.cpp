@@ -3,223 +3,302 @@
 
 using namespace Msg::MsgCore;
 
-void	Material::setAmbient( const Vec4f& ambient, Face face )
+void Material::getProperty( Material::ColorMode mode, Vec4f& val, Material::Face face ) const
 {
-	switch( face )
-	{
-		case FRONT:
-		{
-			mFrontAmbientCom = ambient;
-			break;
-		}
-		case BACK:
-		{
-			mBackAmbientCom  = ambient;
-			break;
-		}
-		case FRONT_AND_BACK:
-		{
-			mFrontAmbientCom = ambient;
-			mBackAmbientCom  = mFrontAmbientCom;
-			mFrontAndBack    = true;
-			break;
-		}
-	};
+  switch( mode )
+  {
+    case AMBIENT: 
+    {
+      switch( face )
+      {
+	      case FRONT:
+	      {
+		      val = mFrontAmbient;
+		      break;
+	      }
+	      case BACK:
+	      {
+		      val = mBackAmbient;
+		      break;
+	      }
+	      case FRONT_AND_BACK:
+	      {
+		      if( !mFrontAndBack )
+		      {
+            std::cerr << "Error No: FRONT_AND_BACK called on material with "<< std::endl;
+			      std::cerr << "separate FRONT and BACK material. " << std::endl;
+		      }
+    			
+		      val = mFrontAmbient;
+		      break;
+	      }
+        default:
+        {
+          std::cerr << "Error No: Invalid Face " << face << std::endl;
+          break;
+        }
+      };
+      break;
+    }
+    case DIFFUSE: 
+    {
+      switch( face )
+      {
+	      case FRONT:
+	      {
+		      val = mFrontDiffuse;
+		      break;
+	      }
+	      case BACK:
+	      {
+		      val = mBackDiffuse;
+		      break;
+	      }
+	      case FRONT_AND_BACK:
+	      {
+		      if( !mFrontAndBack )
+		      {
+            std::cerr << "Error No: FRONT_AND_BACK called on material with "<< std::endl;
+			      std::cerr << "separate FRONT and BACK material. " << std::endl;
+		      }
+    			
+		      val = mFrontDiffuse;
+		      break;
+	      }
+      };
+      break;
+    }
+    case SPECULAR: 
+    {
+      switch( face )
+      {
+	      case FRONT:
+	      {
+		      val = mFrontSpecular;
+		      break;
+	      }
+	      case BACK:
+	      {
+		      val = mBackSpecular;
+		      break;
+	      }
+	      case FRONT_AND_BACK:
+	      {
+		      if( !mFrontAndBack )
+		      {
+            std::cerr << "Error No: FRONT_AND_BACK called on material with "<< std::endl;
+			      std::cerr << "separate FRONT and BACK material. " << std::endl;
+		      }
+    			
+		      val = mFrontSpecular;
+		      break;
+	      }
+      };      
+      break;
+    }
+    default:
+    {
+      std::cerr << "Error No: Invalid Face " << face << std::endl;
+      break;
+    }
+  }
+}   
+
+
+void	Material::setProperty( Material::ColorMode mode, const Vec4f& val, Face face )
+{
+  switch( mode )
+  {
+    case Material::AMBIENT:
+    {
+      switch( face )
+      {
+        case FRONT:
+		    {
+			    mFrontAmbient = val;
+			    break;
+		    }
+		    case BACK:
+		    {
+			    mBackAmbient = val;
+			    break;
+		    }
+		    case FRONT_AND_BACK:
+		    {
+			    mFrontAmbient = val;
+			    mBackAmbient  = val;
+			    mFrontAndBack = true;
+			    break;
+		    }
+        default: 
+        {
+          std::cerr << "Error No: Invalid Face " << face << std::endl;
+          break;
+        }
+      };
+      break;
+    }
+    case Material::DIFFUSE:
+    {
+      switch( face )
+      {
+        case FRONT:
+		    {
+			    mFrontDiffuse = val;
+			    break;
+		    }
+		    case BACK:
+		    {
+			    mBackDiffuse = val;
+			    break;
+		    }
+		    case FRONT_AND_BACK:
+		    {
+			    mFrontDiffuse = val;
+			    mBackDiffuse  = val;
+			    mFrontAndBack = true;
+			    break;
+		    }
+        default: 
+        {
+          std::cerr << "Error No: Invalid Face " << face << std::endl;
+          break;
+        }
+      };
+      break;
+    }
+    case Material::SPECULAR:
+    {
+      switch( face )
+      {
+        case FRONT:
+		    {
+          mFrontSpecular = val;
+			    break;
+		    }
+		    case BACK:
+		    {
+          mBackSpecular  = val;
+			    break;
+		    }
+		    case FRONT_AND_BACK:
+		    {
+			    mFrontSpecular = val;
+			    mBackSpecular  = val;
+			    mFrontAndBack  = true;
+			    break;
+		    }
+        default: 
+        {
+          std::cerr << "Error No: Invalid Face " << face << std::endl;
+          break;
+        }
+      };
+      break;
+    }    
+    default: 
+    {
+      std::cerr << "Error No: Invalid ColorMode " << mode << std::endl;
+      break;
+    }
+  };
 }
 
-Vec4f	Material::getAmbient( Material::Face face ) const
-{
-	switch( face )
-	{
-		case FRONT:
-		{
-			return mFrontAmbientCom;
-			break;
-		}
-		case BACK:
-		{
-			return mBackAmbientCom;
-			break;
-		}
-		case FRONT_AND_BACK:
-		{
-			if( !mFrontAndBack )
-			{
-				std::cerr << "[Material::getAmbient] FRONT_AND_BACK called on material with "<< std::endl;
-				std::cerr << "separate FRONT and BACK material. " << std::endl;
-			}
-			
-			return mFrontAmbientCom;
-			break;
-		}
-	};
 
-	std::cerr << "[Material::getAmbient] Invalid Face : " << face << " passed. " << std::endl;
-	return mFrontAmbientCom;
+void Material::getProperty( Material::ColorMode mode, float& val, Material::Face face ) const
+{
+  switch( mode )
+  {
+    case SHININESS: 
+    {
+      switch( face )
+      {
+        case FRONT:
+        {
+          val = mFrontShininess;
+          break;
+        }
+        case BACK:
+        {
+          val = mBackShininess;
+          break;
+        }
+        case FRONT_AND_BACK:
+        {
+          if( !mFrontAndBack )
+          {
+            std::cerr << "Error No: FRONT_AND_BACK called on material with "<< std::endl;
+	          std::cerr << "separate FRONT and BACK material. " << std::endl;
+          }
+    			
+          val = mFrontShininess;
+          break;
+        }
+        default:
+        {
+          std::cerr << "Error No: Invalid Face " << face << std::endl;
+          break;
+        }
+      }; // switch( face ). 
+      break;
+    }
+    default:
+    {
+      std::cerr << "Error No: Invalid ColorMode " << mode << std::endl;
+      break;
+    }
+  }; // switch( mode ).
 }
 
-void	Material::setDiffuse( const Vec4f diffuse, Material::Face face )
+
+void Material::setProperty( Material::ColorMode mode, const float& val, Material::Face face )
 {
-	switch( face )
-	{
-		case FRONT:
-		{
-			mFrontDiffuseCom = diffuse;
-			break;
-		}
-		case BACK:
-		{
-			mBackDiffuseCom = diffuse;
-			break;
-		}
-		case FRONT_AND_BACK:
-		{
-			mFrontDiffuseCom = diffuse;
-			mBackDiffuseCom  = mFrontDiffuseCom;
-			mFrontAndBack	 = true;
-			break;
-		}
-	};
+  switch( mode )
+  {
+    case Material::SHININESS:
+    {
+      switch( face )
+      {
+        case FRONT:
+	      {
+          mFrontShininess = val;
+		      break;
+	      }
+	      case BACK:
+	      {
+          mBackShininess  = val;
+		      break;
+	      }
+	      case FRONT_AND_BACK:
+	      {
+		      mFrontShininess = val;
+		      mBackShininess  = val;
+		      mFrontAndBack   = true;
+		      break;
+	      }
+        default: 
+        {
+          std::cerr << "Error No: Invalid Face " << face << std::endl;
+          break;
+        }
+      };
+      break;
+    }
+    default:
+    {
+      std::cerr << "Error No: Invalid ColorMode" << mode << std::endl;
+      break;
+    }
+  }  
 }
 
-Vec4f	Material::getDiffuse( Material::Face face ) const
-{
-	switch( face )
-	{
-		case FRONT:
-		{
-			return mFrontDiffuseCom;
-			break;
-		}
-		case BACK:
-		{
-			return mBackDiffuseCom;
-			break;
-		}
-		case FRONT_AND_BACK:
-		{
-			if( !mFrontAndBack )
-			{
-				std::cerr << "[Material::getDiffuse] FRONT_AND_BACK called on material with "<< std::endl;
-				std::cerr << "separate FRONT and BACK material. " << std::endl;
-			}
-			return mFrontDiffuseCom;
-			break;
-		}
-	};
 
-	std::cerr << "[Material::getDiffuse] Invalid Face : " << face << " passed. " << std::endl;
-	return mFrontDiffuseCom;
-}
-
-void	Material::setSpecular( const Vec4f specular, Material::Face face )
-{
-	switch( face )
-	{
-		case FRONT:
-		{
-			mFrontSpecularCom = specular;
-			break;
-		}
-		case BACK:
-		{
-			mBackSpecularCom = specular;
-			break;
-		}
-		case FRONT_AND_BACK:
-		{
-			mFrontSpecularCom = specular;
-			mBackSpecularCom  = mFrontSpecularCom;
-			mFrontAndBack	  = false;
-			break;
-		}
-	};
-}
-
-Vec4f	Material::getSpecular( Material::Face face ) const
-{
-	switch( face )
-	{
-		case FRONT:
-		{
-			return mFrontSpecularCom;
-			break;
-		}
-		case BACK:
-		{
-			mBackSpecularCom;
-			break;
-		}
-		case FRONT_AND_BACK:
-		{
-			if( !mFrontAndBack )
-			{
-				std::cerr << "[Material::getSpecular] FRONT_AND_BACK called on material with "<< std::endl;
-				std::cerr << "separate FRONT and BACK material. " << std::endl;
-			}
-
-			mFrontSpecularCom;
-			break;
-		}
-	};
-	return mFrontSpecularCom;
-}
-
-void	Material::setShininess( float shininess, Material::Face face )
-{
-	switch( face )
-	{
-		case FRONT:
-		{
-			mFrontShininess = shininess;
-			break;
-		}
-		case BACK:
-		{
-			mBackShininess = shininess;
-			break;
-		}
-		case FRONT_AND_BACK:
-		{
-			mFrontShininess = shininess;
-			mBackShininess  = mFrontShininess;
-			mFrontAndBack   = true;
-			break;
-		}
-	};
-}
-
-float	Material::getShininess( Material::Face face ) const
-{
-	switch( face )
-	{
-		case FRONT:
-		{
-			return mFrontShininess;
-			break;
-		}
-		case BACK:
-		{
-			return mBackShininess;
-			break;
-		}
-		case FRONT_AND_BACK:
-		{
-			if( !mFrontAndBack )
-			{
-				std::cerr << "[Material::getShininess] FRONT_AND_BACK called on material with "<< std::endl;
-				std::cerr << "separate FRONT and BACK material. " << std::endl;
-			}
-			return mFrontShininess;
-			break;
-		}
-	}
-
-	std::cerr << "[Material::getShininess] Invalid Face : " << face << " passed. " << std::endl;
-	return  mFrontShininess;
-}
-
-bool Material::frontAndBack()
+bool Material::enabledFrontAndBack()
 {
 	return mFrontAndBack;
+}
+
+
+void Material::activateStateSet( Node* node )
+{
 }

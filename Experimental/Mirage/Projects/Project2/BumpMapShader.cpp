@@ -5,6 +5,7 @@
 
 #include "Image/Image.h"
 
+#include "MsgCore/Node.h"
 #include "MsgCore/Geometry.h"
 #include "MsgCore/Group.h"
 #include "MsgCore/Geode.h"
@@ -17,7 +18,11 @@
 namespace Project2
 {
   BumpMapShader::BumpMapShader() : 
-    _program( 0x00 )
+    _dirty( true ),
+    _program( 0x00 ), 
+    _locT( 0x00 ), 
+    _locB( 0x00 ), 
+    _locN( 0x00 )
   {
   }
 
@@ -27,76 +32,130 @@ namespace Project2
   }
 
 
+  std::string BumpMapShader::id() const 
+  {
+    return std::string( "Shader" );
+  }
+
+
+  void BumpMapShader::init()
+  {
+    _locT  = glGetAttribLocation( _program, "tangent" );
+    _locB  = glGetAttribLocation( _program, "binormal" );
+    _locN  = glGetAttribLocation( _program, "normal" );
+        
+    _locNormalMap = glGetUniformLocation( _program, "normalMap" ); 
+  }
+
+
+  bool BumpMapShader::dirty() const
+  {
+    return _dirty;
+  }
+
+  
+  void BumpMapShader::dirty( bool flag )
+  {
+    _dirty = flag;
+  }
+
+
   GLint BumpMapShader::program() const
   {
     return _program;
   }
 
 
-  void BumpMapShader::apply( Msg::MsgCore::Node* node )
-  {    
-
-    this->setShader( "./Data/Shaders/BumpMapShader.vert", "./Data/Shaders/BumpMapShader.frag" );
-   
-    //glActiveTexture( GL_TEXTURE0 );        
-    
-    // Load normal map. 
-    this->loadBumpMap( "./Data/Textures/NormalMap.bmp" );  
-
-    if( Msg::MsgCore::Group* gr = dynamic_cast< Msg::MsgCore::Group* >( node ) )
+  void BumpMapShader::calculateTBN( Msg::MsgCore::Geometry* geom )
+  { 
+    if( geom )
     {
-      size_t noOfChildren = gr->getChildren().size();
+      Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > t( new Msg::MsgCore::Vec3Array() );
+      Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > b( new Msg::MsgCore::Vec3Array() );
+      Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > n( new Msg::MsgCore::Vec3Array() );
+      this->doCalculateTBN( geom, t.get(), b.get(), n.get() );
 
-      for( size_t k = 0; k < noOfChildren; ++k )
+      geom->setTangetTBNArray( t.get() );
+      geom->setBinormalTBNArray( b.get() );
+      geom->setNormalTBNArray( n.get() );
+
+      //GLint locT  = glGetAttribLocation( _program, "tangent" );
+
+      //// @Todo: Why we need to call this? 
+      //glBindAttribLocation( _program, locT, "tangent" );  
+      //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, t->getDataPointer() );  
+
+      //GLint locB  = glGetAttribLocation( _program, "binormal" );
+      //glBindAttribLocation( _program, locB, "binormal" );  
+      //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, b->getDataPointer() );  
+    }
+  }
+
+  
+  void  BumpMapShader::parseArguments( std::vector< std::string >& arguments )
+  {      
+    for( size_t i = 0; i < arguments.size(); ++i )
+    {
+      if( arguments[i] == "--shader_file" )
       {
-        Msg::MsgCore::Geode* ge = dynamic_cast< Msg::MsgCore::Geode* >( gr->getChild( k ) );
-      
-        size_t drawablesCount = ge->getDrawableList().size();
-
-        for( size_t i = 0; i < drawablesCount; ++i )
-        {
-          Msg::MsgCore::Geometry* geom = dynamic_cast< Msg::MsgCore::Geometry* >( ge->getDrawable( i ) );
-
-          if( geom )
-          {
-            Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > t( new Msg::MsgCore::Vec3Array() );
-            Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > b( new Msg::MsgCore::Vec3Array() );
-            Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > n( new Msg::MsgCore::Vec3Array() );
-            calculateTBN( geom, t.get(), b.get(), n.get() );
-
-            geom->setTangetTBNArray( t.get() );
-            geom->setBinormalTBNArray( b.get() );
-            geom->setNormalTBNArray( n.get() );
-
-            //GLint locT  = glGetAttribLocation( _program, "tangent" );
-
-            //// @Todo: Why we need to call this? 
-            //glBindAttribLocation( _program, locT, "tangent" );  
-            //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, t->getDataPointer() );  
-
-            //GLint locB  = glGetAttribLocation( _program, "binormal" );
-            //glBindAttribLocation( _program, locB, "binormal" );  
-            //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, b->getDataPointer() );  
-          }
-        }
+        this->setShader( ( arguments[i+1] + std::string( ".vert" ) ), ( arguments[i+1] + std::string( ".frag" ) ) );  
+      }
+      if( arguments[i] == "--normal_map" )
+      {
+        this->loadBumpMap( arguments[i+1] );
+      }
+      if( arguments[i] == "--decal_map" )
+      {
+        this->loadDecalMap( arguments[i+1] );
       }
     }
   }
 
 
-  void BumpMapShader::draw()
+  void BumpMapShader::activate( Msg::MsgCore::Node* node )
   {
-    //glUseProgram( _program );
-    //
-    //GLint locT  = glGetAttribLocation( _program, "tangent" );
-    //glBindAttribLocation( _program, locT, "tangent" );  
-    //       
-    //GLint locB  = glGetAttribLocation( _program, "binormal" );
-    //glBindAttribLocation( _program, locB, "binormal" );    
+    Msg::MsgCore::SmartPtr< Msg::MsgCore::Geometry > geom = dynamic_cast< Msg::MsgCore::Geometry* >( node );
+    
+    if( geom.valid() )
+    {
+      //if( this->dirty() )
+      {
+        init(); 
+        //this->dirty( false );
+      }
+      // Only if we dont have tangent array we will do the calculation. 
+      //
+      // @Note: Here we are assuming that if we dont have tangent array that means 
+      // that we are missing binormals as well. 
+      if( !geom->getTangentTBNArray() )
+      {
+        calculateTBN( geom.get() );       
+      }
 
-    //// Locate uniform for BumpMap sampler. 
-    //GLint loc = glGetUniformLocation( _program, "normalMap" ); 
-    //glUniform1i ( loc, 0 );  
+      glEnableVertexAttribArray( _locT );    
+      glVertexAttribPointer( _locT, 3, GL_FLOAT, false, 0, geom->getTangentTBNArray()->getDataPointer() );        
+      
+      glEnableVertexAttribArray( _locB );    
+      glVertexAttribPointer( _locB, 3, GL_FLOAT, false, 0, geom->getBinormalTBNArray()->getDataPointer() );  
+      
+      glEnableVertexAttribArray( _locN );    
+      glVertexAttribPointer( _locN, 3, GL_FLOAT, false, 0, geom->getNormalTBNArray()->getDataPointer() );  
+
+      // Locate uniform for BumpMap sampler.       
+      glUniform1i ( _locNormalMap, 0 );           
+    }
+  }
+
+
+  void BumpMapShader::deActivate( Msg::MsgCore::Node* node )
+  {
+    //if( !dirty() )
+    {
+      // Disabling generic attribute arrays.         
+      glDisableVertexAttribArray( _locN );
+      glDisableVertexAttribArray( _locB );
+      glDisableVertexAttribArray( _locT );    
+    }
   }
 
 
@@ -127,9 +186,15 @@ namespace Project2
   }
 
 
-  void BumpMapShader::loadDecalMap( const std::string& filename ) 
+  void BumpMapShader::loadDecalMap( const std::string& fileName ) 
   {
-    
+    IMAGE image; 
+    image.Load( const_cast< char* >( fileName.c_str() ) );
+    image.ExpandPalette();
+    GLuint texIndex; 
+    glGenTextures( 1, &texIndex );
+    glBindTexture( GL_TEXTURE_2D, texIndex );
+    gluBuild2DMipmaps( GL_TEXTURE_2D, GL_RGBA8, image.width, image.height, image.format, GL_UNSIGNED_BYTE, image.data );
   }
 
 
@@ -141,7 +206,7 @@ namespace Project2
   }
 
   
-  void BumpMapShader::calculateTBN( Msg::MsgCore::Geometry* geom, Msg::MsgCore::Vec3Array* tangent, 
+  void BumpMapShader::doCalculateTBN( Msg::MsgCore::Geometry* geom, Msg::MsgCore::Vec3Array* tangent, 
                                     Msg::MsgCore::Vec3Array* binormal, Msg::MsgCore::Vec3Array* normal )
   {
     Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > vertices = geom->getVertexArray();
@@ -245,6 +310,7 @@ namespace Project2
       Vec3f& t = tan1->at( j );
 
       Vec3f bin3v = n.cross( t ) * 1.0;
+      bin3v.normalize();
       binormal->push_back( bin3v );
     }
 
@@ -286,7 +352,7 @@ namespace Project2
   }
 
 
-  Shader* createBumpMapShader()
+  static Shader* createBumpMapShader()
   {
     return new BumpMapShader();
   }

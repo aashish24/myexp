@@ -70,27 +70,39 @@ void Geometry::setColorArray( Vec4Array* colorArray )
 }
 
 
-Vec3Array* Geometry::getTangentArray() 
+Vec3Array* Geometry::getTangentTBNArray() 
 {
-  return mTangets.get();
+  return mTangetsTBN.get();
 }
 
 
-void Geometry::setTangetArray( Vec3Array* tangentArray )
+void Geometry::setTangetTBNArray( Vec3Array* tangentArray )
 {
-  mTangets = tangentArray;
+  mTangetsTBN = tangentArray;
 }
 
 
-Vec3Array* Geometry::getBinormalArray() 
+Vec3Array* Geometry::getBinormalTBNArray() 
 {
-  return mBinormals.get();
+  return mBinormalsTBN.get();
 }
 
 
-void Geometry::setBinormalArray( Vec3Array* binormalArray )
+void Geometry::setBinormalTBNArray( Vec3Array* binormalArray )
 {
-  mBinormals = binormalArray;
+  mBinormalsTBN = binormalArray;
+}
+
+
+Vec3Array* Geometry::getNormalTBNArray() 
+{
+  return mNormalsTBN.get();
+}
+
+
+void Geometry::setNormalTBNArray( Vec3Array* normalArray )
+{
+  mNormalsTBN = normalArray;
 }
 
 
@@ -228,112 +240,110 @@ void Geometry::addPrimitiveSet( PrimitiveSet* primitiveSet )
 
 void Geometry::drawImplementation() const
 {
-	glBegin( GL_TRIANGLES );
-	for( size_t i=0; i < mVertexIndices->size(); ++ i )
-	{
-		if( mAttrBinding == Geometry::BIND_PER_PRIMITIVE )
-		{
-			if( mNormals.valid())
-			{
-				glNormal3f( mNormals->at( mNormalIndices->at(i)[0] )[0],
-							mNormals->at( mNormalIndices->at(i)[0] )[1],
-							mNormals->at( mNormalIndices->at(i)[0] )[2] );	  
-			}
+  // This is a slow path. 
+  // @Todo: Need to revamp the code sometime to make the drawing via different ways. 
+  
+  bool slowPath = false; 
 
-			glVertex3f( mVertices->at( mVertexIndices->at(i)[0] )[0], 	
-						mVertices->at( mVertexIndices->at(i)[0] )[1], 
-						mVertices->at( mVertexIndices->at(i)[0] )[2] );
-
-			glVertex3f( mVertices->at( mVertexIndices->at(i)[1] )[0], 	
-						mVertices->at( mVertexIndices->at(i)[1] )[1], 
-						mVertices->at( mVertexIndices->at(i)[1] )[2] );
-
-			glVertex3f( mVertices->at( mVertexIndices->at(i)[2] )[0], 	
-						mVertices->at( mVertexIndices->at(i)[2] )[1], 
-						mVertices->at( mVertexIndices->at(i)[2] )[2] );
-		}
-		else if( mAttrBinding == Geometry::BIND_PER_VERTEX )
-		{
-			
-      glNormal3f( mNormals->at( mNormalIndices->at(i)[0] )[0],
-						      mNormals->at( mNormalIndices->at(i)[0] )[1],
-						      mNormals->at( mNormalIndices->at(i)[0] )[2] );
-
-      glTexCoord3f( mTexCoords->at( mTextureIndices->at(i)[0] )[0],
-						        mTexCoords->at( mTextureIndices->at(i)[0] )[1],
-						        mTexCoords->at( mTextureIndices->at(i)[0] )[2] );
-
-			glVertex3f( mVertices->at( mVertexIndices->at(i)[0] )[0], 	
-						      mVertices->at( mVertexIndices->at(i)[0] )[1], 
-						      mVertices->at( mVertexIndices->at(i)[0] )[2] );
-
-			glNormal3f( mNormals->at( mNormalIndices->at(i)[1] )[0],
-						      mNormals->at( mNormalIndices->at(i)[1] )[1],
-						      mNormals->at( mNormalIndices->at(i)[1] )[2] );
-
-      glTexCoord3f( mTexCoords->at( mTextureIndices->at(i)[1] )[0],
-						        mTexCoords->at( mTextureIndices->at(i)[1] )[1],
-						        mTexCoords->at( mTextureIndices->at(i)[1] )[2] );
-
-			glVertex3f( mVertices->at( mVertexIndices->at(i)[1] )[0], 	
-						      mVertices->at( mVertexIndices->at(i)[1] )[1], 
-						      mVertices->at( mVertexIndices->at(i)[1] )[2] );
-
-			glNormal3f( mNormals->at( mNormalIndices->at(i)[2] )[0],
-						      mNormals->at( mNormalIndices->at(i)[2] )[1],
-						      mNormals->at( mNormalIndices->at(i)[2] )[2] );
-
-      glTexCoord3f( mTexCoords->at( mTextureIndices->at(i)[2] )[0],
-						        mTexCoords->at( mTextureIndices->at(i)[2] )[1],
-						        mTexCoords->at( mTextureIndices->at(i)[2] )[2] );
-
-			glVertex3f( mVertices->at( mVertexIndices->at(i)[2] )[0], 	
-						      mVertices->at( mVertexIndices->at(i)[2] )[1], 
-						      mVertices->at( mVertexIndices->at(i)[2] )[2] );
-		}
-	}
-	glEnd();
-
-  if( mTangets.valid() )
+  if( slowPath )
   {
-     //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, mTangets->getDataPointer() );        
-  }
+	  glBegin( GL_TRIANGLES );
+	  for( size_t i=0; i < mVertexIndices->size(); ++ i )
+	  {
+		  if( mAttrBinding == Geometry::BIND_PER_PRIMITIVE )
+		  {
+			  if( mNormals.valid())
+			  {
+				  glNormal3f( mNormals->at( mNormalIndices->at(i)[0] )[0],
+							  mNormals->at( mNormalIndices->at(i)[0] )[1],
+							  mNormals->at( mNormalIndices->at(i)[0] )[2] );	  
+			  }
 
-  if( mBinormals.valid() )
+			  glVertex3f( mVertices->at( mVertexIndices->at(i)[0] )[0], 	
+						  mVertices->at( mVertexIndices->at(i)[0] )[1], 
+						  mVertices->at( mVertexIndices->at(i)[0] )[2] );
+
+			  glVertex3f( mVertices->at( mVertexIndices->at(i)[1] )[0], 	
+						  mVertices->at( mVertexIndices->at(i)[1] )[1], 
+						  mVertices->at( mVertexIndices->at(i)[1] )[2] );
+
+			  glVertex3f( mVertices->at( mVertexIndices->at(i)[2] )[0], 	
+						  mVertices->at( mVertexIndices->at(i)[2] )[1], 
+						  mVertices->at( mVertexIndices->at(i)[2] )[2] );
+		  }
+		  else if( mAttrBinding == Geometry::BIND_PER_VERTEX )
+		  {
+  			
+        glNormal3f( mNormals->at( mNormalIndices->at(i)[0] )[0],
+						        mNormals->at( mNormalIndices->at(i)[0] )[1],
+						        mNormals->at( mNormalIndices->at(i)[0] )[2] );
+
+        glTexCoord3f( mTexCoords->at( mTextureIndices->at(i)[0] )[0],
+						          mTexCoords->at( mTextureIndices->at(i)[0] )[1],
+						          mTexCoords->at( mTextureIndices->at(i)[0] )[2] );
+
+			  glVertex3f( mVertices->at( mVertexIndices->at(i)[0] )[0], 	
+						        mVertices->at( mVertexIndices->at(i)[0] )[1], 
+						        mVertices->at( mVertexIndices->at(i)[0] )[2] );
+
+			  glNormal3f( mNormals->at( mNormalIndices->at(i)[1] )[0],
+						        mNormals->at( mNormalIndices->at(i)[1] )[1],
+						        mNormals->at( mNormalIndices->at(i)[1] )[2] );
+
+        glTexCoord3f( mTexCoords->at( mTextureIndices->at(i)[1] )[0],
+						          mTexCoords->at( mTextureIndices->at(i)[1] )[1],
+						          mTexCoords->at( mTextureIndices->at(i)[1] )[2] );
+
+			  glVertex3f( mVertices->at( mVertexIndices->at(i)[1] )[0], 	
+						        mVertices->at( mVertexIndices->at(i)[1] )[1], 
+						        mVertices->at( mVertexIndices->at(i)[1] )[2] );
+
+			  glNormal3f( mNormals->at( mNormalIndices->at(i)[2] )[0],
+						        mNormals->at( mNormalIndices->at(i)[2] )[1],
+						        mNormals->at( mNormalIndices->at(i)[2] )[2] );
+
+        glTexCoord3f( mTexCoords->at( mTextureIndices->at(i)[2] )[0],
+						          mTexCoords->at( mTextureIndices->at(i)[2] )[1],
+						          mTexCoords->at( mTextureIndices->at(i)[2] )[2] );
+
+			  glVertex3f( mVertices->at( mVertexIndices->at(i)[2] )[0], 	
+						        mVertices->at( mVertexIndices->at(i)[2] )[1], 
+						        mVertices->at( mVertexIndices->at(i)[2] )[2] );
+		  }
+	  }
+	  glEnd();
+  }
+  else
   {
-    //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, mBinormals->getDataPointer() ); 
+    // Fast path using DrawElements and VertexArrays. 
+
+    // Set all the vertex arrays and then dereference the arrays later. 
+    glVertexPointer( 3, GL_FLOAT, 0, mVertices->getDataPointer() );
+
+    if( mColors.valid() )
+    {
+	    glEnableClientState( GL_COLOR_ARRAY );
+	    glColorPointer( 4, GL_FLOAT, 0, mColors->getDataPointer() );
+    }
+
+    if( mNormals.valid() )
+    {
+	    glEnableClientState( GL_NORMAL_ARRAY );
+	    glNormalPointer( GL_FLOAT, 0, mNormals->getDataPointer() );      
+    }	
+  	
+    if( mTexCoords.valid() )
+    {
+	    glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+	    glTexCoordPointer( 3, GL_FLOAT, 0, mTexCoords->getDataPointer() );
+    }		  
+
+    // Now dereference the arrays. 
+	  for( size_t i=0; i < mPrimitiveSets.size(); ++i )
+	  {	
+		  glEnableClientState( GL_VERTEX_ARRAY );
+		  mPrimitiveSets[i]->draw();
+		  glDisableClientState( GL_VERTEX_ARRAY );		   
+	  }
   }
-
-
-	/*
-	for( size_t i=0; i < mPrimitiveSets.size(); ++i )
-	{			
-		glPushAttrib( GL_ALL_ATTRIB_BITS );
-		glVertexPointer( 3, GL_FLOAT, 0, mVertices->getDataPointer() );
-
-		if( mColors.valid() )
-		{
-			glEnableClientState( GL_COLOR_ARRAY );
-			glColorPointer( 4, GL_FLOAT, 0, mColors->getDataPointer() );
-		}
-
-		if( mNormals.valid() )
-		{
-			glEnableClientState( GL_NORMAL_ARRAY );
-			glNormalPointer( GL_FLOAT, 0, mNormals->getDataPointer() );
-		}	
-		
-		if( mTexCoords.valid() )
-		{
-			glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-			glTexCoordPointer( 3, GL_FLOAT, 0, mTexCoords->getDataPointer() );
-		}
-
-		glEnableClientState( GL_VERTEX_ARRAY );
-		mPrimitiveSets[i]->draw();
-		glDisableClientState( GL_VERTEX_ARRAY );
-
-		glPopAttrib();	
-	}
-	*/
 }

@@ -6,6 +6,11 @@ uniform sampler2D normalMap;
 varying	vec3 lightDir;
 varying	vec3 eyeDir;
 
+// @Note: For testing. 
+varying vec3 t;
+varying vec3 b;
+varying vec3 n;
+
 void main()
 {   
 	// Final color of the fragment initialized to 0.0. 

@@ -13,6 +13,8 @@
 #include "GL/glew.h"
 #include "GL/gl.h"
 
+#include "MsgCore/Node.h"
+
 #include <iostream>
 #include <vector>
 
@@ -22,7 +24,7 @@ namespace Msg
 	{
 		class Geode;			
 
-		class MSG_EXPORT Drawable : public Object
+		class MSG_EXPORT Drawable : public Node
 		{
 			public:
 				typedef std::vector< Geode* > Parents; 
@@ -31,13 +33,13 @@ namespace Msg
 				Drawable();
 				Drawable( const Drawable& drawable );
 
-        void                          addParent( Geode* parent );
-        const Parents                 getParents() const ;
-        Parents                       getParents();
-        unsigned int                  getNumParents();
+        //void                          addParent( Geode* parent );
+        //const Parents                 getParents() const ;
+        //Parents                       getParents();
+        //unsigned int                  getNumParents();
 
-        const StateSet*               getStateSet() const;
-        StateSet*                     getStateSet();
+        //const StateSet*               getStateSet() const;
+        //StateSet*                     getStateSet();
           
 			  void                          setUseDisplayList( bool flag );
         bool                          getUseDisplayList( unsigned int contextID );
@@ -60,15 +62,15 @@ namespace Msg
 
         bool					                _useDisplayList;
 
-				Parents					              _parents;
+				//Parents					              _parents;
 
-				SmartPtr< StateSet >	        _stateSet;
+				//SmartPtr< StateSet >	        _stateSet;
 
 				mutable GLObjectList	        _glObjectList;
 		};
 
     
-    inline void Drawable::addParent( Geode* parent )
+   /* inline void Drawable::addParent( Geode* parent )
 		{
 			_parents.push_back( parent );
 		}
@@ -101,7 +103,7 @@ namespace Msg
     inline StateSet* Drawable::getStateSet() 
 		{
 			return _stateSet.get();
-		}
+		}*/
 
 
     inline void Drawable::setUseDisplayList( bool flag )
@@ -124,11 +126,9 @@ namespace Msg
      
 
     inline void Drawable::draw()
-	  {
-		  if( _stateSet.valid() )
-		  {
-			  _stateSet->drawGLState();
-		  }
+	  { 
+      // Should we compile this into display list? 
+      this->activateStateSet();
 
 		  // If this is not the first time. 
 		  if( !_glObjectList.empty() )
@@ -150,6 +150,9 @@ namespace Msg
 			  glEndList();
         glCallList( globj );
 		  }
+      
+      this->deActivateStateSet();
+
 		  return;
 	  }   
 	}

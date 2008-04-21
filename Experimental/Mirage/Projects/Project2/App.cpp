@@ -7,20 +7,19 @@
 #include "GL/glut.h"
 
 #include "App.h"
-#include "Shader.h"
 #include "ShaderFactory.h"
+#include "BumpMapShader.h"
 
 #include "MsgCore/Node.h"
 #include "MsgCore/Group.h"
 #include "MsgCore/Geode.h"
 #include "MsgCore/Geometry.h"
-#include "MsgCore/NodeVisitor.h"
 #include "MsgDB/FileRead.h"
 
 namespace Project2
 {
   App::App() :
-    _lightPosition( 0.0, 0.0, -18.0, 1.0 ), 
+    _lightPosition( 0.0, 0.0, -17.0, 1.0 ), 
     _shader( 0x00 ), 
     _nodeVisitor( new Msg::MsgCore::NodeVisitor() )
   {
@@ -28,10 +27,7 @@ namespace Project2
 
 
   App::~App()
-  {
-    // Delete current shader and free the memory ( as the shader is created using new operator ). 
-    delete _shader;
-    _shader = 0x00;
+  { 
   }
 
 
@@ -62,26 +58,18 @@ namespace Project2
     glMaterialfv( GL_FRONT, GL_AMBIENT,   mambient   );
     glMaterialfv( GL_FRONT, GL_DIFFUSE,   mdiffuse   );
     glMaterialfv( GL_FRONT, GL_SPECULAR,  mspecular  );
-    glMaterialf ( GL_FRONT, GL_SHININESS, 10.0 );  
+    glMaterialf ( GL_FRONT, GL_SHININESS, 200.0 );  
     
     // Initialize scene graph now. 
     _root = new Msg::MsgCore::Group();
-    
-    // Load data and build scene graph.
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Node > node = Msg::MsgDB::FileRead::readFile( "./Data/Models/plane.obj", false );
-
-    if( node.valid() )
-    {
-      _root->addChild( node.get() );
-    }
 
     // Glew initialization. 
-    glewInit();
-
-    // Initialize shaders now. 
-    _shader = ShaderFactory::instance()->create( "BumpMapShader" );
+    glewInit();    
     
-    _shader->apply( _root.get() );   
+    // Parse arguments. 
+    parseArguments();
+    
+    _root->getOrCreateStateSet()->setAttribute( _shader.get() );
   }
   
   
@@ -110,36 +98,45 @@ namespace Project2
     // Draw scene. 
     glPushMatrix();
     glTranslatef( 0.0f, 0.0f, -20.0f );
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Geode > ge = dynamic_cast< Msg::MsgCore::Geode* >( _root->getChild( 0 ) );
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Geometry > geom = dynamic_cast< Msg::MsgCore::Geometry* >( ge->getDrawable( 0 ) );
-
+    
     GLint program = _shader->program();
-    glUseProgram( program );  
-    // @Todo: Find a better way set this. 
-    GLint locT  = glGetAttribLocation( program, "tangent" );
-    glEnableVertexAttribArray( locT );    
-    glVertexAttribPointer( locT, 3, GL_FLOAT, false, 0, geom->getTangentTBNArray()->getDataPointer() );  
+    glUseProgram( program );      
 
-    GLint locB  = glGetAttribLocation( program, "binormal" );
-    glEnableVertexAttribArray( locB );    
-    glVertexAttribPointer( locB, 3, GL_FLOAT, false, 0, geom->getBinormalTBNArray()->getDataPointer() );  
+    //Msg::MsgCore::SmartPtr< Msg::MsgCore::Geode > ge = dynamic_cast< Msg::MsgCore::Geode* >( _root->getChild( 0 ) );
+    //Msg::MsgCore::SmartPtr< Msg::MsgCore::Geometry > geom = dynamic_cast< Msg::MsgCore::Geometry* >( ge->getDrawable( 0 ) );     
 
-    GLint locC  = glGetAttribLocation( program, "normal" );
-    glEnableVertexAttribArray( locC );    
-    glVertexAttribPointer( locC, 3, GL_FLOAT, false, 0, geom->getNormalTBNArray()->getDataPointer() );  
+    //BumpMapShader* bms = dynamic_cast< BumpMapShader* >( _shader.get() );
+    //if( bms )
+    //{
+    //  bms->calculateTBN( geom.get() );
+    //}
 
-    // Locate uniform for BumpMap sampler. 
-    GLint loc = glGetUniformLocation( program, "normalMap" ); 
-    glUniform1i ( loc, 0 );  
+    //// @Todo: Find a better way set this.
+    //GLint locT  = glGetAttribLocation( program, "tangent" );
+    //glEnableVertexAttribArray( locT );
+    //glVertexAttribPointer( locT, 3, GL_FLOAT, false, 0, geom->getTangentTBNArray()->getDataPointer() );    
+    ////glDisableVertexAttribArray( locT );
+    //  
+    //GLint locB  = glGetAttribLocation( program, "binormal" );
+    //glEnableVertexAttribArray( locB );
+    //glVertexAttribPointer( locB, 3, GL_FLOAT, false, 0, geom->getBinormalTBNArray()->getDataPointer() );
+    ////glDisableVertexAttribArray( locB );
 
-    GLint locLightPos = glGetUniformLocation( program, "lightPos" );
-    glUniform3fv( locLightPos, 1, _lightPosition.front() );
+    //GLint locN  = glGetAttribLocation( program, "normal" );
+    //glEnableVertexAttribArray( locN );
+    //glVertexAttribPointer( locN, 3, GL_FLOAT, false, 0, geom->getNormalTBNArray()->getDataPointer() );
+    ////glDisableVertexAttribArray( locN );
 
-    _root->accept( *( _nodeVisitor ) );    
+    //// Locate uniform for BumpMap sampler.
+    //GLint loc = glGetUniformLocation( program, "normalMap" );
+    //glUniform1i ( loc, 0 );
 
-    // Disabling generic attribute arrays. 
-    glDisableVertexAttribArray( locB );
-    glDisableVertexAttribArray( locT );    
+    _root->accept( *( _nodeVisitor.get() ) );    
+    //
+    //glDisableVertexAttribArray( locN );
+    //glDisableVertexAttribArray( locB );
+    //glDisableVertexAttribArray( locT );
+
     glPopMatrix();
 
     // Draw light object. 
@@ -159,10 +156,48 @@ namespace Project2
   }
 
 
+  void App::arguments( int& argc, char** argv ) 
+  {
+    for( int i = 0; i < argc; ++i ) 
+    {
+      _arguments.push_back( std::string(  argv[i] ) );
+    }
+  }
+
+
+  void App::parseArguments() 
+  {
+    for( size_t i = 0; i < _arguments.size(); ++i )
+    {
+      if( _arguments[i] == "--shader_type" )
+      {
+        _shader = ShaderFactory::instance()->create( _arguments[i+1] );
+
+        if( _shader.valid() )
+        {
+          // Shader needs to extract the information from arguments. 
+          _shader->parseArguments( _arguments );     
+        }
+      }
+      if( _arguments[i] == "--model" )
+      {
+        // Load data and build scene graph.
+        Msg::MsgCore::SmartPtr< Msg::MsgCore::Node > node = 
+          Msg::MsgDB::FileRead::readFile( _arguments[i+1], false );
+
+        if( node.valid() )
+        {
+          _root->addChild( node.get() );
+        }
+      }
+    }
+  }
+
+
   void App::update()
   {
     static float theta = 0.0f;
-    static float r = 1.0f;
+    static float r = 3.0f;
     static const float incr = 0.01f;
     static const float minAngle = 0.0f;
     static const float maxAngle = 360.f;

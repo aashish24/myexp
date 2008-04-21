@@ -2,6 +2,10 @@
 #ifndef __PROJECT2_SHADER_H__
 #define __PROJECT2_SHADER_H__
 
+#include "MsgCore/StateAttribute.h"
+
+#include <vector>
+
 namespace Msg
 {
   namespace MsgCore
@@ -12,7 +16,7 @@ namespace Msg
 
 namespace Project2
 {
-  class Shader 
+  class Shader : public Msg::MsgCore::StateAttribute
   {
     public: 
 
@@ -21,12 +25,10 @@ namespace Project2
       // Shader interface. 
       // 
       /////////////////////////////////////////////////////////////////////////
+      
+      virtual int program() const = 0;
 
-      virtual GLint program() const = 0;
-
-      virtual void apply( Msg::MsgCore::Node* node ) = 0;     
-
-      virtual void draw() = 0;
+      virtual void parseArguments( std::vector< std::string >& arguments ) = 0;
   };
 }
 

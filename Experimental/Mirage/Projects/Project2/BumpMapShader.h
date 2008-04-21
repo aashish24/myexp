@@ -9,9 +9,9 @@
 #include "GL/glew.h"
 #include "GL/gl.h"
 
-#include "Shader.h"
-
 #include "MsgCore/Array.h"
+
+#include "Shader.h"
 
 #include <string >
 
@@ -25,7 +25,7 @@ namespace Msg
 }
 
 namespace Project2 
-{  
+{ 
   /////////////////////////////////////////////////////////////////////////////
   //
   // Class that implement Phong Shading. 
@@ -61,18 +61,30 @@ namespace Project2
       // @Note: Passing default shaders as agruments. 
       // 
       /////////////////////////////////////////////////////////////////////////
+      
+      std::string   id() const;
+
+      virtual void  init();
+
+      virtual bool  dirty() const;
+
+      virtual void  dirty( bool flag );
 
       GLint         program() const;
 
-      void          apply( Msg::MsgCore::Node* node );
+      void          calculateTBN( Msg::MsgCore::Geometry* geom );
 
-      void          draw();
+      virtual void  parseArguments( std::vector< std::string >& arguments );
+
+      virtual void  activate( Msg::MsgCore::Node* node );
+
+      virtual void  deActivate( Msg::MsgCore::Node* node );
 
       void          loadBumpMap( const std::string& filename );
 
       void          loadDecalMap( const std::string& filename );
 
-      void          calculateTBN( Msg::MsgCore::Geometry* geom, Msg::MsgCore::Vec3Array* tangent,
+      void          doCalculateTBN( Msg::MsgCore::Geometry* geom, Msg::MsgCore::Vec3Array* tangent,
                                   Msg::MsgCore::Vec3Array* binormal, Msg::MsgCore::Vec3Array* normal );
 
 
@@ -86,8 +98,14 @@ namespace Project2
 
 
     protected: 
+
+      bool          _dirty;
       
       GLint         _program;  
+      GLint         _locT;
+      GLint         _locB;
+      GLint         _locN;
+      GLint         _locNormalMap;
   };  
 }
 

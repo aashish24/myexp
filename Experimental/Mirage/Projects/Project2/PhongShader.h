@@ -42,29 +42,37 @@ namespace Project2
 
       PhongShader();
 
+      std::string   id() const;
 
-      /////////////////////////////////////////////////////////////////////////
-      //
-      // Destructor.  
-      // 
-      /////////////////////////////////////////////////////////////////////////
-      
-      virtual ~PhongShader();
+      virtual void  init();
 
+      virtual bool  dirty() const;
+
+      virtual void  dirty( bool flag );
 
       GLint         program() const;
 
+
       /////////////////////////////////////////////////////////////////////////
       //
-      // Calls setShader( const std::string& vert, const std::string& frag ).
-      // @Note: Passing default shaders as agruments. 
+      // 
       // 
       /////////////////////////////////////////////////////////////////////////
 
-      void          apply( Msg::MsgCore::Node* node );
+      virtual void  parseArguments( std::vector< std::string >& arguments );
+
+     
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // 
+      // 
+      /////////////////////////////////////////////////////////////////////////
+
+      virtual void  activate( Msg::MsgCore::Node* node );
 
 
-      void          draw(); 
+      virtual void  deActivate( Msg::MsgCore::Node* node );
+
 
       /////////////////////////////////////////////////////////////////////////
       //
@@ -76,6 +84,19 @@ namespace Project2
 
 
     protected: 
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // Destructor.  
+      // 
+      /////////////////////////////////////////////////////////////////////////
+      
+      virtual ~PhongShader();
+
+
+    protected: 
+
+      bool          _dirty;
       
       GLint         _program;  
   };  

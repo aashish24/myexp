@@ -18,7 +18,7 @@ namespace Msg
 		{
 			public:
 				typedef std::vector< SmartPtr< PrimitiveSet > >	 PrimitiveSets;
-
+        
 				enum AttributeBinding
 				{
 					BIND_PER_PRIMITIVE, 
@@ -41,11 +41,14 @@ namespace Msg
 				Vec4Array*			  getColorArray();
 				void				      setColorArray( Vec4Array* colorArray );
 
-        Vec3Array*			  getTangentArray();
-				void				      setTangetArray( Vec3Array* tangetArray );
+        Vec3Array*			  getTangentTBNArray();
+				void				      setTangetTBNArray( Vec3Array* tangetArray );
 
-        Vec3Array*			  getBinormalArray();
-				void				      setBinormalArray( Vec3Array* binormalArray );
+        Vec3Array*			  getBinormalTBNArray();
+				void				      setBinormalTBNArray( Vec3Array* binormalArray );
+
+        Vec3Array*			  getNormalTBNArray();
+				void				      setNormalTBNArray( Vec3Array* binormalArray );
 
 				AttributeBinding	getAttrBinding();
 				void				      setAttrBinding( const AttributeBinding& attrBinding );
@@ -76,8 +79,9 @@ namespace Msg
 				SmartPtr< Vec3Array	>	  mTexCoords;
 				SmartPtr< Vec4Array >	  mColors;
 
-        SmartPtr< Vec3Array >   mTangets;
-        SmartPtr< Vec3Array >   mBinormals;
+        SmartPtr< Vec3Array >   mTangetsTBN;
+        SmartPtr< Vec3Array >   mBinormalsTBN;
+        SmartPtr< Vec3Array >   mNormalsTBN;  
 
 				SmartPtr< Vec3iArray >	mVertexIndices;
 				SmartPtr< Vec3iArray >	mNormalIndices;
