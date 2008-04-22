@@ -42,9 +42,16 @@ void main()
 	// Calculate diffuse parameter.	
 	float diff = max( dot( pNormal, lightDir ), 0.3 );
 	
-	// Calculate fragment color using specular and diffuse light components.  
+	//
+	vec3 diffuseColor = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff;
+	vec3 diffuseColorMix = min( mix(  diffuseColor, color, 0.3 ), 1.0 ); 
+	
+	// Calculate fragment color using specular and diffuse light components.  	
+	//litColor = gl_FrontMaterial.specular.xyz * gl_LightSource[0].specular.xyz * pow( spec,  gl_FrontMaterial.shininess ) + 
+	//		   gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff + gl_FrontMaterial.ambient.xyz * gl_LightSource[0].ambient.xyz  ; 	
+	
 	litColor = gl_FrontMaterial.specular.xyz * gl_LightSource[0].specular.xyz * pow( spec,  gl_FrontMaterial.shininess ) + 
-			   gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff + gl_FrontMaterial.ambient.xyz * gl_LightSource[0].ambient.xyz  ; 	
+			   diffuseColorMix + gl_FrontMaterial.ambient.xyz * gl_LightSource[0].ambient.xyz  ; 	
 	
 	// @Test. 
 	//litColor = gl_FrontMaterial.specular.xyz * gl_LightSource[0].specular.xyz * pow( spec,  gl_FrontMaterial.shininess );			   
@@ -52,8 +59,8 @@ void main()
 	// Chop off values greater then 1.0.
 	litColor = min( litColor, vec3( 1.0 ) );
 	
-	//
-	litColor = min( mix( litColor, color, 0.2 ), 1.0 );
+	// @Note: Now we are mixing only diffuse components. 
+	//litColor = min( mix( litColor, color, 0.2 ), 1.0 );
 	
 	// Set fragment color.
 	gl_FragColor = vec4( litColor, 1.0 );
@@ -61,3 +68,4 @@ void main()
 	// @Test
 	//gl_FragColor = vec4( b, 1.0 );
 }
+
