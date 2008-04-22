@@ -19,7 +19,7 @@
 namespace Project2
 {
   App::App() :
-    _lightPosition( 0.0, 0.0, -17.0, 1.0 ), 
+    _lightPosition( 0.0, 0.0, -10.0, 1.0 ), 
     _shader( 0x00 ), 
     _nodeVisitor( new Msg::MsgCore::NodeVisitor() )
   {
@@ -46,8 +46,8 @@ namespace Project2
     GLfloat ldiffuse[] =  { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat lspecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };   
 
-    GLfloat mambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-    GLfloat mdiffuse[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+    GLfloat mambient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    GLfloat mdiffuse[] = { 0.3f, 0.8f, 0.8f, 1.0f };
     GLfloat mspecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     
     glLightfv( GL_LIGHT0, GL_AMBIENT, lambient );	
@@ -58,7 +58,7 @@ namespace Project2
     glMaterialfv( GL_FRONT, GL_AMBIENT,   mambient   );
     glMaterialfv( GL_FRONT, GL_DIFFUSE,   mdiffuse   );
     glMaterialfv( GL_FRONT, GL_SPECULAR,  mspecular  );
-    glMaterialf ( GL_FRONT, GL_SHININESS, 200.0 );  
+    glMaterialf ( GL_FRONT, GL_SHININESS, 100.0 );  
     
     // Initialize scene graph now. 
     _root = new Msg::MsgCore::Group();
@@ -102,41 +102,8 @@ namespace Project2
     GLint program = _shader->program();
     glUseProgram( program );      
 
-    //Msg::MsgCore::SmartPtr< Msg::MsgCore::Geode > ge = dynamic_cast< Msg::MsgCore::Geode* >( _root->getChild( 0 ) );
-    //Msg::MsgCore::SmartPtr< Msg::MsgCore::Geometry > geom = dynamic_cast< Msg::MsgCore::Geometry* >( ge->getDrawable( 0 ) );     
-
-    //BumpMapShader* bms = dynamic_cast< BumpMapShader* >( _shader.get() );
-    //if( bms )
-    //{
-    //  bms->calculateTBN( geom.get() );
-    //}
-
-    //// @Todo: Find a better way set this.
-    //GLint locT  = glGetAttribLocation( program, "tangent" );
-    //glEnableVertexAttribArray( locT );
-    //glVertexAttribPointer( locT, 3, GL_FLOAT, false, 0, geom->getTangentTBNArray()->getDataPointer() );    
-    ////glDisableVertexAttribArray( locT );
-    //  
-    //GLint locB  = glGetAttribLocation( program, "binormal" );
-    //glEnableVertexAttribArray( locB );
-    //glVertexAttribPointer( locB, 3, GL_FLOAT, false, 0, geom->getBinormalTBNArray()->getDataPointer() );
-    ////glDisableVertexAttribArray( locB );
-
-    //GLint locN  = glGetAttribLocation( program, "normal" );
-    //glEnableVertexAttribArray( locN );
-    //glVertexAttribPointer( locN, 3, GL_FLOAT, false, 0, geom->getNormalTBNArray()->getDataPointer() );
-    ////glDisableVertexAttribArray( locN );
-
-    //// Locate uniform for BumpMap sampler.
-    //GLint loc = glGetUniformLocation( program, "normalMap" );
-    //glUniform1i ( loc, 0 );
-
     _root->accept( *( _nodeVisitor.get() ) );    
-    //
-    //glDisableVertexAttribArray( locN );
-    //glDisableVertexAttribArray( locB );
-    //glDisableVertexAttribArray( locT );
-
+    
     glPopMatrix();
 
     // Draw light object. 

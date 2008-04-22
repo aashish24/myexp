@@ -44,7 +44,7 @@ void main()
 	
 	//
 	vec3 diffuseColor = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff;
-	vec3 diffuseColorMix = min( mix(  diffuseColor, color, 0.3 ), 1.0 ); 
+	vec3 diffuseColorMix = min( mix(  diffuseColor, color, 0.6 ), 1.0 ); 
 	
 	// Calculate fragment color using specular and diffuse light components.  	
 	//litColor = gl_FrontMaterial.specular.xyz * gl_LightSource[0].specular.xyz * pow( spec,  gl_FrontMaterial.shininess ) + 
