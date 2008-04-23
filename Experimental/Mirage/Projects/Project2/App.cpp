@@ -19,7 +19,7 @@
 namespace Project2
 {
   App::App() :
-    _lightPosition( 0.0, 0.0, -10.0, 1.0 ), 
+    _lightPosition( 0.0, 0.0, -17.0, 1.0 ), 
     _shader( 0x00 ), 
     _nodeVisitor( new Msg::MsgCore::NodeVisitor() )
   {
@@ -42,12 +42,12 @@ namespace Project2
     glEnable( GL_LIGHTING );
     glEnable( GL_LIGHT0 );
 
-    GLfloat lambient[] =  { 0.1f, 0.1f, 0.1f, 1.0f };
+    GLfloat lambient[] =  { 0.0f, 0.0f, 0.0f, 1.0f };
     GLfloat ldiffuse[] =  { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat lspecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };   
 
     GLfloat mambient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-    GLfloat mdiffuse[] = { 0.3f, 0.8f, 0.8f, 1.0f };
+    GLfloat mdiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat mspecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     
     glLightfv( GL_LIGHT0, GL_AMBIENT, lambient );	
@@ -88,7 +88,7 @@ namespace Project2
   void App::display()
   {
     //glPushMatrix();
-    glClearColor( 0.5f, 0.5f, 0.5f, 1.0f );
+    glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 
     glMatrixMode( GL_MODELVIEW );   
