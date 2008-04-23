@@ -25,9 +25,9 @@ int setupGLUT( int *argc, char *argv[] );
 
 
 
-NodePtr localModel (  UInt8* black_white_image_data_recived,  UInt32 width,  int xpoint, int zpoint ,  Pnt3f hit_point, bool event, float scale_value = 1.0);
+NodePtr localModel (  UInt8* black_white_image_data_recived,  UInt32 width,   Pnt3f hit_point, bool event, float scale_value = 1.0);
 
-NodePtr localModel1 (  UInt8* black_white_image_data_recived,  UInt32 width,  int xpoint, int zpoint ,  Pnt3f hit_point, bool event, float scale_value = 1.0);
+
 const float scale = 0.8; 
 
 GroupNodePtr n ;
@@ -79,7 +79,7 @@ void keyboard(unsigned char key, int x, int y)
                 {
                         hit_point = act->getHitPoint();
                     
-                        NodePtr SourceNode = localModel( black_white_image_data, width, 0, 0, hit_point, 1);        ////calling the function //////////////
+                        NodePtr SourceNode = localModel( black_white_image_data, width, hit_point, 1);        ////calling the function //////////////
                         localRoots.push_back(SourceNode);
                    
                         
@@ -159,10 +159,10 @@ void keyboard(unsigned char key, int x, int y)
  
  
  
- NodePtr localModel (  UInt8* black_white_image_data_recived,  UInt32 width,  int xpoint, int zpoint ,  Pnt3f hit_point, bool event, float scale_value)
+ NodePtr localModel (  UInt8* black_white_image_data_recived,  UInt32 width,  Pnt3f hit_point, bool event, float scale_value)
 {
         Matrix m, modelnodematrix, geometry_tempmatrix, modelnode_tempmatrix;
-        Vec3f min, max,min1, max1;
+        Vec3f min, max;
         osg::Matrix m1, m2, m3, m4, m5,m6, m7; 
         
         NodePtr model = OSG::SceneFileHandler::the().read("house1_3.3ds");/////defining the first model
@@ -176,8 +176,7 @@ void keyboard(unsigned char key, int x, int y)
                 if(event)       
                         m3.setTransform( Vec3f(hit_point[0], 0,  hit_point[2]),  Quaternion(Vec3f(1,0,0), -((90.0f * 3.14f) / 180.0f)));
                         
-                else 
-                        m3.setTransform( Vec3f(hit_point[0], 0,  hit_point[2]),  Quaternion(Vec3f(1,0,0), -((90.0f * 3.14f) / 180.0f)));      
+               
                         
                 m1.mult(m3);
                 
@@ -219,7 +218,7 @@ void keyboard(unsigned char key, int x, int y)
   
                   /******placing the  model on the terrian*************/
 	double  length,breadth, area, lowestpoint=100000.0, variable;
-	UInt32 x, z, j, i,a,b;
+	UInt32 x, z, j, i,x_starting,z_starting;
 
 	length = max[0] - min[0];                                           /////width//
 	breadth = max[2] - min[2];                                          ///height///
@@ -227,19 +226,13 @@ void keyboard(unsigned char key, int x, int y)
       
 	if( event)
 	{
-	        x=( hit_point[0] ) - UInt32(length/2) ;
-	        z=( hit_point[2] ) - UInt32(breadth/2);
-
-	        
+	        x = ( hit_point[0] ) - UInt32(length/2) ;
+	        z = ( hit_point[2] ) - UInt32(breadth/2);
+	        x_starting = x;
+	        z_starting = z;
+   
 	}
-	else
-	{
-	        x=( xpoint ) - UInt32(length/2) ;
-	        z=( zpoint ) - UInt32(breadth/2);
-	        a=x;
-	        b=z;
-	        
-	}
+	
 	
 	
 	////the two for loops for checking the lowest point condition on the terrain
@@ -269,22 +262,23 @@ void keyboard(unsigned char key, int x, int y)
                 m1.setIdentity(); 
                 
                  Vec3f trans,translate;
+                
                  
-                 translate[0]=(a+length)-center_of_bounding_box[0];
-                 translate[1]=0;
-                 translate[2]=(b+breadth)-center_of_bounding_box[2];
+                 translate[0] = (x_starting+length)-center_of_bounding_box[0];
+                 translate[1] = 0;
+                 translate[2] = (z_starting + breadth)-center_of_bounding_box[2];
                  
                  trans[0] = hit_point[0];
                  trans[1] = lowestpoint;
                  trans[2] = hit_point[2];
-                 
+                  //std::cout<< "translate=" << translate << std::endl;
                  
                 m1.setTranslate(0,0,0);                
                 m2.setTranslate(translate);
                 m2.mult(m1);
                 
                 m3.setTransform( Quaternion( Vec3f( 1,0,0), -( ( 90.0f * 3.14f ) / 180.0f ))); 
-                    
+                 //m3.mult(m1);   
                 m3.mult(m2);                
               
                 m6.setTransform( Quaternion(Vec3f(0,1,0), ((90.0f * 3.14f) / 180.0f)));
@@ -294,10 +288,10 @@ void keyboard(unsigned char key, int x, int y)
                 m7.setTranslate(-translate);
                 
                 m7.mult(m6);
-                
+                //m7.mult(m3);
                 m7.setTranslate( trans );
                 transform->setMatrix(m7);               
-                
+                //std::cout<<"matrix m7="<<m7<<std::endl;
                 
                 
         endEditCP(transform, Transform::MatrixFieldMask );
@@ -310,17 +304,42 @@ void keyboard(unsigned char key, int x, int y)
 
 
 
+///checking for the corner whetehr is blue or not
+bool blue_check(  UInt32 z_variable ,  UInt32 x_variable , UInt8* image_data, UInt32 width_image)
+{
+
+        bool blue_corner;
+        if( image_data[(width_image * x_variable  * 4) + (z_variable  * 4) + 2] == 255)
+	{              
+	        blue_corner = true;                 
+	}
+	                                                        
+	else
+	{
+	         blue_corner = false;
+	                           
+	}
+	return blue_corner;
+	
+	
+}
+
+
+
+
  
  ////the function which is generalized which will check the case like whether any part is 
  ////a colour completly and will return a boolean value
  ////it will take the pointer of image and the width and the length and breadth of the model 
  
- bool check_condition(  UInt32 z_length,  UInt32  x_length,   UInt32 breadth,   UInt32 length,   UInt8* test_image_data,   UInt32 width_image, bool red)
+ bool check_condition(  UInt32 z_length,  UInt32  x_length,   UInt32 breadth,   UInt32 length,   UInt8* test_image_data,   UInt32 width_image, bool colour)
  {
         //checking for red
         
         bool not_adjacent = false, adjacent = false, not_blue = false, blue = false;
-        if(red)
+        
+        //experimenting code
+         if(colour)
         {
                  for( UInt32 j = z_length; j <= (z_length + breadth); j++ ) 
 	         {
@@ -328,77 +347,66 @@ void keyboard(unsigned char key, int x, int y)
 	                {
 	                      
 	                                                        
-	                        if( test_image_data[(width_image * i  * 3) + (j  * 3) + 0] != 255)
-	                        {              
-	                                not_adjacent = true;                 
-	                        }
+	                        if( test_image_data[(width_image * i  * 3) + (j  * 3) + 0] == 255)
+                                         return false;                
+
 	                                                        
 	                        else
-	                        {
-	                                not_adjacent = false;
-	                                adjacent=true;
-	                                                                
-	                                break;
-	                        }
-	                                                               
-	                                                        
+                                         adjacent=true;                                
+                                 
 	                  } 
-	                                                
-	                  if(adjacent)  
-	                  break;
+  
 	           } 
-	   
-	        return not_adjacent;
-	   }
-	   
-	   ///checking for blue
-	   
-	   else
+
+	           return true;
+ 
+	  }
+	  
+	  
+ 	   else
 	   {
 	                    
-                        for( UInt32 j = z_length; j <= (z_length + breadth); j++ ) 
+                for( UInt32 j = z_length; j <= (z_length + breadth); j++ ) 
+                {
+                        for( UInt32 i = x_length ; i <= (x_length + length); i++)
                         {
-                                for( UInt32 i = x_length ; i <= (x_length + length); i++)
-                                {
 	                                      
 	                                                                        
-                                        if( test_image_data[(width_image * j  * 3) + (i  * 3) + 0] != 255)
-                                        {              
-                                                 not_blue = true;                 
-                                        }
+                               if( test_image_data[(width_image * i  * 4) + (j  * 4) + 2] == 255)      //if ! blue
+                               {              
+                                       blue = true;
+                                                 
+                                                                 
+                               }
 	                                                                        
-                                        else
-                                        {
-                                                not_blue = false;
-                                                blue=true;
-	                                                                                
-                                                break;
-                                        }
+                               else    // blue
+                               {
+                                              
+                                       return false;                                     
+                                                
+                                }
 	                                                                               
 	                                                                        
-                                } 
-	                                                                
-                                if(blue)  
-                                break;
-                        } 
-	   
-                        return not_blue;
-	        
+                          } 
+           
+                  } 
+      
+                  return true;
+         
 	   }
- 
+  
  
 }
 
 
-
+//////   colouring that part of terrain where the house is placed on the reference image
  void colouring_empty_terrain(UInt32 z_length,  UInt32  x_length,   UInt32 breadth,   UInt32 length,   UInt8* empty_image_data,   UInt32 width_housing_image)
  {
  
-       for( UInt32 i = x_length ; i <= (x_length + length); i++)
-        {
-                
-                 for( UInt32 j = z_length; j <= (z_length + breadth); j++ ) 
-                {
+       for( UInt32 j = z_length; j <= (z_length + breadth); j++ ) 
+	         {
+	                for( UInt32 i = x_length ; i <= (x_length + length); i++)
+	                {
                         //clouring that part of terrain where the model is been placed 
                         empty_image_data[(width_housing_image * i  * 3) + (j  * 3) + 0] = 255;
 	                                                       
@@ -572,7 +580,7 @@ GroupNodePtr createScenegraph(void)
 	transformNode->getWorldVolume(vol);
 	vol.getBounds ( min, max ); 
 	  
-	 Pnt3f hit_point ;
+	 Pnt3f placing_point ;
 	 
 	UInt32  length,breadth;
 	
@@ -583,65 +591,87 @@ GroupNodePtr createScenegraph(void)
         
         UInt32 l = length/2;
         UInt32 b = breadth/2;
-        UInt32 height_variable,width_variable;
+        UInt32 breadth_variable, width_variable;
          
+        double angle_of_rotation = 0.0;
          
         /// scanning a image to find whether the area is of a particular colour or not and 
         /// then if the whole are is of that colour then the model is being placed with the boundary condtions of the 
         /// colour.
-        for( height_variable = l;   height_variable < height_housing_image - l;   height_variable++)
+        for( width_variable = l;   width_variable < width_housing_image - l;   width_variable++)
         {
-	        for( width_variable = b;   width_variable < width_housing_image - b;   width_variable++)
+	        for( breadth_variable = b;   breadth_variable < height_housing_image - b;   breadth_variable++)
 	        {     
 	        
 	                 
 	                //checking initially for the co-ordinates whether that co-ordinates has the blue colour so as to place the model          
-	                if(  housing_image_data[(width_housing_image * height_variable * 4) + (width_variable * 4) + 2] == 255)
+	                if(  housing_image_data[(width_housing_image * width_variable * 4) + (breadth_variable * 4) + 2] == 255)
 	                        {
 	                               
-	                                /// finding the initial cordinates of the model so as to scann the complete area
-	                                UInt32 x_length = ( height_variable ) -(l);
-	                                UInt32 z_length = ( width_variable ) - (b);  
-	                              
-	                              
-	                              
-	                                //// looking whether a model is already there so as to check the if other nodel is placed it does not overlap any other model
-	                                bool not_red = check_condition(z_length, x_length, breadth, length, empty_image_data, width_housing_image, true);           
-	                                
-	                                
-	                                
-	                                ////now checking the condtion whether the are where the model has to be placed is of desired colour or not
-	                                bool blue = check_condition(z_length, x_length, breadth, length, housing_image_data, width_housing_image, false);
 	                               
-	                                /*if(!blue)
-	                                {
+	                               
+	                                /// finding the initial cordinates of the model so as to scann the complete area
+	                                UInt32 x_length = ( width_variable ) -(l);
+	                                UInt32 z_length = ( breadth_variable ) - (b);  
+	                              
+	                              //std::cout<<"x = "<<x_length<<"z ="<<z_length<<std::endl;
+	                              
+	                              
+	                              
+	                             
+	                                outputFIle<<"checking for red"<<std::endl;
+	                                
+	                                //// looking whether a model is already there so as to check the if other nodel is placed it does not overlap any other model
+	                                bool not_red = check_condition(z_length, x_length, breadth, length, empty_image_data, width_housing_image, true);   
 	                                        
-	                                       ///checking which corner is inside the patch
-	                                       bool corner = blue_check( height_variable , width_variable , housing_image_data, width_housing_image);
+	                                outputFIle<<"not_red = "<<not_red<<std::endl;
+	                                outputFIle<<"checked for red"<<std::endl;
+	                                
+	                                
+	                                
+	                                        outputFIle<<"checking for blue"<<std::endl;
 	                                        
-	                                }*/
+	                                        ////now checking the condtion whether the area where the model has to be placed is of desired colour or not
+	                                        bool  blue = check_condition(z_length, x_length, breadth, length, housing_image_data, width_housing_image, false);
+	                                         
+	                                        outputFIle<<"blue = "<<blue<<std::endl;
+	                                       outputFIle<<"checked for blue"<<std::endl;
+	                                        
+	                               
+	                               
+	                               
+	                               
 	                               
 	                               
 	                               
 	                                ///if satisfying both the conditions like whetehr the area is blue and no other model is been there so that the model to be placed does not overlap
 	                                if( (blue == true) && (not_red == true ))
 	                                {
-	                                        //std::cout << "Put house at " << height_variable << "," << width_variable << std::endl;
-	                                        ///calling the function to add the model to the desired postion on the terrain
+	                                
+	                                
 	                                      
-	                                       if(width_housing_image == 128)
+	                                        if(width_housing_image == 128)
 	                                        {
-	                                                 NodePtr SourceNode = localModel( black_white_image_data, width, height_variable / (float)height_housing_image * height_colour_image, 
-	                                                                                       width_variable / (float)width_housing_image * width_colour_image,  hit_point, event,
-	                                                                                       width_colour_image / (float)width_housing_image); 
+	                                        
+	                                                placing_point[0] = width_variable / (float)height_housing_image * height_colour_image;
+	                                                placing_point[1] = 0;
+	                                                placing_point[2] = breadth_variable / (float)width_housing_image * width_colour_image;
+	                                                
+	                                                 NodePtr SourceNode = localModel( black_white_image_data, width,  placing_point, 1, width_colour_image / (float)width_housing_image); 
 	                                                 
 	                                                  localRoots.push_back(SourceNode);
 	                                        }
 	                                                                                       
+	                                           
+	                                           
 	                                                                                       
 	                                        else
 	                                        {
-	                                                NodePtr SourceNode = localModel( black_white_image_data, width, height_variable , width_variable ,  hit_point, event,1.0);        ////calling the function //////////////
+	                                                placing_point[0] = width_variable;
+	                                                placing_point[1] = 0;
+	                                                placing_point[2] = breadth_variable;
+	                                               
+	                                                NodePtr SourceNode = localModel( black_white_image_data, width, placing_point, 1);        ////calling the function //////////////
 	                                                                                 
                                                                         localRoots.push_back(SourceNode);
                                                 }
@@ -649,6 +679,8 @@ GroupNodePtr createScenegraph(void)
                                                 
                                                 colouring_empty_terrain(z_length, x_length, breadth, length, empty_image_data, width_housing_image);
   
+	                                         
+	                                         
 	                                                 
 	                                }
 	                                
@@ -657,8 +689,8 @@ GroupNodePtr createScenegraph(void)
 	                        
 	           }
 	 }
-	           
-	   
+	  
+	  
 
         
         /**********************************making the final Group node*********************************************/
@@ -674,8 +706,6 @@ GroupNodePtr createScenegraph(void)
 	return n;
 
 }
-
-
 
 
 
