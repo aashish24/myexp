@@ -19,7 +19,7 @@ namespace Msg
     }
 
 
-    void Drawable::drawImplementation() const 
+    void Drawable::drawImplementation() 
 		{					
 		}
   }

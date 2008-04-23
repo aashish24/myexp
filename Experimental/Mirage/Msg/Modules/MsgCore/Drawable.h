@@ -47,7 +47,7 @@ namespace Msg
         GLuint&                       getDisplayList( unsigned int contextID );
 
         void                          draw();
-				virtual void                  drawImplementation() const;
+				virtual void                  drawImplementation();
 				
 
 			protected:

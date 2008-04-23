@@ -219,7 +219,7 @@ namespace Smtl
 			}
 
 
-			void normalize()
+			Vector< DATA_TYPE, SIZE >& normalize()
 			{
 				for( size_t i=0; i < SIZE; ++i )
 				{
@@ -233,6 +233,8 @@ namespace Smtl
             // Do do anything. 
           }
 				}
+
+        return *this;
 			}
 
 

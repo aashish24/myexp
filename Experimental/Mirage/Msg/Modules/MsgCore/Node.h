@@ -50,7 +50,7 @@ namespace Msg
 
 				///////////////////////////////////////////////////////////////
 				//
-				// 
+				// Get parent with given index. 
 				//
 				///////////////////////////////////////////////////////////////				
 				
@@ -62,14 +62,14 @@ namespace Msg
 					}
 					else
 					{
-						return 0;
+						return 0x00;
 					}
 				}
 
 
 				///////////////////////////////////////////////////////////////
 				//
-				// 
+				// Get array of parents. 
 				//
 				///////////////////////////////////////////////////////////////				
 				
@@ -81,7 +81,7 @@ namespace Msg
 
 				///////////////////////////////////////////////////////////////
 				//
-				// 
+				// Add a parent in the list of parents.  
 				//
 				///////////////////////////////////////////////////////////////				
 				
@@ -92,7 +92,8 @@ namespace Msg
 
 				///////////////////////////////////////////////////////////////
 				//
-				// 
+				// Get the StateSet object if not create one and return the 
+        // newly created StateSet object. 
 				//
 				///////////////////////////////////////////////////////////////				
 				
@@ -112,7 +113,8 @@ namespace Msg
 
 				///////////////////////////////////////////////////////////////
 				//
-				// 
+				// Set StateSet for the node. 
+        // @Note: It unrefs the last StateSet. 
 				//
 				///////////////////////////////////////////////////////////////				
 				
@@ -133,7 +135,7 @@ namespace Msg
          
 				///////////////////////////////////////////////////////////////
 				//
-				// Call drawGLStateSet. 
+				// Activate the StateSet on the Node. 
         // @Note:
         // We are missing the case of over-riding the parent state sets. 
 				//
@@ -147,6 +149,12 @@ namespace Msg
 					}
         }
 
+        
+        ///////////////////////////////////////////////////////////////
+				//
+				// Deactivate the StateSet on the Node.         
+				//
+				///////////////////////////////////////////////////////////////				         
 
         virtual void deActivateStateSet()
         {
@@ -168,13 +176,14 @@ namespace Msg
 			
 				///////////////////////////////////////////////////////////////
 				//
-				//
+				// Traverse the scene with given NodeVisitor. 
+        // @Note: 
+        // Only Group nodes can call activeStateSet. 
 				//
 				///////////////////////////////////////////////////////////////
 				
         virtual void traverse( NodeVisitor& nv ) 
-				{			
-          //this->activateStateSet();
+				{	
 				}
 
 

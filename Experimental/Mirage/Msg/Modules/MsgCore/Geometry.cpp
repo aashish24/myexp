@@ -11,14 +11,44 @@
 using namespace Msg::MsgCore;
 
 Geometry::Geometry() :
-	mAttrBinding( Geometry::BIND_PER_VERTEX )
+  mFastPath       ( true ), 
+  mVertices       ( 0x00 ),
+  mNormals        ( 0x00 ), 
+  mTexCoords      ( 0x00 ),   
+  mColors         ( 0x00 ),   
+  mTangetsTBN     ( 0x00 ),      
+  mBinormalsTBN   ( 0x00 ), 
+  mNormalsTBN     ( 0x00 ),   
+  mVertexIndices  ( 0x00 ), 
+  mNormalIndices  ( 0x00 ),
+  mTextureIndices ( 0x00 ),
+  mAttrBinding    ( BIND_PER_VERTEX ), 
+	mPrimitiveSets  ( 0x00 )
 {
 }
 
 
 Geometry::Geometry( const Geometry& geom ) :
-	mAttrBinding( Geometry::BIND_PER_VERTEX )
+  mFastPath       ( geom.mFastPath ), 
+  mVertices       ( geom.mVertices ),
+  mNormals        ( geom.mNormals ), 
+  mTexCoords      ( geom.mTexCoords ),   
+  mColors         ( geom.mColors ),   
+  mTangetsTBN     ( geom.mTangetsTBN ),      
+  mBinormalsTBN   ( geom.mBinormalsTBN ), 
+  mNormalsTBN     ( geom.mNormalsTBN ),   
+  mVertexIndices  ( 0x00 ), 
+  mNormalIndices  ( 0x00 ),
+  mTextureIndices ( 0x00 ),
+  mAttrBinding    ( BIND_PER_VERTEX ), 
+	mPrimitiveSets  ( 0x00 )
 {
+}
+
+
+bool Geometry::hasFastPath() const
+{
+  return true;
 }
 
 
@@ -238,14 +268,11 @@ void Geometry::addPrimitiveSet( PrimitiveSet* primitiveSet )
 }
 
 
-void Geometry::drawImplementation() const
+void Geometry::drawImplementation() 
 {
   // This is a slow path. 
-  // @Todo: Need to revamp the code sometime to make the drawing via different ways. 
-  
-  bool slowPath = false; 
-
-  if( slowPath )
+  // @Todo: Need to revamp the code sometime to make the drawing via different ways.   
+  if( 0 )
   {
 	  glBegin( GL_TRIANGLES );
 	  for( size_t i=0; i < mVertexIndices->size(); ++ i )
@@ -316,26 +343,80 @@ void Geometry::drawImplementation() const
   else
   {
     // Fast path using DrawElements and VertexArrays. 
+    static bool flag = true;
 
-    // Set all the vertex arrays and then dereference the arrays later. 
+    if( flag ) 
+    {
+      // Lazy initialization. 
+      mNormalArray = new Vec3Array( mVertices->size() );
+      mTexCoordArray = new Vec3Array( mVertices->size() );
+      mColorArray = new Vec4Array();
+
+      for( size_t i=0; i < mVertexIndices->size(); ++ i )
+      {
+        // Find the index for the vectices. 
+        int v1 = mVertexIndices->at( i )[0];
+        int v2 = mVertexIndices->at( i )[1];
+        int v3 = mVertexIndices->at( i )[2];
+
+        // Now for these vertices set their normals. 
+        if( mNormals.valid() )
+        {
+          mNormalArray->at(v1) = mNormals->at( mNormalIndices->at(i)[0] );
+          mNormalArray->at(v2) = mNormals->at( mNormalIndices->at(i)[1] );
+          mNormalArray->at(v3) = mNormals->at( mNormalIndices->at(i)[2] );        
+        }
+        else
+        {
+          mNormalArray  = 0x00;
+        }
+
+        // Now for these vertices set their texture coordinates. 
+        if( mTexCoords.valid() )
+        { 
+          mTexCoordArray->at(v1) = mTexCoords->at( mTextureIndices->at(i)[0] );
+          mTexCoordArray->at(v2) = mTexCoords->at( mTextureIndices->at(i)[1] );
+          mTexCoordArray->at(v3) = mTexCoords->at( mTextureIndices->at(i)[2] );          
+        }
+        else
+        {
+          mTexCoordArray = 0x00;
+        }
+
+        // Now for these vertces set their colors. 
+        if( mColors.valid() )
+        { 
+          // @Todo: Implement this. 
+        }
+        else
+        {
+          mColorArray = 0x00;
+        }
+      } // End for loop. 
+
+      // One time. 
+      flag = false;
+    }
+
+    // Set all the vertex arrays and then dereference the vertex array later. 
     glVertexPointer( 3, GL_FLOAT, 0, mVertices->getDataPointer() );
 
-    if( mColors.valid() )
+    if( mColorArray.valid() )
     {
 	    glEnableClientState( GL_COLOR_ARRAY );
 	    glColorPointer( 4, GL_FLOAT, 0, mColors->getDataPointer() );
     }
 
-    if( mNormals.valid() )
+    if( mNormalArray.valid() )
     {
 	    glEnableClientState( GL_NORMAL_ARRAY );
-	    glNormalPointer( GL_FLOAT, 0, mNormals->getDataPointer() );      
+      glNormalPointer( GL_FLOAT, 0, mNormalArray->getDataPointer() );      
     }	
   	
-    if( mTexCoords.valid() )
+    if( mTexCoordArray.valid() )
     {
 	    glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-	    glTexCoordPointer( 3, GL_FLOAT, 0, mTexCoords->getDataPointer() );
+      glTexCoordPointer( 3, GL_FLOAT, 0, mTexCoordArray->getDataPointer() );
     }		  
 
     // Now dereference the arrays. 

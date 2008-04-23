@@ -29,6 +29,10 @@ namespace Msg
 
 				Geometry( const Geometry& geometry );
 
+        bool              hasFastPath() const;
+
+        PrimitiveSets&    getPrimitiveSets();
+
 				Vec3Array*			  getVertexArray();
 				void				      setVertexArray( Vec3Array* vArray );
 
@@ -66,18 +70,27 @@ namespace Msg
 
 				void				      addPrimitiveSet( PrimitiveSet* primitiveSet );
 
-				virtual void		  drawImplementation() const;
+				virtual void		  drawImplementation();
 
 			protected:
-				virtual ~Geometry()
+				
+        virtual ~Geometry()
 				{
 				}
 
 			protected:			
+
+        bool                    mFastPath;
+
 				SmartPtr< Vec3Array >	  mVertices;
 				SmartPtr< Vec3Array	>	  mNormals;
 				SmartPtr< Vec3Array	>	  mTexCoords;
 				SmartPtr< Vec4Array >	  mColors;
+      
+        // For fast path. 
+        SmartPtr< Vec3Array >   mNormalArray;
+        SmartPtr< Vec3Array >   mTexCoordArray;
+        SmartPtr< Vec4Array >	  mColorArray;
 
         SmartPtr< Vec3Array >   mTangetsTBN;
         SmartPtr< Vec3Array >   mBinormalsTBN;
