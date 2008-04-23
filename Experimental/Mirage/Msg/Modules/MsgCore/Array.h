@@ -7,6 +7,9 @@
 
 #include "Smtl/Vector.h"
 
+#include "GL/glew.h"
+#include "GL/gl.h"
+
 #include <vector>
 
 using namespace Smtl;

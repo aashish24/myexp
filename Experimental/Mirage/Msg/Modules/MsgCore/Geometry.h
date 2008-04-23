@@ -29,7 +29,7 @@ namespace Msg
 
 				Geometry( const Geometry& geometry );
 
-        bool              hasFastPath() const;
+        bool              hasFastPath();
 
         PrimitiveSets&    getPrimitiveSets();
 
@@ -88,16 +88,17 @@ namespace Msg
 				SmartPtr< Vec4Array >	  mColors;
       
         // For fast path. 
-        SmartPtr< Vec3Array >   mNormalArray;
-        SmartPtr< Vec3Array >   mTexCoordArray;
-        SmartPtr< Vec4Array >	  mColorArray;
+        //SmartPtr< Vec3Array >   mNormalArray;
+        //SmartPtr< Vec3Array >   mTexCoordArray;
+        //SmartPtr< Vec4Array >	  mColorArray;
 
         SmartPtr< Vec3Array >   mTangetsTBN;
         SmartPtr< Vec3Array >   mBinormalsTBN;
         SmartPtr< Vec3Array >   mNormalsTBN;  
 
 				SmartPtr< Vec3iArray >	mVertexIndices;
-				SmartPtr< Vec3iArray >	mNormalIndices;
+				
+        SmartPtr< Vec3iArray >	mNormalIndices;
         SmartPtr< Vec3iArray >	mTextureIndices;
 	
 				AttributeBinding		    mAttrBinding;

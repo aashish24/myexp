@@ -140,8 +140,7 @@ namespace Msg
 		  }
 		  else
 		  {
-			  GLuint globj;
-			  std::cout << "[draw] New display list generated" << std::endl;
+			  GLuint globj;			  
 			  globj = glGenLists( 1 );
 			  _glObjectList.clear();
 			  _glObjectList.push_back( globj );
