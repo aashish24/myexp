@@ -3,6 +3,9 @@
 uniform sampler2D normalMap;
 uniform sampler2D decalMap;
 
+// Check whether or not we have the decal map. 
+uniform bool useDecalMap;
+
 // Interpolated light and eye directions. 
 varying	vec3 lightDir;
 varying	vec3 eyeDir;
@@ -13,7 +16,7 @@ varying vec3 b;
 varying vec3 n;
 
 void main()
-{   
+{	
 	// Final color of the fragment initialized to 0.0. 
 	vec3  litColor = vec3( 0.0, 0.0, 0.0 );
 	
@@ -44,7 +47,17 @@ void main()
 	
 	//
 	vec3 diffuseColor = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff;
-	vec3 diffuseColorMix = min( mix(  diffuseColor, color, 0.2 ), 1.0 ); 
+	
+	vec3 diffuseColorMix;
+	
+	if( useDecalMap ) 
+	{
+		diffuseColorMix = min( mix(  diffuseColor, color, 0.5 ), 1.0 ); 
+	}
+	else
+	{
+		diffuseColorMix = min( diffuseColor, 1.0 ); 	
+	}
 	
 	// Calculate fragment color using specular and diffuse light components.  	
 	//litColor = gl_FrontMaterial.specular.xyz * gl_LightSource[0].specular.xyz * pow( spec,  gl_FrontMaterial.shininess ) + 

@@ -19,7 +19,7 @@
 namespace Project2
 {
   App::App() :
-    _lightPosition( 0.0, 0.0, -17.0, 1.0 ), 
+    _lightPosition( 0.0, 0.0, -5.0, 1.0 ), 
     _shader( 0x00 ), 
     _nodeVisitor( new Msg::MsgCore::NodeVisitor() )
   {
@@ -97,7 +97,7 @@ namespace Project2
        
     // Draw scene. 
     glPushMatrix();
-    glTranslatef( 0.0f, 0.0f, -20.0f );
+    glTranslatef( 0.0f, 0.0f, -15.0f );
     
     GLint program = _shader->program();
     glUseProgram( program );      

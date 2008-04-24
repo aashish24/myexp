@@ -21,12 +21,14 @@ namespace Project2
 {
   BumpMapShader::BumpMapShader() : 
     _dirty( true ),
+    _useDecalMap( false ), 
     _program( -1 ), 
     _locT( -1 ), 
     _locB( -1 ), 
     _locN( -1 ),
     _locNormalMap( -1 ), 
     _locDecalMap( -1 ), 
+    _locUseDecalMap( -1 ), 
     _normalMapTexIndex( -1 ), 
     _decalMapTexIndex( -1 )
   {
@@ -52,6 +54,8 @@ namespace Project2
         
     _locNormalMap = glGetUniformLocation( _program, "normalMap" ); 
     _locDecalMap  = glGetUniformLocation( _program, "decalMap" ); 
+
+    _locUseDecalMap  = glGetUniformLocation( _program, "useDecalMap" ); 
   }
 
 
@@ -157,6 +161,9 @@ namespace Project2
       glActiveTexture( GL_TEXTURE1 );
       glBindTexture( GL_TEXTURE_2D, _decalMapTexIndex );
       glUniform1i ( _locDecalMap, 1 );           
+
+      // Set the boolean flag in the shader to use decal map. 
+      glUniform1i( _locUseDecalMap, _useDecalMap );
     }
   }
 
@@ -186,9 +193,29 @@ namespace Project2
                        GL_RGB,
                        GL_FLOAT, normalMap.data() );    */
 
-    IMAGE image; 
-    image.Load( const_cast< char* >( fileName.c_str() ) );
-    image.ExpandPalette();    
+    IMAGE image;
+    
+    try
+    {      
+      image.Load( const_cast< char* >( fileName.c_str() ) );
+      image.ExpandPalette();    
+    }
+    catch( std::exception& e )
+    {
+      std::cerr << "Error " << e.what() << std::endl;
+      throw;
+    }
+    catch( ... )
+    {
+      std::cerr << "Unknown error: " << std::endl;
+      throw;
+    }
+
+    if( ! image.data  )
+    {
+      throw "Image data is NULL: ";
+    }
+
     glActiveTexture( GL_TEXTURE0 );
     glGenTextures( 1,  &_normalMapTexIndex );
     glBindTexture( GL_TEXTURE_2D, _normalMapTexIndex );
@@ -203,12 +230,38 @@ namespace Project2
   void BumpMapShader::loadDecalMap( const std::string& fileName ) 
   {
     IMAGE image; 
-    image.Load( const_cast< char* >( fileName.c_str() ) );
-    image.ExpandPalette();    
+
+    try
+    {
+      image.Load( const_cast< char* >( fileName.c_str() ) );
+      image.ExpandPalette();    
+    }
+    catch( std::exception& e )
+    {
+      std::cerr << "Error " << e.what() << std::endl;
+      throw;
+    }
+    catch( ... )
+    {
+      std::cerr << "Unknown error: " << std::endl;
+      throw;
+    }
+
+    if( !image.data )
+    {
+      this->_useDecalMap = false;
+      return;
+    }    
+
     glActiveTexture( GL_TEXTURE1 );
     glGenTextures( 1, &_decalMapTexIndex );
     glBindTexture( GL_TEXTURE_2D, _decalMapTexIndex );
     gluBuild2DMipmaps( GL_TEXTURE_2D, GL_RGBA8, image.width, image.height, image.format, GL_UNSIGNED_BYTE, image.data );
+
+    // Ok now we can ask shaders to use this decal map. 
+    // 
+    // @Note: We are still not checking for any OpenGL error here.     
+    this->_useDecalMap = true;
   }
 
 

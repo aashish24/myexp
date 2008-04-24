@@ -100,6 +100,7 @@ namespace Project2
     protected: 
 
       bool          _dirty;
+      bool          _useDecalMap;
       
       GLint         _program;  
       GLint         _locT;
@@ -107,6 +108,7 @@ namespace Project2
       GLint         _locN;
       GLint         _locNormalMap;
       GLint         _locDecalMap;
+      GLint         _locUseDecalMap;
 
       GLuint         _normalMapTexIndex;
       GLuint         _decalMapTexIndex;
