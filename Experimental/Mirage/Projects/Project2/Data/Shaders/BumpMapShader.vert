@@ -16,6 +16,8 @@ varying vec3 t;
 varying vec3 b;
 varying vec3 n;
 
+varying vec3 vForLight; 
+
 // Entry function. 
 void main()
 {
@@ -33,6 +35,8 @@ void main()
 	b = normalize( gl_NormalMatrix * binormal );
 	n = normalize( gl_NormalMatrix * normal );				
 
+	vForLight = vec3( gl_ModelViewMatrix * gl_Vertex );
+	
 	//vec3 lightPos =  vec4( gl_LightSource[0].position.xyz, 1.0 ).xyz;
 	
 	// Temporary vector for calculation purposes. 

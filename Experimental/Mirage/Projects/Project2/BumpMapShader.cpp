@@ -19,10 +19,8 @@
 
 namespace Project2
 {
-  BumpMapShader::BumpMapShader() : 
-    _dirty( true ),
-    _useDecalMap( false ), 
-    _program( -1 ), 
+  BumpMapShader::BumpMapShader() :   
+    _useDecalMap( false ),     
     _locT( -1 ), 
     _locB( -1 ), 
     _locN( -1 ),
@@ -42,7 +40,7 @@ namespace Project2
 
   std::string BumpMapShader::id() const 
   {
-    return std::string( "Shader" );
+    return std::string( "BumpMapShader" );
   }
 
 
@@ -58,24 +56,13 @@ namespace Project2
     _locUseDecalMap  = glGetUniformLocation( _program, "useDecalMap" ); 
   }
 
-
-  bool BumpMapShader::dirty() const
-  {
-    return _dirty;
+ 
+  void BumpMapShader::reset()
+  {   
+    // Assuming that we are loading shaders from the file only. 
+    this->setShader( _vertShaderFile, _fragShaderFile );
   }
-
   
-  void BumpMapShader::dirty( bool flag )
-  {
-    _dirty = flag;
-  }
-
-
-  GLint BumpMapShader::program() const
-  {
-    return _program;
-  }
-
 
   void BumpMapShader::calculateTBN( Msg::MsgCore::Geometry* geom )
   { 
@@ -88,17 +75,7 @@ namespace Project2
 
       geom->setTangetTBNArray( t.get() );
       geom->setBinormalTBNArray( b.get() );
-      geom->setNormalTBNArray( n.get() );
-
-      //GLint locT  = glGetAttribLocation( _program, "tangent" );
-
-      //// @Todo: Why we need to call this? 
-      //glBindAttribLocation( _program, locT, "tangent" );  
-      //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, t->getDataPointer() );  
-
-      //GLint locB  = glGetAttribLocation( _program, "binormal" );
-      //glBindAttribLocation( _program, locB, "binormal" );  
-      //glVertexAttribPointer( 10, 3, GL_FLOAT, false, 0, b->getDataPointer() );  
+      geom->setNormalTBNArray( n.get() );     
     }
   }
 
@@ -266,10 +243,20 @@ namespace Project2
 
 
   void BumpMapShader::setShader( const std::string &vert, const std::string &frag )
-  {    
-    ShadersUtil* shUtil = new ShadersUtil();
-    _program = shUtil->setAndLoadShaders( vert, frag );
-    delete shUtil;
+  { 
+    try
+    {
+      ShadersUtil* shUtil = new ShadersUtil();
+      this->program( shUtil->setAndLoadShaders( vert, frag ) );
+      this->vertexShaderFile( vert );
+      this->fragmentShaderFile( frag );
+      delete shUtil;
+    }
+    catch( ... )
+    {
+      std::cerr << "Error 1042252865: Unknown error: " << std::endl;
+      std::cerr << " Failed to create shader: " << std::endl;
+    }
   }
 
   
@@ -348,16 +335,9 @@ namespace Project2
         tan2->at( i2 ) = tan2->at( i2 ) + B;
         tan2->at( i3 ) = tan2->at( i3 ) + B;       
       }
-    }
+    }   
 
-    // Now average and orthogonalize the vectors. 
-    // 1. tangents. 
-    // 2. binormals. 
-    // 3. normals. 
-
-    //Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > tangentsT = new Msg::MsgCore::Vec3Array();
-    //Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > binormalsB = new Msg::MsgCore::Vec3Array();
-    //Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > normalsN = new Msg::MsgCore::Vec3Array();
+    Msg::MsgCore::Vec3Array* tw = new Msg::MsgCore::Vec3Array(); 
 
     for( size_t i = 0; i < ( vertices->size() ); ++i )
     {
@@ -366,56 +346,30 @@ namespace Project2
       Vec3f& b = tan2->at( i );
 
       Vec3f tan3v = ( ( t - n * n.dot( t ) ) );      
-      tan3v.normalize();
-      tan3v = tan3v * ( ( ( n.cross( t ) ).dot( b ) ) < 0.0f ? -1.0f : 1.0f );
+      tan3v.normalize();      
+      
+      float f = ( ( ( n.cross( t ) ).dot( b ) ) < 0.0f ? -1.0f : 1.0f ); 
+      tw->push_back( Vec3f( f, 0.0, 0.0 ) );
+
       tangent->push_back( tan3v );
     }      
 
     for( size_t j = 0; j < ( vertices->size() ); ++j )
     {
       Vec3f& n = normals->at( j );
-      Vec3f& t = tan1->at( j );
-
-      Vec3f bin3v = n.cross( t ) * 1.0;
+      Vec3f& t = tangent->at( j );
+      
+      Vec3f bin3v = n.cross( t ) * tw->at( j )[0];
       bin3v.normalize();
       binormal->push_back( bin3v );
     }
 
     for( size_t j = 0; j < ( vertices->size() ); ++j )
-    {
-      Vec3f norV = tangent->at(j).cross( binormal->at(j) );
+    {      
+      Vec3f norV = normals->at( j );
       norV.normalize();
-      normal->push_back( norV );
+      normal->push_back( norV );     
     }
-
-    //// Now find the inverse. 
-    //for( size_t j = 0; j < ( vertices->size() ); ++j )
-    //{
-    //  float fScale2 = 1.0f / (( tangentsT->at(j)[0] * binormalsB->at(j)[1] * normalsN->at(j)[2] - tangentsT->at(j)[2] * binormalsB->at(j)[1] * normalsN->at(j)[0] ) + 
-    //                          ( binormalsB->at(j)[0] * normalsN->at(j)[1] * tangentsT->at(j)[2] - binormalsB->at(j)[2] * normalsN->at(j)[1] * tangentsT->at(j)[0]) + 
-    //                          ( normalsN->at(j)[0] * tangentsT->at(j)[1] * binormalsB->at(j)[2] - normalsN->at(j)[2] * tangentsT->at(j)[1] * binormalsB->at(j)[0] ));
-    //  
-    //  Vec3f T = Vec3f( binormalsB->at(j).cross( normalsN->at(j) )[0] * fScale2, 
-    //                   ( -1.0f * normalsN->at(j).cross( tangentsT->at(j) )[0] * fScale2,
-    //                   tangentsT->at(j).cross( binormalsB->at(j) )[0] * fScale2 ) );
-    //  T.normalize();
-
-    //  tangent->push_back( T );
-    //  
-    //  
-    //  Vec3f B = Vec3f( -1.0f * binormalsB->at(j).cross( normalsN->at(j) )[1] * fScale2, 
-    //                   ( normalsN->at(j) ).cross( tangentsT->at(j) )[1] * fScale2,
-    //                   ( -1.0f * tangentsT->at(j).cross( binormalsB->at(j) )[1] * fScale2 ) );
-    //  B.normalize();
-    //  binormal->push_back( B );
-
-    //  Vec3f N = Vec3f( binormalsB->at(j).cross( normalsN->at(j) )[2] * fScale2, 
-    //                   ( -1.0f * normalsN->at(j).cross( tangentsT->at(j) )[2] * fScale2,
-    //                   tangentsT->at(j).cross( binormalsB->at(j) )[2] * fScale2 ) );
-
-    //  N.normalize();
-    //  normal->push_back( N );
-    //}
   }
 
 

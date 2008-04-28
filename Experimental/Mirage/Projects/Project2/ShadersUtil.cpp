@@ -2,6 +2,8 @@
 #include "ShadersUtil.h"
 #include "ShaderDebug.h"
 
+#include "Shader.h"
+
 #include "TextFile.h"
 
 namespace Project2
@@ -20,7 +22,7 @@ namespace Project2
   {
     if( vert.empty() && frag.empty() )
     {
-      return -1;
+      return Shader::SHADER_NULL_PROGRAM;
     }
 
     // Create shaders. 

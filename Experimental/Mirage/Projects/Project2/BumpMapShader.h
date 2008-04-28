@@ -57,52 +57,119 @@ namespace Project2
 
       /////////////////////////////////////////////////////////////////////////
       //
-      // Calls setShader( const std::string& vert, const std::string& frag ).
-      // @Note: Passing default shaders as agruments. 
+      // 
+      // 
       // 
       /////////////////////////////////////////////////////////////////////////
       
       std::string   id() const;
 
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // 
+      // 
+      // 
+      /////////////////////////////////////////////////////////////////////////
+
       virtual void  init();
+    
 
-      virtual bool  dirty() const;
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // 
+      // 
+      // 
+      /////////////////////////////////////////////////////////////////////////
 
-      virtual void  dirty( bool flag );
-
-      GLint         program() const;
-
-      void          calculateTBN( Msg::MsgCore::Geometry* geom );
-
-      virtual void  parseArguments( std::vector< std::string >& arguments );
-
-      virtual void  activate( Msg::MsgCore::Node* node );
-
-      virtual void  deActivate( Msg::MsgCore::Node* node );
-
-      void          loadBumpMap( const std::string& filename );
-
-      void          loadDecalMap( const std::string& filename );
-
-      void          doCalculateTBN( Msg::MsgCore::Geometry* geom, Msg::MsgCore::Vec3Array* tangent,
-                                  Msg::MsgCore::Vec3Array* binormal, Msg::MsgCore::Vec3Array* normal );
+      virtual void  reset();
 
 
       /////////////////////////////////////////////////////////////////////////
       //
-      // Compile and load shaders. 
+      // 
+      // 
+      // 
+      /////////////////////////////////////////////////////////////////////////
+
+      virtual void  parseArguments( std::vector< std::string >& arguments );
+
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // 
+      // 
+      // 
+      /////////////////////////////////////////////////////////////////////////
+
+      void          calculateTBN( Msg::MsgCore::Geometry* geom );
+
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // 
+      // 
+      // 
+      /////////////////////////////////////////////////////////////////////////
+
+      virtual void  activate( Msg::MsgCore::Node* node );
+
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // 
+      // 
+      // 
+      /////////////////////////////////////////////////////////////////////////
+
+      virtual void  deActivate( Msg::MsgCore::Node* node );
+
+
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // 
+      // 
+      // 
+      /////////////////////////////////////////////////////////////////////////
+
+      void          loadBumpMap( const std::string& filename );
+
+      
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // 
+      // 
+      // 
+      /////////////////////////////////////////////////////////////////////////
+
+      void          loadDecalMap( const std::string& filename );
+
+      
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // 
+      // 
+      // 
+      /////////////////////////////////////////////////////////////////////////
+
+      void          doCalculateTBN( Msg::MsgCore::Geometry* geom, Msg::MsgCore::Vec3Array* tangent,
+                                    Msg::MsgCore::Vec3Array* binormal, Msg::MsgCore::Vec3Array* normal );
+
+      
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // 
+      // 
       // 
       /////////////////////////////////////////////////////////////////////////
 
       void          setShader( const std::string& vert, const std::string& frag );
+  
 
+    private: 
+   
+      bool          _useDecalMap;      
 
-    protected: 
-
-      bool          _dirty;
-      bool          _useDecalMap;
-      
-      GLint         _program;  
       GLint         _locT;
       GLint         _locB;
       GLint         _locN;
@@ -110,8 +177,8 @@ namespace Project2
       GLint         _locDecalMap;
       GLint         _locUseDecalMap;
 
-      GLuint         _normalMapTexIndex;
-      GLuint         _decalMapTexIndex;
+      GLuint        _normalMapTexIndex;
+      GLuint        _decalMapTexIndex;      
   };  
 }
 

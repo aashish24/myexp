@@ -15,6 +15,8 @@ varying vec3 t;
 varying vec3 b;
 varying vec3 n;
 
+varying vec3 vForLight;
+
 void main()
 {	
 	// Final color of the fragment initialized to 0.0. 
@@ -22,6 +24,10 @@ void main()
 	
 	// Convert perturbed normal information stored as RGB to range [-1.0, 1.0]. 	
     vec3 bump = ( texture2D( normalMap, gl_TexCoord[0].xy ).rgb -  0.5 ) * 2.0 ;    
+
+	// 
+	bump[0] = bump[0] * 4.0;
+	bump[1] = bump[1] * 4.0;
 	
 	// Read the color value from diffuse map. 
 	vec3 color = ( texture2D( decalMap, gl_TexCoord[0].xy ).rgb );
@@ -43,20 +49,30 @@ void main()
 	float spec = max( dot( eyeDir, reflectDir ), 0.0 );	
 	
 	// Calculate diffuse parameter.	
-	float diff = max( dot( pNormal, lightDir ), 0.3 );
+	float diff = max( dot( pNormal, lightDir ), -1.0 );
+	
+	// Calculate diffuse based off actual normals. 
+	n = normalize( n );
+	vec3 l = normalize( gl_LightSource[0].position.xyz - vForLight );
+	float diff2 = max( dot( n, l ), -1.0 );
 	
 	//
 	vec3 diffuseColor = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff;
 	
+	// Part of an experimentation. 
+	vec3 diffuseColor2 = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff2;
+	
 	vec3 diffuseColorMix;
+	
+	// Part of an experimentation. 
+	//diffuseColorMix = min( mix(  diffuseColor, diffuseColor2, 0.5 ), 1.0 );
+	
+	// 
+	diffuseColorMix = min( diffuseColor, 1.0 );	
 	
 	if( useDecalMap ) 
 	{
-		diffuseColorMix = min( mix(  diffuseColor, color, 0.5 ), 1.0 ); 
-	}
-	else
-	{
-		diffuseColorMix = min( diffuseColor, 1.0 ); 	
+		diffuseColorMix = min( mix(  diffuseColorMix, color, 0.5 ), 1.0 ); 
 	}
 	
 	// Calculate fragment color using specular and diffuse light components.  	

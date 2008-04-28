@@ -215,6 +215,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\MsgCore\Event.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Modules\MsgCore\Geode.cpp"
 					>
 				</File>
@@ -247,15 +251,11 @@
 					>
 				</File>
 				<File
+					RelativePath=".\MsgCore\InputDev.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Modules\MsgCore\MatDef.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\Material.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\Material.h"
 					>
 				</File>
 				<File

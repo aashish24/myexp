@@ -19,7 +19,7 @@
 namespace Project2
 {
   App::App() :
-    _lightPosition( 0.0, 0.0, -5.0, 1.0 ), 
+    _lightPosition( 0.0, 0.0, -10.0, 1.0 ), 
     _shader( 0x00 ), 
     _nodeVisitor( new Msg::MsgCore::NodeVisitor() )
   {
@@ -42,6 +42,8 @@ namespace Project2
     glEnable( GL_LIGHTING );
     glEnable( GL_LIGHT0 );
 
+    glShadeModel( GL_SMOOTH );
+
     GLfloat lambient[] =  { 0.0f, 0.0f, 0.0f, 1.0f };
     GLfloat ldiffuse[] =  { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat lspecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };   
@@ -53,7 +55,8 @@ namespace Project2
     glLightfv( GL_LIGHT0, GL_AMBIENT, lambient );	
     glLightfv( GL_LIGHT0, GL_DIFFUSE, ldiffuse );
 	  glLightfv( GL_LIGHT0, GL_SPECULAR, lspecular );		   
-    glLightfv( GL_LIGHT0, GL_POSITION, _lightPosition.front() );	
+    glLightfv( GL_LIGHT0, GL_POSITION, _lightPosition.front() );
+    //glLightModeli( 
 
     glMaterialfv( GL_FRONT, GL_AMBIENT,   mambient   );
     glMaterialfv( GL_FRONT, GL_DIFFUSE,   mdiffuse   );
@@ -95,7 +98,7 @@ namespace Project2
     glLoadIdentity(); 
     gluLookAt( 0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f );   
        
-    // Draw scene. 
+    //Draw scene. 
     glPushMatrix();
     glTranslatef( 0.0f, 0.0f, -15.0f );
     
@@ -106,20 +109,21 @@ namespace Project2
     
     glPopMatrix();
 
-    // Draw light object. 
+    //// Draw light object. 
     glPushMatrix();    
     glUseProgram( 0 );
     glDisable( GL_LIGHTING );
     glDisable( GL_LIGHT0 );    
     glTranslated( _lightPosition[0], _lightPosition[1], _lightPosition[2] );
+    glColor3f( 0.0, 1.0, 0.0 );
     glutSolidSphere( 0.1, 10.0, 10.0 );
     glEnable( GL_LIGHTING );
     glEnable( GL_LIGHT0 );        
     glPopMatrix();
     
-    glPushMatrix();         
+    glPushMatrix();        
     glLightfv( GL_LIGHT0, GL_POSITION, _lightPosition.front() );    
-    glPopMatrix();
+    glPopMatrix();    
   }
 
 
@@ -134,6 +138,13 @@ namespace Project2
 
   void App::parseArguments() 
   {
+    // Check for no arguments. 
+    if( _arguments.size() < 2 )
+    {
+      std::cout << this->help() << std::endl;
+      std::exit( 0 ) ;
+    }
+
     for( size_t i = 0; i < _arguments.size(); ++i )
     {
       if( _arguments[i] == "--shader_type" )
@@ -158,6 +169,20 @@ namespace Project2
         }
       }
     }
+  }
+
+
+  std::string App::help( std::string &arg )
+  {
+    std::string outStr;
+    
+    const std::string str1( "Application usage: exe --model <data> --shader_file <file> " );
+    const std::string str2( " --shader_type <type> " );
+
+    outStr.append( str1 );
+    outStr.append( str2 );
+
+    return outStr;
   }
 
 

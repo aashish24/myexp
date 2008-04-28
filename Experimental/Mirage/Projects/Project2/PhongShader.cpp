@@ -7,9 +7,7 @@
 
 namespace Project2
 {
-  PhongShader::PhongShader() : 
-    _dirty( true ),
-    _program( 0x00 )
+  PhongShader::PhongShader() 
   {
   }
 
@@ -29,25 +27,7 @@ namespace Project2
   {
     this->dirty( false );
   }
-
-
-  bool PhongShader::dirty() const
-  {
-    return _dirty;
-  }
-
   
-  void PhongShader::dirty( bool flag )
-  {
-    _dirty = flag;
-  }
-
-
-  GLint PhongShader::program() const
-  {
-    return _program;
-  }
-
 
   void PhongShader::parseArguments( std::vector< std::string >& arguments )
   {      
@@ -61,6 +41,12 @@ namespace Project2
   }
 
   
+  void PhongShader::reset()
+  {
+    this->setShader( _vertShaderFile, _fragShaderFile );
+  }
+
+
   void PhongShader::activate( Msg::MsgCore::Node* node )
   {
     if( this->dirty() )
@@ -77,9 +63,21 @@ namespace Project2
 
   void PhongShader::setShader( const std::string &vert, const std::string &frag )
   {    
-    ShadersUtil* shUtil = new ShadersUtil();
-    _program = shUtil->setAndLoadShaders( vert, frag );
-    delete shUtil;
+    // Save the file names for the future references. 
+    _vertShaderFile = vert;
+    _fragShaderFile = frag;
+
+    try
+    {
+      ShadersUtil* shUtil = new ShadersUtil();
+      _program = shUtil->setAndLoadShaders( vert, frag );
+      delete shUtil;
+    }
+    catch( ... )
+    {
+      std::cerr << "Error 1063529326: Unknown error: " << std::endl;
+      std::cerr << " Failed to create shader: " << std::endl;
+    }
   }
 
 
