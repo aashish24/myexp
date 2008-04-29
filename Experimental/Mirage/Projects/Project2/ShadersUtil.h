@@ -43,7 +43,16 @@ namespace Project2
       //
       /////////////////////////////////////////////////////////////////////////
 
-      GLint setAndLoadShaders( const std::string& vert, const std::string& frag );    
+      GLint compileAndLinkShaders( const char* vs, const char* fs ); 
+
+      
+      /////////////////////////////////////////////////////////////////////////
+      //
+      // Compile and link shaders from files. 
+      //
+      /////////////////////////////////////////////////////////////////////////
+
+      GLint compileAndLinkFiles( std::string& vsFile, std::string& fsFile ); 
   };
 }
 

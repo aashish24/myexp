@@ -19,7 +19,7 @@
 namespace Project2
 {
   App::App() :
-    _lightPosition( 0.0, 0.0, -10.0, 1.0 ), 
+    _lightPosition( 0.0, 0.0, -8.0, 1.0 ), 
     _shader( 0x00 ), 
     _nodeVisitor( new Msg::MsgCore::NodeVisitor() )
   {
@@ -70,8 +70,9 @@ namespace Project2
     glewInit();    
     
     // Parse arguments. 
-    parseArguments();
-    
+    parseArguments();   
+   
+
     _root->getOrCreateStateSet()->setAttribute( _shader.get() );
   }
   
@@ -100,11 +101,9 @@ namespace Project2
        
     //Draw scene. 
     glPushMatrix();
-    glTranslatef( 0.0f, 0.0f, -15.0f );
+    glTranslatef( 0.0f, 0.0f, -15.0f );   
     
-    GLint program = _shader->program();
-    glUseProgram( program );      
-
+    // Start draw traversal.   
     _root->accept( *( _nodeVisitor.get() ) );    
     
     glPopMatrix();

@@ -18,9 +18,9 @@ namespace Project2
   }
 
 
-  GLint ShadersUtil::setAndLoadShaders( const std::string &vert, const std::string &frag )
+  GLint ShadersUtil::compileAndLinkShaders( const char* vs, const char* fs )
   {
-    if( vert.empty() && frag.empty() )
+    if( ( vs == 0x00 ) || ( fs == 0x00 ) )
     {
       return Shader::SHADER_NULL_PROGRAM;
     }
@@ -30,8 +30,8 @@ namespace Project2
   	GLint fragmentShader  = glCreateShader( GL_FRAGMENT_SHADER );	
     GLint program         = glCreateProgram();	
 
-    const char* vs = textFileRead( _strdup( vert.c_str() ) );
-    const char* fs = textFileRead( _strdup( frag.c_str() ) );
+    //const char* vs = textFileRead( _strdup( vert.c_str() ) );
+    //const char* fs = textFileRead( _strdup( frag.c_str() ) );
 
 	  glShaderSource( vertexShader, 1, &vs, NULL );
 	  glShaderSource( fragmentShader, 1, &fs, NULL );
@@ -52,11 +52,22 @@ namespace Project2
 	  glLinkProgram( program );
 
     // Print log info. 
-	  printProgramInfoLog( program );
-
-    // Use this program. 
-	  glUseProgram( program );	
+	  printProgramInfoLog( program );    
 
     return program;
+  }
+
+
+  GLint ShadersUtil::compileAndLinkFiles( std::string &vsFile, std::string &fsFile )
+  {
+    if( vsFile.empty() || fsFile.empty() )
+    {
+      return Shader::SHADER_NULL_PROGRAM;
+    }
+
+    const char* vs = textFileRead( _strdup( vsFile.c_str() ) );
+    const char* fs = textFileRead( _strdup( fsFile.c_str() ) );
+    
+    return compileAndLinkShaders( vs, fs );
   }
 }

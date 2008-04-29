@@ -46,6 +46,13 @@ namespace Project2
 
   void BumpMapShader::init()
   {
+  }
+
+
+  void BumpMapShader::contextInit()
+  {
+    compileAndLink();
+      
     _locT  = glGetAttribLocation( _program, "tangent" );
     _locB  = glGetAttribLocation( _program, "binormal" );
     _locN  = glGetAttribLocation( _program, "normal" );
@@ -60,7 +67,7 @@ namespace Project2
   void BumpMapShader::reset()
   {   
     // Assuming that we are loading shaders from the file only. 
-    this->setShader( _vertShaderFile, _fragShaderFile );
+    compileAndLink();
   }
   
 
@@ -86,7 +93,7 @@ namespace Project2
     {
       if( arguments[i] == "--shader_file" )
       {
-        this->setShader( ( arguments[i+1] + std::string( ".vert" ) ), ( arguments[i+1] + std::string( ".frag" ) ) );  
+        this->setShaderFiles( ( arguments[i+1] + std::string( ".vert" ) ), ( arguments[i+1] + std::string( ".frag" ) ) );  
       }
       if( arguments[i] == "--normal_map" )
       {
@@ -102,11 +109,13 @@ namespace Project2
 
   void BumpMapShader::activate( Msg::MsgCore::Node* node )
   {
-    if( this->dirty() )
+    if( dirty() )
     {
-      init(); 
-      this->dirty( false );
+      contextInit(); 
+      dirty( false );
     }
+
+    glUseProgram( this->program() );
 
     Msg::MsgCore::SmartPtr< Msg::MsgCore::Geometry > geom = dynamic_cast< Msg::MsgCore::Geometry* >( node );
     
@@ -242,14 +251,27 @@ namespace Project2
   }
 
 
-  void BumpMapShader::setShader( const std::string &vert, const std::string &frag )
+  void BumpMapShader::setShaderFiles( const std::string &vert, const std::string &frag )
   { 
     try
     {
-      ShadersUtil* shUtil = new ShadersUtil();
-      this->program( shUtil->setAndLoadShaders( vert, frag ) );
       this->vertexShaderFile( vert );
-      this->fragmentShaderFile( frag );
+      this->fragmentShaderFile( frag );      
+    }
+    catch( ... )
+    {
+      std::cerr << "Error 1042252865: Unknown error: " << std::endl;
+      std::cerr << " Failed to create shader: " << std::endl;
+    }
+  }
+
+
+  void BumpMapShader::compileAndLink() 
+  {
+    try
+    {
+      ShadersUtil* shUtil = new ShadersUtil();    
+      this->program( shUtil->compileAndLinkFiles( this->vertexShaderFile(), this->fragmentShaderFile() ) );
       delete shUtil;
     }
     catch( ... )

@@ -49,12 +49,24 @@ void main()
 	float spec = max( dot( eyeDir, reflectDir ), 0.0 );	
 	
 	// Calculate diffuse parameter.	
-	float diff = max( dot( pNormal, lightDir ), -1.0 );
+	// @Note: We are setting the range of [-1.0, 1.0] 
+	// so that we could negate of the color component as we get from 
+	// the color map. 
+	float diff;
+	
+	if( useDecalMap )
+	{
+		diff = max( dot( pNormal, lightDir ), -1.0 );	
+	}
+	else
+	{
+		diff = max( dot( pNormal, lightDir ), 0.0 );	
+	}	
 	
 	// Calculate diffuse based off actual normals. 
 	n = normalize( n );
 	vec3 l = normalize( gl_LightSource[0].position.xyz - vForLight );
-	float diff2 = max( dot( n, l ), -1.0 );
+	float diff2 = max( dot( n, l ), 0.0 );
 	
 	//
 	vec3 diffuseColor = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff;
@@ -72,7 +84,7 @@ void main()
 	
 	if( useDecalMap ) 
 	{
-		diffuseColorMix = min( mix(  diffuseColorMix, color, 0.5 ), 1.0 ); 
+		diffuseColorMix = min( mix(  diffuseColorMix, color, 0.3 ), 1.0 ); 
 	}
 	
 	// Calculate fragment color using specular and diffuse light components.  	
@@ -90,6 +102,11 @@ void main()
 	
 	// @Note: Now we are mixing only diffuse components. 
 	//litColor = min( mix( litColor, color, 0.2 ), 1.0 );
+	
+	if( diff == -1.0 )
+	{
+		diffuseColor = vec3( 0.0, 0.0, 0.0 );
+	}
 	
 	// Set fragment color.
 	gl_FragColor = vec4( litColor, 1.0 );

@@ -27,6 +27,12 @@ namespace Project2
   {
     this->dirty( false );
   }
+
+
+  void PhongShader::contextInit()
+  {
+    this->compileAndLink();
+  }
   
 
   void PhongShader::parseArguments( std::vector< std::string >& arguments )
@@ -35,7 +41,7 @@ namespace Project2
     {
       if( arguments[i] == "--shader_file" )
       {
-        this->setShader( ( arguments[i+1] + std::string( ".vert" ) ), ( arguments[i+1] + std::string( ".frag" ) ) );  
+        this->setShaderFiles( ( arguments[i+1] + std::string( ".vert" ) ), ( arguments[i+1] + std::string( ".frag" ) ) );  
       }      
     }
   }
@@ -43,7 +49,7 @@ namespace Project2
   
   void PhongShader::reset()
   {
-    this->setShader( _vertShaderFile, _fragShaderFile );
+    this->compileAndLink();
   }
 
 
@@ -51,8 +57,10 @@ namespace Project2
   {
     if( this->dirty() )
     {
-      this->init();
+      this->contextInit();
     }
+
+    glUseProgram( this->program() );
   }
 
 
@@ -61,16 +69,20 @@ namespace Project2
   }
 
 
-  void PhongShader::setShader( const std::string &vert, const std::string &frag )
+  void PhongShader::setShaderFiles( const std::string &vert, const std::string &frag )
   {    
     // Save the file names for the future references. 
-    _vertShaderFile = vert;
-    _fragShaderFile = frag;
+    this->vertexShaderFile( vert );
+    this->fragmentShaderFile( frag );
+  }
 
+
+  void PhongShader::compileAndLink()
+  {
     try
     {
       ShadersUtil* shUtil = new ShadersUtil();
-      _program = shUtil->setAndLoadShaders( vert, frag );
+      this->program( shUtil->compileAndLinkFiles( this->vertexShaderFile(), this->fragmentShaderFile() ) );
       delete shUtil;
     }
     catch( ... )
