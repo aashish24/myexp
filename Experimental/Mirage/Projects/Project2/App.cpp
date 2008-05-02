@@ -92,7 +92,7 @@ namespace Project2
   void App::display()
   {
     //glPushMatrix();
-    glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
+    glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 
     glMatrixMode( GL_MODELVIEW );   
@@ -108,9 +108,6 @@ namespace Project2
     glRotatef( angle, 0.0, 1.0, 0.0 ); 
 
     // Start draw traversal.     
-    glEnable( GL_CULL_FACE );
-    glCullFace( GL_BACK );    
-    //glPolygonMode( GL_FRONT, GL_LINE );    
     _root->accept( *( _nodeVisitor.get() ) );    
     glPopMatrix();
     

@@ -360,6 +360,10 @@ namespace Project2
       Vec3d& t = tan1->at( i );
       Vec3d& b = tan2->at( i );
 
+      n.normalize();
+      t.normalize(); 
+      b.normalize();
+
       Vec3d tan3v = ( ( t - n * n.dot( t ) ) );            
 
       tan3v.normalize();      
@@ -376,6 +380,9 @@ namespace Project2
       Vec3d& n = normals->at( j );
       Vec3d& t = tangent->at( j );
       
+      n.normalize();
+      t.normalize();
+
       Vec3d bin3v = n.cross( t ) * tw->at( j )[0];
       bin3v.normalize();
       binormal->push_back( bin3v );

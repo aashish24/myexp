@@ -41,21 +41,21 @@ void main()
 	// Normalize. 
 	lightDir = normalize( il - iv );	
 	
-	t = normalize( t );
-	b = normalize( b );
-	n = normalize( n );	
+	vec3 nt = normalize( t );
+	vec3 nb = normalize( b );
+	vec3 nn = normalize( n );	
 	
 	// In tangent space. 
 	vec3 v;
-	v.x = dot( t, ( lightDir ) );
-	v.y = dot( b, ( lightDir ) );
-	v.z = dot( n, ( lightDir ) );		
+	v.x = dot( nt, ( lightDir ) );
+	v.y = dot( nb, ( lightDir ) );
+	v.z = dot( nn, ( lightDir ) );		
 	lightDir = normalize( v );	
 		
 	eyeDir = normalize( iv );	
-	v.x = dot( t, ( eyeDir ) );
-	v.y = dot( b, ( eyeDir ) );
-	v.z = dot( n, ( eyeDir ) );		
+	v.x = dot( nt, ( eyeDir ) );
+	v.y = dot( nb, ( eyeDir ) );
+	v.z = dot( nn, ( eyeDir ) );		
 	
 	eyeDir = -normalize( v );		
 	
@@ -78,8 +78,7 @@ void main()
 	else
 	{
 		diff = max( dot( pNormal, lightDir ), 0.0 );	
-	}	
-	
+	}
 	
 	// Calculate diffuse component. 
 	vec3 diffuseColor = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff;
@@ -112,6 +111,6 @@ void main()
 	
 	
 	// Set fragment color.
-	gl_FragColor = vec4( t, 1.0 );	
+	gl_FragColor = vec4( litColor, 1.0 );	
 }
 
