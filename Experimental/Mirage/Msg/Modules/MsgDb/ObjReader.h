@@ -52,6 +52,22 @@ namespace Msg
             }
         };
 
+
+        struct VertexData
+        {
+          VertexData() : 
+            mVertexIndex( -1 ), 
+            mColorIndex( -1 ), 
+            mTextureIndex( -1 ), 
+            mNormalIndex( -1 )
+          {
+          }
+          long mVertexIndex;
+          long mColorIndex;
+          long mTextureIndex;
+          long mNormalIndex;
+        };
+
         ///////////////////////////////////////////////////////////////////////
         //
         // Constructor. 
@@ -97,6 +113,11 @@ namespace Msg
 				virtual ~ObjReader()
 				{
 				}
+
+
+      protected:
+
+        std::vector< VertexData > mVertexData;
 		};
 	}
 }

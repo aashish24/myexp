@@ -7,15 +7,18 @@ uniform sampler2D decalMap;
 uniform bool useDecalMap;
 
 // Interpolated light and eye directions. 
-varying	vec3 lightDir;
-varying	vec3 eyeDir;
+vec3 lightDir;
+vec3 eyeDir;
 
 // @Note: For testing. 
 varying vec3 t;
 varying vec3 b;
 varying vec3 n;
 
-varying vec3 vForLight;
+varying vec3 iv; 
+varying vec3 il;
+
+//varying vec3 vForLight;
 
 void main()
 {	
@@ -32,16 +35,30 @@ void main()
 	// Read the color value from diffuse map. 
 	vec3 color = ( texture2D( decalMap, gl_TexCoord[0].xy ).rgb );
 	
-	//@Test
-	//vec3 bump = ( texture2D( normalMap, gl_TexCoord[0].xy ).rgb ); 
-		
 	// Normalize perturbed normal.  
 	vec3 pNormal = normalize( bump );		
 
-	// 
-	lightDir = normalize( lightDir );
-	eyeDir = normalize( eyeDir );
-
+	// Normalize. 
+	lightDir = normalize( il - iv );	
+	
+	t = normalize( t );
+	b = normalize( b );
+	n = normalize( n );	
+	
+	// In tangent space. 
+	vec3 v;
+	v.x = dot( t, ( lightDir ) );
+	v.y = dot( b, ( lightDir ) );
+	v.z = dot( n, ( lightDir ) );		
+	lightDir = normalize( v );	
+		
+	eyeDir = normalize( iv );	
+	v.x = dot( t, ( eyeDir ) );
+	v.y = dot( b, ( eyeDir ) );
+	v.z = dot( n, ( eyeDir ) );		
+	
+	eyeDir = -normalize( v );		
+	
 	// Calculate reflection direction. 
 	vec3 reflectDir = -reflect( pNormal, lightDir );	
 	
@@ -63,16 +80,12 @@ void main()
 		diff = max( dot( pNormal, lightDir ), 0.0 );	
 	}	
 	
-	// Calculate diffuse based off actual normals. 
-	n = normalize( n );
-	vec3 l = normalize( gl_LightSource[0].position.xyz - vForLight );
-	float diff2 = max( dot( n, l ), 0.0 );
 	
-	//
+	// Calculate diffuse component. 
 	vec3 diffuseColor = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff;
 	
 	// Part of an experimentation. 
-	vec3 diffuseColor2 = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff2;
+	//vec3 diffuseColor2 = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff2;
 	
 	vec3 diffuseColorMix;
 	
@@ -93,25 +106,12 @@ void main()
 	
 	litColor = gl_FrontMaterial.specular.xyz * gl_LightSource[0].specular.xyz * pow( spec,  gl_FrontMaterial.shininess ) + 
 			   diffuseColorMix + gl_FrontMaterial.ambient.xyz * gl_LightSource[0].ambient.xyz  ; 	
-	
-	// @Test. 
-	//litColor = gl_FrontMaterial.specular.xyz * gl_LightSource[0].specular.xyz * pow( spec,  gl_FrontMaterial.shininess );			   
-				
+			
 	// Chop off values greater then 1.0.
 	litColor = min( litColor, vec3( 1.0 ) );
 	
-	// @Note: Now we are mixing only diffuse components. 
-	//litColor = min( mix( litColor, color, 0.2 ), 1.0 );
-	
-	if( diff == -1.0 )
-	{
-		diffuseColor = vec3( 0.0, 0.0, 0.0 );
-	}
 	
 	// Set fragment color.
-	gl_FragColor = vec4( litColor, 1.0 );
-	
-	// @Test
-	//gl_FragColor = vec4( b, 1.0 );
+	gl_FragColor = vec4( t, 1.0 );	
 }
 

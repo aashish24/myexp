@@ -74,9 +74,13 @@ namespace Msg
 
 		typedef Array< GLfloat, 1 >		FloatArray;
 
-		typedef Array< Vec2f, 2 >		  Vec2Array;
-		typedef Array< Vec3f, 3 >		  Vec3Array;
-		typedef Array< Vec4f, 4 >		  Vec4Array;
+    typedef Array< Vec2f, 2 >		  Vec2fArray;
+		typedef Array< Vec3f, 3 >		  Vec3fArray;
+		typedef Array< Vec4f, 4 >		  Vec4fArray;
+
+		typedef Array< Vec2d, 2 >		  Vec2Array;
+		typedef Array< Vec3d, 3 >		  Vec3Array;
+		typedef Array< Vec4d, 4 >		  Vec4Array;
 
 		typedef Array< Vec2i, 2 >		  Vec2iArray;
 		typedef Array< Vec3i, 3 >		  Vec3iArray;

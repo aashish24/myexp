@@ -19,7 +19,7 @@
 namespace Project2
 {
   App::App() :
-    _lightPosition( 0.0, 0.0, -8.0, 1.0 ), 
+    _lightPosition( 0.0, 0.0, -7.0, 1.0 ), 
     _shader( 0x00 ), 
     _nodeVisitor( new Msg::MsgCore::NodeVisitor() )
   {
@@ -98,22 +98,28 @@ namespace Project2
     glMatrixMode( GL_MODELVIEW );   
     glLoadIdentity(); 
     gluLookAt( 0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f );   
-       
+    
+    static float angle = 0.0; 
+    angle = angle + 0.1;
+
     //Draw scene. 
     glPushMatrix();
     glTranslatef( 0.0f, 0.0f, -15.0f );   
-    
-    // Start draw traversal.   
-    _root->accept( *( _nodeVisitor.get() ) );    
-    
-    glPopMatrix();
+    glRotatef( angle, 0.0, 1.0, 0.0 ); 
 
+    // Start draw traversal.     
+    glEnable( GL_CULL_FACE );
+    glCullFace( GL_BACK );    
+    //glPolygonMode( GL_FRONT, GL_LINE );    
+    _root->accept( *( _nodeVisitor.get() ) );    
+    glPopMatrix();
+    
     //// Draw light object. 
     glPushMatrix();    
     glUseProgram( 0 );
     glDisable( GL_LIGHTING );
     glDisable( GL_LIGHT0 );    
-    glTranslated( _lightPosition[0], _lightPosition[1], _lightPosition[2] );
+    glTranslated( _lightPosition[0], _lightPosition[1], _lightPosition[2] );    
     glColor3f( 0.0, 1.0, 0.0 );
     glutSolidSphere( 0.1, 10.0, 10.0 );
     glEnable( GL_LIGHTING );

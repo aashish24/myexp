@@ -32,6 +32,7 @@ namespace Project2
   void PhongShader::contextInit()
   {
     this->compileAndLink();
+    this->dirty( false );
   }
   
 

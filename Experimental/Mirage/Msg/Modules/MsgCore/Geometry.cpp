@@ -56,6 +56,11 @@ bool Geometry::hasFastPath()
   return mFastPath;
 }
 
+Geometry::PrimitiveSets& Geometry::getPrimitiveSets() 
+{
+  return mPrimitiveSets;
+}
+
 
 Vec3Array* Geometry::getVertexArray()
 {	
@@ -209,9 +214,9 @@ void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 
 	for( size_t i=0; i < mVertexIndices->size(); ++i )
 	{
-		Vec3f vec1 = mVertices->at( mVertexIndices->at(i)[1] ) - mVertices->at( mVertexIndices->at(i)[0] );
-		Vec3f vec2 = mVertices->at( mVertexIndices->at(i)[2] ) - mVertices->at( mVertexIndices->at(i)[0] );
-		Vec3f normal = vec1.cross( vec2 );		
+		Vec3d vec1 = mVertices->at( mVertexIndices->at(i)[1] ) - mVertices->at( mVertexIndices->at(i)[0] );
+		Vec3d vec2 = mVertices->at( mVertexIndices->at(i)[2] ) - mVertices->at( mVertexIndices->at(i)[0] );
+		Vec3d normal = vec1.cross( vec2 );		
 		normal.normalize();
 		normals->push_back( normal );
 		nIndices->push_back( Vec3i( i, 0, 0 ) );
@@ -251,7 +256,7 @@ void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 		MapVertexIDToPrimitiveID::iterator itr = mapVertexIDToPrimitiveID.begin();		
 		for( itr; itr != mapVertexIDToPrimitiveID.end(); ++itr )
 		{
-			Vec3f vertextNormal;
+			Vec3d vertextNormal;
 			for( size_t i = 0; i < itr->second.size(); ++i )
 			{				
 				vertextNormal = vertextNormal + normals->at( ( itr->second.at( i ) ) );
@@ -348,24 +353,24 @@ void Geometry::drawImplementation()
   else
   {
     // Set all the vertex arrays and then dereference the vertex array later. 
-    glVertexPointer( 3, GL_FLOAT, 0, mVertices->getDataPointer() );
+    glVertexPointer( 3, GL_DOUBLE, 0, mVertices->getDataPointer() );
 
     if( mColors.valid() )
     {
 	    glEnableClientState( GL_COLOR_ARRAY );
-	    glColorPointer( 4, GL_FLOAT, 0, mColors->getDataPointer() );
+	    glColorPointer( 4, GL_DOUBLE, 0, mColors->getDataPointer() );
     }
 
     if( mNormals.valid() )
     {
 	    glEnableClientState( GL_NORMAL_ARRAY );
-      glNormalPointer( GL_FLOAT, 0, mNormals->getDataPointer() );      
+      glNormalPointer( GL_DOUBLE, 0, mNormals->getDataPointer() );      
     }	
   	
     if( mTexCoords.valid() )
     {
 	    glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-      glTexCoordPointer( 3, GL_FLOAT, 0, mTexCoords->getDataPointer() );
+      glTexCoordPointer( 3, GL_DOUBLE, 0, mTexCoords->getDataPointer() );
     }		  
 
     // Now dereference the arrays. 
@@ -375,5 +380,20 @@ void Geometry::drawImplementation()
 		  mPrimitiveSets[i]->draw();
 		  glDisableClientState( GL_VERTEX_ARRAY );		   
 	  }
+
+    if( mTexCoords.valid() )
+    {
+      glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+    }
+
+    if( mNormals.valid() )
+    {
+      glDisableClientState( GL_NORMAL_ARRAY );
+    }
+
+    if( mColors.valid() )
+    {
+      glDisableClientState( GL_COLOR_ARRAY );
+    }
   }
 }

@@ -116,7 +116,7 @@ namespace Project2
     }
 
     glUseProgram( this->program() );
-
+    
     Msg::MsgCore::SmartPtr< Msg::MsgCore::Geometry > geom = dynamic_cast< Msg::MsgCore::Geometry* >( node );
     
     if( geom.valid() )
@@ -131,13 +131,13 @@ namespace Project2
       }
 
       glEnableVertexAttribArray( _locT );    
-      glVertexAttribPointer( _locT, 3, GL_FLOAT, false, 0, geom->getTangentTBNArray()->getDataPointer() );        
+      glVertexAttribPointer( _locT, 3, GL_DOUBLE, false, 0, geom->getTangentTBNArray()->getDataPointer() );        
       
       glEnableVertexAttribArray( _locB );    
-      glVertexAttribPointer( _locB, 3, GL_FLOAT, false, 0, geom->getBinormalTBNArray()->getDataPointer() );  
+      glVertexAttribPointer( _locB, 3, GL_DOUBLE, false, 0, geom->getBinormalTBNArray()->getDataPointer() );  
       
       glEnableVertexAttribArray( _locN );    
-      glVertexAttribPointer( _locN, 3, GL_FLOAT, false, 0, geom->getNormalTBNArray()->getDataPointer() );  
+      glVertexAttribPointer( _locN, 3, GL_DOUBLE, false, 0, geom->getNormalTBNArray()->getDataPointer() );  
 
       // Locate uniform for BumpMap sampler.      
       glActiveTexture( GL_TEXTURE0 );
@@ -168,17 +168,7 @@ namespace Project2
 
   void BumpMapShader::loadBumpMap( const std::string& fileName )
   {
-    // Load normal map. 
-   /* ShImage normalMap;
-    ShUtil::load_PNG( normalMap, fileName );    
-    GLuint texIndex;
-    glGenTextures( 1,  &texIndex );
-    glBindTexture( GL_TEXTURE_2D, texIndex );
-    gluBuild2DMipmaps( GL_TEXTURE_2D, GL_RGB,
-                       normalMap.width(), normalMap.height(),
-                       GL_RGB,
-                       GL_FLOAT, normalMap.data() );    */
-
+    // Load normal map.    
     IMAGE image;
     
     try
@@ -241,7 +231,7 @@ namespace Project2
 
     glActiveTexture( GL_TEXTURE1 );
     glGenTextures( 1, &_decalMapTexIndex );
-    glBindTexture( GL_TEXTURE_2D, _decalMapTexIndex );
+    glBindTexture( GL_TEXTURE_2D, _decalMapTexIndex );   
     gluBuild2DMipmaps( GL_TEXTURE_2D, GL_RGBA8, image.width, image.height, image.format, GL_UNSIGNED_BYTE, image.data );
 
     // Ok now we can ask shaders to use this decal map. 
@@ -311,27 +301,30 @@ namespace Project2
       long i2 = indices->at( i )[1];
       long i3 = indices->at( i )[2];
 
-      float x1 = vertices->at( i1 )[0] - vertices->at( i1 )[0];
-      float x2 = vertices->at( i3 )[0] - vertices->at( i1 )[0];
-      float y1 = vertices->at( i2 )[1] - vertices->at( i1  )[1];
-      float y2 = vertices->at( i2 )[1] - vertices->at( i1 )[1];      
-      float z1 = vertices->at( i1 )[2] - vertices->at( i1 )[2];
-      float z2 = vertices->at( i2 )[2] - vertices->at( i1 )[2];
+      double x1 = vertices->at( i2 )[0] - vertices->at( i1 )[0];
+      double x2 = vertices->at( i3 )[0] - vertices->at( i1 )[0];
       
-      float s2 = texcoords->at( i2 )[0] - texcoords->at( i1 )[0];
-      float s1 = texcoords->at( i1 )[0] - texcoords->at( i1 )[0];
-
-      float t1 = texcoords->at( i2 )[1] - texcoords->at( i1 )[1];
-      float t2 = texcoords->at( i1 )[1] - texcoords->at( i1 )[1];          
-
-      float denom = 1.0f / ( s2 * t2 - s2 * t1 );
+      double y1 = vertices->at( i2 )[1] - vertices->at( i1  )[1];
+      double y2 = vertices->at( i3 )[1] - vertices->at( i1 )[1];      
       
-      if ( denom > -0.001 || denom < 0.001 ) 
+      double z1 = vertices->at( i2 )[2] - vertices->at( i1 )[2];
+      double z2 = vertices->at( i3 )[2] - vertices->at( i1 )[2];
+      
+      double s1 = texcoords->at( i2 )[0] - texcoords->at( i1 )[0];
+      double s2 = texcoords->at( i3 )[0] - texcoords->at( i1 )[0];
+      
+      double t1 = texcoords->at( i2 )[1] - texcoords->at( i1 )[1];
+      double t2 = texcoords->at( i3 )[1] - texcoords->at( i1 )[1];          
+
+      double denom = 1.0f / ( s1 * t2 - s2 * t1 );
+      
+      //if ( denom > -0.001 || denom < 0.001 ) 
+      if( false )
       {        
-        Vec3f T, B;
+        Vec3d T, B;
 
-        T = Vec3f( 1.0f, 0.0f, 0.0f );
-        B = Vec3f( 0.0f, 1.0f, 0.0f );
+        T = Vec3d( 1.0f, 0.0f, 0.0f );
+        B = Vec3d( 0.0f, 1.0f, 0.0f );
 
         tan1->at( i1 ) = tan1->at( i1 ) + T;
         tan1->at( i2 ) = tan1->at( i2 ) + T;
@@ -344,10 +337,10 @@ namespace Project2
       }
       else
       {
-        Vec3f T, B;
+        Vec3d T, B;
       
-        T = Vec3f( ( t2 * x1 - t1 * x2 ) * denom, ( t2 * y1 - t1 * y2 ) * denom, ( t2 * z1 - t1 * z2 ) * denom );
-        B = Vec3f( ( s1 * x2 - s2 * x1 ) * denom, ( s1 * y2 - s2 * y1 ) * denom, ( s1 * z2 - s2 * z1 ) * denom ); 
+        T = Vec3d( ( t2 * x1 - t1 * x2 ) * denom, ( t2 * y1 - t1 * y2 ) * denom, ( t2 * z1 - t1 * z2 ) * denom );
+        B = Vec3d( ( s1 * x2 - s2 * x1 ) * denom, ( s1 * y2 - s2 * y1 ) * denom, ( s1 * z2 - s2 * z1 ) * denom ); 
 
         tan1->at( i1 ) = tan1->at( i1 ) + T;
         tan1->at( i2 ) = tan1->at( i2 ) + T;
@@ -363,32 +356,34 @@ namespace Project2
 
     for( size_t i = 0; i < ( vertices->size() ); ++i )
     {
-      Vec3f& n = normals->at( i );
-      Vec3f& t = tan1->at( i );
-      Vec3f& b = tan2->at( i );
+      Vec3d& n = normals->at( i );
+      Vec3d& t = tan1->at( i );
+      Vec3d& b = tan2->at( i );
 
-      Vec3f tan3v = ( ( t - n * n.dot( t ) ) );      
+      Vec3d tan3v = ( ( t - n * n.dot( t ) ) );            
+
       tan3v.normalize();      
       
-      float f = ( ( ( n.cross( t ) ).dot( b ) ) < 0.0f ? -1.0f : 1.0f ); 
-      tw->push_back( Vec3f( f, 0.0, 0.0 ) );
+      double f = ( ( ( n.cross( t ) ).dot( b ) ) < 0.0f ? -1.0f : 1.0f ); 
+
+      tw->push_back( Vec3d( f, 0.0, 0.0 ) );
 
       tangent->push_back( tan3v );
     }      
 
     for( size_t j = 0; j < ( vertices->size() ); ++j )
     {
-      Vec3f& n = normals->at( j );
-      Vec3f& t = tangent->at( j );
+      Vec3d& n = normals->at( j );
+      Vec3d& t = tangent->at( j );
       
-      Vec3f bin3v = n.cross( t ) * tw->at( j )[0];
+      Vec3d bin3v = n.cross( t ) * tw->at( j )[0];
       bin3v.normalize();
       binormal->push_back( bin3v );
     }
 
     for( size_t j = 0; j < ( vertices->size() ); ++j )
     {      
-      Vec3f norV = normals->at( j );
+      Vec3d norV = normals->at( j );
       norV.normalize();
       normal->push_back( norV );     
     }
