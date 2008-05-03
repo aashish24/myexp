@@ -45,14 +45,11 @@ namespace Msg
 				Vec4Array*			  getColorArray();
 				void				      setColorArray( Vec4Array* colorArray );
 
-        Vec3Array*			  getTangentTBNArray();
-				void				      setTangetTBNArray( Vec3Array* tangetArray );
+        Vec3Array*			  getTangentArray();
+				void				      setTangentArray( Vec3Array* tangetArray );
 
-        Vec3Array*			  getBinormalTBNArray();
-				void				      setBinormalTBNArray( Vec3Array* binormalArray );
-
-        Vec3Array*			  getNormalTBNArray();
-				void				      setNormalTBNArray( Vec3Array* binormalArray );
+        Vec3Array*			  getBinormalArray();
+				void				      setBinormalArray( Vec3Array* binormalArray );
 
 				AttributeBinding	getAttrBinding();
 				void				      setAttrBinding( const AttributeBinding& attrBinding );
@@ -86,15 +83,9 @@ namespace Msg
 				SmartPtr< Vec3Array	>	  mNormals;
 				SmartPtr< Vec3Array	>	  mTexCoords;
 				SmartPtr< Vec4Array >	  mColors;
-      
-        // For fast path. 
-        //SmartPtr< Vec3Array >   mNormalArray;
-        //SmartPtr< Vec3Array >   mTexCoordArray;
-        //SmartPtr< Vec4Array >	  mColorArray;
 
-        SmartPtr< Vec3Array >   mTangetsTBN;
-        SmartPtr< Vec3Array >   mBinormalsTBN;
-        SmartPtr< Vec3Array >   mNormalsTBN;  
+        SmartPtr< Vec3Array >   mTangents;
+        SmartPtr< Vec3Array >   mBinormals;        
 
 				SmartPtr< Vec3iArray >	mVertexIndices;
 				

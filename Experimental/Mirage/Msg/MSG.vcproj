@@ -363,6 +363,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Modules\MsgUtil\GeometryFuncs.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgUtil\GeometryFuncs.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Modules\MsgUtil\String.h"
 					>
 				</File>

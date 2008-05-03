@@ -16,9 +16,8 @@ Geometry::Geometry() :
   mNormals        ( 0x00 ), 
   mTexCoords      ( 0x00 ),   
   mColors         ( 0x00 ),   
-  mTangetsTBN     ( 0x00 ),      
-  mBinormalsTBN   ( 0x00 ), 
-  mNormalsTBN     ( 0x00 ),   
+  mTangents       ( 0x00 ),      
+  mBinormals      ( 0x00 ),   
   mVertexIndices  ( 0x00 ), 
   mNormalIndices  ( 0x00 ),
   mTextureIndices ( 0x00 ),
@@ -34,9 +33,8 @@ Geometry::Geometry( const Geometry& geom ) :
   mNormals        ( geom.mNormals ), 
   mTexCoords      ( geom.mTexCoords ),   
   mColors         ( geom.mColors ),   
-  mTangetsTBN     ( geom.mTangetsTBN ),      
-  mBinormalsTBN   ( geom.mBinormalsTBN ), 
-  mNormalsTBN     ( geom.mNormalsTBN ),   
+  mTangents       ( geom.mTangents ),      
+  mBinormals      ( geom.mBinormals ),   
   mVertexIndices  ( 0x00 ), 
   mNormalIndices  ( 0x00 ),
   mTextureIndices ( 0x00 ),
@@ -110,39 +108,27 @@ void Geometry::setColorArray( Vec4Array* colorArray )
 }
 
 
-Vec3Array* Geometry::getTangentTBNArray() 
+Vec3Array* Geometry::getTangentArray() 
 {
-  return mTangetsTBN.get();
+  return mTangents.get();
 }
 
 
-void Geometry::setTangetTBNArray( Vec3Array* tangentArray )
+void Geometry::setTangentArray( Vec3Array* tangentArray )
 {
-  mTangetsTBN = tangentArray;
+  mTangents = tangentArray;
 }
 
 
-Vec3Array* Geometry::getBinormalTBNArray() 
+Vec3Array* Geometry::getBinormalArray() 
 {
-  return mBinormalsTBN.get();
+  return mBinormals.get();
 }
 
 
-void Geometry::setBinormalTBNArray( Vec3Array* binormalArray )
+void Geometry::setBinormalArray( Vec3Array* binormalArray )
 {
-  mBinormalsTBN = binormalArray;
-}
-
-
-Vec3Array* Geometry::getNormalTBNArray() 
-{
-  return mNormalsTBN.get();
-}
-
-
-void Geometry::setNormalTBNArray( Vec3Array* normalArray )
-{
-  mNormalsTBN = normalArray;
+  mBinormals = binormalArray;
 }
 
 
