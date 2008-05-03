@@ -120,9 +120,10 @@ namespace Project2
         catch( ... )
         {
           // @Todo: How to disable this attribute. We need to find a way.           
-          std::cerr << "Error 3892253893: Unknown error. " << std::endl;
+          std::cerr << " ERROR 3892253893: Unknown error. " << std::endl;
           
-          assert( false );          
+          assert( false ); 
+          return;
         }
       }
 
@@ -151,7 +152,8 @@ namespace Project2
       }
       else
       {
-        std::cerr << "Error 2395475227: Missing tangent, binormal or normal array. " << std::endl;
+        std::cerr << " ERROR 2395475227: Missing tangent, binormal or normal array. " << std::endl;
+        return;
       }
     }
   }
@@ -181,18 +183,18 @@ namespace Project2
     }
     catch( std::exception& e )
     {
-      std::cerr << "Error " << e.what() << std::endl;
-      throw;
+      std::cerr << " ERROR 1120598588: " << e.what() << std::endl;
+      return;
     }
     catch( ... )
     {
-      std::cerr << "Unknown error: " << std::endl;
-      throw;
+      std::cerr << " ERROR 3490106803: Unknown error. " << std::endl;
+      return;
     }
 
     if( ! image.data  )
     {
-      throw "Image data is NULL: ";
+      throw " ERROR 7626153710: Image contains invalid or no data. ";
     }
 
     glActiveTexture( GL_TEXTURE0 );
@@ -216,18 +218,19 @@ namespace Project2
       image.ExpandPalette();    
     }
     catch( std::exception& e )
-    {
-      std::cerr << "Error " << e.what() << std::endl;
+    { 
+      std::cerr << " ERROR 9940214690: " << e.what() << std::endl;
       throw;
     }
     catch( ... )
     {
-      std::cerr << "Unknown error: " << std::endl;
+      std::cerr << " ERROR: 3137731113: Unknown error. " << std::endl;
       throw;
     }
 
     if( !image.data )
     {
+      std::cerr << " ERROR 1478987840: Missing of invalid image data. " << std::endl;
       this->_useDecalMap = false;
       return;
     }    
@@ -253,8 +256,8 @@ namespace Project2
     }
     catch( ... )
     {
-      std::cerr << "Error 1042252865: Unknown error: " << std::endl;
-      std::cerr << " Failed to create shader: " << std::endl;
+      std::cerr << " ERROR 1042252865: Unknown error. " << std::endl;
+      std::cerr << " Failed to create shader.  " << std::endl;
     }
   }
 
@@ -269,8 +272,8 @@ namespace Project2
     }
     catch( ... )
     {
-      std::cerr << "Error 1042252865: Unknown error: " << std::endl;
-      std::cerr << " Failed to create shader: " << std::endl;
+      std::cerr << " ERROR 1042252865: Unknown error. " << std::endl;
+      std::cerr << " Failed to create shader. " << std::endl;
     }
   }  
   
