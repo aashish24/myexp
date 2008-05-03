@@ -423,9 +423,7 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
     SmartPtr< Vec3Array > vertexArray( new Vec3Array( sizeArray ) );
     SmartPtr< Vec3Array > normalArray( new Vec3Array( sizeArray ) );
     SmartPtr< Vec3Array > textureArray( new Vec3Array( sizeArray ) );
-    SmartPtr< Vec3Array > colorArray( new Vec3Array( sizeArray ) );
-
-    
+    SmartPtr< Vec3Array > colorArray( new Vec3Array( sizeArray ) );    
 
    for( size_t i=0; i < mVertexData.size(); ++i )
    {
@@ -436,6 +434,19 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
    
    Geometry::PrimitiveSets primSets = geom->getPrimitiveSets();
    SmartPtr< Vec3iArray > vertexIndicesArray( new Vec3iArray() );
+
+   for( size_t i=0; i < primSets.size(); ++i )
+   {     
+    Vec3i vector;
+    DrawElementUInt* elem = ( dynamic_cast< DrawElementUInt* > ( primSets[i].get() ) );
+    if( elem ) 
+    {
+      vector[0] = elem->at( 0 );
+      vector[1] = elem->at( 1 );
+      vector[2] = elem->at( 2 );
+    }
+    vertexIndicesArray->push_back(  vector );
+   }
 
 #if 0
     // Create geode which will hold this geometry. 
