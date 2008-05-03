@@ -254,6 +254,13 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
     // Node that actually holds the data. 
 	  SmartPtr< Geometry > geom = new Geometry();
 
+    // Lets create a map of vertex index to VertexData.
+    // We need to have this as we need to loop thru all the 
+    // VertexData which has the same vertex index and if we find one 
+    // which has the same texture index then we wont push a new vertex 
+    // but rather will use the vertex index of that VertexData. 
+    std::map< int, std::vector< int > > vertexIndexVertexDataTable;
+
     for( size_t i=0; i < model->mVertexIndices->size(); ++i )
     {
       SmartPtr< DrawElementUInt > drawUInt( new DrawElementUInt( DrawElementUInt::TRIANGLES ) );
@@ -289,86 +296,128 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
       if( mVertexData.at( v1 ).mVertexIndex == -1 ) 
       {
         mVertexData.at( v1 ) = vData1;
+        vertexIndexVertexDataTable[v1].push_back( v1 );
         drawUInt->push_back( vData1.mVertexIndex );
       }
-      else if( ( mVertexData.at( v1 ).mTextureIndex != vData1.mTextureIndex ) ||
-            ( mVertexData.at( v1 ).mNormalIndex != vData1.mNormalIndex ) )
+      else if( mVertexData.at( v1 ).mTextureIndex == vData1.mTextureIndex )
       {
-        // Check if we have same texutre coordinate and normals.. else 
-        // create new vertex and 
-        // add texture coordinate 
-        // add normal
-        {         
+        drawUInt->push_back( vData1.mVertexIndex );
+      }
+      else
+      {        
+        bool found = false;
+        std::map< int, std::vector< int > >::iterator itr = vertexIndexVertexDataTable.find( v1 );
+        size_t size = itr->second.size();
+
+        //for( itr; itr != vertexIndexVertexDataTable.end(); ++itr )
+        for( size_t i=0; i < size; ++i )
+        {
+          //std::cout << "Test: " << mVertexData.at( itr->second[i] ).mTextureIndex << " "  
+          //          << vData1.mTextureIndex << std::endl;
+          if( mVertexData.at( itr->second[i] ).mTextureIndex == vData1.mTextureIndex )
+          {            
+            //vData1.mVertexIndex = mVertexData.at( itr->first ).mVertexIndex;
+            vData1.mVertexIndex = mVertexData.at( itr->second[i] ).mVertexIndex;
+            drawUInt->push_back( vData1.mVertexIndex );
+            found = true;
+          }
+        }  
+
+        if( !found ) 
+        {
           model->mVertices->push_back( model->mVertices->at( vData1.mVertexIndex ) );
           model->mNormals->push_back( model->mNormals->at( vData1.mNormalIndex ) );
           model->mTexCoords->push_back( model->mTexCoords->at( vData1.mTextureIndex ) );
           vData1.mVertexIndex = mVertexData.size();
           mVertexData.push_back( vData1 );
-          drawUInt->push_back( vData1.mVertexIndex );
+          vertexIndexVertexDataTable[v1].push_back( vData1.mTextureIndex );
+          drawUInt->push_back( vData1.mVertexIndex );        
         }
       }
-      else
-      {
-        drawUInt->push_back( vData1.mVertexIndex );
-      }
 
-      // If we dont have any allocated value at this position. 
+      // @Todo: Write the algorithm here. 
       if( mVertexData.at( v2 ).mVertexIndex == -1 ) 
       {
         mVertexData.at( v2 ) = vData2;
+        vertexIndexVertexDataTable[v2].push_back( v2 );
         drawUInt->push_back( vData2.mVertexIndex );
       }
-      // Else check if already have one data at this position but if the current and the one 
-      // in the vertex data set are not same then create new vertex hence new vertex index
-      // along with the normals, colors, texture coords etc. 
-      // @Todo: We have very poor error checking. Need to fix that. 
-      // @Todo: We are not updating indices for normals, colors etc which could cause some issues. 
-      else if( ( mVertexData.at( v2 ).mTextureIndex != vData2.mTextureIndex ) ||
-            ( mVertexData.at( v2 ).mNormalIndex != vData2.mNormalIndex ) )
+      else if( mVertexData.at( v2 ).mTextureIndex == vData2.mTextureIndex )
+      {
+        drawUInt->push_back( vData2.mVertexIndex );
+      }
+      else
       {        
-        {          
+        bool found = false;
+        std::map< int, std::vector< int > >::iterator itr = vertexIndexVertexDataTable.find( v2 );
+        size_t size = itr->second.size();
+        
+        for( size_t i=0; i < size; ++i )
+        {
+          //std::cout << "Test: " << mVertexData.at( itr->second[i] ).mTextureIndex << " "  
+          //          << vData2.mTextureIndex << std::endl;
+          if( mVertexData.at( itr->second[i] ).mTextureIndex == vData2.mTextureIndex )
+          {            
+            vData2.mVertexIndex = mVertexData.at( itr->second[i] ).mVertexIndex;
+            drawUInt->push_back( vData2.mVertexIndex );
+            found = true;
+          }
+        } 
+        if( !found ) 
+        {
           model->mVertices->push_back( model->mVertices->at( vData2.mVertexIndex ) );
           model->mNormals->push_back( model->mNormals->at( vData2.mNormalIndex ) );
           model->mTexCoords->push_back( model->mTexCoords->at( vData2.mTextureIndex ) );
           vData2.mVertexIndex = mVertexData.size();
-          mVertexData.push_back( vData2 );         
-          drawUInt->push_back(  vData2.mVertexIndex );
+          mVertexData.push_back( vData2 );
+          vertexIndexVertexDataTable[v2].push_back( vData2.mVertexIndex );
+          drawUInt->push_back( vData2.mVertexIndex );        
         }
-      }
-      else
-      {
-        drawUInt->push_back( vData2.mVertexIndex );
       }
 
       if( mVertexData.at( v3 ).mVertexIndex == -1 ) 
       {
         mVertexData.at( v3 ) = vData3;
+        vertexIndexVertexDataTable[v3].push_back( v3 );
         drawUInt->push_back( vData3.mVertexIndex );
       }
-      else if( ( mVertexData.at( v3 ).mTextureIndex != vData3.mTextureIndex ) ||
-            ( mVertexData.at( v3 ).mNormalIndex != vData3.mNormalIndex ) )
-      {        
-        model->mVertices->push_back( model->mVertices->at( vData3.mVertexIndex ) );
-        model->mNormals->push_back( model->mNormals->at( vData3.mNormalIndex ) );
-        model->mTexCoords->push_back( model->mTexCoords->at( vData3.mTextureIndex ) );
-        vData3.mVertexIndex = mVertexData.size();
-        mVertexData.push_back( vData3 );       
-        drawUInt->push_back(  vData3.mVertexIndex );
-      }
-      else
+      else if( mVertexData.at( v3 ).mTextureIndex == vData3.mTextureIndex )
       {
         drawUInt->push_back( vData3.mVertexIndex );
-      }      
+      }
+      else
+      {        
+        bool found = false;
+        std::map< int, std::vector< int > >::iterator itr = vertexIndexVertexDataTable.find( v3 );
+        size_t size = itr->second.size();
+        
+        for( size_t i=0; i < size; ++i )
+        {
+          //std::cout << "Test: " << mVertexData.at( itr->second[i] ).mTextureIndex << " "  
+          //          << vData3.mTextureIndex << std::endl;
+          if( mVertexData.at( itr->second[i] ).mTextureIndex == vData1.mTextureIndex )
+          {            
+            vData3.mVertexIndex = mVertexData.at( itr->second[i] ).mVertexIndex;
+            drawUInt->push_back( vData3.mVertexIndex );
+            found = true;
+          }
+        } 
+        if( !found ) 
+        {
+          model->mVertices->push_back( model->mVertices->at( vData3.mVertexIndex ) );
+          model->mNormals->push_back( model->mNormals->at( vData3.mNormalIndex ) );
+          model->mTexCoords->push_back( model->mTexCoords->at( vData3.mTextureIndex ) );
+          vData3.mVertexIndex = mVertexData.size();
+          mVertexData.push_back( vData3 );
+          vertexIndexVertexDataTable[v3].push_back( vData3.mVertexIndex );
+          drawUInt->push_back( vData3.mVertexIndex );        
+        }
+      }
+          
 
       geom->addPrimitiveSet( drawUInt.get() );
     } // for( ... )
-
-   //  // Create geode which will hold this geometry. 
-   // SmartPtr< Geode > geode = new Geode();
-
-   // // Node that actually holds the data. 
-	  //SmartPtr< Geometry > geom = new Geometry();
-
+ 
     size_t sizeArray = mVertexData.size();
 
     SmartPtr< Vec3Array > vertexArray( new Vec3Array( sizeArray ) );
@@ -388,45 +437,7 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
    Geometry::PrimitiveSets primSets = geom->getPrimitiveSets();
    SmartPtr< Vec3iArray > vertexIndicesArray( new Vec3iArray() );
 
-   std::fstream; 
-   std::ostringstream;
-
-   std::ofstream file;
-   file.open( "out.txt" ); 
-   
-   if( !file.is_open() )
-   {
-     std::cout << "Bad file: " << std::endl;
-   }
-
-   for( size_t i=0; i < primSets.size(); ++i )
-   {     
-    Vec3i vector;
-    DrawElementUInt* elem = ( dynamic_cast< DrawElementUInt* > ( primSets[i].get() ) );
-    if( elem ) 
-    {
-      vector[0] = elem->at( 0 );
-      vector[1] = elem->at( 1 );
-      vector[2] = elem->at( 2 );
-
-      file << vector[0] << " " << vector[1] << " " << vector[2] << std::endl;
-    }
-
-    vertexIndicesArray->push_back(  vector );
-   }
-
-   for( size_t i=0; i < vertexArray->size(); ++i )
-   {
-     Vec3d vertex = vertexArray->at( i );
-
-     file << vertex[0] << " " << vertex[1] << " " << vertex[2] << std::endl;     
-   }
-
-   file.close();
-    
-
 #if 0
-
     // Create geode which will hold this geometry. 
     SmartPtr< Geode > geode = new Geode();
 

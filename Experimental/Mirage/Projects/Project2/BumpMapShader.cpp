@@ -360,6 +360,9 @@ namespace Project2
       Vec3d& t = tan1->at( i );
       Vec3d& b = tan2->at( i );
 
+      // @Todo: I am not sure why we need to normalize t here. 
+      // Need to figure out the algorithm. 
+      
       n.normalize();
       t.normalize(); 
       b.normalize();
@@ -380,6 +383,9 @@ namespace Project2
       Vec3d& n = normals->at( j );
       Vec3d& t = tangent->at( j );
       
+      // @Todo: I am not sure why we need to normalize t here. 
+      // Need to figure out the algorithm. 
+
       n.normalize();
       t.normalize();
 

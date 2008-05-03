@@ -29,8 +29,8 @@ void main()
     vec3 bump = ( texture2D( normalMap, gl_TexCoord[0].xy ).rgb -  0.5 ) * 2.0 ;    
 
 	// 
-	bump[0] = bump[0] * 4.0;
-	bump[1] = bump[1] * 4.0;
+	bump[0] = bump[0] * 2.0;
+	bump[1] = bump[1] * 2.0;
 	
 	// Read the color value from diffuse map. 
 	vec3 color = ( texture2D( decalMap, gl_TexCoord[0].xy ).rgb );
@@ -89,7 +89,7 @@ void main()
 	vec3 diffuseColorMix;
 	
 	// Part of an experimentation. 
-	//diffuseColorMix = min( mix(  diffuseColor, diffuseColor2, 0.5 ), 1.0 );
+	//diffuseColorMix = min( mix( diffuseColor, diffuseColor2, 0.5 ), 1.0 );
 	
 	// 
 	diffuseColorMix = min( diffuseColor, 1.0 );	
