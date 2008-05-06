@@ -243,9 +243,10 @@ namespace Smtl
 
 			Vector< DATA_TYPE, SIZE >& normalize()
 			{
+        DATA_TYPE val = length();
+
 				for( size_t i=0; i < SIZE; ++i )
-				{
-          DATA_TYPE val = length();
+				{          
           if( val != 0.0 )
           {
             mData[i] = mData[i] / val;
@@ -285,7 +286,9 @@ namespace Smtl
 				return &mData[0];
 			}
 
+
 		private:
+
 			DATA_TYPE mData[SIZE];
 	};
 

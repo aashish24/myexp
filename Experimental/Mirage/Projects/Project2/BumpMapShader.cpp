@@ -15,10 +15,6 @@
 
 #include "GL/gl.h"
 
-#include "sh/sh.hpp"
-#include "shutil/shutil.hpp"
-#include "sh/ShImage.hpp"
-
 namespace Project2
 {
   BumpMapShader::BumpMapShader() :   
