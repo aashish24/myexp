@@ -1,16 +1,14 @@
 
 #include "MsgCore/Group.h"
 
-using namespace Msg::MsgCore;
-
-void Group::traverse( NodeVisitor &nv )
+void Msg::MsgCore::Group::traverse( NodeVisitor &nv )
 {
   this->activateStateSet();
 
 	// @Todo: Why use iterator here ?? 
-	for( size_t i=0; i < mChildren.size(); ++i )
+	for( size_t i=0; i < _children.size(); ++i )
 	{
-		mChildren[i]->accept( nv );
+		_children[i]->accept( nv );
 	}
 
   this->deActivateStateSet();

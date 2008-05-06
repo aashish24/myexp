@@ -1,11 +1,6 @@
-///////////////////////////////////////////////////////////////////////////////
-//
-// 
-//
-///////////////////////////////////////////////////////////////////////////////				
 
-#ifndef __GROUP_H__
-#define __GROUP_H__
+#ifndef __MSG_CORE_GROUP_H__
+#define __MSG_CORE_GROUP_H__
 
 #include "MsgCore/Node.h"
 
@@ -13,7 +8,7 @@ namespace Msg
 {
 	namespace MsgCore
 	{		
-		class MSG_EXPORT Group : public Node 
+    class MSG_EXPORT Group : public Msg::MsgCore::Node 
 		{
 			public:
         
@@ -22,31 +17,34 @@ namespace Msg
 
 				Group() :
 					Node(),
-					mChildren()
+					_children()
 				{
         }
+
 
 				Group( const Group& group ) :
 					Node( group ),
-					mChildren()
+					_children()
 				{
         }
 
-				virtual	Node* getChild( unsigned int index )
+
+				virtual	Node* child( unsigned int index )
 				{
-					if( index < mChildren.size() )
+					if( index < _children.size() )
 					{
-						return mChildren[index].get();
+						return _children[index].get();
 					}
 					else
 					{
-						return 0;
+						return 0x00;
 					}
 				}
 
-				virtual const Children& getChildren() const
+
+				virtual const Children& children() const
 				{
-					return mChildren;
+					return _children;
 				}	
 	
 
@@ -54,7 +52,7 @@ namespace Msg
 				{
 					// As of now the a child can be 
 					// added sequentially and not randomly. 
-					mChildren.push_back( child );
+					_children.push_back( child );
 
 					// Register as parent of child. 
 					child->addParent( this );
@@ -64,18 +62,22 @@ namespace Msg
 					// Force the traversal.
 				}
 
+
 				virtual void traverse( NodeVisitor& nv );
 
 
 			protected:
+
 				virtual ~Group()
-				{}
+				{
+        }
 
 
 			protected:
-				Children mChildren;
+
+				Children  _children;
 		};
 	}
 }
 
-#endif // __GROUP_H__
+#endif // __MSG_CORE_GROUP_H__

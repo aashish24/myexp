@@ -14,12 +14,14 @@ namespace Msg
 {
 	namespace MsgDB
 	{
-		class MSG_EXPORT FileRead : public Referenced
+    class MSG_EXPORT FileRead : public Msg::MsgCore::Referenced
 		{
 			public:
-				FileRead()
+				
+        FileRead()
 				{
 				}
+
 
 				FileRead( const FileRead& ogeDB )
 				{
@@ -36,6 +38,7 @@ namespace Msg
 				*/
 
 			protected:
+
 				virtual ~FileRead()
 				{
 				}

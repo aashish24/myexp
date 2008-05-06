@@ -111,7 +111,7 @@ namespace Project2
       //
       // @Note: Here we are assuming that if we dont have tangent array that means 
       // that we are missing binormals as well. 
-      if( !geom->getTangentArray() )
+      if( !geom->tangentArray() )
       {
         try
         {
@@ -127,16 +127,16 @@ namespace Project2
         }
       }
 
-      if( geom->getTangentArray() && geom->getBinormalArray() && geom->getNormalArray() )
+      if( geom->tangentArray() && geom->binormalArray() && geom->normalArray() )
       {
         glEnableVertexAttribArray( _locT );    
-        glVertexAttribPointer( _locT, 3, GL_DOUBLE, false, 0, geom->getTangentArray()->getDataPointer() );        
+        glVertexAttribPointer( _locT, 3, GL_DOUBLE, false, 0, geom->tangentArray()->getDataPointer() );        
         
         glEnableVertexAttribArray( _locB );    
-        glVertexAttribPointer( _locB, 3, GL_DOUBLE, false, 0, geom->getBinormalArray()->getDataPointer() );  
+        glVertexAttribPointer( _locB, 3, GL_DOUBLE, false, 0, geom->binormalArray()->getDataPointer() );  
         
         glEnableVertexAttribArray( _locN );    
-        glVertexAttribPointer( _locN, 3, GL_DOUBLE, false, 0, geom->getNormalArray()->getDataPointer() );  
+        glVertexAttribPointer( _locN, 3, GL_DOUBLE, false, 0, geom->normalArray()->getDataPointer() );  
 
         // Locate uniform for BumpMap sampler.      
         glActiveTexture( GL_TEXTURE0 );

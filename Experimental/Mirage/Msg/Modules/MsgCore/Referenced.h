@@ -10,6 +10,7 @@ namespace Msg
 		class MSG_EXPORT Referenced
 		{
 			public:
+
 				Referenced();
 
 				Referenced( const Referenced& ref );
@@ -26,6 +27,7 @@ namespace Msg
 				void unrefDoNotDelete();
 
 			protected:
+
 				virtual ~Referenced();
 
 			private:
@@ -35,7 +37,7 @@ namespace Msg
 				// /c const.
 				//
 				///////////////////////////////////////////////////////////////
-				mutable int mRefCount;
+				mutable int _refCount;
 		};
 	}
 }

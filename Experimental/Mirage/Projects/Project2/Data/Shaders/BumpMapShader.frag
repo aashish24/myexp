@@ -83,25 +83,12 @@ void main()
 	// Calculate diffuse component. 
 	vec3 diffuseColor = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff;
 	
-	// Part of an experimentation. 
-	//vec3 diffuseColor2 = gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff2;
-	
-	vec3 diffuseColorMix;
-	
-	// Part of an experimentation. 
-	//diffuseColorMix = min( mix( diffuseColor, diffuseColor2, 0.5 ), 1.0 );
-	
-	// 
-	diffuseColorMix = min( diffuseColor, 1.0 );	
+	vec3 diffuseColorMix = min( diffuseColor, 1.0 );	
 	
 	if( useDecalMap ) 
 	{
 		diffuseColorMix = min( mix(  diffuseColorMix, color, 0.3 ), 1.0 ); 
 	}
-	
-	// Calculate fragment color using specular and diffuse light components.  	
-	//litColor = gl_FrontMaterial.specular.xyz * gl_LightSource[0].specular.xyz * pow( spec,  gl_FrontMaterial.shininess ) + 
-	//		   gl_FrontMaterial.diffuse.xyz * gl_LightSource[0].diffuse.xyz * diff + gl_FrontMaterial.ambient.xyz * gl_LightSource[0].ambient.xyz  ; 	
 	
 	litColor = gl_FrontMaterial.specular.xyz * gl_LightSource[0].specular.xyz * pow( spec,  gl_FrontMaterial.shininess ) + 
 			   diffuseColorMix + gl_FrontMaterial.ambient.xyz * gl_LightSource[0].ambient.xyz  ; 	

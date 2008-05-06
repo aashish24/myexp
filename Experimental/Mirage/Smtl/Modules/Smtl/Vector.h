@@ -18,7 +18,8 @@ namespace Smtl
 	class Vector
 	{
 		public:
-			Vector()
+			
+      Vector()
 			{
 				for( unsigned int i=0; i < SIZE; ++i )
 				{
@@ -26,11 +27,13 @@ namespace Smtl
 				}
 			}
 
+
 			Vector( DATA_TYPE val0, DATA_TYPE val1 )
 			{
 				Vector();
 				set( val0, val1 );
 			}
+
 
 			Vector( DATA_TYPE val0, DATA_TYPE val1, DATA_TYPE val2 )
 			{
@@ -38,14 +41,18 @@ namespace Smtl
 				set( val0, val1, val2 );
 			}
 
+
 			Vector( DATA_TYPE val0, DATA_TYPE val1, DATA_TYPE val2, DATA_TYPE val3 )
 			{
 				Vector();
 				set( val0, val1, val2, val3 );
 			}
 
+
 			~Vector()
-			{}
+			{
+      }
+
 
 			DATA_TYPE& operator[]( unsigned int column )
 			{
@@ -53,12 +60,14 @@ namespace Smtl
 				return mData[column]; 
 			}
 
+
 			const DATA_TYPE& operator[]( unsigned int column ) const
 			{
 				assert( column < SIZE );
 				return mData[column]; 
 			}
 			
+
 			Vector< DATA_TYPE, SIZE >& operator=( const Vector< DATA_TYPE,SIZE >& rhs )
 			{
 				for( unsigned i = 0; i < SIZE; ++i )
@@ -68,6 +77,7 @@ namespace Smtl
 
 				return *this;
 			}
+
 
 			bool operator==( const Vector< DATA_TYPE,SIZE >& rhs )
 			{
@@ -84,6 +94,7 @@ namespace Smtl
 				return retVal;				
 			}
 
+
 			Vector< DATA_TYPE, SIZE >& operator+=( const Vector< DATA_TYPE,SIZE >& rhs )
 			{
 				for( unsigned i = 0; i < SIZE; ++i )
@@ -93,6 +104,7 @@ namespace Smtl
 
 				return *this;
 			}
+
 
 			Vector< DATA_TYPE, SIZE >& operator-=( const Vector< DATA_TYPE,SIZE >& rhs )
 			{
@@ -104,6 +116,7 @@ namespace Smtl
 				return *this;
 			}
 
+
 			Vector< DATA_TYPE, SIZE >& operator*=( const Vector< DATA_TYPE,SIZE >& rhs )
 			{
 				for( unsigned i = 0; i < SIZE; ++i )
@@ -113,6 +126,7 @@ namespace Smtl
 
 				return *this;
 			}
+
 
 			Vector< DATA_TYPE, SIZE >& operator/=( const Vector< DATA_TYPE,SIZE >& rhs )
 			{
@@ -136,6 +150,7 @@ namespace Smtl
 				return vec;
 			}
 
+
 			Vector< DATA_TYPE, SIZE > operator+( const Vector< DATA_TYPE,SIZE >& rhs )
 			{
 				Vector< DATA_TYPE, SIZE > vec;
@@ -146,6 +161,7 @@ namespace Smtl
 
 				return vec;
 			}
+
 
 			Vector< DATA_TYPE, SIZE > operator-( const Vector< DATA_TYPE,SIZE >& rhs )
 			{
@@ -158,6 +174,7 @@ namespace Smtl
 				return vec;
 			}
 
+
 			Vector< DATA_TYPE, SIZE > operator/( const Vector< DATA_TYPE, SIZE >& rhs )
 			{
 				Vector< DATA_TYPE, SIZE > vec;
@@ -168,6 +185,7 @@ namespace Smtl
 
 				return vec;
 			}
+
 
 			Vector< DATA_TYPE, SIZE > operator-()
 			{
@@ -180,10 +198,12 @@ namespace Smtl
 				return vec;
 			}			
 
+
 			Vector< DATA_TYPE, SIZE >* operator&( const Vector< DATA_TYPE, SIZE >& rhs )
 			{
 				return &rhs[0];
 			}
+
 
 			void set( DATA_TYPE val0, DATA_TYPE val1 )
 			{
@@ -191,12 +211,14 @@ namespace Smtl
 				mData[1] = val1;
 			}
 
+
 			void set( DATA_TYPE val0, DATA_TYPE val1, DATA_TYPE val2 )
 			{
 				mData[0] = val0;
 				mData[1] = val1;
 				mData[2] = val2;
 			}
+
 
 			void set( DATA_TYPE val0, DATA_TYPE val1, DATA_TYPE val2, DATA_TYPE val3 )
 			{
@@ -230,7 +252,7 @@ namespace Smtl
           }
           else
           {
-            // Do do anything. 
+            throw "ERROR 3614273646: Division by zero error. "; 
           }
 				}
 
@@ -249,6 +271,7 @@ namespace Smtl
 
 				return resultVec;
 			}
+
 
 			DATA_TYPE dot( Vector< DATA_TYPE, SIZE > vec2 )
 			{

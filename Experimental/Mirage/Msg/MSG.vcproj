@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(NoInherit) opengl32.lib glew32d.lib"
-				OutputFile="../bin/$(ProjectName)d.dll"
+				OutputFile="..\bin\$(ProjectName)d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
 				GenerateDebugInformation="true"
@@ -123,7 +123,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../src;../../smtl/src;"
+				AdditionalIncludeDirectories=".\Modules;.\..\Smtl\Modules;$(GLEW_INC_DIR)"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -142,9 +142,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="opengl32.lib $(NOINHERIT)"
-				OutputFile="../bin/$(ProjectName).dll"
+				OutputFile="..\bin\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(GLUT_LIB_DIR)"
+				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
 				GenerateDebugInformation="true"
 				ImportLibrary="$(TargetDir)$(TargetName).lib"
 				TargetMachine="1"
@@ -203,10 +203,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\BoundingBox.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Modules\MsgCore\Drawable.cpp"
 					>
 				</File>
@@ -235,39 +231,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\GlutText.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Modules\MsgCore\Group.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Modules\MsgCore\Group.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\Image.h"
-					>
-				</File>
-				<File
-					RelativePath=".\MsgCore\InputDev.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\MatDef.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\Msg.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\Msg.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\Navigation.h"
 					>
 				</File>
 				<File
@@ -287,10 +255,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\ParticleSystem.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Modules\MsgCore\PrimitiveSet.h"
 					>
 				</File>
@@ -300,10 +264,6 @@
 				</File>
 				<File
 					RelativePath=".\Modules\MsgCore\Referenced.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\Render.h"
 					>
 				</File>
 				<File
@@ -320,14 +280,6 @@
 				</File>
 				<File
 					RelativePath=".\Modules\MsgCore\StateSet.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\Texture.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\User.h"
 					>
 				</File>
 			</Filter>

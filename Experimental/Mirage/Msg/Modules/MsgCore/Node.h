@@ -1,6 +1,6 @@
 
-#ifndef __NODE_H__
-#define __NODE_H__
+#ifndef __MSG_CORE_NODE_H__
+#define __MSG_CORE_NODE_H__
 
 #include "MsgCore/Object.h"
 #include "MsgCore/StateSet.h"
@@ -29,7 +29,7 @@ namespace Msg
 				
         Node() :
 					Object(),
-					mStateSet( new StateSet() )
+					_stateSet( new StateSet() )
 				{
 
 				}
@@ -43,8 +43,8 @@ namespace Msg
 				
         Node( const Node& node ) :
 					Object( node ), 
-					mParents(), 
-					mStateSet( node.mStateSet )
+					_parents(), 
+					_stateSet( node._stateSet )
 				{}				
 
 
@@ -54,11 +54,11 @@ namespace Msg
 				//
 				///////////////////////////////////////////////////////////////				
 				
-        virtual Group* getParent( unsigned int index )
+        virtual Group* parent( unsigned int index )
 				{
-					if( index < mParents.size() )
+					if( index < _parents.size() )
 					{
-						return mParents[index];
+						return _parents[index];
 					}
 					else
 					{
@@ -73,9 +73,9 @@ namespace Msg
 				//
 				///////////////////////////////////////////////////////////////				
 				
-        virtual Parents getParents()
+        virtual Parents parents()
 				{
-					return mParents;
+					return _parents;
 				}
 
 
@@ -87,7 +87,7 @@ namespace Msg
 				
         virtual void addParent( Group* parent )
 				{
-					mParents.push_back( parent );
+					_parents.push_back( parent );
 				}
 
 				///////////////////////////////////////////////////////////////
@@ -99,14 +99,14 @@ namespace Msg
 				
         virtual StateSet* getOrCreateStateSet() 
 				{
-					if( mStateSet.valid() )
+					if( _stateSet.valid() )
 					{
-						return mStateSet.get();
+						return _stateSet.get();
 					}
 					else
 					{
-            mStateSet = new StateSet();
-            return mStateSet.get();
+            _stateSet = new StateSet();
+            return _stateSet.get();
 					}
 				}
 
@@ -118,16 +118,16 @@ namespace Msg
 				//
 				///////////////////////////////////////////////////////////////				
 				
-        virtual void setStateSet( StateSet* stateset )
+        virtual void stateSet( StateSet* stateset )
 				{
-					if( mStateSet.valid() )
+					if( _stateSet.valid() )
 					{
-						mStateSet->unref();
-						mStateSet = stateset;
+						_stateSet->unref();
+						_stateSet = stateset;
 					}
 					else
 					{
-						mStateSet = stateset;
+						_stateSet = stateset;
 					}
 				}
 
@@ -143,9 +143,9 @@ namespace Msg
 
         virtual void activateStateSet()
         {
-          if( mStateSet.valid() )
+          if( _stateSet.valid() )
 					{
-						mStateSet->activateStateSet( this );
+						_stateSet->activateStateSet( this );
 					}
         }
 
@@ -158,9 +158,9 @@ namespace Msg
 
         virtual void deActivateStateSet()
         {
-          if( mStateSet.valid() )
+          if( _stateSet.valid() )
 					{
-						mStateSet->deActivateStateSet( this );
+						_stateSet->deActivateStateSet( this );
 					}
         }
         
@@ -208,7 +208,7 @@ namespace Msg
 				//
 				///////////////////////////////////////////////////////////////		
 
-				Parents					mParents;
+				Parents					      _parents;
 
 		
 				///////////////////////////////////////////////////////////////
@@ -217,9 +217,9 @@ namespace Msg
 				//
 				///////////////////////////////////////////////////////////////	
 
-				SmartPtr< StateSet >	mStateSet;
+				SmartPtr< StateSet >	_stateSet;
 		};
 	}
 }
 
-#endif // __NODE_H__
+#endif // __MSG_CORE_NODE_H__

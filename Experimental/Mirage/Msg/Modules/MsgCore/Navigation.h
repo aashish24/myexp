@@ -1,5 +1,6 @@
-#ifndef __NAVIGATION_H__
-#define __NAVIGATION_H__
+
+#ifndef __MSG_CORE_NAVIGATION_H__
+#define __MSG_CORE_NAVIGATION_H__
 
 #include <glMath/Vector"
 
@@ -286,4 +287,4 @@ namespace glCore
 	}
 }
 
-#endif /// __NAVIGATION_H__
+#endif /// __MSG_CORE_NAVIGATION_H__

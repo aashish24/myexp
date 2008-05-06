@@ -6,43 +6,47 @@
 using namespace Msg::MsgCore;
 
 Referenced::Referenced() :
-	mRefCount( 0 )
+	_refCount( 0 )
 {
 
 }
 
 Referenced::Referenced( const Msg::MsgCore::Referenced &ref ) :
-	mRefCount( 0 )
+	_refCount( 0 )
 {
 
 }
+
 
 Referenced::~Referenced()
 {
-	if( mRefCount > 0 )
+	if( _refCount > 0 )
 	{
-		std::cerr << "Warning: Deleting still referenced object: " 
-			<< std::endl;
+    std::cerr << "WARNING 1746864110: Deleting still referenced object: " 
+			        << std::endl;
 	}
 }
 
+
 void Referenced::ref()
 {
-	++mRefCount;
+	++_refCount;
 }
+
 
 void Referenced::unref()
 {	
-	--mRefCount;
+	--_refCount;
 
-	if( mRefCount <= 0 )
+	if( _refCount <= 0 )
 	{
 		delete this;
 	}
 }
 
+
 void Referenced::unrefDoNotDelete()
 {
-	--mRefCount;
+	--_refCount;
 }
 

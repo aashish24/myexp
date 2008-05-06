@@ -1,5 +1,6 @@
-#ifndef __NODE_VISITOR_H__
-#define __NODE_VISITOR_H__
+
+#ifndef __MSG_CORE_NODE_VISITOR_H__
+#define __MSG_CORE_NODE_VISITOR_H__
 
 #include "Export.h"
 
@@ -15,9 +16,10 @@ namespace Msg
 		class Group;
 		class Geode;
 
-		class MSG_EXPORT NodeVisitor : public Object 
+    class MSG_EXPORT NodeVisitor : public Msg::MsgCore::Object 
 		{
 			public:
+
 				typedef std::vector< Node* > NodePath;
 
 				NodeVisitor() : 
@@ -25,29 +27,36 @@ namespace Msg
 				{
 				}
 
+
 				NodeVisitor( const NodeVisitor& nodeVisitor ) :
 					Object( nodeVisitor )
 				{
 				}
 
-				virtual void apply( Node& node );
+
+				virtual void                apply( Node& node );
 				
-				virtual void apply( Group& group );
+				virtual void                apply( Group& group );
 
-				virtual void apply( Geode& geode );
+				virtual void                apply( Geode& geode );
 
-				virtual void traverse( Node& node );
+				virtual void                traverse( Node& node );
 
-				virtual void push( Node* node );
+				virtual void                push( Node* node );
 
-				virtual void pop();
+				virtual void                pop();
 			
+
 			protected:
+
 				virtual ~NodeVisitor()
-				{}
+				{
+        }
+
 
 			private:
-				NodePath	mNodePath;
+
+				NodePath	                  _nodePath;
 
 		};
 	}
@@ -58,9 +67,10 @@ inline void Msg::MsgCore::NodeVisitor::apply( Msg::MsgCore::Node& node )
 	traverse( node );
 }
 
+
 inline void Msg::MsgCore::NodeVisitor::apply( Msg::MsgCore::Group& group )
 {
-  Msg::MsgCore::Group::Children children = group.getChildren();
+  Msg::MsgCore::Group::Children children = group.children();
 
   Msg::MsgCore::Group::Children::const_iterator itr = children.begin();
 
@@ -70,24 +80,28 @@ inline void Msg::MsgCore::NodeVisitor::apply( Msg::MsgCore::Group& group )
   }
 }
 
+
 inline void Msg::MsgCore::NodeVisitor::apply( Msg::MsgCore::Geode& geode )
 {
 	apply( ( Node& )geode ); 
 }
+
 
 inline void Msg::MsgCore::NodeVisitor::traverse( Node& node )
 {
 	node.traverse( *this );
 }
 
+
 inline void Msg::MsgCore::NodeVisitor::push( Node* node )
 {
-	mNodePath.push_back( node );
+	_nodePath.push_back( node );
 }
+
 
 inline void Msg::MsgCore::NodeVisitor::pop()
 {
-	mNodePath.pop_back();
+	_nodePath.pop_back();
 }
 
-#endif  __NODE_VISITOR_H__
+#endif  __MSG_CORE_NODE_VISITOR_H__

@@ -52,10 +52,10 @@ Node* ObjReader::readFile( std::istream& fin, const char *fileName, const bool& 
 		  {
 			  // Read all the vertices here. 
 			  unsigned int fieldsRead = sscanf_s( line+2,"%f %f %f %f", &x, &y, &z, &w );
-        if ( fieldsRead==1 ) model->mVertices->push_back( Smtl::Vec3d( x,0.0f,0.0f ) );
-			  else if ( fieldsRead==2 ) model->mVertices->push_back( Smtl::Vec3d( x,y,0.0f ) );
-			  else if ( fieldsRead==3 ) model->mVertices->push_back( Smtl::Vec3d( x,y,z ) );
-			  else if ( fieldsRead>=4 ) model->mVertices->push_back( Smtl::Vec3d( x/w,y/w,z/w ) );
+        if ( fieldsRead==1 ) model->_vertices->push_back( Smtl::Vec3d( x,0.0f,0.0f ) );
+			  else if ( fieldsRead==2 ) model->_vertices->push_back( Smtl::Vec3d( x,y,0.0f ) );
+			  else if ( fieldsRead==3 ) model->_vertices->push_back( Smtl::Vec3d( x,y,z ) );
+			  else if ( fieldsRead>=4 ) model->_vertices->push_back( Smtl::Vec3d( x/w,y/w,z/w ) );
 		  }	
 
 		  if( strncmp( line, "f ", 2 ) == 0 )
@@ -124,33 +124,33 @@ Node* ObjReader::readFile( std::istream& fin, const char *fileName, const bool& 
 
         if( counter == 4 )
         {
-          model->mVertexIndices->push_back( Vec3i( vectorIndex[0], vectorIndex[1], vectorIndex[2] ) );
-    			model->mVertexIndices->push_back( Vec3i( vectorIndex[0], vectorIndex[2], vectorIndex[3] ) );
+          model->_vertexIndices->push_back( Vec3i( vectorIndex[0], vectorIndex[1], vectorIndex[2] ) );
+    			model->_vertexIndices->push_back( Vec3i( vectorIndex[0], vectorIndex[2], vectorIndex[3] ) );
 
 			    if( !normalIndex.empty() )
 			    {
-            model->mNormalIndices->push_back( Vec3i( normalIndex[0], normalIndex[1], normalIndex[2] ) );
-            model->mNormalIndices->push_back( Vec3i( normalIndex[0], normalIndex[2], normalIndex[3] ) );
+            model->_normalIndices->push_back( Vec3i( normalIndex[0], normalIndex[1], normalIndex[2] ) );
+            model->_normalIndices->push_back( Vec3i( normalIndex[0], normalIndex[2], normalIndex[3] ) );
 			    }
 
           if( !textureIndex.empty() )
           {
-            model->mTexCoordIndices->push_back( Vec3i( textureIndex[0], textureIndex[1], textureIndex[2] ) );
-            model->mTexCoordIndices->push_back( Vec3i( textureIndex[0], textureIndex[2], textureIndex[3] ) );
+            model->_texCoordIndices->push_back( Vec3i( textureIndex[0], textureIndex[1], textureIndex[2] ) );
+            model->_texCoordIndices->push_back( Vec3i( textureIndex[0], textureIndex[2], textureIndex[3] ) );
           }
         }
         else
         {
-          model->mVertexIndices->push_back( Vec3i( vectorIndex[0], vectorIndex[1], vectorIndex[2] ) );
+          model->_vertexIndices->push_back( Vec3i( vectorIndex[0], vectorIndex[1], vectorIndex[2] ) );
     			
 			    if( !normalIndex.empty() )
 			    {
-            model->mNormalIndices->push_back( Vec3i( normalIndex[0], normalIndex[1], normalIndex[2] ) );
+            model->_normalIndices->push_back( Vec3i( normalIndex[0], normalIndex[1], normalIndex[2] ) );
 			    }
 
           if( !textureIndex.empty() )
           {
-            model->mTexCoordIndices->push_back( Vec3i( textureIndex[0], textureIndex[1], textureIndex[2] ) );
+            model->_texCoordIndices->push_back( Vec3i( textureIndex[0], textureIndex[1], textureIndex[2] ) );
           }
         }        
 
@@ -160,30 +160,30 @@ Node* ObjReader::readFile( std::istream& fin, const char *fileName, const bool& 
 		  if( strncmp( line, "vn ", 3 ) == 0 )
 		  {
 			  unsigned int fieldsRead = sscanf_s( line+3 , "%f %f %f %f", &x, &y, &z, &w );
-        if( fieldsRead == 1 ) model->mNormals->push_back( Smtl::Vec3d( x, 0.0, 0.0 ) );
-			  else if( fieldsRead == 1 ) model->mNormals->push_back( Smtl::Vec3d( x, 0.0, 0.0 ) );
-			  else if( fieldsRead == 2 ) model->mNormals->push_back( Smtl::Vec3d( x, y, 0.0 ) );
-			  else if( fieldsRead == 3 ) model->mNormals->push_back( Smtl::Vec3d( x, y, z ) );
+        if( fieldsRead == 1 ) model->_normals->push_back( Smtl::Vec3d( x, 0.0, 0.0 ) );
+			  else if( fieldsRead == 1 ) model->_normals->push_back( Smtl::Vec3d( x, 0.0, 0.0 ) );
+			  else if( fieldsRead == 2 ) model->_normals->push_back( Smtl::Vec3d( x, y, 0.0 ) );
+			  else if( fieldsRead == 3 ) model->_normals->push_back( Smtl::Vec3d( x, y, z ) );
 		  }
 
       if( strncmp( line, "vt ", 3 ) == 0 )
 		  {
 			  unsigned int fieldsRead = sscanf_s( line+3 , "%f %f %f %f", &x, &y, &z, &w );
-        if( fieldsRead == 1 )       model->mTexCoords->push_back( Smtl::Vec3d( x, 0.0, 0.0 ) );
-			  else if( fieldsRead == 1 )  model->mTexCoords->push_back( Smtl::Vec3d( x, 0.0, 0.0 ) );
-			  else if( fieldsRead == 2 )  model->mTexCoords->push_back( Smtl::Vec3d( x, y, 0.0 ) );
-			  else if( fieldsRead == 3 )  model->mTexCoords->push_back( Smtl::Vec3d( x, y, 0.0 ) );
+        if( fieldsRead == 1 )       model->_textureCoords->push_back( Smtl::Vec3d( x, 0.0, 0.0 ) );
+			  else if( fieldsRead == 1 )  model->_textureCoords->push_back( Smtl::Vec3d( x, 0.0, 0.0 ) );
+			  else if( fieldsRead == 2 )  model->_textureCoords->push_back( Smtl::Vec3d( x, y, 0.0 ) );
+			  else if( fieldsRead == 3 )  model->_textureCoords->push_back( Smtl::Vec3d( x, y, 0.0 ) );
 		  }
 	  }      
 
     return this->convertDataIntoNode( model.get() );
-	  //geom->setVertexArray( vertices.get() );
+	  //geom->vertexArray( vertices.get() );
   	//
-   // geom->setVertexIndices( vIndices.get() );
+   // geom->vertexIndices( vIndices.get() );
 
 	  //if( !normals->empty() && !ignoreNormals )
 	  //{
-		 // geom->setNormalArray( normals.get() );
+		 // geom->normalArray( normals.get() );
 	  //}
 	  //else if( !ignoreNormals )
 	  //{
@@ -192,17 +192,17 @@ Node* ObjReader::readFile( std::istream& fin, const char *fileName, const bool& 
 
 	  //if( !nIndices->empty() )
 	  //{
-		 // geom->setNormalIndices( nIndices.get() );
+		 // geom->normalIndices( nIndices.get() );
 	  //}
 
    // if( !texcoords->empty() )
    // {
-   //   geom->setTexCoordArray( texcoords.get() );
+   //   geom->textureCoordArray( texcoords.get() );
    // }
 
    // if( !tIndices->empty() )
    // {
-   //   geom->setTextureIndices( tIndices.get() );
+   //   geom->textureCoordIndices( tIndices.get() );
    // }
    // 
    // // For fast method. 
@@ -246,7 +246,7 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
     int k = 0;
     int l = 0;
 
-    mVertexData.resize( model->mVertices->size() );
+    _vertexData.resize( model->_vertices->size() );
 
     // Create geode which will hold this geometry. 
     SmartPtr< Geode > geode = new Geode();
@@ -261,7 +261,7 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
     // but rather will use the vertex index of that VertexData. 
     std::map< int, std::vector< int > > vertexIndexVertexDataTable;
 
-    for( size_t i=0; i < model->mVertexIndices->size(); ++i )
+    for( size_t i=0; i < model->_vertexIndices->size(); ++i )
     {
       SmartPtr< DrawElementUInt > drawUInt( new DrawElementUInt( DrawElementUInt::TRIANGLES ) );
 
@@ -270,38 +270,38 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
       VertexData vData2;
       VertexData vData3;
 
-      int v1 = model->mVertexIndices->at( i )[0];
-      int v2 = model->mVertexIndices->at( i )[1];
-      int v3 = model->mVertexIndices->at( i )[2];
+      int v1 = model->_vertexIndices->at( i )[0];
+      int v2 = model->_vertexIndices->at( i )[1];
+      int v3 = model->_vertexIndices->at( i )[2];
       
-      vData1.mVertexIndex = v1;
-      vData1.mNormalIndex = model->mNormalIndices->at( i )[0];
-      //vData1.mColorIndex  = model->mColorIndices->at( k )[0];
-      vData1.mTextureIndex = model->mTexCoordIndices->at( i )[0];
+      vData1._vertexIndex = v1;
+      vData1._normalIndex = model->_normalIndices->at( i )[0];
+      //vData1._colorIndex  = model->_colorIndices->at( k )[0];
+      vData1._textureIndex = model->_texCoordIndices->at( i )[0];
 
       j = k = l = count = i+1;
 
-      vData2.mVertexIndex = v2;
-      vData2.mNormalIndex = model->mNormalIndices->at( i )[1];
-      //vData1.mColorIndex  = model->mColorIndices->at( k )[0];
-      vData2.mTextureIndex = model->mTexCoordIndices->at( i )[1];
+      vData2._vertexIndex = v2;
+      vData2._normalIndex = model->_normalIndices->at( i )[1];
+      //vData1._colorIndex  = model->_colorIndices->at( k )[0];
+      vData2._textureIndex = model->_texCoordIndices->at( i )[1];
 
       j = k = l = count = i+2;
 
-      vData3.mVertexIndex = v3;
-      vData3.mNormalIndex = model->mNormalIndices->at( i )[2];
-      //vData1.mColorIndex  = model->mColorIndices->at( k )[0];
-      vData3.mTextureIndex = model->mTexCoordIndices->at( i )[2];      
+      vData3._vertexIndex = v3;
+      vData3._normalIndex = model->_normalIndices->at( i )[2];
+      //vData1._colorIndex  = model->_colorIndices->at( k )[0];
+      vData3._textureIndex = model->_texCoordIndices->at( i )[2];      
 
-      if( mVertexData.at( v1 ).mVertexIndex == -1 ) 
+      if( _vertexData.at( v1 )._vertexIndex == -1 ) 
       {
-        mVertexData.at( v1 ) = vData1;
+        _vertexData.at( v1 ) = vData1;
         vertexIndexVertexDataTable[v1].push_back( v1 );
-        drawUInt->push_back( vData1.mVertexIndex );
+        drawUInt->push_back( vData1._vertexIndex );
       }
-      else if( mVertexData.at( v1 ).mTextureIndex == vData1.mTextureIndex )
+      else if( _vertexData.at( v1 )._textureIndex == vData1._textureIndex )
       {
-        drawUInt->push_back( vData1.mVertexIndex );
+        drawUInt->push_back( vData1._vertexIndex );
       }
       else
       {        
@@ -312,39 +312,39 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
         //for( itr; itr != vertexIndexVertexDataTable.end(); ++itr )
         for( size_t i=0; i < size; ++i )
         {
-          //std::cout << "Test: " << mVertexData.at( itr->second[i] ).mTextureIndex << " "  
-          //          << vData1.mTextureIndex << std::endl;
-          if( mVertexData.at( itr->second[i] ).mTextureIndex == vData1.mTextureIndex )
+          //std::cout << "Test: " << _vertexData.at( itr->second[i] )._textureIndex << " "  
+          //          << vData1._textureIndex << std::endl;
+          if( _vertexData.at( itr->second[i] )._textureIndex == vData1._textureIndex )
           {            
-            //vData1.mVertexIndex = mVertexData.at( itr->first ).mVertexIndex;
-            vData1.mVertexIndex = mVertexData.at( itr->second[i] ).mVertexIndex;
-            drawUInt->push_back( vData1.mVertexIndex );
+            //vData1._vertexIndex = _vertexData.at( itr->first )._vertexIndex;
+            vData1._vertexIndex = _vertexData.at( itr->second[i] )._vertexIndex;
+            drawUInt->push_back( vData1._vertexIndex );
             found = true;
           }
         }  
 
         if( !found ) 
         {
-          model->mVertices->push_back( model->mVertices->at( vData1.mVertexIndex ) );
-          model->mNormals->push_back( model->mNormals->at( vData1.mNormalIndex ) );
-          model->mTexCoords->push_back( model->mTexCoords->at( vData1.mTextureIndex ) );
-          vData1.mVertexIndex = mVertexData.size();
-          mVertexData.push_back( vData1 );
-          vertexIndexVertexDataTable[v1].push_back( vData1.mTextureIndex );
-          drawUInt->push_back( vData1.mVertexIndex );        
+          model->_vertices->push_back( model->_vertices->at( vData1._vertexIndex ) );
+          model->_normals->push_back( model->_normals->at( vData1._normalIndex ) );
+          model->_textureCoords->push_back( model->_textureCoords->at( vData1._textureIndex ) );
+          vData1._vertexIndex = _vertexData.size();
+          _vertexData.push_back( vData1 );
+          vertexIndexVertexDataTable[v1].push_back( vData1._textureIndex );
+          drawUInt->push_back( vData1._vertexIndex );        
         }
       }
 
       // @Todo: Write the algorithm here. 
-      if( mVertexData.at( v2 ).mVertexIndex == -1 ) 
+      if( _vertexData.at( v2 )._vertexIndex == -1 ) 
       {
-        mVertexData.at( v2 ) = vData2;
+        _vertexData.at( v2 ) = vData2;
         vertexIndexVertexDataTable[v2].push_back( v2 );
-        drawUInt->push_back( vData2.mVertexIndex );
+        drawUInt->push_back( vData2._vertexIndex );
       }
-      else if( mVertexData.at( v2 ).mTextureIndex == vData2.mTextureIndex )
+      else if( _vertexData.at( v2 )._textureIndex == vData2._textureIndex )
       {
-        drawUInt->push_back( vData2.mVertexIndex );
+        drawUInt->push_back( vData2._vertexIndex );
       }
       else
       {        
@@ -354,36 +354,36 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
         
         for( size_t i=0; i < size; ++i )
         {
-          //std::cout << "Test: " << mVertexData.at( itr->second[i] ).mTextureIndex << " "  
-          //          << vData2.mTextureIndex << std::endl;
-          if( mVertexData.at( itr->second[i] ).mTextureIndex == vData2.mTextureIndex )
+          //std::cout << "Test: " << _vertexData.at( itr->second[i] )._textureIndex << " "  
+          //          << vData2._textureIndex << std::endl;
+          if( _vertexData.at( itr->second[i] )._textureIndex == vData2._textureIndex )
           {            
-            vData2.mVertexIndex = mVertexData.at( itr->second[i] ).mVertexIndex;
-            drawUInt->push_back( vData2.mVertexIndex );
+            vData2._vertexIndex = _vertexData.at( itr->second[i] )._vertexIndex;
+            drawUInt->push_back( vData2._vertexIndex );
             found = true;
           }
         } 
         if( !found ) 
         {
-          model->mVertices->push_back( model->mVertices->at( vData2.mVertexIndex ) );
-          model->mNormals->push_back( model->mNormals->at( vData2.mNormalIndex ) );
-          model->mTexCoords->push_back( model->mTexCoords->at( vData2.mTextureIndex ) );
-          vData2.mVertexIndex = mVertexData.size();
-          mVertexData.push_back( vData2 );
-          vertexIndexVertexDataTable[v2].push_back( vData2.mVertexIndex );
-          drawUInt->push_back( vData2.mVertexIndex );        
+          model->_vertices->push_back( model->_vertices->at( vData2._vertexIndex ) );
+          model->_normals->push_back( model->_normals->at( vData2._normalIndex ) );
+          model->_textureCoords->push_back( model->_textureCoords->at( vData2._textureIndex ) );
+          vData2._vertexIndex = _vertexData.size();
+          _vertexData.push_back( vData2 );
+          vertexIndexVertexDataTable[v2].push_back( vData2._vertexIndex );
+          drawUInt->push_back( vData2._vertexIndex );        
         }
       }
 
-      if( mVertexData.at( v3 ).mVertexIndex == -1 ) 
+      if( _vertexData.at( v3 )._vertexIndex == -1 ) 
       {
-        mVertexData.at( v3 ) = vData3;
+        _vertexData.at( v3 ) = vData3;
         vertexIndexVertexDataTable[v3].push_back( v3 );
-        drawUInt->push_back( vData3.mVertexIndex );
+        drawUInt->push_back( vData3._vertexIndex );
       }
-      else if( mVertexData.at( v3 ).mTextureIndex == vData3.mTextureIndex )
+      else if( _vertexData.at( v3 )._textureIndex == vData3._textureIndex )
       {
-        drawUInt->push_back( vData3.mVertexIndex );
+        drawUInt->push_back( vData3._vertexIndex );
       }
       else
       {        
@@ -393,24 +393,24 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
         
         for( size_t i=0; i < size; ++i )
         {
-          //std::cout << "Test: " << mVertexData.at( itr->second[i] ).mTextureIndex << " "  
-          //          << vData3.mTextureIndex << std::endl;
-          if( mVertexData.at( itr->second[i] ).mTextureIndex == vData1.mTextureIndex )
+          //std::cout << "Test: " << _vertexData.at( itr->second[i] )._textureIndex << " "  
+          //          << vData3._textureIndex << std::endl;
+          if( _vertexData.at( itr->second[i] )._textureIndex == vData1._textureIndex )
           {            
-            vData3.mVertexIndex = mVertexData.at( itr->second[i] ).mVertexIndex;
-            drawUInt->push_back( vData3.mVertexIndex );
+            vData3._vertexIndex = _vertexData.at( itr->second[i] )._vertexIndex;
+            drawUInt->push_back( vData3._vertexIndex );
             found = true;
           }
         } 
         if( !found ) 
         {
-          model->mVertices->push_back( model->mVertices->at( vData3.mVertexIndex ) );
-          model->mNormals->push_back( model->mNormals->at( vData3.mNormalIndex ) );
-          model->mTexCoords->push_back( model->mTexCoords->at( vData3.mTextureIndex ) );
-          vData3.mVertexIndex = mVertexData.size();
-          mVertexData.push_back( vData3 );
-          vertexIndexVertexDataTable[v3].push_back( vData3.mVertexIndex );
-          drawUInt->push_back( vData3.mVertexIndex );        
+          model->_vertices->push_back( model->_vertices->at( vData3._vertexIndex ) );
+          model->_normals->push_back( model->_normals->at( vData3._normalIndex ) );
+          model->_textureCoords->push_back( model->_textureCoords->at( vData3._textureIndex ) );
+          vData3._vertexIndex = _vertexData.size();
+          _vertexData.push_back( vData3 );
+          vertexIndexVertexDataTable[v3].push_back( vData3._vertexIndex );
+          drawUInt->push_back( vData3._vertexIndex );        
         }
       }
           
@@ -418,21 +418,21 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
       geom->addPrimitiveSet( drawUInt.get() );
     } // for( ... )
  
-    size_t sizeArray = mVertexData.size();
+    size_t sizeArray = _vertexData.size();
 
     SmartPtr< Vec3Array > vertexArray( new Vec3Array( sizeArray ) );
     SmartPtr< Vec3Array > normalArray( new Vec3Array( sizeArray ) );
     SmartPtr< Vec3Array > textureArray( new Vec3Array( sizeArray ) );
     SmartPtr< Vec3Array > colorArray( new Vec3Array( sizeArray ) );    
 
-   for( size_t i=0; i < mVertexData.size(); ++i )
+   for( size_t i=0; i < _vertexData.size(); ++i )
    {
-     vertexArray->at( i ) = ( model->mVertices->at( mVertexData.at( i ).mVertexIndex ) );
-     normalArray->at( i ) = ( model->mNormals->at( mVertexData.at( i ).mNormalIndex ) );
-     textureArray->at( i ) = ( model->mTexCoords->at( mVertexData.at( i ).mTextureIndex ) );     
+     vertexArray->at( i ) = ( model->_vertices->at( _vertexData.at( i )._vertexIndex ) );
+     normalArray->at( i ) = ( model->_normals->at( _vertexData.at( i )._normalIndex ) );
+     textureArray->at( i ) = ( model->_textureCoords->at( _vertexData.at( i )._textureIndex ) );     
    }
    
-   Geometry::PrimitiveSets primSets = geom->getPrimitiveSets();
+   Geometry::PrimitiveSets primSets = geom->primitiveSets();
    SmartPtr< Vec3iArray > vertexIndicesArray( new Vec3iArray() );
 
    for( size_t i=0; i < primSets.size(); ++i )
@@ -456,43 +456,43 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
 	  SmartPtr< Geometry > geom = new Geometry();
 
     // Place holders for vertex data. 
-    SmartPtr< Vec3Array > vertexArray( new Vec3Array( model->mVertices->size() ) );
-    SmartPtr< Vec3Array > normalArray( new Vec3Array( model->mVertices->size() ) );
-    SmartPtr< Vec3Array > texCoordArray( new Vec3Array( model->mVertices->size() ) );
-    SmartPtr< Vec3Array > colorArray( new Vec3Array( model->mVertices->size() ) );
+    SmartPtr< Vec3Array > vertexArray( new Vec3Array( model->_vertices->size() ) );
+    SmartPtr< Vec3Array > normalArray( new Vec3Array( model->_vertices->size() ) );
+    SmartPtr< Vec3Array > textureCoordArray( new Vec3Array( model->_vertices->size() ) );
+    SmartPtr< Vec3Array > colorArray( new Vec3Array( model->_vertices->size() ) );
 
     // Vertices are Vertex Indices are must in an obj. 
-    if( model->mVertices->empty() || model->mVertexIndices->empty() )
+    if( model->_vertices->empty() || model->_vertexIndices->empty() )
     {
       return 0x00;
     }    
 
     // Set vertices and vertex index array. 
-    geom->setVertexArray( model->mVertices.get() );
-    geom->setVertexIndices( model->mVertexIndices.get() );    
-    geom->setTexCoordArray( model->mTexCoords.get() );
-    geom->setTextureIndices( model->mTexCoordIndices.get() ); 
-    geom->setNormalArray( model->mNormals.get() );
-    geom->setNormalIndices( model->mNormalIndices.get() ); 
+    geom->vertexArray( model->_vertices.get() );
+    geom->vertexIndices( model->_vertexIndices.get() );    
+    geom->textureCoordArray( model->_textureCoords.get() );
+    geom->textureCoordIndices( model->_texCoordIndices.get() ); 
+    geom->normalArray( model->_normals.get() );
+    geom->normalIndices( model->_normalIndices.get() ); 
 /*
-    for( size_t i=0; i < model->mVertexIndices->size(); ++i )
+    for( size_t i=0; i < model->_vertexIndices->size(); ++i )
     {
       SmartPtr< DrawElementUInt > drawUInt( new DrawElementUInt( DrawElementUInt::TRIANGLES ) );
-      drawUInt->push_back( model->mVertexIndices->at( i )[0] );
-      drawUInt->push_back( model->mVertexIndices->at( i )[1] );
-      drawUInt->push_back( model->mVertexIndices->at( i )[2] );
+      drawUInt->push_back( model->_vertexIndices->at( i )[0] );
+      drawUInt->push_back( model->_vertexIndices->at( i )[1] );
+      drawUInt->push_back( model->_vertexIndices->at( i )[2] );
       geom->addPrimitiveSet( drawUInt.get() );
 
       // Find the index for the vectices. 
-      int v1 = model->mVertexIndices->at( i )[0];
-      int v2 = model->mVertexIndices->at( i )[1];
-      int v3 = model->mVertexIndices->at( i )[2];
+      int v1 = model->_vertexIndices->at( i )[0];
+      int v2 = model->_vertexIndices->at( i )[1];
+      int v3 = model->_vertexIndices->at( i )[2];
 
-      if( model->mVertices.valid() )
+      if( model->_vertices.valid() )
       {
-        vertexArray->at(v1) = model->mVertices->at( model->mVertexIndices->at(i)[0] );
-        vertexArray->at(v2) = model->mVertices->at( model->mVertexIndices->at(i)[1] );
-        vertexArray->at(v3) = model->mVertices->at( model->mVertexIndices->at(i)[2] );        
+        vertexArray->at(v1) = model->_vertices->at( model->_vertexIndices->at(i)[0] );
+        vertexArray->at(v2) = model->_vertices->at( model->_vertexIndices->at(i)[1] );
+        vertexArray->at(v3) = model->_vertices->at( model->_vertexIndices->at(i)[2] );        
       }
       else
       {
@@ -500,11 +500,11 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
       }
 
       // Now for these vertices set their normals. 
-      if( model->mNormals.valid() && model->mNormalIndices.valid() )
+      if( model->_normals.valid() && model->_normalIndices.valid() )
       {
-        normalArray->at(v1) = model->mNormals->at( model->mNormalIndices->at(i)[0] );
-        normalArray->at(v2) = model->mNormals->at( model->mNormalIndices->at(i)[1] );
-        normalArray->at(v3) = model->mNormals->at( model->mNormalIndices->at(i)[2] );        
+        normalArray->at(v1) = model->_normals->at( model->_normalIndices->at(i)[0] );
+        normalArray->at(v2) = model->_normals->at( model->_normalIndices->at(i)[1] );
+        normalArray->at(v3) = model->_normals->at( model->_normalIndices->at(i)[2] );        
       }
       else
       {
@@ -512,19 +512,19 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
       }
 
       // Now for these vertices set their texture coordinates. 
-      if( model->mTexCoords.valid() && model->mTexCoordIndices.valid() )
+      if( model->_textureCoords.valid() && model->_texCoordIndices.valid() )
       { 
-        texCoordArray->at(v1) = model->mTexCoords->at( model->mTexCoordIndices->at(i)[0] );
-        texCoordArray->at(v2) = model->mTexCoords->at( model->mTexCoordIndices->at(i)[1] );
-        texCoordArray->at(v3) = model->mTexCoords->at( model->mTexCoordIndices->at(i)[2] );          
+        textureCoordArray->at(v1) = model->_textureCoords->at( model->_texCoordIndices->at(i)[0] );
+        textureCoordArray->at(v2) = model->_textureCoords->at( model->_texCoordIndices->at(i)[1] );
+        textureCoordArray->at(v3) = model->_textureCoords->at( model->_texCoordIndices->at(i)[2] );          
       }
       else
       {
-        texCoordArray = 0x00;
+        textureCoordArray = 0x00;
       }
 
       // Now for these vertces set their colors. 
-      if( model->mColors.valid() && model->mColorIndices.valid() )
+      if( model->_colors.valid() && model->_colorIndices.valid() )
       { 
         // @Todo: Implement this. 
       }
@@ -538,43 +538,43 @@ Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
      
     if( vertexArray.valid() )
     {
-      geom->setVertexArray( vertexArray.get() );
+      geom->vertexArray( vertexArray.get() );
     }
 
     if( vertexIndicesArray.valid() )
     {
-      geom->setVertexIndices( vertexIndicesArray.get() );
+      geom->vertexIndices( vertexIndicesArray.get() );
     }
 
     // Set normal array. 
     if( normalArray.valid() )
     {
-      geom->setNormalArray( normalArray.get() );
+      geom->normalArray( normalArray.get() );
     }
 
     // Set texture coordinate array. 
     if( textureArray.valid() )
     {
-      geom->setTexCoordArray( textureArray.get() );
+      geom->textureCoordArray( textureArray.get() );
     }
 
     //// Set normal index array. 
-    if( !model->mNormalIndices->empty() )
+    if( !model->_normalIndices->empty() )
     {
-      geom->setNormalIndices( model->mNormalIndices.get() );
+      geom->normalIndices( model->_normalIndices.get() );
     }
 
     //// Set texture coordinate index array. 
-    if( !model->mTexCoordIndices->empty() )
+    if( !model->_texCoordIndices->empty() )
     {
-      geom->setTextureIndices( model->mTexCoordIndices.get() );
+      geom->textureCoordIndices( model->_texCoordIndices.get() );
     }
 
     //// Set color index array. 
-    //if( !model->mColorIndices->empty() )
+    //if( !model->_colorIndices->empty() )
     //{
     //  // @Todo: Implement. 
-    //  //geom->setColorArray( model->mColorIndices );
+    //  //geom->colorArray( model->_colorIndices );
     //}
 
     // Add geometry to this geode. 

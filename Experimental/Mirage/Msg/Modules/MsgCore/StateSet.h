@@ -14,7 +14,7 @@ namespace Msg
 	{
     class Node; 
 
-		class MSG_EXPORT StateSet : public Object 
+    class MSG_EXPORT StateSet : public Msg::MsgCore::Object 
 		{
 			public:
 
@@ -27,25 +27,107 @@ namespace Msg
         typedef std::list< std::pair< SmartPtr< StateAttribute >, bool > > Attributes;
         typedef std::map< unsigned int, std::pair< SmartPtr< StateAttribute >, bool > > TextureAttributes;
 
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Constructor. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
 				StateSet();
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Copy constructor. 
+        //
+        ///////////////////////////////////////////////////////////////////////
 
 				StateSet( const StateSet& stateset );
 
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Return state of being dirty. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
         bool dirty() const;
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Set state of being dirty. 
+        //
+        ///////////////////////////////////////////////////////////////////////
 
         void dirty( bool flag ); 
 
-        void getAttribute( const std::string& id );
 
-        Attributes& getAttributes();
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Return a attribute with given id. 
+        //
+        ///////////////////////////////////////////////////////////////////////
 
-        void setAttribute( StateAttribute* attr, const bool& state = 1 );
+        void attribute( const std::string& id );
 
-        TextureAttributes& getTextureAttributes();
 
-        void setTextureAttribute( unsigned int unit, StateAttribute* attr, const bool& state = 1 );
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Return list of attributes. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
+        Attributes& attributes();
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Set attribute and its state. 
+        //
+        // @Note: Attribute with the same id will be removed if present. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
+        void attribute( StateAttribute* attr, const bool& state = 1 );
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //        
+        // Get list of texture attributes.         
+        //
+        // @Note: Texture attributes are handled differently because we can 
+        // have multiple textures associate with any object. 
+        // 
+        ///////////////////////////////////////////////////////////////////////
+
+        TextureAttributes& textureAttributes();
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Set texture attribute and its state.         
+        //
+        ///////////////////////////////////////////////////////////////////////
+
+        void textureAttribute( unsigned int unit, StateAttribute* attr, const bool& state = 1 );
+
+        
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Active StateSet on the given node. 
+        //
+        ///////////////////////////////////////////////////////////////////////
 
 				void activateStateSet( Node* node );
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Deactive StateSet on the given node. 
+        //
+        ///////////////////////////////////////////////////////////////////////
 
         void deActivateStateSet( Node* node );
 

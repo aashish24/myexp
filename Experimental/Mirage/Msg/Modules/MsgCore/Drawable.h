@@ -24,101 +24,58 @@ namespace Msg
 	{
 		class Geode;			
 
-		class MSG_EXPORT Drawable : public Node
+    class MSG_EXPORT Drawable : public Msg::MsgCore::Node
 		{
 			public:
+
 				typedef std::vector< Geode* > Parents; 
 				typedef std::vector< GLuint > GLObjectList;
 
 				Drawable();
+
 				Drawable( const Drawable& drawable );
-
-        //void                          addParent( Geode* parent );
-        //const Parents                 getParents() const ;
-        //Parents                       getParents();
-        //unsigned int                  getNumParents();
-
-        //const StateSet*               getStateSet() const;
-        //StateSet*                     getStateSet();
           
-			  void                          setUseDisplayList( bool flag );
-        bool                          getUseDisplayList( unsigned int contextID );
-        bool                          getUseDisplayList();
-        GLuint&                       getDisplayList( unsigned int contextID );
+			  void                          useDisplayList( bool flag );
+        
+        bool                          useDisplayList( unsigned int contextID );
+        
+        bool                          useDisplayList();
+        
+        GLuint&                       displayList( unsigned int contextID );
 
         void                          draw();
-				virtual void                  drawImplementation();
+				
+        virtual void                  drawImplementation();
 				
 
 			protected:
 
         virtual ~Drawable()
-        {
-          // Do nothing. 
+        {        
         }
 
 
 			protected:
 
-        bool					                _useDisplayList;
-
-				//Parents					              _parents;
-
-				//SmartPtr< StateSet >	        _stateSet;
+        bool					                _useDisplayList;				
 
 				mutable GLObjectList	        _glObjectList;
-		};
+		};    
+  
 
-    
-   /* inline void Drawable::addParent( Geode* parent )
-		{
-			_parents.push_back( parent );
-		}
-
-
-    inline const Drawable::Parents Drawable::getParents() const
-		{
-			return _parents;
-		}
-
-
-    inline Drawable::Parents Drawable::getParents()
-		{
-			return _parents;
-		}
-
-
-    inline unsigned int Drawable::getNumParents()
-		{
-			return ( unsigned int )_parents.size();
-		}
-		
-
-		inline const StateSet* Drawable::getStateSet() const
-		{
-			return _stateSet.get();
-		}
-
-		
-    inline StateSet* Drawable::getStateSet() 
-		{
-			return _stateSet.get();
-		}*/
-
-
-    inline void Drawable::setUseDisplayList( bool flag )
+    inline void Drawable::useDisplayList( bool flag )
 		{
 			_useDisplayList = flag;
 		}
 
 
-		inline bool Drawable::getUseDisplayList()
+		inline bool Drawable::useDisplayList()
 		{
 			return _useDisplayList;
 		}
 
 
-		inline GLuint& Drawable::getDisplayList( unsigned int contextID )
+		inline GLuint& Drawable::displayList( unsigned int contextID )
 		{
 			// Only once display list is associated as of now. 
 			return _glObjectList[0];

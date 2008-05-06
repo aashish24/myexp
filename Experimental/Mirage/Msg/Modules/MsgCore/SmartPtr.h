@@ -1,5 +1,5 @@
-#ifndef __SMART_PTR_H__
-#define __SMART_PTR_H__
+#ifndef __MSG_CORE_SMART_PTR_H__
+#define __MSG_CORE_SMART_PTR_H__
 
 #include "Export.h"
 
@@ -14,43 +14,48 @@ namespace Msg
 	  {
 		  public:
 			  SmartPtr() :
-				  mPtr( 0 )
-			  {}
+				  _ptr( 0 )
+			  {
+        }
+
 
 			  SmartPtr( T* ptr ) :
-				  mPtr( ptr )
+				  _ptr( ptr )
 			  {
-				  if( mPtr ) 
+				  if( _ptr ) 
 				  {
-					  mPtr->ref();
+					  _ptr->ref();
 				  }
 			  }
 
+
 			  SmartPtr( const SmartPtr& sp ) :
-				  mPtr( sp.mPtr )
+				  _ptr( sp._ptr )
 			  {
-				  if( mPtr )
+				  if( _ptr )
 				  {
-					  mPtr->ref();
+					  _ptr->ref();
 				  }
 			  }	
 
-		     ~SmartPtr()
+
+		   ~SmartPtr()
 			  {
-				  if( mPtr )
+				  if( _ptr )
 				  {
-					  mPtr->unref();
+					  _ptr->unref();
 				  }
 			  }
 
+
 			  SmartPtr& operator = ( const SmartPtr& sp )
 			  {
-				  if( mPtr == sp.mPtr )
+				  if( _ptr == sp._ptr )
 					  return *this;
   				
-				  T* tmpPtr = mPtr;
-				  mPtr = sp.mPtr;
-				  mPtr->ref();
+				  T* tmpPtr = _ptr;
+				  _ptr = sp._ptr;
+				  _ptr->ref();
 
 				  if( tmpPtr )
 				  {
@@ -60,17 +65,18 @@ namespace Msg
 				  return *this;				
 			  }
 
+
 			  SmartPtr& operator = ( T* ptr )
 			  {
-				  if( mPtr == ptr )
+				  if( _ptr == ptr )
 					  return *this;
   				
-				  T* tmpPtr = mPtr;
-				  mPtr = ptr;
+				  T* tmpPtr = _ptr;
+				  _ptr = ptr;
 
-				  if( mPtr )
+				  if( _ptr )
 				  {
-					  mPtr->ref();
+					  _ptr->ref();
 				  }
 
 				  if( tmpPtr )
@@ -81,33 +87,38 @@ namespace Msg
 				  return *this;
 			  }
 
+
 			  T* operator -> ()
 			  {
-				  return mPtr;
+				  return _ptr;
 			  }
+
 
 			  T* operator -> () const
 			  {
-				  return mPtr;
+				  return _ptr;
 			  }
+
 
 			  bool valid() const
 			  {
-				  return mPtr != 0;
+				  return _ptr != 0;
 			  }
+
 
 			  T* get() const
 			  {
-				  return mPtr;
+				  return _ptr;
 			  }
+
 
 			  T* release()
 			  {
-				  T* tmpPtr = mPtr; 
-				  if( mPtr )
+				  T* tmpPtr = _ptr; 
+				  if( _ptr )
 				  {
-					  mPtr->unrefDoNotDelete();
-					  mPtr = 0;
+					  _ptr->unrefDoNotDelete();
+					  _ptr = 0;
 					  return tmpPtr;
 				  }
 				  else
@@ -117,9 +128,10 @@ namespace Msg
 			  }
 
 		  private:
-			  T* mPtr;
+
+			  T* _ptr;
 	  };
   }
 }
 
-#endif // __SMART_PTR_H__
+#endif // __MSG_CORE_SMART_PTR_H__

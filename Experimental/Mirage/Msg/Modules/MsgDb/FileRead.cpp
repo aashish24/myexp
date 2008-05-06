@@ -30,14 +30,14 @@ Node* FileRead::readFile( const char* fileName, const bool& ignoreNormals )
 	}
 	else
 	{
-		std::cerr <<"[FileRead::readFile] File extension not handled for file: " << file << std::endl;
-		return NULL;
+    std::cerr <<"ERROR 1559475712: File extension not handled for file. " << file << std::endl;
+		return 0x00;
 	}
 }
 
 Node* FileRead::readFile( const std::string &fileName, const bool& ignoreNormals )
 {
-	return readFile( fileName.c_str() );
+	return readFile( fileName.c_str(), ignoreNormals );
 }
 
 /*

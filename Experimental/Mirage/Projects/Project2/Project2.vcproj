@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(GLEW_INC_DIR)&quot;;..\..\Msg\Modules;..\..\Smtl\Modules;E:\aashish\src\libsh\install\windows.x86_32\include"
+				AdditionalIncludeDirectories="$(GLEW_INC_DIR);..\..\Msg\Modules;..\..\Smtl\Modules"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;NOMINMAX;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,10 +62,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glew32d.lib libsh_debug.lib libshutil_debug.lib"
+				AdditionalDependencies="glew32d.lib "
 				OutputFile="../../bin/$(ProjectName)d.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(GLEW_BIN_DIR)&quot;;E:\aashish\src\libsh\install\windows.x86_32\bin"
+				AdditionalLibraryDirectories="$(GLEW_BIN_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -120,6 +120,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="$(GLEW_INC_DIR);..\..\Msg\Modules;..\..\Smtl\Modules"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -138,7 +139,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="glew32.lib "
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(GLEW_BIN_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

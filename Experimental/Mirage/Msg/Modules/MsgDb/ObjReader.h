@@ -1,5 +1,5 @@
-#ifndef __OBJ_READER_H__
-#define __OBJ_READER_H__
+#ifndef __MSG_DB_OBJ_READER_H__
+#define __MSG_DB_OBJ_READER_H__
 
 #include <istream>
 
@@ -24,26 +24,26 @@ namespace Msg
         {
           Model() : 
             Referenced      (),
-            mVertices       ( new Vec3Array() ), 
-            mNormals        ( new Vec3Array() ), 
-            mTexCoords      ( new Vec3Array() ), 
-            mColors         ( new Vec4Array() ), 
-            mVertexIndices  ( new Vec3iArray() ), 
-            mNormalIndices  ( new Vec3iArray() ), 
-            mTexCoordIndices( new Vec3iArray() ), 
-            mColorIndices   ( new Vec3iArray() )
+            _vertices       ( new Vec3Array() ), 
+            _normals        ( new Vec3Array() ), 
+            _textureCoords      ( new Vec3Array() ), 
+            _colors         ( new Vec4Array() ), 
+            _vertexIndices  ( new Vec3iArray() ), 
+            _normalIndices  ( new Vec3iArray() ), 
+            _texCoordIndices( new Vec3iArray() ), 
+            _colorIndices   ( new Vec3iArray() )
           {
           }
 
-          SmartPtr< Vec3Array > mVertices;
-          SmartPtr< Vec3Array > mNormals;
-          SmartPtr< Vec3Array > mTexCoords;          
-          SmartPtr< Vec4Array > mColors;
+          SmartPtr< Vec3Array > _vertices;
+          SmartPtr< Vec3Array > _normals;
+          SmartPtr< Vec3Array > _textureCoords;          
+          SmartPtr< Vec4Array > _colors;
 
-          SmartPtr< Vec3iArray > mVertexIndices;
-          SmartPtr< Vec3iArray > mNormalIndices;
-          SmartPtr< Vec3iArray > mTexCoordIndices;
-          SmartPtr< Vec3iArray > mColorIndices;          
+          SmartPtr< Vec3iArray > _vertexIndices;
+          SmartPtr< Vec3iArray > _normalIndices;
+          SmartPtr< Vec3iArray > _texCoordIndices;
+          SmartPtr< Vec3iArray > _colorIndices;          
 
           protected: 
           
@@ -53,20 +53,28 @@ namespace Msg
         };
 
 
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Data structure to hold data related with a vertex. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
         struct VertexData
         {
           VertexData() : 
-            mVertexIndex( -1 ), 
-            mColorIndex( -1 ), 
-            mTextureIndex( -1 ), 
-            mNormalIndex( -1 )
+            _vertexIndex( -1 ), 
+            _colorIndex( -1 ), 
+            _textureIndex( -1 ), 
+            _normalIndex( -1 )
           {
           }
-          long mVertexIndex;
-          long mColorIndex;
-          long mTextureIndex;
-          long mNormalIndex;
+
+          long _vertexIndex;
+          long _colorIndex;
+          long _textureIndex;
+          long _normalIndex;
         };
+
 
         ///////////////////////////////////////////////////////////////////////
         //
@@ -90,6 +98,7 @@ namespace Msg
 
 				}
 
+
         ///////////////////////////////////////////////////////////////////////
         //
         // Parse obj file.
@@ -98,9 +107,15 @@ namespace Msg
 			
 				Node*	readFile( std::istream& fin, const char* fileName, const bool& ignoreNormals=false );
 
-				Node*	readFile( std::istream& fin, const std::string& fileName, const bool& ignoreNormals=false );
 
-        Node* convertDataIntoNode( Model* model ); 
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Parse obj file.
+        //
+        ///////////////////////////////////////////////////////////////////////
+
+				Node*	readFile( std::istream& fin, const std::string& fileName, const bool& ignoreNormals=false );
+       
 
 			protected:
 
@@ -114,12 +129,21 @@ namespace Msg
 				{
 				}
 
+        
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Convert data stored as Model into Node. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
+        Node* convertDataIntoNode( Model* model ); 
+
 
       protected:
 
-        std::vector< VertexData > mVertexData;
+        std::vector< VertexData > _vertexData;
 		};
 	}
 }
 
-#endif // __OBJ_READER_H__
+#endif // __MSG_DB_OBJ_READER_H__

@@ -1,5 +1,6 @@
-#ifndef __GEOMETRY_H__
-#define __GEOMETRY_H__
+
+#ifndef __MSG_CORE_GEOMETRY_H__
+#define __MSG_CORE_GEOMETRY_H__
 
 #include "Export.h"
 #include "MsgCore/Drawable.h"
@@ -14,7 +15,7 @@ namespace Msg
 	{		
 		class PrimitiveSet;
 
-		class MSG_EXPORT Geometry : public Drawable
+    class MSG_EXPORT Geometry : public Msg::MsgCore::Drawable
 		{
 			public:
 				typedef std::vector< SmartPtr< PrimitiveSet > >	 PrimitiveSets;
@@ -31,37 +32,37 @@ namespace Msg
 
         bool              hasFastPath();
 
-        PrimitiveSets&    getPrimitiveSets();
+        PrimitiveSets&    primitiveSets();
 
-				Vec3Array*			  getVertexArray();
-				void				      setVertexArray( Vec3Array* vArray );
+				Vec3Array*			  vertexArray();
+				void				      vertexArray( Vec3Array* vArray );
 
-				Vec3Array*			  getNormalArray();
-				void				      setNormalArray( Vec3Array* nArray );
+				Vec3Array*			  normalArray();
+				void				      normalArray( Vec3Array* nArray );
 
-				Vec3Array*			  getTexCoordArray();
-				void				      setTexCoordArray( Vec3Array* texCoordArray );
+				Vec3Array*			  textureCoordArray();
+				void				      textureCoordArray( Vec3Array* textureCoordArray );
 				
-				Vec4Array*			  getColorArray();
-				void				      setColorArray( Vec4Array* colorArray );
+				Vec4Array*			  colorArray();
+				void				      colorArray( Vec4Array* colorArray );
 
-        Vec3Array*			  getTangentArray();
-				void				      setTangentArray( Vec3Array* tangetArray );
+        Vec3Array*			  tangentArray();
+				void				      tangentArray( Vec3Array* tangetArray );
 
-        Vec3Array*			  getBinormalArray();
-				void				      setBinormalArray( Vec3Array* binormalArray );
+        Vec3Array*			  binormalArray();
+				void				      binormalArray( Vec3Array* binormalArray );
 
-				AttributeBinding	getAttrBinding();
-				void				      setAttrBinding( const AttributeBinding& attrBinding );
+				AttributeBinding	attributeBinding();
+				void				      attributeBinding( const AttributeBinding& attrBinding );
 
-				Vec3iArray*			  getVertexIndices();
-				void				      setVertexIndices( Vec3iArray* viArray );
+				Vec3iArray*			  vertexIndices();
+				void				      vertexIndices( Vec3iArray* viArray );
 
-				Vec3iArray*			  getNormalIndices();
-				void				      setNormalIndices( Vec3iArray* niArray );
+				Vec3iArray*			  normalIndices();
+				void				      normalIndices( Vec3iArray* niArray );
 
-        Vec3iArray*			  getTextureIndices();
-				void				      setTextureIndices( Vec3iArray* niArray );
+        Vec3iArray*			  textureCoordIndices();
+				void				      textureCoordIndices( Vec3iArray* niArray );
 
 				void			  	    generateNormals( Geometry::AttributeBinding attrBinding=BIND_PER_VERTEX );
 
@@ -77,25 +78,26 @@ namespace Msg
 
 			protected:			
 
-        bool                    mFastPath;
+        bool                    _fastPath;
 
-				SmartPtr< Vec3Array >	  mVertices;
-				SmartPtr< Vec3Array	>	  mNormals;
-				SmartPtr< Vec3Array	>	  mTexCoords;
-				SmartPtr< Vec4Array >	  mColors;
+				SmartPtr< Vec3Array >	  _vertices;
+				SmartPtr< Vec3Array	>	  _normals;
+				SmartPtr< Vec3Array	>	  _textureCoords;
+				SmartPtr< Vec4Array >	  _colors;
 
-        SmartPtr< Vec3Array >   mTangents;
-        SmartPtr< Vec3Array >   mBinormals;        
+        SmartPtr< Vec3Array >   _tangents;
+        SmartPtr< Vec3Array >   _binormals;        
 
-				SmartPtr< Vec3iArray >	mVertexIndices;
+				SmartPtr< Vec3iArray >	_vertexIndices;
 				
-        SmartPtr< Vec3iArray >	mNormalIndices;
-        SmartPtr< Vec3iArray >	mTextureIndices;
+        SmartPtr< Vec3iArray >	_normalIndices;
+        SmartPtr< Vec3iArray >	_textureIndices;
 	
-				AttributeBinding		    mAttrBinding;
-				PrimitiveSets			      mPrimitiveSets;
+				AttributeBinding		    _attrBinding;
+				PrimitiveSets			      _primitiveSets;
 		};
 	}
 }
 
-#endif // __GEOMETRY_H__
+#endif // __MSG_CORE_GEOMETRY_H__
+

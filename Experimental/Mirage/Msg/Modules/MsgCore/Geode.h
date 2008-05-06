@@ -1,11 +1,6 @@
-///////////////////////////////////////////////////////////////////////////////
-//
-// 
-//
-///////////////////////////////////////////////////////////////////////////////
 
-#ifndef __GEODE_H__
-#define __GEODE_H__
+#ifndef __MSG_CORE_GEODE_H__
+#define __MSG_CORE_GEODE_H__
 
 #include "Export.h"
 
@@ -25,7 +20,7 @@ namespace Msg
 		// Typedefs. 
 		typedef std::vector< SmartPtr< Drawable > > DrawableList;
 
-		class MSG_EXPORT Geode : public Group 
+    class MSG_EXPORT Geode : public Msg::MsgCore::Group 
 		{
 			public:
 				Geode() :
@@ -43,7 +38,7 @@ namespace Msg
 				{
           if( drawable )
           {
-            mDrawables.push_back( drawable );
+            _drawables.push_back( drawable );
             drawable->addParent( static_cast< Group* >( this ) );
           }
 				}
@@ -57,14 +52,14 @@ namespace Msg
 
 				virtual Drawable* getDrawable( const unsigned int& index )
 				{
-					assert( index < mDrawables.size() );
-					return mDrawables[index].get();
+					assert( index < _drawables.size() );
+					return _drawables[index].get();
 				}
 
 
 				virtual DrawableList getDrawableList()
 				{
-					return mDrawables;
+					return _drawables;
 				}
 
 
@@ -73,22 +68,22 @@ namespace Msg
 
 				const BoundingBox& getBoundingBox() const
 				{
-					return mBBox;
+					return _boundingBox;
 				}		
 
 
 				virtual void traverse( NodeVisitor& nv );
 
+
 			protected:
+
 				virtual ~Geode();
 
-				mutable BoundingBox	mBBox;
+				mutable BoundingBox	  _boundingBox;
 
-				DrawableList		mDrawables;
-
-			private:
+				DrawableList		      _drawables;
 		};
 	}
 }
 
-#endif // __GEODE_H__
+#endif // __MSG_CORE_GEODE_H__

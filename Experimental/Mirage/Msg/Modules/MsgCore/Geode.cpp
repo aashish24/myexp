@@ -1,23 +1,23 @@
 
 #include "MsgCore/Geode.h"
 
-using namespace Msg::MsgCore;
-
-void Geode::compileDrawables()
+Msg::MsgCore::Geode::~Geode()
 {
 }
 
-Geode::~Geode()
+
+void Msg::MsgCore::Geode::compileDrawables()
 {
 }
 
-void Geode::traverse( NodeVisitor& nv )
+
+void Msg::MsgCore::Geode::traverse( NodeVisitor& nv )
 {
   this->activateStateSet();
 
-	for( size_t i=0; i < mDrawables.size(); ++i )
+	for( size_t i=0; i < _drawables.size(); ++i )
 	{
-		mDrawables[i]->draw();
+		_drawables[i]->draw();
 	}
 
   this->deActivateStateSet();

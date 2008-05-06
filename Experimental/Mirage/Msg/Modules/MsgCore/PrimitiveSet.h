@@ -13,7 +13,8 @@ namespace Msg
 		{
 			typedef std::vector< value_type > vector_type;
 			
-			public:    
+			public: 
+
 				VectorGLubyte(): vector_type() 
 				{
 				}
@@ -39,7 +40,8 @@ namespace Msg
 		{
 			typedef std::vector< value_type > vector_type;
 			
-			public:    
+			public: 
+
 				VectorGLushort(): 
 					vector_type() 
 				{
@@ -66,7 +68,8 @@ namespace Msg
 		{
 			typedef std::vector< value_type > vector_type;
 			
-			public:    
+			public:   
+
 				VectorGLuint(): 
 					vector_type() 
 				{
@@ -116,8 +119,8 @@ namespace Msg
 
 
 				PrimitiveSet( GLenum mode, Type type ) :
-					mMode( mode ), 
-					mType( type )
+					_mode( mode ), 
+					_type( type )
 				{
 				}
 
@@ -134,13 +137,13 @@ namespace Msg
 
 				Type getType()
 				{
-					return mType;
+					return _type;
 				}
 
 
 				GLenum getMode()
 				{
-					return mMode;
+					return _mode;
 				}
 
 
@@ -156,15 +159,16 @@ namespace Msg
 
 			protected:
 				
-        GLenum	mMode;
+        GLenum	_mode;
 
-				Type	mType;				
+				Type	  _type;				
 		};
 
 
 		class MSG_EXPORT DrawElementsUByte : public PrimitiveSet, public VectorGLubyte 
 		{
 			public:
+
 				DrawElementsUByte( GLenum mode=0 ) :
 					PrimitiveSet( mode, BYTE )
 				{
@@ -179,7 +183,7 @@ namespace Msg
 
 				virtual void draw() const 
 				{
-					glDrawElements( mMode, ( GLsizei )size(), mType,  &front() );
+					glDrawElements( _mode, ( GLsizei )size(), _type,  &front() );
 				}
 
 		
@@ -188,7 +192,9 @@ namespace Msg
 					return size();
 				}
 
+
 			protected:
+
 				virtual ~DrawElementsUByte()
 				{
 				}
@@ -212,7 +218,7 @@ namespace Msg
 
 				virtual void draw() const 
 				{
-					glDrawElements( mMode, ( GLsizei )size(), mType,  &front() );
+					glDrawElements( _mode, ( GLsizei )size(), _type,  &front() );
 				}
 
 
@@ -222,6 +228,7 @@ namespace Msg
 				}
 
 			protected:
+
 				virtual ~DrawElementsUShort()
 				{
 				}
@@ -245,7 +252,7 @@ namespace Msg
 
 				virtual void draw() const 
 				{
-					glDrawElements( mMode, ( GLsizei ) size(), mType,  &front() );
+					glDrawElements( _mode, ( GLsizei ) size(), _type,  &front() );
 				}		
 
 

@@ -11,172 +11,172 @@
 using namespace Msg::MsgCore;
 
 Geometry::Geometry() :
-  mFastPath       ( true ), 
-  mVertices       ( 0x00 ),
-  mNormals        ( 0x00 ), 
-  mTexCoords      ( 0x00 ),   
-  mColors         ( 0x00 ),   
-  mTangents       ( 0x00 ),      
-  mBinormals      ( 0x00 ),   
-  mVertexIndices  ( 0x00 ), 
-  mNormalIndices  ( 0x00 ),
-  mTextureIndices ( 0x00 ),
-  mAttrBinding    ( BIND_PER_VERTEX ), 
-	mPrimitiveSets  ( 0x00 )
+  _fastPath       ( true ), 
+  _vertices       ( 0x00 ),
+  _normals        ( 0x00 ), 
+  _textureCoords      ( 0x00 ),   
+  _colors         ( 0x00 ),   
+  _tangents       ( 0x00 ),      
+  _binormals      ( 0x00 ),   
+  _vertexIndices  ( 0x00 ), 
+  _normalIndices  ( 0x00 ),
+  _textureIndices ( 0x00 ),
+  _attrBinding    ( BIND_PER_VERTEX ), 
+	_primitiveSets  ( 0x00 )
 {
 }
 
 
 Geometry::Geometry( const Geometry& geom ) :
-  mFastPath       ( geom.mFastPath ), 
-  mVertices       ( geom.mVertices ),
-  mNormals        ( geom.mNormals ), 
-  mTexCoords      ( geom.mTexCoords ),   
-  mColors         ( geom.mColors ),   
-  mTangents       ( geom.mTangents ),      
-  mBinormals      ( geom.mBinormals ),   
-  mVertexIndices  ( 0x00 ), 
-  mNormalIndices  ( 0x00 ),
-  mTextureIndices ( 0x00 ),
-  mAttrBinding    ( BIND_PER_VERTEX ), 
-	mPrimitiveSets  ( 0x00 )
+  _fastPath       ( geom._fastPath ), 
+  _vertices       ( geom._vertices ),
+  _normals        ( geom._normals ), 
+  _textureCoords      ( geom._textureCoords ),   
+  _colors         ( geom._colors ),   
+  _tangents       ( geom._tangents ),      
+  _binormals      ( geom._binormals ),   
+  _vertexIndices  ( 0x00 ), 
+  _normalIndices  ( 0x00 ),
+  _textureIndices ( 0x00 ),
+  _attrBinding    ( BIND_PER_VERTEX ), 
+	_primitiveSets  ( 0x00 )
 {
 }
 
 
 bool Geometry::hasFastPath() 
 {
-  if( this->getAttrBinding() == BIND_PER_PRIMITIVE )
+  if( this->attributeBinding() == BIND_PER_PRIMITIVE )
   {
-    mFastPath = false;
+    _fastPath = false;
   }
   
-  return mFastPath;
+  return _fastPath;
 }
 
-Geometry::PrimitiveSets& Geometry::getPrimitiveSets() 
+Geometry::PrimitiveSets& Geometry::primitiveSets() 
 {
-  return mPrimitiveSets;
+  return _primitiveSets;
 }
 
 
-Vec3Array* Geometry::getVertexArray()
+Vec3Array* Geometry::vertexArray()
 {	
-	return mVertices.get();
+	return _vertices.get();
 }
 
 
-void Geometry::setVertexArray( Vec3Array* vArray )
+void Geometry::vertexArray( Vec3Array* vArray )
 {
-	mVertices = vArray;
+	_vertices = vArray;
 }
 
 
-Vec3Array* Geometry::getNormalArray()
+Vec3Array* Geometry::normalArray()
 {
-	return mNormals.get();
+	return _normals.get();
 }
 
 
-void Geometry::setNormalArray(  Vec3Array* nArray )
+void Geometry::normalArray(  Vec3Array* nArray )
 {
-	mNormals = nArray;
+	_normals = nArray;
 }
 
 
-Vec3Array* Geometry::getTexCoordArray()
+Vec3Array* Geometry::textureCoordArray()
 {
-	return mTexCoords.get();
+	return _textureCoords.get();
 }
 
 
-void Geometry::setTexCoordArray( Vec3Array* texCoordArray )
+void Geometry::textureCoordArray( Vec3Array* textureCoordArray )
 {
-	mTexCoords = texCoordArray;
+	_textureCoords = textureCoordArray;
 }
 
 
-Vec4Array* Geometry::getColorArray()
+Vec4Array* Geometry::colorArray()
 {
-	return mColors.get();
+	return _colors.get();
 }
 
 
-void Geometry::setColorArray( Vec4Array* colorArray )
+void Geometry::colorArray( Vec4Array* colorArray )
 {
-	mColors = colorArray;
+	_colors = colorArray;
 }
 
 
-Vec3Array* Geometry::getTangentArray() 
+Vec3Array* Geometry::tangentArray() 
 {
-  return mTangents.get();
+  return _tangents.get();
 }
 
 
-void Geometry::setTangentArray( Vec3Array* tangentArray )
+void Geometry::tangentArray( Vec3Array* tangentArray )
 {
-  mTangents = tangentArray;
+  _tangents = tangentArray;
 }
 
 
-Vec3Array* Geometry::getBinormalArray() 
+Vec3Array* Geometry::binormalArray() 
 {
-  return mBinormals.get();
+  return _binormals.get();
 }
 
 
-void Geometry::setBinormalArray( Vec3Array* binormalArray )
+void Geometry::binormalArray( Vec3Array* binormalArray )
 {
-  mBinormals = binormalArray;
+  _binormals = binormalArray;
 }
 
 
-Geometry::AttributeBinding Geometry::getAttrBinding()
+Geometry::AttributeBinding Geometry::attributeBinding()
 {
-	return mAttrBinding;
+	return _attrBinding;
 }
 
 
-void Geometry::setAttrBinding( const Geometry::AttributeBinding& attrBinding )
+void Geometry::attributeBinding( const Geometry::AttributeBinding& attrBinding )
 {
-	mAttrBinding = attrBinding;
+	_attrBinding = attrBinding;
 }
 
 
-Vec3iArray* Geometry::getVertexIndices()
+Vec3iArray* Geometry::vertexIndices()
 {
-	return mVertexIndices.get();
+	return _vertexIndices.get();
 }
 
 
-void Geometry::setVertexIndices( Vec3iArray* viArray )
+void Geometry::vertexIndices( Vec3iArray* viArray )
 {
-	mVertexIndices = viArray;
+	_vertexIndices = viArray;
 }
 
 
-Vec3iArray* Geometry::getNormalIndices()
+Vec3iArray* Geometry::normalIndices()
 {
-	return mNormalIndices.get();
+	return _normalIndices.get();
 }
 
 
-void Geometry::setNormalIndices( Vec3iArray* niArray )
+void Geometry::normalIndices( Vec3iArray* niArray )
 {
-	mNormalIndices = niArray;
+	_normalIndices = niArray;
 }
 
 
-Vec3iArray* Geometry::getTextureIndices()
+Vec3iArray* Geometry::textureCoordIndices()
 {
-  return mTextureIndices.get();
+  return _textureIndices.get();
 }
 
 
-void Geometry::setTextureIndices( Vec3iArray* niArray )
+void Geometry::textureCoordIndices( Vec3iArray* niArray )
 {
-  mTextureIndices = niArray;
+  _textureIndices = niArray;
 }
 
 
@@ -198,10 +198,10 @@ void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 	SmartPtr< Vec3Array >  normals   = new Vec3Array();
 	SmartPtr< Vec3iArray > nIndices  = new Vec3iArray();
 
-	for( size_t i=0; i < mVertexIndices->size(); ++i )
+	for( size_t i=0; i < _vertexIndices->size(); ++i )
 	{
-		Vec3d vec1 = mVertices->at( mVertexIndices->at(i)[1] ) - mVertices->at( mVertexIndices->at(i)[0] );
-		Vec3d vec2 = mVertices->at( mVertexIndices->at(i)[2] ) - mVertices->at( mVertexIndices->at(i)[0] );
+		Vec3d vec1 = _vertices->at( _vertexIndices->at(i)[1] ) - _vertices->at( _vertexIndices->at(i)[0] );
+		Vec3d vec2 = _vertices->at( _vertexIndices->at(i)[2] ) - _vertices->at( _vertexIndices->at(i)[0] );
 		Vec3d normal = vec1.cross( vec2 );		
 		normal.normalize();
 		normals->push_back( normal );
@@ -210,8 +210,8 @@ void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 
 	if( attrBinding == Geometry::BIND_PER_PRIMITIVE )
 	{
-		mNormals = normals.get();
-		mNormalIndices = nIndices.get();
+		_normals = normals.get();
+		_normalIndices = nIndices.get();
 	}
 	else if( attrBinding == Geometry::BIND_PER_VERTEX )
 	{
@@ -221,19 +221,19 @@ void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 		std::vector< int > PrimitiveIDs;
 
 		// Point each VertextID to a vector of PrimitiveIDs. 
-		for( size_t i=0; i < mVertexIndices->size(); ++i )
+		for( size_t i=0; i < _vertexIndices->size(); ++i )
 		{
-			mapVertexIDToPrimitiveID[ mVertexIndices->at(i)[0] ] = PrimitiveIDs;
-			mapVertexIDToPrimitiveID[ mVertexIndices->at(i)[1] ] = PrimitiveIDs;
-			mapVertexIDToPrimitiveID[ mVertexIndices->at(i)[2] ] = PrimitiveIDs;
+			mapVertexIDToPrimitiveID[ _vertexIndices->at(i)[0] ] = PrimitiveIDs;
+			mapVertexIDToPrimitiveID[ _vertexIndices->at(i)[1] ] = PrimitiveIDs;
+			mapVertexIDToPrimitiveID[ _vertexIndices->at(i)[2] ] = PrimitiveIDs;
 		}
 
 		// Now fill the this map. 
-		for( size_t i=0; i < mVertexIndices->size(); ++i )
+		for( size_t i=0; i < _vertexIndices->size(); ++i )
 		{
-			mapVertexIDToPrimitiveID[ mVertexIndices->at(i)[0] ].push_back( i );
-			mapVertexIDToPrimitiveID[ mVertexIndices->at(i)[1] ].push_back( i );
-			mapVertexIDToPrimitiveID[ mVertexIndices->at(i)[2] ].push_back( i );
+			mapVertexIDToPrimitiveID[ _vertexIndices->at(i)[0] ].push_back( i );
+			mapVertexIDToPrimitiveID[ _vertexIndices->at(i)[1] ].push_back( i );
+			mapVertexIDToPrimitiveID[ _vertexIndices->at(i)[2] ].push_back( i );
 		}
 		
 		// Now calculate per vertex normals. 
@@ -251,7 +251,7 @@ void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 			perVertexNormals->push_back( vertextNormal );
 		}		
 
-		mNormals = perVertexNormals.get();
+		_normals = perVertexNormals.get();
 	}
 
 	std::cout << "Finished creating normals with binding " << bindingType << std::endl;
@@ -260,7 +260,7 @@ void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 
 void Geometry::addPrimitiveSet( PrimitiveSet* primitiveSet )
 {
-	mPrimitiveSets.push_back( primitiveSet );
+	_primitiveSets.push_back( primitiveSet );
 }
 
 
@@ -271,67 +271,67 @@ void Geometry::drawImplementation()
   if( !this->hasFastPath() )
   {
 	  glBegin( GL_TRIANGLES );
-	  for( size_t i=0; i < mVertexIndices->size(); ++ i )
+	  for( size_t i=0; i < _vertexIndices->size(); ++ i )
 	  {
-		  if( mAttrBinding == Geometry::BIND_PER_PRIMITIVE )
+		  if( _attrBinding == Geometry::BIND_PER_PRIMITIVE )
 		  {
-			  if( mNormals.valid())
+			  if( _normals.valid())
 			  {
-				  glNormal3f( mNormals->at( mNormalIndices->at(i)[0] )[0],
-							  mNormals->at( mNormalIndices->at(i)[0] )[1],
-							  mNormals->at( mNormalIndices->at(i)[0] )[2] );	  
+				  glNormal3d( _normals->at( _normalIndices->at(i)[0] )[0],
+							        _normals->at( _normalIndices->at(i)[0] )[1],
+							        _normals->at( _normalIndices->at(i)[0] )[2] );	  
 			  }
 
-			  glVertex3f( mVertices->at( mVertexIndices->at(i)[0] )[0], 	
-						  mVertices->at( mVertexIndices->at(i)[0] )[1], 
-						  mVertices->at( mVertexIndices->at(i)[0] )[2] );
+			  glVertex3d(   _vertices->at( _vertexIndices->at(i)[0] )[0], 	
+						          _vertices->at( _vertexIndices->at(i)[0] )[1], 
+						          _vertices->at( _vertexIndices->at(i)[0] )[2] );
 
-			  glVertex3f( mVertices->at( mVertexIndices->at(i)[1] )[0], 	
-						  mVertices->at( mVertexIndices->at(i)[1] )[1], 
-						  mVertices->at( mVertexIndices->at(i)[1] )[2] );
+			  glVertex3d(   _vertices->at( _vertexIndices->at(i)[1] )[0], 	
+						          _vertices->at( _vertexIndices->at(i)[1] )[1], 
+						          _vertices->at( _vertexIndices->at(i)[1] )[2] );
 
-			  glVertex3f( mVertices->at( mVertexIndices->at(i)[2] )[0], 	
-						  mVertices->at( mVertexIndices->at(i)[2] )[1], 
-						  mVertices->at( mVertexIndices->at(i)[2] )[2] );
+			  glVertex3d(   _vertices->at( _vertexIndices->at(i)[2] )[0], 	
+						          _vertices->at( _vertexIndices->at(i)[2] )[1], 
+						          _vertices->at( _vertexIndices->at(i)[2] )[2] );
 		  }
-		  else if( mAttrBinding == Geometry::BIND_PER_VERTEX )
+		  else if( _attrBinding == Geometry::BIND_PER_VERTEX )
 		  {
   			
-        glNormal3f( mNormals->at( mNormalIndices->at(i)[0] )[0],
-						        mNormals->at( mNormalIndices->at(i)[0] )[1],
-						        mNormals->at( mNormalIndices->at(i)[0] )[2] );
+        glNormal3d(   _normals->at( _normalIndices->at(i)[0] )[0],
+						          _normals->at( _normalIndices->at(i)[0] )[1],
+						          _normals->at( _normalIndices->at(i)[0] )[2] );
 
-        glTexCoord3f( mTexCoords->at( mTextureIndices->at(i)[0] )[0],
-						          mTexCoords->at( mTextureIndices->at(i)[0] )[1],
-						          mTexCoords->at( mTextureIndices->at(i)[0] )[2] );
+        glTexCoord3d( _textureCoords->at( _textureIndices->at(i)[0] )[0],
+						          _textureCoords->at( _textureIndices->at(i)[0] )[1],
+						          _textureCoords->at( _textureIndices->at(i)[0] )[2] );
 
-			  glVertex3f( mVertices->at( mVertexIndices->at(i)[0] )[0], 	
-						        mVertices->at( mVertexIndices->at(i)[0] )[1], 
-						        mVertices->at( mVertexIndices->at(i)[0] )[2] );
+			  glVertex3d(   _vertices->at( _vertexIndices->at(i)[0] )[0], 	
+						          _vertices->at( _vertexIndices->at(i)[0] )[1], 
+						          _vertices->at( _vertexIndices->at(i)[0] )[2] );
 
-			  glNormal3f( mNormals->at( mNormalIndices->at(i)[1] )[0],
-						        mNormals->at( mNormalIndices->at(i)[1] )[1],
-						        mNormals->at( mNormalIndices->at(i)[1] )[2] );
+			  glNormal3d(   _normals->at( _normalIndices->at(i)[1] )[0],
+						          _normals->at( _normalIndices->at(i)[1] )[1],
+						          _normals->at( _normalIndices->at(i)[1] )[2] );
 
-        glTexCoord3f( mTexCoords->at( mTextureIndices->at(i)[1] )[0],
-						          mTexCoords->at( mTextureIndices->at(i)[1] )[1],
-						          mTexCoords->at( mTextureIndices->at(i)[1] )[2] );
+        glTexCoord3d( _textureCoords->at( _textureIndices->at(i)[1] )[0],
+						          _textureCoords->at( _textureIndices->at(i)[1] )[1],
+						          _textureCoords->at( _textureIndices->at(i)[1] )[2] );
 
-			  glVertex3f( mVertices->at( mVertexIndices->at(i)[1] )[0], 	
-						        mVertices->at( mVertexIndices->at(i)[1] )[1], 
-						        mVertices->at( mVertexIndices->at(i)[1] )[2] );
+			  glVertex3d(   _vertices->at( _vertexIndices->at(i)[1] )[0], 	
+						          _vertices->at( _vertexIndices->at(i)[1] )[1], 
+						          _vertices->at( _vertexIndices->at(i)[1] )[2] );
 
-			  glNormal3f( mNormals->at( mNormalIndices->at(i)[2] )[0],
-						        mNormals->at( mNormalIndices->at(i)[2] )[1],
-						        mNormals->at( mNormalIndices->at(i)[2] )[2] );
+			  glNormal3d(   _normals->at( _normalIndices->at(i)[2] )[0],
+						          _normals->at( _normalIndices->at(i)[2] )[1],
+						          _normals->at( _normalIndices->at(i)[2] )[2] );
 
-        glTexCoord3f( mTexCoords->at( mTextureIndices->at(i)[2] )[0],
-						          mTexCoords->at( mTextureIndices->at(i)[2] )[1],
-						          mTexCoords->at( mTextureIndices->at(i)[2] )[2] );
+        glTexCoord3d( _textureCoords->at( _textureIndices->at(i)[2] )[0],
+						          _textureCoords->at( _textureIndices->at(i)[2] )[1],
+						          _textureCoords->at( _textureIndices->at(i)[2] )[2] );
 
-			  glVertex3f( mVertices->at( mVertexIndices->at(i)[2] )[0], 	
-						        mVertices->at( mVertexIndices->at(i)[2] )[1], 
-						        mVertices->at( mVertexIndices->at(i)[2] )[2] );
+			  glVertex3d(   _vertices->at( _vertexIndices->at(i)[2] )[0], 	
+						          _vertices->at( _vertexIndices->at(i)[2] )[1], 
+						          _vertices->at( _vertexIndices->at(i)[2] )[2] );
 		  }
 	  }
 	  glEnd();
@@ -339,45 +339,45 @@ void Geometry::drawImplementation()
   else
   {
     // Set all the vertex arrays and then dereference the vertex array later. 
-    glVertexPointer( 3, GL_DOUBLE, 0, mVertices->getDataPointer() );
+    glVertexPointer( 3, GL_DOUBLE, 0, _vertices->getDataPointer() );
 
-    if( mColors.valid() )
+    if( _colors.valid() )
     {
 	    glEnableClientState( GL_COLOR_ARRAY );
-	    glColorPointer( 4, GL_DOUBLE, 0, mColors->getDataPointer() );
+	    glColorPointer( 4, GL_DOUBLE, 0, _colors->getDataPointer() );
     }
 
-    if( mNormals.valid() )
+    if( _normals.valid() )
     {
 	    glEnableClientState( GL_NORMAL_ARRAY );
-      glNormalPointer( GL_DOUBLE, 0, mNormals->getDataPointer() );      
+      glNormalPointer( GL_DOUBLE, 0, _normals->getDataPointer() );      
     }	
   	
-    if( mTexCoords.valid() )
+    if( _textureCoords.valid() )
     {
 	    glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-      glTexCoordPointer( 3, GL_DOUBLE, 0, mTexCoords->getDataPointer() );
+      glTexCoordPointer( 3, GL_DOUBLE, 0, _textureCoords->getDataPointer() );
     }		  
 
     // Now dereference the arrays. 
-	  for( size_t i=0; i < mPrimitiveSets.size(); ++i )
+	  for( size_t i=0; i < _primitiveSets.size(); ++i )
 	  {	
 		  glEnableClientState( GL_VERTEX_ARRAY );
-		  mPrimitiveSets[i]->draw();
+		  _primitiveSets[i]->draw();
 		  glDisableClientState( GL_VERTEX_ARRAY );		   
 	  }
 
-    if( mTexCoords.valid() )
+    if( _textureCoords.valid() )
     {
       glDisableClientState( GL_TEXTURE_COORD_ARRAY );
     }
 
-    if( mNormals.valid() )
+    if( _normals.valid() )
     {
       glDisableClientState( GL_NORMAL_ARRAY );
     }
 
-    if( mColors.valid() )
+    if( _colors.valid() )
     {
       glDisableClientState( GL_COLOR_ARRAY );
     }

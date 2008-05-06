@@ -70,10 +70,9 @@ namespace Project2
     glewInit();    
     
     // Parse arguments. 
-    parseArguments();   
-   
+    parseArguments();      
 
-    _root->getOrCreateStateSet()->setAttribute( _shader.get() );
+    _root->getOrCreateStateSet()->attribute( _shader.get() );
   }
   
   

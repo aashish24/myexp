@@ -1,5 +1,5 @@
-#ifndef __OBJECT_H__
-#define __OBJECT_H__
+#ifndef __MSG_CORE_OBJECT_H__
+#define __MSG_CORE_OBJECT_H__
 
 #include <string>
 
@@ -15,44 +15,54 @@ namespace Msg
 		class MSG_EXPORT Object : public Referenced
 		{
 			public:
+
 				///////////////////////////////////////////////////////////////
 				//
 				// Constructor. 
 				//
 				///////////////////////////////////////////////////////////////
-				Object() :
+				
+        Object() :
 					Referenced(),
-					mName("")
-				{}
+					_name("")
+				{
+        }
+
 
 				///////////////////////////////////////////////////////////////
 				//
 				// Copy constructor. 
 				//
 				///////////////////////////////////////////////////////////////
-				Object( const Object& obj ) :
+				
+        Object( const Object& obj ) :
 					Referenced(), 
-					mName( obj.getName() )
-				{}
+					_name( obj.getName() )
+				{
+        }
+
 
 				///////////////////////////////////////////////////////////////
 				//
 				// Set name ( C++ style ).
 				//
 				////////////////////////////////////////////////////////////////
-				void setName( const std::string& name )
+				
+        void setName( const std::string& name )
 				{
-					mName = name;
+					_name = name;
 				}
+
 
 				///////////////////////////////////////////////////////////////
 				//
 				// Set name ( C style ).
 				//
 				///////////////////////////////////////////////////////////////
-				void setName( const char* name )
+				
+        void setName( const char* name )
 				{
-					mName = name;
+					_name = name;
 				}
 
 				///////////////////////////////////////////////////////////////
@@ -60,26 +70,32 @@ namespace Msg
 				// Get name. 
 				//
 				///////////////////////////////////////////////////////////////
-				const std::string getName() const
+				
+        const std::string getName() const
 				{
-					return mName;
+					return _name;
 				}
+
 			
 			protected:
-				///////////////////////////////////////////////////////////////
+				
+        ///////////////////////////////////////////////////////////////
 				//
 				// Destructor. 
 				//
 				////////////////////////////////////////////////////////////////
-				virtual ~Object()
-				{}
+				
+        virtual ~Object()
+				{
+        }
+
 
 			private:
-				std::string mName;
+
+				std::string   _name;
 		};
 	}
 }
 		
-#endif // __OBJECT_H__
-	
+#endif // __MSG_CORE_OBJECT_H__	
 		
