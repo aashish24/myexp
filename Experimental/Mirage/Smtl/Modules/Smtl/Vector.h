@@ -228,6 +228,7 @@ namespace Smtl
 				mData[3] = val3;
 			}
 
+
 			DATA_TYPE length()
 			{
 				DATA_TYPE mVal = (DATA_TYPE)0;
@@ -280,6 +281,7 @@ namespace Smtl
 				resultVal = mData[0] * vec2[0] + mData[1] * vec2[1] + mData[2] * vec2[2];
 				return resultVal;
 			}
+
 
 			const DATA_TYPE* front()
 			{

@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(GLEW_INC_DIR)"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,10 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glew32d.lib"
 				OutputFile="..\bin\$(ProjectName)d.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -180,6 +179,10 @@
 			>
 			<File
 				RelativePath=".\BmpImage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\BmpImage.h"
 				>
 			</File>
 			<File

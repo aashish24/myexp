@@ -1,10 +1,8 @@
 
-
 #ifdef _MSC_VER
 #include <windows.h>
 #endif 
 
-//#include "GL/glew.h"
 #include "GL/gl.h"
 #include "GL/glut.h"
 
@@ -14,6 +12,7 @@
 #include <vector>
 #include <string>
 
+// Data structure that represents each image. 
 struct ImageElem
 {
   int         _width;
@@ -21,24 +20,23 @@ struct ImageElem
   std::string _fileName;
 };
 
+
+// Data structure that represents each stereo pair. 
 struct StereoImagePair
 {
   std::pair< ImageElem, ImageElem > _imageElemPair;
 };
 
+
+// Data structure that represents each OpenGL stereo pair. 
 struct GLStereoImagePair : public StereoImagePair 
 {
   std::pair< GLuint, GLuint > _textureObjectPair;
 };
 
+
 typedef std::vector< GLStereoImagePair > GLStereoImagePairs;
 GLStereoImagePairs _gGLStereoImagePairs;
-
-//typedef std::vector< std::pair< GLuint, GLuint > >  StereoTextures;
-//StereoTextures _gStereoTextures;
-//
-//typedef std::vector< std::pair< int, int > > StereoImageDimensions;
-//StereoImageDimensions _gStereoImageDimensions;
 
 // Quad size. 
 float _gWidth = 1.0f; 
@@ -46,9 +44,6 @@ float _gHeight = 1.0f;
 
 // Global for counting the index for the stereo pair index. 
 unsigned int _gStereoImagePairIndex = 0;
-
-// 
-static float initTranslate = 0.0f; 
 
 GLuint loadTexture( std::string fileName, ImageElem& imageElem )
 {
@@ -100,12 +95,19 @@ GLuint loadTexture( std::string fileName, ImageElem& imageElem )
 }
 
 
-void loadTextures( std::vector< std::string >& fileNames )
+void loadStereoImagesAsTextures( std::vector< std::string >& fileNames )
 {
-  // Assuming we are going to get two images per stereo pair.   
-  if( fileNames.size() % 2 != 0 )
+  if( fileNames.empty() )
   {
-    std::cerr << "ERROR: Need two imager per pair: " << std::endl;
+    std::cerr << "ERROR: No input file. " << std::endl;
+    std::exit( 0 );
+    return;
+  }
+
+  // Assuming we are going to get two images per stereo pair.   
+  if( fileNames.size() < 2 != 0 )
+  {
+    std::cerr << "ERROR: Required two images per pair. " << std::endl;
     std::exit( 0 );
   }
 
@@ -234,12 +236,8 @@ void init()
 {
   // Set OpenGL states. 
   glEnable( GL_DEPTH_TEST);
-  glEnable( GL_TEXTURE_2D );
-  
-  //glEnable( GL_LIGHTING );
-  //glEnable( GL_LIGHT0 );
-
-  //glShadeModel( GL_SMOOTH );
+  glEnable( GL_TEXTURE_2D );  
+  glDisable( GL_LIGHTING );  
 }
 
 
@@ -253,7 +251,7 @@ void parseArguments( int& argc, char** argv )
   }
 
   // Now load these textures. 
-  loadTextures( images );  
+  loadStereoImagesAsTextures( images );  
 }
 
 
@@ -262,22 +260,15 @@ void initScene()
   //if( _gStereoImagePairIndex >= _gStereoTextures.size() )
   if( _gStereoImagePairIndex >= _gGLStereoImagePairs.size() )
   {
-    throw "ERROR: Stereo pair index has higher value than number of pairs";    
+    std::cerr << "ERROR: Stereo pair index has higher value than number of pairs" << std::endl;    
+    std::exit( 0 );
   }
-	
-  /*if( ( _gStereoImageDimensions[_gStereoImagePairIndex].first != _gStereoImageDimensions[_gStereoImagePairIndex + 1].first ) ||
-      ( _gStereoImageDimensions[_gStereoImagePairIndex].second != _gStereoImageDimensions[_gStereoImagePairIndex + 1].second ) )
-  {
-    throw "ERROR: Stereo pair images does not have the same dimensions: ";	
-  }  
-
-  
-  _gHeight = (  _gStereoImageDimensions[_gStereoImagePairIndex].first /  _gStereoImageDimensions[_gStereoImagePairIndex].second ) * _gHeight; */
 
   if( ( _gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.first._width != _gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.second._width ) ||
       ( _gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.first._height != _gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.second._height ) )        
   {
-    throw "ERROR: Stereo pair images does not have the same dimensions: ";	  
+    std::cerr << "ERROR: Stereo pair images does not have the same dimensions: " << std::endl;	  
+    std::exit( 0 );
   }
 
   _gHeight = (  ( float )_gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.first._height /  
