@@ -179,51 +179,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Image\IMAGE.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Image\IMAGE_CalculateStride.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Image\IMAGE_ExpandPalette.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Image\IMAGE_Load.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Image\IMAGE_Load24BitBMP.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Image\IMAGE_Load8BitBMP.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Image\IMAGE_LoadAlpha.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Image\IMAGE_LoadBMP.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Image\IMAGE_LoadCompressedTrueColorTGA.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Image\IMAGE_LoadTGA.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Image\IMAGE_LoadUncompressed8BitTGA.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Image\IMAGE_LoadUncompressedTrueColorTGA.cpp"
+				RelativePath=".\BmpImage.cpp"
 				>
 			</File>
 			<File

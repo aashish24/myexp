@@ -12,6 +12,8 @@
 *****************************************************************************/
 #include "BmpImage.h"
 
+#include <string>
+
 /*
 * Constructor, load bmp file and setup class info.
 */

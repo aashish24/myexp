@@ -1,4 +1,4 @@
-using namespace std;
+
 /*****************************************************************************
 *
 * File: BmpImage.cpp
@@ -17,10 +17,12 @@ using namespace std;
 #include <iostream>
 #include <fstream>
 
+using namespace std;
+
 class BmpImage
 {
     public:
-        BmpImage(string file);
+        BmpImage( std::string file);
         ~BmpImage();
         int getWidth();
         int getHeight();

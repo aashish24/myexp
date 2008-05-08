@@ -12,21 +12,45 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
-typedef std::vector< std::pair< GLuint, GLuint > >  StereoTextures;
-StereoTextures _gStereoTextures;
+struct ImageElem
+{
+  int         _width;
+  int         _height;
+  std::string _fileName;
+};
 
-typedef std::vector< std::pair< int, int > > StereoImageDimensions;
-StereoImageDimensions _gStereoImageDimensions;
+struct StereoImagePair
+{
+  std::pair< ImageElem, ImageElem > _imageElemPair;
+};
+
+struct GLStereoImagePair : public StereoImagePair 
+{
+  std::pair< GLuint, GLuint > _textureObjectPair;
+};
+
+typedef std::vector< GLStereoImagePair > GLStereoImagePairs;
+GLStereoImagePairs _gGLStereoImagePairs;
+
+//typedef std::vector< std::pair< GLuint, GLuint > >  StereoTextures;
+//StereoTextures _gStereoTextures;
+//
+//typedef std::vector< std::pair< int, int > > StereoImageDimensions;
+//StereoImageDimensions _gStereoImageDimensions;
 
 // Quad size. 
 float _gWidth = 1.0f; 
 float _gHeight = 1.0f;
 
-// Global for counting the index for the stereo image. 
-unsigned int _gStereoPairIndex = 0;
+// Global for counting the index for the stereo pair index. 
+unsigned int _gStereoImagePairIndex = 0;
 
-GLuint loadTexture( std::string fileName )
+// 
+static float initTranslate = 0.0f; 
+
+GLuint loadTexture( std::string fileName, ImageElem& imageElem )
 {
   // Load normal map.    
     //IMAGE image;
@@ -64,7 +88,13 @@ GLuint loadTexture( std::string fileName )
                        GL_UNSIGNED_BYTE, image->getBitmap() ); 
 
 
-   _gStereoImageDimensions.push_back( std::pair< int, int >( image->getWidth(), image->getHeight() ) );
+    imageElem._fileName = fileName;
+    imageElem._width = image->getWidth();
+    imageElem._height = image->getHeight();
+
+    delete image;
+
+   //_gStereoImageDimensions.push_back( std::pair< int, int >( image->getWidth(), image->getHeight() ) );
  
     return index;
 }
@@ -72,14 +102,46 @@ GLuint loadTexture( std::string fileName )
 
 void loadTextures( std::vector< std::string >& fileNames )
 {
-  // Assuming we are going to get two images per stereo pair. 
-  
+  // Assuming we are going to get two images per stereo pair.   
+  if( fileNames.size() % 2 != 0 )
+  {
+    std::cerr << "ERROR: Need two imager per pair: " << std::endl;
+    std::exit( 0 );
+  }
+
   for( size_t i=0; i < fileNames.size() / 2; i=i+2 )
   {
-    GLint index1 = loadTexture( fileNames[i] );
-    GLint index2 = loadTexture( fileNames[i+1] );
+    ImageElem imageElem1;
+    ImageElem imageElem2; 
 
-    _gStereoTextures.push_back( std::pair< GLint, GLint >( index1, index2 ) );
+    try
+    {
+      GLint index1 = loadTexture( fileNames[i], imageElem1 );
+      GLint index2 = loadTexture( fileNames[i+1], imageElem2 );
+
+      GLStereoImagePair sp; 
+      sp._imageElemPair = std::pair< ImageElem, ImageElem >( imageElem1, imageElem2 );
+      sp._textureObjectPair = std::pair< GLuint, GLuint >( index1, index2 );
+
+      _gGLStereoImagePairs.push_back( sp );
+    }
+    catch( std::exception& e )
+    {
+      std::cerr << "ERROR: " << e.what() << std::endl;
+      std::exit( 0 );
+    }
+    catch( std::string s )
+    {
+      std::cerr << s << std::endl;
+      std::exit( 0 );
+    }
+    catch( ... )
+    {
+      std::cerr << "ERROR: Unknown error. " << std::endl;
+      std::exit( 0 );
+    }
+
+    //_gStereoTextures.push_back( std::pair< GLint, GLint >( index1, index2 ) );
   }
 }
 
@@ -88,7 +150,7 @@ void drawQuad()
 {  
   glBegin( GL_QUADS );
     glTexCoord2f( 0.0f, 0.0f ); 
-    glVertex2f( 0.0, 0.0 );
+    glVertex2f( 0.0f, 0.0f );
     glTexCoord2f( 1.0f, 0.0f ); 
     glVertex2f(  _gWidth, 0.0f );
     glTexCoord2f( 1.0f, 1.0f ); 
@@ -105,12 +167,12 @@ void drawLeft()
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
-  gluLookAt( 0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 );
+  gluLookAt( 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 );
  
   glEnable( GL_TEXTURE_2D ); 
-  glPushMatrix(); 
-    //std::cout << "index is: " << _gStereoTextures[_gStereoPairIndex].first << std::endl;
-    glBindTexture( GL_TEXTURE_2D, _gStereoTextures[_gStereoPairIndex].first );
+  glPushMatrix();     
+    //std::cout << "index is: " << _gStereoTextures[_gStereoImagePairIndex].first << std::endl;
+    glBindTexture( GL_TEXTURE_2D, _gGLStereoImagePairs[_gStereoImagePairIndex]._textureObjectPair.first );
     drawQuad();
   glPopMatrix();
   glDisable( GL_TEXTURE_2D );
@@ -126,9 +188,9 @@ void drawRight()
   gluLookAt( 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 );
  
   glEnable( GL_TEXTURE_2D ); 
-  glPushMatrix();
-     //std::cout << "index is: " << _gStereoTextures[_gStereoPairIndex].second << std::endl;
-     glBindTexture( GL_TEXTURE_2D, _gStereoTextures[_gStereoPairIndex].second );
+  glPushMatrix();    
+    //std::cout << "index is: " << _gStereoTextures[_gStereoImagePairIndex].second << std::endl;     
+    glBindTexture( GL_TEXTURE_2D, _gGLStereoImagePairs[_gStereoImagePairIndex]._textureObjectPair.second );
     drawQuad();
   glPopMatrix();
   glDisable( GL_TEXTURE_2D );
@@ -138,10 +200,12 @@ void drawRight()
 void display()
 { 
   glDrawBuffer( GL_BACK );
+  
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   drawLeft(); 
-  drawRight();
+  drawRight();  
+  
   glutSwapBuffers();
 }
 
@@ -152,7 +216,8 @@ void reshape( int w, int h )
 
   glMatrixMode( GL_PROJECTION );    
   glLoadIdentity();
-  //gluPerspective( 40.0f, ( GLfloat ) w / ( GLfloat ) h, 0.1f, 10000.0f );
+  //gluPerspective( 40.0f, ( GLfloat ) w / ( GLfloat ) h, 0.1f, 10000.0f ); 
+  
   glOrtho( 0.0f, _gWidth, 0.0f, _gHeight, 0.1f, 10000.0f );
 
   glMatrixMode( GL_MODELVIEW );
@@ -161,7 +226,7 @@ void reshape( int w, int h )
 
 
 void idle()
-{
+{ 
 }
 
 
@@ -187,7 +252,6 @@ void parseArguments( int& argc, char** argv )
     images.push_back( argv[i] );
   }
 
-
   // Now load these textures. 
   loadTextures( images );  
 }
@@ -195,28 +259,46 @@ void parseArguments( int& argc, char** argv )
 
 void initScene()
 {
-  if( _gStereoPairIndex >= _gStereoTextures.size() )
+  //if( _gStereoImagePairIndex >= _gStereoTextures.size() )
+  if( _gStereoImagePairIndex >= _gGLStereoImagePairs.size() )
   {
     throw "ERROR: Stereo pair index has higher value than number of pairs";    
   }
 	
-  if( ( _gStereoImageDimensions[_gStereoPairIndex].first != _gStereoImageDimensions[_gStereoPairIndex + 1].first ) ||
-      ( _gStereoImageDimensions[_gStereoPairIndex].second != _gStereoImageDimensions[_gStereoPairIndex + 1].second ) )
+  /*if( ( _gStereoImageDimensions[_gStereoImagePairIndex].first != _gStereoImageDimensions[_gStereoImagePairIndex + 1].first ) ||
+      ( _gStereoImageDimensions[_gStereoImagePairIndex].second != _gStereoImageDimensions[_gStereoImagePairIndex + 1].second ) )
   {
     throw "ERROR: Stereo pair images does not have the same dimensions: ";	
   }  
 
   
-  _gHeight = (  _gStereoImageDimensions[_gStereoPairIndex].first /  _gStereoImageDimensions[_gStereoPairIndex].second ) * _gHeight; 
-}
+  _gHeight = (  _gStereoImageDimensions[_gStereoImagePairIndex].first /  _gStereoImageDimensions[_gStereoImagePairIndex].second ) * _gHeight; */
 
+  if( ( _gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.first._width != _gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.second._width ) ||
+      ( _gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.first._height != _gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.second._height ) )        
+  {
+    throw "ERROR: Stereo pair images does not have the same dimensions: ";	  
+  }
+
+  _gHeight = (  ( float )_gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.first._height /  
+                ( float )_gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.first._width ) * _gHeight; 
+} 
+
+
+void myDisplay() 
+{
+  glutSwapBuffers();
+}
 
 
 int main( int argc, char** argv )
 {
+  const int windowWidth  = 1280; 
+  const int windowHeight = 1280; 
+
   glutInit( &argc, argv );
-  glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_STEREO );
-  glutInitWindowSize( 1280, 1024 );
+  glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_STEREO );  
+  glutInitWindowSize( windowWidth, windowHeight );
   glutCreateWindow( "Stereo Viewer" ); 
 
   // Initialization. 
@@ -228,8 +310,15 @@ int main( int argc, char** argv )
   // 
   initScene(); 
 
+  // Reshape window size based on the aspect ratio of the image. 
+  int newHeight = windowHeight * _gHeight;
+  if( newHeight > 0 )
+  {
+    glutReshapeWindow( windowWidth, newHeight );
+  }
+
   // Set display function. 
-  glutDisplayFunc( display );
+  glutDisplayFunc( display );  
 
   // Reshape function.
   glutReshapeFunc( reshape );
