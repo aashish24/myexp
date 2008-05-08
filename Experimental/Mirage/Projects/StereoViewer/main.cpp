@@ -249,7 +249,7 @@ void reshape( int w, int h )
 
 void resizeWindow()
 {
-  int newHeight = windowHeight * _gHeight;
+  int newHeight = static_cast< int >( windowHeight * _gHeight );
   if( newHeight > 0 )
   {
     glutReshapeWindow( windowWidth, newHeight );
