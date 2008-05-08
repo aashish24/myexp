@@ -39,11 +39,22 @@ typedef std::vector< GLStereoImagePair > GLStereoImagePairs;
 GLStereoImagePairs _gGLStereoImagePairs;
 
 // Quad size. 
-float _gWidth = 1.0f; 
-float _gHeight = 1.0f;
+float _gScale = 1.0f; 
+
+float _gWidth = _gScale; 
+float _gHeight = _gScale;
 
 // Global for counting the index for the stereo pair index. 
 unsigned int _gStereoImagePairIndex = 0;
+
+// Global tag to check when we have to render the scene again. 
+bool  _gRefresh = false;
+
+// 
+bool _gResize = true;
+
+const int windowWidth  = 1280; 
+const int windowHeight = 1280; 
 
 GLuint loadTexture( std::string fileName, ImageElem& imageElem )
 {
@@ -117,21 +128,24 @@ void loadStereoImagesAsTextures( std::vector< std::string >& fileNames )
     std::cerr << " Ignoring last file. " << std::endl;
   }
 
-  for( size_t i=0; i < fileNames.size() / 2; i=i+2 )
+  size_t j = 0;
+  for( size_t i=0; i < fileNames.size() / 2; ++i )
   {
     ImageElem imageElem1;
     ImageElem imageElem2; 
 
     try
     {
-      GLint index1 = loadTexture( fileNames[i], imageElem1 );
-      GLint index2 = loadTexture( fileNames[i+1], imageElem2 );
+      GLint index1 = loadTexture( fileNames[j], imageElem1 );
+      GLint index2 = loadTexture( fileNames[j+1], imageElem2 );
 
       GLStereoImagePair sp; 
       sp._imageElemPair = std::pair< ImageElem, ImageElem >( imageElem1, imageElem2 );
       sp._textureObjectPair = std::pair< GLuint, GLuint >( index1, index2 );
 
       _gGLStereoImagePairs.push_back( sp );
+
+      j += 2;
     }
     catch( std::exception& e )
     {
@@ -233,8 +247,39 @@ void reshape( int w, int h )
 }
 
 
+void resizeWindow()
+{
+  int newHeight = windowHeight * _gHeight;
+  if( newHeight > 0 )
+  {
+    glutReshapeWindow( windowWidth, newHeight );
+  }
+}
+
+
+void reshapeWindow()
+{
+ _gHeight = (  ( float )_gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.first._height /  
+                ( float )_gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.first._width ) * _gScale;
+ resizeWindow();
+}
+
+
+
 void idle()
-{ 
+{
+  if( _gRefresh )
+  {
+    if( _gResize )
+    {
+      reshapeWindow();
+    }
+
+    glutPostRedisplay();
+
+    _gRefresh = false;
+    _gResize  = false;
+  }  
 }
 
 
@@ -275,24 +320,63 @@ void initScene()
   {
     std::cerr << "ERROR: Stereo pair images does not have the same dimensions: " << std::endl;	  
     std::exit( 0 );
-  }
-
-  _gHeight = (  ( float )_gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.first._height /  
-                ( float )_gGLStereoImagePairs[_gStereoImagePairIndex]._imageElemPair.first._width ) * _gHeight; 
+  } 
 } 
 
 
-void myDisplay() 
+void appExit()
 {
-  glutSwapBuffers();
+  std::cout << "Application exiting. " << std::endl;
+  std::exit( 0 );
+}
+
+
+void update()
+{
+  if( _gStereoImagePairIndex < 0 || ( _gStereoImagePairIndex > ( _gGLStereoImagePairs.size() - 1 ) ) )
+  {
+    _gStereoImagePairIndex = 0;
+  }  
+  else
+  {
+    // Do nothing. 
+  }
+
+  _gRefresh = true;
+}
+
+
+void keyboard( unsigned char key, int x, int y )
+{
+  switch( key )
+  {
+    case 'e' : 
+    {
+      appExit();
+      break;
+    }
+    case 'p': 
+    {
+      --_gStereoImagePairIndex;
+      _gResize = true;
+      break;
+    }
+    case 'n': 
+    {
+      ++_gStereoImagePairIndex;
+      _gResize = true;
+      break;
+    }
+  }; // switch( key ).
+
+
+  // Update now. 
+  update();
 }
 
 
 int main( int argc, char** argv )
 {
-  const int windowWidth  = 1280; 
-  const int windowHeight = 1280; 
-
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_STEREO );  
   glutInitWindowSize( windowWidth, windowHeight );
@@ -308,11 +392,10 @@ int main( int argc, char** argv )
   initScene(); 
 
   // Reshape window size based on the aspect ratio of the image. 
-  int newHeight = windowHeight * _gHeight;
-  if( newHeight > 0 )
+  if( _gResize )
   {
-    glutReshapeWindow( windowWidth, newHeight );
-  }
+    reshapeWindow();
+  } 
 
   // Set display function. 
   glutDisplayFunc( display );  
@@ -322,6 +405,9 @@ int main( int argc, char** argv )
 
   // Idle function. 
   glutIdleFunc( idle );
+
+  // Keyboard mouse functions. 
+  glutKeyboardFunc( keyboard );
 
   // Run the loop. 
   glutMainLoop();
