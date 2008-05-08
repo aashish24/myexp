@@ -99,7 +99,7 @@ void loadStereoImagesAsTextures( std::vector< std::string >& fileNames )
 {
   if( fileNames.empty() )
   {
-    std::cerr << "ERROR: No input file. " << std::endl;
+    std::cerr << " ERROR: No input file. " << std::endl;
     std::exit( 0 );
     return;
   }
@@ -107,8 +107,14 @@ void loadStereoImagesAsTextures( std::vector< std::string >& fileNames )
   // Assuming we are going to get two images per stereo pair.   
   if( fileNames.size() < 2 != 0 )
   {
-    std::cerr << "ERROR: Required two images per pair. " << std::endl;
+    std::cerr << " ERROR: Required two images per pair. " << std::endl;
     std::exit( 0 );
+  }
+
+  if( fileNames.size() %2 != 0 )
+  {
+    std::cerr << " WARNING: Odd count of file names as arguments. " << std::endl;
+    std::cerr << " Ignoring last file. " << std::endl;
   }
 
   for( size_t i=0; i < fileNames.size() / 2; i=i+2 )
@@ -129,7 +135,7 @@ void loadStereoImagesAsTextures( std::vector< std::string >& fileNames )
     }
     catch( std::exception& e )
     {
-      std::cerr << "ERROR: " << e.what() << std::endl;
+      std::cerr << " ERROR: " << e.what() << std::endl;
       std::exit( 0 );
     }
     catch( std::string s )
@@ -139,7 +145,7 @@ void loadStereoImagesAsTextures( std::vector< std::string >& fileNames )
     }
     catch( ... )
     {
-      std::cerr << "ERROR: Unknown error. " << std::endl;
+      std::cerr << " ERROR: Unknown error. " << std::endl;
       std::exit( 0 );
     }
 
