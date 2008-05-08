@@ -1,7 +1,7 @@
 
 CC = gcc
 CFLAGS = -g 
-LIBS = -L/usr/local/lib64 -L/usr/lib64 -L/usr/lib -L/usr/X11R6/lib -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm 
+LIBS = -L/usr/local/lib64 -L/usr/lib64 -L/usr/lib -L/usr/X11R6/lib -L/usr/X11R6/lib64 -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm 
 
 OBJS=main.cpp BmpImage.cpp 	\
 
