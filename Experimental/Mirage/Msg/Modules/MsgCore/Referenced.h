@@ -26,18 +26,22 @@ namespace Msg
 
 				void unrefDoNotDelete();
 
+
 			protected:
 
 				virtual ~Referenced();
 
+
 			private:
+
 				///////////////////////////////////////////////////////////////
 				//
 				// This can be changed even thouth the instance defined  
 				// /c const.
 				//
 				///////////////////////////////////////////////////////////////
-				mutable int _refCount;
+				
+        mutable int _refCount;
 		};
 	}
 }

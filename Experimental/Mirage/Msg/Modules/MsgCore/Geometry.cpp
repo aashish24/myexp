@@ -14,7 +14,7 @@ Geometry::Geometry() :
   _fastPath       ( true ), 
   _vertices       ( 0x00 ),
   _normals        ( 0x00 ), 
-  _textureCoords      ( 0x00 ),   
+  _textureCoords  ( 0x00 ),   
   _colors         ( 0x00 ),   
   _tangents       ( 0x00 ),      
   _binormals      ( 0x00 ),   
@@ -31,7 +31,7 @@ Geometry::Geometry( const Geometry& geom ) :
   _fastPath       ( geom._fastPath ), 
   _vertices       ( geom._vertices ),
   _normals        ( geom._normals ), 
-  _textureCoords      ( geom._textureCoords ),   
+  _textureCoords  ( geom._textureCoords ),   
   _colors         ( geom._colors ),   
   _tangents       ( geom._tangents ),      
   _binormals      ( geom._binormals ),   
@@ -200,12 +200,12 @@ void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 
 	for( size_t i=0; i < _vertexIndices->size(); ++i )
 	{
-		Vec3d vec1 = _vertices->at( _vertexIndices->at(i)[1] ) - _vertices->at( _vertexIndices->at(i)[0] );
-		Vec3d vec2 = _vertices->at( _vertexIndices->at(i)[2] ) - _vertices->at( _vertexIndices->at(i)[0] );
-		Vec3d normal = vec1.cross( vec2 );		
+		MsgMath::Vec3d vec1 = _vertices->at( _vertexIndices->at(i)[1] ) - _vertices->at( _vertexIndices->at(i)[0] );
+		MsgMath::Vec3d vec2 = _vertices->at( _vertexIndices->at(i)[2] ) - _vertices->at( _vertexIndices->at(i)[0] );
+		MsgMath::Vec3d normal = vec1.cross( vec2 );		
 		normal.normalize();
 		normals->push_back( normal );
-		nIndices->push_back( Vec3i( i, 0, 0 ) );
+		nIndices->push_back( MsgMath::Vec3i( i, 0, 0 ) );
 	}	
 
 	if( attrBinding == Geometry::BIND_PER_PRIMITIVE )
@@ -242,7 +242,7 @@ void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 		MapVertexIDToPrimitiveID::iterator itr = mapVertexIDToPrimitiveID.begin();		
 		for( itr; itr != mapVertexIDToPrimitiveID.end(); ++itr )
 		{
-			Vec3d vertextNormal;
+			MsgMath::Vec3d vertextNormal;
 			for( size_t i = 0; i < itr->second.size(); ++i )
 			{				
 				vertextNormal = vertextNormal + normals->at( ( itr->second.at( i ) ) );

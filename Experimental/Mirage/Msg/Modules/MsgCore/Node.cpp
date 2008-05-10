@@ -12,5 +12,5 @@ void Node::accept( NodeVisitor& nv )
 	// Pop out. 
 	nv.push( this );
 	nv.apply( *this );
-	nv.pop();
+	nv.pop(); 
 }
