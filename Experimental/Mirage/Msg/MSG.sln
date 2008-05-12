@@ -3,11 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Msg", "MSG.vcproj", "{44940738-98ED-45C6-8943-389ACB8E18C4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project2", "..\Projects\Project2\Project2.vcproj", "{824EEBE0-4AD7-4066-AEFC-9CC296D9C11F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{44940738-98ED-45C6-8943-389ACB8E18C4} = {44940738-98ED-45C6-8943-389ACB8E18C4}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StereoViewer", "..\Projects\StereoViewer\StereoViewer.vcproj", "{03987122-B45A-4A5E-9112-029734CF581E}"
 EndProject
 Global
@@ -20,10 +15,6 @@ Global
 		{44940738-98ED-45C6-8943-389ACB8E18C4}.Debug|Win32.Build.0 = Debug|Win32
 		{44940738-98ED-45C6-8943-389ACB8E18C4}.Release|Win32.ActiveCfg = Release|Win32
 		{44940738-98ED-45C6-8943-389ACB8E18C4}.Release|Win32.Build.0 = Release|Win32
-		{824EEBE0-4AD7-4066-AEFC-9CC296D9C11F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{824EEBE0-4AD7-4066-AEFC-9CC296D9C11F}.Debug|Win32.Build.0 = Debug|Win32
-		{824EEBE0-4AD7-4066-AEFC-9CC296D9C11F}.Release|Win32.ActiveCfg = Release|Win32
-		{824EEBE0-4AD7-4066-AEFC-9CC296D9C11F}.Release|Win32.Build.0 = Release|Win32
 		{03987122-B45A-4A5E-9112-029734CF581E}.Debug|Win32.ActiveCfg = Debug|Win32
 		{03987122-B45A-4A5E-9112-029734CF581E}.Debug|Win32.Build.0 = Debug|Win32
 		{03987122-B45A-4A5E-9112-029734CF581E}.Release|Win32.ActiveCfg = Release|Win32

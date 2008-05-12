@@ -191,63 +191,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\BumpMapShader.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\BumpMapShader.h"
-				>
-			</File>
-			<File
-				RelativePath=".\IShader.h"
-				>
-			</File>
-			<File
 				RelativePath=".\main.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\PhongShader.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\PhongShader.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Shader.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Shader.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ShaderDebug.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ShaderFactory.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ShaderFactory.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ShadersUtil.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ShadersUtil.h"
-				>
-			</File>
-			<File
-				RelativePath=".\TextFile.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TextFile.h"
 				>
 			</File>
 			<Filter

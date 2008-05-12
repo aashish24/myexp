@@ -15,7 +15,7 @@ namespace Msg
 	{		
 		class PrimitiveSet;
 
-    class MSG_EXPORT Geometry : public Msg::MsgCore::Drawable
+    class MSG_EXPORT Geometry : public MsgCore::Drawable
 		{
 			public:
 				typedef std::vector< SmartPtr< PrimitiveSet > >	 PrimitiveSets;

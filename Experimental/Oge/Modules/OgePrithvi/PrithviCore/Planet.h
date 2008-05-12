@@ -3,10 +3,10 @@
 #define __PRITHVI_CORE_PLANET_H__
 
 // This should be the first include. 
-#include "Oge/OgePrithvi/PrithviConfig.h"
+#include "OgePrithvi/PrithviConfig.h"
 
 // Adding this fixes the ossim::min ossim::max problem.
-#ifdef _WIN32
+#ifdef _MSC_VER
 # include <windows.h>
 # ifdef max
 #   undef max
@@ -41,11 +41,11 @@
 
 #include "osgDB/Registry"
 
-#include "Oge/OgePrithvi/Export.h"
+#include "OgePrithvi/Export.h"
 
-#include "Oge/OgeBase/OgeCore/Referenced.h"
-#include "Oge/OgeBase/OgeCore/Pointer.h"
-#include "Oge/OgeBase/OgeCore/SmartPointer.h"
+#include "OgeBase/OgeCore/Referenced.h"
+#include "OgeBase/OgeCore/Pointer.h"
+#include "OgeBase/OgeCore/SmartPointer.h"
 
 
 namespace Oge

@@ -12,7 +12,7 @@ namespace Msg
 {
 	namespace MsgCore
 	{
-		class MSG_EXPORT Object : public Referenced
+    class MSG_EXPORT Object : public MsgCore::Referenced
 		{
 			public:
 

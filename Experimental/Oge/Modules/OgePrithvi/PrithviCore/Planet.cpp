@@ -1,7 +1,7 @@
 
 #ifdef USE_OSSIM
 
-#include "Oge/OgePrithvi/PrithviCore/Planet.h"
+#include "OgePrithvi/PrithviCore/Planet.h"
 
 namespace Oge
 {

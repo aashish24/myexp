@@ -8,7 +8,7 @@ namespace Msg
 {
 	namespace MsgCore
 	{		
-    class MSG_EXPORT Group : public Msg::MsgCore::Node 
+    class MSG_EXPORT Group : public MsgCore::Node 
 		{
 			public:
         

@@ -282,24 +282,16 @@
 					RelativePath=".\Modules\MsgCore\StateSet.h"
 					>
 				</File>
-			</Filter>
-			<Filter
-				Name="MsgDB"
-				>
 				<File
-					RelativePath=".\Modules\MsgDb\FileRead.cpp"
+					RelativePath="..\Projects\Project2\TextFile.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgDb\FileRead.h"
+					RelativePath="..\Projects\Project2\TextFile.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgDb\ObjReader.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgDb\ObjReader.h"
+					RelativePath=".\msgcore\Uniform.h"
 					>
 				</File>
 			</Filter>
@@ -326,6 +318,46 @@
 					RelativePath=".\Modules\MsgUtil\String.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="MsgDB"
+				>
+				<File
+					RelativePath=".\Modules\MsgDb\FileRead.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgDb\FileRead.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgDb\ObjReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgDb\ObjReader.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="MsgMath"
+				>
+				<Filter
+					Name="Vector.h"
+					>
+					<File
+						RelativePath=".\Modules\MsgMath\Vector\Vector.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Matrix"
+					>
+					<File
+						RelativePath=".\Modules\MsgMath\Matrix\Matrix.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

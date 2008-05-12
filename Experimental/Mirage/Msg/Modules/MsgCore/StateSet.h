@@ -14,7 +14,7 @@ namespace Msg
 	{
     class Node; 
 
-    class MSG_EXPORT StateSet : public Msg::MsgCore::Object 
+    class MSG_EXPORT StateSet : public MsgCore::Object 
 		{
 			public:
 
