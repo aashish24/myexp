@@ -1,0 +1,1 @@
+./build.linux.ia64.gcc_34.debug/StereoViewer ../../data/common/4_Left.bmp ../../data/common/3_Right.bmp ../../data/common/6_Left.bmp ../../data/common/5_Right.bmp
