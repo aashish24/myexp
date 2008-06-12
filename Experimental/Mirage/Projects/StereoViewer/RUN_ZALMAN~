@@ -1,0 +1,7 @@
+
+source /research/tools/lite/scripts/literc
+
+export LD_LIBRARY_PATH=/research/tools/glew/current/linux.ia64.gcc.release/lib/:$LD_LIBRARY_PATH
+
+export IMAGEDIR=/research/projects/StereoViewer/data/common/dirk/
+./StereoViewer.x86_64 -mode interleaved -geo 1674x1026+0+1  ${IMAGEDIR}/*
