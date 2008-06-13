@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="OgeOsg"
+	Name="Lib: OgeOsg"
 	ProjectGUID="{0DC12601-084C-45FF-8064-5A8754D2DA1B}"
 	RootNamespace="OgeNew"
 	Keyword="Win32Proj"

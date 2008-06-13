@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="OgePrithvi"
+	Name="Lib: OgePrithvi"
 	ProjectGUID="{94317236-BEBD-4A80-A008-F9D5D1D5A842}"
 	RootNamespace="lib: Prithvi"
 	Keyword="Win32Proj"

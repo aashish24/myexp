@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Msg"
+	Name="Lib: Msg"
 	ProjectGUID="{44940738-98ED-45C6-8943-389ACB8E18C4}"
 	RootNamespace="oge"
 	Keyword="ManagedCProj"
@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(NoInherit) opengl32.lib glew32d.lib"
-				OutputFile="..\bin\$(ProjectName)d.dll"
+				OutputFile="..\bin\Msgd.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
 				GenerateDebugInformation="true"
@@ -195,6 +195,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\MsgCore\StateAttribute_H.h"
+				>
+			</File>
 			<Filter
 				Name="MsgCore"
 				>
@@ -231,11 +235,39 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Modules\MsgCore\GLSLAttribute.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\GLSLAttribute.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\GLSLProgram.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\GLSLProgram.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Modules\MsgCore\Group.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Modules\MsgCore\Group.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\IShader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\IStateAttribute.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\IUniform.h"
 					>
 				</File>
 				<File
@@ -267,7 +299,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Modules\MsgCore\Shader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\Shader.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Modules\MsgCore\SmartPtr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\StateAttribute.cpp"
 					>
 				</File>
 				<File
@@ -283,15 +327,29 @@
 					>
 				</File>
 				<File
-					RelativePath="..\Projects\Project2\TextFile.cpp"
+					RelativePath=".\Modules\MsgCore\Uniform.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\Projects\Project2\TextFile.h"
-					>
-				</File>
-				<File
-					RelativePath=".\msgcore\Uniform.h"
+					RelativePath=".\Modules\MsgCore\Uniform.h"
 					>
 				</File>
 			</Filter>
@@ -336,6 +394,14 @@
 				</File>
 				<File
 					RelativePath=".\Modules\MsgDb\ObjReader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgDb\TextFileReadWrite.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgDb\TextFileReadWrite.h"
 					>
 				</File>
 			</Filter>
