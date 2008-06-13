@@ -211,10 +211,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\MsgCore\Event.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Modules\MsgCore\Geode.cpp"
 					>
 				</File>

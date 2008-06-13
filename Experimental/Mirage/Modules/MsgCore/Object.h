@@ -1,3 +1,4 @@
+
 #ifndef __MSG_CORE_OBJECT_H__
 #define __MSG_CORE_OBJECT_H__
 

@@ -1,3 +1,4 @@
+
 #ifndef __OGE_DB_H__
 #define __OGE_DB_H__
 

@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Test: Test3"
+	Name="Mirage_Test3"
 	ProjectGUID="{12485EC0-7E09-4197-B42F-5ED4DE17EE12}"
 	RootNamespace="Test: Test3"
 	Keyword="Win32Proj"
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="E:\aashish\src\osve\current\osve\trunk\Experimental\Mirage\Msg\Modules;&quot;$(GLEW_INC_DIR)&quot;"
+				AdditionalIncludeDirectories="..\..\Modules;$(GLEW_INC_DIR);"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="E:\aashish\src\osve\current\osve\trunk\Experimental\Mirage\bin\$(ProjectName).exe"
+				OutputFile="..\..\..\bin\Mirage_Test3d.exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
