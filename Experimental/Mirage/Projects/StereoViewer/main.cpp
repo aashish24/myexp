@@ -1,5 +1,4 @@
 
-
 #ifdef _WIN32
   #include <GL/glew.h>
 #else
@@ -15,6 +14,8 @@
 
 #ifdef _MSC_VER
 #include <windows.h>
+
+#define strcasecmp _strcmpi
 #endif 
 
 #include "GL/gl.h"
@@ -26,9 +27,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <string.h>
 
 // Options
-
 typedef enum { 
     MONO = 1, 
     ACTIVE, 
@@ -159,7 +160,7 @@ GLuint loadTexture( std::string fileName, ImageElem& imageElem )
     if(useMipmaps)
     {
       gluBuild2DMipmaps( GL_TEXTURE_2D, GL_RGBA8, width, height,
-                         GL_RGB, GL_UNSIGNED_BYTE, pixels); 
+                         GL_RGB, GL_UNSIGNED_BYTE, pixels ); 
     }
     else
     {
@@ -441,6 +442,7 @@ void reshape( int w, int h )
   glutPostRedisplay();
 }
 
+
 void mouseButton(int but, int state, int x, int y)
 {
   //cout << "mouseButton: button " << but << " state " << state << " at " << x << "," << y << endl;
@@ -483,6 +485,7 @@ void mouseButton(int but, int state, int x, int y)
   // Force a redraw
   glutPostRedisplay();    
 }
+
 
 void mouseMotion(int x, int y)
 {

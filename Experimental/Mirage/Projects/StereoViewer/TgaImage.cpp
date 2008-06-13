@@ -51,7 +51,12 @@ void TgaImage::read(std::string name)
 
     // Open File    
     FILE *file;   
-    file = fopen(fullname.c_str(), "rb");
+
+#ifdef _MSC_VER
+    fopen_s( &file, fullname.c_str(), "rb" );
+#else
+    file = fopen( fullname.c_str(), "rb" );
+#endif 
 
     // Load the file and perform checks
     if(file == NULL)
