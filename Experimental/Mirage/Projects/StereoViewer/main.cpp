@@ -1,4 +1,12 @@
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Created By: Aashish Chaudhary
+// Authors: Aashish Chaudhary, Dirk Reiners
+//
+///////////////////////////////////////////////////////////////////////////////
+
+
 #ifdef _WIN32
   #include <GL/glew.h>
 #else
@@ -272,6 +280,7 @@ void drawImage(ImageElem &img)
   drawQuad(img);
   glDisable( GL_TEXTURE_2D );
 }
+
 
 void drawInterleaved(GLuint program)
 {  
@@ -563,7 +572,10 @@ void init()
   glEnable( GL_DEPTH_TEST);
   glEnable( GL_TEXTURE_2D );  
   glDisable( GL_LIGHTING );  
-  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+  // We need word alignment here instead of bye alignment as used earlier which
+  // was causing some shear effect on the image when applied over the polygon. 
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
   if(canInterleave)
   {
@@ -782,6 +794,7 @@ void update()
   glutPostRedisplay();
 }
 
+
 void flipLeftRight(void)
 {
   ImageElem dummy;
@@ -792,6 +805,7 @@ void flipLeftRight(void)
     stereoImagePairs[i]._right = dummy;
   }
 }
+
 
 void keyboard( unsigned char key, int x, int y )
 {
@@ -850,6 +864,7 @@ void keyboard( unsigned char key, int x, int y )
   }; // switch( key ).
 }
 
+
 void menu(int val)
 {
   if(val >= 0x100 && val < 0x200)
@@ -873,6 +888,7 @@ void menu(int val)
   }
   
 }
+
 
 int main( int argc, char** argv )
 {
