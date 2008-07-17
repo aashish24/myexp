@@ -31,7 +31,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lib: Msg", "Mirage\MSG.vcpr
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test: Test3", "Mirage\Tests\Test3\Test3.vcproj", "{12485EC0-7E09-4197-B42F-5ED4DE17EE12}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mirage_Test3", "Mirage\Tests\Test3\Test3.vcproj", "{12485EC0-7E09-4197-B42F-5ED4DE17EE12}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StereoViewer", "Mirage\Projects\StereoViewer\StereoViewer.vcproj", "{03987122-B45A-4A5E-9112-029734CF581E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StencilShadowVolume", "Mirage\Tests\StencilShadowVolume\StencilShadowVolume.vcproj", "{6E41F13B-B2D1-4FF0-9718-BF0568D6933C}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
@@ -66,6 +78,14 @@ Global
 		{12485EC0-7E09-4197-B42F-5ED4DE17EE12}.Debug|Win32.Build.0 = Debug|Win32
 		{12485EC0-7E09-4197-B42F-5ED4DE17EE12}.Release|Win32.ActiveCfg = Release|Win32
 		{12485EC0-7E09-4197-B42F-5ED4DE17EE12}.Release|Win32.Build.0 = Release|Win32
+		{03987122-B45A-4A5E-9112-029734CF581E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{03987122-B45A-4A5E-9112-029734CF581E}.Debug|Win32.Build.0 = Debug|Win32
+		{03987122-B45A-4A5E-9112-029734CF581E}.Release|Win32.ActiveCfg = Release|Win32
+		{03987122-B45A-4A5E-9112-029734CF581E}.Release|Win32.Build.0 = Release|Win32
+		{6E41F13B-B2D1-4FF0-9718-BF0568D6933C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6E41F13B-B2D1-4FF0-9718-BF0568D6933C}.Debug|Win32.Build.0 = Debug|Win32
+		{6E41F13B-B2D1-4FF0-9718-BF0568D6933C}.Release|Win32.ActiveCfg = Release|Win32
+		{6E41F13B-B2D1-4FF0-9718-BF0568D6933C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
