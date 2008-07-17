@@ -6,7 +6,7 @@
 #include "MsgCore/Geometry.h"
 #include "MsgCore/Array.h"
 
-#include "MsgMath/Vector/Vector.h"
+#include "MsgMath/Vector.h"
 
 #include <fstream>
 
@@ -16,7 +16,8 @@ namespace Msg
 {
   namespace MsgDB
   {
-    Node* ObjReader::readFile( std::istream& fin, const char *fileName, const bool& ignoreNormals  )
+    Node* ObjReader::readFile( std::istream& fin, const char *fileName, 
+                               const MsgCore::OpenGLDrawMethod& method, const bool& ignoreNormals )
     {
       // Lets dereference all the indices except the vertex indices so that we can use
       // the fast path. 
@@ -181,7 +182,7 @@ namespace Msg
 		      }
 	      }      
 
-        return this->convertDataIntoNode( model.get() );
+        return this->convertDataIntoNode( model.get(), method );
 	      //geom->vertexArray( vertices.get() );
   	    //
        // geom->vertexIndices( vIndices.get() );
@@ -229,13 +230,15 @@ namespace Msg
       }
     }
 
-    Node* ObjReader::readFile( std::istream& fin, const std::string &fileName, const bool& ignoreNormals )
+
+    Node* ObjReader::readFile( std::istream& fin, const std::string &fileName, 
+                               const MsgCore::OpenGLDrawMethod& method, const bool& ignoreNormals )
     {
-	    return readFile( fin, fileName.c_str() );
+	    return readFile( fin, fileName.c_str(), method );
     }
 
 
-    Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
+    Node* ObjReader::convertDataIntoNode( ObjReader::Model* model, const MsgCore::OpenGLDrawMethod& method )
     {
       // If NULL. 
       if( !model )
@@ -257,7 +260,7 @@ namespace Msg
         SmartPtr< Geode > geode = new Geode();
 
         // Node that actually holds the data. 
-	      SmartPtr< Geometry > geom = new Geometry();
+	      SmartPtr< Geometry > geom = new Geometry( method );
 
         // Lets create a map of vertex index to VertexData.
         // We need to have this as we need to loop thru all the 

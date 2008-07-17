@@ -21,7 +21,8 @@
 #endif
 
 #ifdef _MSC_VER
-#include <windows.h>
+  #include <windows.h>
+  #define strcasecmp _strcmpi
 
 #define strcasecmp _strcmpi
 #endif 
@@ -1000,7 +1001,7 @@ int main( int argc, char** argv )
 }
 
 
-// Shader Source
+// GLSLShader Source
 
 const GLchar *vshader_source="\n\
 void main()\n\

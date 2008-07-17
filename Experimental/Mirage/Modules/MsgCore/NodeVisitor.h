@@ -6,7 +6,6 @@
 
 #include "MsgCore/Node.h"
 #include "MsgCore/Group.h"
-#include "MsgCore/Object.h"
 
 namespace Msg 
 {
@@ -16,23 +15,37 @@ namespace Msg
 		class Group;
 		class Geode;
 
-    class MSG_EXPORT NodeVisitor : public Msg::MsgCore::Object 
+    class MSG_EXPORT NodeVisitor : public Referenced
 		{
 			public:
 
 				typedef std::vector< Node* > NodePath;
 
-				NodeVisitor() : 
-					Object() 
+        enum Type
+        {
+          UPDATE = 0, 
+          DRAW
+        };
+
+
+				NodeVisitor( const Type& type ) :          
+          Referenced(), 
+          _type( type )
 				{
 				}
 
 
 				NodeVisitor( const NodeVisitor& nodeVisitor ) :
-					Object( nodeVisitor )
+					Referenced( nodeVisitor )
 				{
 				}
 
+
+        const Type&                 type() const 
+        {
+          return _type;
+        }
+        
 
 				virtual void                apply( Node& node );
 				
@@ -54,7 +67,9 @@ namespace Msg
         }
 
 
-			private:
+			protected:
+
+        Type                        _type;
 
 				NodePath	                  _nodePath;
 

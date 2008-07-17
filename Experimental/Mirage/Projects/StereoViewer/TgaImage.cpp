@@ -74,7 +74,7 @@ void TgaImage::read(std::string name)
 
     if(TGAheader[2] != 2 && TGAheader[2] != 10)
     {
-        std::cerr << "TgaImage::read: File " << fullname << " is not ummapped RGB/RGBA!" << std::endl;
+        std::cerr << "TgaImage::read: File " << fullname << " is no't ummapped RGB/RGBA!" << std::endl;
         fclose(file);    
         return;      
     }

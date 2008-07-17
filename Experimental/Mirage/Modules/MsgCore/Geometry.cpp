@@ -10,8 +10,9 @@
 
 using namespace Msg::MsgCore;
 
-Geometry::Geometry() :
-  _fastPath       ( true ), 
+Geometry::Geometry( const OpenGLDrawMethod& method ) :
+  _fastPath       ( true ),
+  _glDrawMethod   ( method ), 
   _vertices       ( 0x00 ),
   _normals        ( 0x00 ), 
   _textureCoords  ( 0x00 ),   
@@ -46,13 +47,14 @@ Geometry::Geometry( const Geometry& geom ) :
 
 bool Geometry::hasFastPath() 
 {
-  if( this->attributeBinding() == BIND_PER_PRIMITIVE )
+  if( this->attributeBinding() == BIND_PER_PRIMITIVE || ( this->glDrawMethod() == INDIVIDUAL  ) )
   {
     _fastPath = false;
   }
   
   return _fastPath;
 }
+
 
 Geometry::PrimitiveSets& Geometry::primitiveSets() 
 {
@@ -178,6 +180,19 @@ void Geometry::textureCoordIndices( Vec3iArray* niArray )
 {
   _textureIndices = niArray;
 }
+
+
+const OpenGLDrawMethod&  Geometry::glDrawMethod() const 
+{
+  return _glDrawMethod;
+}
+
+
+void Geometry::glDrawMethod( const Msg::MsgCore::OpenGLDrawMethod& method )
+{
+  _glDrawMethod = method;
+}
+
 
 
 void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
@@ -336,7 +351,7 @@ void Geometry::drawImplementation()
 	  }
 	  glEnd();
   }
-  else
+  else if( glDrawMethod() == VERTEX_ARRAYS )
   {
     // Set all the vertex arrays and then dereference the vertex array later. 
     glVertexPointer( 3, GL_DOUBLE, 0, _vertices->getDataPointer() );
@@ -382,4 +397,7 @@ void Geometry::drawImplementation()
       glDisableClientState( GL_COLOR_ARRAY );
     }
   }
+  else
+  {
+  } // if( !this->hasFastPath() ) 
 }

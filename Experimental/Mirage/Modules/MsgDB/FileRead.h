@@ -5,6 +5,8 @@
 #include "Export.h"
 #include "MsgCore/Referenced.h"
 
+#include "MsgCore/MirageOpenGL.h"
+
 #include <string>
 
 using namespace Msg::MsgCore;
@@ -28,9 +30,9 @@ namespace Msg
 				{
 				}
 
-				static Node*	readFile( const char* fileName, const bool& ignoreNormals=false );
+				static Node*	readFile( const char* fileName, const MsgCore::OpenGLDrawMethod& method = MsgCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
 
-				static Node*	readFile( const std::string& fileName, const bool& ignoreNormals=false );
+				static Node*	readFile( const std::string& fileName, const MsgCore::OpenGLDrawMethod& method = MsgCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
 
 				/*
 					static Image*	readImageFile( const char* fileName );

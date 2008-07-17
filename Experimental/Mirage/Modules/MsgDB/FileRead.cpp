@@ -10,7 +10,9 @@
 
 using namespace Msg::MsgDB;
 
-Node* FileRead::readFile( const char* fileName, const bool& ignoreNormals )
+Node* FileRead::readFile( const char* fileName, 
+                         const Msg::MsgCore::OpenGLDrawMethod& method, 
+                          const bool& ignoreNormals )
 {
 	std::ifstream fin( fileName, std::ios::in );	
 
@@ -26,7 +28,7 @@ Node* FileRead::readFile( const char* fileName, const bool& ignoreNormals )
 	if( comp == 0 )
 	{
 		SmartPtr< ObjReader > objReader = new ObjReader();
-		return objReader->readFile( fin, file ); 
+		return objReader->readFile( fin, file, method ); 
 	}
 	else
 	{
@@ -35,9 +37,11 @@ Node* FileRead::readFile( const char* fileName, const bool& ignoreNormals )
 	}
 }
 
-Node* FileRead::readFile( const std::string &fileName, const bool& ignoreNormals )
+Node* FileRead::readFile( const std::string &fileName, 
+                          const Msg::MsgCore::OpenGLDrawMethod& method, 
+                          const bool& ignoreNormals )
 {
-	return readFile( fileName.c_str(), ignoreNormals );
+	return readFile( fileName.c_str(), method, ignoreNormals );
 }
 
 /*

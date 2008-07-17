@@ -23,7 +23,7 @@ MsgCore::SmartPtr< MsgCore::NodeVisitor > _nv;
 
 void init()
 {
-  _nv = new MsgCore::NodeVisitor();
+  _nv = new MsgCore::NodeVisitor( MsgCore::NodeVisitor::DRAW );
   _root = new MsgCore::Group();
   SmartPtr< Node > node = MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\current\\osve\\trunk\\Experimental\\Mirage\\Data\\Models\\plane.obj" );
   

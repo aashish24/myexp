@@ -53,7 +53,7 @@ namespace Msg
     }
 
 
-    void GLSLAttribute::addShader( MsgCore::Shader* shader )
+    void GLSLAttribute::addShader( MsgCore::GLSLShader* shader )
     {
     }
 

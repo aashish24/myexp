@@ -243,6 +243,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Modules\MsgCore\GLSLShader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\GLSLShader.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Modules\MsgCore\Group.cpp"
 					>
 				</File>
@@ -260,6 +268,14 @@
 				</File>
 				<File
 					RelativePath=".\Modules\MsgCore\IUniform.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\IViewer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\MirageOpenGL.h"
 					>
 				</File>
 				<File
@@ -288,14 +304,6 @@
 				</File>
 				<File
 					RelativePath=".\Modules\MsgCore\Referenced.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\Shader.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\Shader.h"
 					>
 				</File>
 				<File
@@ -342,6 +350,14 @@
 				</File>
 				<File
 					RelativePath=".\Modules\MsgCore\Uniform.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\Viewer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\Viewer.h"
 					>
 				</File>
 			</Filter>
@@ -400,22 +416,14 @@
 			<Filter
 				Name="MsgMath"
 				>
-				<Filter
-					Name="Vector.h"
+				<File
+					RelativePath=".\Modules\MsgMath\Matrix.h"
 					>
-					<File
-						RelativePath=".\Modules\MsgMath\Vector\Vector.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Matrix"
+				</File>
+				<File
+					RelativePath=".\Modules\MsgMath\Vector.h"
 					>
-					<File
-						RelativePath=".\Modules\MsgMath\Matrix\Matrix.h"
-						>
-					</File>
-				</Filter>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>

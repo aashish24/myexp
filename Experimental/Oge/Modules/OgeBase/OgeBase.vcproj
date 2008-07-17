@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppdom_d-0_7_10.lib osgd.lib osgUtild.lib osgViewerd.lib opengl32.lib"
+				AdditionalDependencies="cppdom_d-0_7_10.lib opengl32.lib"
 				OutputFile=".\..\..\bin\OgeBase_d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(CPPDOM_LIB_DIR);$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);"

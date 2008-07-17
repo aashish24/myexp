@@ -7,6 +7,8 @@
 #include "MsgCore/Referenced.h"
 #include "MsgCore/Array.h"
 
+#include "MsgCore/MirageOpenGL.h"
+
 #include "Export.h"
 
 using namespace Msg::MsgCore;
@@ -106,7 +108,8 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 			
-				Node*	readFile( std::istream& fin, const char* fileName, const bool& ignoreNormals=false );
+        Node*	readFile( std::istream& fin, const char* fileName, 
+                        const MsgCore::OpenGLDrawMethod& method = MsgCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -115,7 +118,8 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 
-				Node*	readFile( std::istream& fin, const std::string& fileName, const bool& ignoreNormals=false );
+				Node*	readFile( std::istream& fin, const std::string& fileName, 
+                        const MsgCore::OpenGLDrawMethod& method = MsgCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
        
 
 			protected:
@@ -137,7 +141,7 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 
-        Node* convertDataIntoNode( Model* model ); 
+        Node* convertDataIntoNode( Model* model, const MsgCore::OpenGLDrawMethod& method ); 
 
 
       protected:

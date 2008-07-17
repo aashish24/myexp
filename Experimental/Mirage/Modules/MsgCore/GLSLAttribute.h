@@ -6,7 +6,7 @@
 
 #include "MsgCore/GLSLProgram.h"
 #include "MsgCore/Uniform.h"
-#include "MsgCore/Shader.h"
+#include "MsgCore/GLSLShader.h"
 
 #include <map>
 #include <vector>
@@ -17,7 +17,7 @@ namespace Msg
   {
     ///////////////////////////////////////////////////////////////////////////
     //
-    // Shader Attribute that could be used as an attribute in any SteteSet. 
+    // GLSLShader Attribute that could be used as an attribute in any SteteSet. 
     //
     ///////////////////////////////////////////////////////////////////////////
 
@@ -35,7 +35,7 @@ namespace Msg
 
         virtual void                                    deActivate( Node* node );
 
-        virtual void                                    addShader( Shader* shader );
+        virtual void                                    addShader( GLSLShader* shader );
 
         virtual void                                    addUniform( Uniform* uniform );
       
@@ -50,7 +50,7 @@ namespace Msg
 
         SmartPtr< GLSLProgram >                         _glslProgram;
 
-        std::map< IShader::Type, SmartPtr< Shader > >   _shaders;
+        std::map< IShader::Type, SmartPtr< GLSLShader > >   _shaders;
 
         std::vector< SmartPtr< Uniform > >              _uniforms;
     };

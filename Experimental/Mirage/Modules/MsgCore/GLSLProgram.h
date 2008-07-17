@@ -10,7 +10,7 @@ namespace Msg
 {
   namespace MsgCore
   {
-    class Shader;
+    class GLSLShader;
 
     class MSG_EXPORT GLSLProgram : public MsgCore::Object
     {
@@ -22,7 +22,7 @@ namespace Msg
 
         int   glObject() const;
 
-        void  attach( Shader* shader ); 
+        void  attach( GLSLShader* shader ); 
 
         void  link(); 
 

@@ -1,7 +1,7 @@
 
 #include "MsgCore/GLSLProgram.h"
 
-#include "MsgCore/Shader.h"
+#include "MsgCore/GLSLShader.h"
 
 namespace Msg
 {
@@ -31,7 +31,7 @@ namespace Msg
     }
 
     
-    void  GLSLProgram::attach( Shader* shader )
+    void  GLSLProgram::attach( GLSLShader* shader )
     {
       glAttachShader( _glObject, shader->glObject() );
     }

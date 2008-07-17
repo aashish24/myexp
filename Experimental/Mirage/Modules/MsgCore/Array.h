@@ -5,7 +5,7 @@
 #include "Export.h"
 #include "MsgCore/Object.h"
 
-#include "MsgMath/Vector/Vector.h"
+#include "MsgMath/Vector.h"
 
 #include "GL/glew.h"
 #include "GL/gl.h"
