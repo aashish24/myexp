@@ -315,16 +315,13 @@ namespace Msg
           {        
             bool found = false;
             std::map< int, std::vector< int > >::iterator itr = vertexIndexVertexDataTable.find( v1 );
-            size_t size = itr->second.size();
+            int size = itr->second.size();
 
             //for( itr; itr != vertexIndexVertexDataTable.end(); ++itr )
             for( size_t i=0; i < size; ++i )
-            {
-              //std::cout << "Test: " << _vertexData.at( itr->second[i] )._textureIndex << " "  
-              //          << vData1._textureIndex << std::endl;
+            {              
               if( _vertexData.at( itr->second[i] )._textureIndex == vData1._textureIndex )
-              {            
-                //vData1._vertexIndex = _vertexData.at( itr->first )._vertexIndex;
+              { 
                 vData1._vertexIndex = _vertexData.at( itr->second[i] )._vertexIndex;
                 drawUInt->push_back( vData1._vertexIndex );
                 found = true;
@@ -336,9 +333,9 @@ namespace Msg
               model->_vertices->push_back( model->_vertices->at( vData1._vertexIndex ) );
               model->_normals->push_back( model->_normals->at( vData1._normalIndex ) );
               model->_textureCoords->push_back( model->_textureCoords->at( vData1._textureIndex ) );
-              vData1._vertexIndex = _vertexData.size();
+              vData1._vertexIndex = _vertexData.size() - 1;
               _vertexData.push_back( vData1 );
-              vertexIndexVertexDataTable[v1].push_back( vData1._textureIndex );
+              vertexIndexVertexDataTable[v1].push_back( vData1._vertexIndex );
               drawUInt->push_back( vData1._vertexIndex );        
             }
           }
@@ -376,7 +373,7 @@ namespace Msg
               model->_vertices->push_back( model->_vertices->at( vData2._vertexIndex ) );
               model->_normals->push_back( model->_normals->at( vData2._normalIndex ) );
               model->_textureCoords->push_back( model->_textureCoords->at( vData2._textureIndex ) );
-              vData2._vertexIndex = _vertexData.size();
+              vData2._vertexIndex = _vertexData.size() - 1;
               _vertexData.push_back( vData2 );
               vertexIndexVertexDataTable[v2].push_back( vData2._vertexIndex );
               drawUInt->push_back( vData2._vertexIndex );        
@@ -415,7 +412,7 @@ namespace Msg
               model->_vertices->push_back( model->_vertices->at( vData3._vertexIndex ) );
               model->_normals->push_back( model->_normals->at( vData3._normalIndex ) );
               model->_textureCoords->push_back( model->_textureCoords->at( vData3._textureIndex ) );
-              vData3._vertexIndex = _vertexData.size();
+              vData3._vertexIndex = _vertexData.size() - 1;
               _vertexData.push_back( vData3 );
               vertexIndexVertexDataTable[v3].push_back( vData3._vertexIndex );
               drawUInt->push_back( vData3._vertexIndex );        

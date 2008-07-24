@@ -31,7 +31,7 @@ static const GLfloat lightAmbient[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
 static const GLfloat lightDiffuse[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
 static const GLfloat lightSpecular[]  = { 1.0f, 0.6f, 0.6f, 1.0f };
 
-static       GLfloat lightPosition[]  = { -5.0f, 1.0f, 0.0f, 1.0 };
+static       GLfloat lightPosition[]  = { -8.0f, 4.0f, 0.0f, 1.0 };
 
 Msg::MsgCore::SmartPtr< Msg::MsgCore::Material > _matBlue   = new Msg::MsgCore::Material();
 Msg::MsgCore::SmartPtr< Msg::MsgCore::Material > _matRed    = new Msg::MsgCore::Material();
@@ -162,7 +162,7 @@ void init()
 
   // Read geometry files. 
   Msg::MsgCore::SmartPtr< Msg::MsgCore::Node > model =  
-    Msg::MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\head\\Mirage\\Data\\Models\\Test.obj" );
+    Msg::MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\head\\Mirage\\Data\\Models\\Sphere.obj" );
 
   if( model.valid() )
   {
@@ -435,7 +435,7 @@ void drawShadowVolume()
 
           const float extensionFactor = 10.0f;
 
-          glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
+          // Use display list. 
           for( jItr; jItr != _edges.end(); ++jItr )
           {            
             glBegin( GL_QUADS );
@@ -468,7 +468,7 @@ void drawShadowVolume()
           // Front cap. 
           //
 
-          /*std::vector< Triangle >::const_iterator constItr;
+          std::vector< Triangle >::const_iterator constItr;
 
           glEnable( GL_POLYGON_OFFSET_FILL );
           glPolygonOffset( 0.0f, 2.0f );
@@ -480,7 +480,7 @@ void drawShadowVolume()
             glVertex3dv( vertices->at( constItr->_faceIndex[2] ).front() );            
           }
           glEnd();
-          glDisable( GL_POLYGON_OFFSET_FILL );       */
+          glDisable( GL_POLYGON_OFFSET_FILL );       
 
 
           /////////////////////////////////////////////////////////////////////
@@ -488,7 +488,7 @@ void drawShadowVolume()
           //
 
           // Drawing in the reverse order of drawing for front cap. 
-         /* glBegin( GL_POLYGON );
+          glBegin( GL_POLYGON );
           int count = 0;
           for( int i = _extendedVertices.size()-1; i >= 0 ; --i )
           {            
@@ -497,7 +497,7 @@ void drawShadowVolume()
                 glVertex3dv( _extendedVertices[i].front() );
               }
           }
-          glEnd();*/
+          glEnd();
 
         } // End if( geom  )
 
@@ -580,7 +580,7 @@ void drawScene()
 
   // @end: For testing purposes.   
 
-  drawShadowVolume();
+  _viewer->draw();
 
 #if 0
    _viewer->draw();

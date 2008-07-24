@@ -6,7 +6,7 @@ namespace Msg
   namespace MsgCore
   {
     Drawable::Drawable() :
-      _useDisplayList( false ), 
+      _useDisplayList( true ), 
       _glObjectList  ( 0x00 )
     {
     }
