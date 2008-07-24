@@ -5,9 +5,10 @@ namespace Msg
 {
   namespace MsgCore
   {
-    StateAttribute::StateAttribute( const bool& flag ) :
-      Object(),
-      _dirty( flag )
+    StateAttribute::StateAttribute( const bool& flag, const int& maskVal ) :
+      Object  (),
+      _dirty  ( flag ), 
+      _mask   ( maskVal ) 
     {
     }
 
@@ -26,6 +27,18 @@ namespace Msg
     void StateAttribute::dirty( const bool& flag )
     {
       _dirty = flag;
+    }
+
+
+    const int& StateAttribute::mask() const 
+    {
+      return _mask;
+    }
+
+
+    void StateAttribute::mask( const int& maskVal )
+    {
+      _mask = maskVal;
     }
   }
 }

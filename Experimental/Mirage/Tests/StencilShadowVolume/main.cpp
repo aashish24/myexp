@@ -17,21 +17,37 @@
 
 #include "MsgMath/Vector.h"
 
+#include "MsgCore/Material.h"
+
 #include <list>
 
 static bool animate = false;
+
+static bool two_sided = false;
+
+static bool _pause = false;
 
 static const GLfloat lightAmbient[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
 static const GLfloat lightDiffuse[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
 static const GLfloat lightSpecular[]  = { 1.0f, 0.6f, 0.6f, 1.0f };
 
-static  GLfloat lightPosition[]  = { -10.0f, 2.0f, 0.0f, 1.0 };
+static       GLfloat lightPosition[]  = { -5.0f, 1.0f, 0.0f, 1.0 };
+
+Msg::MsgCore::SmartPtr< Msg::MsgCore::Material > _matBlue   = new Msg::MsgCore::Material();
+Msg::MsgCore::SmartPtr< Msg::MsgCore::Material > _matRed    = new Msg::MsgCore::Material();
+Msg::MsgCore::SmartPtr< Msg::MsgCore::Material > _matShadow = new Msg::MsgCore::Material();
+
 
 Msg::MsgCore::SmartPtr< Msg::MsgCore::GLSLProgram > extrusionProgram = new Msg::MsgCore::GLSLProgram();
 Msg::MsgCore::SmartPtr< Msg::MsgCore::GLSLShader >  vertShader = new Msg::MsgCore::GLSLShader( Msg::MsgCore::GLSLShader::VERTEX_SHADER );
 Msg::MsgCore::SmartPtr< Msg::MsgCore::GLSLShader >  fragShader = new Msg::MsgCore::GLSLShader( Msg::MsgCore::GLSLShader::FRAGMENT_SHADER );
 
 Msg::MsgCore::SmartPtr< Msg::MsgCore::Viewer > _viewer = new Msg::MsgCore::Viewer();
+
+// Create scene _root node. 
+Msg::MsgCore::SmartPtr< Msg::MsgCore::Group > _root( new Msg::MsgCore::Group() );
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -45,6 +61,20 @@ struct Vertex
   int _vertexIndex;
   int _normalIndex;
   int _texCoordIndex;
+
+  virtual bool operator==( const Vertex& rhs )
+  {
+    if( ( this->_vertexIndex == rhs._vertexIndex )  &&  
+        ( this->_normalIndex == rhs._normalIndex )  && 
+        ( this->_texCoordIndex == rhs._texCoordIndex ) )
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
 };
 
 
@@ -52,6 +82,38 @@ struct Edge
 {
   Vertex _vertex1; 
   Vertex _vertex2;
+  
+  virtual bool operator==( const Edge& rhs )
+  {
+    if( ( this->_vertex1 == rhs._vertex1 )  &&  ( this->_vertex2 == rhs._vertex2 ) )
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+};
+
+
+class compare
+{
+  public: 
+    bool operator()( Edge first, Edge second )
+    {
+        if( ( first._vertex1._vertexIndex == second._vertex1._vertexIndex ) || 
+            ( first._vertex2._vertexIndex == second._vertex1._vertexIndex ) )
+        {
+          if( ( first._vertex1._vertexIndex == second._vertex2._vertexIndex ) || 
+            ( first._vertex2._vertexIndex == second._vertex2._vertexIndex ) )
+          {
+            return true;
+          }
+        }
+
+        return false;
+    }
 };
 
 
@@ -68,7 +130,7 @@ void init()
   glEnable( GL_LIGHT0 );  
 
   //glLightfv( GL_LIGHT0, GL_AMBIENT, lightAmbient );
-  //glLightfv( GL_LIGHT0, GL_DIFFUSE, lightDiffuse );
+  glLightfv( GL_LIGHT0, GL_DIFFUSE, lightDiffuse );
   glLightfv( GL_LIGHT0, GL_SPECULAR, lightSpecular );  
 
   // @todo: Planning to perform extraction of vertices via shaders. 
@@ -91,11 +153,8 @@ void init()
 
   // Initialize viewer. 
   _viewer->init();
-
-  // Create scene root node. 
-  Msg::MsgCore::SmartPtr< Msg::MsgCore::Group > root( new Msg::MsgCore::Group() );
-
-  if( !root.valid() )
+  
+  if( !_root.valid() )
   {
     std::cerr << " ERROR: Out of memory or invalid pointer. " << std::endl;
     std::exit( 0 );
@@ -103,28 +162,71 @@ void init()
 
   // Read geometry files. 
   Msg::MsgCore::SmartPtr< Msg::MsgCore::Node > model =  
-    Msg::MsgDB::FileRead::readFile( "E:\\aashish\\src\\temp\\Mirage\\Data\\Models\\Test.obj" );
+    Msg::MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\head\\Mirage\\Data\\Models\\Test.obj" );
 
   if( model.valid() )
   {
-    root->addChild( model.get() );
+    _root->addChild( model.get() );
   }
 
   Msg::MsgCore::SmartPtr< Msg::MsgCore::Node > floor =  
-    Msg::MsgDB::FileRead::readFile( "E:\\aashish\\src\\temp\\Mirage\\Data\\Models\\Floor.obj" );
+    Msg::MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\head\\Mirage\\Data\\Models\\Floor.obj" );
 
   if( floor.valid() )
   {
-    root->addChild( floor.get() );    
+    _root->addChild( floor.get() );    
   }
 
-  _viewer->sceneData( root.get() );
+  _viewer->sceneData( _root.get() );
+
+  // Set materials. 
+  if( _matBlue.valid() )
+  {
+    _matBlue->setProperty( DIFFUSE, Msg::MsgMath::Vec4f( 0.0, 0.0, 0.5, 1.0 ) );
+    _matBlue->setProperty( AMBIENT, Msg::MsgMath::Vec4f( 0.0, 0.0, 0.0, 1.0 ) );
+    _matBlue->setProperty( SPECULAR, Msg::MsgMath::Vec4f( 0.0, 0.0, 0.5, 1.0 ) );
+
+
+    model->getOrCreateStateSet()->attribute( _matBlue.get() );
+  }
+  else
+  {
+    // Warning. 
+  }
+
+  // Set materials. 
+  if( _matRed.valid() )
+  {
+    _matRed->setProperty( DIFFUSE, Msg::MsgMath::Vec4f( 0.0, 0.7, 0.1, 1.0 ) );
+    _matRed->setProperty( AMBIENT, Msg::MsgMath::Vec4f( 0.0, 0.0, 0.0, 1.0 ) );
+    _matRed->setProperty( SPECULAR, Msg::MsgMath::Vec4f( 0.0, 0.7, 0.1, 1.0 ) );
+
+    floor->getOrCreateStateSet()->attribute( _matRed.get() );
+  }
+  else
+  {
+    // Warning. 
+  }
+
+   // Set materials. 
+  if( _matShadow.valid() )
+  {
+    _matShadow->setProperty( DIFFUSE, Msg::MsgMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
+    _matShadow->setProperty( AMBIENT, Msg::MsgMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
+    _matShadow->setProperty( SPECULAR, Msg::MsgMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
+
+    //floor->getOrCreateStateSet()->attribute( _matRed.get() );
+  }
+  else
+  {
+    // Warning. 
+  }
 }
 
 // @todo: Two issues. 
 // 1. How we are going to draw in the same coordinate system as where 
 // we have the original geometry as still we dont have the transform node. 
-// 2. We are not iterating over the nodes which are group nodes under the root? 
+// 2. We are not iterating over the nodes which are group nodes under the _root? 
 
 void drawShadowVolume()
 {
@@ -140,7 +242,7 @@ void drawShadowVolume()
    
   Msg::MsgCore::SmartPtr< Msg::MsgCore::Group > gr = node->asGroup();
   
-  // Now check each child of the root node. 
+  // Now check each child of the _root node. 
   // Grab any geometry. 
   // Construct shadow volume out of it. 
 
@@ -196,7 +298,23 @@ void drawShadowVolume()
 
             int count = 0;
 
-            if( ( normal1.dot( lightDir1 ) > 0 ) && ( normal2.dot( lightDir2 ) > 0 ) ) 
+            bool edge1Passed = false; 
+
+            if( ( normal1.dot( lightDir1 ) > 0 ) && ( normal2.dot( lightDir2 ) > 0 ) )
+            {
+              edge1Passed = true;
+            }
+          
+            if( two_sided )
+            {
+              if( ( -normal1.dot( lightDir1 ) > 0 ) && ( -normal2.dot( lightDir2 ) > 0 ) )
+              {
+                edge1Passed = true;
+              }
+            }
+
+
+            if( edge1Passed )
             {
               //std::cout << "Vertex 1 passed: " << std::endl;
               Vertex vertex1; 
@@ -216,9 +334,24 @@ void drawShadowVolume()
               _edges.push_back( edge );
 
               ++count;
-            }
+            }           
+
+            bool edge2Passed = false;
             
             if( ( normal2.dot( lightDir2 ) > 0 ) && ( normal3.dot( lightDir3 ) > 0 ) )
+            {
+              edge2Passed = true;
+            }
+
+            if( two_sided )
+            {
+              if( ( -normal2.dot( lightDir2 ) > 0 ) && ( -normal3.dot( lightDir3 ) > 0 ) )
+              {
+                edge2Passed = true;
+              }
+            }
+
+            if( edge2Passed )
             {
               //std::cout << "Vertex 2 passed: " << std::endl;
 
@@ -241,7 +374,27 @@ void drawShadowVolume()
               ++count;
             }
             
+            ///////////////////////////////////////////////////////////////////
+            // 
+            // Third edge.  
+            //
+
+            bool edge3Passed = false;
+
             if( ( normal3.dot( lightDir3 ) > 0 ) && ( normal1.dot( lightDir1 ) > 0 ) )  
+            {
+              edge3Passed = true;
+            }
+
+            if( two_sided )
+            {
+              if( ( -normal3.dot( lightDir3 ) > 0 ) && ( -normal1.dot( lightDir1 ) > 0 ) )  
+              {
+                edge3Passed = true;
+              } 
+            }
+
+            if( edge3Passed )
             {
               //std::cout << "Vertex 3 passed: " << std::endl;
 
@@ -264,77 +417,29 @@ void drawShadowVolume()
               ++count;
             }
 
-            if( count == 3 ) 
+            if( count == 3 )
             {
+              Triangle triangle;
+              triangle._faceIndex = Msg::MsgMath::Vec3i( i1, i2, i3 );
+              _capTriangles.push_back( triangle );
 
-              std::cout << " count is 3: " << std::endl;
-              // This would be the cap triangle as all the edges are lit for this triangle. 
-              Triangle triangle; 
-              triangle._faceIndex = indices->at( k );
-              _capTriangles.push_back( triangle ); 
-
-              count = 0;
             }
-          } // End  for( size_t k = 0; k < indices->size() ; ++k )  
 
-          // Add polygon offset so that front cap would be fail in 
-          // depth test. 
-    /*      glEnable( GL_POLYGON_OFFSET_FILL );
-          glPolygonOffset( 0.0f, 1.0f );
-          for( size_t l = 0; l < _capTriangles.size(); ++l ) 
-          {
-            int vIndex1 = _capTriangles[l]._faceIndex[0];
-            int vIndex2 = _capTriangles[l]._faceIndex[1];
-            int vIndex3 = _capTriangles[l]._faceIndex[2];
+          } // End  for( size_t k = 0; k < indices->size() ; ++k )            
+        
+          _edges.unique( compare() );
 
-            glBegin( GL_TRIANGLES );
-            glVertex3dv( vertices->at( vIndex1 ).front() );
-            glVertex3dv( vertices->at( vIndex2 ).front() );
-            glVertex3dv( vertices->at( vIndex3 ).front() );
-            glEnd();
-          }
-          glDisable( GL_POLYGON_OFFSET_FILL );*/
+          std::vector< Msg::MsgMath::Vec3d > _extendedVertices;          
 
           std::list< Edge >::iterator jItr = _edges.begin();
-                    
-          for( jItr; jItr != _edges.end(); ++jItr )
-          {
-            for( std::list< Edge >::iterator kItr = _edges.begin(); kItr != _edges.end(); ++kItr )
-            {
-              if( kItr == jItr ) 
-              {
-                continue;
-              }
-              else 
-              {
-                if( ( jItr->_vertex1._vertexIndex == kItr->_vertex1._vertexIndex || 
-                    jItr->_vertex2._vertexIndex == kItr->_vertex1._vertexIndex ) && 
-                  ( jItr->_vertex1._vertexIndex == kItr->_vertex2._vertexIndex || 
-                    jItr->_vertex2._vertexIndex == kItr->_vertex2._vertexIndex ) 
-                 )
-                {
-                  // We found the duplicates!!. Remove it.
-                  std::cout << " Removing duplicate edges. " << std::endl;
-                }
-              }
-            } // End for inner loop.
-          } // End for outer loop. 
 
-          std::vector< Msg::MsgMath::Vec3d > _extendedVertices;
-          std::vector< Msg::MsgMath::Vec3d > _sillVertices;
+          const float extensionFactor = 10.0f;
 
-          jItr = _edges.begin();
-
-          const float extensionFactor = 3.0f;
-
-          // @testing: 
-          // 
-
-          //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );          
-
+          glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
           for( jItr; jItr != _edges.end(); ++jItr )
           {            
             glBegin( GL_QUADS );
+              
               glVertex3dv( vertices->at( jItr->_vertex2._vertexIndex ).front() );
               glVertex3dv( vertices->at( jItr->_vertex1._vertexIndex ).front() );
               
@@ -351,45 +456,39 @@ void drawShadowVolume()
 
               glVertex3dv( vertex42.front() );              
               glVertex3dv( vertex41.front() );
-            glEnd();              
 
-            _sillVertices.push_back( vertex22 );
-            _sillVertices.push_back( vertex11 );
+            glEnd();                          
 
             _extendedVertices.push_back( vertex42 );
             _extendedVertices.push_back( vertex41 );
           }
 
           
+          /////////////////////////////////////////////////////////////////////
           // Front cap. 
+          //
 
-          // Make the front CAP z fail as front cap might have same depth 
-          // as the object itself. 
+          /*std::vector< Triangle >::const_iterator constItr;
+
           glEnable( GL_POLYGON_OFFSET_FILL );
-          glPolygonOffset( 0.0f, 1.0f );
-          
-          // We would need first two vertices and then every other vertex to draw it. 
+          glPolygonOffset( 0.0f, 2.0f );
           glBegin( GL_POLYGON );
-          for( size_t i = 0; i < _sillVertices.size(); ++i )
-          { 
-            if( i < 2 )
-            {
-              glVertex3dv( _sillVertices[i].front() );            
-            }
-            else
-            {
-              if( i % 2 != 0 )
-              {
-                glVertex3dv( _sillVertices[i].front() );            
-              }
-            }
+          for( constItr = _capTriangles.begin(); constItr != _capTriangles.end(); ++constItr )
+          {           
+            glVertex3dv( vertices->at( constItr->_faceIndex[0] ).front() );
+            glVertex3dv( vertices->at( constItr->_faceIndex[1] ).front() );
+            glVertex3dv( vertices->at( constItr->_faceIndex[2] ).front() );            
           }
           glEnd();
-          glDisable( GL_POLYGON_OFFSET_FILL );
+          glDisable( GL_POLYGON_OFFSET_FILL );       */
 
+
+          /////////////////////////////////////////////////////////////////////
           // Back cap. 
+          //
+
           // Drawing in the reverse order of drawing for front cap. 
-          glBegin( GL_POLYGON );
+         /* glBegin( GL_POLYGON );
           int count = 0;
           for( int i = _extendedVertices.size()-1; i >= 0 ; --i )
           {            
@@ -398,12 +497,16 @@ void drawShadowVolume()
                 glVertex3dv( _extendedVertices[i].front() );
               }
           }
-          glEnd();
+          glEnd();*/
 
         } // End if( geom  )
+
       } // End for( size_t i = 0; i < drawables.size(); ++i ) 
+
     } // End if( ge ) 
+
   } // End  for loop. 
+
 }
 
 
@@ -435,13 +538,11 @@ void drawScene()
   glDepthMask( GL_TRUE );
   glDepthFunc( GL_LEQUAL );
 
-  const GLfloat objectMat[] = { 1.0, 0.0, 0.0, 1.0 };
-  const GLfloat shadowMat[] = { 0.2, 0.2, 0.2, 0.5 };
+  const GLfloat shadowMat[] = { 0.0, 0.0, 0.0, 0.5 };
   
-  glMaterialfv( GL_FRONT, GL_AMBIENT, &objectMat[0] );    
-  glMaterialfv( GL_FRONT, GL_DIFFUSE, &objectMat[0] );    
-  
-  
+  //glMaterialfv( GL_FRONT, GL_AMBIENT, &objectMat[0] );    
+  //glMaterialfv( GL_FRONT, GL_DIFFUSE, &objectMat[0] );    
+    
     
   // @start. For testing purposes.
 
@@ -477,9 +578,11 @@ void drawScene()
 
   //glDisable( GL_STENCIL_TEST );
 
-  // @end: For testing purposes. 
+  // @end: For testing purposes.   
 
-#if 1
+  drawShadowVolume();
+
+#if 0
    _viewer->draw();
 
   // Turn on OpenGL states.
@@ -514,14 +617,23 @@ void drawScene()
   glCullFace( GL_BACK );
   
   glEnable( GL_BLEND );
-  glMaterialfv( GL_FRONT, GL_AMBIENT, &shadowMat[0] ); 
-  glMaterialfv( GL_FRONT, GL_DIFFUSE, &shadowMat[0] ); 
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
-  //glEnable( GL_POLYGON_OFFSET_FILL );
-  //glPolygonOffset( 1.0f, -10.0f );
+  //glMaterialfv( GL_FRONT, GL_AMBIENT,  &shadowMat[0] ); 
+  //glMaterialfv( GL_FRONT, GL_DIFFUSE,  &shadowMat[0] ); 
+  //glMaterialfv( GL_FRONT, GL_SPECULAR, &shadowMat[0] ); 
+  
+  if( _matShadow.valid() )
+  {
+    _root->getOrCreateStateSet()->attribute( _matShadow.get(), IStateAttribute::OVERRIDE | IStateAttribute::ON );
+  }  
+
   _viewer->draw();
-  //glDisable( GL_POLYGON_OFFSET_FILL );
+
+  if( _matShadow.valid() )
+  {
+    _root->getOrCreateStateSet()->attribute( _matShadow.get(), IStateAttribute::OFF );
+  }  
 
   // Turn off OpenGL states. 
   glDisable( GL_CULL_FACE );
@@ -605,17 +717,20 @@ void idle()
   const static float distance = -10.0f;
   static float angle = 0.0f; 
 
-  lightPosition[0] = distance * cos( angle ); 
-  lightPosition[2] = -20.0f + distance * sin( angle );
-
-  angle = angle + 0.01f;
-
-  if( angle > 360.0f ) 
+  if( !_pause )
   {
-    angle = 0.0f;
-  }
+    lightPosition[0] = distance * cos( angle ); 
+    lightPosition[2] = -60.0 + distance * sin( angle );
 
-  glutPostRedisplay();
+    angle = angle + 0.01f;
+
+    if( angle > 360.0f ) 
+    {
+      angle = 0.0f;
+    }
+
+    glutPostRedisplay();
+  }
 }
 
 
@@ -639,6 +754,11 @@ void keyboard( unsigned char key, int x, int y )
   if( key == 's' )
   {
     glRotatef( -1.0f, 1.0f, 0.0f, 0.0f );
+  }
+
+  if( key == 'p' )
+  {
+    _pause = !_pause;
   }
 
   glutPostRedisplay();

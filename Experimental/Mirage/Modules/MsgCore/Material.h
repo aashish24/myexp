@@ -10,8 +10,9 @@
 #include "Export.h"
 #include "MsgCore/Object.h"
 #include "MsgCore/StateAttribute.h"
+#include "MsgCore/MirageOpenGL.h"
 
-#include "Smtl/Vector.h"
+#include "MsgMath/Vector.h"
 
 #ifdef _WIN32
 	#include <windows.h>
@@ -20,44 +21,13 @@
 #include "GL/glew.h"
 #include "GL/gl.h"
 
-using namespace Smtl;
-
 namespace Msg 
 {
 	namespace MsgCore
 	{
     class MSG_EXPORT Material : public StateAttribute
 		{
-			public:
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        // Define types of face. 
-        //
-        ///////////////////////////////////////////////////////////////////////
-
-				enum Face
-				{
-					FRONT			      = GL_FRONT, 
-					BACK			      = GL_BACK, 
-					FRONT_AND_BACK  = GL_FRONT_AND_BACK
-				};
-
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        // Define types of ColorMode. 
-        //
-        ///////////////////////////////////////////////////////////////////////
-
-				enum ColorMode
-				{
-					AMBIENT				      = GL_AMBIENT,
-					DIFFUSE				      = GL_DIFFUSE, 
-					SPECULAR			      = GL_SPECULAR, 
-					AMBIENT_AND_DIFFUSE	= GL_AMBIENT_AND_DIFFUSE,
-          SHININESS           = GL_SHININESS
-				};
+			public:     
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -68,15 +38,16 @@ namespace Msg
 
 				Material() : 
           StateAttribute  ( ),
-					mFrontAmbient	  ( Vec4f() ), 
-					mFrontDiffuse	  ( Vec4f() ), 
-					mFrontSpecular	( Vec4f() ), 
+					mFrontAmbient	  ( MsgMath::Vec4f() ), 
+					mFrontDiffuse	  ( MsgMath::Vec4f() ), 
+					mFrontSpecular	( MsgMath::Vec4f() ), 
 					mFrontShininess	( 0.0 ), 
-					mBackAmbient		( Vec4f() ),
-					mBackDiffuse		( Vec4f() ), 
-					mBackSpecular	  ( Vec4f() ),
+          mBackAmbient		( MsgMath::Vec4f() ),
+					mBackDiffuse		( MsgMath::Vec4f() ), 
+					mBackSpecular	  ( MsgMath::Vec4f() ),
 					mBackShininess	( 0.0 ), 
-					mFrontAndBack		( false )
+          mFront          ( true ), 
+          mBack           ( false )					
 				{
 				}
 
@@ -97,7 +68,8 @@ namespace Msg
 					mBackDiffuse    ( mat.mBackDiffuse ), 
 					mBackSpecular   ( mat.mBackSpecular ),
 					mBackShininess  ( mat.mBackShininess ), 
-					mFrontAndBack   ( mat.mFrontAndBack )
+				  mFront          ( mat.mFront ), 
+          mBack           ( mat.mBack )          
 				{
 				}
 
@@ -108,11 +80,15 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 
-        void	getProperty( ColorMode mode, Vec4f& val, Face face=FRONT ) const;
-				void	setProperty( ColorMode mode, const Vec4f& val, Face face=FRONT );								
+        void getProperty( LightMode mode, MsgMath::Vec4f& val, Face face=FRONT ) const;
+				void setProperty( LightMode mode, const MsgMath::Vec4f& val, Face face=FRONT );								
  
-        void	getProperty( ColorMode mode, float& val, Face face=FRONT ) const;
-				void	setProperty( ColorMode mode, const float& val, Face face=FRONT );								
+        void getProperty( LightMode mode, float& val, Face face=FRONT ) const;
+				void setProperty( LightMode mode, const float& val, Face face=FRONT );								
+
+
+        void enable( const Face& face );
+
 
         ///////////////////////////////////////////////////////////////////////
         //
@@ -120,7 +96,7 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 
-				bool	enabledFrontAndBack();
+				bool enabledFrontAndBack();
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -137,11 +113,39 @@ namespace Msg
 			
         ///////////////////////////////////////////////////////////////////////
         //
-        // Draw function. 
+        // Initialization. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+        
+        virtual void init(){;}
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Context specific initialization. 
         //
         ///////////////////////////////////////////////////////////////////////
 
-        virtual void activateStateSet( Node*  node );
+        virtual void contextInit(){;}
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Activate OpenGL states. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
+        virtual void activate( Node*  node );
+
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        // Activate OpenGL states. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
+        virtual void deActivate( Node*  node );
 
 
 			protected:
@@ -165,17 +169,19 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 
-				Vec4f	    mFrontAmbient;
-				Vec4f	    mFrontDiffuse;
-				Vec4f	    mFrontSpecular;
-				float	    mFrontShininess;
+        MsgMath::Vec4f	    mFrontAmbient;
+				MsgMath::Vec4f	    mFrontDiffuse;
+				MsgMath::Vec4f	    mFrontSpecular;
+				float	              mFrontShininess;
 
-				Vec4f	    mBackAmbient;
-				Vec4f	    mBackDiffuse;
-				Vec4f	    mBackSpecular;
-				float	    mBackShininess;
+				MsgMath::Vec4f	    mBackAmbient;
+				MsgMath::Vec4f	    mBackDiffuse;
+				MsgMath::Vec4f	    mBackSpecular;
+				float	              mBackShininess;
 
-				bool	    mFrontAndBack;
+        bool                mFront; 
+        bool                mBack;      
+        bool                mFrontAndBack;
 		};
 	}
 }

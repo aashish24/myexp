@@ -15,11 +15,13 @@ namespace Msg
 		{
 			public:                
 
-        StateAttribute( const bool& flag = true );
+        StateAttribute( const bool& flag = true, const int& mask = IStateAttribute::ON );
 
         virtual bool dirty() const;
-
         virtual void dirty( const bool& flag );
+        
+        virtual const int& mask() const;
+        virtual void mask( const int& maskVal );
 
 
       protected:
@@ -30,6 +32,8 @@ namespace Msg
       protected: 
 
         bool         _dirty;
+
+        int          _mask;
 		};
 	}
 }

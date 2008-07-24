@@ -24,7 +24,7 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
         
-        typedef std::list< std::pair< SmartPtr< StateAttribute >, bool > > Attributes;
+        typedef std::list< SmartPtr< StateAttribute > >                                 Attributes;
         typedef std::map< unsigned int, std::pair< SmartPtr< StateAttribute >, bool > > TextureAttributes;
 
 
@@ -84,13 +84,24 @@ namespace Msg
 
         ///////////////////////////////////////////////////////////////////////
         //
+        // Push an attribute. 
+        // @Note: This will check for collision and perform operations 
+        // based on the IStateAttribute::Values mask. 
+        //
+        ///////////////////////////////////////////////////////////////////////
+
+        void pushAttribute( StateAttribute* attr );
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
         // Set attribute and its state. 
         //
         // @Note: Attribute with the same id will be removed if present. 
         //
         ///////////////////////////////////////////////////////////////////////
 
-        void attribute( StateAttribute* attr, const bool& state = 1 );
+        void attribute( StateAttribute* attr, const int& mask = IStateAttribute::ON );
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -111,7 +122,7 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 
-        void textureAttribute( unsigned int unit, StateAttribute* attr, const bool& state = 1 );
+        void textureAttribute( unsigned int unit, StateAttribute* attr, const int& mask = IStateAttribute::ON );
 
         
         ///////////////////////////////////////////////////////////////////////

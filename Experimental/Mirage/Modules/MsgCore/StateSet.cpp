@@ -36,7 +36,7 @@ namespace Msg
 
     void StateSet::dirty( bool flag ) 
     {
-      _dirty = flag;
+      _dirty = flag;      
     }
 
     
@@ -51,7 +51,27 @@ namespace Msg
     }
 
 
-    void StateSet::attribute( StateAttribute* attr, const bool& state )
+    void StateSet::attribute( StateAttribute* attr, const int& maskVal )
+    {
+       Attributes::iterator itr = _attributes.begin();
+      
+      for( itr; itr != _attributes.end(); ++itr )
+      {
+        if( ( ( *itr )->id() == attr->id() ))
+        {
+          _attributes.erase( itr );
+          break;
+        }
+      }
+
+      this->dirty( true );
+
+      attr->mask( maskVal );
+      _attributes.push_back( attr );
+    }
+
+  
+    void StateSet::pushAttribute( StateAttribute* attr )
     { 
       if( !attr )
       {
@@ -62,15 +82,19 @@ namespace Msg
       
       for( itr; itr != _attributes.end(); ++itr )
       {
-        if( itr->first->id() == attr->id() )
+        if( ( ( *itr )->id() == attr->id() ) && 
+            ( !( ( *itr )->mask() & IStateAttribute::PROTECTED ) ) &&
+            ( attr->mask() & IStateAttribute::OVERRIDE ) )
         {
-          _attributes.erase( itr );
+          //_attributes.erase( itr );
+           
+          this->dirty( true );
+          
+          _attributes.push_back( attr );
+          
           break;
         }
-      }
-
-      this->dirty( true );
-      _attributes.push_back( std::make_pair< SmartPtr< StateAttribute >, bool >( attr, state ) );
+      }      
     }
 
 
@@ -80,7 +104,7 @@ namespace Msg
     }
 
 
-    void StateSet::textureAttribute( unsigned int unit, StateAttribute* attr, const bool& state )
+    void StateSet::textureAttribute( unsigned int unit, StateAttribute* attr, const int& values )
     {
       // Need to implement this. 
     }
@@ -104,7 +128,7 @@ namespace Msg
           for( start; start != end; ++start )
           {
             //start->first->activateStateSet( node );
-            this->attribute( start->first.get(), start->second );
+            this->pushAttribute( start->get() );
           }
 
           TextureAttributes tAttr = parents[i]->getOrCreateStateSet()->textureAttributes();
@@ -119,6 +143,16 @@ namespace Msg
           }*/          
         }
 
+        // If this is a group node then lets make the StateSet's of childern dirty. 
+        SmartPtr< Group > gr( node->asGroup() );
+        if( gr.valid() )
+        {
+          for( size_t i=0; i < gr->children().size(); ++i ) 
+          {
+            gr->child( i )->getOrCreateStateSet()->dirty( true );
+          }
+        }
+
         node->getOrCreateStateSet()->dirty( false );
       }
       
@@ -130,7 +164,7 @@ namespace Msg
       end = _attributes.end();
       for( start; start != end; ++start )
       {
-        start->first->activate( node );
+        ( *start )->activate( node );
       }
       
       // @Todo: Need to fix this. 
@@ -151,7 +185,7 @@ namespace Msg
       end = _attributes.end();
       for( start; start != end; ++start )
       {
-        start->first->deActivate( node );
+        ( *start )->deActivate( node );
       }
     }
 

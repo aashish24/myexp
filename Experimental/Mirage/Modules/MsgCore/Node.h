@@ -30,7 +30,7 @@ namespace Msg
 				
         Node() :
 					Object(),
-					_stateSet( new StateSet() )
+					_stateSet( 0x0 )
 				{
 
 				}
@@ -128,6 +128,18 @@ namespace Msg
             return _stateSet.get();
 					}
 				}
+
+        
+        ///////////////////////////////////////////////////////////////
+				//
+				// Get StateSet for the node. 
+				//
+				///////////////////////////////////////////////////////////////				
+
+        virtual StateSet* stateSet()
+        {
+          return _stateSet.get();
+        }
 
 
 				///////////////////////////////////////////////////////////////

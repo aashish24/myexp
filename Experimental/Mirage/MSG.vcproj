@@ -275,6 +275,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Modules\MsgCore\Material.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MsgCore\Material.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Modules\MsgCore\MirageOpenGL.h"
 					>
 				</File>
