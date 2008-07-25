@@ -121,7 +121,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories=".\..\;$(OSG_INC_DIR);$(VJ_BASE_DIR)\include;$(GMTL_INC_DIR);$(CPPDOM_INC_DIR);$(NSPR_INC_DIR);$(BOOST_INC_DIR);"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;OGE_BUILD_SHARED_LIBRARY;USE_OSG;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;OGE_BASE_BUILD_SHARED_LIBRARY;USE_OSG;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
