@@ -32,8 +32,8 @@ namespace Oge
       OgeBase::OgeInterfaces::IUnknown* MemberFunctor< T >::queryInterface( const unsigned long& iid )
       {
         switch( iid )
-	{
-		case OgeBase::OgeInterfaces::IUnknown::IID:
+	      {
+		      case OgeBase::OgeInterfaces::IUnknown::IID:
         	case OgeBase::OgeInterfaces::IFunctor::IID: 
         	{
           	return static_cast< OgeBase::OgeInterfaces::IFunctor* >( this );
@@ -42,7 +42,7 @@ namespace Oge
         	{
           	return 0x00;
         	}
-	};
+	      };
       }
     }
   }

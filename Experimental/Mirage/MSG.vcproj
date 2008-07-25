@@ -141,7 +141,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib $(NOINHERIT)"
+				AdditionalDependencies="opengl32.lib glew32.lib $(NOINHERIT)"
 				OutputFile="..\bin\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
