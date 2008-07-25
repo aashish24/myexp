@@ -36,6 +36,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mirage_Test3", "Mirage\Test
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{44940738-98ED-45C6-8943-389ACB8E18C4} = {44940738-98ED-45C6-8943-389ACB8E18C4}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StereoViewer", "Mirage\Projects\StereoViewer\StereoViewer.vcproj", "{03987122-B45A-4A5E-9112-029734CF581E}"
 	ProjectSection(WebsiteProperties) = preProject

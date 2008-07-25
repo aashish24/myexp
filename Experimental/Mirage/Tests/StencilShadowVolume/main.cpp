@@ -162,7 +162,7 @@ void init()
 
   // Read geometry files. 
   MsgCore::SmartPtr< MsgCore::Node > model =  
-    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\head\\Mirage\\Data\\Models\\Box.obj" );
+    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\trunk\\Mirage\\Data\\Models\\Box.obj" );
 
   if( model.valid() )
   {
@@ -170,7 +170,7 @@ void init()
   }
 
   MsgCore::SmartPtr< MsgCore::Node > floor =  
-    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\head\\Mirage\\Data\\Models\\Floor.obj" );
+    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\trunk\\Mirage\\Data\\Models\\Floor.obj" );
 
   if( floor.valid() )
   {
