@@ -16,37 +16,37 @@
 #include "MsgDB/FileRead.h"
 
 #include "MsgMath/Vector.h"
+#include "MsgMath/Matrix.h"
+#include "MsgMath/MatrixVecOps.h"
 
 #include "MsgCore/Material.h"
 
 #include <list>
 
-static bool animate = false;
+using namespace Msg;
 
+static bool animate   = false;
 static bool two_sided = false;
-
-static bool _pause = false;
+static bool _pause    = true;
 
 static const GLfloat lightAmbient[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
 static const GLfloat lightDiffuse[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
 static const GLfloat lightSpecular[]  = { 1.0f, 0.6f, 0.6f, 1.0f };
 
-static       GLfloat lightPosition[]  = { -8.0f, 4.0f, 0.0f, 1.0 };
+static       GLfloat lightPosition[]  = { -5.0f, 3.0f, 0.0f, 1.0 };
 
-Msg::MsgCore::SmartPtr< Msg::MsgCore::Material > _matBlue   = new Msg::MsgCore::Material();
-Msg::MsgCore::SmartPtr< Msg::MsgCore::Material > _matRed    = new Msg::MsgCore::Material();
-Msg::MsgCore::SmartPtr< Msg::MsgCore::Material > _matShadow = new Msg::MsgCore::Material();
+MsgCore::SmartPtr< MsgCore::Material > _matBlue   = new MsgCore::Material();
+MsgCore::SmartPtr< MsgCore::Material > _matRed    = new MsgCore::Material();
+MsgCore::SmartPtr< MsgCore::Material > _matShadow = new MsgCore::Material();
 
+MsgCore::SmartPtr< MsgCore::GLSLProgram > extrusionProgram  = new MsgCore::GLSLProgram();
+MsgCore::SmartPtr< MsgCore::GLSLShader >  vertShader        = new MsgCore::GLSLShader( MsgCore::GLSLShader::VERTEX_SHADER );
+MsgCore::SmartPtr< MsgCore::GLSLShader >  fragShader        = new MsgCore::GLSLShader( MsgCore::GLSLShader::FRAGMENT_SHADER );
 
-Msg::MsgCore::SmartPtr< Msg::MsgCore::GLSLProgram > extrusionProgram = new Msg::MsgCore::GLSLProgram();
-Msg::MsgCore::SmartPtr< Msg::MsgCore::GLSLShader >  vertShader = new Msg::MsgCore::GLSLShader( Msg::MsgCore::GLSLShader::VERTEX_SHADER );
-Msg::MsgCore::SmartPtr< Msg::MsgCore::GLSLShader >  fragShader = new Msg::MsgCore::GLSLShader( Msg::MsgCore::GLSLShader::FRAGMENT_SHADER );
-
-Msg::MsgCore::SmartPtr< Msg::MsgCore::Viewer > _viewer = new Msg::MsgCore::Viewer();
+MsgCore::SmartPtr< MsgCore::Viewer > _viewer      = new MsgCore::Viewer();
 
 // Create scene _root node. 
-Msg::MsgCore::SmartPtr< Msg::MsgCore::Group > _root( new Msg::MsgCore::Group() );
-
+MsgCore::SmartPtr< MsgCore::Group > _root( new MsgCore::Group() );
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -97,6 +97,7 @@ struct Edge
 };
 
 
+// Predicate for STL list unique algorithm. 
 class compare
 {
   public: 
@@ -119,7 +120,7 @@ class compare
 
 struct Triangle
 {
-  Msg::MsgMath::Vec3i _faceIndex;
+  MsgMath::Vec3i _faceIndex;
 }; 
 
 
@@ -135,7 +136,8 @@ void init()
 
   // @todo: Planning to perform extraction of vertices via shaders. 
   // Commented out for time being. 
- /* vertShader->sourceAsFile( "PositionExtrusionShader.vert" );
+  /* 
+  vertShader->sourceAsFile( "PositionExtrusionShader.vert" );
   fragShader->sourceAsFile( "PositionExtrusionShader.frag" );
 
   vertShader->contextInit();
@@ -144,10 +146,8 @@ void init()
   extrusionProgram->attach( vertShader.get() );
   extrusionProgram->attach( fragShader.get() );
 
-  extrusionProgram->link();*/
-
-  //glEnable( GL_CULL_FACE );
-  //glCullFace( GL_FRONT );
+  extrusionProgram->link();
+  */
 
   glClearColor( 0.0, 0.0, 0.0, 1.0 );
 
@@ -161,16 +161,16 @@ void init()
   }
 
   // Read geometry files. 
-  Msg::MsgCore::SmartPtr< Msg::MsgCore::Node > model =  
-    Msg::MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\head\\Mirage\\Data\\Models\\Sphere.obj" );
+  MsgCore::SmartPtr< MsgCore::Node > model =  
+    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\head\\Mirage\\Data\\Models\\Box.obj" );
 
   if( model.valid() )
   {
     _root->addChild( model.get() );
   }
 
-  Msg::MsgCore::SmartPtr< Msg::MsgCore::Node > floor =  
-    Msg::MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\head\\Mirage\\Data\\Models\\Floor.obj" );
+  MsgCore::SmartPtr< MsgCore::Node > floor =  
+    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\head\\Mirage\\Data\\Models\\Floor.obj" );
 
   if( floor.valid() )
   {
@@ -182,9 +182,9 @@ void init()
   // Set materials. 
   if( _matBlue.valid() )
   {
-    _matBlue->setProperty( DIFFUSE, Msg::MsgMath::Vec4f( 0.0, 0.0, 0.5, 1.0 ) );
-    _matBlue->setProperty( AMBIENT, Msg::MsgMath::Vec4f( 0.0, 0.0, 0.0, 1.0 ) );
-    _matBlue->setProperty( SPECULAR, Msg::MsgMath::Vec4f( 0.0, 0.0, 0.5, 1.0 ) );
+    _matBlue->setProperty( DIFFUSE, MsgMath::Vec4f( 0.0, 0.0, 0.5, 1.0 ) );
+    _matBlue->setProperty( AMBIENT, MsgMath::Vec4f( 0.0, 0.0, 0.0, 1.0 ) );
+    _matBlue->setProperty( SPECULAR, MsgMath::Vec4f( 0.0, 0.0, 0.5, 1.0 ) );
 
 
     model->getOrCreateStateSet()->attribute( _matBlue.get() );
@@ -197,9 +197,9 @@ void init()
   // Set materials. 
   if( _matRed.valid() )
   {
-    _matRed->setProperty( DIFFUSE, Msg::MsgMath::Vec4f( 0.0, 0.7, 0.1, 1.0 ) );
-    _matRed->setProperty( AMBIENT, Msg::MsgMath::Vec4f( 0.0, 0.0, 0.0, 1.0 ) );
-    _matRed->setProperty( SPECULAR, Msg::MsgMath::Vec4f( 0.0, 0.7, 0.1, 1.0 ) );
+    _matRed->setProperty( DIFFUSE, MsgMath::Vec4f( 0.0, 0.7, 0.1, 1.0 ) );
+    _matRed->setProperty( AMBIENT, MsgMath::Vec4f( 0.0, 0.0, 0.0, 1.0 ) );
+    _matRed->setProperty( SPECULAR, MsgMath::Vec4f( 0.0, 0.7, 0.1, 1.0 ) );
 
     floor->getOrCreateStateSet()->attribute( _matRed.get() );
   }
@@ -211,9 +211,9 @@ void init()
    // Set materials. 
   if( _matShadow.valid() )
   {
-    _matShadow->setProperty( DIFFUSE, Msg::MsgMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
-    _matShadow->setProperty( AMBIENT, Msg::MsgMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
-    _matShadow->setProperty( SPECULAR, Msg::MsgMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
+    _matShadow->setProperty( DIFFUSE, MsgMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
+    _matShadow->setProperty( AMBIENT, MsgMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
+    _matShadow->setProperty( SPECULAR, MsgMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
 
     //floor->getOrCreateStateSet()->attribute( _matRed.get() );
   }
@@ -223,6 +223,17 @@ void init()
   }
 }
 
+
+//Convert a openGL Matrix into Matrix44d. 
+MsgMath::Matrix44d convert( GLdouble* matrix ) 
+{
+  MsgMath::Matrix44d mat;
+  mat.set( matrix );
+
+  return mat;
+}
+
+
 // @todo: Two issues. 
 // 1. How we are going to draw in the same coordinate system as where 
 // we have the original geometry as still we dont have the transform node. 
@@ -231,7 +242,7 @@ void init()
 void drawShadowVolume()
 {
   // Lets query the vertices. 
-  Msg::MsgCore::Node* node = _viewer->sceneData(); 
+  MsgCore::Node* node = _viewer->sceneData(); 
   
   // Check for valid node. 
   if( !node )
@@ -240,7 +251,7 @@ void drawShadowVolume()
     return;
   }
    
-  Msg::MsgCore::SmartPtr< Msg::MsgCore::Group > gr = node->asGroup();
+  MsgCore::SmartPtr< MsgCore::Group > gr = node->asGroup();
   
   // Now check each child of the _root node. 
   // Grab any geometry. 
@@ -249,28 +260,36 @@ void drawShadowVolume()
   // Now currently checking only at one level ( ignorning group  nodes ). 
   for( size_t index = 0; index < gr->children().size(); ++index )
   {
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Node > node = gr->child( index );
+    MsgCore::SmartPtr< MsgCore::Node > node = gr->child( index );
 
-    Msg::MsgCore::Geode* ge = node->asGeode();
+    MsgCore::Geode* geode = node->asGeode();
 
-    if( ge ) 
+    // Get the Model View matrix. 
+    GLdouble worldMatrix[16]; 
+
+    glGetDoublev( GL_MODELVIEW_MATRIX, worldMatrix );
+
+    // Convert into Matrix44d so that we can use it for multiplication with verticess. 
+    MsgMath::Matrix44d mat = convert( worldMatrix );
+
+    if( geode ) 
     {
-      std::vector< Msg::MsgCore::SmartPtr< Msg::MsgCore::Drawable > > drawables = ge->getDrawableList();
+      std::vector< MsgCore::SmartPtr< MsgCore::Drawable > > drawables = geode->getDrawableList();
 
       for( size_t i = 0; i < drawables.size(); ++i ) 
       {
-        Msg::MsgCore::Geometry* geom = dynamic_cast< Msg::MsgCore::Geometry* >( drawables[i].get() );
+        MsgCore::Geometry* geom = dynamic_cast< MsgCore::Geometry* >( drawables[i].get() );
         if( geom )
         {
           std::vector< Triangle > _capTriangles; 
           std::list< Edge > _edges;
 
-          Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3iArray > indices    = geom->vertexIndices();
-          Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3iArray > nIndices   = geom->normalIndices();
-          Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array >  vertices    = geom->vertexArray();
-          Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array >  normals     = geom->normalArray();
+          MsgCore::SmartPtr< MsgCore::Vec3iArray > indices    = geom->vertexIndices();
+          MsgCore::SmartPtr< MsgCore::Vec3iArray > nIndices   = geom->normalIndices();
+          MsgCore::SmartPtr< MsgCore::Vec3Array >  vertices    = geom->vertexArray();
+          MsgCore::SmartPtr< MsgCore::Vec3Array >  normals     = geom->normalArray();
           
-          Msg::MsgMath::Vec3d lightPos = Msg::MsgMath::Vec3d( lightPosition[0], lightPosition[1], lightPosition[2] );
+          MsgMath::Vec4d lightPos = MsgMath::Vec4d( lightPosition[0], lightPosition[1], lightPosition[2], 1 );
 
           for( size_t k = 0; k < indices->size() ; ++k ) 
           {
@@ -283,31 +302,44 @@ void drawShadowVolume()
             int ni2 = nIndices->at( k )[1];
             int ni3 = nIndices->at( k )[2];
               
-            Msg::MsgMath::Vec3d lightDir1 = lightPos - vertices->at( i1 );
+            MsgMath::Vec3d vecOrig1 = vertices->at( i1 );
+            MsgMath::Vec4d vecModi1( vecOrig1[0], vecOrig1[1], vecOrig1[2], 1 );  
+
+            MsgMath::Vec3d vecOrig2 = vertices->at( i2 );
+            MsgMath::Vec4d vecModi2( vecOrig2[0], vecOrig2[1], vecOrig2[2], 1 );  
+
+            MsgMath::Vec3d vecOrig3 = vertices->at( i3 );
+            MsgMath::Vec4d vecModi3( vecOrig3[0], vecOrig3[1], vecOrig3[2], 1 );  
+
+            MsgMath::Vec4d lightDir1 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi1 );
             lightDir1.normalize();
 
-            Msg::MsgMath::Vec3d lightDir2 = lightPos - vertices->at( i2 );
+            MsgMath::Vec4d lightDir2 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi2 );
             lightDir2.normalize();
             
-            Msg::MsgMath::Vec3d lightDir3 = lightPos - vertices->at( i3 );  
+            MsgMath::Vec4d lightDir3 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi3 );;  
             lightDir3.normalize();
             
-            Msg::MsgMath::Vec3d normal1 =  normals->at( ni1 );
-            Msg::MsgMath::Vec3d normal2 =  normals->at( ni2 );
-            Msg::MsgMath::Vec3d normal3 =  normals->at( ni3 );
+            MsgMath::Vec3d normal1 =  normals->at( ni1 );
+            MsgMath::Vec3d normal2 =  normals->at( ni2 );
+            MsgMath::Vec3d normal3 =  normals->at( ni3 );
+
+            MsgMath::Vec4d normal1Modi( normal1[0], normal1[1], normal1[2], 1 );
+            MsgMath::Vec4d normal2Modi( normal2[0], normal2[1], normal2[2], 1 );
+            MsgMath::Vec4d normal3Modi( normal3[0], normal3[1], normal3[2], 1 );
 
             int count = 0;
 
             bool edge1Passed = false; 
 
-            if( ( normal1.dot( lightDir1 ) > 0 ) && ( normal2.dot( lightDir2 ) > 0 ) )
+            if( ( normal1Modi.dot( lightDir1 ) > 0 ) && ( normal2Modi.dot( lightDir2 ) > 0 ) )
             {
               edge1Passed = true;
             }
           
             if( two_sided )
             {
-              if( ( -normal1.dot( lightDir1 ) > 0 ) && ( -normal2.dot( lightDir2 ) > 0 ) )
+              if( ( -normal1Modi.dot( lightDir1 ) > 0 ) && ( -normal2Modi.dot( lightDir2 ) > 0 ) )
               {
                 edge1Passed = true;
               }
@@ -338,14 +370,14 @@ void drawShadowVolume()
 
             bool edge2Passed = false;
             
-            if( ( normal2.dot( lightDir2 ) > 0 ) && ( normal3.dot( lightDir3 ) > 0 ) )
+            if( ( normal2Modi.dot( lightDir2 ) > 0 ) && ( normal3Modi.dot( lightDir3 ) > 0 ) )
             {
               edge2Passed = true;
             }
 
             if( two_sided )
             {
-              if( ( -normal2.dot( lightDir2 ) > 0 ) && ( -normal3.dot( lightDir3 ) > 0 ) )
+              if( ( -normal2Modi.dot( lightDir2 ) > 0 ) && ( -normal3Modi.dot( lightDir3 ) > 0 ) )
               {
                 edge2Passed = true;
               }
@@ -353,8 +385,6 @@ void drawShadowVolume()
 
             if( edge2Passed )
             {
-              //std::cout << "Vertex 2 passed: " << std::endl;
-
               Vertex vertex1; 
               vertex1._vertexIndex = i2;
               vertex1._normalIndex = i2;
@@ -381,14 +411,14 @@ void drawShadowVolume()
 
             bool edge3Passed = false;
 
-            if( ( normal3.dot( lightDir3 ) > 0 ) && ( normal1.dot( lightDir1 ) > 0 ) )  
+            if( ( normal3Modi.dot( lightDir3 ) > 0 ) && ( normal1Modi.dot( lightDir1 ) > 0 ) )  
             {
               edge3Passed = true;
             }
 
             if( two_sided )
             {
-              if( ( -normal3.dot( lightDir3 ) > 0 ) && ( -normal1.dot( lightDir1 ) > 0 ) )  
+              if( ( -normal3Modi.dot( lightDir3 ) > 0 ) && ( -normal1Modi.dot( lightDir1 ) > 0 ) )  
               {
                 edge3Passed = true;
               } 
@@ -396,8 +426,6 @@ void drawShadowVolume()
 
             if( edge3Passed )
             {
-              //std::cout << "Vertex 3 passed: " << std::endl;
-
               Vertex vertex1; 
               vertex1._vertexIndex = i3;
               vertex1._normalIndex = i3;
@@ -420,44 +448,65 @@ void drawShadowVolume()
             if( count == 3 )
             {
               Triangle triangle;
-              triangle._faceIndex = Msg::MsgMath::Vec3i( i1, i2, i3 );
+              triangle._faceIndex = MsgMath::Vec3i( i1, i2, i3 );
               _capTriangles.push_back( triangle );
-
             }
 
           } // End  for( size_t k = 0; k < indices->size() ; ++k )            
         
+
+          // Remove duplicate edges. 
           _edges.unique( compare() );
 
-          std::vector< Msg::MsgMath::Vec3d > _extendedVertices;          
-
+          // Extrude the vertices. 
+          std::vector< MsgMath::Vec4d > _extendedVertices;          
           std::list< Edge >::iterator jItr = _edges.begin();
+          const float extensionFactor = 5.0f;
 
-          const float extensionFactor = 10.0f;
-
-          // Use display list. 
+          // @Todo: Use display list. 
           for( jItr; jItr != _edges.end(); ++jItr )
           {            
+            glPushMatrix();
+            glLoadIdentity();
             glBegin( GL_QUADS );
               
-              glVertex3dv( vertices->at( jItr->_vertex2._vertexIndex ).front() );
-              glVertex3dv( vertices->at( jItr->_vertex1._vertexIndex ).front() );
+              MsgMath::Vec3d vec3d1 = vertices->at( jItr->_vertex2._vertexIndex );
+              MsgMath::Vec3d vec3d2 = vertices->at( jItr->_vertex1._vertexIndex );
               
-              Msg::MsgMath::Vec3d vertex11 = vertices->at( jItr->_vertex2._vertexIndex );
-              Msg::MsgMath::Vec3d vertex41( vertex11[0] - lightPos[0], vertex11[1] - lightPos[1], vertex11[2] - lightPos[2] );
-              
-              vertex41 = vertex11 + vertex41 * extensionFactor;
+              MsgMath::Vec4d vec4d1( vec3d1[0], vec3d1[1], vec3d1[2], 1.0 );
+              MsgMath::Vec4d vec4d2( vec3d2[0], vec3d2[1], vec3d2[2], 1.0 );
 
-              Msg::MsgMath::Vec3d vertex22 = vertices->at( jItr->_vertex1._vertexIndex );
-              Msg::MsgMath::Vec3d vertex42( vertex22[0] - lightPos[0], vertex22[1] - lightPos[1], vertex22[2] - lightPos[2] );              
+              vec4d1 = MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vec4d1 );
+              vec4d2 = MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vec4d2 );
               
+              //glVertex3dv( vertices->at( jItr->_vertex2._vertexIndex ).front() );
+              //glVertex3dv( vertices->at( jItr->_vertex1._vertexIndex ).front() );
               
-              vertex42 = vertex22 + vertex42 * extensionFactor;
+              //MsgMath::Vec3d vertex11 = vertices->at( jItr->_vertex2._vertexIndex );
+              //MsgMath::Vec4d vertex41( vertex11[0] - lightPos[0], vertex11[1] - lightPos[1], vertex11[2] - lightPos[2] );
+              
+              MsgMath::Vec4d vertex41( vec4d1[0] - lightPos[0], vec4d1[1] - lightPos[1], vec4d1[2] - lightPos[2], 1.0 );
+              vertex41 = vec4d1 + vertex41 * extensionFactor;
+              vertex41[3] = 1.0;
 
-              glVertex3dv( vertex42.front() );              
-              glVertex3dv( vertex41.front() );
+              //MsgMath::Vec3d vertex22 = vertices->at( jItr->_vertex1._vertexIndex );
+              //MsgMath::Vec3d vertex42( vertex22[0] - lightPos[0], vertex22[1] - lightPos[1], vertex22[2] - lightPos[2] );              
+              //vertex42 = vertex22 + vertex42 * extensionFactor;
 
-            glEnd();                          
+              MsgMath::Vec4d vertex42( vec4d2[0] - lightPos[0], vec4d2[1] - lightPos[1], vec4d2[2] - lightPos[2], 1.0 );
+              vertex42 = vec4d2 + vertex42 * extensionFactor;
+              vertex42[3] = 1.0;
+
+              //glVertex3dv( vertex42.front() );              
+              //glVertex3dv( vertex41.front() );
+
+              glVertex4dv( vec4d1.front() );
+              glVertex4dv( vec4d2.front() );
+              glVertex4dv( vertex42.front() );
+              glVertex4dv( vertex41.front() );
+
+            glEnd();                                      
+            glPopMatrix();
 
             _extendedVertices.push_back( vertex42 );
             _extendedVertices.push_back( vertex41 );
@@ -468,8 +517,8 @@ void drawShadowVolume()
           // Front cap. 
           //
 
+          glPushMatrix();
           std::vector< Triangle >::const_iterator constItr;
-
           glEnable( GL_POLYGON_OFFSET_FILL );
           glPolygonOffset( 0.0f, 2.0f );
           glBegin( GL_POLYGON );
@@ -480,7 +529,8 @@ void drawShadowVolume()
             glVertex3dv( vertices->at( constItr->_faceIndex[2] ).front() );            
           }
           glEnd();
-          glDisable( GL_POLYGON_OFFSET_FILL );       
+          glDisable( GL_POLYGON_OFFSET_FILL );  
+          glPopMatrix();
 
 
           /////////////////////////////////////////////////////////////////////
@@ -488,16 +538,19 @@ void drawShadowVolume()
           //
 
           // Drawing in the reverse order of drawing for front cap. 
+          glPushMatrix();
+          glLoadIdentity();
           glBegin( GL_POLYGON );
           int count = 0;
           for( int i = _extendedVertices.size()-1; i >= 0 ; --i )
           {            
               if( i % 2 == 0 )
               {
-                glVertex3dv( _extendedVertices[i].front() );
+                glVertex4dv( _extendedVertices[i].front() );
               }
           }
           glEnd();
+          glPopMatrix();
 
         } // End if( geom  )
 
@@ -537,52 +590,11 @@ void drawScene()
   glEnable( GL_DEPTH_TEST );  
   glDepthMask( GL_TRUE );
   glDepthFunc( GL_LEQUAL );
-
-  const GLfloat shadowMat[] = { 0.0, 0.0, 0.0, 0.5 };
   
-  //glMaterialfv( GL_FRONT, GL_AMBIENT, &objectMat[0] );    
-  //glMaterialfv( GL_FRONT, GL_DIFFUSE, &objectMat[0] );    
-    
-    
-  // @start. For testing purposes.
+  /*glColor3f( 1.0, 1.0, 1.0 );
+  drawShadowVolume();*/
 
-  //drawShadowVolume();
-
-  //glPolygonMode( GL_BACK, GL_LINE );
-  //glPolygonMode( GL_FRONT, GL_LINE );
-  //glEnable( GL_CULL_FACE );
-  //glCullFace( GL_FRONT );
-  //drawShadowVolume();
-
-  //glClearStencil( 0x00 );
-  //glEnable( GL_STENCIL_TEST );
-  //glClear( GL_STENCIL_BUFFER_BIT );
-
-  //glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE );
-  ////glDepthMask( GL_FALSE );
-  //glStencilFunc( GL_ALWAYS, 0x1, 0x1 );
-  //glStencilOp( GL_REPLACE, GL_REPLACE, GL_REPLACE );
-  ////glCullFace( GL_FRONT );
-  //drawQuad();
-  //// _viewer->draw();
-
-  //glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
-  //glDepthMask( GL_TRUE );
-  //glDepthFunc( GL_LEQUAL );
-
-  //glStencilFunc( GL_NOTEQUAL, 0x1, 0x1 );
-  //glDisable( GL_LIGHTING );
-  //glColor3f( 0.0, 1.0, 0.0 );
-  //drawQuad();
-  ////_viewer->draw();
-
-  //glDisable( GL_STENCIL_TEST );
-
-  // @end: For testing purposes.   
-
-  _viewer->draw();
-
-#if 0
+#if 1
    _viewer->draw();
 
   // Turn on OpenGL states.
@@ -714,7 +726,7 @@ void reshape( int w, int h )
 
 void idle()
 {
-  const static float distance = -10.0f;
+  const static float distance = -20.0f;
   static float angle = 0.0f; 
 
   if( !_pause )
@@ -738,22 +750,36 @@ void keyboard( unsigned char key, int x, int y )
 {
   if( key == 'a' )
   {
-    glRotatef( 1.0f, 0.0f, 1.0f, 0.0f );
+    //glRotatef( 1.0f, 0.0f, 1.0f, 0.0f );
+    lightPosition[0] = lightPosition[0] - 1.0;
   }
 
   if( key == 'd' ) 
   {
-    glRotatef( -1.0f, 0.0f, 1.0f, 0.0f );
+    //glRotatef( -1.0f, 0.0f, 1.0f, 0.0f );
+    lightPosition[0] = lightPosition[0] + 1.0;
   }
 
   if( key == 'w' ) 
   {
-    glRotatef( 1.0f, 1.0f, 0.0f, 0.0f );
+    //glRotatef( 1.0f, 1.0f, 0.0f, 0.0f );
+    lightPosition[2] = lightPosition[2] - 1.0;
   }
 
   if( key == 's' )
   {
-    glRotatef( -1.0f, 1.0f, 0.0f, 0.0f );
+    //glRotatef( -1.0f, 1.0f, 0.0f, 0.0f );
+    lightPosition[2] = lightPosition[2] + 1.0;
+  }
+
+  if( key == 'u' )
+  {
+    lightPosition[1] = lightPosition[1] + 1.0;
+  }
+
+  if( key == 'j' )
+  {
+    lightPosition[1] = lightPosition[1] - 1.0;
   }
 
   if( key == 'p' )
