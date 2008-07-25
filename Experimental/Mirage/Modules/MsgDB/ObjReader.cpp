@@ -333,7 +333,7 @@ namespace Msg
               model->_vertices->push_back( model->_vertices->at( vData1._vertexIndex ) );
               model->_normals->push_back( model->_normals->at( vData1._normalIndex ) );
               model->_textureCoords->push_back( model->_textureCoords->at( vData1._textureIndex ) );
-              vData1._vertexIndex = _vertexData.size() - 1;
+              vData1._vertexIndex = _vertexData.size();
               _vertexData.push_back( vData1 );
               vertexIndexVertexDataTable[v1].push_back( vData1._vertexIndex );
               drawUInt->push_back( vData1._vertexIndex );        
@@ -373,7 +373,7 @@ namespace Msg
               model->_vertices->push_back( model->_vertices->at( vData2._vertexIndex ) );
               model->_normals->push_back( model->_normals->at( vData2._normalIndex ) );
               model->_textureCoords->push_back( model->_textureCoords->at( vData2._textureIndex ) );
-              vData2._vertexIndex = _vertexData.size() - 1;
+              vData2._vertexIndex = _vertexData.size();
               _vertexData.push_back( vData2 );
               vertexIndexVertexDataTable[v2].push_back( vData2._vertexIndex );
               drawUInt->push_back( vData2._vertexIndex );        
@@ -412,7 +412,7 @@ namespace Msg
               model->_vertices->push_back( model->_vertices->at( vData3._vertexIndex ) );
               model->_normals->push_back( model->_normals->at( vData3._normalIndex ) );
               model->_textureCoords->push_back( model->_textureCoords->at( vData3._textureIndex ) );
-              vData3._vertexIndex = _vertexData.size() - 1;
+              vData3._vertexIndex = _vertexData.size();
               _vertexData.push_back( vData3 );
               vertexIndexVertexDataTable[v3].push_back( vData3._vertexIndex );
               drawUInt->push_back( vData3._vertexIndex );        

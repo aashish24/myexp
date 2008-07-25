@@ -15,13 +15,24 @@ namespace Msg
     {
 	    public:
   			
+        friend class MatrixVecOps;
+
         Vector()
 		    {
 			    for( unsigned int i=0; i < SIZE; ++i )
 			    {
-				    this->mData[i] = ( DATA_TYPE )0 ;
+				    this->_data[i] = ( DATA_TYPE )0 ;
 			    }
 		    }
+
+
+        Vector( const Vector< DATA_TYPE, SIZE >& from )
+        {
+          for( unsigned i = 0; i < SIZE; ++i )
+			    {
+            _data[i] = from._data[i];
+			    }
+        }
 
 
 		    Vector( DATA_TYPE val0, DATA_TYPE val1 )
@@ -44,6 +55,27 @@ namespace Msg
 			    set( val0, val1, val2, val3 );
 		    }
 
+        
+        /*template< class TYPE, unsigned int MY_SIZE >
+        Vector( Vector< TYPE, MY_SIZE >& vec )
+        {
+          for( size_t i=0; i < vec.size(); ++i )
+          {
+            if( i < SIZE )
+            {
+              this->_data[i] = vec[i];
+            }
+          }
+          
+          if( vec.size() < SIZE )
+          {
+            for( size_t i= vec.size(); i < SIZE; ++i )
+            {
+              this->_data[i] = DATA_TYPE();
+            }
+          }
+        }
+*/
 
 		    ~Vector()
 		    {
@@ -53,22 +85,27 @@ namespace Msg
 		    DATA_TYPE& operator[]( unsigned int column )
 		    {
 			    assert( column < SIZE );
-			    return mData[column]; 
+			    return _data[column]; 
 		    }
 
 
 		    const DATA_TYPE& operator[]( unsigned int column ) const
 		    {
 			    assert( column < SIZE );
-			    return mData[column]; 
+			    return _data[column]; 
 		    }
   			
 
 		    Vector< DATA_TYPE, SIZE >& operator=( const Vector< DATA_TYPE,SIZE >& rhs )
 		    {
+          if( &rhs == this )
+          {
+            return *this;
+          }
+
 			    for( unsigned i = 0; i < SIZE; ++i )
 			    {
-				    mData[i] = rhs[i];
+				    _data[i] = rhs[i];
 			    }
 
 			    return *this;
@@ -81,7 +118,7 @@ namespace Msg
 
 			    for( unsigned i = 0; i < SIZE; ++i )
 			    {
-				    if( mData[i] != rhs[i] )
+				    if( _data[i] != rhs[i] )
 				    {
 					    retVal = false;
 				    }
@@ -95,7 +132,7 @@ namespace Msg
 		    {
 			    for( unsigned i = 0; i < SIZE; ++i )
 			    {
-				    mData[i] = mData[i] + rhs[i];
+				    _data[i] = _data[i] + rhs[i];
 			    }
 
 			    return *this;
@@ -106,7 +143,7 @@ namespace Msg
 		    {
 			    for( unsigned i = 0; i < SIZE; ++i )
 			    {
-				    mData[i] = mData[i] - rhs[i];
+				    _data[i] = _data[i] - rhs[i];
 			    }
 
 			    return *this;
@@ -117,7 +154,7 @@ namespace Msg
 		    {
 			    for( unsigned i = 0; i < SIZE; ++i )
 			    {
-				    mData[i] = mData[i] * rhs[i];
+				    _data[i] = _data[i] * rhs[i];
 			    }
 
 			    return *this;
@@ -128,7 +165,7 @@ namespace Msg
 		    {
 			    for( unsigned i = 0; i < SIZE; ++i )
 			    {
-				    mData[i] = mData[i] / rhs[i];
+				    _data[i] = _data[i] / rhs[i];
 			    }
 
 			    return *this;
@@ -140,7 +177,7 @@ namespace Msg
 			    Vector< DATA_TYPE, SIZE > vec;
 			    for( unsigned int i = 0; i < SIZE; ++i )
 			    {
-				    vec[i] = mData[i] * val;
+				    vec[i] = _data[i] * val;
 			    }
 
 			    return vec;
@@ -152,7 +189,7 @@ namespace Msg
 			    Vector< DATA_TYPE, SIZE > vec;
 			    for( unsigned int i=0; i<SIZE; ++i )
 			    {
-				    vec[i] = mData[i] + rhs[i];
+				    vec[i] = _data[i] + rhs[i];
 			    }
 
 			    return vec;
@@ -164,7 +201,7 @@ namespace Msg
 			    Vector< DATA_TYPE, SIZE > vec;
 			    for( unsigned int i=0; i<SIZE; ++i )
 			    {
-				    vec[i] = mData[i] - rhs[i];
+				    vec[i] = _data[i] - rhs[i];
 			    }
 
 			    return vec;
@@ -176,7 +213,7 @@ namespace Msg
 			    Vector< DATA_TYPE, SIZE > vec;
 			    for( unsigned int i=0; i<SIZE; ++i )
 			    {
-				    vec[i] = mData[i] / rhs[i];
+				    vec[i] = _data[i] / rhs[i];
 			    }
 
 			    return vec;
@@ -188,7 +225,7 @@ namespace Msg
 			    Vector< DATA_TYPE, SIZE > vec;
 			    for( unsigned int i=0; i<SIZE; ++i )
 			    {
-				    vec[i] = -mData[i];
+				    vec[i] = -_data[i];
 			    }
 
 			    return vec;
@@ -203,25 +240,25 @@ namespace Msg
 
 		    void set( DATA_TYPE val0, DATA_TYPE val1 )
 		    {
-			    mData[0] = val0;
-			    mData[1] = val1;
+			    _data[0] = val0;
+			    _data[1] = val1;
 		    }
 
 
 		    void set( DATA_TYPE val0, DATA_TYPE val1, DATA_TYPE val2 )
 		    {
-			    mData[0] = val0;
-			    mData[1] = val1;
-			    mData[2] = val2;
+			    _data[0] = val0;
+			    _data[1] = val1;
+			    _data[2] = val2;
 		    }
 
 
 		    void set( DATA_TYPE val0, DATA_TYPE val1, DATA_TYPE val2, DATA_TYPE val3 )
 		    {
-			    mData[0] = val0;
-			    mData[1] = val1;
-			    mData[2] = val2;
-			    mData[3] = val3;
+			    _data[0] = val0;
+			    _data[1] = val1;
+			    _data[2] = val2;
+			    _data[3] = val3;
 		    }
 
 
@@ -231,7 +268,7 @@ namespace Msg
 
 			    for( unsigned int i=0; i<SIZE; ++i )
 			    {
-				    mVal = this->mData[i] * this->mData[i] + mVal;
+				    mVal = this->_data[i] * this->_data[i] + mVal;
 			    }
 
 			    return sqrt( mVal );
@@ -246,7 +283,7 @@ namespace Msg
 			    {          
             if( val != 0.0 )
             {
-              mData[i] = mData[i] / val;
+              _data[i] = _data[i] / val;
             }
             else
             {
@@ -263,9 +300,9 @@ namespace Msg
 			    Vector< DATA_TYPE, SIZE > resultVec;
   				
 			    assert( SIZE == 3 );
-			    resultVec[0] = ( mData[1] * vec2[2] ) - ( mData[2] * vec2[1] );
-			    resultVec[1] = ( mData[2] * vec2[0] ) - ( mData[0] * vec2[2] );
-			    resultVec[2] = ( mData[0] * vec2[1] ) - ( mData[1] * vec2[0] );
+			    resultVec[0] = ( _data[1] * vec2[2] ) - ( _data[2] * vec2[1] );
+			    resultVec[1] = ( _data[2] * vec2[0] ) - ( _data[0] * vec2[2] );
+			    resultVec[2] = ( _data[0] * vec2[1] ) - ( _data[1] * vec2[0] );
 
 			    return resultVec;
 		    }
@@ -274,20 +311,26 @@ namespace Msg
 		    DATA_TYPE dot( Vector< DATA_TYPE, SIZE > vec2 )
 		    {
 			    DATA_TYPE resultVal;
-			    resultVal = mData[0] * vec2[0] + mData[1] * vec2[1] + mData[2] * vec2[2];
+			    resultVal = _data[0] * vec2[0] + _data[1] * vec2[1] + _data[2] * vec2[2];
 			    return resultVal;
 		    }
 
 
 		    const DATA_TYPE* front()
 		    {
-			    return &mData[0];
+			    return &_data[0];
 		    }
+
+
+        const int& size() const 
+        {
+          return SIZE;
+        }
 
 
 	    private:
 
-		    DATA_TYPE mData[SIZE];
+		    DATA_TYPE _data[SIZE];
     };
 
     typedef Vector< float, 2 >        Vec2f;

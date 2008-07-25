@@ -11,25 +11,31 @@ namespace Msg
     {
       public: 
 
-        Matrix( unsigned int rows = ROWS, unsigned int cols = COLS )
+        friend class MatrixVecOps;
+
+        Matrix()
         {
-          for( size_t i=0; i < rows; ++i )
+          for( size_t i=0; i < ROWS; ++i )
           {
-            for( size_t j=0; j < cols; ++j )
+            for( size_t j=0; j < COLS; ++j )
             {
               this->operator()( i, j ) = ( DATA_TYPE ) 0.0; 
             } // for( size_t j=0; j < cols; ++j )
           } // for( size_t i=0; i < rows; ++i )
 
-          for( size_t k=0; k < rows; ++k )
+          for( size_t k=0; k < ROWS; ++k )
           {
             this->operator()( k, k ) = ( DATA_TYPE ) 1.0;
           }
         }
 
 
-        Matrix( const Matrix& from ) 
+        Matrix( const Matrix< DATA_TYPE, ROWS, COLS >& from ) 
         {
+          for( size_t i=0; i < ( ROWS * COLS ); ++i )
+          {
+            _data[i] = from._data[i];
+          }          
         }
 
 
@@ -107,13 +113,41 @@ namespace Msg
         
         DATA_TYPE& operator()( unsigned int row, unsigned int col )
         {
-          return _data[ row * COLS + col ];
+          return _data[ col * ROWS + row ];
         }
         
+
+        Matrix< DATA_TYPE, ROWS, COLS >& operator=( const Matrix< DATA_TYPE, ROWS, COLS >& rhs )
+        {
+          if( &rhs == this )
+          {
+            return *this;s
+          }
+
+          for( size_t i=0; i < ( ROWS * COLS ); ++i )
+          {
+            _data[i] = rhs[i];
+          }
+
+          return *this;
+        }
+
 
         DATA_TYPE* data()
         {
           return &_data;  
+        }
+
+
+        const int& rows() const
+        {
+          return ROWS;
+        }
+
+
+        const int& cols() const 
+        {
+          return COLS;
         }
 
 
