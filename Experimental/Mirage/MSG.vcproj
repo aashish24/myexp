@@ -429,6 +429,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Modules\MsgMath\MatrixVecOps.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Modules\MsgMath\Vector.h"
 					>
 				</File>
