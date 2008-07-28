@@ -23,11 +23,29 @@
 
 #include <list>
 
+
+// Definitions. 
+#define TESTING 0
+
+
 using namespace Msg;
 
-static bool animate   = false;
-static bool two_sided = false;
-static bool _pause    = true;
+enum Mode 
+{
+  NAVIGATE    = 0x0, 
+  MOVE_LIGHT  = 0x1, 
+  ANIMATE     = 0x2
+};
+
+static bool _twoSided       = false;
+static bool _pause          = true;
+static Mode _mode           = MOVE_LIGHT;
+
+static const int  MAX_LISTS = 30;
+
+// Display lists. 
+GLuint      _shadowVol;
+GLubyte     _shadowVolLists[MAX_LISTS];
 
 static const GLfloat lightAmbient[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
 static const GLfloat lightDiffuse[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
@@ -35,15 +53,15 @@ static const GLfloat lightSpecular[]  = { 1.0f, 0.6f, 0.6f, 1.0f };
 
 static       GLfloat lightPosition[]  = { -5.0f, 3.0f, 0.0f, 1.0 };
 
-MsgCore::SmartPtr< MsgCore::Material > _matBlue   = new MsgCore::Material();
-MsgCore::SmartPtr< MsgCore::Material > _matRed    = new MsgCore::Material();
-MsgCore::SmartPtr< MsgCore::Material > _matShadow = new MsgCore::Material();
+MsgCore::SmartPtr< MsgCore::Material > _matBlue             = new MsgCore::Material();
+MsgCore::SmartPtr< MsgCore::Material > _matRed              = new MsgCore::Material();
+MsgCore::SmartPtr< MsgCore::Material > _matShadow           = new MsgCore::Material();
 
 MsgCore::SmartPtr< MsgCore::GLSLProgram > extrusionProgram  = new MsgCore::GLSLProgram();
 MsgCore::SmartPtr< MsgCore::GLSLShader >  vertShader        = new MsgCore::GLSLShader( MsgCore::GLSLShader::VERTEX_SHADER );
 MsgCore::SmartPtr< MsgCore::GLSLShader >  fragShader        = new MsgCore::GLSLShader( MsgCore::GLSLShader::FRAGMENT_SHADER );
 
-MsgCore::SmartPtr< MsgCore::Viewer > _viewer      = new MsgCore::Viewer();
+MsgCore::SmartPtr< MsgCore::Viewer >      _viewer           = new MsgCore::Viewer();
 
 // Create scene _root node. 
 MsgCore::SmartPtr< MsgCore::Group > _root( new MsgCore::Group() );
@@ -162,19 +180,27 @@ void init()
 
   // Read geometry files. 
   MsgCore::SmartPtr< MsgCore::Node > model =  
-    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\trunk\\Mirage\\Data\\Models\\Box.obj" );
+    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\trunk\\Experimental\\Mirage\\Data\\Models\\Test.obj" );
 
   if( model.valid() )
   {
     _root->addChild( model.get() );
   }
+  else
+  {
+    throw " Model not found error: ";
+  }
 
   MsgCore::SmartPtr< MsgCore::Node > floor =  
-    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\trunk\\Mirage\\Data\\Models\\Floor.obj" );
+    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\trunk\\Experimental\\Mirage\\Data\\Models\\Floor.obj" );
 
   if( floor.valid() )
   {
     _root->addChild( floor.get() );    
+  }
+  else
+  {
+    throw " Model not found error: ";
   }
 
   _viewer->sceneData( _root.get() );
@@ -221,6 +247,10 @@ void init()
   {
     // Warning. 
   }
+
+
+  // Assign ids to display lists. 
+  _shadowVol = glGenLists( MAX_LISTS );  
 }
 
 
@@ -239,7 +269,7 @@ MsgMath::Matrix44d convert( GLdouble* matrix )
 // we have the original geometry as still we dont have the transform node. 
 // 2. We are not iterating over the nodes which are group nodes under the _root? 
 
-void drawShadowVolume()
+void buildShadowVolume()
 {
   // Lets query the vertices. 
   MsgCore::Node* node = _viewer->sceneData(); 
@@ -311,13 +341,16 @@ void drawShadowVolume()
             MsgMath::Vec3d vecOrig3 = vertices->at( i3 );
             MsgMath::Vec4d vecModi3( vecOrig3[0], vecOrig3[1], vecOrig3[2], 1 );  
 
-            MsgMath::Vec4d lightDir1 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi1 );
+            //MsgMath::Vec4d lightDir1 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi1 );
+            MsgMath::Vec4d lightDir1 = lightPos - vecModi1;
             lightDir1.normalize();
 
-            MsgMath::Vec4d lightDir2 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi2 );
+            //MsgMath::Vec4d lightDir2 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi2 );
+            MsgMath::Vec4d lightDir2 = lightPos - vecModi2;
             lightDir2.normalize();
             
-            MsgMath::Vec4d lightDir3 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi3 );;  
+            //MsgMath::Vec4d lightDir3 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi3 );;  
+            MsgMath::Vec4d lightDir3 = lightPos - vecModi3;
             lightDir3.normalize();
             
             MsgMath::Vec3d normal1 =  normals->at( ni1 );
@@ -337,7 +370,7 @@ void drawShadowVolume()
               edge1Passed = true;
             }
           
-            if( two_sided )
+            if( _twoSided )
             {
               if( ( -normal1Modi.dot( lightDir1 ) > 0 ) && ( -normal2Modi.dot( lightDir2 ) > 0 ) )
               {
@@ -375,7 +408,7 @@ void drawShadowVolume()
               edge2Passed = true;
             }
 
-            if( two_sided )
+            if( _twoSided )
             {
               if( ( -normal2Modi.dot( lightDir2 ) > 0 ) && ( -normal3Modi.dot( lightDir3 ) > 0 ) )
               {
@@ -416,7 +449,7 @@ void drawShadowVolume()
               edge3Passed = true;
             }
 
-            if( two_sided )
+            if( _twoSided )
             {
               if( ( -normal3Modi.dot( lightDir3 ) > 0 ) && ( -normal1Modi.dot( lightDir1 ) > 0 ) )  
               {
@@ -464,10 +497,10 @@ void drawShadowVolume()
           const float extensionFactor = 5.0f;
 
           // @Todo: Use display list. 
+          glNewList( _shadowVol + ( index * 3 ), GL_COMPILE );
           for( jItr; jItr != _edges.end(); ++jItr )
           {            
             glPushMatrix();
-            glLoadIdentity();
             glBegin( GL_QUADS );
               
               MsgMath::Vec3d vec3d1 = vertices->at( jItr->_vertex2._vertexIndex );
@@ -476,8 +509,8 @@ void drawShadowVolume()
               MsgMath::Vec4d vec4d1( vec3d1[0], vec3d1[1], vec3d1[2], 1.0 );
               MsgMath::Vec4d vec4d2( vec3d2[0], vec3d2[1], vec3d2[2], 1.0 );
 
-              vec4d1 = MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vec4d1 );
-              vec4d2 = MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vec4d2 );
+              //vec4d1 = MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vec4d1 );
+              //vec4d2 = MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vec4d2 );
               
               //glVertex3dv( vertices->at( jItr->_vertex2._vertexIndex ).front() );
               //glVertex3dv( vertices->at( jItr->_vertex1._vertexIndex ).front() );
@@ -500,10 +533,11 @@ void drawShadowVolume()
               //glVertex3dv( vertex42.front() );              
               //glVertex3dv( vertex41.front() );
 
-              glVertex4dv( vec4d1.front() );
-              glVertex4dv( vec4d2.front() );
-              glVertex4dv( vertex42.front() );
-              glVertex4dv( vertex41.front() );
+              
+                glVertex4dv( vec4d1.front() );
+                glVertex4dv( vec4d2.front() );
+                glVertex4dv( vertex42.front() ); 
+                glVertex4dv( vertex41.front() );              
 
             glEnd();                                      
             glPopMatrix();
@@ -511,16 +545,18 @@ void drawShadowVolume()
             _extendedVertices.push_back( vertex42 );
             _extendedVertices.push_back( vertex41 );
           }
+          glEndList();
 
           
           /////////////////////////////////////////////////////////////////////
           // Front cap. 
           //
 
+          glNewList( _shadowVol + ( index * 3 + 1 ), GL_COMPILE );
           glPushMatrix();
           std::vector< Triangle >::const_iterator constItr;
           glEnable( GL_POLYGON_OFFSET_FILL );
-          glPolygonOffset( 0.0f, 2.0f );
+          glPolygonOffset( 2.0f, 2.0f );
           glBegin( GL_POLYGON );
           for( constItr = _capTriangles.begin(); constItr != _capTriangles.end(); ++constItr )
           {           
@@ -531,15 +567,15 @@ void drawShadowVolume()
           glEnd();
           glDisable( GL_POLYGON_OFFSET_FILL );  
           glPopMatrix();
-
+          glEndList();
 
           /////////////////////////////////////////////////////////////////////
           // Back cap. 
           //
 
           // Drawing in the reverse order of drawing for front cap. 
+          glNewList( _shadowVol + ( index * 3 + 2 ), GL_COMPILE );
           glPushMatrix();
-          glLoadIdentity();
           glBegin( GL_POLYGON );
           int count = 0;
           for( int i = _extendedVertices.size()-1; i >= 0 ; --i )
@@ -551,15 +587,26 @@ void drawShadowVolume()
           }
           glEnd();
           glPopMatrix();
+          glEndList();
 
         } // End if( geom  )
-
       } // End for( size_t i = 0; i < drawables.size(); ++i ) 
-
     } // End if( ge ) 
-
   } // End  for loop. 
+}
 
+
+void drawShadowVolume()
+{
+  for( size_t i=0; i < MAX_LISTS;++i )
+  {
+    _shadowVolLists[i] = i;
+  }
+
+  glPushMatrix();
+    glListBase( _shadowVol );
+    glCallLists( MAX_LISTS, GL_UNSIGNED_BYTE, _shadowVolLists );
+  glPopMatrix();
 }
 
 
@@ -592,9 +639,27 @@ void drawScene()
   glDepthFunc( GL_LEQUAL );
   
   /*glColor3f( 1.0, 1.0, 1.0 );
-  drawShadowVolume();*/
+  buildShadowVolume();*/
 
-#if 1
+#if TESTING
+  
+  glEnable( GL_LIGHTING );
+  glEnable( GL_LIGHT0 );
+  glLightModelfv( GL_AMBIENT, lightAmbient );
+  glLightModelfv( GL_SPECULAR, lightSpecular );
+  glLightModelfv( GL_DIFFUSE, lightDiffuse );
+  glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, lightAmbient );
+  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, lightDiffuse );
+  if( _mode == !NAVIGATE )
+  {  
+    buildShadowVolume();
+  }
+
+  drawShadowVolume();
+
+#else
+  buildShadowVolume();
+
    _viewer->draw();
 
   // Turn on OpenGL states.
@@ -657,66 +722,35 @@ void drawScene()
 
 void display()
 {
-
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-  glEnable( GL_DEPTH_TEST );
+  glEnable( GL_DEPTH_TEST );  
   
   glPushMatrix();
-  glLoadIdentity();
-  glLightfv( GL_LIGHT0, GL_POSITION, lightPosition );
-  glTranslatef( lightPosition[0], lightPosition[1], lightPosition[2] );
-  glDisable( GL_LIGHTING );
-  glutSolidSphere( 1.0f, 10, 10 );
-  glEnable( GL_LIGHTING );
+    //glLoadIdentity();
+    glLightfv( GL_LIGHT0, GL_POSITION, lightPosition );
+    glTranslatef( lightPosition[0], lightPosition[1], lightPosition[2] );
+    glDisable( GL_LIGHTING );
+    glTranslatef( lightPosition[0], lightPosition[1], lightPosition[2] ); 
+    glutSolidSphere( 1.0f, 10, 10 );
+    glEnable( GL_LIGHTING );
   glPopMatrix();
 
-  //glRotatef( 10.0f, 1.0f, 0.0f, 0.0f );
-  //glRotatef( 10.0f, 0.0f, 1.0f, 0.0f );
-  drawScene();
-
-  /*
-  glClear( GL_STENCIL_BUFFER_BIT );
-  glEnable( GL_STENCIL_TEST );
-  glStencilFunc( GL_ALWAYS, 0, ~0 );  
-
-  glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE );
-  glDepthMask( GL_FALSE );
+  glPushMatrix();
+    drawScene();  
+  glPopMatrix();
   
-  glStencilOp( GL_KEEP, GL_INCR, GL_KEEP );
-  glCullFace( GL_FRONT );
-  
-  drawScene(); 
-
-  glStencilOp( GL_KEEP, GL_DECR, GL_KEEP );
-  glCullFace( GL_BACK );
-  
-  drawScene(); 
-
-  glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
-  glDepthFunc( GL_EQUAL );
-  glStencilFunc( GL_GEQUAL, 1, 1 );
-  glStencilOp( GL_KEEP, GL_KEEP, GL_REPLACE );
-  
-  glCullFace( GL_BACK );
-  drawScene();
-
-  glDisable( GL_STENCIL_TEST );
-  */
-
   glutSwapBuffers();
 }
 
 
 void reshape( int w, int h )
 {
-
   glViewport( 0, 0, w, h );
 
   glMatrixMode( GL_PROJECTION );
   glLoadIdentity();
   
-  gluPerspective( 45.0, ( float )w/h, 0.1, 1000.0 );
+  gluPerspective( 45.0, ( double )w/h, 0.1, 1000.0 );
 
   glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
@@ -748,44 +782,40 @@ void idle()
 
 void keyboard( unsigned char key, int x, int y )
 {
-  if( key == 'a' )
+  switch( _mode )
   {
-    //glRotatef( 1.0f, 0.0f, 1.0f, 0.0f );
-    lightPosition[0] = lightPosition[0] - 1.0;
-  }
+    case MOVE_LIGHT: 
+    {
+      if( key == 'a' ) { lightPosition[0] = lightPosition[0] - 1.0; }
+      if( key == 'd' ) { lightPosition[0] = lightPosition[0] + 1.0; }
+      if( key == 'w' ) { lightPosition[2] = lightPosition[2] - 1.0; }
+      if( key == 's' ) { lightPosition[2] = lightPosition[2] + 1.0; }
+      if( key == 'u' ) { lightPosition[1] = lightPosition[1] + 1.0; }
+      if( key == 'j' ) { lightPosition[1] = lightPosition[1] - 1.0; }
+      break;
+    }
+    case NAVIGATE: 
+    {
+      if( key == 'a' ) { glTranslatef( -1.0f,  0.0,  0.0 ); }
+      if( key == 'd' ) { glTranslatef(  1.0f,  0.0,  0.0 ); }
+      if( key == 'w' ) { glTranslatef(  0.0f,  0.0, -1.0 ); }
+      if( key == 's' ) { glTranslatef(  0.0f,  0.0,  1.0 ); }
+      break;
+    }
+    case ANIMATE: 
+    {
+      if( key == 'p' )
+      {
+        _pause = !_pause;
+      }
+      break;
+    }
+  };  
 
-  if( key == 'd' ) 
-  {
-    //glRotatef( -1.0f, 0.0f, 1.0f, 0.0f );
-    lightPosition[0] = lightPosition[0] + 1.0;
-  }
+  if( key == 'b' ){ _mode = MOVE_LIGHT; }
+  if( key == 'n' ){ _mode = NAVIGATE; }
+  if( key == 'm' ){ _mode = ANIMATE; }
 
-  if( key == 'w' ) 
-  {
-    //glRotatef( 1.0f, 1.0f, 0.0f, 0.0f );
-    lightPosition[2] = lightPosition[2] - 1.0;
-  }
-
-  if( key == 's' )
-  {
-    //glRotatef( -1.0f, 1.0f, 0.0f, 0.0f );
-    lightPosition[2] = lightPosition[2] + 1.0;
-  }
-
-  if( key == 'u' )
-  {
-    lightPosition[1] = lightPosition[1] + 1.0;
-  }
-
-  if( key == 'j' )
-  {
-    lightPosition[1] = lightPosition[1] - 1.0;
-  }
-
-  if( key == 'p' )
-  {
-    _pause = !_pause;
-  }
 
   glutPostRedisplay();
 }
