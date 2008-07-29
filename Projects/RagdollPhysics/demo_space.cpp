@@ -3,8 +3,6 @@
 
 // uses Juniper wood manikins of density 508 kg/m^3
 
-// Testing.....
-
 # include	<stdio.h>
 # include	<stdlib.h>
 # include	<math.h>
@@ -34,7 +32,7 @@ double timeAccum;
 double lastTime;
 //using namespace ode;
 
-int puase = 0;
+
 bool friction = true;
 int viewing = 1;
 
@@ -52,7 +50,7 @@ static dSpaceID coll_space_id;
 static dJointID plane2d_joint_ids[N_BODIES];
 static dJointGroup coll_contacts;
 
-//names objects
+//names of objects
 static dBodyID  torso1[N_BODIES];
 static dBodyID  torso2[N_BODIES];
 static dBodyID  torso3[N_BODIES];
@@ -67,7 +65,7 @@ static dBodyID  rightleg1[N_BODIES];
 static dBodyID  rightleg2[N_BODIES];
 
 
-//names shapes to be applied to objects later
+//names of shapes to be applied to objects later
 static dGeomID  torso1_geom[N_BODIES];
 static dGeomID  torso2_geom[N_BODIES];
 static dGeomID  torso3_geom[N_BODIES];
@@ -106,13 +104,15 @@ int viewport[] = { 0, 0, 800, 600 };
 static bool doInteract = false;
 static int  cursorX;
 static int  cursorY;
+static int  cursorX2;
+static int  cursorY2;
 
 
 void draw()
     {
 	// ode  drawstuff
 	
-	//glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
+	glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 
 	glBegin( GL_QUADS );
 		glVertex3f( -100.0, -100.0, 0.0 );
@@ -124,30 +124,6 @@ void draw()
 	dsSetColor (0.9, 0.6, 0.4);
 	for (int b = 0; b < N_BODIES; b ++)
 	{
-
-#ifdef dDOUBLE
-
-
-
-	dsDrawCapsuleD (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
-	dsDrawSphereD (dGeomGetPosition(torso2_geom[b]),dGeomGetRotation(torso2_geom[b]),.1);
-	dsDrawSphereD (dGeomGetPosition(torso3_geom[b]),dGeomGetRotation(torso3_geom[b]),.1);
-
-	dsDrawSphereD (dGeomGetPosition(head_geom[b]),dGeomGetRotation(head_geom[b]),.075);
-
-	dsDrawCapsuleD (dGeomGetPosition(leftarm1_geom[b]),dGeomGetRotation(leftarm1_geom[b]),.3,.05);
-	dsDrawCapsuleD (dGeomGetPosition(leftarm2_geom[b]),dGeomGetRotation(leftarm2_geom[b]),.3,.05);
-
-	dsDrawCapsuleD (dGeomGetPosition(rightarm1_geom[b]),dGeomGetRotation(rightarm1_geom[b]),.3,.05);
-	dsDrawCapsuleD (dGeomGetPosition(rightarm2_geom[b]),dGeomGetRotation(rightarm2_geom[b]),.3,.05);
-
-	dsDrawCapsuleD (dGeomGetPosition(leftleg1_geom[b]),dGeomGetRotation(leftleg1_geom[b]),.4,.05);
-	dsDrawCapsuleD (dGeomGetPosition(leftleg2_geom[b]),dGeomGetRotation(leftleg2_geom[b]),.4,.05);
-
-	dsDrawCapsuleD (dGeomGetPosition(rightleg1_geom[b]),dGeomGetRotation(rightleg1_geom[b]),.4,.05);
-	dsDrawCapsuleD (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
-
-#else
 
 
 	dsDrawCapsule (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
@@ -169,7 +145,6 @@ void draw()
 	dsDrawCapsule (dGeomGetPosition(rightleg1_geom[b]),dGeomGetRotation(rightleg1_geom[b]),.4,.05);
 	dsDrawCapsule (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
 
-# endif
 	}
     }
 
@@ -196,7 +171,7 @@ static void     cb_near_collision (void *data, dGeomID o1, dGeomID o2)
 	}
 
 	contact.surface.mode = 0;
-	contact.surface.mu = 100; // static friction I belive);
+	contact.surface.mu = 10; // static friction I belive);
 
 
 	if (dCollide (o1, o2, 1, &contact.geom, sizeof (dContactGeom)))
@@ -393,10 +368,9 @@ if (friction == true)  /* [ */
 }
 
 
-void interact(int cursorX, int cursorY)
+void interact()
 {
 	//sets up interactivity
-
 	//GLint viewport[4];
 
 	glSelectBuffer(BUFSIZE,selectBuf);
@@ -404,20 +378,84 @@ void interact(int cursorX, int cursorY)
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	std::cout << "Viewport is: " << viewport[0] << " " << viewport[1] << " " << viewport[2] << " " << viewport[3] << std::endl;	
 	glLoadIdentity();
-
-	//glGetIntegerv(GL_VIEWPORT, viewport);
 	gluPickMatrix(cursorX, viewport[3]-cursorY, 5, 5, viewport);
-	gluPerspective(60, viewport[2]/viewport[3], 1.0, 1000);
+	gluPerspective( 60.0, ( double )viewport[2]/viewport[3], 0.1, 10000.0);
+	//glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	glInitNames();
 }
 
+void movedoll (int name)
+{
+int bodynum = name%20;
+int bodypart = name/20;
+dReal z= 0;
+int scalar = 10;
+
+switch (bodypart)
+  {
+	case -1:
+		std::cout<<"nothing has been grabbed\n";
+		break;
+	case 0:
+		dBodySetLinearVel(torso1[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+	case 1:
+		dBodySetLinearVel(torso2[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+	case 2:
+		dBodySetLinearVel(torso3[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+	case 3:
+		dBodySetLinearVel(head[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+	case 4:
+		dBodySetLinearVel(leftarm1[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+	case 5:
+		dBodySetLinearVel(leftarm2[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+	case 6:
+		dBodySetLinearVel(rightarm1[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+	case 7:
+		dBodySetLinearVel(rightarm2[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+	case 8:
+		dBodySetLinearVel(leftleg1[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+	case 9:
+		dBodySetLinearVel(leftleg2[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+	case 10:
+		dBodySetLinearVel(rightleg1[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+	case 11:
+		dBodySetLinearVel(rightleg2[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+		break;
+  }
+
+}
+
 void processHits (GLint hits, GLuint buffer[])
 {
-
 std::cout<<"# of hits "<<hits<<'\n';
+GLuint smallest = 4294967295;
+GLuint name =-20;
+for (int i=1; i < hits*4; i+= 4)
+{
+	if (buffer[i]<=smallest)
+	{
+		smallest = buffer[i];
+		name = buffer[i+2];
+	}
 
+}
+if (name != -20)
+	movedoll(name);
 }
 
 
@@ -434,12 +472,10 @@ void endinteract()
 
 	// returning to normal rendering mode
 	hits = glRenderMode(GL_RENDER);
-	std::cout << "hits are: " << hits << std::endl;
 
 	// if there are hits process them
 	if (hits != 0)
 	{
-		std::cout << "hits are: " << hits << std::endl;
 		processHits(hits,selectBuf);
 	}
 }
@@ -450,61 +486,9 @@ void endinteract()
 	//incompatibility issues between gl and ds
 void InteractiveRender ()
 {
-	//glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 
-	glBegin( GL_QUADS );
-		glVertex3f( -100.0, -100.0, 0.0 );
-		glVertex3f(  100.0, -100.0, 0.0 );
-		glVertex3f(  100.0, 100.0, 0.0 );
-		glVertex3f( -100.0, 100.0, 0.0 );
-	glEnd();
-
-	dsSetColor (0.9, 0.6, 0.4);
 	for (int b = 0; b < N_BODIES; b ++)
 	{
-
-#ifdef dDOUBLE
-
-
-
-
-	glInitNames();
-	glPushName(b);
-
-	dsDrawCapsuleD (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
-	glLoadName(b+N_BODIES);
-	dsDrawSphereD (dGeomGetPosition(torso2_geom[b]),dGeomGetRotation(torso2_geom[b]),.1);
-	glLoadName(b+N_BODIES*2);
-	dsDrawSphereD (dGeomGetPosition(torso3_geom[b]),dGeomGetRotation(torso3_geom[b]),.1);
-
-	glLoadName(b+N_BODIES*3);
-	dsDrawSphereD (dGeomGetPosition(head_geom[b]),dGeomGetRotation(head_geom[b]),.075);
-
-	glLoadName(b+N_BODIES*4);
-	dsDrawCapsuleD (dGeomGetPosition(leftarm1_geom[b]),dGeomGetRotation(leftarm1_geom[b]),.3,.05);
-	glLoadName(b+N_BODIES*5);
-	dsDrawCapsuleD (dGeomGetPosition(leftarm2_geom[b]),dGeomGetRotation(leftarm2_geom[b]),.3,.05);
-
-	glLoadName(b+N_BODIES*6);
-	dsDrawCapsuleD (dGeomGetPosition(rightarm1_geom[b]),dGeomGetRotation(rightarm1_geom[b]),.3,.05);
-	glLoadName(b+N_BODIES*7);
-	dsDrawCapsuleD (dGeomGetPosition(rightarm2_geom[b]),dGeomGetRotation(rightarm2_geom[b]),.3,.05);
-
-	glLoadName(b+N_BODIES*8);
-	dsDrawCapsuleD (dGeomGetPosition(leftleg1_geom[b]),dGeomGetRotation(leftleg1_geom[b]),.4,.05);
-	glLoadName(b+N_BODIES*9);
-	dsDrawCapsuleD (dGeomGetPosition(leftleg2_geom[b]),dGeomGetRotation(leftleg2_geom[b]),.4,.05);
-
-	glLoadName(b+N_BODIES*10);
-	dsDrawCapsuleD (dGeomGetPosition(rightleg1_geom[b]),dGeomGetRotation(rightleg1_geom[b]),.4,.05);
-	glLoadName(b+N_BODIES*11);
-	dsDrawCapsuleD (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
-	glPopName();
-	}
-
-#else
-
-
 
 	glInitNames();
 	glPushName(b);
@@ -540,8 +524,7 @@ void InteractiveRender ()
 	glPopName();
 	}
 
-# endif
-	
+
 
 
 
@@ -561,19 +544,8 @@ static void     cb_sim_step ()
 		coll_contacts.empty ();
 	}
 
-
-
 	Friction();
-
-	switch (viewing)
-	{
-		case 1:
-			InteractiveRender();
-			break;
-		case 2:
-			InteractiveRender();
-			break;
-	}
+	//draw();
 }
 
 
@@ -863,10 +835,9 @@ void init()
 	glShadeModel (GL_FLAT);
 	glEnable (GL_DEPTH_TEST);
 	glDepthFunc (GL_LESS);
-	glColor3f (1,1,1);	
+	glColor3f (1,1,1);
 
-
-
+	//dsSetShadows( 0 );
 }
 
 void display()
@@ -876,20 +847,20 @@ void display()
 
 	if( doInteract )
 	{
-		std::cout << "Test interact( int, int ) " << cursorX << " " << cursorY << std::endl;			
-		interact( cursorX, cursorY );	
-		cb_sim_step();
+		std::cout << "\nTest interact( int, int ) " << cursorX << ' ' << cursorY <<'\n' ;
+		interact();
+		InteractiveRender();
 		endinteract();
 		viewing = 1;
 		doInteract = false;
-		//InteractiveRender();
 	}
+
 	else
 	{
 		cb_sim_step();
+		draw();
+		glutSwapBuffers();
 	}
-
-	glutSwapBuffers();
 }
 
 
@@ -900,13 +871,9 @@ void idle()
 
 	dWorldStep (dyn_world,TIME_STEP);
 
-	//cb_sim_step();void dsDrawFrame (int width, int height, dsFunctions *fn, int pause)	
-
-	//drawGround();
 
 	glColor3f( 0.5, 0.5, 0.5 );
-	//cb_sim_step();
-		
+
 	glutPostRedisplay();
 	//glutSwapBuffers();
 }
@@ -921,14 +888,15 @@ void reshape(int w, int h)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective( 60.0, w/h, 1.0, 10000.0 );
+	gluPerspective( 60.0, ( double )w/h, 0.1, 10000.0 );
 
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 	gluLookAt(STAGE_SIZE/2, STAGE_SIZE/2, STAGE_SIZE, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 1.0, 0.0);
 }
 
 
-void myGlutTimer( int pause )
+void myGlutTimer(int puase)
 {
 /*
 	double now = 1;
@@ -956,8 +924,11 @@ void mouseplay(int button, int state, int X, int Y)
 			switch ( button )
 			{
 			case GLUT_LEFT_BUTTON:
+				cursorX = X;
+				cursorY = Y;
 				break;
 			case GLUT_MIDDLE_BUTTON:
+				viewing = 2;
 				break;
 			case GLUT_RIGHT_BUTTON:
 				break;
@@ -968,43 +939,21 @@ void mouseplay(int button, int state, int X, int Y)
 			switch ( button )
 			{
 			case GLUT_LEFT_BUTTON:
-				friction = true;
+				cursorX2 = X;
+				cursorY2 = Y;
+				doInteract = true;
 				break;
 			case GLUT_MIDDLE_BUTTON:
 			{
-				
-				viewing = 2;
-
-				doInteract = true;
-				std::cout << "doInteract " << doInteract << std::endl;
-				cursorX = X;
-				cursorY = Y;	
-				//interact(X, Y);
-//				endinteract();
 				break;
 			}
 			case GLUT_RIGHT_BUTTON:
-				friction = false;
 				break;
 			}
 		}
 		break;
 	case 2:
 		if ( state == 0 )
-		{
-			switch ( button )
-			{
-			case GLUT_LEFT_BUTTON:
-				break;
-			case GLUT_MIDDLE_BUTTON:
-//				interact(X, Y);
-//				endinteract();
-				break;
-			case GLUT_RIGHT_BUTTON:
-				break;
-			}
-		}
-		else if ( state == 1 )
 		{
 			switch ( button )
 			{
@@ -1019,10 +968,22 @@ void mouseplay(int button, int state, int X, int Y)
 				break;
 			}
 		}
+		else if ( state == 1 )
+		{
+			switch ( button )
+			{
+			case GLUT_LEFT_BUTTON:
+				break;
+			case GLUT_MIDDLE_BUTTON:
+				break;
+			case GLUT_RIGHT_BUTTON:
+				break;
+			}
+		}
 		break;
 	}
 
-	glutPostRedisplay();
+//	glutPostRedisplay();
 }
 
 
@@ -1033,7 +994,7 @@ int main( int argc, char **argv )
 	glutInit( &argc, argv );
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);	
 	glutInitWindowPosition(100,100);
-	glutInitWindowSize(680,510);
+	glutInitWindowSize(800,600);
 	glutCreateWindow("Ragdoll-Physics");
 
 	init();
@@ -1047,9 +1008,6 @@ int main( int argc, char **argv )
 	glutMouseFunc(mouseplay);
 
 
-	//dsDrawFrame( 680, 420, &drawstuff_functions, 1 );
-
-	//dsSimulationLoop (argc, argv, 352,288,&drawstuff_functions);
 	
 	glutMainLoop();
 	glutTimerFunc( 1, myGlutTimer, 1 );
