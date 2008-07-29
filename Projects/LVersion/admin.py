@@ -31,7 +31,9 @@ for line in f:
             
 # Create repositories.             
 for item in paths:
-    os.system( 'svnadmin create' + item )
+    os.system( 'svnadmin create' + item )    
+    #print 'cp -rf ./Hooks/*' + item
+    os.system( 'cp -rf ./Hooks/*' + item.append( '/' + 'hooks' ) )
             
             
         
