@@ -7,8 +7,25 @@
 import os
 import string 
 import sys
+import subprocess
 
 from config_loader import getPaths
+
+
+def getDelimeter():
+    if(sys.platform == "win32" or sys.platform == "win64"):
+        return "\\"
+    else:
+        return '//'
+
+
+def convertToNative(path): 
+    if(sys.platform == "win32" or sys.platform == "win64"):
+        return path.replace("/", "\\")
+    else: 
+        return path.replace("\", \"/")
+
+
 
 def buildAndCopyConfig( repoPath="", paths=[] ):
     # Check for NULL args.
@@ -78,7 +95,47 @@ def create( repoName="", config="repos.cfg" ):
 #
 #////////////////////////////////////////////////////////////////////////////
 
-#def add( args ):     
+def add(args):    
+    delimiter = getDelimeter()    
+    
+    URL=""    
+    addArgs = " ".join(args[2:len(args)])
+
+    # @todo: 
+    # Strip the file or directory name and keep the path.                
+    slashIndex  = string.rfind(addArgs, delimiter)    
+    svnInfoPath = addArgs[0 : slashIndex]
+    addArgs     = addArgs[slashIndex : len(addArgs)]
+        
+    print "addArgs is: " + addArgs
+    
+    p = subprocess.Popen( ["svn", "info", svnInfoPath], stdout=subprocess.PIPE )
+    info = p.communicate()[0]
+    info =  info.split( "\n" )
+    #print info
+    for i in info:           
+        #print i
+        if string.rfind( i, "Repository Root" ) > -1:
+            index = string.find( i, ":" )
+            #print i
+            #print index
+            URL = string.strip( i[index + 1 : len( i )] )                
+            print "URL is: " + URL
+            
+            # Now we have the URL read the config and switch to repositories accordingly.             
+            if string.find(URL, "file:///") > -1: 
+                repoPath = URL.strip("file:///")
+                repoPath = convertToNative( repoPath )                
+                print repoPath
+                print repoPath + delimiter + 'lversion.cfg'
+                repoPaths = getPaths( repoPath + delimiter + 'lversion.cfg')
+                #print repoPaths   
+                for i in repoPaths: 
+                    print i
+                    # @todo: Fix writing path to the config. 
+                    #subprocess.Popen(["svn", "switch" "URL"], i)
+                    #subprocess.Popen(["svn", "add"], addArgs)
+                
     
 #
 # Parase command line. 
@@ -90,6 +147,8 @@ def create( repoName="", config="repos.cfg" ):
 for args in sys.argv:
     if args == "create": 
         code = create(sys.argv[2])
-    if args == "add":        
-        code = add( sys.argv )
+    
+    # @note: We have a different stratagey now. We will use svn dump as of now. 
+    #if args == "add":        
+    #    code = add( sys.argv )
         
