@@ -79,7 +79,12 @@ def create( repoName="", config="repos.cfg" ):
     # Close the file. 
     #f.close()
 
-    # Create repositories and copy hooks in the respective directories.                 
+    # Create repositories and copy hooks in the respective directories.            
+    
+    # @todo: Fix the condition below. 
+    # We need to make it a chain. Hence the first path will be considered as master path 
+    # and hence we dont need to copy the master path to path list for the next sister 
+    # repos and so on.     
     for repoPath in paths:                            
         os.system( 'svnadmin create ' + repoPath )        
         hooksPath = repoPath + '/' + 'hooks'         
