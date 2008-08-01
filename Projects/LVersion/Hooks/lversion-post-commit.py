@@ -1,12 +1,12 @@
 import os
 import sys
 import subprocess
-from import config_loader *
+from config_loader import *
 
 REPOS   = sys.argv[1]
 REV     = sys.argv[2] 
 
-print "Repository is: " REPOS " and Revision is: " REV
+#print "Repository is: " REPOS " and Revision is: " REV
 
 # @todo: Dump the changes to a file. 
 # load the dump to sistes repos. 
@@ -17,13 +17,22 @@ print "Repository is: " REPOS " and Revision is: " REV
 #for repos in paths: 
 #    commit-email.pl repos "$REV" commit-watchers@example.org
 #    log-commit.py --repository repos --revision "$REV"
+path = REPOS + "\\" + "hooks"
+os.chdir( path )
+file = open( "out", "w" )
+arg = REPOS + ' -r ' + REV + ' --incremental ' + ' > temp.txt'  
+#p = subprocess.Popen( ["svnadmin", "dump", arg], stdout=None ) 
+os.system( 'svnadmin dump ' + arg )
+file.write( arg )
+#file.close
+#file = open( "temp", "w+" )
+#file.write( p.communicate()[0] )
+#file.close()
 
-p = subprocess.POpen( ["svnadmin", "dump", REPOS + '-r' + REV + '--incremental'], stdout=subprocess.PIPE ) 
-file = open( "temp", "w+" )
-file.write( p.communicate()[0] )
+paths = getPaths( REPOS + '//lversion.cfg' )
+file.write( ' '.join( paths ) )
 file.close()
-
-paths = getPaths( '..//lversion.cfg' )
-print paths 
 for i in paths: 
-    p = subprocess.POpen( ["svnadmin", "load", i + '<' + file], stdout=subprocess.PIPE )     
+    arg = i + ' < temp.txt '
+    os.system( 'svnadmin load ' + arg ) 
+    #p = subprocess.POpen( ["svnadmin", "load", i + '<' + temp.txt], stdout=None )     
