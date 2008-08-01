@@ -9,15 +9,8 @@ import string
 import sys
 import subprocess
 
-from config_loader import getPaths
-
-
-def getDelimeter():
-    if(sys.platform == "win32" or sys.platform == "win64"):
-        return "\\"
-    else:
-        return '//'
-
+from config_loader import *
+from os_handler    import *
 
 def convertToNative(path): 
     if(sys.platform == "win32" or sys.platform == "win64"):
@@ -25,23 +18,23 @@ def convertToNative(path):
     else: 
         return path.replace("\", \"/")
 
-
+#
+# Copy configs to the respected repositories 
+# @todo: Should we copy sister repositories only to each? 
+#
+#////////////////////////////////////////////////////////////////////////////
 
 def buildAndCopyConfig( repoPath="", paths=[] ):
-    # Check for NULL args.
-        
-    # Get all the paths. 
     
-    #repoPath = string.lstrip(repoPath)
-    #repoPath = string.rstrip(repoPath)
+    # @todo: Check for NULL args.
     
-    fullPath = repoPath + '/' + "lversion.cfg"
-    print fullPath
+    fullPath = repoPath + '/' + "lversion.cfg"    
     f = open( fullPath, 'w' )
     f.write( "PATHS \n { \n" )
     f.write( "\n".join( paths ) )
     f.write( "\n } \n" )
     f.close()
+    return
 
 #
 # Create a repository.
@@ -56,7 +49,7 @@ def create( repoName="", config="repos.cfg" ):
     # Write paths
     paths = getPaths( config )
     for i in range( 0, len( paths ) ):
-        paths[i] = paths[i] + '/' + repoName
+        paths[i] = paths[i] + getDelimeter() + repoName
         #print paths
         
     # Copy path names to the hooks
@@ -85,12 +78,17 @@ def create( repoName="", config="repos.cfg" ):
     # We need to make it a chain. Hence the first path will be considered as master path 
     # and hence we dont need to copy the master path to path list for the next sister 
     # repos and so on.     
+    #print paths[1]    
+    current = int( 1 )        
     for repoPath in paths:                            
         os.system( 'svnadmin create ' + repoPath )        
         hooksPath = repoPath + '/' + 'hooks'         
-        os.system( 'cp -rf ./Hooks/* ' + hooksPath )     
-        os.system( 'cp -f config_loader.py ' + hooksPath )         
-        buildAndCopyConfig( repoPath, paths )
+        #os.system( 'cp -rf ./Hooks/* ' + hooksPath )
+        os.system( 'xcopy /S Hooks ' + hooksPath )        
+        #os.system( 'cp -f config_loader.py ' + hooksPath )
+        os.system( 'xcopy config_loader.py ' + hooksPath )
+        buildAndCopyConfig( repoPath, paths[current:len( paths )]  )
+        current += 1
 
 #
 # Adding files to repository
