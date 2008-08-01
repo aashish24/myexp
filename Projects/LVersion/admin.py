@@ -63,27 +63,28 @@ def create( repoName="", config="repos.cfg" ):
     # @todo: Make it more efficient 
     
     # First read existing lines.  
-    f = open('Hooks/post-commit.py', 'r+')
-    lines = f.readlines()
+    #f = open('Hooks/post-commit.py', 'r+')
+    #lines = f.readlines()
 
     # Beginning of the file
-    f.seek(0)
+    #f.seek(0)
 
-    f.write('paths=[')
-    f.write(",".join(paths))
-    f.write(']' + '\n')
+    #f.write('paths=[')
+    #f.write(",".join(paths))
+    #f.write(']' + '\n')
 
     # Write old content 
-    f.write("".join( lines ))
+    #f.write("".join( lines ))
 
     # Close the file. 
-    f.close()
+    #f.close()
 
     # Create repositories and copy hooks in the respective directories.                 
     for repoPath in paths:                            
         os.system( 'svnadmin create ' + repoPath )        
         hooksPath = repoPath + '/' + 'hooks'         
         os.system( 'cp -rf ./Hooks/* ' + hooksPath )     
+        os.system( 'cp -f config_loader.py ' + hooksPath )         
         buildAndCopyConfig( repoPath, paths )
 
 #
