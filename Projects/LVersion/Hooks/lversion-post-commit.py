@@ -2,6 +2,7 @@ import os
 import sys
 import subprocess
 from config_loader import *
+from os_handler    import *
 
 REPOS   = sys.argv[1]
 REV     = sys.argv[2] 
@@ -17,7 +18,7 @@ REV     = sys.argv[2]
 #for repos in paths: 
 #    commit-email.pl repos "$REV" commit-watchers@example.org
 #    log-commit.py --repository repos --revision "$REV"
-path = REPOS + "\\" + "hooks"
+path = REPOS + getDelimeter() + "hooks"
 os.chdir( path )
 file = open( "out", "w" )
 arg = REPOS + ' -r ' + REV + ' --incremental ' + ' > temp.txt'  
@@ -29,7 +30,7 @@ file.write( arg )
 #file.write( p.communicate()[0] )
 #file.close()
 
-paths = getPaths( REPOS + '//lversion.cfg' )
+paths = getPaths( REPOS + getDelimeter() + 'lversion.cfg' )
 file.write( ' '.join( paths ) )
 file.close()
 for i in paths: 

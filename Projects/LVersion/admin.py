@@ -30,9 +30,9 @@ def buildAndCopyConfig( repoPath="", paths=[] ):
     
     fullPath = repoPath + '/' + "lversion.cfg"    
     f = open( fullPath, 'w' )
-    f.write( "PATHS \n { \n" )
+    f.write( "PATHS\n{\n" )
     f.write( "\n".join( paths ) )
-    f.write( "\n } \n" )
+    f.write( "\n} \n" )
     f.close()
     return
 
@@ -82,11 +82,13 @@ def create( repoName="", config="repos.cfg" ):
     current = int( 1 )        
     for repoPath in paths:                            
         os.system( 'svnadmin create ' + repoPath )        
-        hooksPath = repoPath + '/' + 'hooks'         
+        hooksPath = repoPath + getDelimeter() + 'hooks'         
         #os.system( 'cp -rf ./Hooks/* ' + hooksPath )
-        os.system( 'xcopy /S Hooks ' + hooksPath )        
+        print hooksPath        
+        os.system( 'xcopy Hooks ' + hooksPath )        
         #os.system( 'cp -f config_loader.py ' + hooksPath )
         os.system( 'xcopy config_loader.py ' + hooksPath )
+        os.system( 'xcopy os_handler.py ' + hooksPath )
         buildAndCopyConfig( repoPath, paths[current:len( paths )]  )
         current += 1
 
