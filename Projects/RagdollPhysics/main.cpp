@@ -19,6 +19,10 @@
 # define BUFSIZE  512
 GLuint selectBuf[BUFSIZE];
 
+
+// Texture object indices. 
+GLuint glTexIndex;
+
 //number of manikins
 # define        N_BODIES        20
 
@@ -130,25 +134,22 @@ GLuint loadTexture( std::string fileName)
 	int width, height;
 	void *pixels;
 
-	
-		tgaimage = new TgaImage(fileName);
+	tgaimage = new TgaImage(fileName);
 
-		width = tgaimage->getWidth();
-		height = tgaimage->getHeight();
-		pixels = tgaimage->getPixels();
-	
+	width = tgaimage->getWidth();
+	height = tgaimage->getHeight();
+	pixels = tgaimage->getPixels();	
+
+	std::cout << "Texture filename is: " << fileName << " width: " << width << " height: " << height << std::endl;
 
 	GLuint index;
 	glGenTextures( 1,  &index );
 	glBindTexture( GL_TEXTURE_2D, index );
-
-
-
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-
+	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 
 	if(tgaimage)
 		delete tgaimage;
@@ -161,18 +162,25 @@ void draw()
 	// ode  drawstuff
 	
 	glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
-
-
-
-//	loadTexture("./data/wood.tga");
-
+	
+	
+	glDisable( GL_LIGHTING );
+  	glEnable( GL_TEXTURE_2D ); 
+  	glBindTexture( GL_TEXTURE_2D, glTexIndex ); 
+	glColor3f( 1.0, 1.0, 0.8 );
 	glBegin( GL_QUADS );
-		glVertex3f( -100.0, -100.0, 0.0 );
-		glVertex3f(  100.0, -100.0, 0.0 );
-		glVertex3f(  100.0, 100.0, 0.0 );
-		glVertex3f( -100.0, 100.0, 0.0 );
+		glNormal3f( 0.0, 0.0, 1.0 );
+		glTexCoord3f( 0.0, 0.0, 0.0 );
+		glVertex3f( -10.0, -10.0, 0.0 );
+		glTexCoord3f( 20.0, 0.0, 0.0 );
+		glVertex3f(  20.0, -10.0, 0.0 );
+		glTexCoord3f( 20.0, 20.0, 0.0 );
+		glVertex3f(  20.0, 10.0, 0.0 );
+		glTexCoord3f( 0.0, 20.0, 0.0 );
+		glVertex3f( -10.0, 10.0, 0.0 );
 	glEnd();
-
+	glDisable( GL_TEXTURE_2D );
+	glEnable( GL_LIGHTING );
 
 	dsSetColor (0.9, 0.6, 0.4);
 	for (int b = 0; b < N_BODIES; b ++)
@@ -197,8 +205,7 @@ void draw()
 
 	dsDrawCapsule (dGeomGetPosition(rightleg1_geom[b]),dGeomGetRotation(rightleg1_geom[b]),.4,.05);
 	dsDrawCapsule (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
-
-	}
+	}		
 }
 
 
@@ -866,9 +873,9 @@ void init()
 	// setup stuff
 	glEnable (GL_LIGHTING);
 	glEnable (GL_LIGHT0);
-	glDisable (GL_TEXTURE_2D);
-	glDisable (GL_TEXTURE_GEN_S);
-	glDisable (GL_TEXTURE_GEN_T);
+//	glDisable (GL_TEXTURE_2D);
+//	glDisable (GL_TEXTURE_GEN_S);
+//	glDisable (GL_TEXTURE_GEN_T);
 	glShadeModel (GL_FLAT);
 	glEnable (GL_DEPTH_TEST);
 	glDepthFunc (GL_LESS);
@@ -878,11 +885,15 @@ void init()
 
 	// leave openGL in a known state - flat shaded white, no textures
 	glEnable (GL_LIGHTING);
-	glDisable (GL_TEXTURE_2D);
+//	glDisable (GL_TEXTURE_2D);
 	glShadeModel (GL_FLAT);
 	glEnable (GL_DEPTH_TEST);
 	glDepthFunc (GL_LESS);
 	glColor3f (1,1,1);
+
+	glTexIndex = loadTexture("./data/wood.tga");
+
+
 
 	//dsSetShadows( 0 );
 /*      considering ways to impliment dance rutine or other artist endevers
@@ -1057,7 +1068,7 @@ void idle()
 	dWorldStep (dyn_world,TIME_STEP);
 
 
-	glColor3f( 0.5, 0.5, 0.5 );
+	//glColor3f( 0, 1, 0 );
 
 	glutPostRedisplay();
 	//glutSwapBuffers();
