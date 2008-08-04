@@ -11,6 +11,8 @@
 # include	<drawstuff/drawstuff.h>
 # include	"texturepath.h"
 # include	"GL/glut.h"
+# include	"BmpImage.h"
+# include	"TgaImage.h"
 
 #   define drand48()  ((double) (((double) rand()) / ((double) RAND_MAX)))
 
@@ -44,6 +46,14 @@ static int  cursorX;
 static int  cursorY;
 static int  cursorX2;
 static int  cursorY2;
+
+
+
+
+
+static GLuint wood[1];
+
+
 
 
 //names the world in which the collisions take place
@@ -110,20 +120,51 @@ static dJointID rightknee[N_BODIES];
 // rendering parameters.
 int viewport[] = { 0, 0, 800, 600 };
 
+GLuint loadTexture( std::string fileName)
+{
+	int extind = fileName.rfind('.');
+	std::string ext(&(fileName.c_str()[extind+1]));
 
+	TgaImage *tgaimage = 0;
+
+	int width, height;
+	void *pixels;
+
+	
+		tgaimage = new TgaImage(fileName);
+
+		width = tgaimage->getWidth();
+		height = tgaimage->getHeight();
+		pixels = tgaimage->getPixels();
+	
+
+	GLuint index;
+	glGenTextures( 1,  &index );
+	glBindTexture( GL_TEXTURE_2D, index );
+
+
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+
+	if(tgaimage)
+		delete tgaimage;
+
+	return index;
+}
 
 void draw()
-    {
+{
 	// ode  drawstuff
 	
 	glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 
-/*
-	glGenTextures (1 , wood);
-	texture = (some function that grabs and converts image file);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2048, 1024, 0, GL_RGB, GL_INT, texture);
-	glBindTexture(GL_TEXTURE_2D, wood[0]);
-*/
+
+
+//	loadTexture("./data/wood.tga");
 
 	glBegin( GL_QUADS );
 		glVertex3f( -100.0, -100.0, 0.0 );
@@ -132,7 +173,6 @@ void draw()
 		glVertex3f( -100.0, 100.0, 0.0 );
 	glEnd();
 
-	//glDeleteTextures (1, wood);
 
 	dsSetColor (0.9, 0.6, 0.4);
 	for (int b = 0; b < N_BODIES; b ++)
@@ -159,7 +199,7 @@ void draw()
 	dsDrawCapsule (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
 
 	}
-    }
+}
 
 
 
