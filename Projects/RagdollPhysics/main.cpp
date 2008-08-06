@@ -1,14 +1,14 @@
 
-#include	<stdio.h>
-#include	<stdlib.h>
-#include	<math.h>
-#include	<iostream>
-#include	<ode/ode.h>
-#include	<drawstuff/drawstuff.h>
-#include	"texturepath.h"
-#include	"GL/glut.h"
-#include	"BmpImage.h"
-#include	"TgaImage.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <iostream>
+#include <ode/ode.h>
+#include <drawstuff/drawstuff.h>
+#include "texturepath.h"
+#include "GL/glut.h"
+#include "BmpImage.h"
+#include "TgaImage.h"
 
 #include "gmtl/Vec.h"
 #include "gmtl/Matrix.h"
@@ -26,7 +26,7 @@ GLuint                selectBuf[BUFSIZE];
 GLuint                glTexIndex;
 
 // Number of manikins
-#define               N_BODIES              2
+#define               N_BODIES              20
 
 
 #define               STAGE_SIZE            8.0  // in m
@@ -44,36 +44,54 @@ double                lastTime;
 
 // Variables dealling with mouse use
 // used to turn off and on animation and friction aproximation by triggers
-static bool           dancing   =             false;
-static bool           friction =              true;
-static int            viewing =               1;
-static int            dance_counter =         0;
-static int            step =                  0;
-static bool           doInteract =            false;
-static int            cursorX;
-static int            cursorY;
-static int            cursorX2;
-static int            cursorY2;
+static bool dancing = false;
+static bool friction = true;
+static int  dance_counter=0;
+static int  step=0;
+static bool doInteract = false;
+static int  cursorX;
+static int  cursorY;
+static int  cursorX2;
+static int  cursorY2;
 
 
 //
 static GLuint         wood[1];
 
+static GLuint name =-N_BODIES;
+static int  hits;
+static int  clicked = -1;
+static int  beat = 50;
 
-//names the world in which the collisions take place
+// Names the world in which the collisions take place
 static dWorld         dyn_world;
 
 
-//density of manikins in kg/m^3  (sun baked dried Chinese Juniper Wood)
+// Density of manikins in kg/m^3  (sun baked dried Chinese Juniper Wood)
 static dReal          density = 508;
 
 
-//necessary for collisions
+// Necessary for collisions
 static dSpaceID       coll_space_id;
 static dJointID       plane2d_joint_ids[N_BODIES];
 static dJointGroup    coll_contacts;
 
-//names of objects
+
+// Stairs
+static dGeomID  stair1;
+static dGeomID  stair2;
+static dGeomID  stair3;
+static dGeomID  stair4;
+static dGeomID  stair5;
+static dGeomID  stair6;
+static dGeomID  stair7;
+static dReal    sides1[]= {2, 1, 0.5};
+static dReal    sides2[]= {2, 1, 1};
+static dReal    sides3[]= {2, 1, 1.5};
+static dReal    sides4[]= {12, 2, 2};
+
+
+// Names of objects
 static dBodyID        torso1[N_BODIES];
 static dBodyID        torso2[N_BODIES];
 static dBodyID        torso3[N_BODIES];
@@ -140,15 +158,15 @@ bool                  useMouseRightButton  ( false );
 
 enum                  InteractioMode
                       { 
-                        PICK_AND_MOVE = 0, 
-                        NAVIGATE
+                        PICK        = 1,                        
+                        NAVIGATE    = 2
                       };
 
-InteractioMode        mode( NAVIGATE );
+InteractioMode        mode( PICK );
 
 
 //
-GLuint loadTexture( std::string fileName)
+GLuint loadTexture(std::string fileName)
 {
 	int extind = fileName.rfind('.');
 	std::string ext(&(fileName.c_str()[extind+1]));
@@ -184,14 +202,13 @@ GLuint loadTexture( std::string fileName)
 
 void draw()
 {	
-	glDisable( GL_LIGHTING );
+	glDisable( GL_LIGHTING );  
+  	glColor3f( 1.0, 1.0, 0.8 );
+  	glEnable( GL_TEXTURE_2D ); 
+  	glBindTexture( GL_TEXTURE_2D, glTexIndex );   
   
-  glColor3f( 1.0, 1.0, 0.8 );
-  glEnable( GL_TEXTURE_2D ); 
-  glBindTexture( GL_TEXTURE_2D, glTexIndex );   
-  
-  glPushMatrix();
-  glBegin( GL_QUADS );
+  	glPushMatrix();
+  	glBegin( GL_QUADS );
 		glNormal3f( 0.0, 0.0, 1.0 );
 		glTexCoord3f( 0.0, 0.0, 0.0 );
 		glVertex3f( -10.0, -10.0, 0.0 );
@@ -202,55 +219,71 @@ void draw()
 		glTexCoord3f( 0.0, 20.0, 0.0 );
 		glVertex3f( -10.0, 10.0, 0.0 );
 	glEnd();
-  glPopMatrix();
+  	glPopMatrix();
 
 	glDisable( GL_TEXTURE_2D );
 	glEnable( GL_LIGHTING );
 
+	dsDrawBox(dGeomGetPosition(stair1), dGeomGetRotation(stair1), sides1);
+	dsDrawBox(dGeomGetPosition(stair2), dGeomGetRotation(stair2), sides1);
+	dsDrawBox(dGeomGetPosition(stair3), dGeomGetRotation(stair3), sides2);
+	dsDrawBox(dGeomGetPosition(stair4), dGeomGetRotation(stair4), sides2);
+	dsDrawBox(dGeomGetPosition(stair5), dGeomGetRotation(stair5), sides3);
+	dsDrawBox(dGeomGetPosition(stair6), dGeomGetRotation(stair6), sides3);
+	dsDrawBox(dGeomGetPosition(stair7), dGeomGetRotation(stair7), sides4);
+
 	dsSetColor (0.9, 0.6, 0.4);
 	
-  for (int b = 0; b < N_BODIES; b ++)
+  	for (int b = 0; b < N_BODIES; b ++)
 	{
-    glPushMatrix();
+		if (clicked == b)
+			dsSetColor (0, 0, 1);
+
+    		glPushMatrix();
 	  
-    dsDrawCapsule (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
+    	  	dsDrawCapsule (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
 
-	  dsDrawSphere (dGeomGetPosition(torso2_geom[b]),dGeomGetRotation(torso2_geom[b]),.1);
-	  dsDrawSphere (dGeomGetPosition(torso3_geom[b]),dGeomGetRotation(torso3_geom[b]),.1);
-	  dsDrawSphere (dGeomGetPosition(head_geom[b]),dGeomGetRotation(head_geom[b]),.075);
+	  	dsDrawSphere (dGeomGetPosition(torso2_geom[b]),dGeomGetRotation(torso2_geom[b]),.1);
+	  	dsDrawSphere (dGeomGetPosition(torso3_geom[b]),dGeomGetRotation(torso3_geom[b]),.1);
+	  	dsDrawSphere (dGeomGetPosition(head_geom[b]),dGeomGetRotation(head_geom[b]),.075);
 
-	  dsDrawCapsule (dGeomGetPosition(leftarm1_geom[b]),dGeomGetRotation(leftarm1_geom[b]),.3,.05);
-	  dsDrawCapsule (dGeomGetPosition(leftarm2_geom[b]),dGeomGetRotation(leftarm2_geom[b]),.3,.05);
+	  	dsDrawCapsule (dGeomGetPosition(leftarm1_geom[b]),dGeomGetRotation(leftarm1_geom[b]),.3,.05);
+	  	dsDrawCapsule (dGeomGetPosition(leftarm2_geom[b]),dGeomGetRotation(leftarm2_geom[b]),.3,.05);
 
-	  dsDrawCapsule (dGeomGetPosition(rightarm1_geom[b]),dGeomGetRotation(rightarm1_geom[b]),.3,.05);
-	  dsDrawCapsule (dGeomGetPosition(rightarm2_geom[b]),dGeomGetRotation(rightarm2_geom[b]),.3,.05);
+	  	dsDrawCapsule (dGeomGetPosition(rightarm1_geom[b]),dGeomGetRotation(rightarm1_geom[b]),.3,.05);
+	  	dsDrawCapsule (dGeomGetPosition(rightarm2_geom[b]),dGeomGetRotation(rightarm2_geom[b]),.3,.05);
 
-	  dsDrawCapsule (dGeomGetPosition(leftleg1_geom[b]),dGeomGetRotation(leftleg1_geom[b]),.4,.05);
-	  dsDrawCapsule (dGeomGetPosition(leftleg2_geom[b]),dGeomGetRotation(leftleg2_geom[b]),.4,.05);
+	  	dsDrawCapsule (dGeomGetPosition(leftleg1_geom[b]),dGeomGetRotation(leftleg1_geom[b]),.4,.05);
+	  	dsDrawCapsule (dGeomGetPosition(leftleg2_geom[b]),dGeomGetRotation(leftleg2_geom[b]),.4,.05);
 
-	  dsDrawCapsule (dGeomGetPosition(rightleg1_geom[b]),dGeomGetRotation(rightleg1_geom[b]),.4,.05);
-	  dsDrawCapsule (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
+	  	dsDrawCapsule (dGeomGetPosition(rightleg1_geom[b]),dGeomGetRotation(rightleg1_geom[b]),.4,.05);
+	  	dsDrawCapsule (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
 
-    glPopMatrix();
-	}		
+        glPopMatrix();
+	    
+        if (clicked == b)
+        {
+		    dsSetColor (0.9, 0.6, 0.4);
+        }
+    }		
 }
 
 
 
 // Creates tempotary jiont constraints for coliding objects
-static void cb_near_collision (void *data, dGeomID o1, dGeomID o2)
+static void cb_near_collision(void *data, dGeomID o1, dGeomID o2)
 {
 	dBodyID		b1 = dGeomGetBody (o1);
 	dBodyID		b2 = dGeomGetBody (o2);
 	dContact	contact;
 
-  // Exit without doing anything if the two bodies are static
+    // Exit without doing anything if the two bodies are static
 	if(b1 == 0 && b2 == 0)
-  {
-		return;
-  }
+    {
+	    return;
+    }
 
-  // Exit without doing anything if the two bodies are connected by a joint
+    // Exit without doing anything if the two bodies are connected by a joint
 	if(b1 && b2 && dAreConnected (b1, b2))
 	{
 		/* MTRAP; */
@@ -272,192 +305,202 @@ static void cb_near_collision (void *data, dGeomID o1, dGeomID o2)
 
 void Friction()
 {
-
-  //this is a switch for turning on or off the friction (1 = on, 0 = off)
-  if (friction == true)  /* [ */
-  {
-	  // basic aproximation for kenetic air and ground friction 
-	  for (int b = 0; b < N_BODIES; b ++)
-	  {
-	    //linear slowing due to air friction
-	    dReal       s = 1-0.001*1000/density;
-	    //angular slowing due to air friction
-            dReal       t = 1-0.002*1000/density;
-	    //linear slowing due to ground frinction
-	    dReal       u = 1-0.01*density/1000;
-
-      //////////////////////////////---torso---/////////////////////////////////////////
-
-	    const dReal	*vel_torso1 = dBodyGetLinearVel (torso1[b]),
-		  *rot_torso1 = dBodyGetAngularVel (torso1[b]),
-		  *hight_torso1 = dBodyGetPosition (torso1[b]);
-		  if (hight_torso1[2] > 0.6)
-		  {
-			  dBodySetLinearVel (torso1[b], s*vel_torso1[0],s*vel_torso1[1],s*vel_torso1[2]);
-			  dBodySetAngularVel (torso1[b],t*rot_torso1[0],t*rot_torso1[1],t*rot_torso1[2]);
-		  }
-		  else
-		  {
-			  dBodySetLinearVel (torso1[b], (s+u-1)*vel_torso1[0],(s+u-1)*vel_torso1[1],(s+u-1)*vel_torso1[2]);
-			  dBodySetAngularVel (torso1[b],t*rot_torso1[0],t*rot_torso1[1],t*rot_torso1[2]);
-		  }
-
-	    const dReal	*vel_torso2 = dBodyGetLinearVel (torso2[b]),
-		  *rot_torso2 = dBodyGetAngularVel (torso2[b]),
-		  *hight_torso2 = dBodyGetPosition (torso2[b]);
-		  if (hight_torso2[2] > 0.6)
-		  {
-			  dBodySetLinearVel (torso2[b], s*vel_torso2[0],s*vel_torso2[1],s*vel_torso2[2]);
-			  dBodySetAngularVel (torso2[b],t*rot_torso2[0],t*rot_torso2[1],t*rot_torso2[2]);
-		  }
-		  else
-		  {
-			  dBodySetLinearVel (torso2[b], (s+u-1)*vel_torso2[0],(s+u-1)*vel_torso2[1],(s+u-1)*vel_torso2[2]);
-			  dBodySetAngularVel (torso2[b],t*rot_torso2[0],t*rot_torso2[1],t*rot_torso2[2]);
-		  }
-
-	    const dReal	*vel_torso3 = dBodyGetLinearVel (torso3[b]),
-		  *rot_torso3 = dBodyGetAngularVel (torso3[b]),
-		  *hight_torso3 = dBodyGetPosition (torso3[b]);
-		  if (hight_torso3[2] > 0.6)
-		  {
-			  dBodySetLinearVel (torso3[b], s*vel_torso3[0],s*vel_torso3[1],s*vel_torso3[2]);
-			  dBodySetAngularVel (torso3[b],t*rot_torso3[0],t*rot_torso3[1],t*rot_torso3[2]);
-		  }
-		  else
-		  {
-			  dBodySetLinearVel (torso3[b], (s+u-1)*vel_torso3[0],(s+u-1)*vel_torso3[1],(s+u-1)*vel_torso3[2]);
-			  dBodySetAngularVel (torso3[b],t*rot_torso3[0],t*rot_torso3[1],t*rot_torso3[2]);
-		  }
-
-      //////////////////////////////---leftarm---//////////////////////////////////////////
-
-	    const dReal	*vel_leftarm1 = dBodyGetLinearVel (leftarm1[b]),
-		  *rot_leftarm1 = dBodyGetAngularVel (leftarm1[b]),
-		  *hight_leftarm1 = dBodyGetPosition (leftarm1[b]);
-	    if (hight_leftarm1[2] > 0.3)
+    // This is a switch for turning on or off the friction (1 = on, 0 = off)
+    if (friction == true)  /* [ */
+    {
+	    // Basic aproximation for kenetic air and ground friction 
+	    for (int b = 0; b < N_BODIES; b ++)
 	    {
-			  dBodySetLinearVel (leftarm1[b], s*vel_leftarm1[0],s*vel_leftarm1[1],s*vel_leftarm1[2]);
-			  dBodySetAngularVel (leftarm1[b],t*rot_leftarm1[0],t*rot_leftarm1[1],t*rot_leftarm1[2]);
-		  }
-		  else
-		  {
-			  dBodySetLinearVel (leftarm1[b], (s+u-1)*vel_leftarm1[0],(s+u-1)*vel_leftarm1[1],(s+u-1)*vel_leftarm1[2]);
-			  dBodySetAngularVel (leftarm1[b],t*rot_leftarm1[0],t*rot_leftarm1[1],t*rot_leftarm1[2]);
-		  }
-
-	    const dReal	*vel_leftarm2 = dBodyGetLinearVel (leftarm2[b]),
-		  *rot_leftarm2 = dBodyGetAngularVel (leftarm2[b]),
-		  *hight_leftarm2 = dBodyGetPosition (leftarm2[b]);
-		  if (hight_leftarm2[2] > 0.3)
-		  {
-			  dBodySetLinearVel (leftarm2[b], s*vel_leftarm2[0],s*vel_leftarm2[1],s*vel_leftarm2[2]);
-			  dBodySetAngularVel (leftarm2[b],t*rot_leftarm2[0],t*rot_leftarm2[1],t*rot_leftarm2[2]);
-		  }
-		  else
-		  {
-			  dBodySetLinearVel (leftarm2[b], (s+u-1)*vel_leftarm2[0],(s+u-1)*vel_leftarm2[1],(s+u-1)*vel_leftarm2[2]);
-			  dBodySetAngularVel (leftarm2[b],t*rot_leftarm2[0],t*rot_leftarm2[1],t*rot_leftarm2[2]);
-		  }
-
-      /////////////////////////////---rightarm---/////////////////////////////////////////////////
-
-	    const dReal	*vel_rightarm1 = dBodyGetLinearVel (rightarm1[b]),
-		  *rot_rightarm1 = dBodyGetAngularVel (rightarm1[b]),
-		  *hight_rightarm1 = dBodyGetPosition (rightarm1[b]);
-		  if (hight_rightarm1[2] > 0.3)
-		  {
-			  dBodySetLinearVel (rightarm1[b], s*vel_rightarm1[0],s*vel_rightarm1[1],s*vel_rightarm1[2]);
-			  dBodySetAngularVel (rightarm1[b],t*rot_rightarm1[0],t*rot_rightarm1[1],t*rot_rightarm1[2]);
-		  }
-		  else
-		  {
-			  dBodySetLinearVel (rightarm1[b], (s+u-1)*vel_rightarm1[0],(s+u-1)*vel_rightarm1[1],(s+u-1)*vel_rightarm1[2]);
-			  dBodySetAngularVel (rightarm1[b],t*rot_rightarm1[0],t*rot_rightarm1[1],t*rot_rightarm1[2]);
-		  }
+	        // Linear slowing due to air friction
+	        dReal       s = 1-0.001*1000/density;
     
-	    const dReal	*vel_rightarm2 = dBodyGetLinearVel (rightarm2[b]),
-		  *rot_rightarm2 = dBodyGetAngularVel (rightarm2[b]),
-		  *hight_rightarm2 = dBodyGetPosition (rightarm2[b]);
-		  if (hight_rightarm2[2] > 0.3)
-		  {
-			  dBodySetLinearVel (rightarm2[b], s*vel_rightarm2[0],s*vel_rightarm2[1],s*vel_rightarm2[2]);
-			  dBodySetAngularVel (rightarm2[b],t*rot_rightarm2[0],t*rot_rightarm2[1],t*rot_rightarm2[2]);
-		  }
-		  else
-		  {
-			  dBodySetLinearVel (rightarm2[b], (s+u-1)*vel_rightarm2[0],(s+u-1)*vel_rightarm2[1],(s+u-1)*vel_rightarm2[2]);
-			  dBodySetAngularVel (rightarm2[b],t*rot_rightarm2[0],t*rot_rightarm2[1],t*rot_rightarm2[2]);
-		  }
-
-      ////////////////////////////---leftleg---////////////////////////////////////////////////////
-
-	    const dReal	*vel_leftleg1 = dBodyGetLinearVel (leftleg1[b]),
-		  *rot_leftleg1 = dBodyGetAngularVel (leftleg1[b]),
-		  *hight_leftleg1 = dBodyGetPosition (leftleg1[b]);
-		  if (hight_leftleg1[2] > 0.3)
-		  {
-			  dBodySetLinearVel (leftleg1[b], s*vel_leftleg1[0],s*vel_leftleg1[1],s*vel_leftleg1[2]);
-			  dBodySetAngularVel (leftleg1[b],t*rot_leftleg1[0],t*rot_leftleg1[1],t*rot_leftleg1[2]);
-		  }
-		  else
-		  {
-			  dBodySetLinearVel (leftleg1[b], (s+u-1)*vel_leftleg1[0],(s+u-1)*vel_leftleg1[1],(s+u-1)*vel_leftleg1[2]);
-			  dBodySetAngularVel (leftleg1[b],t*rot_leftleg1[0],t*rot_leftleg1[1],t*rot_leftleg1[2]);
-		  }
-
-	    const dReal	*vel_leftleg2 = dBodyGetLinearVel (leftleg2[b]),
-		  *rot_leftleg2 = dBodyGetAngularVel (leftleg2[b]),
-		  *hight_leftleg2 = dBodyGetPosition (leftleg2[b]);
-		  if (hight_leftleg2[2] > 0.3)
-		  {
-			  dBodySetLinearVel (leftleg2[b], s*vel_leftleg2[0],s*vel_leftleg2[1],s*vel_leftleg2[2]);
-			  dBodySetAngularVel (leftleg2[b],t*rot_leftleg2[0],t*rot_leftleg2[1],t*rot_leftleg2[2]);
-		  }
-		  else
-		  {
-			  dBodySetLinearVel (leftleg2[b], (s+u-1)*vel_leftleg2[0],(s+u-1)*vel_leftleg2[1],(s+u-1)*vel_leftleg2[2]);
-			  dBodySetAngularVel (leftleg2[b],t*rot_leftleg2[0],t*rot_leftleg2[1],t*rot_leftleg2[2]);
-		  }
-
-      ////////////////////////////---rightleg---///////////////////////////////////////////////////////
-
-	    const dReal	*vel_rightleg1 = dBodyGetLinearVel (rightleg1[b]),
-		  *rot_rightleg1 = dBodyGetAngularVel (rightleg1[b]),
-		  *hight_rightleg1 = dBodyGetPosition (rightleg1[b]);
-		  if (hight_rightleg1[2] > 0.3)
-		  {
-			  dBodySetLinearVel (rightleg1[b], s*vel_rightleg1[0],s*vel_rightleg1[1],s*vel_rightleg1[2]);
-			  dBodySetAngularVel (rightleg1[b],t*rot_rightleg1[0],t*rot_rightleg1[1],t*rot_rightleg1[2]);
-		  }
-		  else
-		  {
-			  dBodySetLinearVel (rightleg1[b], (s+u-1)*vel_rightleg1[0],(s+u-1)*vel_rightleg1[1],(s+u-1)*vel_rightleg1[2]);
-			  dBodySetAngularVel (rightleg1[b],t*rot_rightleg1[0],t*rot_rightleg1[1],t*rot_rightleg1[2]);
-		  }
-
-	    const dReal	*vel_rightleg2 = dBodyGetLinearVel (rightleg2[b]),
-		  *rot_rightleg2 = dBodyGetAngularVel (rightleg2[b]),
-		  *hight_rightleg2 = dBodyGetPosition (rightleg2[b]);
-		  if (hight_rightleg2[2] > 0.3)
-		  {
-			  dBodySetLinearVel (rightleg2[b], s*vel_rightleg2[0],s*vel_rightleg2[1],s*vel_rightleg2[2]);
-			  dBodySetAngularVel (rightleg2[b],t*rot_rightleg2[0],t*rot_rightleg2[1],t*rot_rightleg2[2]);
-		  }
-		  else
-		  {
-			  dBodySetLinearVel (rightleg2[b], (s+u-1)*vel_rightleg2[0],(s+u-1)*vel_rightleg2[1],(s+u-1)*vel_rightleg2[2]);
-			  dBodySetAngularVel (rightleg2[b],t*rot_rightleg2[0],t*rot_rightleg2[1],t*rot_rightleg2[2]);
-		  }
+	        // Angular slowing due to air friction
+            dReal       t = 1-0.002*1000/density;
+    
+	        // Linear slowing due to ground frinction
+	        dReal       u = 1-0.01*density/1000;
+    
+            //////////////////////////////---torso---/////////////////////////////////////////
+    
+	        const dReal	*vel_torso1 = dBodyGetLinearVel (torso1[b]),
+		                *rot_torso1 = dBodyGetAngularVel (torso1[b]),
+		                *hight_torso1 = dBodyGetPosition (torso1[b]);
+    
+		    if (hight_torso1[2] > 0.6)
+		    {
+			    dBodySetLinearVel (torso1[b], s*vel_torso1[0],s*vel_torso1[1],s*vel_torso1[2]);
+			    dBodySetAngularVel (torso1[b],t*rot_torso1[0],t*rot_torso1[1],t*rot_torso1[2]);
+		    }
+		    else
+		    {
+			    dBodySetLinearVel (torso1[b], (s+u-1)*vel_torso1[0],(s+u-1)*vel_torso1[1],(s+u-1)*vel_torso1[2]);
+			    dBodySetAngularVel (torso1[b],t*rot_torso1[0],t*rot_torso1[1],t*rot_torso1[2]);
+		    }
+    
+	        const dReal	*vel_torso2 = dBodyGetLinearVel (torso2[b]),
+		                *rot_torso2 = dBodyGetAngularVel (torso2[b]),
+		                *hight_torso2 = dBodyGetPosition (torso2[b]);
+    
+		    if (hight_torso2[2] > 0.6)
+		    {
+			    dBodySetLinearVel (torso2[b], s*vel_torso2[0],s*vel_torso2[1],s*vel_torso2[2]);
+			    dBodySetAngularVel (torso2[b],t*rot_torso2[0],t*rot_torso2[1],t*rot_torso2[2]);
+		    }
+		    else
+		    {
+			    dBodySetLinearVel (torso2[b], (s+u-1)*vel_torso2[0],(s+u-1)*vel_torso2[1],(s+u-1)*vel_torso2[2]);
+			    dBodySetAngularVel (torso2[b],t*rot_torso2[0],t*rot_torso2[1],t*rot_torso2[2]);
+		    }
+    
+	        const dReal	*vel_torso3 = dBodyGetLinearVel (torso3[b]),
+		                *rot_torso3 = dBodyGetAngularVel (torso3[b]),
+		                *hight_torso3 = dBodyGetPosition (torso3[b]);
+    
+		    if (hight_torso3[2] > 0.6)
+		    {
+			    dBodySetLinearVel (torso3[b], s*vel_torso3[0],s*vel_torso3[1],s*vel_torso3[2]);
+			    dBodySetAngularVel (torso3[b],t*rot_torso3[0],t*rot_torso3[1],t*rot_torso3[2]);
+		    }
+		    else
+		    {
+			    dBodySetLinearVel (torso3[b], (s+u-1)*vel_torso3[0],(s+u-1)*vel_torso3[1],(s+u-1)*vel_torso3[2]);
+			    dBodySetAngularVel (torso3[b],t*rot_torso3[0],t*rot_torso3[1],t*rot_torso3[2]);
+		    }
+    
+            //////////////////////////////---leftarm---//////////////////////////////////////////
+    
+	        const dReal	*vel_leftarm1 = dBodyGetLinearVel (leftarm1[b]), 
+                        *rot_leftarm1 = dBodyGetAngularVel (leftarm1[b]),
+                        *hight_leftarm1 = dBodyGetPosition (leftarm1[b]) ;
+    
+	        if (hight_leftarm1[2] > 0.3)
+	        {
+			    dBodySetLinearVel (leftarm1[b], s*vel_leftarm1[0],s*vel_leftarm1[1],s*vel_leftarm1[2]);
+			    dBodySetAngularVel (leftarm1[b],t*rot_leftarm1[0],t*rot_leftarm1[1],t*rot_leftarm1[2]);
+		    }
+		    else
+		    {
+			    dBodySetLinearVel (leftarm1[b], (s+u-1)*vel_leftarm1[0],(s+u-1)*vel_leftarm1[1],(s+u-1)*vel_leftarm1[2]);
+			    dBodySetAngularVel (leftarm1[b],t*rot_leftarm1[0],t*rot_leftarm1[1],t*rot_leftarm1[2]);
+		    }
+    
+	        const dReal *vel_leftarm2 = dBodyGetLinearVel (leftarm2[b]),
+		                *rot_leftarm2 = dBodyGetAngularVel (leftarm2[b]),
+		                *hight_leftarm2 = dBodyGetPosition (leftarm2[b]);
+    
+		    if (hight_leftarm2[2] > 0.3)
+		    {
+			    dBodySetLinearVel (leftarm2[b], s*vel_leftarm2[0],s*vel_leftarm2[1],s*vel_leftarm2[2]);
+			    dBodySetAngularVel (leftarm2[b],t*rot_leftarm2[0],t*rot_leftarm2[1],t*rot_leftarm2[2]);
+		    }
+		    else
+		    {
+			    dBodySetLinearVel (leftarm2[b], (s+u-1)*vel_leftarm2[0],(s+u-1)*vel_leftarm2[1],(s+u-1)*vel_leftarm2[2]);
+			    dBodySetAngularVel (leftarm2[b],t*rot_leftarm2[0],t*rot_leftarm2[1],t*rot_leftarm2[2]);
+		    }
+    
+            /////////////////////////////---rightarm---/////////////////////////////////////////////////
+    
+	        const dReal   *vel_rightarm1 = dBodyGetLinearVel (rightarm1[b]),
+		                *rot_rightarm1 = dBodyGetAngularVel (rightarm1[b]),
+		                *hight_rightarm1 = dBodyGetPosition (rightarm1[b]);
+		    if (hight_rightarm1[2] > 0.3)
+		    {
+			    dBodySetLinearVel (rightarm1[b], s*vel_rightarm1[0],s*vel_rightarm1[1],s*vel_rightarm1[2]);
+			    dBodySetAngularVel (rightarm1[b],t*rot_rightarm1[0],t*rot_rightarm1[1],t*rot_rightarm1[2]);
+		    }
+		    else
+		    {
+			    dBodySetLinearVel (rightarm1[b], (s+u-1)*vel_rightarm1[0],(s+u-1)*vel_rightarm1[1],(s+u-1)*vel_rightarm1[2]);
+			    dBodySetAngularVel (rightarm1[b],t*rot_rightarm1[0],t*rot_rightarm1[1],t*rot_rightarm1[2]);
+		    }
+        
+	        const dReal	*vel_rightarm2 = dBodyGetLinearVel (rightarm2[b]),
+		                *rot_rightarm2 = dBodyGetAngularVel (rightarm2[b]),
+		                *hight_rightarm2 = dBodyGetPosition (rightarm2[b]);
+    
+		    if (hight_rightarm2[2] > 0.3)
+		    {
+			    dBodySetLinearVel (rightarm2[b], s*vel_rightarm2[0],s*vel_rightarm2[1],s*vel_rightarm2[2]);
+			    dBodySetAngularVel (rightarm2[b],t*rot_rightarm2[0],t*rot_rightarm2[1],t*rot_rightarm2[2]);
+		    }
+		    else
+		    {
+			    dBodySetLinearVel (rightarm2[b], (s+u-1)*vel_rightarm2[0],(s+u-1)*vel_rightarm2[1],(s+u-1)*vel_rightarm2[2]);
+			    dBodySetAngularVel (rightarm2[b],t*rot_rightarm2[0],t*rot_rightarm2[1],t*rot_rightarm2[2]);
+		    }
+    
+            ////////////////////////////---leftleg---////////////////////////////////////////////////////
+    
+	        const dReal	*vel_leftleg1 = dBodyGetLinearVel (leftleg1[b]),
+		                *rot_leftleg1 = dBodyGetAngularVel (leftleg1[b]),
+		                *hight_leftleg1 = dBodyGetPosition (leftleg1[b]);
+		    
+            if (hight_leftleg1[2] > 0.3)
+		    {
+			    dBodySetLinearVel (leftleg1[b], s*vel_leftleg1[0],s*vel_leftleg1[1],s*vel_leftleg1[2]);
+			    dBodySetAngularVel (leftleg1[b],t*rot_leftleg1[0],t*rot_leftleg1[1],t*rot_leftleg1[2]);
+		    }
+		    else
+		    {
+			    dBodySetLinearVel (leftleg1[b], (s+u-1)*vel_leftleg1[0],(s+u-1)*vel_leftleg1[1],(s+u-1)*vel_leftleg1[2]);
+			    dBodySetAngularVel (leftleg1[b],t*rot_leftleg1[0],t*rot_leftleg1[1],t*rot_leftleg1[2]);
+		    }
+    
+	        const dReal	*vel_leftleg2 = dBodyGetLinearVel (leftleg2[b]),
+		                *rot_leftleg2 = dBodyGetAngularVel (leftleg2[b]),
+		                *hight_leftleg2 = dBodyGetPosition (leftleg2[b]); 
+    
+		    if (hight_leftleg2[2] > 0.3)
+		    {
+			    dBodySetLinearVel (leftleg2[b], s*vel_leftleg2[0],s*vel_leftleg2[1],s*vel_leftleg2[2]);
+			    dBodySetAngularVel (leftleg2[b],t*rot_leftleg2[0],t*rot_leftleg2[1],t*rot_leftleg2[2]);
+		    }
+		    else
+		    {
+			    dBodySetLinearVel (leftleg2[b], (s+u-1)*vel_leftleg2[0],(s+u-1)*vel_leftleg2[1],(s+u-1)*vel_leftleg2[2]);
+			    dBodySetAngularVel (leftleg2[b],t*rot_leftleg2[0],t*rot_leftleg2[1],t*rot_leftleg2[2]);
+		    }
+    
+            ////////////////////////////---rightleg---///////////////////////////////////////////////////////
+    
+	        const dReal	*vel_rightleg1 = dBodyGetLinearVel (rightleg1[b]),
+		                *rot_rightleg1 = dBodyGetAngularVel (rightleg1[b]),
+		                *hight_rightleg1 = dBodyGetPosition (rightleg1[b]);
+    
+		    if (hight_rightleg1[2] > 0.3)
+		    {
+			    dBodySetLinearVel (rightleg1[b], s*vel_rightleg1[0],s*vel_rightleg1[1],s*vel_rightleg1[2]);
+			    dBodySetAngularVel (rightleg1[b],t*rot_rightleg1[0],t*rot_rightleg1[1],t*rot_rightleg1[2]);
+		    }
+		    else
+		    {
+			    dBodySetLinearVel (rightleg1[b], (s+u-1)*vel_rightleg1[0],(s+u-1)*vel_rightleg1[1],(s+u-1)*vel_rightleg1[2]);
+			    dBodySetAngularVel (rightleg1[b],t*rot_rightleg1[0],t*rot_rightleg1[1],t*rot_rightleg1[2]);
+		    }
+    
+	        const dReal	*vel_rightleg2 = dBodyGetLinearVel (rightleg2[b]),
+		                *rot_rightleg2 = dBodyGetAngularVel (rightleg2[b]),
+		                *hight_rightleg2 = dBodyGetPosition (rightleg2[b]);
+		    
+            if (hight_rightleg2[2] > 0.3)
+		    {
+			    dBodySetLinearVel (rightleg2[b], s*vel_rightleg2[0],s*vel_rightleg2[1],s*vel_rightleg2[2]);
+			    dBodySetAngularVel (rightleg2[b],t*rot_rightleg2[0],t*rot_rightleg2[1],t*rot_rightleg2[2]);
+		    }
+		    else
+		    {
+			    dBodySetLinearVel (rightleg2[b], (s+u-1)*vel_rightleg2[0],(s+u-1)*vel_rightleg2[1],(s+u-1)*vel_rightleg2[2]);
+			    dBodySetAngularVel (rightleg2[b],t*rot_rightleg2[0],t*rot_rightleg2[1],t*rot_rightleg2[2]);
+		    }
+        }
     }
-  }
 }
 
 
 // Sets up interactivity
 void interact()
 {
-
 	//GLint viewport[4];
 
 	glSelectBuffer(BUFSIZE,selectBuf);
@@ -475,14 +518,14 @@ void interact()
 	glInitNames();
 }
 
-
-void movedoll (int name)
+void movedoll ()
 {
 	int bodynum = name%N_BODIES;
 	int bodypart = name/N_BODIES;
+	name = -N_BODIES;
 	dReal z= 0;
 	int scalar = 10;
-
+	clicked = -1;
 	switch (bodypart)
 	{
 		case -1:
@@ -525,33 +568,32 @@ void movedoll (int name)
 			dBodySetLinearVel(rightleg2[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
 			break;
 	}
-
 }
 
 
 // Grabs information from mouse interacting with manikins and sends the name/number of the object clicked on to movedoll()
-void processHits (GLint hits, GLuint buffer[])
+void processHits (GLuint buffer[])
 {
-	std::cout<<"# of hits "<<hits<<'\n';
-	GLuint smallest = 4294967295;
-	GLuint name =-N_BODIES;
-	for (int i=1; i < hits*4; i+= 4)
+	if (hits!=0)
 	{
-		if (buffer[i]<=smallest)
+		std::cout<<"# of hits "<<hits<<'\n';
+		GLuint smallest = 4294967295;
+		for (int i=1; i < hits*4; i+= 4)
 		{
-			smallest = buffer[i];
-			name = buffer[i+2];
+			if (buffer[i]<=smallest)
+			{
+				smallest = buffer[i];
+				name = buffer[i+2];
+			}
 		}
+		clicked = name%N_BODIES;
 	}
-	if (name != -N_BODIES)
-		movedoll(name);
 }
 
 
+// ??
 void endinteract()
 {
-	int hits;
-
 	// Restoring the original projection matrix
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
@@ -561,10 +603,9 @@ void endinteract()
 	// Returning to normal rendering mode
 	hits = glRenderMode(GL_RENDER);
 
-	// If there are hits process them
-	if (hits != 0)
+	if(hits!=0)
 	{
-		processHits(hits,selectBuf);
+		processHits(selectBuf);
 	}
 }
 
@@ -573,41 +614,40 @@ void endinteract()
 // Incompatibility issues between gl and ds
 void InteractiveRender ()
 {
-	for (int b = 0; b < N_BODIES; b ++)
+	for(int b = 0; b < N_BODIES; b ++)
 	{
-
-	glInitNames();
-	glPushName(b);
-
-	dsDrawCapsule (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
-	glLoadName(b+N_BODIES);
-	dsDrawSphere (dGeomGetPosition(torso2_geom[b]),dGeomGetRotation(torso2_geom[b]),.1);
-	glLoadName(b+N_BODIES*2);
-	dsDrawSphere (dGeomGetPosition(torso3_geom[b]),dGeomGetRotation(torso3_geom[b]),.1);
-
-	glLoadName(b+N_BODIES*3);
-	dsDrawSphere (dGeomGetPosition(head_geom[b]),dGeomGetRotation(head_geom[b]),.075);
-
-	glLoadName(b+N_BODIES*4);
-	dsDrawCapsule (dGeomGetPosition(leftarm1_geom[b]),dGeomGetRotation(leftarm1_geom[b]),.3,.05);
-	glLoadName(b+N_BODIES*5);
-	dsDrawCapsule (dGeomGetPosition(leftarm2_geom[b]),dGeomGetRotation(leftarm2_geom[b]),.3,.05);
-
-	glLoadName(b+N_BODIES*6);
-	dsDrawCapsule (dGeomGetPosition(rightarm1_geom[b]),dGeomGetRotation(rightarm1_geom[b]),.3,.05);
-	glLoadName(b+N_BODIES*7);
-	dsDrawCapsule (dGeomGetPosition(rightarm2_geom[b]),dGeomGetRotation(rightarm2_geom[b]),.3,.05);
-
-	glLoadName(b+N_BODIES*8);
-	dsDrawCapsule (dGeomGetPosition(leftleg1_geom[b]),dGeomGetRotation(leftleg1_geom[b]),.4,.05);
-	glLoadName(b+N_BODIES*9);
-	dsDrawCapsule (dGeomGetPosition(leftleg2_geom[b]),dGeomGetRotation(leftleg2_geom[b]),.4,.05);
-
-	glLoadName(b+N_BODIES*10);
-	dsDrawCapsule (dGeomGetPosition(rightleg1_geom[b]),dGeomGetRotation(rightleg1_geom[b]),.4,.05);
-	glLoadName(b+N_BODIES*11);
-	dsDrawCapsule (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
-	glPopName();
+	    glInitNames();
+	    glPushName(b);
+    
+	    dsDrawCapsule (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
+	    glLoadName(b+N_BODIES);
+	    dsDrawSphere (dGeomGetPosition(torso2_geom[b]),dGeomGetRotation(torso2_geom[b]),.1);
+	    glLoadName(b+N_BODIES*2);
+	    dsDrawSphere (dGeomGetPosition(torso3_geom[b]),dGeomGetRotation(torso3_geom[b]),.1);
+    
+	    glLoadName(b+N_BODIES*3);
+	    dsDrawSphere (dGeomGetPosition(head_geom[b]),dGeomGetRotation(head_geom[b]),.075);
+    
+	    glLoadName(b+N_BODIES*4);
+	    dsDrawCapsule (dGeomGetPosition(leftarm1_geom[b]),dGeomGetRotation(leftarm1_geom[b]),.3,.05);
+	    glLoadName(b+N_BODIES*5);
+	    dsDrawCapsule (dGeomGetPosition(leftarm2_geom[b]),dGeomGetRotation(leftarm2_geom[b]),.3,.05);
+    
+	    glLoadName(b+N_BODIES*6);
+	    dsDrawCapsule (dGeomGetPosition(rightarm1_geom[b]),dGeomGetRotation(rightarm1_geom[b]),.3,.05);
+	    glLoadName(b+N_BODIES*7);
+	    dsDrawCapsule (dGeomGetPosition(rightarm2_geom[b]),dGeomGetRotation(rightarm2_geom[b]),.3,.05);
+    
+	    glLoadName(b+N_BODIES*8);
+	    dsDrawCapsule (dGeomGetPosition(leftleg1_geom[b]),dGeomGetRotation(leftleg1_geom[b]),.4,.05);
+	    glLoadName(b+N_BODIES*9);
+	    dsDrawCapsule (dGeomGetPosition(leftleg2_geom[b]),dGeomGetRotation(leftleg2_geom[b]),.4,.05);
+    
+	    glLoadName(b+N_BODIES*10);
+	    dsDrawCapsule (dGeomGetPosition(rightleg1_geom[b]),dGeomGetRotation(rightleg1_geom[b]),.4,.05);
+	    glLoadName(b+N_BODIES*11);
+	    dsDrawCapsule (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
+	    glPopName();
 	}
 }
 
@@ -657,6 +697,24 @@ void init()
 	
 	// Floor
 	dCreatePlane (coll_space_id, 0, 0, 1, 0);
+
+	// Stairs
+	stair1 = dCreateBox   (coll_space_id, 2, 1, 0.5);
+	stair2 = dCreateBox   (coll_space_id, 2, 1, 0.5);
+	stair3 = dCreateBox   (coll_space_id, 2, 1, 1);
+	stair4 = dCreateBox   (coll_space_id, 2, 1, 1);
+	stair5 = dCreateBox   (coll_space_id, 2, 1, 1.5);
+	stair6 = dCreateBox   (coll_space_id, 2, 1, 1.5);
+	stair7 = dCreateBox   (coll_space_id, 12, 2, 2);
+
+
+	dGeomSetPosition (stair1, -1, 5.5, 0.25);
+	dGeomSetPosition (stair2, 9, 5.5, 0.25);
+	dGeomSetPosition (stair3, -1, 6.5, 0.5);
+	dGeomSetPosition (stair4, 9, 6.5, 0.5);
+	dGeomSetPosition (stair5, -1, 7.5, 0.75);
+	dGeomSetPosition (stair6, 9, 7.5, 0.75);
+	dGeomSetPosition (stair7, 4, 9, 1);
 
 	//Four walls
 	dCreatePlane (coll_space_id,  1, 0, 0, 0);
@@ -910,28 +968,40 @@ void init()
 }
 
 
+void stand(int b)
+{
+	float base = 4.5;
+	int arm_tenser = 5;
+	int leg_tenser = 25;
+	int scale = 2500*beat;
+	dBodyAddForce(head[b], 0, 0, (base+leg_tenser)*scale);
+	dBodyAddForce(leftarm1[b], 0, 0, base*scale);
+	dBodyAddForce(leftarm2[b], 0, 0, (base-arm_tenser)*scale);
+	dBodyAddForce(rightarm1[b], 0, 0, base*scale);
+	dBodyAddForce(rightarm2[b], 0, 0, (base-arm_tenser)*scale);
+	dBodyAddForce(torso1[b], 0, 0, (base+2*arm_tenser)*scale);
+	dBodyAddForce(torso2[b], 0, 0, base*scale);
+	dBodyAddForce(torso3[b], 0, 0, (base+leg_tenser)*scale);
+	dBodyAddForce(leftleg1[b], 0, 0, base*scale);
+	dBodyAddForce(rightleg1[b], 0, 0, base*scale);
+	dBodyAddForce(leftleg2[b], 0, 0, (base-leg_tenser)*scale);
+	dBodyAddForce(rightleg2[b], 0, 0, (base-leg_tenser)*scale);
+}
+
 void odd()
 {
 	for (int b = 0; b < N_BODIES; b+= 2)
 	{
-		dBodyAddForce(head[b], 0, 0, 300000);
-		dBodyAddForce(leftarm1[b], 0, 0, 1000000);
-		dBodyAddForce(rightarm1[b], 0, 0, 1000000);
-		dBodyAddForce(torso1[b], 0, 0, 2000000);
-		dBodyAddForce(torso3[b], 0, 0, 2000000);
-		dBodyAddForce(leftleg2[b], 1000/TIME_STEP, 0, -500000);
-		dBodyAddForce(rightleg2[b], 1000/TIME_STEP, 0, -500000);
+		stand(b);
+		dBodyAddForce(leftleg2[b], 1000/TIME_STEP, 0, 0);
+		dBodyAddForce(rightleg2[b], 1000/TIME_STEP, 0, 0);
 	}
 
 	for (int b = 1; b < N_BODIES; b+= 2)
 	{
-		dBodyAddForce(head[b], 0, 0, 300000);
-		dBodyAddForce(leftarm1[b], 0, 0, 1000000);
-		dBodyAddForce(rightarm1[b], 0, 0, 1000000);
-		dBodyAddForce(torso1[b], 0, 0, 2000000);
-		dBodyAddForce(torso3[b], 0, 0, 2000000);
-		dBodyAddForce(leftleg2[b], 0, 1000/TIME_STEP, -500000);
-		dBodyAddForce(rightleg2[b], 0, -1000/TIME_STEP, -500000);
+		stand(b);
+		dBodyAddForce(leftleg2[b], 0, 1000/TIME_STEP, 0);
+		dBodyAddForce(rightleg2[b], 0, -1000/TIME_STEP, 0);
 	}
 }
 
@@ -940,24 +1010,16 @@ void even()
 {
 	for (int b = 0; b < N_BODIES; b+= 2)
 	{
-		dBodyAddForce(head[b], 0, 0, 300000);
-		dBodyAddForce(leftarm1[b], 0, 0, 1000000);
-		dBodyAddForce(rightarm1[b], 0, 0, 1000000);
-		dBodyAddForce(torso1[b], 0, 0, 2000000);
-		dBodyAddForce(torso3[b], 0, 0, 2000000);
-		dBodyAddForce(leftleg2[b], -1000/TIME_STEP, 0, -500000);
-		dBodyAddForce(rightleg2[b], -1000/TIME_STEP, 0, -500000);
+		stand(b);
+		dBodyAddForce(leftleg2[b], -1000/TIME_STEP, 0, 0);
+		dBodyAddForce(rightleg2[b], -1000/TIME_STEP, 0, 0);
 	}
 
 	for (int b = 1; b < N_BODIES; b+= 2)
 	{
-		dBodyAddForce(head[b], 0, 0, 300000);
-		dBodyAddForce(leftarm1[b], 0, 0, 1000000);
-		dBodyAddForce(rightarm1[b], 0, 0, 1000000);
-		dBodyAddForce(torso1[b], 0, 0, 2000000);
-		dBodyAddForce(torso3[b], 0, 0, 2000000);
-		dBodyAddForce(leftleg2[b], 0, -1000/TIME_STEP, -500000);
-		dBodyAddForce(rightleg2[b], 0, 1000/TIME_STEP, -500000);
+		stand(b);
+		dBodyAddForce(leftleg2[b], 0, -1000/TIME_STEP, 0);
+		dBodyAddForce(rightleg2[b], 0, 1000/TIME_STEP, 0);
 	}
 }
 
@@ -1017,9 +1079,131 @@ void dance(int step)
 
 	// This function should map out chorographiclly the dancing moves of the manikins in half-second steps
 	if (step%4<2)
+    {
 		odd();
+    }   
 	else
+    {
 		even();
+    }
+}
+
+
+void first()
+{
+	for(int b = 0; b < N_BODIES; b++)
+	{
+		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
+		dBodySetForce(leftleg2[b], -1000/TIME_STEP, 0, 0);
+		dBodySetForce(torso1[b], -500/TIME_STEP, 0, 0);
+		stand(b);
+	}
+}
+
+
+void second()
+{
+	for(int b = 0; b < N_BODIES; b++)
+	{
+		dBodySetLinearVel(leftleg2[b], 0, 0, 0);
+		dBodySetForce(rightleg2[b], -1000/TIME_STEP, 0, 0);
+		dBodySetForce(torso1[b], -500/TIME_STEP, 0, 0);
+		stand(b);
+	}
+}
+
+
+void third()
+{
+	for(int b = 0; b < N_BODIES; b++)
+	{
+		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
+		dBodySetForce(leftleg2[b], 0, 1000/TIME_STEP, 0);
+		dBodySetForce(torso1[b], 0, 500/TIME_STEP, 0);
+		stand(b);
+	}
+}
+
+
+void fourth()
+{
+	for(int b = 0; b < N_BODIES; b++)
+	{
+		dBodySetLinearVel(leftleg2[b], 0, 0, 0);
+		dBodySetForce(rightleg2[b], 0, 1000/TIME_STEP, 0);
+		dBodySetForce(torso1[b], 0, 500/TIME_STEP, 0);
+		stand(b);
+	}
+}
+
+
+void fith()
+{
+	for(int b = 0; b < N_BODIES; b++)
+	{
+		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
+		dBodySetForce(rightleg2[b], 1000/TIME_STEP, 0, 0);
+		dBodySetForce(torso1[b], 500/TIME_STEP, 0, 0);
+		stand(b);
+	}
+}
+
+
+void sixth()
+{
+	for(int b = 0; b < N_BODIES; b++)
+	{
+		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
+		dBodySetForce(leftleg2[b], 1000/TIME_STEP, 0, 0);
+		dBodySetForce(torso1[b], 500/TIME_STEP, 0, 0);
+		stand(b);
+	}
+}
+
+
+void seventh()
+{
+	for (int b = 0; b < N_BODIES; b++)
+		{
+			dBodySetLinearVel(leftleg2[b], 0, 0, 0);
+			dBodySetForce(leftleg2[b], 0, -1000/TIME_STEP, 0);
+			dBodySetForce(torso1[b], 0, -500/TIME_STEP, 0);
+			stand(b);
+		}
+}
+
+
+void eigth()
+{
+	for (int b = 0; b < N_BODIES; b++)
+		{
+			dBodySetLinearVel(leftleg2[b], 0, 0, 0);
+			dBodySetForce(rightleg2[b], 0, -1000/TIME_STEP, 0);
+			dBodySetForce(torso1[b], 0, -500/TIME_STEP, 0);
+			stand(b);
+		}
+}
+
+void waltz(int step)
+{
+	balance();
+
+	if (step%8==1)
+		first();
+	else if (step%8==2)
+		second();
+	else if (step%8==3)
+		third();
+	else if (step%8==4)
+		fourth();
+	else if (step%8==5)
+		fith();
+	else if (step%8==6)
+		sixth();
+	else if (step%8==7)
+		seventh();
+	else
+		eigth();
 }
 
 
@@ -1028,46 +1212,45 @@ void display()
 	glClearColor( 0.0, 0.0, 0.0, 0.0 );
 	glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 
-  glMatrixMode( GL_MODELVIEW );
-  glPushMatrix();
-  glMultMatrixf( gmtlNavigationMatrix.mData );		            
-  glRotatef( -90.0, 1.0, 0.0, 0.0 );
+    glMatrixMode( GL_MODELVIEW );
+    glPushMatrix();
+    glMultMatrixf( gmtlNavigationMatrix.mData );		            
+    glRotatef( -90.0, 1.0, 0.0, 0.0 );
 
-  if( doInteract )
+    if( doInteract )
 	{
 		std::cout << "\nTest interact( int, int ) " << cursorX << ' ' << cursorY <<'\n' ;
 		interact();
-    InteractiveRender();
-    endinteract();
-		viewing = 1;
+        InteractiveRender();
+        endinteract();
+		mode = PICK;
 		doInteract = false;
 	}
-
 	else
 	{
 		if (dancing == true)
 		{
 			dance_counter++;
-			if (dance_counter%25==0)
-				{
+			if (dance_counter%beat==0)
+			{
 				step++;
-				dance(step);
-				}
+				waltz(step);
+    			dance(step);
+			}
 		}	    
     cb_sim_step();
     draw();    
 		glutSwapBuffers();
 	}  
 
-  glPopMatrix();
+    glPopMatrix();
 }
 
 
 void idle()
 {
 	dWorldStep (dyn_world,TIME_STEP);
-
-	glutPostRedisplay();	
+	glutPostRedisplay();
 }
 
 
@@ -1082,12 +1265,14 @@ void reshape(int w, int h)
 
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
-	gluPerspective( 60.0, ( double )w/h, 0.1, 10000.0 );
+	gluPerspective( 60.0, ( double )w/h, 1.0, 1000.0 );
 
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
-	gluLookAt( STAGE_SIZE/2, STAGE_SIZE/2, STAGE_SIZE, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 1.0, 0.0 );  
-  glMultMatrixf( gmtlNavigationMatrix.mData );
+	//gluLookAt(STAGE_SIZE/2, STAGE_SIZE/2, STAGE_SIZE, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 0.0, 1.0);
+    gluLookAt( STAGE_SIZE/2, STAGE_SIZE/2, STAGE_SIZE, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 1.0, 0.0 );
+	//gluLookAt(STAGE_SIZE/2, -3.0, 10.0, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 0.0, 1.0);
+    glMultMatrixf( gmtlNavigationMatrix.mData );
 }
 
 
@@ -1109,165 +1294,103 @@ void myGlutTimer(int puase)
 
 void mouseplay( int button, int state, int X, int Y )
 {
-  switch( mode )
-  {
-    case PICK_AND_MOVE:
-    {
-      switch( viewing )
-	    {
-	      case 1:
-        {
-		      if( state == 0 )
-		      {
-			      switch( button )
-			      {
-			        case GLUT_LEFT_BUTTON:
-              {
-				        cursorX = X;
-				        cursorY = Y;
-				        break;
-              }
-			        case GLUT_MIDDLE_BUTTON:
-              {
-				        viewing = 2;
-				        break;
-              }
-			        case GLUT_RIGHT_BUTTON:
-              {
-				        if( dancing == true )
-					        dancing = false;
-				        else 
-					        dancing = true;
-				        break;
-              }
-			      }
-          }
-		      else if ( state == 1 )
-		      {
-			      switch ( button )
-			      {
-			        case GLUT_LEFT_BUTTON:
-              {
-				        cursorX2 = X;
-				        cursorY2 = Y;
-				        doInteract = true;
-				        break;
-              }
-			        case GLUT_MIDDLE_BUTTON:
-			        {
-				        break;
-			        }
-			        case GLUT_RIGHT_BUTTON:
-              {
-				        break;
-              }
-            }
-          }
-		    break;
-      }
-	    case 2:
-      {
-		    if ( state == 0 )
-		    {
-			    switch ( button )
-			    {
-			      case GLUT_LEFT_BUTTON:
+    switch( mode )
+    {        
+        case PICK:	    
+            if ( state == 0 )
             {
-				      friction = true;
-				      break;
+                switch ( button )
+                {
+                    case GLUT_LEFT_BUTTON:
+                        cursorX = X;
+                        cursorY = Y;
+                        doInteract = true;
+                        break;                            
+                    case GLUT_MIDDLE_BUTTON:                            
+                        if (clicked!=-1)
+                            dJointGroupEmpty (ragdoll_joints[clicked]);
+                        break;                            
+                    case GLUT_RIGHT_BUTTON:                            
+                        if (dancing == true)
+                            dancing = false;
+                        else 
+                            dancing = true;
+                        break;                            
+                }
             }
-			      case GLUT_MIDDLE_BUTTON:
+            else if ( state == 1 )
             {
-				      viewing = 1;
-				      break;
+                switch ( button )
+                {
+                    case GLUT_LEFT_BUTTON:
+                        cursorX2 = X;
+                        cursorY2 = Y;
+                        if (name != -N_BODIES)
+                            movedoll();
+                        break;                           
+                    
+                    case GLUT_MIDDLE_BUTTON:                            
+                        break;
+                    
+                    case GLUT_RIGHT_BUTTON:                            
+                        break;                            
+                }
             }
-			      case GLUT_RIGHT_BUTTON:
+            break; // ...case PICK                    
+	        
+        case NAVIGATE: 
+            if( ( X < viewport[0] || X >  viewport[2] ) || 
+                ( Y < viewport[1] || Y >  viewport[3] ) )
             {
-				      friction = false;
-				      break;
+                return;  
             }
-			    }; // ...switch( button )
-		    }
-		    else if( state == 1 )
-		    {
-			    switch( button )
-			    {
-            case GLUT_LEFT_BUTTON:  { break; }
-            case GLUT_MIDDLE_BUTTON:{ break; }
-            case GLUT_RIGHT_BUTTON: { break; }
-			    }
-		    }
-		    break;
-      }
-    };
-    break;
-  }
-    case NAVIGATE: 
-    {
-      if( ( X < viewport[0] || X >  viewport[2] ) || 
-          ( Y < viewport[1] || Y >  viewport[3] ) )
-      {
-        return;  
-      }
+        
+            double x1 = ( 2.0f * X - trackBallDiameter ) / trackBallDiameter;
+            double y1 = ( trackBallDiameter - 2.0f * Y ) / trackBallDiameter;
+            double z1 = sqrt( 1.0f - ( x1 * x1  - y1 * y1 ) );
+        
+            if( z1 >= 1.0f )
+            {
+                z1 = 1.0f;
+            }
+    
+            lastPosition.set( x1, y1, z1 );
+            gmtl::normalize( lastPosition );
+        
+            if(state == GLUT_DOWN)
+            {
+                switch(button)
+                {
+                    case GLUT_LEFT_BUTTON:                     
+                        useMouseLeftButton = true;
+                        break;                    
+                    case GLUT_RIGHT_BUTTON:                    
+                        useMouseRightButton = true;
+                        break;                    
+                    case GLUT_MIDDLE_BUTTON:                     
+                        useMouseMiddleButton = true;
+                        break;                    
+                }
+            }        
+            else if(state == GLUT_UP)
+            {
+                switch(button)
+                {
+                    case GLUT_LEFT_BUTTON:                     
+                        useMouseLeftButton = false;
+                        break;                    
+                    case GLUT_RIGHT_BUTTON:                    
+                        useMouseRightButton = false;
+                        break;                    
+                    case GLUT_MIDDLE_BUTTON: 
+                        useMouseMiddleButton = false;
+                        break;                
+                }
+            }
+            break; // ... case NAVIGATE
+    }
+}        
 
-      double x1 = ( 2.0f * X - trackBallDiameter ) / trackBallDiameter;
-      double y1 = ( trackBallDiameter - 2.0f * Y ) / trackBallDiameter;
-      double z1 = sqrt( 1.0f - ( x1 * x1  - y1 * y1 ) );
-
-      if( z1 >= 1.0f )
-      {
-        z1 = 1.0f;
-      }
-
-      lastPosition.set( x1, y1, z1 );
-      gmtl::normalize( lastPosition );
-
-      if( state == GLUT_DOWN )
-      {
-        switch( button )
-        {
-          case GLUT_LEFT_BUTTON: 
-          {
-            useMouseLeftButton = true;
-            break;
-          }
-          case GLUT_RIGHT_BUTTON:
-          {
-            useMouseRightButton = true;
-            break;
-          }
-          case GLUT_MIDDLE_BUTTON: 
-          {
-            useMouseMiddleButton = true;
-            break;
-          }
-        }
-      }
-      else if( state == GLUT_UP )
-      {
-        switch( button )
-        {
-          case GLUT_LEFT_BUTTON: 
-          {
-            useMouseLeftButton = false;
-            break;
-          }
-          case GLUT_RIGHT_BUTTON:
-          {
-            useMouseRightButton = false;
-            break;
-          }
-          case GLUT_MIDDLE_BUTTON: 
-          {
-            useMouseMiddleButton = false;
-            break;
-          }
-        }
-      }
-      break;
-    } 
-  };
-}
 
 
 void mouseMotion( int X, int Y )
@@ -1348,10 +1471,21 @@ void mouseMotion( int X, int Y )
 }
 
 
-void keyboard( unsigned char key, int x, int y )
+void keyboard (unsigned char key, int x, int y)
 {
-  if( key == 'i' ){ mode = PICK_AND_MOVE; }
-  if( key == 'n' ){ mode = NAVIGATE; }
+	switch (key)
+	{
+	    case 27:
+		    exit(0);
+		    break;
+
+	    case 32:	
+		    if(mode == NAVIGATE)
+			    mode = PICK;
+		    else
+			    mode = NAVIGATE;
+		    break;
+	}
 }
 
 
@@ -1369,9 +1503,10 @@ int main( int argc, char **argv )
 	glutReshapeFunc( reshape );
 	glutIdleFunc( idle );
 
-  glutKeyboardFunc( keyboard );
+    glutKeyboardFunc( keyboard );
+
 	glutMouseFunc(mouseplay);
-  glutMotionFunc( mouseMotion );
+    glutMotionFunc( mouseMotion );
 	
 	glutMainLoop();
 	glutTimerFunc( 1, myGlutTimer, 1 );
