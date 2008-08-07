@@ -235,7 +235,7 @@ void draw()
 
     glDisable( GL_TEXTURE_2D );
     glEnable( GL_LIGHTING );
-    
+
 	dsSetColor (0.9, 0.6, 0.4);
 	
   	for (int b = 0; b < N_BODIES; b ++)
@@ -244,8 +244,7 @@ void draw()
 			dsSetColor (0, 0, 1);
 
     		glPushMatrix();
-	  
-    	  	dsDrawCapsule (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
+    		dsDrawCapsule (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
 
 	  	dsDrawSphere (dGeomGetPosition(torso2_geom[b]),dGeomGetRotation(torso2_geom[b]),.1);
 	  	dsDrawSphere (dGeomGetPosition(torso3_geom[b]),dGeomGetRotation(torso3_geom[b]),.1);
