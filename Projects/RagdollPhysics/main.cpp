@@ -15,155 +15,159 @@
 #include "gmtl/VecOps.h"
 #include "gmtl/MatrixOps.h"
 #include "gmtl/Xforms.h"
-#define               drand48()  ((double) (((double) rand()) / ((double) RAND_MAX)))
-#define               BUFSIZE               512
+#define                 drand48()               ((double) (((double) rand()) / ((double) RAND_MAX)))
+#define                 BUFSIZE                 512
 
 
 // Buffer size to store hits. 
-GLuint                selectBuf[BUFSIZE];
+GLuint                  selectBuf[BUFSIZE];
 
 // Texture object indices. 
-GLuint                glTexIndex;
+GLuint                  glTexIndex;
 
 // Number of manikins
-#define               N_BODIES              20
+#define                 N_BODIES                10
 
 
-#define               STAGE_SIZE            8.0  // in m
-static float          TIME_STEP       =     0.0005;
+#define                 STAGE_SIZE              8.0  // in m
+static float            TIME_STEP =             0.0005;
 
 // Sponginess
-#define               K_SPRING              1.0
-#define               K_DAMP                1.0
+#define                 K_SPRING                1.0
+#define                 K_DAMP                  1.0
 
 
 // ??
-double                timeAccum;
-double                lastTime;
+double                  timeAccum;
+double                  lastTime;
 
 
 // Variables dealling with mouse use
 // used to turn off and on animation and friction aproximation by triggers
-static bool dancing = false;
-static bool friction = true;
-static int  dance_counter=0;
-static int  step=0;
-static bool doInteract = false;
-static int  cursorX;
-static int  cursorY;
-static int  cursorX2;
-static int  cursorY2;
+static bool             dancing =               false;
+static bool             friction =              true;
+static int              dance_counter =         0;
+static int              step =                  0;
+static bool             doInteract =            false;
+static int              cursorX;
+static int              cursorY;
+static int              cursorX2;
+static int              cursorY2;
 
 
 //
-static GLuint         wood[1];
+static GLuint           wood[1];
 
-static GLuint name =-N_BODIES;
-static int  hits;
-static int  clicked = -1;
-static int  beat = 50;
+static GLuint           name =                  -N_BODIES;
+static int              hits;
+static int              clicked =               -1;
+static int              beat =                  50;
 
 // Names the world in which the collisions take place
-static dWorld         dyn_world;
+static dWorld           dyn_world;
 
 
 // Density of manikins in kg/m^3  (sun baked dried Chinese Juniper Wood)
-static dReal          density = 508;
+static dReal            density =               508;
 
 
 // Necessary for collisions
-static dSpaceID       coll_space_id;
-static dJointID       plane2d_joint_ids[N_BODIES];
-static dJointGroup    coll_contacts;
+static dSpaceID         coll_space_id;
+static dJointID         plane2d_joint_ids[N_BODIES];
+static dJointGroup      coll_contacts;
 
 
 // Stairs
-static dGeomID  stair1;
-static dGeomID  stair2;
-static dGeomID  stair3;
-static dGeomID  stair4;
-static dGeomID  stair5;
-static dGeomID  stair6;
-static dGeomID  stair7;
-static dReal    sides1[]= {2, 1, 0.5};
-static dReal    sides2[]= {2, 1, 1};
-static dReal    sides3[]= {2, 1, 1.5};
-static dReal    sides4[]= {12, 2, 2};
+static dGeomID          stair1;
+static dGeomID          stair2;
+static dGeomID          stair3;
+static dGeomID          stair4;
+static dGeomID          stair5;
+static dGeomID          stair6;
+static dGeomID          stair7;
+static dReal            sides1[]= {2, 1, 0.5};
+static dReal            sides2[]= {2, 1, 1};
+static dReal            sides3[]= {2, 1, 1.5};
+static dReal            sides4[]= {12, 2, 2};
 
 
 // Names of objects
-static dBodyID        torso1[N_BODIES];
-static dBodyID        torso2[N_BODIES];
-static dBodyID        torso3[N_BODIES];
-static dBodyID        head[N_BODIES];
-static dBodyID        leftarm1[N_BODIES];
-static dBodyID        leftarm2[N_BODIES];
-static dBodyID        rightarm1[N_BODIES];
-static dBodyID        rightarm2[N_BODIES];
-static dBodyID        leftleg1[N_BODIES];
-static dBodyID        leftleg2[N_BODIES];
-static dBodyID        rightleg1[N_BODIES];
-static dBodyID        rightleg2[N_BODIES];
+static dBodyID          torso1[N_BODIES];
+static dBodyID          torso2[N_BODIES];
+static dBodyID          torso3[N_BODIES];
+static dBodyID          head[N_BODIES];
+static dBodyID          leftarm1[N_BODIES];
+static dBodyID          leftarm2[N_BODIES];
+static dBodyID          rightarm1[N_BODIES];
+static dBodyID          rightarm2[N_BODIES];
+static dBodyID          leftleg1[N_BODIES];
+static dBodyID          leftleg2[N_BODIES];
+static dBodyID          rightleg1[N_BODIES];
+static dBodyID          rightleg2[N_BODIES];
 
 
 // Names of shapes to be applied to objects later
-static dGeomID        torso1_geom[N_BODIES];
-static dGeomID        torso2_geom[N_BODIES];
-static dGeomID        torso3_geom[N_BODIES];
-static dGeomID        head_geom[N_BODIES];
-static dGeomID        leftarm1_geom[N_BODIES];
-static dGeomID        leftarm2_geom[N_BODIES];
-static dGeomID        rightarm1_geom[N_BODIES];
-static dGeomID        rightarm2_geom[N_BODIES];
-static dGeomID        leftleg1_geom[N_BODIES];
-static dGeomID        leftleg2_geom[N_BODIES];
-static dGeomID        rightleg1_geom[N_BODIES];
-static dGeomID        rightleg2_geom[N_BODIES];
+static dGeomID          torso1_geom[N_BODIES];
+static dGeomID          torso2_geom[N_BODIES];
+static dGeomID          torso3_geom[N_BODIES];
+static dGeomID          head_geom[N_BODIES];
+static dGeomID          leftarm1_geom[N_BODIES];
+static dGeomID          leftarm2_geom[N_BODIES];
+static dGeomID          rightarm1_geom[N_BODIES];
+static dGeomID          rightarm2_geom[N_BODIES];
+static dGeomID          leftleg1_geom[N_BODIES];
+static dGeomID          leftleg2_geom[N_BODIES];
+static dGeomID          rightleg1_geom[N_BODIES];
+static dGeomID          rightleg2_geom[N_BODIES];
 
 
 // Makes all the joints of one manikin into a single unit makes an array of them
-static dJointGroupID  ragdoll_joints[N_BODIES];
+static dJointGroupID    ragdoll_joints[N_BODIES];
 
 
 // Names joint constraints
-static dJointID       rib1[N_BODIES];
-static dJointID       rib2[N_BODIES];
-static dJointID       neck[N_BODIES];
-static dJointID       leftsholder[N_BODIES];
-static dJointID       rightsholder[N_BODIES];
-static dJointID       leftelbow[N_BODIES];
-static dJointID       rightelbow[N_BODIES];
-static dJointID       lefthip[N_BODIES];
-static dJointID       righthip[N_BODIES];
-static dJointID       leftknee[N_BODIES];
-static dJointID       rightknee[N_BODIES];
+static dJointID         rib1[N_BODIES];
+static dJointID         rib2[N_BODIES];
+static dJointID         neck[N_BODIES];
+static dJointID         leftsholder[N_BODIES];
+static dJointID         rightsholder[N_BODIES];
+static dJointID         leftelbow[N_BODIES];
+static dJointID         rightelbow[N_BODIES];
+static dJointID         lefthip[N_BODIES];
+static dJointID         righthip[N_BODIES];
+static dJointID         leftknee[N_BODIES];
+static dJointID         rightknee[N_BODIES];
 
 
 // Rendering parameters.
-int                   viewport[] =   { 0, 0, 800, 600 };
+int                     viewport[] =   { 0, 0, 800, 600 };
 
 
 // Trackball parameters. 
-float                 trackBallDiameter( 800.0 );  
-
-gmtl::Vec3f           currentPosition;
-gmtl::Vec3f           lastPosition;
-
-gmtl::Matrix44f       gmtlNavigationMatrix;
-gmtl::Matrix44f       trueWorldMatrix; 
-
-bool                  useMouseLeftButton   ( false );
-bool                  useMouseMiddleButton ( false );
-bool                  useMouseRightButton  ( false );
+float                   trackBallDiameter( 800.0 );  
 
 
-enum                  InteractioMode
-                      { 
-                        PICK        = 1,
-                        NAVIGATE    = 2
-                      };
+gmtl::Vec3f             currentPosition;
+gmtl::Vec3f             lastPosition;
 
-InteractioMode        mode( PICK );
+
+gmtl::Matrix44f         gmtlNavigationMatrix;
+gmtl::Matrix44f         trueWorldMatrix; 
+
+
+bool                    useMouseLeftButton   ( false );
+bool                    useMouseMiddleButton ( false );
+bool                    useMouseRightButton  ( false );
+
+
+enum                    InteractioMode
+                        { 
+                            PICK        = 1,                        
+                            NAVIGATE    = 2
+                        };
+
+
+InteractioMode          mode( PICK );
 
 
 //
@@ -1277,7 +1281,7 @@ void reshape(int w, int h)
 	viewport[2] = w;
 	viewport[3] = h;
 	
-  trackBallDiameter    = ( h > w ) ? h : w;
+    trackBallDiameter    = ( h > w ) ? h : w;
 
 	glViewport( viewport[0], viewport[1], viewport[2], viewport[3] );
 
@@ -1456,11 +1460,9 @@ void mouseMotion( int X, int Y )
       glGetFloatv( GL_MODELVIEW_MATRIX, gNavigationMatrix );
       glPopMatrix();
 
-      gmtl::Matrix44f temp, temp2;
+      gmtl::Matrix44f temp;
       temp.set( gNavigationMatrix );
-      gmtl::invertFull( temp2, temp ); 
-      gmtl::Vec3f result = direction * temp2;
-
+      
       if( dx >= 0 ? dx > dy : dx < dy )
       {
         gmtl::postMult( gmtlNavigationMatrix, temp );
