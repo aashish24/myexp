@@ -128,12 +128,12 @@
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;WIN32;dSINGLE;WIN32_LEAN_AND_MEAN;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="0"
-				RuntimeLibrary="3"
+				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="0"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -150,7 +150,6 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib winmm.lib gdi32.lib opengl32.lib glu32.lib"
 				OutputFile="E:\aashish\src\ode\ode-0.10.1\lib\releasesingledll\demo_space.exe"
-				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../lib/ReleaseSingleDLL"
 				GenerateDebugInformation="false"
 				ProgramDatabaseFile="$(OutDir)/demo_space.pdb"
