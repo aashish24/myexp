@@ -140,11 +140,11 @@ static dJointID         rightknee[N_BODIES];
 
 
 // Rendering parameters.
-int                     viewport[] =   { 0, 0, 800, 600 };
+int                     viewport[] =            { 0, 0, 800, 600 };
 
 
 // Trackball parameters. 
-float                   trackBallDiameter( 800.0 );  
+float                   trackBallDiameter       (800.0);  
 
 
 gmtl::Vec3f             currentPosition;
@@ -155,9 +155,9 @@ gmtl::Matrix44f         gmtlNavigationMatrix;
 gmtl::Matrix44f         trueWorldMatrix; 
 
 
-bool                    useMouseLeftButton   ( false );
-bool                    useMouseMiddleButton ( false );
-bool                    useMouseRightButton  ( false );
+bool                    useMouseLeftButton      (false);
+bool                    useMouseMiddleButton    (false);
+bool                    useMouseRightButton     (false);
 
 
 enum                    InteractioMode
@@ -167,7 +167,7 @@ enum                    InteractioMode
                         };
 
 
-InteractioMode          mode( PICK );
+InteractioMode          mode(PICK);
 
 
 //
@@ -190,13 +190,13 @@ GLuint loadTexture(std::string fileName)
 	std::cout << "Texture filename is: " << fileName << " width: " << width << " height: " << height << std::endl;
 
 	GLuint index;
-	glGenTextures( 1,  &index );
-	glBindTexture( GL_TEXTURE_2D, index );
+	glGenTextures(1,  &index);
+	glBindTexture(GL_TEXTURE_2D, index);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	if(tgaimage)
 		delete tgaimage;
@@ -207,27 +207,27 @@ GLuint loadTexture(std::string fileName)
 
 void draw()
 {	
-	glDisable( GL_LIGHTING );  
-  	glColor3f( 1.0, 1.0, 0.8 );
-  	glEnable( GL_TEXTURE_2D ); 
-  	glBindTexture( GL_TEXTURE_2D, glTexIndex );   
+	glDisable(GL_LIGHTING);  
+  	glColor3f(1.0, 1.0, 0.8);
+  	glEnable(GL_TEXTURE_2D); 
+  	glBindTexture(GL_TEXTURE_2D, glTexIndex);   
   
   	glPushMatrix();
-  	glBegin( GL_QUADS );
-		glNormal3f( 0.0, 0.0, 1.0 );
-		glTexCoord3f( 0.0, 0.0, 0.0 );
-		glVertex3f( -10.0, -10.0, 0.0 );
-		glTexCoord3f( 20.0, 0.0, 0.0 );
-		glVertex3f(  20.0, -10.0, 0.0 );
-		glTexCoord3f( 20.0, 20.0, 0.0 );
-		glVertex3f(  20.0, 10.0, 0.0 );
-		glTexCoord3f( 0.0, 20.0, 0.0 );
-		glVertex3f( -10.0, 10.0, 0.0 );
+  	glBegin(GL_QUADS);
+		glNormal3f(0.0, 0.0, 1.0);
+		glTexCoord3f(0.0, 0.0, 0.0);
+		glVertex3f(-10.0, -10.0, 0.0);
+		glTexCoord3f(20.0, 0.0, 0.0);
+		glVertex3f( 20.0, -10.0, 0.0);
+		glTexCoord3f(20.0, 20.0, 0.0);
+		glVertex3f( 20.0, 10.0, 0.0);
+		glTexCoord3f(0.0, 20.0, 0.0);
+		glVertex3f(-10.0, 10.0, 0.0);
 	glEnd();
   	glPopMatrix();
 
-	//glDisable( GL_TEXTURE_2D );
-	//glEnable( GL_LIGHTING );
+	//glDisable(GL_TEXTURE_2D);
+	//glEnable(GL_LIGHTING);
 
 	dsDrawBox(dGeomGetPosition(stair1), dGeomGetRotation(stair1), sides1);
 	dsDrawBox(dGeomGetPosition(stair2), dGeomGetRotation(stair2), sides1);
@@ -237,8 +237,8 @@ void draw()
 	dsDrawBox(dGeomGetPosition(stair6), dGeomGetRotation(stair6), sides3);
 	dsDrawBox(dGeomGetPosition(stair7), dGeomGetRotation(stair7), sides4);
 
-    glDisable( GL_TEXTURE_2D );
-    glEnable( GL_LIGHTING );
+    glDisable(GL_TEXTURE_2D);
+    glEnable(GL_LIGHTING);
 
 	dsSetColor (0.9, 0.6, 0.4);
 	
@@ -519,7 +519,7 @@ void interact()
 	std::cout << "Viewport is: " << viewport[0] << " " << viewport[1] << " " << viewport[2] << " " << viewport[3] << std::endl;	
 	glLoadIdentity();
 	gluPickMatrix(cursorX, viewport[3]-cursorY, 1, 1, viewport);
-	gluPerspective( 60.0, ( double )viewport[2]/viewport[3], 0.1, 10000.0);
+	gluPerspective(60.0, (double)viewport[2]/viewport[3], 0.1, 10000.0);
 	//glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	glInitNames();
@@ -538,7 +538,7 @@ void movedoll()
     gmtl::Vec3f direction, result;
     direction.set((cursorX2-cursorX)*1.0, (cursorY-cursorY2)*1.0, z);
 
-    gmtl::invert( temp, trueWorldMatrix );
+    gmtl::invert(temp, trueWorldMatrix);
     gmtl::xform(result, temp, direction);
 
     std::cout << " direction: " << direction[0] << " " << direction[1] << " " << direction[2] << std::endl;
@@ -696,8 +696,8 @@ void init()
 	// Let bodies move into each other a bit.
 	dReal  cf_mixing;// = 1 / TIME_STEP * K_SPRING + K_DAMP;
 	dReal  err_reduct;// = TIME_STEP * K_SPRING * cf_mixing;
-	err_reduct = REAL( 0.5 );
-	cf_mixing = REAL( 0.001 );
+	err_reduct = REAL(0.5);
+	cf_mixing = REAL(0.001);
 	dWorldSetERP (dyn_world.id (), err_reduct);
 	dWorldSetCFM (dyn_world.id (), cf_mixing);
 
@@ -745,9 +745,9 @@ void init()
 	for (b = 0; b < N_BODIES; b ++)
 	{
 		int     l = (int) (1 + sqrt ((double) N_BODIES));
-		dReal  x = dReal( (0.5 + (b / l)) / l * STAGE_SIZE );
-		dReal  y = dReal( (0.5 + (b % l)) / l * STAGE_SIZE );
-		dReal  z = REAL( 1.2 );
+		dReal  x = dReal((0.5 + (b / l)) / l * STAGE_SIZE);
+		dReal  y = dReal((0.5 + (b % l)) / l * STAGE_SIZE);
+		dReal  z = REAL(1.2);
 
 
 		// Center of mass hight (torso2)
@@ -845,18 +845,18 @@ void init()
 
 		// Makes things oriented up
 		dMatrix3 dir = {1,1,1,1,1,1,1,1,1,1,1,1};
-		dGeomSetRotation(torso1_geom[b], dir );
-		dGeomSetRotation(torso2_geom[b], dir );
-		dGeomSetRotation(torso3_geom[b], dir );
-		dGeomSetRotation(head_geom[b], dir );
-		dGeomSetRotation(leftarm1_geom[b],dir );
-		dGeomSetRotation(leftarm2_geom[b],dir );
-		dGeomSetRotation(rightarm1_geom[b],dir );
-		dGeomSetRotation(rightarm2_geom[b],dir );
-		dGeomSetRotation(leftleg1_geom[b], dir );
-		dGeomSetRotation(leftleg2_geom[b], dir );
-		dGeomSetRotation(rightleg1_geom[b],dir );
-		dGeomSetRotation(rightleg2_geom[b],dir );
+		dGeomSetRotation(torso1_geom[b], dir);
+		dGeomSetRotation(torso2_geom[b], dir);
+		dGeomSetRotation(torso3_geom[b], dir);
+		dGeomSetRotation(head_geom[b], dir);
+		dGeomSetRotation(leftarm1_geom[b],dir);
+		dGeomSetRotation(leftarm2_geom[b],dir);
+		dGeomSetRotation(rightarm1_geom[b],dir);
+		dGeomSetRotation(rightarm2_geom[b],dir);
+		dGeomSetRotation(leftleg1_geom[b], dir);
+		dGeomSetRotation(leftleg2_geom[b], dir);
+		dGeomSetRotation(rightleg1_geom[b],dir);
+		dGeomSetRotation(rightleg2_geom[b],dir);
 
 
 		// Makes a group for the joints to join
@@ -1227,17 +1227,17 @@ void waltz(int step)
 
 void display()
 {
-	glClearColor( 0.0, 0.0, 0.0, 0.0 );
-	glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-    glMatrixMode( GL_MODELVIEW );
+    glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
-    glMultMatrixf( gmtlNavigationMatrix.mData );
-    glRotatef( -90.0, 1.0, 0.0, 0.0 );
+    glMultMatrixf(gmtlNavigationMatrix.mData);
+    glRotatef(-90.0, 1.0, 0.0, 0.0);
 
-    if( doInteract )
+    if(doInteract)
 	{
-		std::cout << "\nTest interact( int, int ) " << cursorX << ' ' << cursorY <<'\n' ;
+		std::cout << "\nTest interact(int, int) " << cursorX << ' ' << cursorY <<'\n' ;
 		interact();
         InteractiveRender();
         endinteract();
@@ -1262,8 +1262,8 @@ void display()
 	}
     
     GLfloat temp[16];
-    glGetFloatv( GL_MODELVIEW_MATRIX, temp );
-    trueWorldMatrix.set( temp );
+    glGetFloatv(GL_MODELVIEW_MATRIX, temp);
+    trueWorldMatrix.set(temp);
 
     glPopMatrix();
 }
@@ -1281,20 +1281,20 @@ void reshape(int w, int h)
 	viewport[2] = w;
 	viewport[3] = h;
 	
-    trackBallDiameter    = ( h > w ) ? h : w;
+    trackBallDiameter    = (h > w) ? h : w;
 
-	glViewport( viewport[0], viewport[1], viewport[2], viewport[3] );
+	glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
 
-	glMatrixMode( GL_PROJECTION );
+	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective( 60.0, ( double )w/h, 1.0, 1000.0 );
+	gluPerspective(60.0, (double)w/h, 0.1, 1000.0);
 
-	glMatrixMode( GL_MODELVIEW );
+	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	//gluLookAt(STAGE_SIZE/2, STAGE_SIZE/2, STAGE_SIZE, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 0.0, 1.0);
-    gluLookAt( STAGE_SIZE/2, STAGE_SIZE/2, STAGE_SIZE, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 1.0, 0.0 );
+    gluLookAt(STAGE_SIZE/2, STAGE_SIZE/2, STAGE_SIZE, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 1.0, 0.0);
 	//gluLookAt(STAGE_SIZE/2, -3.0, 10.0, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 0.0, 1.0);
-    glMultMatrixf( gmtlNavigationMatrix.mData );
+    glMultMatrixf(gmtlNavigationMatrix.mData);
 }
 
 
@@ -1314,14 +1314,14 @@ void myGlutTimer(int puase)
 }
 
 
-void mouseplay( int button, int state, int X, int Y )
+void mouseplay(int button, int state, int X, int Y)
 {
-    switch( mode )
+    switch(mode)
     {        
         case PICK:	    
-            if ( state == 0 )
+            if (state == 0)
             {
-                switch ( button )
+                switch (button)
                 {
                     case GLUT_LEFT_BUTTON:
                         cursorX = X;
@@ -1340,9 +1340,9 @@ void mouseplay( int button, int state, int X, int Y )
                         break;                            
                 }
             }
-            else if ( state == 1 )
+            else if (state == 1)
             {
-                switch ( button )
+                switch (button)
                 {
                     case GLUT_LEFT_BUTTON:
                         cursorX2 = X;
@@ -1361,23 +1361,23 @@ void mouseplay( int button, int state, int X, int Y )
             break; // ...case PICK
 
         case NAVIGATE: 
-            if( ( X < viewport[0] || X >  viewport[2] ) || 
-                ( Y < viewport[1] || Y >  viewport[3] ) )
+            if((X < viewport[0] || X >  viewport[2]) || 
+                (Y < viewport[1] || Y >  viewport[3]))
             {
                 return;  
             }
 
-            double x1 = ( 2.0f * X - trackBallDiameter ) / trackBallDiameter;
-            double y1 = ( trackBallDiameter - 2.0f * Y ) / trackBallDiameter;
-            double z1 = sqrt( 1.0f - ( x1 * x1  - y1 * y1 ) );
+            double x1 = (2.0f * X - trackBallDiameter) / trackBallDiameter;
+            double y1 = (trackBallDiameter - 2.0f * Y) / trackBallDiameter;
+            double z1 = sqrt(1.0f - (x1 * x1  - y1 * y1));
 
-            if( z1 >= 1.0f )
+            if(z1 >= 1.0f)
             {
                 z1 = 1.0f;
             }
 
-            lastPosition.set( x1, y1, z1 );
-            gmtl::normalize( lastPosition );
+            lastPosition.set(x1, y1, z1);
+            gmtl::normalize(lastPosition);
 
             if(state == GLUT_DOWN)
             {
@@ -1415,75 +1415,75 @@ void mouseplay( int button, int state, int X, int Y )
 
 
 
-void mouseMotion( int X, int Y )
+void mouseMotion(int X, int Y)
 {
   float dx, dy, dz, gAngle;
   float axis[3];
 
-  if( ( X < viewport[0] || X >  viewport[2] ) ||
-      ( Y < viewport[1] || Y >  viewport[3]  )  )
+  if((X < viewport[0] || X >  viewport[2]) ||
+      (Y < viewport[1] || Y >  viewport[3] ) )
   {
       return;
   }
 
-  double x1 = ( 2.0f * X - trackBallDiameter ) / trackBallDiameter;
-  double y1 = ( trackBallDiameter - 2.0f * Y ) / trackBallDiameter;
-  double z1 = sqrt( 1.0f - ( x1 * x1  - y1 * y1 ) );
+  double x1 = (2.0f * X - trackBallDiameter) / trackBallDiameter;
+  double y1 = (trackBallDiameter - 2.0f * Y) / trackBallDiameter;
+  double z1 = sqrt(1.0f - (x1 * x1  - y1 * y1));
 
-  if( z1 >= 1.0f )
+  if(z1 >= 1.0f)
   {
     z1 = 1.0f;
   }
 
-  currentPosition.set( x1, y1, z1 );
-  gmtl::normalize( currentPosition );
+  currentPosition.set(x1, y1, z1);
+  gmtl::normalize(currentPosition);
 
   dx = currentPosition[0] - lastPosition[0];
   dy = currentPosition[1] - lastPosition[1];
   dz = currentPosition[2] - lastPosition[2];
 
-  if( dx || dy || dz )
+  if(dx || dy || dz)
   {
     axis[0] = lastPosition[1] * currentPosition[2] - lastPosition[2] * currentPosition[1];
     axis[1] = lastPosition[2] * currentPosition[0] - lastPosition[0] * currentPosition[2];
     axis[2] = lastPosition[0] * currentPosition[1] - lastPosition[1] * currentPosition[0];
 
-    gAngle = gmtl::length( gmtl::Vec3f( axis[0], axis[1], axis[2] ) ) * ( ( 180 * 7.0f ) / 22.0f );
+    gAngle = gmtl::length(gmtl::Vec3f(axis[0], axis[1], axis[2])) * ((180 * 7.0f) / 22.0f);
 
-    if( useMouseLeftButton )
+    if(useMouseLeftButton)
     {
-      glMatrixMode( GL_MODELVIEW );
+      glMatrixMode(GL_MODELVIEW);
       glPushMatrix();
       glLoadIdentity();
-      glRotatef( gAngle, axis[0], axis[1], axis[2] );
+      glRotatef(gAngle, axis[0], axis[1], axis[2]);
       GLfloat gNavigationMatrix[16];
-      glGetFloatv( GL_MODELVIEW_MATRIX, gNavigationMatrix );
+      glGetFloatv(GL_MODELVIEW_MATRIX, gNavigationMatrix);
       glPopMatrix();
 
       gmtl::Matrix44f temp;
-      temp.set( gNavigationMatrix );
+      temp.set(gNavigationMatrix);
       
-      if( dx >= 0 ? dx > dy : dx < dy )
+      if(dx >= 0 ? dx > dy : dx < dy)
       {
-        gmtl::postMult( gmtlNavigationMatrix, temp );
+        gmtl::postMult(gmtlNavigationMatrix, temp);
       }
       else
       {
-        gmtl::preMult( gmtlNavigationMatrix, temp );
+        gmtl::preMult(gmtlNavigationMatrix, temp);
       }
 
       lastPosition = currentPosition;
     }
 
-    if( useMouseRightButton )
+    if(useMouseRightButton)
     { 
-      glTranslatef( dx * 5.0, dy * 5.0, 0.0 );
+      glTranslatef(dx * 5.0, dy * 5.0, 0.0);
       lastPosition = currentPosition;
     }
 
-    if( useMouseMiddleButton )
+    if(useMouseMiddleButton)
     { 
-      glTranslatef( 0.0, 0.0, dz * 50.0 );
+      glTranslatef(0.0, 0.0, dz * 50.0);
       lastPosition = currentPosition;
     }
   }
@@ -1516,9 +1516,9 @@ void keyboard (unsigned char key, int x, int y)
 }
 
 
-int main( int argc, char **argv )
+int main(int argc, char **argv)
 {
-	glutInit( &argc, argv );
+	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);	
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(800,600);
@@ -1526,17 +1526,17 @@ int main( int argc, char **argv )
 
 	init();
 
-	glutDisplayFunc( display );
-	glutReshapeFunc( reshape );
-	glutIdleFunc( idle );
+	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
+	glutIdleFunc(idle);
 
-    glutKeyboardFunc( keyboard );
+    glutKeyboardFunc(keyboard);
 
 	glutMouseFunc(mouseplay);
-    glutMotionFunc( mouseMotion );
+    glutMotionFunc(mouseMotion);
 	
 	glutMainLoop();
-	glutTimerFunc( 1, myGlutTimer, 1 );
+	glutTimerFunc(1, myGlutTimer, 1);
 
 	dCloseODE();
 	return 0;
