@@ -14,7 +14,7 @@
 #include "gmtl/Matrix.h"
 #include "gmtl/VecOps.h"
 #include "gmtl/MatrixOps.h"
-
+#include "gmtl/Xforms.h"
 #define               drand48()  ((double) (((double) rand()) / ((double) RAND_MAX)))
 #define               BUFSIZE               512
 
@@ -150,6 +150,7 @@ gmtl::Vec3f           currentPosition;
 gmtl::Vec3f           lastPosition;
 
 gmtl::Matrix44f       gmtlNavigationMatrix;
+gmtl::Matrix44f       trueWorldMatrix; 
 
 bool                  useMouseLeftButton   ( false );
 bool                  useMouseMiddleButton ( false );
@@ -158,7 +159,7 @@ bool                  useMouseRightButton  ( false );
 
 enum                  InteractioMode
                       { 
-                        PICK        = 1,                        
+                        PICK        = 1,
                         NAVIGATE    = 2
                       };
 
@@ -521,54 +522,65 @@ void interact()
 	glInitNames();
 }
 
-void movedoll ()
+void movedoll()
 {
 	int bodynum = name%N_BODIES;
 	int bodypart = name/N_BODIES;
 	name = -N_BODIES;
-	dReal z= 0;
+	dReal z= 0.0;
 	int scalar = 10;
 	clicked = -1;
+    
+    gmtl::Matrix44f temp;
+    gmtl::Vec3f direction, result;
+    direction.set((cursorX2-cursorX)*1.0, (cursorY-cursorY2)*1.0, z);
+
+    gmtl::invert( temp, trueWorldMatrix );
+    gmtl::xform(result, temp, direction);
+
+    std::cout << " direction: " << direction[0] << " " << direction[1] << " " << direction[2] << std::endl;
+    std::cout << " result: " << result[0] << " " << result[1] << " " << result[2] << std::endl;
+
 	switch (bodypart)
 	{
 		case -1:
 			std::cout<<"nothing has been grabbed\n";
 			break;
 		case 0:
-			dBodySetLinearVel(torso1[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(torso1[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 		case 1:
-			dBodySetLinearVel(torso2[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(torso2[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 		case 2:
-			dBodySetLinearVel(torso3[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(torso3[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 		case 3:
-			dBodySetLinearVel(head[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(head[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 		case 4:
-			dBodySetLinearVel(leftarm1[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(leftarm1[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 		case 5:
-			dBodySetLinearVel(leftarm2[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(leftarm2[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 		case 6:
-			dBodySetLinearVel(rightarm1[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(rightarm1[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 		case 7:
-			dBodySetLinearVel(rightarm2[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(rightarm2[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 		case 8:
-			dBodySetLinearVel(leftleg1[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(leftleg1[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 		case 9:
-			dBodySetLinearVel(leftleg2[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(leftleg2[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 		case 10:
-			dBodySetLinearVel(rightleg1[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(rightleg1[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 		case 11:
-			dBodySetLinearVel(rightleg2[bodynum], (cursorX2-cursorX)*scalar,  (cursorY-cursorY2)*scalar, z);
+			dBodySetLinearVel(rightleg2[bodynum], result[0]*scalar,  result[1]*scalar, result[2]);
 			break;
 	}
 }
@@ -1241,10 +1253,14 @@ void display()
 //  			dance(step);
 			}
 		}
-    cb_sim_step();
-    draw();
+        cb_sim_step();
+        draw();
 		glutSwapBuffers();
 	}
+    
+    GLfloat temp[16];
+    glGetFloatv( GL_MODELVIEW_MATRIX, temp );
+    trueWorldMatrix.set( temp );
 
     glPopMatrix();
 }
