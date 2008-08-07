@@ -30,7 +30,7 @@ GLuint                glTexIndex;
 
 
 #define               STAGE_SIZE            8.0  // in m
-#define               TIME_STEP             0.0005
+static float          TIME_STEP       =     0.0005;
 
 // Sponginess
 #define               K_SPRING              1.0
@@ -221,8 +221,8 @@ void draw()
 	glEnd();
   	glPopMatrix();
 
-	glDisable( GL_TEXTURE_2D );
-	glEnable( GL_LIGHTING );
+	//glDisable( GL_TEXTURE_2D );
+	//glEnable( GL_LIGHTING );
 
 	dsDrawBox(dGeomGetPosition(stair1), dGeomGetRotation(stair1), sides1);
 	dsDrawBox(dGeomGetPosition(stair2), dGeomGetRotation(stair2), sides1);
@@ -232,6 +232,9 @@ void draw()
 	dsDrawBox(dGeomGetPosition(stair6), dGeomGetRotation(stair6), sides3);
 	dsDrawBox(dGeomGetPosition(stair7), dGeomGetRotation(stair7), sides4);
 
+    glDisable( GL_TEXTURE_2D );
+    glEnable( GL_LIGHTING );
+    
 	dsSetColor (0.9, 0.6, 0.4);
 	
   	for (int b = 0; b < N_BODIES; b ++)
@@ -1214,7 +1217,7 @@ void display()
 
     glMatrixMode( GL_MODELVIEW );
     glPushMatrix();
-    glMultMatrixf( gmtlNavigationMatrix.mData );		            
+    glMultMatrixf( gmtlNavigationMatrix.mData );
     glRotatef( -90.0, 1.0, 0.0, 0.0 );
 
     if( doInteract )
@@ -1235,13 +1238,13 @@ void display()
 			{
 				step++;
 				waltz(step);
-    			dance(step);
+//  			dance(step);
 			}
-		}	    
+		}
     cb_sim_step();
-    draw();    
+    draw();
 		glutSwapBuffers();
-	}  
+	}
 
     glPopMatrix();
 }
@@ -1331,65 +1334,65 @@ void mouseplay( int button, int state, int X, int Y )
                     
                     case GLUT_MIDDLE_BUTTON:                            
                         break;
-                    
-                    case GLUT_RIGHT_BUTTON:                            
-                        break;                            
+
+                    case GLUT_RIGHT_BUTTON:
+                        break;
                 }
             }
-            break; // ...case PICK                    
-	        
+            break; // ...case PICK
+
         case NAVIGATE: 
             if( ( X < viewport[0] || X >  viewport[2] ) || 
                 ( Y < viewport[1] || Y >  viewport[3] ) )
             {
                 return;  
             }
-        
+
             double x1 = ( 2.0f * X - trackBallDiameter ) / trackBallDiameter;
             double y1 = ( trackBallDiameter - 2.0f * Y ) / trackBallDiameter;
             double z1 = sqrt( 1.0f - ( x1 * x1  - y1 * y1 ) );
-        
+
             if( z1 >= 1.0f )
             {
                 z1 = 1.0f;
             }
-    
+
             lastPosition.set( x1, y1, z1 );
             gmtl::normalize( lastPosition );
-        
+
             if(state == GLUT_DOWN)
             {
                 switch(button)
                 {
-                    case GLUT_LEFT_BUTTON:                     
+                    case GLUT_LEFT_BUTTON:
                         useMouseLeftButton = true;
-                        break;                    
-                    case GLUT_RIGHT_BUTTON:                    
+                        break;
+                    case GLUT_RIGHT_BUTTON:
                         useMouseRightButton = true;
-                        break;                    
-                    case GLUT_MIDDLE_BUTTON:                     
+                        break;
+                    case GLUT_MIDDLE_BUTTON:
                         useMouseMiddleButton = true;
-                        break;                    
+                        break;
                 }
-            }        
+            }
             else if(state == GLUT_UP)
             {
                 switch(button)
                 {
-                    case GLUT_LEFT_BUTTON:                     
+                    case GLUT_LEFT_BUTTON:
                         useMouseLeftButton = false;
-                        break;                    
-                    case GLUT_RIGHT_BUTTON:                    
+                        break;
+                    case GLUT_RIGHT_BUTTON:
                         useMouseRightButton = false;
-                        break;                    
+                        break;
                     case GLUT_MIDDLE_BUTTON: 
                         useMouseMiddleButton = false;
-                        break;                
+                        break;
                 }
             }
             break; // ... case NAVIGATE
     }
-}        
+}
 
 
 
@@ -1398,10 +1401,10 @@ void mouseMotion( int X, int Y )
   float dx, dy, dz, gAngle;
   float axis[3];
 
-  if( ( X < viewport[0] || X >  viewport[2] ) || 
+  if( ( X < viewport[0] || X >  viewport[2] ) ||
       ( Y < viewport[1] || Y >  viewport[3]  )  )
   {
-      return;  
+      return;
   }
 
   double x1 = ( 2.0f * X - trackBallDiameter ) / trackBallDiameter;
@@ -1424,17 +1427,16 @@ void mouseMotion( int X, int Y )
   {
     axis[0] = lastPosition[1] * currentPosition[2] - lastPosition[2] * currentPosition[1];
     axis[1] = lastPosition[2] * currentPosition[0] - lastPosition[0] * currentPosition[2];
-    axis[2] = lastPosition[0] * currentPosition[1] - lastPosition[1] * currentPosition[0];    
+    axis[2] = lastPosition[0] * currentPosition[1] - lastPosition[1] * currentPosition[0];
 
     gAngle = gmtl::length( gmtl::Vec3f( axis[0], axis[1], axis[2] ) ) * ( ( 180 * 7.0f ) / 22.0f );
 
     if( useMouseLeftButton )
-    {       
-      glMatrixMode( GL_MODELVIEW );                  
-      
+    {
+      glMatrixMode( GL_MODELVIEW );
       glPushMatrix();
-      glLoadIdentity();      
-      glRotatef( gAngle, axis[0], axis[1], axis[2] );  
+      glLoadIdentity();
+      glRotatef( gAngle, axis[0], axis[1], axis[2] );
       GLfloat gNavigationMatrix[16];
       glGetFloatv( GL_MODELVIEW_MATRIX, gNavigationMatrix );
       glPopMatrix();
@@ -1451,19 +1453,19 @@ void mouseMotion( int X, int Y )
         gmtl::preMult( gmtlNavigationMatrix, temp );
       }
 
-      lastPosition = currentPosition;      
+      lastPosition = currentPosition;
     }
-    
+
     if( useMouseRightButton )
     { 
       glTranslatef( dx * 5.0, dy * 5.0, 0.0 );
-      lastPosition = currentPosition;      
+      lastPosition = currentPosition;
     }
 
     if( useMouseMiddleButton )
     { 
       glTranslatef( 0.0, 0.0, dz * 50.0 );
-      lastPosition = currentPosition;      
+      lastPosition = currentPosition;
     }
   }
 
@@ -1485,6 +1487,12 @@ void keyboard (unsigned char key, int x, int y)
 		    else
 			    mode = NAVIGATE;
 		    break;
+        case 45:
+            TIME_STEP/=2;
+            break;
+        case 61:
+            TIME_STEP*=2;
+            break;
 	}
 }
 
