@@ -10,40 +10,63 @@
 
 #include "MsgCore/Group.h"
 #include "MsgCore/Node.h"
-#include "MsgCore/NodeVisitor.h"
+#include "MsgCore/Viewer.h"
 
 #include "MsgDB/FileRead.h"
 
 
 using namespace Msg; 
 
-MsgCore::SmartPtr< MsgCore::Group > _root; 
-MsgCore::SmartPtr< MsgCore::NodeVisitor > _nv;
+static MsgCore::SmartPtr< MsgCore::Group >       _root; 
+static MsgCore::SmartPtr< MsgCore::NodeVisitor > _nv;
+static MsgCore::SmartPtr< MsgCore::Viewer >      _viewer( new MsgCore::Viewer() );
 
 
 void init()
-{
-  _nv = new MsgCore::NodeVisitor( MsgCore::NodeVisitor::DRAW );
+{  
+  glEnable( GL_DEPTH_TEST );
+  glEnable( GL_LIGHTING );
+  glEnable( GL_LIGHT0 );   
+
+  glClearColor( 0.0, 0.0, 0.0, 1.0 );
+
+  // Initialize viewer. 
+  _viewer->init();  
+
   _root = new MsgCore::Group();
-  SmartPtr< Node > node = MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\current\\osve\\trunk\\Experimental\\Mirage\\Data\\Models\\plane.obj" );
+  SmartPtr< Node > node = MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\trunk\\Experimental\\Mirage\\Data\\Models\\sphere.obj" );
   
   if( node.valid() )
   {
     _root->addChild( node.get() );
   }
+
+  if( _viewer.valid() )
+  {
+    _viewer->sceneData( _root.get() );
+  }
 }
 
 
 void display()
-{
-  _root->accept( *_nv.get() );
-
+{  
+  _viewer->draw();
   glutSwapBuffers();
 }
 
 
-void reshape( int width, int height )
+void reshape( int w, int h )
 {
+  glViewport( 0, 0, w, h );
+
+  glMatrixMode( GL_PROJECTION );
+  glLoadIdentity();
+  
+  gluPerspective( 45.0, ( double )w/h, 1.0, 1000.0 );
+
+  glMatrixMode( GL_MODELVIEW );
+  glLoadIdentity();
+  gluLookAt( 0.0, 0.0, 60.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 );
 }
 
 

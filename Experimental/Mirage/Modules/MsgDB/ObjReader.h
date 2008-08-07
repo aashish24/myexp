@@ -34,7 +34,8 @@ namespace Msg
             _vertexIndices  ( new Vec3iArray() ), 
             _normalIndices  ( new Vec3iArray() ), 
             _texCoordIndices( new Vec3iArray() ), 
-            _colorIndices   ( new Vec3iArray() )
+            _colorIndices   ( new Vec3iArray() ), 
+            _useFastPath    ( true )
           {
           }
 
@@ -47,6 +48,9 @@ namespace Msg
           SmartPtr< Vec3iArray > _normalIndices;
           SmartPtr< Vec3iArray > _texCoordIndices;
           SmartPtr< Vec3iArray > _colorIndices;          
+          
+          bool                   _useFastPath;
+          
 
           protected: 
           
@@ -147,6 +151,8 @@ namespace Msg
       protected:
 
         std::vector< VertexData > _vertexData;
+
+        bool                      _useFastPath;
 		};
 	}
 }

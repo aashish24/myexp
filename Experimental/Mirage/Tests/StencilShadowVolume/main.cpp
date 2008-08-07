@@ -494,7 +494,7 @@ void buildShadowVolume()
           // Extrude the vertices. 
           std::vector< MsgMath::Vec4d > _extendedVertices;          
           std::list< Edge >::iterator jItr = _edges.begin();
-          const float extensionFactor = 5.0f;
+          const float extensionFactor = 1000.0f;
 
           // @Todo: Use display list. 
           glNewList( _shadowVol + ( index * 3 ), GL_COMPILE );
@@ -524,7 +524,7 @@ void buildShadowVolume()
 
               //MsgMath::Vec3d vertex22 = vertices->at( jItr->_vertex1._vertexIndex );
               //MsgMath::Vec3d vertex42( vertex22[0] - lightPos[0], vertex22[1] - lightPos[1], vertex22[2] - lightPos[2] );              
-              //vertex42 = vertex22 + vertex42 * extensionFactor;
+              //vertex42 = vertex22 + vertex42 * `sionFactor;
 
               MsgMath::Vec4d vertex42( vec4d2[0] - lightPos[0], vec4d2[1] - lightPos[1], vec4d2[2] - lightPos[2], 1.0 );
               vertex42 = vec4d2 + vertex42 * extensionFactor;
@@ -556,7 +556,7 @@ void buildShadowVolume()
           glPushMatrix();
           std::vector< Triangle >::const_iterator constItr;
           glEnable( GL_POLYGON_OFFSET_FILL );
-          glPolygonOffset( 2.0f, 2.0f );
+          glPolygonOffset( 0.0f, 100.0f );
           glBegin( GL_POLYGON );
           for( constItr = _capTriangles.begin(); constItr != _capTriangles.end(); ++constItr )
           {           
@@ -688,7 +688,7 @@ void drawScene()
 
   // Now render the shadow part. 
   // @todo: I still dont understand this glStencilFunc. 
-  glStencilFunc( GL_EQUAL, 0x1, 0x1 );
+  glStencilFunc( GL_NOTEQUAL, 0x00, 0xff );
   glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
   
   glCullFace( GL_BACK );
@@ -750,7 +750,7 @@ void reshape( int w, int h )
   glMatrixMode( GL_PROJECTION );
   glLoadIdentity();
   
-  gluPerspective( 45.0, ( double )w/h, 0.1, 1000.0 );
+  gluPerspective( 45.0, ( double )w/h, 1.0, 1000.0 );
 
   glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
@@ -796,10 +796,28 @@ void keyboard( unsigned char key, int x, int y )
     }
     case NAVIGATE: 
     {
-      if( key == 'a' ) { glTranslatef( -1.0f,  0.0,  0.0 ); }
-      if( key == 'd' ) { glTranslatef(  1.0f,  0.0,  0.0 ); }
-      if( key == 'w' ) { glTranslatef(  0.0f,  0.0, -1.0 ); }
-      if( key == 's' ) { glTranslatef(  0.0f,  0.0,  1.0 ); }
+      static bool rotate = false;
+      
+      if( key == 'r' )
+        rotate = !rotate;
+
+      if( !rotate )
+      {
+        if( key == 'a' ) { glTranslatef( -1.0f,  0.0,  0.0 ); }
+        if( key == 'd' ) { glTranslatef(  1.0f,  0.0,  0.0 ); }
+        if( key == 'w' ) { glTranslatef(  0.0f,  0.0, -1.0 ); }
+        if( key == 's' ) { glTranslatef(  0.0f,  0.0,  1.0 ); }
+        if( key == 'u' ) { glTranslatef(  0.0f,  1.0,  0.0 ); }
+        if( key == 'j' ) { glTranslatef(  0.0f, -1.0,  0.0 ); }        
+      }
+      else
+      {
+        if( key == 'a' ) { glRotatef( 1.0f, 0.0f,  1.0f,  0.0f ); }
+        if( key == 'd' ) { glRotatef(-1.0f, 0.0f,  1.0f,  0.0f ); }
+        if( key == 'w' ) { glRotatef( 1.0f, 1.0f,  1.0f,  0.0f ); }
+        if( key == 's' ) { glRotatef( 1.0f,-1.0f,  0.0f,  0.0f ); }
+      }
+
       break;
     }
     case ANIMATE: 

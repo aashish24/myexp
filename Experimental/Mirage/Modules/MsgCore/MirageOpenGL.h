@@ -17,6 +17,11 @@ namespace Msg
     {
       INDIVIDUAL   = 0,   
       VERTEX_ARRAYS, 
+
+      // If we are forcing to use vertex arrays only ( file reader or geomtry handles may have to 
+      // do some extra work if used this option. This is specially true for OBJ reader with unmatched 
+      // vertex, normal and texture indices for a given vertex point. 
+      FORCED_VERTEX_ARRAYS,
       VBO    
     };
 

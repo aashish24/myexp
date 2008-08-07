@@ -33,6 +33,7 @@ namespace Msg
 				Geometry( const Geometry& geometry );
 
         bool                      hasFastPath();
+        void                      useFastPath( const bool& val );
 
         PrimitiveSets&            primitiveSets();
 

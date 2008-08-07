@@ -56,6 +56,12 @@ bool Geometry::hasFastPath()
 }
 
 
+void Geometry::useFastPath( const bool& val )
+{
+  _fastPath = val;
+}
+
+
 Geometry::PrimitiveSets& Geometry::primitiveSets() 
 {
   return _primitiveSets;
