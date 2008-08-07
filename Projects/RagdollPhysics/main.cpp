@@ -1441,8 +1441,10 @@ void mouseMotion( int X, int Y )
       glGetFloatv( GL_MODELVIEW_MATRIX, gNavigationMatrix );
       glPopMatrix();
 
-      gmtl::Matrix44f temp;
+      gmtl::Matrix44f temp, temp2;
       temp.set( gNavigationMatrix );
+      gmtl::invertFull( temp2, temp ); 
+      gmtl::Vec3f result = direction * temp2;
 
       if( dx >= 0 ? dx > dy : dx < dy )
       {
