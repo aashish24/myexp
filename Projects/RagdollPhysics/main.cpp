@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -19,14 +18,14 @@
 #define                 BUFSIZE                 512
 
 
-// Buffer size to store hits. 
+// Buffer size to store hits.
 GLuint                  selectBuf[BUFSIZE];
 
 // Texture object indices. 
 GLuint                  glTexIndex;
 
 // Number of manikins
-#define                 N_BODIES                10
+#define                 N_BODIES                20
 
 
 #define                 STAGE_SIZE              8.0  // in m
@@ -143,8 +142,8 @@ static dJointID         rightknee[N_BODIES];
 int                     viewport[] =            { 0, 0, 800, 600 };
 
 
-// Trackball parameters. 
-float                   trackBallDiameter       (800.0);  
+// Trackball parameters.
+float                   trackBallDiameter       (800.0);
 
 
 gmtl::Vec3f             currentPosition;
@@ -161,8 +160,8 @@ bool                    useMouseRightButton     (false);
 
 
 enum                    InteractioMode
-                        { 
-                            PICK        = 1,                        
+                        {
+                            PICK        = 1,
                             NAVIGATE    = 2
                         };
 
@@ -170,7 +169,7 @@ enum                    InteractioMode
 InteractioMode          mode(PICK);
 
 
-//
+
 GLuint loadTexture(std::string fileName)
 {
 	int extind = fileName.rfind('.');
@@ -205,15 +204,39 @@ GLuint loadTexture(std::string fileName)
 }
 
 
+//does not do anything yet, am hopeing I wouln't need it
+void draw_stairs()
+{
+    glDisable(GL_LIGHTING);  
+    glColor3f(1.0, 1.0, 0.8);
+    glEnable(GL_TEXTURE_2D); 
+    glBindTexture(GL_TEXTURE_2D, glTexIndex);
+
+    glPushMatrix();
+    glBegin(GL_QUADS);
+        glNormal3f(0.0, 1.0, 0.0);
+        glTexCoord3f(0.0, 0.0, 0.0);
+        glVertex3f(-2.0, 5.0, 0.0);
+        glTexCoord3f(1.0, 0.0, 0.0);
+        glVertex3f( 0.0, 5.0, 0.0);
+        glTexCoord3f(1.0, 0.0, 1.0);
+        glVertex3f( 0.0, 5.0, .5);
+        glTexCoord3f(0.0, 0.0, 1.0);
+        glVertex3f(-2.0, 5.0, .5);
+    glEnd();
+    glPopMatrix();
+}
+
+
 void draw()
 {	
-	glDisable(GL_LIGHTING);  
-  	glColor3f(1.0, 1.0, 0.8);
-  	glEnable(GL_TEXTURE_2D); 
-  	glBindTexture(GL_TEXTURE_2D, glTexIndex);   
-  
-  	glPushMatrix();
-  	glBegin(GL_QUADS);
+	glDisable(GL_LIGHTING);
+	glColor3f(1.0, 1.0, 0.8);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, glTexIndex);
+
+	glPushMatrix();
+	glBegin(GL_QUADS);
 		glNormal3f(0.0, 0.0, 1.0);
 		glTexCoord3f(0.0, 0.0, 0.0);
 		glVertex3f(-10.0, -10.0, 0.0);
@@ -224,7 +247,7 @@ void draw()
 		glTexCoord3f(0.0, 20.0, 0.0);
 		glVertex3f(-10.0, 10.0, 0.0);
 	glEnd();
-  	glPopMatrix();
+	glPopMatrix();
 
 	//glDisable(GL_TEXTURE_2D);
 	//glEnable(GL_LIGHTING);
@@ -242,7 +265,7 @@ void draw()
 
 	dsSetColor (0.9, 0.6, 0.4);
 	
-  	for (int b = 0; b < N_BODIES; b ++)
+	for (int b = 0; b < N_BODIES; b ++)
 	{
 		if (clicked == b)
 			dsSetColor (0, 0, 1);
@@ -267,12 +290,12 @@ void draw()
 	  	dsDrawCapsule (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
 
         glPopMatrix();
-	    
+
         if (clicked == b)
         {
 		    dsSetColor (0.9, 0.6, 0.4);
         }
-    }		
+    }
 }
 
 
@@ -298,7 +321,8 @@ static void cb_near_collision(void *data, dGeomID o1, dGeomID o2)
 	}
 
 	contact.surface.mode = 0;
-	contact.surface.mu = 10; // static friction I belive);
+    // Static friction I belive);
+	contact.surface.mu = 10;
 
 
 	if (dCollide (o1, o2, 1, &contact.geom, sizeof (dContactGeom)))
@@ -320,19 +344,19 @@ void Friction()
 	    {
 	        // Linear slowing due to air friction
 	        dReal       s = 1-0.001*1000/density;
-    
+
 	        // Angular slowing due to air friction
             dReal       t = 1-0.002*1000/density;
-    
+
 	        // Linear slowing due to ground frinction
 	        dReal       u = 1-0.01*density/1000;
-    
+
             //////////////////////////////---torso---/////////////////////////////////////////
-    
+
 	        const dReal	*vel_torso1 = dBodyGetLinearVel (torso1[b]),
 		                *rot_torso1 = dBodyGetAngularVel (torso1[b]),
 		                *hight_torso1 = dBodyGetPosition (torso1[b]);
-    
+
 		    if (hight_torso1[2] > 0.6)
 		    {
 			    dBodySetLinearVel (torso1[b], s*vel_torso1[0],s*vel_torso1[1],s*vel_torso1[2]);
@@ -343,11 +367,11 @@ void Friction()
 			    dBodySetLinearVel (torso1[b], (s+u-1)*vel_torso1[0],(s+u-1)*vel_torso1[1],(s+u-1)*vel_torso1[2]);
 			    dBodySetAngularVel (torso1[b],t*rot_torso1[0],t*rot_torso1[1],t*rot_torso1[2]);
 		    }
-    
+
 	        const dReal	*vel_torso2 = dBodyGetLinearVel (torso2[b]),
 		                *rot_torso2 = dBodyGetAngularVel (torso2[b]),
 		                *hight_torso2 = dBodyGetPosition (torso2[b]);
-    
+
 		    if (hight_torso2[2] > 0.6)
 		    {
 			    dBodySetLinearVel (torso2[b], s*vel_torso2[0],s*vel_torso2[1],s*vel_torso2[2]);
@@ -358,11 +382,11 @@ void Friction()
 			    dBodySetLinearVel (torso2[b], (s+u-1)*vel_torso2[0],(s+u-1)*vel_torso2[1],(s+u-1)*vel_torso2[2]);
 			    dBodySetAngularVel (torso2[b],t*rot_torso2[0],t*rot_torso2[1],t*rot_torso2[2]);
 		    }
-    
+
 	        const dReal	*vel_torso3 = dBodyGetLinearVel (torso3[b]),
 		                *rot_torso3 = dBodyGetAngularVel (torso3[b]),
 		                *hight_torso3 = dBodyGetPosition (torso3[b]);
-    
+
 		    if (hight_torso3[2] > 0.6)
 		    {
 			    dBodySetLinearVel (torso3[b], s*vel_torso3[0],s*vel_torso3[1],s*vel_torso3[2]);
@@ -373,13 +397,13 @@ void Friction()
 			    dBodySetLinearVel (torso3[b], (s+u-1)*vel_torso3[0],(s+u-1)*vel_torso3[1],(s+u-1)*vel_torso3[2]);
 			    dBodySetAngularVel (torso3[b],t*rot_torso3[0],t*rot_torso3[1],t*rot_torso3[2]);
 		    }
-    
+
             //////////////////////////////---leftarm---//////////////////////////////////////////
-    
+
 	        const dReal	*vel_leftarm1 = dBodyGetLinearVel (leftarm1[b]), 
                         *rot_leftarm1 = dBodyGetAngularVel (leftarm1[b]),
                         *hight_leftarm1 = dBodyGetPosition (leftarm1[b]) ;
-    
+
 	        if (hight_leftarm1[2] > 0.3)
 	        {
 			    dBodySetLinearVel (leftarm1[b], s*vel_leftarm1[0],s*vel_leftarm1[1],s*vel_leftarm1[2]);
@@ -390,11 +414,11 @@ void Friction()
 			    dBodySetLinearVel (leftarm1[b], (s+u-1)*vel_leftarm1[0],(s+u-1)*vel_leftarm1[1],(s+u-1)*vel_leftarm1[2]);
 			    dBodySetAngularVel (leftarm1[b],t*rot_leftarm1[0],t*rot_leftarm1[1],t*rot_leftarm1[2]);
 		    }
-    
+
 	        const dReal *vel_leftarm2 = dBodyGetLinearVel (leftarm2[b]),
 		                *rot_leftarm2 = dBodyGetAngularVel (leftarm2[b]),
 		                *hight_leftarm2 = dBodyGetPosition (leftarm2[b]);
-    
+
 		    if (hight_leftarm2[2] > 0.3)
 		    {
 			    dBodySetLinearVel (leftarm2[b], s*vel_leftarm2[0],s*vel_leftarm2[1],s*vel_leftarm2[2]);
@@ -405,9 +429,9 @@ void Friction()
 			    dBodySetLinearVel (leftarm2[b], (s+u-1)*vel_leftarm2[0],(s+u-1)*vel_leftarm2[1],(s+u-1)*vel_leftarm2[2]);
 			    dBodySetAngularVel (leftarm2[b],t*rot_leftarm2[0],t*rot_leftarm2[1],t*rot_leftarm2[2]);
 		    }
-    
+
             /////////////////////////////---rightarm---/////////////////////////////////////////////////
-    
+
 	        const dReal   *vel_rightarm1 = dBodyGetLinearVel (rightarm1[b]),
 		                *rot_rightarm1 = dBodyGetAngularVel (rightarm1[b]),
 		                *hight_rightarm1 = dBodyGetPosition (rightarm1[b]);
@@ -421,11 +445,11 @@ void Friction()
 			    dBodySetLinearVel (rightarm1[b], (s+u-1)*vel_rightarm1[0],(s+u-1)*vel_rightarm1[1],(s+u-1)*vel_rightarm1[2]);
 			    dBodySetAngularVel (rightarm1[b],t*rot_rightarm1[0],t*rot_rightarm1[1],t*rot_rightarm1[2]);
 		    }
-        
+
 	        const dReal	*vel_rightarm2 = dBodyGetLinearVel (rightarm2[b]),
 		                *rot_rightarm2 = dBodyGetAngularVel (rightarm2[b]),
 		                *hight_rightarm2 = dBodyGetPosition (rightarm2[b]);
-    
+
 		    if (hight_rightarm2[2] > 0.3)
 		    {
 			    dBodySetLinearVel (rightarm2[b], s*vel_rightarm2[0],s*vel_rightarm2[1],s*vel_rightarm2[2]);
@@ -436,13 +460,13 @@ void Friction()
 			    dBodySetLinearVel (rightarm2[b], (s+u-1)*vel_rightarm2[0],(s+u-1)*vel_rightarm2[1],(s+u-1)*vel_rightarm2[2]);
 			    dBodySetAngularVel (rightarm2[b],t*rot_rightarm2[0],t*rot_rightarm2[1],t*rot_rightarm2[2]);
 		    }
-    
+
             ////////////////////////////---leftleg---////////////////////////////////////////////////////
-    
+
 	        const dReal	*vel_leftleg1 = dBodyGetLinearVel (leftleg1[b]),
 		                *rot_leftleg1 = dBodyGetAngularVel (leftleg1[b]),
 		                *hight_leftleg1 = dBodyGetPosition (leftleg1[b]);
-		    
+
             if (hight_leftleg1[2] > 0.3)
 		    {
 			    dBodySetLinearVel (leftleg1[b], s*vel_leftleg1[0],s*vel_leftleg1[1],s*vel_leftleg1[2]);
@@ -453,11 +477,11 @@ void Friction()
 			    dBodySetLinearVel (leftleg1[b], (s+u-1)*vel_leftleg1[0],(s+u-1)*vel_leftleg1[1],(s+u-1)*vel_leftleg1[2]);
 			    dBodySetAngularVel (leftleg1[b],t*rot_leftleg1[0],t*rot_leftleg1[1],t*rot_leftleg1[2]);
 		    }
-    
+
 	        const dReal	*vel_leftleg2 = dBodyGetLinearVel (leftleg2[b]),
 		                *rot_leftleg2 = dBodyGetAngularVel (leftleg2[b]),
 		                *hight_leftleg2 = dBodyGetPosition (leftleg2[b]); 
-    
+
 		    if (hight_leftleg2[2] > 0.3)
 		    {
 			    dBodySetLinearVel (leftleg2[b], s*vel_leftleg2[0],s*vel_leftleg2[1],s*vel_leftleg2[2]);
@@ -468,9 +492,9 @@ void Friction()
 			    dBodySetLinearVel (leftleg2[b], (s+u-1)*vel_leftleg2[0],(s+u-1)*vel_leftleg2[1],(s+u-1)*vel_leftleg2[2]);
 			    dBodySetAngularVel (leftleg2[b],t*rot_leftleg2[0],t*rot_leftleg2[1],t*rot_leftleg2[2]);
 		    }
-    
+
             ////////////////////////////---rightleg---///////////////////////////////////////////////////////
-    
+
 	        const dReal	*vel_rightleg1 = dBodyGetLinearVel (rightleg1[b]),
 		                *rot_rightleg1 = dBodyGetAngularVel (rightleg1[b]),
 		                *hight_rightleg1 = dBodyGetPosition (rightleg1[b]);
@@ -485,11 +509,11 @@ void Friction()
 			    dBodySetLinearVel (rightleg1[b], (s+u-1)*vel_rightleg1[0],(s+u-1)*vel_rightleg1[1],(s+u-1)*vel_rightleg1[2]);
 			    dBodySetAngularVel (rightleg1[b],t*rot_rightleg1[0],t*rot_rightleg1[1],t*rot_rightleg1[2]);
 		    }
-    
+
 	        const dReal	*vel_rightleg2 = dBodyGetLinearVel (rightleg2[b]),
 		                *rot_rightleg2 = dBodyGetAngularVel (rightleg2[b]),
 		                *hight_rightleg2 = dBodyGetPosition (rightleg2[b]);
-		    
+
             if (hight_rightleg2[2] > 0.3)
 		    {
 			    dBodySetLinearVel (rightleg2[b], s*vel_rightleg2[0],s*vel_rightleg2[1],s*vel_rightleg2[2]);
@@ -508,19 +532,15 @@ void Friction()
 // Sets up interactivity
 void interact()
 {
-	//GLint viewport[4];
-
 	glSelectBuffer(BUFSIZE,selectBuf);
 	glRenderMode(GL_SELECT);
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glGetIntegerv(GL_VIEWPORT, viewport);
-	std::cout << "Viewport is: " << viewport[0] << " " << viewport[1] << " " << viewport[2] << " " << viewport[3] << std::endl;	
 	glLoadIdentity();
 	gluPickMatrix(cursorX, viewport[3]-cursorY, 1, 1, viewport);
 	gluPerspective(60.0, (double)viewport[2]/viewport[3], 0.1, 10000.0);
-	//glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	glInitNames();
 }
@@ -533,16 +553,13 @@ void movedoll()
 	dReal z= 0.0;
 	int scalar = 10;
 	clicked = -1;
-    
+
     gmtl::Matrix44f temp;
     gmtl::Vec3f direction, result;
     direction.set((cursorX2-cursorX)*1.0, (cursorY-cursorY2)*1.0, z);
 
     gmtl::invert(temp, trueWorldMatrix);
     gmtl::xform(result, temp, direction);
-
-    std::cout << " direction: " << direction[0] << " " << direction[1] << " " << direction[2] << std::endl;
-    std::cout << " result: " << result[0] << " " << result[1] << " " << result[2] << std::endl;
 
 	switch (bodypart)
 	{
@@ -609,7 +626,7 @@ void processHits (GLuint buffer[])
 }
 
 
-// ??
+
 void endinteract()
 {
 	// Restoring the original projection matrix
@@ -629,38 +646,37 @@ void endinteract()
 
 
 
-// Incompatibility issues between gl and ds
 void InteractiveRender ()
 {
 	for(int b = 0; b < N_BODIES; b ++)
 	{
 	    glInitNames();
 	    glPushName(b);
-    
+
 	    dsDrawCapsule (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
 	    glLoadName(b+N_BODIES);
 	    dsDrawSphere (dGeomGetPosition(torso2_geom[b]),dGeomGetRotation(torso2_geom[b]),.1);
 	    glLoadName(b+N_BODIES*2);
 	    dsDrawSphere (dGeomGetPosition(torso3_geom[b]),dGeomGetRotation(torso3_geom[b]),.1);
-    
+
 	    glLoadName(b+N_BODIES*3);
 	    dsDrawSphere (dGeomGetPosition(head_geom[b]),dGeomGetRotation(head_geom[b]),.075);
-    
+
 	    glLoadName(b+N_BODIES*4);
 	    dsDrawCapsule (dGeomGetPosition(leftarm1_geom[b]),dGeomGetRotation(leftarm1_geom[b]),.3,.05);
 	    glLoadName(b+N_BODIES*5);
 	    dsDrawCapsule (dGeomGetPosition(leftarm2_geom[b]),dGeomGetRotation(leftarm2_geom[b]),.3,.05);
-    
+
 	    glLoadName(b+N_BODIES*6);
 	    dsDrawCapsule (dGeomGetPosition(rightarm1_geom[b]),dGeomGetRotation(rightarm1_geom[b]),.3,.05);
 	    glLoadName(b+N_BODIES*7);
 	    dsDrawCapsule (dGeomGetPosition(rightarm2_geom[b]),dGeomGetRotation(rightarm2_geom[b]),.3,.05);
-    
+
 	    glLoadName(b+N_BODIES*8);
 	    dsDrawCapsule (dGeomGetPosition(leftleg1_geom[b]),dGeomGetRotation(leftleg1_geom[b]),.4,.05);
 	    glLoadName(b+N_BODIES*9);
 	    dsDrawCapsule (dGeomGetPosition(leftleg2_geom[b]),dGeomGetRotation(leftleg2_geom[b]),.4,.05);
-    
+
 	    glLoadName(b+N_BODIES*10);
 	    dsDrawCapsule (dGeomGetPosition(rightleg1_geom[b]),dGeomGetRotation(rightleg1_geom[b]),.4,.05);
 	    glLoadName(b+N_BODIES*11);
@@ -862,6 +878,7 @@ void init()
 		// Makes a group for the joints to join
 		ragdoll_joints[b] = dJointGroupCreate (0);
 
+
 		// Makes, assigns a name to, attaches, and places joints
 
 		rib1[b] = dJointCreateBall (dyn_world.id (), ragdoll_joints[b]);
@@ -975,7 +992,7 @@ void init()
 	glCullFace (GL_BACK);
 	glFrontFace (GL_CCW);
 
-	// leave openGL in a known state - flat shaded white, no textures
+	// Leave openGL in a known state - flat shaded white, no textures
 	glEnable (GL_LIGHTING);
 	glShadeModel (GL_FLAT);
 	glEnable (GL_DEPTH_TEST);
@@ -985,7 +1002,7 @@ void init()
 	glTexIndex = loadTexture("./data/wood.tga");
 }
 
-
+// Helps the manikins remain standing while dancing by applying an upward force and mock body tension
 void stand(int b)
 {
 	float base = 4.5;
@@ -1006,6 +1023,7 @@ void stand(int b)
 	dBodyAddForce(rightleg2[b], 0, 0, (base-leg_tenser)*scale);
 }
 
+// Causes manikins to move in a two step rhythm
 void odd()
 {
 	for (int b = 0; b < N_BODIES; b+= 2)
@@ -1023,7 +1041,7 @@ void odd()
 	}
 }
 
-
+// Causes manikins to move in a two step rhythm
 void even()
 {
 	for (int b = 0; b < N_BODIES; b+= 2)
@@ -1041,7 +1059,7 @@ void even()
 	}
 }
 
-
+// Auto corrects for bad balance and leaning over too far while dancing
 void balance()
 {
 	for (int b = 0; b < N_BODIES; b+= 1)
@@ -1091,15 +1109,15 @@ void balance()
 }
 
 
+// Couses manikins to move in a two step rhythm
 void dance(int step)
 {
 	balance();
 
-	// This function should map out chorographiclly the dancing moves of the manikins in half-second steps
 	if (step%4<2)
     {
 		odd();
-    }   
+    }
 	else
     {
 		even();
@@ -1107,6 +1125,7 @@ void dance(int step)
 }
 
 
+// Waltz dance movement
 void first()
 {
 	for(int b = 0; b < N_BODIES; b++)
@@ -1118,7 +1137,7 @@ void first()
 	}
 }
 
-
+// Waltz dance movement
 void second()
 {
 	for(int b = 0; b < N_BODIES; b++)
@@ -1130,7 +1149,7 @@ void second()
 	}
 }
 
-
+// Waltz dance movement
 void third()
 {
 	for(int b = 0; b < N_BODIES; b++)
@@ -1142,7 +1161,7 @@ void third()
 	}
 }
 
-
+// Waltz dance movement
 void fourth()
 {
 	for(int b = 0; b < N_BODIES; b++)
@@ -1154,7 +1173,7 @@ void fourth()
 	}
 }
 
-
+// Waltz dance movement
 void fith()
 {
 	for(int b = 0; b < N_BODIES; b++)
@@ -1166,7 +1185,7 @@ void fith()
 	}
 }
 
-
+// Waltz dance movement
 void sixth()
 {
 	for(int b = 0; b < N_BODIES; b++)
@@ -1178,7 +1197,7 @@ void sixth()
 	}
 }
 
-
+// Waltz dance movement
 void seventh()
 {
 	for (int b = 0; b < N_BODIES; b++)
@@ -1190,7 +1209,7 @@ void seventh()
 		}
 }
 
-
+// Waltz dance movement
 void eigth()
 {
 	for (int b = 0; b < N_BODIES; b++)
@@ -1202,6 +1221,7 @@ void eigth()
 		}
 }
 
+// Eight step dance proformed by the manikins
 void waltz(int step)
 {
 	balance();
@@ -1260,7 +1280,7 @@ void display()
         draw();
 		glutSwapBuffers();
 	}
-    
+
     GLfloat temp[16];
     glGetFloatv(GL_MODELVIEW_MATRIX, temp);
     trueWorldMatrix.set(temp);
@@ -1291,34 +1311,21 @@ void reshape(int w, int h)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	//gluLookAt(STAGE_SIZE/2, STAGE_SIZE/2, STAGE_SIZE, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 0.0, 1.0);
     gluLookAt(STAGE_SIZE/2, STAGE_SIZE/2, STAGE_SIZE, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 1.0, 0.0);
-	//gluLookAt(STAGE_SIZE/2, -3.0, 10.0, STAGE_SIZE/2, STAGE_SIZE/2, 0.0, 0.0, 0.0, 1.0);
     glMultMatrixf(gmtlNavigationMatrix.mData);
 }
 
 
 void myGlutTimer(int puase)
 {
-	/*
-	double now = 1;
-	timeAccum += (now - lastTime);
-	lastTime = now;
-	while (timeAccum >= TIME_STEP)
-	{
-		//collideStuff();
-		cb_sim_step();
-		timeAccum -= TIME_STEP;
-	}
-	*/
 }
 
-
+// Intigrates mouse use into program
 void mouseplay(int button, int state, int X, int Y)
 {
     switch(mode)
-    {        
-        case PICK:	    
+    {
+        case PICK:
             if (state == 0)
             {
                 switch (button)
@@ -1327,17 +1334,17 @@ void mouseplay(int button, int state, int X, int Y)
                         cursorX = X;
                         cursorY = Y;
                         doInteract = true;
-                        break;                            
-                    case GLUT_MIDDLE_BUTTON:                            
+                        break;
+                    case GLUT_MIDDLE_BUTTON:
                         if (clicked!=-1)
                             dJointGroupEmpty (ragdoll_joints[clicked]);
-                        break;                            
-                    case GLUT_RIGHT_BUTTON:                            
+                        break;
+                    case GLUT_RIGHT_BUTTON:
                         if (dancing == true)
                             dancing = false;
                         else 
                             dancing = true;
-                        break;                            
+                        break;
                 }
             }
             else if (state == 1)
@@ -1349,9 +1356,9 @@ void mouseplay(int button, int state, int X, int Y)
                         cursorY2 = Y;
                         if (name != -N_BODIES)
                             movedoll();
-                        break;                           
-                    
-                    case GLUT_MIDDLE_BUTTON:                            
+                        break;
+
+                    case GLUT_MIDDLE_BUTTON:
                         break;
 
                     case GLUT_RIGHT_BUTTON:
@@ -1414,7 +1421,7 @@ void mouseplay(int button, int state, int X, int Y)
 }
 
 
-
+// Mouse navigation mode
 void mouseMotion(int X, int Y)
 {
   float dx, dy, dz, gAngle;
@@ -1460,10 +1467,10 @@ void mouseMotion(int X, int Y)
       glGetFloatv(GL_MODELVIEW_MATRIX, gNavigationMatrix);
       glPopMatrix();
 
-      gmtl::Matrix44f temp;
-      temp.set(gNavigationMatrix);
-      
-      if(dx >= 0 ? dx > dy : dx < dy)
+      gmtl::Matrix44f temp, temp2;
+      temp.set( gNavigationMatrix );
+
+      if( dx >= 0 ? dx > dy : dx < dy )
       {
         gmtl::postMult(gmtlNavigationMatrix, temp);
       }
@@ -1491,7 +1498,7 @@ void mouseMotion(int X, int Y)
   glutPostRedisplay();
 }
 
-
+// Intigrates keyboard use into program
 void keyboard (unsigned char key, int x, int y)
 {
 	switch (key)
@@ -1500,10 +1507,15 @@ void keyboard (unsigned char key, int x, int y)
 		    exit(0);
 		    break;
 
-	    case 32:	
+	    case 32:
 		    if(mode == NAVIGATE)
+            {
+                useMouseLeftButton = false;
+                useMouseRightButton = false;
+                useMouseMiddleButton = false;
 			    mode = PICK;
-		    else
+		    }
+            else
 			    mode = NAVIGATE;
 		    break;
         case 45:
