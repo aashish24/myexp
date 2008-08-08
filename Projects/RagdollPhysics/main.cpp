@@ -1128,8 +1128,8 @@ void first()
 	for(int b = 0; b < N_BODIES; b++)
 	{
 		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
-		dBodySetForce(leftleg2[b], -1000/TIME_STEP, 0, 0);
-		dBodyAddForce(torso1[b], -500/TIME_STEP, 0, 0);
+		dBodySetForce(leftleg2[b], -500/TIME_STEP, 0, 0);
+		dBodyAddForce(torso1[b], -250/TIME_STEP, 0, 0);
 	}
 }
 
@@ -1139,8 +1139,8 @@ void second()
 	for(int b = 0; b < N_BODIES; b++)
 	{
 		dBodySetLinearVel(leftleg2[b], 0, 0, 0);
-		dBodySetForce(rightleg2[b], -1000/TIME_STEP, 0, 0);
-		dBodyAddForce(torso3[b], -500/TIME_STEP, 0, 0);
+		dBodySetForce(rightleg2[b], -500/TIME_STEP, 0, 0);
+		dBodyAddForce(torso3[b], -250/TIME_STEP, 0, 0);
 	}
 }
 
@@ -1150,8 +1150,8 @@ void third()
 	for(int b = 0; b < N_BODIES; b++)
 	{
 		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
-		dBodySetForce(leftleg2[b], 0, 1000/TIME_STEP, 0);
-		dBodyAddForce(torso1[b], 0, 500/TIME_STEP, 0);
+		dBodySetForce(leftleg2[b], 0, 500/TIME_STEP, 0);
+		dBodyAddForce(torso1[b], 0, 250/TIME_STEP, 0);
 	}
 }
 
@@ -1161,8 +1161,8 @@ void fourth()
 	for(int b = 0; b < N_BODIES; b++)
 	{
 		dBodySetLinearVel(leftleg2[b], 0, 0, 0);
-		dBodySetForce(rightleg2[b], 0, 1000/TIME_STEP, 0);
-		dBodyAddForce(torso3[b], 0, 500/TIME_STEP, 0);
+		dBodySetForce(rightleg2[b], 0, 500/TIME_STEP, 0);
+		dBodyAddForce(torso3[b], 0, 250/TIME_STEP, 0);
 	}
 }
 
@@ -1172,8 +1172,8 @@ void fith()
 	for(int b = 0; b < N_BODIES; b++)
 	{
 		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
-		dBodySetForce(rightleg2[b], 1000/TIME_STEP, 0, 0);
-		dBodyAddForce(torso3[b], 500/TIME_STEP, 0, 0);
+		dBodySetForce(rightleg2[b], 500/TIME_STEP, 0, 0);
+		dBodyAddForce(torso3[b], 250/TIME_STEP, 0, 0);
 	}
 }
 
@@ -1183,8 +1183,8 @@ void sixth()
 	for(int b = 0; b < N_BODIES; b++)
 	{
 		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
-		dBodySetForce(leftleg2[b], 1000/TIME_STEP, 0, 0);
-		dBodyAddForce(torso1[b], 500/TIME_STEP, 0, 0);
+		dBodySetForce(leftleg2[b], 500/TIME_STEP, 0, 0);
+		dBodyAddForce(torso1[b], 250/TIME_STEP, 0, 0);
 	}
 }
 
@@ -1194,8 +1194,8 @@ void seventh()
 	for (int b = 0; b < N_BODIES; b++)
 	{
 		dBodySetLinearVel(leftleg2[b], 0, 0, 0);
-		dBodySetForce(leftleg2[b], 0, -1000/TIME_STEP, 0);
-		dBodyAddForce(torso3[b], 0, -500/TIME_STEP, 0);
+		dBodySetForce(leftleg2[b], 0, -500/TIME_STEP, 0);
+		dBodyAddForce(torso3[b], 0, -250/TIME_STEP, 0);
 	}
 }
 
@@ -1205,8 +1205,8 @@ void eigth()
 	for (int b = 0; b < N_BODIES; b++)
 	{
 		dBodySetLinearVel(leftleg2[b], 0, 0, 0);
-		dBodySetForce(rightleg2[b], 0, -1000/TIME_STEP, 0);
-		dBodyAddForce(torso1[b], 0, -500/TIME_STEP, 0);
+		dBodySetForce(rightleg2[b], 0, -500/TIME_STEP, 0);
+		dBodyAddForce(torso1[b], 0, -250/TIME_STEP, 0);
 	}
 }
 
@@ -1535,7 +1535,6 @@ int main(int argc, char **argv)
 	glutIdleFunc(idle);
 
     glutKeyboardFunc(keyboard);
-
 	glutMouseFunc(mouseplay);
     glutMotionFunc(mouseMotion);
 	
