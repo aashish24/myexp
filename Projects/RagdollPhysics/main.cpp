@@ -1003,24 +1003,27 @@ void init()
 }
 
 // Helps the manikins remain standing while dancing by applying an upward force and mock body tension
-void stand(int b)
+void stand()
 {
-	float base = 4.5;
-	int arm_tenser = 5;
-	int leg_tenser = 25;
-	int scale = 2500*beat;
-	dBodyAddForce(head[b], 0, 0, (base+leg_tenser)*scale);
-	dBodyAddForce(leftarm1[b], 0, 0, base*scale);
-	dBodyAddForce(leftarm2[b], 0, 0, (base-arm_tenser)*scale);
-	dBodyAddForce(rightarm1[b], 0, 0, base*scale);
-	dBodyAddForce(rightarm2[b], 0, 0, (base-arm_tenser)*scale);
-	dBodyAddForce(torso1[b], 0, 0, (base+2*arm_tenser)*scale);
-	dBodyAddForce(torso2[b], 0, 0, base*scale);
-	dBodyAddForce(torso3[b], 0, 0, (base+leg_tenser)*scale);
-	dBodyAddForce(leftleg1[b], 0, 0, base*scale);
-	dBodyAddForce(rightleg1[b], 0, 0, base*scale);
-	dBodyAddForce(leftleg2[b], 0, 0, (base-leg_tenser)*scale);
-	dBodyAddForce(rightleg2[b], 0, 0, (base-leg_tenser)*scale);
+    for (int b=0; b<N_BODIES; b++)
+    {
+	    float base = 4.5;
+	    int arm_tenser = 5;
+	    int leg_tenser = 15;
+	    int scale = 35000;
+	    dBodyAddForce(head[b], 0, 0, (base+leg_tenser)*scale);
+	    dBodyAddForce(leftarm1[b], 0, 0, base*scale);
+	    dBodyAddForce(leftarm2[b], 0, 0, (base-arm_tenser)*scale);
+	    dBodyAddForce(rightarm1[b], 0, 0, base*scale);
+	    dBodyAddForce(rightarm2[b], 0, 0, (base-arm_tenser)*scale);
+	    dBodyAddForce(torso1[b], 0, 0, (base+2*arm_tenser)*scale);
+	    dBodyAddForce(torso2[b], 0, 0, base*scale);
+	    dBodyAddForce(torso3[b], 0, 0, (base+leg_tenser)*scale);
+	    dBodyAddForce(leftleg1[b], 0, 0, base*scale);
+	    dBodyAddForce(rightleg1[b], 0, 0, base*scale);
+	    dBodyAddForce(leftleg2[b], 0, 0, (base-leg_tenser)*scale);
+	    dBodyAddForce(rightleg2[b], 0, 0, (base-leg_tenser)*scale);
+    }
 }
 
 // Causes manikins to move in a two step rhythm
@@ -1028,14 +1031,12 @@ void odd()
 {
 	for (int b = 0; b < N_BODIES; b+= 2)
 	{
-		stand(b);
 		dBodyAddForce(leftleg2[b], 1000/TIME_STEP, 0, 0);
 		dBodyAddForce(rightleg2[b], 1000/TIME_STEP, 0, 0);
 	}
 
 	for (int b = 1; b < N_BODIES; b+= 2)
 	{
-		stand(b);
 		dBodyAddForce(leftleg2[b], 0, 1000/TIME_STEP, 0);
 		dBodyAddForce(rightleg2[b], 0, -1000/TIME_STEP, 0);
 	}
@@ -1046,14 +1047,12 @@ void even()
 {
 	for (int b = 0; b < N_BODIES; b+= 2)
 	{
-		stand(b);
 		dBodyAddForce(leftleg2[b], -1000/TIME_STEP, 0, 0);
 		dBodyAddForce(rightleg2[b], -1000/TIME_STEP, 0, 0);
 	}
 
 	for (int b = 1; b < N_BODIES; b+= 2)
 	{
-		stand(b);
 		dBodyAddForce(leftleg2[b], 0, -1000/TIME_STEP, 0);
 		dBodyAddForce(rightleg2[b], 0, 1000/TIME_STEP, 0);
 	}
@@ -1112,9 +1111,7 @@ void balance()
 // Couses manikins to move in a two step rhythm
 void dance(int step)
 {
-	balance();
-
-	if (step%4<2)
+    if (step%4<2)
     {
 		odd();
     }
@@ -1132,8 +1129,7 @@ void first()
 	{
 		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
 		dBodySetForce(leftleg2[b], -1000/TIME_STEP, 0, 0);
-		dBodySetForce(torso1[b], -500/TIME_STEP, 0, 0);
-		stand(b);
+		dBodyAddForce(torso1[b], -500/TIME_STEP, 0, 0);
 	}
 }
 
@@ -1144,8 +1140,7 @@ void second()
 	{
 		dBodySetLinearVel(leftleg2[b], 0, 0, 0);
 		dBodySetForce(rightleg2[b], -1000/TIME_STEP, 0, 0);
-		dBodySetForce(torso1[b], -500/TIME_STEP, 0, 0);
-		stand(b);
+		dBodyAddForce(torso3[b], -500/TIME_STEP, 0, 0);
 	}
 }
 
@@ -1156,8 +1151,7 @@ void third()
 	{
 		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
 		dBodySetForce(leftleg2[b], 0, 1000/TIME_STEP, 0);
-		dBodySetForce(torso1[b], 0, 500/TIME_STEP, 0);
-		stand(b);
+		dBodyAddForce(torso1[b], 0, 500/TIME_STEP, 0);
 	}
 }
 
@@ -1168,8 +1162,7 @@ void fourth()
 	{
 		dBodySetLinearVel(leftleg2[b], 0, 0, 0);
 		dBodySetForce(rightleg2[b], 0, 1000/TIME_STEP, 0);
-		dBodySetForce(torso1[b], 0, 500/TIME_STEP, 0);
-		stand(b);
+		dBodyAddForce(torso3[b], 0, 500/TIME_STEP, 0);
 	}
 }
 
@@ -1180,8 +1173,7 @@ void fith()
 	{
 		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
 		dBodySetForce(rightleg2[b], 1000/TIME_STEP, 0, 0);
-		dBodySetForce(torso1[b], 500/TIME_STEP, 0, 0);
-		stand(b);
+		dBodyAddForce(torso3[b], 500/TIME_STEP, 0, 0);
 	}
 }
 
@@ -1192,8 +1184,7 @@ void sixth()
 	{
 		dBodySetLinearVel(rightleg2[b], 0, 0, 0);
 		dBodySetForce(leftleg2[b], 1000/TIME_STEP, 0, 0);
-		dBodySetForce(torso1[b], 500/TIME_STEP, 0, 0);
-		stand(b);
+		dBodyAddForce(torso1[b], 500/TIME_STEP, 0, 0);
 	}
 }
 
@@ -1201,31 +1192,27 @@ void sixth()
 void seventh()
 {
 	for (int b = 0; b < N_BODIES; b++)
-		{
-			dBodySetLinearVel(leftleg2[b], 0, 0, 0);
-			dBodySetForce(leftleg2[b], 0, -1000/TIME_STEP, 0);
-			dBodySetForce(torso1[b], 0, -500/TIME_STEP, 0);
-			stand(b);
-		}
+	{
+		dBodySetLinearVel(leftleg2[b], 0, 0, 0);
+		dBodySetForce(leftleg2[b], 0, -1000/TIME_STEP, 0);
+		dBodyAddForce(torso3[b], 0, -500/TIME_STEP, 0);
+	}
 }
 
 // Waltz dance movement
 void eigth()
 {
 	for (int b = 0; b < N_BODIES; b++)
-		{
-			dBodySetLinearVel(leftleg2[b], 0, 0, 0);
-			dBodySetForce(rightleg2[b], 0, -1000/TIME_STEP, 0);
-			dBodySetForce(torso1[b], 0, -500/TIME_STEP, 0);
-			stand(b);
-		}
+	{
+		dBodySetLinearVel(leftleg2[b], 0, 0, 0);
+		dBodySetForce(rightleg2[b], 0, -1000/TIME_STEP, 0);
+		dBodyAddForce(torso1[b], 0, -500/TIME_STEP, 0);
+	}
 }
 
 // Eight step dance proformed by the manikins
 void waltz(int step)
 {
-	balance();
-
 	if (step%8==1)
 		first();
 	else if (step%8==2)
@@ -1269,6 +1256,11 @@ void display()
 		if (dancing == true)
 		{
 			dance_counter++;
+            if (dance_counter%10==0)
+            {
+                balance();
+                stand();
+            }
 			if (dance_counter%beat==0)
 			{
 				step++;
