@@ -103,6 +103,8 @@ static dBodyID          leftleg1[N_BODIES];
 static dBodyID          leftleg2[N_BODIES];
 static dBodyID          rightleg1[N_BODIES];
 static dBodyID          rightleg2[N_BODIES];
+static dBodyID          lefthand[N_BODIES];
+static dBodyID          righthand[N_BODIES];
 
 
 // Names of shapes to be applied to objects later
@@ -118,6 +120,8 @@ static dGeomID          leftleg1_geom[N_BODIES];
 static dGeomID          leftleg2_geom[N_BODIES];
 static dGeomID          rightleg1_geom[N_BODIES];
 static dGeomID          rightleg2_geom[N_BODIES];
+static dGeomID          lefthand_geom[N_BODIES];
+static dGeomID          righthand_geom[N_BODIES];
 
 
 // Makes all the joints of one manikin into a single unit makes an array of them
@@ -136,6 +140,8 @@ static dJointID         lefthip[N_BODIES];
 static dJointID         righthip[N_BODIES];
 static dJointID         leftknee[N_BODIES];
 static dJointID         rightknee[N_BODIES];
+static dJointID         leftwrist[N_BODIES];
+static dJointID         rightwrist[N_BODIES];
 
 
 // Rendering parameters.
@@ -229,7 +235,7 @@ void draw_stairs()
 
 
 void draw()
-{	
+{
 	glDisable(GL_LIGHTING);
 	glColor3f(1.0, 1.0, 0.8);
 	glEnable(GL_TEXTURE_2D);
@@ -270,8 +276,8 @@ void draw()
 		if (clicked == b)
 			dsSetColor (0, 0, 1);
 
-    		glPushMatrix();
-    		dsDrawCapsule (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
+		glPushMatrix();
+		dsDrawCapsule (dGeomGetPosition(torso1_geom[b]),dGeomGetRotation(torso1_geom[b]),.1,.1);
 
 	  	dsDrawSphere (dGeomGetPosition(torso2_geom[b]),dGeomGetRotation(torso2_geom[b]),.1);
 	  	dsDrawSphere (dGeomGetPosition(torso3_geom[b]),dGeomGetRotation(torso3_geom[b]),.1);
@@ -288,6 +294,9 @@ void draw()
 
 	  	dsDrawCapsule (dGeomGetPosition(rightleg1_geom[b]),dGeomGetRotation(rightleg1_geom[b]),.4,.05);
 	  	dsDrawCapsule (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
+
+//        dsDrawSphere (dGeomGetPosition(lefthand_geom[b]),dGeomGetRotation(lefthand_geom[b]),.05);
+//        dsDrawSphere (dGeomGetPosition(righthand_geom[b]),dGeomGetRotation(righthand_geom[b]),.05);
 
         glPopMatrix();
 
@@ -498,7 +507,7 @@ void Friction()
 	        const dReal	*vel_rightleg1 = dBodyGetLinearVel (rightleg1[b]),
 		                *rot_rightleg1 = dBodyGetAngularVel (rightleg1[b]),
 		                *hight_rightleg1 = dBodyGetPosition (rightleg1[b]);
-    
+
 		    if (hight_rightleg1[2] > 0.3)
 		    {
 			    dBodySetLinearVel (rightleg1[b], s*vel_rightleg1[0],s*vel_rightleg1[1],s*vel_rightleg1[2]);
@@ -534,7 +543,6 @@ void interact()
 {
 	glSelectBuffer(BUFSIZE,selectBuf);
 	glRenderMode(GL_SELECT);
-
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glGetIntegerv(GL_VIEWPORT, viewport);
@@ -689,7 +697,6 @@ void InteractiveRender ()
 // Updates program at each time step
 static void cb_sim_step()
 {
-
 	const int n = 10;
 	for (int i = 0; i < n; i ++)
 	{
@@ -810,6 +817,9 @@ void init()
 		leftleg2[b] = dBodyCreate(dyn_world);
 		rightleg1[b] = dBodyCreate(dyn_world);
 		rightleg2[b] = dBodyCreate(dyn_world);
+//        lefthand[b] = dBodyCreate(dyn_world);
+//        righthand[b] = dBodyCreate(dyn_world);
+
 
 
     // Creates shapes and assigns names and bodies
@@ -842,8 +852,13 @@ void init()
 		dGeomSetBody (rightleg1_geom[b], rightleg1[b]);
 		rightleg2_geom[b] = dCreateCCylinder (coll_space_id, 0.05, 0.4);
 		dGeomSetBody (rightleg2_geom[b], rightleg2[b]);
+/*
+        lefthand_geom[b] = dCreateSphere (coll_space_id, 0.05);
+        dGeomSetBody (lefthand_geom[b], lefthand[b]);
 
-
+        righthand_geom[b] = dCreateSphere (coll_space_id, 0.05);
+        dGeomSetBody (righthand_geom[b], righthand[b]);
+*/
 		// Positions bodies/shapes
 		dGeomSetPosition(torso1_geom[b], x1, y, z1+.2);
 		dGeomSetPosition(torso2_geom[b], x1, y, z1);
@@ -857,7 +872,8 @@ void init()
 		dGeomSetPosition(leftleg2_geom[b], x2, y, zhip - .6);
 		dGeomSetPosition(rightleg1_geom[b], x3, y, zhip - .2);
 		dGeomSetPosition(rightleg2_geom[b], x3, y, zhip - .6);
-
+//        dGeomSetPosition(lefthand_geom[b], x2, y, zsholder + .625);
+//        dGeomSetPosition(righthand_geom[b], x3, y, zsholder + .625);
 
 		// Makes things oriented up
 		dMatrix3 dir = {1,1,1,1,1,1,1,1,1,1,1,1};
@@ -873,6 +889,8 @@ void init()
 		dGeomSetRotation(leftleg2_geom[b], dir);
 		dGeomSetRotation(rightleg1_geom[b],dir);
 		dGeomSetRotation(rightleg2_geom[b],dir);
+//        dGeomSetRotation(lefthand_geom[b],dir);
+//        dGeomSetRotation(righthand_geom[b],dir);
 
 
 		// Makes a group for the joints to join
@@ -928,58 +946,74 @@ void init()
 		dJointAttach (rightknee[b], rightleg1[b], rightleg2[b]);
 		dJointSetHingeAnchor (rightknee[b], x3, y, zknee);
 		dJointSetHingeAxis (rightknee[b], 1, 0, 0);
+/*
+        leftwrist[b] = dJointCreateBall (dyn_world.id(), ragdoll_joints[b]);
+        dJointAttach (leftwrist[b], leftarm2[b], lefthand[b]);
+        dJointSetBallAnchor (leftwrist[b], x2, y, zsholder + .6);
 
-
+        rightwrist[b] = dJointCreateBall (dyn_world.id(), ragdoll_joints[b]);
+        dJointAttach (rightwrist[b], rightarm2[b], righthand[b]);
+        dJointSetBallAnchor (leftwrist[b], x3, y, zsholder + .6);
+*/
 		// Gives mass to manikins
 		dMass m;
 
 		// Gives torso1 mass
 		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.6));
-		dMassTranslate (&m, x, y, z+ 0.2);		
+		dMassTranslate (&m, x1, y, z1+.2);		
 
 		// Gives torso2 mass
 		dMassSetSphere (&m, density, REAL(0.1));
-		dMassTranslate (&m, x, y, z);
+		dMassTranslate (&m, x1, y, z1);
 
 		// Gives torso3 mass
 		dMassSetSphere (&m, density, REAL(0.1));
-		dMassTranslate (&m, x, y, z- 0.2);
+		dMassTranslate (&m, x1, y, z1-.15);
 
 		// gives head mass
 		dMassSetSphere (&m, density, REAL(0.075));
-		dMassTranslate (&m, x, y, z+ 0.4);
+		dMassTranslate (&m, x1, y, zhead);
 
 		// Gives leftarm1 mass
 		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.3));
-		dMassTranslate (&m, x, y + 0.1, z + 0.4);
+		dMassTranslate (&m, x2, y, zsholder + .15);
 
 		// Gives leftarm2 mass
 		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.3));
-		dMassTranslate (&m, x, y + 0.1, z + 0.7);
+		dMassTranslate (&m, x2, y, zsholder + .45);
 
 		// Gives rightarm1 mass
 		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.3));
-		dMassTranslate (&m, x, y - 0.1, z + 0.4);
+		dMassTranslate (&m, x3, y, zsholder + .15);
 
 		// Gives rightarm2 mass
 		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.3));
-		dMassTranslate (&m, x, y - 0.1, z + 0.7);
+		dMassTranslate (&m, x3, y, zsholder + .45);
 
 		// Gives leftleg1 mass
 		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.4));
-		dMassTranslate (&m, x, y + 0.1, z - 0.4);
+		dMassTranslate (&m, x2, y, zhip - .2);
 
 		// Gives leftleg2 mass
 		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.4));
-		dMassTranslate (&m, x, y + 0.1, z - 0.8);
+		dMassTranslate (&m, x2, y, zhip - .6);
 
 		// Gives rightleg1 mass
 		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.4));
-		dMassTranslate (&m, x, y - 0.1, z - 0.4);
+		dMassTranslate (&m, x3, y, zhip - .2);
 
 		// Gives rightleg2 mass
 		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.4));
-		dMassTranslate (&m, x, y - 0.1, z - 0.8);
+		dMassTranslate (&m, x3, y, zhip - .6);
+/*
+        // Gives lefthand mass
+        dMassSetSphere (&m, density, REAL(0.05));
+        dMassTranslate (&m, x2, y, zsholder + .625);
+
+        // Gives righthand mass
+        dMassSetSphere (&m, density, REAL(0.05));
+        dMassTranslate (&m, x3, y, zsholder + .625);
+*/
 	}
 
 	// Setup stuff
@@ -1231,6 +1265,38 @@ void waltz(int step)
 		eigth();
 }
 
+/*
+// Will try to impliment hand holding for waltz
+void hand_holding(int do)
+{
+    if (do==1)
+    {
+        for (b=0; b<N_BODIES; b+=2)
+        {
+            lefthand[b] = dJointCreateBall (dyn_world.id(), 0);
+            dJointAttach(lefthand[b], leftarm[b], torso1[b+1]);
+            lefthand_pos[b] = dGeomGetPosition(leftarm[b]);
+            lefthand_dir[b] = dGeomGetQuaternion(leftarm[b]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+    }
+    else
+    {
+    }
+}
+*/
 
 void display()
 {
