@@ -25,7 +25,7 @@ GLuint                  selectBuf[BUFSIZE];
 GLuint                  glTexIndex;
 
 // Number of manikins
-#define                 N_BODIES                20
+#define                 N_BODIES                12
 
 
 #define                 STAGE_SIZE              8.0  // in m
@@ -105,6 +105,8 @@ static dBodyID          rightleg1[N_BODIES];
 static dBodyID          rightleg2[N_BODIES];
 static dBodyID          lefthand[N_BODIES];
 static dBodyID          righthand[N_BODIES];
+static dBodyID          rightlead_target[N_BODIES];
+static dBodyID          leftfollow_target[N_BODIES];
 
 
 // Names of shapes to be applied to objects later
@@ -122,6 +124,8 @@ static dGeomID          rightleg1_geom[N_BODIES];
 static dGeomID          rightleg2_geom[N_BODIES];
 static dGeomID          lefthand_geom[N_BODIES];
 static dGeomID          righthand_geom[N_BODIES];
+static dGeomID          rightlead_target_geom[N_BODIES];
+static dGeomID          leftfollow_target_geom[N_BODIES];
 
 
 // Makes all the joints of one manikin into a single unit makes an array of them
@@ -142,6 +146,8 @@ static dJointID         leftknee[N_BODIES];
 static dJointID         rightknee[N_BODIES];
 static dJointID         leftwrist[N_BODIES];
 static dJointID         rightwrist[N_BODIES];
+static dJointID         follow_back[N_BODIES];
+static dJointID         lead_sholder[N_BODIES];
 
 
 // Rendering parameters.
@@ -294,9 +300,6 @@ void draw()
 
 	  	dsDrawCapsule (dGeomGetPosition(rightleg1_geom[b]),dGeomGetRotation(rightleg1_geom[b]),.4,.05);
 	  	dsDrawCapsule (dGeomGetPosition(rightleg2_geom[b]),dGeomGetRotation(rightleg2_geom[b]),.4,.05);
-
-//        dsDrawSphere (dGeomGetPosition(lefthand_geom[b]),dGeomGetRotation(lefthand_geom[b]),.05);
-//        dsDrawSphere (dGeomGetPosition(righthand_geom[b]),dGeomGetRotation(righthand_geom[b]),.05);
 
         glPopMatrix();
 
@@ -819,7 +822,8 @@ void init()
 		rightleg2[b] = dBodyCreate(dyn_world);
 //        lefthand[b] = dBodyCreate(dyn_world);
 //        righthand[b] = dBodyCreate(dyn_world);
-
+//        rightlead_target[b] = dBodyCreate(dyn_world);
+//        leftfollow_target[b] = dBodyCreate(dyn_world);
 
 
     // Creates shapes and assigns names and bodies
@@ -853,11 +857,14 @@ void init()
 		rightleg2_geom[b] = dCreateCCylinder (coll_space_id, 0.05, 0.4);
 		dGeomSetBody (rightleg2_geom[b], rightleg2[b]);
 /*
-        lefthand_geom[b] = dCreateSphere (coll_space_id, 0.05);
+        lefthand_geom[b] = dCreateSphere (0, 0.0001);
         dGeomSetBody (lefthand_geom[b], lefthand[b]);
-
-        righthand_geom[b] = dCreateSphere (coll_space_id, 0.05);
+        righthand_geom[b] = dCreateSphere (0, 0.0001);
         dGeomSetBody (righthand_geom[b], righthand[b]);
+        rightlead_target_geom[b] = dCreateSphere (0, 0.0001);
+        dGeomSetBody (rightlead_target_geom[b], rightlead_target[b]);
+        leftfollow_target_geom[b] = dCreateSphere (0, 0.0001);
+        dGeomSetBody (leftfollow_target_geom[b], leftfollow_target[b]);
 */
 		// Positions bodies/shapes
 		dGeomSetPosition(torso1_geom[b], x1, y, z1+.2);
@@ -872,8 +879,11 @@ void init()
 		dGeomSetPosition(leftleg2_geom[b], x2, y, zhip - .6);
 		dGeomSetPosition(rightleg1_geom[b], x3, y, zhip - .2);
 		dGeomSetPosition(rightleg2_geom[b], x3, y, zhip - .6);
-//        dGeomSetPosition(lefthand_geom[b], x2, y, zsholder + .625);
-//        dGeomSetPosition(righthand_geom[b], x3, y, zsholder + .625);
+//        dBodySetPosition(lefthand[b], x2, y, zsholder + .625);
+//        dBodySetPosition(righthand[b], x3, y, zsholder + .625);
+//        dBodySetPosition(rightlead_target[b], x1, y + 0.1, z1);
+//        dBodySetPosition(leftfollow_target[b], x3, y, zsholder);
+
 
 		// Makes things oriented up
 		dMatrix3 dir = {1,1,1,1,1,1,1,1,1,1,1,1};
@@ -889,8 +899,10 @@ void init()
 		dGeomSetRotation(leftleg2_geom[b], dir);
 		dGeomSetRotation(rightleg1_geom[b],dir);
 		dGeomSetRotation(rightleg2_geom[b],dir);
-//        dGeomSetRotation(lefthand_geom[b],dir);
-//        dGeomSetRotation(righthand_geom[b],dir);
+//        dBodySetRotation(lefthand[b],dir);
+//        dBodySetRotation(righthand[b],dir);
+//        dBodySetRotation(rightlead_target[b],dir);
+//        dBodySetRotation(leftfollow_target[b],dir);
 
 
 		// Makes a group for the joints to join
@@ -949,70 +961,78 @@ void init()
 /*
         leftwrist[b] = dJointCreateBall (dyn_world.id(), ragdoll_joints[b]);
         dJointAttach (leftwrist[b], leftarm2[b], lefthand[b]);
-        dJointSetBallAnchor (leftwrist[b], x2, y, zsholder + .6);
+        dJointSetBallAnchor (leftwrist[b], x2, y, zsholder + .625);
 
         rightwrist[b] = dJointCreateBall (dyn_world.id(), ragdoll_joints[b]);
         dJointAttach (rightwrist[b], rightarm2[b], righthand[b]);
-        dJointSetBallAnchor (leftwrist[b], x3, y, zsholder + .6);
+        dJointSetBallAnchor (rightwrist[b], x3, y, zsholder + .625);
+
+        follow_back[b] = dJointCreateBall (dyn_world.id(), ragdoll_joints[b]);
+        dJointAttach (follow_back[b], torso2[b], rightlead_target[b]);
+        dJointSetBallAnchor (follow_back[b], x1, y+ 0.1, z1);
+
+        lead_sholder[b] = dJointCreateBall (dyn_world.id(), ragdoll_joints[b]);
+        dJointAttach (lead_sholder[b], rightarm1[b], leftfollow_target[b]);
+        dJointSetBallAnchor (lead_sholder[b], x3, y, zsholder);
 */
+
 		// Gives mass to manikins
 		dMass m;
 
 		// Gives torso1 mass
-		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.6));
-		dMassTranslate (&m, x1, y, z1+.2);		
-
+		dMassSetCappedCylinder (&m, density, 1, REAL(0.05), REAL(0.6));
+        dBodySetMass(torso1[b], &m);
 		// Gives torso2 mass
 		dMassSetSphere (&m, density, REAL(0.1));
-		dMassTranslate (&m, x1, y, z1);
+        dBodySetMass(torso2[b], &m);
 
 		// Gives torso3 mass
 		dMassSetSphere (&m, density, REAL(0.1));
-		dMassTranslate (&m, x1, y, z1-.15);
+        dBodySetMass(torso3[b], &m);
 
 		// gives head mass
 		dMassSetSphere (&m, density, REAL(0.075));
-		dMassTranslate (&m, x1, y, zhead);
+        dBodySetMass(head[b], &m);
 
 		// Gives leftarm1 mass
-		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.3));
-		dMassTranslate (&m, x2, y, zsholder + .15);
+		dMassSetCappedCylinder (&m, density, 1, REAL(0.05), REAL(0.3));
+        dBodySetMass(leftarm1[b], &m);
 
 		// Gives leftarm2 mass
-		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.3));
-		dMassTranslate (&m, x2, y, zsholder + .45);
+		dMassSetCappedCylinder (&m, density, 1, REAL(0.05), REAL(0.3));
+        dBodySetMass(leftarm2[b], &m);
 
 		// Gives rightarm1 mass
-		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.3));
-		dMassTranslate (&m, x3, y, zsholder + .15);
+		dMassSetCappedCylinder (&m, density, 1, REAL(0.05), REAL(0.3));
+        dBodySetMass(rightarm1[b], &m);
 
 		// Gives rightarm2 mass
-		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.3));
-		dMassTranslate (&m, x3, y, zsholder + .45);
+		dMassSetCappedCylinder (&m, density, 1, REAL(0.05), REAL(0.3));
+        dBodySetMass(rightarm2[b], &m);
 
 		// Gives leftleg1 mass
-		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.4));
-		dMassTranslate (&m, x2, y, zhip - .2);
+		dMassSetCappedCylinder (&m, density, 1, REAL(0.05), REAL(0.4));
+        dBodySetMass(leftleg1[b], &m);
 
 		// Gives leftleg2 mass
-		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.4));
-		dMassTranslate (&m, x2, y, zhip - .6);
+		dMassSetCappedCylinder (&m, density, 1, REAL(0.05), REAL(0.4));
+        dBodySetMass(leftleg2[b], &m);
 
 		// Gives rightleg1 mass
-		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.4));
-		dMassTranslate (&m, x3, y, zhip - .2);
+		dMassSetCappedCylinder (&m, density, 1, REAL(0.05), REAL(0.4));
+        dBodySetMass(rightleg1[b], &m);
 
 		// Gives rightleg2 mass
-		dMassSetCappedCylinder (&m, density, (0,0,1), REAL(0.05), REAL(0.4));
-		dMassTranslate (&m, x3, y, zhip - .6);
+		dMassSetCappedCylinder (&m, density, 1, REAL(0.05), REAL(0.4));
+        dBodySetMass(rightleg2[b], &m);
 /*
         // Gives lefthand mass
-        dMassSetSphere (&m, density, REAL(0.05));
-        dMassTranslate (&m, x2, y, zsholder + .625);
+        dMassSetZero (&m);
+        dBodySetMass(lefthand[b], &m);
 
         // Gives righthand mass
-        dMassSetSphere (&m, density, REAL(0.05));
-        dMassTranslate (&m, x3, y, zsholder + .625);
+        dMassSetZero (&m);
+        dBodySetMass(righthand[b], &m);
 */
 	}
 
@@ -1273,23 +1293,17 @@ void hand_holding(int do)
     {
         for (b=0; b<N_BODIES; b+=2)
         {
-            lefthand[b] = dJointCreateBall (dyn_world.id(), 0);
-            dJointAttach(lefthand[b], leftarm[b], torso1[b+1]);
-            lefthand_pos[b] = dGeomGetPosition(leftarm[b]);
-            lefthand_dir[b] = dGeomGetQuaternion(leftarm[b]);
+            lead_left[b] = dJointCreateBall(dyn_world.id(), 0);
+            dJointAttach(lead_left[b], lefthand[b], righthand[b+1]);
+            lefthand_pos[b] = dGeomGetPosition(lefthand[b]);
 
+            lead_right[b] = dJointCreateBall(dyn_world.id(), 0);
+            dJointAttach(lead_right[b], righthand[b], rightlead_target[b+1]);
+            righthand_pos[b] = dGeomGetPosition(righthand[b]);
 
-
-
-
-
-
-
-
-
-
-
-
+            follow_left[b+1] = dJointCreateBall(dyn_world.id(), 0);
+            dJointAttach(follow_left[b+1], lefthand[b+1], leftfollow_target[b]);
+            lefthand_pos[b+1] = dGeomGetPosition(lefthand[b+1]);
         }
     }
     else
