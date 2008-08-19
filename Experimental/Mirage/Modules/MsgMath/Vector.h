@@ -271,25 +271,23 @@ namespace Msg
 				    mVal = this->_data[i] * this->_data[i] + mVal;
 			    }
 
-			    return sqrt( mVal );
+                return sqrt( mVal );
 		    }
 
 
 		    Vector< DATA_TYPE, SIZE >& normalize()
 		    {
-          DATA_TYPE val = length();
+          DATA_TYPE val = length();          
 
-			    for( size_t i=0; i < SIZE; ++i )
-			    {          
-            if( val != 0.0 )
-            {
-              _data[i] = _data[i] / val;
-            }
-            else
-            {
-              throw "ERROR 3614273646: Division by zero error. "; 
-            }
-			    }
+          if( val != DATA_TYPE( 0.0 ) )
+          {
+            return *this;
+          }
+
+		      for( size_t i=0; i < SIZE; ++i )
+		      { 
+            _data[i] = _data[i] / val;            
+		      }
 
           return *this;
 		    }
