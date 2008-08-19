@@ -39,6 +39,10 @@ enum Mode
 
 static bool _twoSided       = false;
 static bool _pause          = true;
+
+// Flag t check if we are in debug mode. 
+static bool _debugMode      = false;
+
 static Mode _mode           = MOVE_LIGHT;
 
 static const int  MAX_LISTS = 30;
@@ -47,11 +51,11 @@ static const int  MAX_LISTS = 30;
 GLuint      _shadowVol;
 GLubyte     _shadowVolLists[MAX_LISTS];
 
-static const GLfloat lightAmbient[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
+static const GLfloat lightAmbient[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
 static const GLfloat lightDiffuse[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
 static const GLfloat lightSpecular[]  = { 1.0f, 0.6f, 0.6f, 1.0f };
 
-static       GLfloat lightPosition[]  = { -5.0f, 3.0f, 0.0f, 1.0 };
+static       GLfloat lightPosition[]  = { 0.0f, 5.0f, 0.0f, 1.0 };
 
 MsgCore::SmartPtr< MsgCore::Material > _matBlue             = new MsgCore::Material();
 MsgCore::SmartPtr< MsgCore::Material > _matRed              = new MsgCore::Material();
@@ -142,13 +146,26 @@ struct Triangle
 }; 
 
 
+void drawFloor()
+{
+  glPushMatrix();
+    glBegin( GL_QUADS );
+      glVertex3f( -100.0, -1.0, 100.0 );
+      glVertex3f(  100.0, -1.0, 100.0 );
+      glVertex3f(  100.0, -1.0,-100.0 );
+      glVertex3f( -100.0, -1.0,-100.0 );
+    glEnd();
+  glPopMatrix();
+}
+
+
 void init()
 {
   glEnable( GL_DEPTH_TEST );
   glEnable( GL_LIGHTING );
   glEnable( GL_LIGHT0 );  
 
-  //glLightfv( GL_LIGHT0, GL_AMBIENT, lightAmbient );
+  glLightfv( GL_LIGHT0, GL_AMBIENT, lightAmbient );
   glLightfv( GL_LIGHT0, GL_DIFFUSE, lightDiffuse );
   glLightfv( GL_LIGHT0, GL_SPECULAR, lightSpecular );  
 
@@ -261,6 +278,31 @@ MsgMath::Matrix44d convert( GLdouble* matrix )
   mat.set( matrix );
 
   return mat;
+}
+
+
+void pushBack( std::list< Edge >& edges, Edge& edge )
+{
+  bool result = false;
+  
+  std::list< Edge >::iterator itr = edges.begin();
+  for( itr; itr != edges.end(); ++itr )
+  {
+    if( ( ( edge._vertex1 == itr->_vertex1 ) || 
+          ( edge._vertex2 == itr->_vertex1 ) ) &&
+        ( ( edge._vertex1 == itr->_vertex2 ) || 
+          ( edge._vertex2 == itr->_vertex2 ) ) )
+    {
+      result = true;
+      edges.erase( itr );      
+      break;
+    }
+  }
+
+  if( !result )
+  {
+    edges.push_back( edge );
+  }
 }
 
 
@@ -396,7 +438,10 @@ void buildShadowVolume()
               edge._vertex1 = vertex1; 
               edge._vertex2 = vertex2;
 
-              _edges.push_back( edge );
+
+              // Insert only if it does not exist. 
+              pushBack( _edges, edge );
+              //_edges.push_back( edge );
 
               ++count;
             }           
@@ -432,7 +477,9 @@ void buildShadowVolume()
               edge._vertex1 = vertex1; 
               edge._vertex2 = vertex2;
 
-              _edges.push_back( edge );
+              // Insert only if it does not exist. 
+              pushBack( _edges, edge );
+              //_edges.push_back( edge );
 
               ++count;
             }
@@ -473,7 +520,9 @@ void buildShadowVolume()
               edge._vertex1 = vertex1; 
               edge._vertex2 = vertex2;
 
-              _edges.push_back( edge );
+              // Insert only if it does not exist. 
+              pushBack( _edges, edge );
+              //_edges.push_back( edge );
 
               ++count;
             }
@@ -489,12 +538,17 @@ void buildShadowVolume()
         
 
           // Remove duplicate edges. 
-          _edges.unique( compare() );
+          //_edges.unique( compare() );
 
           // Extrude the vertices. 
           std::vector< MsgMath::Vec4d > _extendedVertices;          
           std::list< Edge >::iterator jItr = _edges.begin();
-          const float extensionFactor = 1000.0f;
+
+          // @todo: This is supposed to be infinity. We need to 
+          // use projection matrix which will account for this. 
+          // Read Gamasutra article on this. 
+          
+          const float extensionFactor = 10.0f;
 
           // @Todo: Use display list. 
           glNewList( _shadowVol + ( index * 3 ), GL_COMPILE );
@@ -574,6 +628,7 @@ void buildShadowVolume()
           //
 
           // Drawing in the reverse order of drawing for front cap. 
+          glColor3f( 0.0, 5.0, 0.0 );
           glNewList( _shadowVol + ( index * 3 + 2 ), GL_COMPILE );
           glPushMatrix();
           glBegin( GL_POLYGON );
@@ -596,29 +651,45 @@ void buildShadowVolume()
 }
 
 
-void drawShadowVolume()
+void drawShadowVolume( bool debugMode = false )
 {
   for( size_t i=0; i < MAX_LISTS;++i )
   {
     _shadowVolLists[i] = i;
   }
 
-  glPushMatrix();
-    glListBase( _shadowVol );
-    glCallLists( MAX_LISTS, GL_UNSIGNED_BYTE, _shadowVolLists );
-  glPopMatrix();
+  if( !debugMode ) 
+  {
+    glPushMatrix();
+      glListBase( _shadowVol );
+      glCallLists( MAX_LISTS, GL_UNSIGNED_BYTE, _shadowVolLists );
+    glPopMatrix();
+  }
+  else
+  {
+    glEnable( GL_CULL_FACE );
+    glCullFace( GL_BACK );
+    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    glPushMatrix();
+      glListBase( _shadowVol );
+      glColor3f( 1.0, 0.0, 0.0 );
+      glCallLists( MAX_LISTS, GL_UNSIGNED_BYTE, _shadowVolLists );
+    glPopMatrix();
+    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+    glDisable( GL_CULL_FACE );
+  }
 }
 
 
-void drawFloor()
-{
-  glBegin( GL_QUADS );
-    glVertex3f( -20.0,  0.0,  20.0 );
-    glVertex3f(  20.0,  0.0,  20.0 );
-    glVertex3f(  20.0,  0.0, -20.0 );
-    glVertex3f( -20.0,  0.0, -20.0 );
-  glEnd();
-}
+//void drawFloor()
+//{
+//  glBegin( GL_QUADS );
+//    glVertex3f( -20.0,  0.0,  20.0 );
+//    glVertex3f(  20.0,  0.0,  20.0 );
+//    glVertex3f(  20.0,  0.0, -20.0 );
+//    glVertex3f( -20.0,  0.0, -20.0 );
+//  glEnd();
+//}
 
 
 void drawQuad()
@@ -658,9 +729,17 @@ void drawScene()
   drawShadowVolume();
 
 #else
+  
+  glEnable( GL_LIGHTING );
+  glEnable( GL_LIGHT0 );
+  glLightModelfv( GL_AMBIENT, lightAmbient );
+  //glLightModelfv( GL_SPECULAR, lightSpecular );
+  //glLightModelfv( GL_DIFFUSE, lightDiffuse );
+
   buildShadowVolume();
 
-   _viewer->draw();
+  _viewer->draw();  
+  //drawFloor();
 
   // Turn on OpenGL states.
   // Requied for the algorithm. 
@@ -705,7 +784,8 @@ void drawScene()
     _root->getOrCreateStateSet()->attribute( _matShadow.get(), IStateAttribute::OVERRIDE | IStateAttribute::ON );
   }  
 
-  _viewer->draw();
+  _viewer->draw();  
+  //drawFloor();
 
   if( _matShadow.valid() )
   {
@@ -715,6 +795,11 @@ void drawScene()
   // Turn off OpenGL states. 
   glDisable( GL_CULL_FACE );
   glDisable( GL_STENCIL_TEST );  
+
+  if( _debugMode )
+  {
+    drawShadowVolume( true );   
+  }
 
 #endif 
 } 
@@ -750,7 +835,7 @@ void reshape( int w, int h )
   glMatrixMode( GL_PROJECTION );
   glLoadIdentity();
   
-  gluPerspective( 45.0, ( double )w/h, 1.0, 1000.0 );
+  gluPerspective( 45.0, ( double )w/h, 0.1, 10000.0 );
 
   glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
@@ -782,6 +867,11 @@ void idle()
 
 void keyboard( unsigned char key, int x, int y )
 {
+  if( key == 'D' )
+  {
+    _debugMode = !_debugMode;
+  }
+
   switch( _mode )
   {
     case MOVE_LIGHT: 
