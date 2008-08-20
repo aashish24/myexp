@@ -271,7 +271,7 @@ namespace Msg
         // Node that actually holds the data. 
         SmartPtr< Geometry > geom = new Geometry( method );
 
-        if( model->_useFastPath && method != MsgCore::FORCED_VERTEX_ARRAYS )
+        if( false )
         {
           // First iterate thru the indices. 
           int count = 0;
@@ -518,10 +518,10 @@ namespace Msg
           geom->useFastPath( _useFastPath );
 
           // Place holders for vertex data. 
-          SmartPtr< Vec3Array > vertexArray( new Vec3Array( model->_vertices->size() ) );
+          /*SmartPtr< Vec3Array > vertexArray( new Vec3Array( model->_vertices->size() ) );
           SmartPtr< Vec3Array > normalArray( new Vec3Array( model->_vertices->size() ) );
           SmartPtr< Vec3Array > textureCoordArray( new Vec3Array( model->_vertices->size() ) );
-          SmartPtr< Vec3Array > colorArray( new Vec3Array( model->_vertices->size() ) );
+          SmartPtr< Vec3Array > colorArray( new Vec3Array( model->_vertices->size() ) );*/
 
           // Vertices are Vertex Indices are must in an obj. 
           if( model->_vertices->empty() || model->_vertexIndices->empty() )
@@ -535,7 +535,7 @@ namespace Msg
           geom->textureCoordArray( model->_textureCoords.get() );
           geom->textureCoordIndices( model->_texCoordIndices.get() ); 
           geom->normalArray( model->_normals.get() );
-          geom->normalIndices( model->_normalIndices.get() ); 
+          geom->normalIndices( model->_normalIndices.get() );
         
           /*
           for( size_t i=0; i < model->_vertexIndices->size(); ++i )
@@ -595,10 +595,9 @@ namespace Msg
             {
               colorArray = 0x00;
             }
-          } // End for(... )    
-        
-          */
-    
+          } // End for(... )            
+          */    
+
           //// Set color index array. 
           //if( !model->_colorIndices->empty() )
           //{

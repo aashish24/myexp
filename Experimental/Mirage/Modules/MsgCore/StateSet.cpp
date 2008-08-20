@@ -53,7 +53,12 @@ namespace Msg
 
     void StateSet::attribute( StateAttribute* attr, const int& maskVal )
     {
-       Attributes::iterator itr = _attributes.begin();
+      if( attr == 0x00 )
+      {
+        return;
+      }
+
+      Attributes::iterator itr = _attributes.begin();
       
       for( itr; itr != _attributes.end(); ++itr )
       {
