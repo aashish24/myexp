@@ -1,19 +1,33 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <iostream>
-#include <ode/ode.h>
-#include <drawstuff/drawstuff.h>
-#include "texturepath.h"
-#include "GL/glut.h"
-#include "BmpImage.h"
-#include "TgaImage.h"
+#include "ode/ode.h"
 
+// GMTL (math library includes).
 #include "gmtl/Vec.h"
 #include "gmtl/Matrix.h"
 #include "gmtl/VecOps.h"
 #include "gmtl/MatrixOps.h"
 #include "gmtl/Xforms.h"
+
+// Sonix (sound library) includes. 
+
+#define  uint32 
+#define  int32
+#define  int8
+
+#include "snx/sonix.h"
+#include "snx/SoundHandle.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <iostream>
+#include <ctime>
+
+#include "drawstuff/drawstuff.h"
+#include "texturepath.h"
+#include "GL/glut.h"
+#include "BmpImage.h"
+#include "TgaImage.h"
+
 #define                 drand48()               ((double) (((double) rand()) / ((double) RAND_MAX)))
 #define                 BUFSIZE                 512
 
@@ -180,8 +194,11 @@ enum                    InteractioMode
 
 InteractioMode          mode(PICK);
 
+snx::SoundHandle        bgSoundHandle;
+snx::SoundHandle        moveSoundHandle;
+snx::SoundHandle        blastSoundHandle;
 
-
+                        
 GLuint loadTexture(std::string fileName)
 {
 	int extind = fileName.rfind('.');
@@ -444,7 +461,7 @@ void Friction()
 
             /////////////////////////////---rightarm---/////////////////////////////////////////////////
 
-	        const dReal   *vel_rightarm1 = dBodyGetLinearVel (rightarm1[b]),
+	        const dReal *vel_rightarm1 = dBodyGetLinearVel (rightarm1[b]),
 		                *rot_rightarm1 = dBodyGetAngularVel (rightarm1[b]),
 		                *hight_rightarm1 = dBodyGetPosition (rightarm1[b]);
 		    if (hight_rightarm1[2] > 0.3)
@@ -709,6 +726,37 @@ static void cb_sim_step()
 	}
 
 	Friction();
+}
+
+
+// Set and initialize sound related items. 
+void initSound()
+{
+    // Hardcoded as of now. 
+    std::string api("OpenAL"); 
+    std::string background(".//data/sounds/background.wav");
+    std::string blast(".//data/sounds/blast.wav");
+    std::string move(".//data/sounds/move.wav");    
+        
+   /* if(!snxFileIO::fileExists(background.c_str() ||
+       !snxFileIO::fileExists(blast.c_str()) ||
+       !snxFileIO::fileExists(move.c_str()) 
+      );
+    {
+        std::cerr << "ERROR: Sounds file not found error: " << std::endl;
+        return; 
+    }*/
+
+    // Create sound info objects. 
+    snx::SoundInfo bgSoundInfo; 
+    bgSoundInfo.filename    = background; 
+    bgSoundInfo.datasource  = snx::SoundInfo::FILESYSTEM;        
+
+    bgSoundHandle.init(" Background sound: ");
+    bgSoundHandle.configure(bgSoundInfo);    
+
+    // start sonix using OpenAL
+    snx::sonix::instance()->changeAPI( api );
 }
 
 
@@ -1054,6 +1102,11 @@ void init()
 	glColor3f (1,1,1);
 
 	glTexIndex = loadTexture("./data/wood.tga");
+
+    // Initialize sound related items. 
+    initSound();
+
+    bgSoundHandle.trigger( -1 );     
 }
 
 // Helps the manikins remain standing while dancing by applying an upward force and mock body tension
@@ -1364,6 +1417,18 @@ void display()
 void idle()
 {
 	dWorldStep (dyn_world,TIME_STEP);
+
+    static clock_t lastTime(clock());
+    static clock_t currTime(clock());
+
+    float timeDelta = static_cast< float >((currTime  - lastTime) / CLOCKS_PER_SEC);
+
+    // Time step for sound libray. 
+    snx::sonix::instance()->step(timeDelta);
+
+    lastTime = currTime; 
+    currTime = clock();
+    
 	glutPostRedisplay();
 }
 

@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(BOOST_INC_DIR)&quot;;&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;;&quot;$(VJ_BASE_DIR)\include&quot;;&quot;$(NSPR_INC_DIR)&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;WIN32;dSINGLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -67,7 +67,7 @@
 				AdditionalDependencies="user32.lib winmm.lib gdi32.lib opengl32.lib glu32.lib"
 				OutputFile="E:\aashish\src\ode\ode-0.10.1\lib\debugsingledll\demo_space.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../../lib/DebugSingleDLL"
+				AdditionalLibraryDirectories="../../lib/DebugSingleDLL;$(VJ_BASE_DIR)\lib;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/demo_space.pdb"
 				SubSystem="1"
@@ -124,7 +124,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(BOOST_INC_DIR)&quot;;&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;;&quot;$(VJ_BASE_DIR)\include&quot;;&quot;$(NSPR_INC_DIR)&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;WIN32;dSINGLE;WIN32_LEAN_AND_MEAN;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="0"
@@ -150,7 +150,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib winmm.lib gdi32.lib opengl32.lib glu32.lib"
 				OutputFile="E:\aashish\src\ode\ode-0.10.1\lib\releasesingledll\demo_space.exe"
-				AdditionalLibraryDirectories="../../lib/ReleaseSingleDLL"
+				AdditionalLibraryDirectories="../../lib/ReleaseSingleDLL; $(VJ_BASE_DIR)\lib;"
 				GenerateDebugInformation="false"
 				ProgramDatabaseFile="$(OutDir)/demo_space.pdb"
 				SubSystem="1"
@@ -207,7 +207,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(BOOST_INC_DIR)&quot;;&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;;&quot;$(VJ_BASE_DIR)\include&quot;;&quot;$(NSPR_INC_DIR)&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;WIN32;dSINGLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -291,7 +291,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(BOOST_INC_DIR)&quot;;&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;;&quot;$(VJ_BASE_DIR)\include&quot;;&quot;$(NSPR_INC_DIR)&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;WIN32;dSINGLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -375,7 +375,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(BOOST_INC_DIR)&quot;;&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;;&quot;$(VJ_BASE_DIR)\include&quot;;&quot;$(NSPR_INC_DIR)&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;WIN32;dSINGLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -459,7 +459,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(BOOST_INC_DIR)&quot;;&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;;&quot;$(VJ_BASE_DIR)\include&quot;;&quot;$(NSPR_INC_DIR)&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;WIN32;dDOUBLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -543,7 +543,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(BOOST_INC_DIR)&quot;;&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;;&quot;$(VJ_BASE_DIR)\include&quot;;&quot;$(NSPR_INC_DIR)&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;WIN32;dSINGLE;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -627,7 +627,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(BOOST_INC_DIR)&quot;;&quot;C:\aashish\src\gmtl\gmtl-0.5.4\install\windows.x86_64.vc8.all\include&quot;;&quot;E:\aashish\src\ode\ode-0.10.1\include&quot;;&quot;$(VJ_BASE_DIR)\include&quot;;&quot;$(NSPR_INC_DIR)&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;WIN32;dDOUBLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
