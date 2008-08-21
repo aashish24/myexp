@@ -54,7 +54,7 @@ static const GLfloat                      _lightAmbient[]   = { 0.2f, 0.2f, 0.2f
 static const GLfloat                      _lightDiffuse[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
 static const GLfloat                      _lightSpecular[]  = { 1.0f, 0.6f, 0.6f, 1.0f };
 
-static GLfloat                            _lightPosition[]  = { 0.0f, 5.0f, 0.0f, 1.0 };
+static GLfloat                            _lightPosition[]  = { 0.0f, 0.0f, 0.0f, 1.0 };
 
 GLdouble                                  _top;
 GLdouble                                  _bottom;
@@ -670,30 +670,25 @@ void drawShadowVolume( bool debugMode = false )
     glPopMatrix();
   }
   else
-  {
-    //glEnable( GL_CULL_FACE );    
-    //glCullFace( GL_FRONT );    
-    GLfloat mat[] = { 0.0, 5.0, 0.0, 1.0 };
-    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, mat );
+  {    
+    GLfloat shadowVolumeMaterial[]  = { 0.0, 5.0, 0.0, 1.0 };
+    GLfloat commonMaterial[]        = { 0.5, 5.0, 0.5, 1.0 };
+
+    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, shadowVolumeMaterial );
     glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glPushMatrix();
       glListBase( _shadowVol );      
       glCallLists( MAX_LISTS, GL_UNSIGNED_BYTE, _shadowVolLists );
     glPopMatrix();
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-    //glDisable( GL_CULL_FACE );    
+    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, commonMaterial );
   }
 }
 
 
 void drawScene() 
-{ 
-  //glEnable( GL_DEPTH_TEST );  
-  //glDepthMask( GL_TRUE );
-  //glDepthFunc( GL_LEQUAL );  
-  
-#if TESTING
-  
+{   
+#if TESTING  
   glEnable( GL_LIGHTING );
   glEnable( GL_LIGHT0 );
   glLightModelfv( GL_AMBIENT, _lightAmbient );
@@ -709,11 +704,6 @@ void drawScene()
   drawShadowVolume();
 
 #else
-  
-  
-  //glEnable( GL_LIGHT0 );
-  //glLightModelfv( GL_AMBIENT, _lightAmbient );
-
   glDisable( GL_LIGHTING );
 
   buildShadowVolume();
@@ -726,32 +716,18 @@ void drawScene()
     glCullFace( GL_BACK );
     glEnable( GL_LIGHTING );
     glDisable( GL_LIGHT0 );
-    //glEnable( GL_LIGHT0 );
-    //glLightfv( GL_LIGHT0, GL_FRONT_AND_BACK, _lightAmbient );
-
-    //    
-    glLightModelfv( GL_LIGHT_MODEL_AMBIENT, _lightAmbient );
-    //glLightModeli( GL_LIGHT_MODEL_LOCAL_VIEWER, GL_FALSE );    
+    
+    glLightModelfv( GL_LIGHT_MODEL_AMBIENT, _lightAmbient );    
+    glLightModeli( GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE );
 
     _viewer->draw();  
-
-    //return;
-
-    //return;
-    //drawFloor();
-    
-    // Turn on OpenGL states.
-    // Requied for the algorithm.  
-    //glEnable( GL_CULL_FACE );    
-    //glClearStencil( 0x00 );
 
     glDepthMask( GL_FALSE );
 
     glEnable( GL_BLEND );
     glBlendFunc( GL_ONE, GL_ONE );
 
-    GLfloat zero[] = { 0.0, 0.0, 0.0, 1.0 };
-    //glLightfv( GL_LIGHT0, GL_FRONT_AND_BACK, zero );
+    GLfloat zero[] = { 0.0, 0.0, 0.0, 1.0 };    
     glLightModelfv( GL_LIGHT_MODEL_AMBIENT, zero );
       
     glEnable( GL_STENCIL_TEST );
@@ -769,33 +745,9 @@ void drawScene()
     glStencilOp( GL_KEEP, GL_DECR, GL_KEEP );      
     glCullFace( GL_BACK );
     drawShadowVolume(); 
-
-    //glDepthMask( GL_TRUE );
+    
     glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
-    glDepthFunc( GL_EQUAL );
-
-    // Now render the shadow part. 
-    // @todo: I still dont understand this glStencilFunc. 
-     //glStencilFunc( GL_NOTEQUAL, 0x00, 0xff );
-    //glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
-    //
-    //glCullFace( GL_BACK );
-   
-    //glEnable( GL_BLEND );
-    //glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-
-    //if( _matShadow.valid() )
-    //{
-    //  _root->getOrCreateStateSet()->attribute( _matShadow.get(), IStateAttribute::OVERRIDE | IStateAttribute::ON );
-    //}  
-
-    //_viewer->draw();  
-    ////drawFloor();
-
-    //if( _matShadow.valid() )
-    //{
-    //  _root->getOrCreateStateSet()->attribute( _matShadow.get(), IStateAttribute::OFF );
-    //} 
+    glDepthFunc( GL_EQUAL );    
 
     glCullFace( GL_BACK );
     glEnable( GL_LIGHT0 );
