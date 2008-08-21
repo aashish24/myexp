@@ -310,10 +310,39 @@ void pushBack( std::list< Edge >& edges, Edge& edge )
 }
 
 
+void getGeodes( std::vector< MsgCore::SmartPtr< MsgCore::Geode > >& geodes, MsgCore::Group* group )
+{
+  // If NULL
+  if( !group )
+    return; 
+
+  for( size_t index = 0; index < group->children().size(); ++index )
+  {
+    // If we get a valid node. 
+    if( MsgCore::Node* node = group->child( index ) )
+    {      
+      if( MsgCore::Geode* geode = node->asGeode() )
+      {
+        geodes.push_back( geode );
+      }
+      else if( MsgCore::Group* subGroup = node->asGroup() )
+      {
+        // Recursive call. 
+        getGeodes( geodes, subGroup );
+      }
+    }
+  }  
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
 // @todo: Two issues. 
 // 1. How we are going to draw in the same coordinate system as where 
 // we have the original geometry as still we dont have the transform node. 
 // 2. We are not iterating over the nodes which are group nodes under the _root? 
+// 3. This code will work till we dont have transform nodes. 
+//
+///////////////////////////////////////////////////////////////////////////////
 
 void buildShadowVolume()
 {
@@ -331,14 +360,17 @@ void buildShadowVolume()
   
   // Now check each child of the _root node. 
   // Grab any geometry. 
-  // Construct shadow volume out of it. 
+  // Construct shadow volume out of it.   
 
   // Now currently checking only at one level ( ignorning group  nodes ). 
-  for( size_t index = 0; index < gr->children().size(); ++index )
-  {
-    MsgCore::SmartPtr< MsgCore::Node > node = gr->child( index );
+  std::vector< MsgCore::SmartPtr< MsgCore::Geode > > geodes; 
+  
+  // Get all the geodes under this group node. 
+  getGeodes( geodes, gr.get() ); 
 
-    MsgCore::Geode* geode = node->asGeode();
+  for( size_t index = 0; index < geodes.size(); ++index )
+  { 
+    MsgCore::Geode* geode = geodes[index].get();
 
     // Get the Model View matrix. 
     GLdouble worldMatrix[16]; 
@@ -488,11 +520,6 @@ void buildShadowVolume()
 
               ++count;
             }
-            
-            ///////////////////////////////////////////////////////////////////
-            // 
-            // Third edge.  
-            //
 
             bool edge3Passed = false;
 
@@ -554,6 +581,7 @@ void buildShadowVolume()
           // use projection matrix which will account for this. 
           // Read Gamasutra article on this.                     
           
+          // Shadow volume ( Not including front or back cap. ). 
           glNewList( _shadowVol + ( index * 3 ), GL_COMPILE );
           for( jItr; jItr != _edges.end(); ++jItr )
           {            
@@ -567,10 +595,12 @@ void buildShadowVolume()
               
               MsgMath::Vec4d vertex41( vec4d1[0] - lightPos[0], vec4d1[1] - lightPos[1], vec4d1[2] - lightPos[2], 0.0 );
               vertex41 = vec4d1 + vertex41;
-              vertex41[3] = 0.0;
-
+              
               MsgMath::Vec4d vertex42( vec4d2[0] - lightPos[0], vec4d2[1] - lightPos[1], vec4d2[2] - lightPos[2], 0.0 );
               vertex42 = vec4d2 + vertex42;
+
+              // Extended vertices drawn at infinity ( or at the far plane ). 
+              vertex41[3] = 0.0;
               vertex42[3] = 0.0;
 
               glVertex4dv( vec4d1.front() );              
@@ -583,10 +613,7 @@ void buildShadowVolume()
           glEndList();
 
           
-          /////////////////////////////////////////////////////////////////////
           // Front cap. 
-          //
-
           glNewList( _shadowVol + ( index * 3 + 1 ), GL_COMPILE );
           glPushMatrix();
           std::vector< Triangle >::const_iterator constItr;
@@ -604,11 +631,7 @@ void buildShadowVolume()
           glPopMatrix();
           glEndList();
 
-
-          /////////////////////////////////////////////////////////////////////
           // Back cap. 
-          //         
-
           glNewList( _shadowVol + ( index * 3 + 2 ), GL_COMPILE );
           glPushMatrix();     
           
@@ -671,17 +694,19 @@ void drawShadowVolume( bool debugMode = false )
   }
   else
   {    
-    GLfloat shadowVolumeMaterial[]  = { 0.0, 5.0, 0.0, 1.0 };
-    GLfloat commonMaterial[]        = { 0.5, 5.0, 0.5, 1.0 };
-
-    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, shadowVolumeMaterial );
+    // Save color, material attributes. 
+    glPushAttrib( GL_LIGHTING_BIT | GL_CURRENT_BIT );    
+    
+    glColor3f( 1.0, 0.0, 0.0 );
     glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glPushMatrix();
       glListBase( _shadowVol );      
       glCallLists( MAX_LISTS, GL_UNSIGNED_BYTE, _shadowVolLists );
     glPopMatrix();
-    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, commonMaterial );
+    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );    
+    
+    // Restore. 
+    glPopAttrib();
   }
 }
 
