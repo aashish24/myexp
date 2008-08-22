@@ -23,6 +23,7 @@
 
 #include <list>
 #include <limits>
+#include <algorithm>
 
 
 // Definitions. 
@@ -86,21 +87,7 @@ struct Vertex
 {
   int _vertexIndex;
   int _normalIndex;
-  int _texCoordIndex;
-
-  virtual bool operator==( const Vertex& rhs )
-  {
-    if( ( this->_vertexIndex == rhs._vertexIndex )  &&  
-        ( this->_normalIndex == rhs._normalIndex )  && 
-        ( this->_texCoordIndex == rhs._texCoordIndex ) )
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
+  int _texCoordIndex;  
 };
 
 
@@ -111,7 +98,7 @@ struct Edge
   
   virtual bool operator==( const Edge& rhs )
   {
-    if( ( this->_vertex1 == rhs._vertex1 )  &&  ( this->_vertex2 == rhs._vertex2 ) )
+    if( ( this->_vertex1._vertexIndex == rhs._vertex1._vertexIndex )  &&  ( this->_vertex2._vertexIndex == rhs._vertex2._vertexIndex ) )
     {
       return true;
     }
@@ -195,7 +182,7 @@ void init()
 
   // Read geometry files. 
   MsgCore::SmartPtr< MsgCore::Node > model =  
-    MsgDB::FileRead::readFile( "..//..//Data//Models//Box.obj" );
+    MsgDB::FileRead::readFile( "..//..//Data//Models//sphere.obj" );
 
   if( model.valid() )
   {
@@ -278,33 +265,24 @@ MsgMath::Matrix44d convert( GLdouble* matrix )
 }
 
 
-void pushBack( std::list< Edge >& edges, Edge& edge )
+void addEdgeToSillhouette( std::list< Edge >& edges, Edge& edge, Edge& edgeInv )
 {
-  bool result = false;
-  
-  std::list< Edge >::iterator itr = edges.begin();
-  for( itr; itr != edges.end(); ++itr )
+  std::list< Edge >::iterator  result; 
+
+  result = find( edges.begin(), edges.end(), edge ); 
+
+  if( result == edges.end() )
   {
-    if( ( ( edge._vertex1._vertexIndex == itr->_vertex1._vertexIndex ) || 
-          ( edge._vertex1._vertexIndex == itr->_vertex2._vertexIndex ) ) &&
-        ( ( edge._vertex2._vertexIndex == itr->_vertex1._vertexIndex ) || 
-          ( edge._vertex2._vertexIndex == itr->_vertex2._vertexIndex ) ) )
+    result = find( edges.begin(), edges.end(), edgeInv );
+
+    if( result == edges.end() )
     {
-      result = true;
-      edges.erase( itr );    
-      break;
+      edges.push_back( edge );
+      return;
     }
   }
 
-  if( !result )
-  {
-    edges.push_back( edge );
-  }
-
-  if( edges.empty() )
-  {
-    std::cout << "Edges are empty: " << std::endl;
-  }
+  edges.erase( result );
 }
 
 
@@ -331,6 +309,7 @@ void getGeodes( std::vector< MsgCore::SmartPtr< MsgCore::Geode > >& geodes, MsgC
     }
   }  
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -432,108 +411,43 @@ void buildShadowVolume()
             normal1.normalize();
             normal2.normalize();
             normal3.normalize();
-
-            // Lets count how many edges( in a triangle we will have three ). 
-            int numberOfEdgesLit = 0;
-
-            bool edge1Passed = false; 
-
-            if( ( normal1.dot( lightDir1 ) > 0 ) && ( normal2.dot( lightDir2 ) > 0 ) )
-            {
-              edge1Passed = true;
-            }
-            if( edge1Passed )
-            {
-              //std::cout << "Vertex 1 passed: " << std::endl;
-              Vertex vertex1; 
-              vertex1._vertexIndex = i1;
-              vertex1._normalIndex = ni1;              
-
-              Vertex vertex2; 
-              vertex2._vertexIndex = i2;
-              vertex2._normalIndex = ni2;              
-
-              Edge edge; 
-              edge._vertex1 = vertex1; 
-              edge._vertex2 = vertex2;
-
-
-              // Insert only if it does not exist. 
-              pushBack( _edges, edge );
-              //_edges.push_back( edge );
-
-              ++numberOfEdgesLit;
-            }           
-
-            bool edge2Passed = false;
             
-            if( ( normal2.dot( lightDir2 ) > 0 ) && ( normal3.dot( lightDir3 ) > 0 ) )
+            if( ( normal1.dot( lightDir1 ) > 0 ) || ( normal2.dot( lightDir2 ) > 0 ) || ( normal3.dot( lightDir3 ) > 0 ) )
             {
-              edge2Passed = true;
-            }
-            if( edge2Passed )
-            {
-              Vertex vertex1; 
-              vertex1._vertexIndex = i2;
-              vertex1._normalIndex = ni2;              
+              Edge edge1, edge2, edge3; 
+              Edge edgeInv1, edgeInv2, edgeInv3; 
 
-              Vertex vertex2; 
-              vertex2._vertexIndex = i3;
-              vertex2._normalIndex = ni3;              
+              edge1._vertex1._vertexIndex = i1; 
+              edge1._vertex2._vertexIndex = i2;
+              edgeInv1._vertex1._vertexIndex = i2; 
+              edgeInv1._vertex2._vertexIndex = i1;
 
-              Edge edge; 
-              edge._vertex1 = vertex1; 
-              edge._vertex2 = vertex2;
+              edge2._vertex1._vertexIndex = i2; 
+              edge2._vertex2._vertexIndex = i3;
+              edgeInv2._vertex1._vertexIndex = i3; 
+              edgeInv2._vertex2._vertexIndex = i2;
 
-              // Insert only if it does not exist. 
-              pushBack( _edges, edge );
-              //_edges.push_back( edge );
+              edge3._vertex1._vertexIndex = i3; 
+              edge3._vertex2._vertexIndex = i1;
+              edgeInv3._vertex1._vertexIndex = i1; 
+              edgeInv3._vertex2._vertexIndex = i3;
 
-              ++numberOfEdgesLit;
-            }
+              addEdgeToSillhouette( _edges, edge1, edgeInv1 );
+              addEdgeToSillhouette( _edges, edge2, edgeInv2 );
+              addEdgeToSillhouette( _edges, edge3, edgeInv3 );
 
-            bool edge3Passed = false;
-
-            if( ( normal3.dot( lightDir3 ) > 0 ) && ( normal1.dot( lightDir1 ) > 0 ) )  
-            {
-              edge3Passed = true;
-            }
-            if( edge3Passed )
-            {
-              Vertex vertex1; 
-              vertex1._vertexIndex = i3;
-              vertex1._normalIndex = ni3;              
-
-              Vertex vertex2; 
-              vertex2._vertexIndex = i1;
-              vertex2._normalIndex = ni1;              
-
-              Edge edge; 
-              edge._vertex1 = vertex1; 
-              edge._vertex2 = vertex2;
-
-              // Insert only if it does not exist. 
-              pushBack( _edges, edge );
-              //_edges.push_back( edge );
-
-              ++numberOfEdgesLit;
-            }
-
-            if( numberOfEdgesLit == 3 )
-            {
               Triangle triangle;
               triangle._faceIndex = MsgMath::Vec3i( i1, i2, i3 );
               _capTriangles.push_back( triangle );
-            }
+            }   
             else
             {
+              // This is a back face. 
               Triangle triangle;
               triangle._faceIndex = MsgMath::Vec3i( i1, i2, i3 );
               _backTriangles.push_back( triangle );
             }
-
-          } // End  for( size_t k = 0; k < indices->size() ; ++k )            
-         
+          }
           
           std::list< Edge >::iterator jItr = _edges.begin();
 
@@ -546,7 +460,7 @@ void buildShadowVolume()
           for( jItr; jItr != _edges.end(); ++jItr )
           {            
             glPushMatrix();
-            glBegin( GL_LINES );              
+            glBegin( GL_QUADS );              
               MsgMath::Vec3d vec3d1 = vertices->at( jItr->_vertex2._vertexIndex );
               MsgMath::Vec3d vec3d2 = vertices->at( jItr->_vertex1._vertexIndex );
               
@@ -554,11 +468,11 @@ void buildShadowVolume()
               MsgMath::Vec4d vec4d2( vec3d2[0], vec3d2[1], vec3d2[2], 1.0 );
               
               MsgMath::Vec4d vertex41( vec4d1[0] - lightPos[0], vec4d1[1] - lightPos[1], vec4d1[2] - lightPos[2], 0.0 );              
-              vertex41 = MsgMath::Vec4d( lightPos[0], lightPos[1], lightPos[2], 0.0 ) + vertex41;
+              vertex41 =  vec4d1 + vertex41;
               
 
               MsgMath::Vec4d vertex42( vec4d2[0] - lightPos[0], vec4d2[1] - lightPos[1], vec4d2[2] - lightPos[2], 0.0 );
-              vertex42 = MsgMath::Vec4d( lightPos[0], lightPos[1], lightPos[2], 0.0 ) + vertex42;
+              vertex42 = vec4d2 + vertex42;
 
               // Extended vertices drawn at infinity ( or at the far plane ). 
               vertex41[3] = 0.0;
@@ -569,14 +483,14 @@ void buildShadowVolume()
 
               glVertex4dv( vec4d1.front() );              
               glVertex4dv( vec4d2.front() );
-              //glVertex4dv( vertex42.front() ); 
-              //glVertex4dv( vertex41.front() );              
+              glVertex4dv( vertex42.front() ); 
+              glVertex4dv( vertex41.front() );              
             glEnd();                     
             glPopMatrix();            
           }
           glEndList();
 
-          
+        
           // Front cap. 
           glNewList( _shadowVol + ( index * 3 + 1 ), GL_COMPILE );
           glPushMatrix();
@@ -586,9 +500,9 @@ void buildShadowVolume()
           glBegin( GL_TRIANGLES );
           for( constItr = _capTriangles.begin(); constItr != _capTriangles.end(); ++constItr )
           {           
-           /* glVertex3dv( vertices->at( constItr->_faceIndex[0] ).front() );
+            glVertex3dv( vertices->at( constItr->_faceIndex[0] ).front() );
             glVertex3dv( vertices->at( constItr->_faceIndex[1] ).front() );
-            glVertex3dv( vertices->at( constItr->_faceIndex[2] ).front() );                        */
+            glVertex3dv( vertices->at( constItr->_faceIndex[2] ).front() );                        
           }
           glEnd();
           glDisable( GL_POLYGON_OFFSET_FILL );  
@@ -615,7 +529,7 @@ void buildShadowVolume()
             MsgMath::Vec3d v1 = vertices->at( constItr->_faceIndex[1] );            
             MsgMath::Vec3d v2 = vertices->at( constItr->_faceIndex[2] );
 
-            /*if( !reverse )
+            if( !reverse )
             {
               glBegin( GL_TRIANGLES );  
                 glVertex4d( v0[0] + v0[0] - lightPos[0], v0[1] + v0[1]- lightPos[1], v0[2] + v0[2] - lightPos[2], 0 ); 
@@ -630,11 +544,10 @@ void buildShadowVolume()
                 glVertex4d( v1[0] + v1[0] - lightPos[0], v1[1] + v1[1]- lightPos[1], v1[2] + v1[2] - lightPos[2], 0 ); 
                 glVertex4d( v0[0] + v0[0] - lightPos[0], v0[1] + v0[1]- lightPos[1], v0[2] + v0[2] - lightPos[2], 0 );
               glEnd();
-            }*/
+            }
           }                    
           glPopMatrix();
           glEndList();
-
         } // End if( geom  )
       } // End for( size_t i = 0; i < drawables.size(); ++i ) 
     } // End if( ge ) 
