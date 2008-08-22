@@ -50,9 +50,9 @@ static const int                          MAX_LISTS = 30;
 GLuint                                    _shadowVol;
 GLubyte                                   _shadowVolLists[MAX_LISTS];
 
-static const GLfloat                      _lightAmbient[]   = { 0.2f, 0.2f, 0.2f, 1.0f };
-static const GLfloat                      _lightDiffuse[]   = { 1.0f, 0.6f, 0.6f, 1.0f };
-static const GLfloat                      _lightSpecular[]  = { 1.0f, 0.6f, 0.6f, 1.0f };
+static const GLfloat                      _lightAmbient[]   = { 0.1f, 0.1f, 0.1f, 1.0f };
+static const GLfloat                      _lightDiffuse[]   = { 5.0f, 0.0f, 0.0f, 1.0f };
+static const GLfloat                      _lightSpecular[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 static GLfloat                            _lightPosition[]  = { 0.0f, 0.0f, 0.0f, 1.0 };
 
@@ -164,15 +164,8 @@ void drawFloor()
 
 
 void init()
-{
-  glEnable( GL_DEPTH_CLAMP_NV );
+{  
   glEnable( GL_DEPTH_TEST );
-  //glEnable( GL_LIGHTING );
-  //glEnable( GL_LIGHT0 );  
-
-  //glLightfv( GL_LIGHT0, GL_AMBIENT, _lightAmbient );
-  //glLightfv( GL_LIGHT0, GL_DIFFUSE, _lightDiffuse );
-  //glLightfv( GL_LIGHT0, GL_SPECULAR, _lightSpecular );  
 
   // @todo: Planning to perform extraction of vertices via shaders. 
   // Commented out for time being. 
@@ -202,7 +195,7 @@ void init()
 
   // Read geometry files. 
   MsgCore::SmartPtr< MsgCore::Node > model =  
-    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\trunk\\Experimental\\Mirage\\Data\\Models\\Box.obj" );
+    MsgDB::FileRead::readFile( "..//..//Data//Models//Box.obj" );
 
   if( model.valid() )
   {
@@ -214,11 +207,11 @@ void init()
   }
 
   MsgCore::SmartPtr< MsgCore::Node > floor =  
-    MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\trunk\\Experimental\\Mirage\\Data\\Models\\Floor.obj" );
+    MsgDB::FileRead::readFile( "..//..//Data//Models//Floor.obj" );
 
   if( floor.valid() )
   {
-    _root->addChild( floor.get() );    
+    //_root->addChild( floor.get() );    
   }
   else
   {
@@ -292,13 +285,13 @@ void pushBack( std::list< Edge >& edges, Edge& edge )
   std::list< Edge >::iterator itr = edges.begin();
   for( itr; itr != edges.end(); ++itr )
   {
-    if( ( ( edge._vertex1 == itr->_vertex1 ) || 
-          ( edge._vertex2 == itr->_vertex1 ) ) &&
-        ( ( edge._vertex1 == itr->_vertex2 ) || 
-          ( edge._vertex2 == itr->_vertex2 ) ) )
+    if( ( ( edge._vertex1._vertexIndex == itr->_vertex1._vertexIndex ) || 
+          ( edge._vertex1._vertexIndex == itr->_vertex2._vertexIndex ) ) &&
+        ( ( edge._vertex2._vertexIndex == itr->_vertex1._vertexIndex ) || 
+          ( edge._vertex2._vertexIndex == itr->_vertex2._vertexIndex ) ) )
     {
       result = true;
-      edges.erase( itr );      
+      edges.erase( itr );    
       break;
     }
   }
@@ -306,6 +299,11 @@ void pushBack( std::list< Edge >& edges, Edge& edge )
   if( !result )
   {
     edges.push_back( edge );
+  }
+
+  if( edges.empty() )
+  {
+    std::cout << "Edges are empty: " << std::endl;
   }
 }
 
@@ -370,16 +368,8 @@ void buildShadowVolume()
 
   for( size_t index = 0; index < geodes.size(); ++index )
   { 
-    MsgCore::Geode* geode = geodes[index].get();
-
-    // Get the Model View matrix. 
-    GLdouble worldMatrix[16]; 
-
-    glGetDoublev( GL_MODELVIEW_MATRIX, worldMatrix );
-
-    // Convert into Matrix44d so that we can use it for multiplication with verticess. 
-    MsgMath::Matrix44d mat = convert( worldMatrix );
-
+    MsgCore::Geode* geode = geodes[index].get();    
+    
     if( geode ) 
     {
       std::vector< MsgCore::SmartPtr< MsgCore::Drawable > > drawables = geode->getDrawableList();
@@ -398,7 +388,7 @@ void buildShadowVolume()
           MsgCore::SmartPtr< MsgCore::Vec3Array >  vertices    = geom->vertexArray();
           MsgCore::SmartPtr< MsgCore::Vec3Array >  normals     = geom->normalArray();
           
-          MsgMath::Vec4d lightPos = MsgMath::Vec4d( _lightPosition[0], _lightPosition[1], _lightPosition[2], 1 );
+          MsgMath::Vec3d lightPos = MsgMath::Vec3d( _lightPosition[0], _lightPosition[1], _lightPosition[2] );
 
           for( size_t k = 0; k < indices->size() ; ++k ) 
           {
@@ -412,64 +402,56 @@ void buildShadowVolume()
             int ni3 = nIndices->at( k )[2];
               
             MsgMath::Vec3d vecOrig1 = vertices->at( i1 );
-            MsgMath::Vec4d vecModi1( vecOrig1[0], vecOrig1[1], vecOrig1[2], 1 );  
+            //MsgMath::Vec4d vecModi1( vecOrig1[0], vecOrig1[1], vecOrig1[2], 1 );  
 
             MsgMath::Vec3d vecOrig2 = vertices->at( i2 );
-            MsgMath::Vec4d vecModi2( vecOrig2[0], vecOrig2[1], vecOrig2[2], 1 );  
+            //MsgMath::Vec4d vecModi2( vecOrig2[0], vecOrig2[1], vecOrig2[2], 1 );  
 
             MsgMath::Vec3d vecOrig3 = vertices->at( i3 );
-            MsgMath::Vec4d vecModi3( vecOrig3[0], vecOrig3[1], vecOrig3[2], 1 );  
+            //MsgMath::Vec4d vecModi3( vecOrig3[0], vecOrig3[1], vecOrig3[2], 1 );  
 
             //MsgMath::Vec4d lightDir1 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi1 );
-            MsgMath::Vec4d lightDir1 = lightPos - vecModi1;
+            //MsgMath::Vec4d lightDir1 = lightPos - vecModi1;
+            MsgMath::Vec3d lightDir1 = lightPos - vecOrig1;
             lightDir1.normalize();
 
             //MsgMath::Vec4d lightDir2 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi2 );
-            MsgMath::Vec4d lightDir2 = lightPos - vecModi2;
+            //MsgMath::Vec4d lightDir2 = lightPos - vecModi2;
+            MsgMath::Vec3d lightDir2 = lightPos - vecOrig2;
             lightDir2.normalize();
             
             //MsgMath::Vec4d lightDir3 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi3 );;  
-            MsgMath::Vec4d lightDir3 = lightPos - vecModi3;
+            //MsgMath::Vec4d lightDir3 = lightPos - vecModi3;
+            MsgMath::Vec3d lightDir3 = lightPos - vecOrig3;
             lightDir3.normalize();
             
             MsgMath::Vec3d normal1 =  normals->at( ni1 );
             MsgMath::Vec3d normal2 =  normals->at( ni2 );
             MsgMath::Vec3d normal3 =  normals->at( ni3 );
 
-            MsgMath::Vec4d normal1Modi( normal1[0], normal1[1], normal1[2], 1 );
-            MsgMath::Vec4d normal2Modi( normal2[0], normal2[1], normal2[2], 1 );
-            MsgMath::Vec4d normal3Modi( normal3[0], normal3[1], normal3[2], 1 );
+            normal1.normalize();
+            normal2.normalize();
+            normal3.normalize();
 
-            int count = 0;
+            // Lets count how many edges( in a triangle we will have three ). 
+            int numberOfEdgesLit = 0;
 
             bool edge1Passed = false; 
 
-            if( ( normal1Modi.dot( lightDir1 ) > 0 ) && ( normal2Modi.dot( lightDir2 ) > 0 ) )
+            if( ( normal1.dot( lightDir1 ) > 0 ) && ( normal2.dot( lightDir2 ) > 0 ) )
             {
               edge1Passed = true;
             }
-          
-            if( _twoSided )
-            {
-              if( ( -normal1Modi.dot( lightDir1 ) > 0 ) && ( -normal2Modi.dot( lightDir2 ) > 0 ) )
-              {
-                edge1Passed = true;
-              }
-            }
-
-
             if( edge1Passed )
             {
               //std::cout << "Vertex 1 passed: " << std::endl;
               Vertex vertex1; 
               vertex1._vertexIndex = i1;
-              vertex1._normalIndex = i1;
-              vertex1._texCoordIndex = i1;
+              vertex1._normalIndex = ni1;              
 
               Vertex vertex2; 
               vertex2._vertexIndex = i2;
-              vertex2._normalIndex = i2;
-              vertex2._texCoordIndex = i2;
+              vertex2._normalIndex = ni2;              
 
               Edge edge; 
               edge._vertex1 = vertex1; 
@@ -480,35 +462,24 @@ void buildShadowVolume()
               pushBack( _edges, edge );
               //_edges.push_back( edge );
 
-              ++count;
+              ++numberOfEdgesLit;
             }           
 
             bool edge2Passed = false;
             
-            if( ( normal2Modi.dot( lightDir2 ) > 0 ) && ( normal3Modi.dot( lightDir3 ) > 0 ) )
+            if( ( normal2.dot( lightDir2 ) > 0 ) && ( normal3.dot( lightDir3 ) > 0 ) )
             {
               edge2Passed = true;
             }
-
-            if( _twoSided )
-            {
-              if( ( -normal2Modi.dot( lightDir2 ) > 0 ) && ( -normal3Modi.dot( lightDir3 ) > 0 ) )
-              {
-                edge2Passed = true;
-              }
-            }
-
             if( edge2Passed )
             {
               Vertex vertex1; 
               vertex1._vertexIndex = i2;
-              vertex1._normalIndex = i2;
-              vertex1._texCoordIndex = i2;
+              vertex1._normalIndex = ni2;              
 
               Vertex vertex2; 
               vertex2._vertexIndex = i3;
-              vertex2._normalIndex = i3;
-              vertex2._texCoordIndex = i3;
+              vertex2._normalIndex = ni3;              
 
               Edge edge; 
               edge._vertex1 = vertex1; 
@@ -518,35 +489,24 @@ void buildShadowVolume()
               pushBack( _edges, edge );
               //_edges.push_back( edge );
 
-              ++count;
+              ++numberOfEdgesLit;
             }
 
             bool edge3Passed = false;
 
-            if( ( normal3Modi.dot( lightDir3 ) > 0 ) && ( normal1Modi.dot( lightDir1 ) > 0 ) )  
+            if( ( normal3.dot( lightDir3 ) > 0 ) && ( normal1.dot( lightDir1 ) > 0 ) )  
             {
               edge3Passed = true;
             }
-
-            if( _twoSided )
-            {
-              if( ( -normal3Modi.dot( lightDir3 ) > 0 ) && ( -normal1Modi.dot( lightDir1 ) > 0 ) )  
-              {
-                edge3Passed = true;
-              } 
-            }
-
             if( edge3Passed )
             {
               Vertex vertex1; 
               vertex1._vertexIndex = i3;
-              vertex1._normalIndex = i3;
-              vertex1._texCoordIndex = i3;
+              vertex1._normalIndex = ni3;              
 
               Vertex vertex2; 
               vertex2._vertexIndex = i1;
-              vertex2._normalIndex = i1;
-              vertex2._texCoordIndex = i1;
+              vertex2._normalIndex = ni1;              
 
               Edge edge; 
               edge._vertex1 = vertex1; 
@@ -556,10 +516,10 @@ void buildShadowVolume()
               pushBack( _edges, edge );
               //_edges.push_back( edge );
 
-              ++count;
+              ++numberOfEdgesLit;
             }
 
-            if( count == 3 )
+            if( numberOfEdgesLit == 3 )
             {
               Triangle triangle;
               triangle._faceIndex = MsgMath::Vec3i( i1, i2, i3 );
@@ -586,27 +546,31 @@ void buildShadowVolume()
           for( jItr; jItr != _edges.end(); ++jItr )
           {            
             glPushMatrix();
-            glBegin( GL_QUADS );              
+            glBegin( GL_LINES );              
               MsgMath::Vec3d vec3d1 = vertices->at( jItr->_vertex2._vertexIndex );
               MsgMath::Vec3d vec3d2 = vertices->at( jItr->_vertex1._vertexIndex );
               
               MsgMath::Vec4d vec4d1( vec3d1[0], vec3d1[1], vec3d1[2], 1.0 );
               MsgMath::Vec4d vec4d2( vec3d2[0], vec3d2[1], vec3d2[2], 1.0 );
               
-              MsgMath::Vec4d vertex41( vec4d1[0] - lightPos[0], vec4d1[1] - lightPos[1], vec4d1[2] - lightPos[2], 0.0 );
-              vertex41 = vec4d1 + vertex41;
+              MsgMath::Vec4d vertex41( vec4d1[0] - lightPos[0], vec4d1[1] - lightPos[1], vec4d1[2] - lightPos[2], 0.0 );              
+              vertex41 = MsgMath::Vec4d( lightPos[0], lightPos[1], lightPos[2], 0.0 ) + vertex41;
               
+
               MsgMath::Vec4d vertex42( vec4d2[0] - lightPos[0], vec4d2[1] - lightPos[1], vec4d2[2] - lightPos[2], 0.0 );
-              vertex42 = vec4d2 + vertex42;
+              vertex42 = MsgMath::Vec4d( lightPos[0], lightPos[1], lightPos[2], 0.0 ) + vertex42;
 
               // Extended vertices drawn at infinity ( or at the far plane ). 
               vertex41[3] = 0.0;
               vertex42[3] = 0.0;
 
+              vertex41.normalize();
+              vertex42.normalize();
+
               glVertex4dv( vec4d1.front() );              
               glVertex4dv( vec4d2.front() );
-              glVertex4dv( vertex42.front() ); 
-              glVertex4dv( vertex41.front() );              
+              //glVertex4dv( vertex42.front() ); 
+              //glVertex4dv( vertex41.front() );              
             glEnd();                     
             glPopMatrix();            
           }
@@ -622,9 +586,9 @@ void buildShadowVolume()
           glBegin( GL_TRIANGLES );
           for( constItr = _capTriangles.begin(); constItr != _capTriangles.end(); ++constItr )
           {           
-            glVertex3dv( vertices->at( constItr->_faceIndex[0] ).front() );
+           /* glVertex3dv( vertices->at( constItr->_faceIndex[0] ).front() );
             glVertex3dv( vertices->at( constItr->_faceIndex[1] ).front() );
-            glVertex3dv( vertices->at( constItr->_faceIndex[2] ).front() );            
+            glVertex3dv( vertices->at( constItr->_faceIndex[2] ).front() );                        */
           }
           glEnd();
           glDisable( GL_POLYGON_OFFSET_FILL );  
@@ -651,7 +615,7 @@ void buildShadowVolume()
             MsgMath::Vec3d v1 = vertices->at( constItr->_faceIndex[1] );            
             MsgMath::Vec3d v2 = vertices->at( constItr->_faceIndex[2] );
 
-            if( !reverse )
+            /*if( !reverse )
             {
               glBegin( GL_TRIANGLES );  
                 glVertex4d( v0[0] + v0[0] - lightPos[0], v0[1] + v0[1]- lightPos[1], v0[2] + v0[2] - lightPos[2], 0 ); 
@@ -666,7 +630,7 @@ void buildShadowVolume()
                 glVertex4d( v1[0] + v1[0] - lightPos[0], v1[1] + v1[1]- lightPos[1], v1[2] + v1[2] - lightPos[2], 0 ); 
                 glVertex4d( v0[0] + v0[0] - lightPos[0], v0[1] + v0[1]- lightPos[1], v0[2] + v0[2] - lightPos[2], 0 );
               glEnd();
-            }
+            }*/
           }                    
           glPopMatrix();
           glEndList();
@@ -685,6 +649,8 @@ void drawShadowVolume( bool debugMode = false )
     _shadowVolLists[i] = i;
   }
 
+  glEnable( GL_DEPTH_CLAMP_NV );
+
   if( !debugMode ) 
   {
     glPushMatrix();
@@ -696,7 +662,7 @@ void drawShadowVolume( bool debugMode = false )
   {    
     // Save color, material attributes. 
     glPushAttrib( GL_LIGHTING_BIT | GL_CURRENT_BIT );    
-    
+
     glColor3f( 1.0, 0.0, 0.0 );
     glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glPushMatrix();
@@ -704,10 +670,11 @@ void drawShadowVolume( bool debugMode = false )
       glCallLists( MAX_LISTS, GL_UNSIGNED_BYTE, _shadowVolLists );
     glPopMatrix();
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );    
-    
+
     // Restore. 
     glPopAttrib();
   }
+  glDisable( GL_DEPTH_CLAMP_NV );
 }
 
 
@@ -746,6 +713,7 @@ void drawScene()
     glLightModeli( GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE );
 
     _viewer->draw();  
+    drawFloor();
 
     glDepthMask( GL_FALSE );
 
@@ -772,14 +740,14 @@ void drawScene()
     drawShadowVolume(); 
     
     glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
-    glDepthFunc( GL_EQUAL );    
+    glDepthFunc( GL_LEQUAL );    
 
     glCullFace( GL_BACK );
     glEnable( GL_LIGHT0 );
     
     glPushMatrix();    
     glLightfv( GL_LIGHT0, GL_POSITION, _lightPosition );        
-    glPopMatrix(); 
+    glPopMatrix();    
     
     glLightfv( GL_LIGHT0, GL_DIFFUSE, _lightDiffuse );
     glLightfv( GL_LIGHT0, GL_SPECULAR, _lightSpecular );  
@@ -787,6 +755,7 @@ void drawScene()
     glStencilOp( GL_KEEP, GL_KEEP, GL_INCR );
     glDepthFunc( GL_EQUAL );
     _viewer->draw(); 
+    drawFloor();
     
     glDisable( GL_BLEND );
     glDisable( GL_CULL_FACE );
@@ -842,8 +811,7 @@ void setPerspective( GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zF
 void reshape( int w, int h )
 {
   glViewport( 0, 0, w, h );
-
-  glEnable( GL_DEPTH_CLAMP_NV );
+  
   glMatrixMode( GL_PROJECTION );
   glLoadIdentity();
   
