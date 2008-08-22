@@ -141,10 +141,10 @@ void drawFloor()
 {
   glPushMatrix();
     glBegin( GL_QUADS );
-      glVertex3f( -100.0, -1.0, 100.0 );
-      glVertex3f(  100.0, -1.0, 100.0 );
-      glVertex3f(  100.0, -1.0,-100.0 );
-      glVertex3f( -100.0, -1.0,-100.0 );
+      glVertex3f( -100.0, 0.0, 100.0 );
+      glVertex3f(  100.0, 0.0, 100.0 );
+      glVertex3f(  100.0, 0.0,-100.0 );
+      glVertex3f( -100.0, 0.0,-100.0 );
     glEnd();
   glPopMatrix();
 }
@@ -182,7 +182,7 @@ void init()
 
   // Read geometry files. 
   MsgCore::SmartPtr< MsgCore::Node > model =  
-    MsgDB::FileRead::readFile( "..//..//Data//Models//sphere.obj" );
+    MsgDB::FileRead::readFile( "..//..//Data//Models//box.obj" );
 
   if( model.valid() )
   {
@@ -464,15 +464,15 @@ void buildShadowVolume()
               MsgMath::Vec3d vec3d1 = vertices->at( jItr->_vertex2._vertexIndex );
               MsgMath::Vec3d vec3d2 = vertices->at( jItr->_vertex1._vertexIndex );
               
-              MsgMath::Vec4d vec4d1( vec3d1[0], vec3d1[1], vec3d1[2], 1.0 );
-              MsgMath::Vec4d vec4d2( vec3d2[0], vec3d2[1], vec3d2[2], 1.0 );
+              MsgMath::Vec4d vec4d1( vec3d1[0], vec3d1[1], vec3d1[2], 0.0 );
+              MsgMath::Vec4d vec4d2( vec3d2[0], vec3d2[1], vec3d2[2], 0.0 );
               
               MsgMath::Vec4d vertex41( vec4d1[0] - lightPos[0], vec4d1[1] - lightPos[1], vec4d1[2] - lightPos[2], 0.0 );              
-              vertex41 =  vec4d1 + vertex41;
+              //vertex41 =  vec4d1 + vertex41;
               
 
               MsgMath::Vec4d vertex42( vec4d2[0] - lightPos[0], vec4d2[1] - lightPos[1], vec4d2[2] - lightPos[2], 0.0 );
-              vertex42 = vec4d2 + vertex42;
+              //vertex42 = vec4d2 + vertex42;
 
               // Extended vertices drawn at infinity ( or at the far plane ). 
               vertex41[3] = 0.0;
@@ -481,8 +481,8 @@ void buildShadowVolume()
               vertex41.normalize();
               vertex42.normalize();
 
-              glVertex4dv( vec4d1.front() );              
-              glVertex4dv( vec4d2.front() );
+              glVertex3dv( vec3d1.front() );              
+              glVertex3dv( vec3d2.front() );
               glVertex4dv( vertex42.front() ); 
               glVertex4dv( vertex41.front() );              
             glEnd();                     
@@ -532,9 +532,9 @@ void buildShadowVolume()
             if( !reverse )
             {
               glBegin( GL_TRIANGLES );  
-                glVertex4d( v0[0] + v0[0] - lightPos[0], v0[1] + v0[1]- lightPos[1], v0[2] + v0[2] - lightPos[2], 0 ); 
-                glVertex4d( v1[0] + v1[0] - lightPos[0], v1[1] + v1[1]- lightPos[1], v1[2] + v1[2] - lightPos[2], 0 ); 
-                glVertex4d( v2[0] + v2[0] - lightPos[0], v2[1] + v2[1]- lightPos[1], v2[2] + v2[2] - lightPos[2], 0 ); 
+                glVertex4d( v0[0] - lightPos[0], v0[1]- lightPos[1], v0[2] - lightPos[2], 0 ); 
+                glVertex4d( v1[0] - lightPos[0], v1[1]- lightPos[1], v1[2] - lightPos[2], 0 ); 
+                glVertex4d( v2[0] - lightPos[0], v2[1]- lightPos[1], v2[2] - lightPos[2], 0 ); 
               glEnd();
             }
             else
