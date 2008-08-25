@@ -262,9 +262,9 @@ namespace Msg
 		    }
 
 
-		    DATA_TYPE length()
+		    double length()
 		    {
-			    DATA_TYPE mVal( 0 );
+			    double mVal( 0 );
 
 			    for( unsigned int i = 0; i < SIZE; ++i )
 			    {
@@ -275,22 +275,41 @@ namespace Msg
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE >& normalize()
-		    {
-          DATA_TYPE val = length();          
+		    Vector< double, SIZE >& normalize()
+        {
+          double len = length();          
 
-          if( val != DATA_TYPE( 0 ) )
+          if( len != DATA_TYPE( 0 ) )
           {
             return *this;
           }
 
 		      for( size_t i=0; i < SIZE; ++i )
 		      { 
-            _data[i] = _data[i] / val;            
+            _data[i] = _data[i] / len;            
 		      }
 
           return *this;
 		    }
+
+
+        Vector< double, SIZE > normalize( Vector< DATA_TYPE, SIZE >& inVec ) 
+        {
+          Vector< double, SIZE > result;
+          double len = length();          
+
+          if( len != DATA_TYPE( 0 ) )
+          {
+            len = 1;
+          }
+
+		      for( size_t i=0; i < SIZE; ++i )
+		      { 
+            result[i] = inVec[i] / len;            
+		      }
+
+          return result;
+        }
 
 
 		    Vector< DATA_TYPE, SIZE > cross( Vector< DATA_TYPE, SIZE > vec2 )
