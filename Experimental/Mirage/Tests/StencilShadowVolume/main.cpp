@@ -156,18 +156,17 @@ void init()
 
   // @todo: Planning to perform extraction of vertices via shaders. 
   // Commented out for time being. 
-  /* 
-  _vertShader->sourceAsFile( "PositionExtrusionShader.vert" );
-  _fragShader->sourceAsFile( "PositionExtrusionShader.frag" );
+   
+  //_vertShader->sourceAsFile( "PositionExtrusionShader.vert" );
+  //_fragShader->sourceAsFile( "PositionExtrusionShader.frag" );
 
-  _vertShader->contextInit();
-  _fragShader->contextInit();
+  //_vertShader->contextInit();
+  //_fragShader->contextInit();
 
-  _extrusionProgram->attach( _vertShader.get() );
-  _extrusionProgram->attach( _fragShader.get() );
+  //_extrusionProgram->attach( _vertShader.get() );
+  //_extrusionProgram->attach( _fragShader.get() );
 
-  _extrusionProgram->link();
-  */
+  //_extrusionProgram->link();  
 
   glClearColor( 0.0, 0.0, 0.0, 1.0 );
 
@@ -181,20 +180,33 @@ void init()
   }
 
   // Read geometry files. 
-  MsgCore::SmartPtr< MsgCore::Node > model =  
+  MsgCore::SmartPtr< MsgCore::Node > model1 =  
     MsgDB::FileRead::readFile( "..//..//Data//Models//cylinder.obj" );
 
-  if( model.valid() )
+  if( model1.valid() )
   {
-    _root->addChild( model.get() );
+    _root->addChild( model1.get() );
   }
   else
   {
-    throw " Model not found error: ";
+    std::cerr << " ERROR: Model not found error: " << std::endl;
   }
 
+  MsgCore::SmartPtr< MsgCore::Node > model2 =  
+    MsgDB::FileRead::readFile( "..//..//Data//Models//cone.obj" );
+
+  if( model2.valid() )
+  {
+    _root->addChild( model2.get() );
+  }
+  else
+  {
+    std::cerr << " ERROR: Model not found error: " << std::endl;
+  }
+
+
   MsgCore::SmartPtr< MsgCore::Node > floor =  
-    MsgDB::FileRead::readFile( "..//..//Data//Models//Floor.obj" );
+    MsgDB::FileRead::readFile( "..//..//Data//Models//floor.obj" );
 
   if( floor.valid() )
   {
@@ -381,27 +393,15 @@ void buildShadowVolume()
             int ni3 = nIndices->at( k )[2];
               
             MsgMath::Vec3d vecOrig1 = vertices->at( i1 );
-            //MsgMath::Vec4d vecModi1( vecOrig1[0], vecOrig1[1], vecOrig1[2], 1 );  
-
             MsgMath::Vec3d vecOrig2 = vertices->at( i2 );
-            //MsgMath::Vec4d vecModi2( vecOrig2[0], vecOrig2[1], vecOrig2[2], 1 );  
-
-            MsgMath::Vec3d vecOrig3 = vertices->at( i3 );
-            //MsgMath::Vec4d vecModi3( vecOrig3[0], vecOrig3[1], vecOrig3[2], 1 );  
-
-            //MsgMath::Vec4d lightDir1 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi1 );
-            //MsgMath::Vec4d lightDir1 = lightPos - vecModi1;
-            MsgMath::Vec3d lightDir1 = lightPos - vecOrig1;
-            lightDir1.normalize();
-
-            //MsgMath::Vec4d lightDir2 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi2 );
-            //MsgMath::Vec4d lightDir2 = lightPos - vecModi2;
-            MsgMath::Vec3d lightDir2 = lightPos - vecOrig2;
-            lightDir2.normalize();
+            MsgMath::Vec3d vecOrig3 = vertices->at( i3 );            
             
-            //MsgMath::Vec4d lightDir3 = lightPos - MsgMath::MatrixVecOps::mult< MsgMath::Matrix44d, MsgMath::Vec4d >( mat, vecModi3 );;  
-            //MsgMath::Vec4d lightDir3 = lightPos - vecModi3;
+            MsgMath::Vec3d lightDir1 = lightPos - vecOrig1;            
+            MsgMath::Vec3d lightDir2 = lightPos - vecOrig2;            
             MsgMath::Vec3d lightDir3 = lightPos - vecOrig3;
+
+            lightDir1.normalize();
+            lightDir2.normalize();
             lightDir3.normalize();
             
             MsgMath::Vec3d normal1 =  normals->at( ni1 );
@@ -467,19 +467,8 @@ void buildShadowVolume()
               MsgMath::Vec4d vec4d1( vec3d1[0], vec3d1[1], vec3d1[2], 0.0 );
               MsgMath::Vec4d vec4d2( vec3d2[0], vec3d2[1], vec3d2[2], 0.0 );
               
-              MsgMath::Vec4d vertex41( vec4d1[0] - lightPos[0], vec4d1[1] - lightPos[1], vec4d1[2] - lightPos[2], 0.0 );              
-              //vertex41 =  vec4d1 + vertex41;
-              
-
+              MsgMath::Vec4d vertex41( vec4d1[0] - lightPos[0], vec4d1[1] - lightPos[1], vec4d1[2] - lightPos[2], 0.0 );                          
               MsgMath::Vec4d vertex42( vec4d2[0] - lightPos[0], vec4d2[1] - lightPos[1], vec4d2[2] - lightPos[2], 0.0 );
-              //vertex42 = vec4d2 + vertex42;
-
-              // Extended vertices drawn at infinity ( or at the far plane ). 
-              //vertex41[3] = 0.0;
-              //vertex42[3] = 0.0;
-
-              //vertex41.normalize();
-              //vertex42.normalize();
 
               glVertex3dv( vec3d1.front() );              
               glVertex3dv( vec3d2.front() );
@@ -534,18 +523,15 @@ void buildShadowVolume()
               glBegin( GL_TRIANGLES );  
                 glVertex4d( v0[0] - lightPos[0], v0[1]- lightPos[1], v0[2] - lightPos[2], 0 ); 
                 glVertex4d( v1[0] - lightPos[0], v1[1]- lightPos[1], v1[2] - lightPos[2], 0 ); 
-                glVertex4d( v2[0] - lightPos[0], v2[1]- lightPos[1], v2[2] - lightPos[2], 0 ); 
-                /*glVertex4d( v0[0] + v0[0] - lightPos[0], v0[1] + v0[1]- lightPos[1], v0[2] + v0[2] - lightPos[2], 0 );
-                glVertex4d( v1[0] + v1[0] - lightPos[0], v1[1] + v1[1]- lightPos[1], v1[2] + v1[2] - lightPos[2], 0 ); 
-                glVertex4d( v2[0] + v2[0] - lightPos[0], v2[1] + v2[1]- lightPos[1], v2[2] + v2[2] - lightPos[2], 0 ); */
+                glVertex4d( v2[0] - lightPos[0], v2[1]- lightPos[1], v2[2] - lightPos[2], 0 );                 
               glEnd();
             }
             else
             {
                glBegin( GL_TRIANGLES );  
-                glVertex4d( v2[0] + v2[0] - lightPos[0], v2[1] + v2[1]- lightPos[1], v2[2] + v2[2] - lightPos[2], 0 ); 
-                glVertex4d( v1[0] + v1[0] - lightPos[0], v1[1] + v1[1]- lightPos[1], v1[2] + v1[2] - lightPos[2], 0 ); 
-                glVertex4d( v0[0] + v0[0] - lightPos[0], v0[1] + v0[1]- lightPos[1], v0[2] + v0[2] - lightPos[2], 0 );
+               glVertex4d( v2[0] - lightPos[0], v2[1]- lightPos[1], v2[2] - lightPos[2], 0 );                  
+               glVertex4d( v1[0] - lightPos[0], v1[1]- lightPos[1], v1[2] - lightPos[2], 0 ); 
+               glVertex4d( v0[0] - lightPos[0], v0[1]- lightPos[1], v0[2] - lightPos[2], 0 ); 
               glEnd();
             }
           }                    
@@ -730,18 +716,13 @@ void reshape( int w, int h )
   
   glMatrixMode( GL_PROJECTION );
   glLoadIdentity();
-  
-  //gluPerspective( 45.0, ( double )w/h, 0.1, 10000.0 );
-  //glFrustum( -1.0, 1.0, -1.0, 1.0, 0.1, 10000.0 );
 
-  setPerspective( 45.0, static_cast< double >( w ) / h, 0.1, 10000.0 );
-  
+  setPerspective( 45.0, static_cast< double >( w ) / h, 0.1, 10000.0 );  
   
   double n = 0.1;
-  /*double _right = -10.0;
-  double _left =  10.0;
-  double _top =  10.0;
-  double _bottom = -10.0;*/
+
+
+  // We need to use this matrix if NVIDIA GL CLAMP extension is not available.  
 
   //GLdouble mat[] = { ( 2*n ) / ( _right-_left ),
   //                    0, 
@@ -760,12 +741,8 @@ void reshape( int w, int h )
   //                    ( -2*n ),
   //                    0
   //                  };
-
-
-
   //glMultMatrixd( mat );
 
-  //glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
   gluLookAt( 0.0, 0.0, 60.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 );
 }
