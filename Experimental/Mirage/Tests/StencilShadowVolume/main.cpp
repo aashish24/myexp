@@ -211,7 +211,7 @@ void init()
 
   if( floor.valid() )
   {
-    //_root->addChild( floor.get() );    
+    _root->addChild( floor.get() );    
   }
   else
   {
@@ -596,7 +596,7 @@ void popInfProjection()
 
 void drawShadowVolume( bool debugMode = false )
 {
-  //pushInfProjection(); 
+  pushInfProjection(); 
 
   for( size_t i=0; i < MAX_LISTS;++i )
   {
@@ -627,7 +627,7 @@ void drawShadowVolume( bool debugMode = false )
     glPopAttrib();
   }
   
-  //popInfProjection();
+  popInfProjection();
 }
 
 
@@ -666,7 +666,7 @@ void drawScene()
     glLightModeli( GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE );
 
     _viewer->draw();  
-    drawFloor();
+    //drawFloor();
 
     glDepthMask( GL_FALSE );
 
@@ -708,7 +708,7 @@ void drawScene()
     glStencilOp( GL_KEEP, GL_KEEP, GL_INCR );
     glDepthFunc( GL_EQUAL );
     _viewer->draw(); 
-    drawFloor();
+    //drawFloor();
     
     glDisable( GL_BLEND );
     glDisable( GL_CULL_FACE );
