@@ -182,7 +182,7 @@ void init()
 
   // Read geometry files. 
   MsgCore::SmartPtr< MsgCore::Node > model =  
-    MsgDB::FileRead::readFile( "..//..//Data//Models//box.obj" );
+    MsgDB::FileRead::readFile( "..//..//Data//Models//cylinder.obj" );
 
   if( model.valid() )
   {
@@ -475,11 +475,11 @@ void buildShadowVolume()
               //vertex42 = vec4d2 + vertex42;
 
               // Extended vertices drawn at infinity ( or at the far plane ). 
-              vertex41[3] = 0.0;
-              vertex42[3] = 0.0;
+              //vertex41[3] = 0.0;
+              //vertex42[3] = 0.0;
 
-              vertex41.normalize();
-              vertex42.normalize();
+              //vertex41.normalize();
+              //vertex42.normalize();
 
               glVertex3dv( vec3d1.front() );              
               glVertex3dv( vec3d2.front() );
@@ -535,6 +535,9 @@ void buildShadowVolume()
                 glVertex4d( v0[0] - lightPos[0], v0[1]- lightPos[1], v0[2] - lightPos[2], 0 ); 
                 glVertex4d( v1[0] - lightPos[0], v1[1]- lightPos[1], v1[2] - lightPos[2], 0 ); 
                 glVertex4d( v2[0] - lightPos[0], v2[1]- lightPos[1], v2[2] - lightPos[2], 0 ); 
+                /*glVertex4d( v0[0] + v0[0] - lightPos[0], v0[1] + v0[1]- lightPos[1], v0[2] + v0[2] - lightPos[2], 0 );
+                glVertex4d( v1[0] + v1[0] - lightPos[0], v1[1] + v1[1]- lightPos[1], v1[2] + v1[2] - lightPos[2], 0 ); 
+                glVertex4d( v2[0] + v2[0] - lightPos[0], v2[1] + v2[1]- lightPos[1], v2[2] + v2[2] - lightPos[2], 0 ); */
               glEnd();
             }
             else
