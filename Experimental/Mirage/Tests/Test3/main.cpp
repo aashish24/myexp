@@ -13,13 +13,15 @@
 #include "MsgCore/Viewer.h"
 
 #include "MsgDB/FileRead.h"
+#include "MsgCore/SmartPtr.h"
 
 
-using namespace Msg; 
+using namespace Msg;
+using namespace Msg::MsgCore;
 
-static MsgCore::SmartPtr< MsgCore::Group >       _root; 
-static MsgCore::SmartPtr< MsgCore::NodeVisitor > _nv;
-static MsgCore::SmartPtr< MsgCore::Viewer >      _viewer( new MsgCore::Viewer() );
+static SmartPtr< Group >       _root; 
+static SmartPtr< NodeVisitor > _nv;
+static SmartPtr< Viewer >      _viewer( new Viewer() );
 
 
 void init()
@@ -33,7 +35,7 @@ void init()
   // Initialize viewer. 
   _viewer->init();  
 
-  _root = new MsgCore::Group();
+  _root = new Group();
   SmartPtr< Node > node = MsgDB::FileRead::readFile( "E:\\aashish\\src\\osve\\trunk\\Experimental\\Mirage\\Data\\Models\\sphere.obj" );
   
   if( node.valid() )

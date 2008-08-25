@@ -2,6 +2,7 @@
 #ifndef __MSG_CORE_VIEWER_H__
 #define __MSG_CORE_VIEWER_H__
 
+#include "Export.h"
 #include "MsgCore/NodeVisitor.h"
 
 namespace Msg

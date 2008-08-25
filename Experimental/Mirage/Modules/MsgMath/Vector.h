@@ -187,7 +187,7 @@ namespace Msg
 		    Vector< DATA_TYPE, SIZE > operator+( const Vector< DATA_TYPE,SIZE >& rhs )
 		    {
 			    Vector< DATA_TYPE, SIZE > vec;
-			    for( unsigned int i=0; i<SIZE; ++i )
+			    for( unsigned int i = 0; i < SIZE; ++i )
 			    {
 				    vec[i] = _data[i] + rhs[i];
 			    }
@@ -264,14 +264,14 @@ namespace Msg
 
 		    DATA_TYPE length()
 		    {
-			    DATA_TYPE mVal = (DATA_TYPE)0;
+			    DATA_TYPE mVal( 0 );
 
-			    for( unsigned int i=0; i<SIZE; ++i )
+			    for( unsigned int i = 0; i < SIZE; ++i )
 			    {
 				    mVal = this->_data[i] * this->_data[i] + mVal;
 			    }
 
-                return sqrt( mVal );
+          return sqrt( mVal );
 		    }
 
 
@@ -279,7 +279,7 @@ namespace Msg
 		    {
           DATA_TYPE val = length();          
 
-          if( val != DATA_TYPE( 0.0 ) )
+          if( val != DATA_TYPE( 0 ) )
           {
             return *this;
           }
@@ -308,8 +308,13 @@ namespace Msg
 
 		    DATA_TYPE dot( Vector< DATA_TYPE, SIZE > vec2 )
 		    {
-			    DATA_TYPE resultVal;
-			    resultVal = _data[0] * vec2[0] + _data[1] * vec2[1] + _data[2] * vec2[2];
+			    DATA_TYPE resultVal( 0 );
+			    
+          for( size_t i=0; i < SIZE; ++i )
+		      { 
+            resultVal = _data[i] * vec2[i] + resultVal;
+		      }
+          
 			    return resultVal;
 		    }
 

@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Lib: Msg"
+	Name="Msg"
 	ProjectGUID="{44940738-98ED-45C6-8943-389ACB8E18C4}"
 	RootNamespace="oge"
 	Keyword="ManagedCProj"
@@ -42,9 +42,10 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\Modules;.\..\Smtl\Modules;$(GLEW_INC_DIR)"
-				PreprocessorDefinitions="WIN32;_DEBUG"
-				BasicRuntimeChecks="3"
+				AdditionalIncludeDirectories=".\Modules;$(GLEW_INC_DIR)"
+				PreprocessorDefinitions="WIN32;NDEBUG;MSG_BUILD_SHARED_LIBRARY;"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="0"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -62,7 +63,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(NoInherit) opengl32.lib glew32d.lib"
-				OutputFile="..\bin\Msgd.dll"
+				OutputFile="..\bin\Msg.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
 				GenerateDebugInformation="true"
@@ -123,12 +124,14 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\Modules;.\..\Smtl\Modules;$(GLEW_INC_DIR)"
-				PreprocessorDefinitions="WIN32;NDEBUG"
+				AdditionalIncludeDirectories=".\Modules;$(GLEW_INC_DIR)"
+				PreprocessorDefinitions="WIN32;NDEBUG;MSG_BUILD_SHARED_LIBRARY;"
+				MinimalRebuild="true"
+				ExceptionHandling="1"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				DebugInformationFormat="3"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -141,11 +144,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glew32.lib $(NOINHERIT)"
+				AdditionalDependencies="$(NoInherit) opengl32.lib glew32.lib "
 				OutputFile="..\bin\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
 				GenerateDebugInformation="true"
+				SubSystem="1"
 				ImportLibrary="$(TargetDir)$(TargetName).lib"
 				TargetMachine="1"
 			/>

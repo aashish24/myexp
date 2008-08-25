@@ -17,7 +17,7 @@ namespace Msg
 	namespace MsgCore
 	{
 		template< class T, unsigned int SIZE >
-		class MSG_EXPORT Array : public Object, public std::vector< T >
+		class Array : public Object, public std::vector< T >
 		{
 			public:
 			  
