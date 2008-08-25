@@ -420,18 +420,23 @@ void buildShadowVolume()
 
               edge1._vertex1._vertexIndex = i1; 
               edge1._vertex2._vertexIndex = i2;
-              edgeInv1._vertex1._vertexIndex = i2; 
+
+              edgeInv1._vertex1._vertexIndex = i2;               
               edgeInv1._vertex2._vertexIndex = i1;
+
 
               edge2._vertex1._vertexIndex = i2; 
               edge2._vertex2._vertexIndex = i3;
+              
               edgeInv2._vertex1._vertexIndex = i3; 
               edgeInv2._vertex2._vertexIndex = i2;
 
               edge3._vertex1._vertexIndex = i3; 
               edge3._vertex2._vertexIndex = i1;
+              
               edgeInv3._vertex1._vertexIndex = i1; 
               edgeInv3._vertex2._vertexIndex = i3;
+
 
               addEdgeToSillhouette( _edges, edge1, edgeInv1 );
               addEdgeToSillhouette( _edges, edge2, edgeInv2 );
@@ -547,8 +552,11 @@ void buildShadowVolume()
 
 void pushInfProjection() 
 {
+  // If we have this NVidia specific extension then enable it.
+  // Once we dont drawing shadow volume disable it. 
   if( _glDepthClampNV )
   {
+    glEnable( GL_DEPTH_CLAMP_NV );
     return;
   }
 
@@ -582,10 +590,12 @@ void pushInfProjection()
   glMatrixMode( GL_MODELVIEW );
 }
 
+
 void popInfProjection()
 {
   if( _glDepthClampNV )
   {
+    glDisable( GL_DEPTH_CLAMP_NV );
     return;
   }
 
@@ -602,7 +612,7 @@ void drawShadowVolume( bool debugMode = false )
   {
     _shadowVolLists[i] = i;
   }
-
+ 
   if( !debugMode ) 
   {
     glPushMatrix();
@@ -717,8 +727,7 @@ void drawScene()
     glDepthMask( GL_TRUE );
   }
   else
-  {
-    //drawFloor();
+  {    
     drawShadowVolume( _debugMode );
   }
 
@@ -776,24 +785,7 @@ void reshape( int w, int h )
 
 
 void idle()
-{
-  const static float distance = -20.0f;
-  static float angle = 0.0f; 
-
-  if( !_pause )
-  {
-    _lightPosition[0] = distance * cos( angle ); 
-    _lightPosition[2] = -60.0 + distance * sin( angle );
-
-    angle = angle + 0.01f;
-
-    if( angle > 360.0f ) 
-    {
-      angle = 0.0f;
-    }
-
-    glutPostRedisplay();
-  }
+{ 
 }
 
 
@@ -871,12 +863,12 @@ int main( int argc, char** argv )
 
   glutCreateWindow( "StencilShadowVolume: Author Aashish Chaudhary" ); 
 
-   // GLEW init for FBOs
+  // GLEW init for FBOs
   GLenum err = glewInit();
 
   if( GLEW_OK == err ) 
   {
-    if( glewIsSupported( "GL_DEPTH_CLAMP_NV" ) )
+    if( GLEW_NV_depth_clamp )
     {
       std::cout << " Nvidia GL_DEPTH_CLAMP_NV is available: " << std::endl;
       _glDepthClampNV = true;
@@ -889,7 +881,7 @@ int main( int argc, char** argv )
   {
     // Problem: glewInit failed, something is seriously wrong. 
     std::cerr << " GLEW Error: " <<  glewGetErrorString( err ) << std::endl;
-  }
+  }  
 
   init(); 
 
