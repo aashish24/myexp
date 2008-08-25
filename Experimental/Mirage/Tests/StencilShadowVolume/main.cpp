@@ -42,6 +42,7 @@ enum Mode
 static bool                               _twoSided         = false;
 static bool                               _pause            = true;
 static bool                               _debugMode        = false;
+static bool                               _glDepthClampNV   = false;
 
 static Mode                               _mode             ( MOVE_LIGHT );
 
@@ -544,14 +545,63 @@ void buildShadowVolume()
 }
 
 
+void pushInfProjection() 
+{
+  if( _glDepthClampNV )
+  {
+    return;
+  }
+
+  // We need to use this matrix if NVIDIA GL CLAMP extension is not available.  
+  glMatrixMode( GL_PROJECTION );
+  glPushMatrix();
+  glLoadIdentity();
+
+  // Value for the near plane. 
+  double _near = 1.0;
+
+  GLdouble mat[] = { ( 2 * _near ) / ( _right-_left ),
+                      0, 
+                      0, 
+                      0, 
+                      0, 
+                      ( 2 * _near ) / ( _top-_bottom ), 
+                      0, 
+                      0, 
+                      ( _right+_left ) / ( _right-_left ),
+                      ( _top+_bottom ) / ( _top-_bottom ), 
+                      -1,
+                      -1,
+                      0, 
+                      0, 
+                      ( -2 * _near ),
+                      0
+                    };
+  glMultMatrixd( mat );  
+
+  glMatrixMode( GL_MODELVIEW );
+}
+
+void popInfProjection()
+{
+  if( _glDepthClampNV )
+  {
+    return;
+  }
+
+  glMatrixMode( GL_PROJECTION );
+  glPopMatrix();
+}
+
+
 void drawShadowVolume( bool debugMode = false )
 {
+  //pushInfProjection(); 
+
   for( size_t i=0; i < MAX_LISTS;++i )
   {
     _shadowVolLists[i] = i;
   }
-
-  glEnable( GL_DEPTH_CLAMP_NV );
 
   if( !debugMode ) 
   {
@@ -576,7 +626,8 @@ void drawShadowVolume( bool debugMode = false )
     // Restore. 
     glPopAttrib();
   }
-  glDisable( GL_DEPTH_CLAMP_NV );
+  
+  //popInfProjection();
 }
 
 
@@ -718,30 +769,6 @@ void reshape( int w, int h )
   glLoadIdentity();
 
   setPerspective( 45.0, static_cast< double >( w ) / h, 0.1, 10000.0 );  
-  
-  double n = 0.1;
-
-
-  // We need to use this matrix if NVIDIA GL CLAMP extension is not available.  
-
-  //GLdouble mat[] = { ( 2*n ) / ( _right-_left ),
-  //                    0, 
-  //                    0, 
-  //                    0, 
-  //                    0, 
-  //                    ( 2*n ) / ( _top-_bottom ), 
-  //                    0, 
-  //                    0, 
-  //                    ( _right+_left ) / ( _right-_left ),
-  //                    ( _top+_bottom ) / ( _top-_bottom ), 
-  //                    -1,
-  //                    -1,
-  //                    0, 
-  //                    0, 
-  //                    ( -2*n ),
-  //                    0
-  //                  };
-  //glMultMatrixd( mat );
 
   glLoadIdentity();
   gluLookAt( 0.0, 0.0, 60.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 );
@@ -843,6 +870,26 @@ int main( int argc, char** argv )
   glutInitWindowSize( 800, 800 );
 
   glutCreateWindow( "StencilShadowVolume: Author Aashish Chaudhary" ); 
+
+   // GLEW init for FBOs
+  GLenum err = glewInit();
+
+  if( GLEW_OK == err ) 
+  {
+    if( glewIsSupported( "GL_DEPTH_CLAMP_NV" ) )
+    {
+      std::cout << " Nvidia GL_DEPTH_CLAMP_NV is available: " << std::endl;
+      _glDepthClampNV = true;
+    }
+    else
+    {
+    }
+  }
+  else
+  {
+    // Problem: glewInit failed, something is seriously wrong. 
+    std::cerr << " GLEW Error: " <<  glewGetErrorString( err ) << std::endl;
+  }
 
   init(); 
 

@@ -61,8 +61,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="glew32d.lib"
 				OutputFile="..\..\..\bin\$(ProjectName)d.exe"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
