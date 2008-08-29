@@ -14,7 +14,7 @@
       #if  defined ( MSG_BUILD_SHARED_LIBRARY )
 	      #define MSG_EXPORT __declspec(dllexport)
       #else
-        #define MSG_EXPORT __declspec(dllexport)      
+        #define MSG_EXPORT __declspec(dllimport)      
       #endif    
     #endif
 #endif
