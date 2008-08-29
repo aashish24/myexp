@@ -1,4 +1,7 @@
 
+///////////////////////////////////////////////
+// @Author: Paul & Vinay 
+
 #include "MsgCore/Viewer.h"
 
 namespace Msg
