@@ -100,6 +100,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
+			ManagedExtensions="0"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -119,8 +120,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="3"
 				AdditionalIncludeDirectories="..\..\Modules;$(GLEW_INC_DIR)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE; WIN32_LEAN_AND_MEAN;"
 				MinimalRebuild="true"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -139,8 +141,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="glew32.lib Msg.lib"
+				OutputFile="..\..\..\bin\$(ProjectName).exe"
 				LinkIncremental="1"
-				GenerateDebugInformation="true"
+				AdditionalLibraryDirectories="$(GLEW_BIN_DIR);..\..\..\bin;"
+				GenerateDebugInformation="false"
 				SubSystem="1"
 				OptimizeReferences="0"
 				EnableCOMDATFolding="0"

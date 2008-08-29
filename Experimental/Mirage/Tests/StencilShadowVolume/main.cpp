@@ -1,6 +1,18 @@
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// @Author: 
+// Aashish Chaudhary
+//
+// @Note: 
+// Implementation of Shadow Volume algorithm as presented in the paper ... 
+// 
+///////////////////////////////////////////////////////////////////////////////
+
+
 #ifdef _MSC_VER
   #include <windows.h>
+  #include <cstdlib>
 #endif
 
 #include "GL/glew.h"
@@ -43,6 +55,7 @@ static bool                               _twoSided         = false;
 static bool                               _pause            = true;
 static bool                               _debugMode        = false;
 static bool                               _glDepthClampNV   = false;
+static bool                               _buildShadowVol   = true;
 
 static Mode                               _mode             ( MOVE_LIGHT );
 
@@ -56,7 +69,7 @@ static const GLfloat                      _lightAmbient[]   = { 0.1f, 0.1f, 0.1f
 static const GLfloat                      _lightDiffuse[]   = { 5.0f, 0.0f, 0.0f, 1.0f };
 static const GLfloat                      _lightSpecular[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
 
-static GLfloat                            _lightPosition[]  = { 0.0f, 0.0f, 0.0f, 1.0 };
+static GLfloat                            _lightPosition[]  = { -10.0f, 5.0f, 20.0f, 1.0 };
 
 GLdouble                                  _top;
 GLdouble                                  _bottom;
@@ -182,7 +195,7 @@ void init()
 
   // Read geometry files. 
   MsgCore::SmartPtr< MsgCore::Node > model1 =  
-    MsgDB::FileRead::readFile( "..//..//Data//Models//cylinder.obj" );
+    MsgDB::FileRead::readFile( "..//..//Data//Models//bunnyUVW.obj" );
 
   if( model1.valid() )
   {
@@ -463,10 +476,9 @@ void buildShadowVolume()
           
           // Shadow volume ( Not including front or back cap. ). 
           glNewList( _shadowVol + ( index * 3 ), GL_COMPILE );
+          glBegin( GL_QUADS );              
           for( jItr; jItr != _edges.end(); ++jItr )
-          {            
-            glPushMatrix();
-            glBegin( GL_QUADS );              
+          { 
               MsgMath::Vec3d vec3d1 = vertices->at( jItr->_vertex2._vertexIndex );
               MsgMath::Vec3d vec3d2 = vertices->at( jItr->_vertex1._vertexIndex );
               
@@ -479,16 +491,14 @@ void buildShadowVolume()
               glVertex3dv( vec3d1.front() );              
               glVertex3dv( vec3d2.front() );
               glVertex4dv( vertex42.front() ); 
-              glVertex4dv( vertex41.front() );              
-            glEnd();                     
-            glPopMatrix();            
+              glVertex4dv( vertex41.front() );   
           }
+          glEnd();                               
           glEndList();
 
         
           // Front cap. 
-          glNewList( _shadowVol + ( index * 3 + 1 ), GL_COMPILE );
-          glPushMatrix();
+          glNewList( _shadowVol + ( index * 3 + 1 ), GL_COMPILE );          
           std::vector< Triangle >::const_iterator constItr;
           glEnable( GL_POLYGON_OFFSET_FILL );
           glPolygonOffset( 0.0f, 100.0f );
@@ -500,13 +510,11 @@ void buildShadowVolume()
             glVertex3dv( vertices->at( constItr->_faceIndex[2] ).front() );                        
           }
           glEnd();
-          glDisable( GL_POLYGON_OFFSET_FILL );  
-          glPopMatrix();
+          glDisable( GL_POLYGON_OFFSET_FILL );            
           glEndList();
 
           // Back cap. 
-          glNewList( _shadowVol + ( index * 3 + 2 ), GL_COMPILE );
-          glPushMatrix();     
+          glNewList( _shadowVol + ( index * 3 + 2 ), GL_COMPILE );          
           
           // What happens when our occluder is just a plane. 
           // In that case out front facing polygons will be back facing as 
@@ -518,6 +526,7 @@ void buildShadowVolume()
             reverse = true;
           }
 
+          glBegin( GL_TRIANGLES );  
           for( constItr = _backTriangles.begin(); constItr != _backTriangles.end(); ++constItr )
           {           
             MsgMath::Vec3d v0 = vertices->at( constItr->_faceIndex[0] );            
@@ -525,23 +534,19 @@ void buildShadowVolume()
             MsgMath::Vec3d v2 = vertices->at( constItr->_faceIndex[2] );
 
             if( !reverse )
-            {
-              glBegin( GL_TRIANGLES );  
+            {              
                 glVertex4d( v0[0] - lightPos[0], v0[1]- lightPos[1], v0[2] - lightPos[2], 0 ); 
                 glVertex4d( v1[0] - lightPos[0], v1[1]- lightPos[1], v1[2] - lightPos[2], 0 ); 
-                glVertex4d( v2[0] - lightPos[0], v2[1]- lightPos[1], v2[2] - lightPos[2], 0 );                 
-              glEnd();
+                glVertex4d( v2[0] - lightPos[0], v2[1]- lightPos[1], v2[2] - lightPos[2], 0 );                               
             }
             else
-            {
-               glBegin( GL_TRIANGLES );  
+            {               
                glVertex4d( v2[0] - lightPos[0], v2[1]- lightPos[1], v2[2] - lightPos[2], 0 );                  
                glVertex4d( v1[0] - lightPos[0], v1[1]- lightPos[1], v1[2] - lightPos[2], 0 ); 
-               glVertex4d( v0[0] - lightPos[0], v0[1]- lightPos[1], v0[2] - lightPos[2], 0 ); 
-              glEnd();
+               glVertex4d( v0[0] - lightPos[0], v0[1]- lightPos[1], v0[2] - lightPos[2], 0 );              
             }
-          }                    
-          glPopMatrix();
+          }                 
+          glEnd();          
           glEndList();
         } // End if( geom  )
       } // End for( size_t i = 0; i < drawables.size(); ++i ) 
@@ -659,9 +664,12 @@ void drawScene()
   drawShadowVolume();
 
 #else
-  glDisable( GL_LIGHTING );
+  glDisable( GL_LIGHTING );  
 
-  buildShadowVolume();
+  if( _buildShadowVol ) 
+  {
+    buildShadowVolume();
+  }
 
   if( !_debugMode )
   {
@@ -675,8 +683,7 @@ void drawScene()
     glLightModelfv( GL_LIGHT_MODEL_AMBIENT, _lightAmbient );    
     glLightModeli( GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE );
 
-    _viewer->draw();  
-    //drawFloor();
+    _viewer->draw();      
 
     glDepthMask( GL_FALSE );
 
@@ -718,7 +725,6 @@ void drawScene()
     glStencilOp( GL_KEEP, GL_KEEP, GL_INCR );
     glDepthFunc( GL_EQUAL );
     _viewer->draw(); 
-    //drawFloor();
     
     glDisable( GL_BLEND );
     glDisable( GL_CULL_FACE );
@@ -796,6 +802,11 @@ void keyboard( unsigned char key, int x, int y )
     _debugMode = !_debugMode;
   }
 
+  if( key == 'b' )
+  {
+    _buildShadowVol = !_buildShadowVol;
+  }
+
   switch( _mode )
   {
     case MOVE_LIGHT: 
@@ -844,9 +855,9 @@ void keyboard( unsigned char key, int x, int y )
     }
   };  
 
-  if( key == 'b' ){ _mode = MOVE_LIGHT; }
-  if( key == 'n' ){ _mode = NAVIGATE; }
-  if( key == 'm' ){ _mode = ANIMATE; }
+  if( key == 'l' ){ _mode = MOVE_LIGHT; }
+  if( key == 'm' ){ _mode = NAVIGATE; }
+  if( key == 'o' ){ _mode = ANIMATE; }
 
 
   glutPostRedisplay();
