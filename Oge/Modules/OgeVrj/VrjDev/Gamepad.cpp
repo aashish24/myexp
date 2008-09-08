@@ -1,0 +1,198 @@
+
+#include "Oge/OgeVrj/VrjDev/Gamepad.h"
+
+// @Temp
+#include "Oge/OgeVrj/VrjCore/VrjDigitalInput.h"
+#include "Oge/OgeVrj/VrjCore/VrjAnalogInput.h"
+#include "Oge/OgeVrj/VrjCore/VrjPositionInput.h"
+
+#include <ostream>
+
+namespace Oge
+{
+  namespace OgeVrj
+  {
+    namespace VrjDev
+    {
+      Gamepad::Gamepad( const unsigned int& digitalsCount, 
+                        const unsigned int& analogsCount, 
+                        const unsigned int& positionsCount ) :
+        _start            ( false ),
+        _digitalInputs    ( digitalsCount ), 
+        _analogInputs     ( analogsCount ), 
+        _positionInputs   ( positionsCount )
+      {
+        init();
+      }
+
+
+      Gamepad::~Gamepad()
+      {
+      }
+
+
+      void Gamepad::init()
+      {
+        // Can we query hardware here? 
+        // Also we test123need to have default config that program will look for. 
+        config( "" );
+      }
+
+
+      void Gamepad::config( const std::string& config )
+      {
+        // Will tell how many digital and analog inputs are there.
+        // Settings for each of the input
+        // How do we do the binding? 
+        // We need to know what kind of interface they are using? 
+        // such as VRJ or SDL. Is it worth the effort? 
+	std::cout << "Initializing digital inputs: " << std::endl; 
+        for( size_t i = 0; i < _digitalInputs.size(); ++i )
+        {
+          std::ostringstream oStrStream1, oStrStream2; 
+          oStrStream1 << i << std::endl;
+          oStrStream2 << "Gamepad01Button0" << i+1 << "\0";
+
+          _digitalInputs[ i ] = new OgeVrj::VrjCore::VrjDigitalInput( oStrStream1.str(), oStrStream2.str().c_str() ) ;
+          _digitalInputs[ i ]->init();
+        }
+
+        // Analog inputs.
+	std::cout << "Initializing analog inputs: " << std::endl; 
+        for( size_t i = 0; i < _analogInputs.size(); ++i )
+        {
+          std::ostringstream oStrStream1, oStrStream2; 
+          oStrStream1 << i << std::endl;
+          oStrStream2 << "Gamepad01Analog0" << i + 1 << "\0";
+
+          _analogInputs[ i ] = new OgeVrj::VrjCore::VrjAnalogInput( oStrStream1.str(), oStrStream2.str().c_str() );
+	  std::cout << "Initializing analog inputs: " << i << std::endl; 
+          _analogInputs[ i ]->init();
+        }
+
+        // Position inputs. 
+        for( size_t i = 0; i < _positionInputs.size(); ++i )
+        {
+          std::ostringstream oStrStream1, oStrStream2; 
+          oStrStream1 << i << std::endl;
+          oStrStream2 << "Gamepad01Position" << i + 1 << "\0";
+
+          _positionInputs[ i ] = new OgeVrj::VrjCore::VrjPositionInput( oStrStream1.str(), oStrStream2.str().c_str() );
+          _positionInputs[ i ]->init();          
+        }
+      }
+
+
+      void Gamepad::start()
+      {
+        _start = true;
+      }
+
+
+      void Gamepad::update()
+      {
+        InputsItr itr;
+        for( itr  = _digitalInputs.begin(); itr != _digitalInputs.end(); ++itr )
+        {
+           ( *itr )->call( ( *itr )->getEvent() );          
+        }
+
+        if( _start  )
+        {
+          for( itr  = _analogInputs.begin(); itr != _analogInputs.end(); ++itr )
+          {
+            ( *itr )->call( ( *itr )->getEvent() );
+          }
+
+          for( itr  = _positionInputs.begin(); itr != _positionInputs.end(); ++itr )
+          {
+            ( *itr )->call( ( *itr )->getEvent() );          
+          }
+        }
+      }
+
+
+      OgeBase::OgeInterfaces::IInput* Gamepad::getInput( IInputDevice::InputType type, const unsigned int& index ) const
+      {
+        switch( type )
+        {
+          case IInputDevice::Digital :
+          {
+            if( index < _digitalInputs.size() ) { return _digitalInputs.at( index ).get(); }
+            else { return 0x00; }
+          }
+          case IInputDevice::Analog : 
+          {
+            if( index < _analogInputs.size() ) { return _analogInputs.at( index ).get(); }
+            else { return 0x00; }
+          }
+          case IInputDevice::Position : 
+          {
+            if( index < _positionInputs.size() ){ return _positionInputs.at( index ).get(); }
+            else { return 0x00; }
+          }
+          default:
+          {
+            return 0x00;
+          }
+        };
+      }
+
+
+      Gamepad::IInputs& Gamepad::getInputs( IInputDevice::InputType type )
+      {
+        switch( type )
+        {
+          case IInputDevice::Digital : 
+          {
+            return _digitalInputs;
+          }
+          case IInputDevice::Analog:
+          {
+            return _analogInputs;
+          }
+          case IInputDevice::Position: 
+          {
+            return _positionInputs;
+          }          
+          default :
+          {
+            throw "Error 1127219602 InputType not recognized: ";
+          }
+        };
+      }
+    
+
+      unsigned int Gamepad::getCount( IInputDevice::InputType type ) const 
+      {
+        switch( type )
+        {
+          case Digital: 
+          {
+            return _digitalInputs.size();
+          }
+          case Analog:
+          {
+            return _analogInputs.size();
+          }
+          case Position:
+          {
+            return _positionInputs.size();
+          }
+          default: 
+          {
+            // Error message here... 
+            return 0;
+          }
+        };
+      }
+
+
+      OgeBase::OgeInterfaces::IUnknown* Gamepad::queryInterface( const unsigned long& iid )
+      {
+        return 0x00;
+      }
+    }
+  }
+}
+
