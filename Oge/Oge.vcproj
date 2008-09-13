@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="cppdom_d-0_7_10.lib osgd.lib osgUtild.lib osgViewerd.lib opengl32.lib"
-				OutputFile=".\bin\Oge_d.dll"
+				OutputFile="$(MSG_ROOT_DIR)\$(ProjectName)d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(CPPDOM_LIB_DIR);$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);"
 				GenerateDebugInformation="true"
@@ -140,7 +140,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="osg.lib osgUtil.lib osgViewer.lib opengl32.lib"
-				OutputFile="./bin/Oge.dll"
+				OutputFile="$(MSG_ROOT_DIR)\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OSG_LIB_DIR);$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);"
 				GenerateDebugInformation="true"

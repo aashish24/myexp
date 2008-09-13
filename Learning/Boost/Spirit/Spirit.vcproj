@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="StencilShadowVolume"
-	ProjectGUID="{0C42F1D5-77F4-4A2B-8EAB-163A4376C933}"
-	RootNamespace="Mirage_Test4"
+	Name="Spirit"
+	ProjectGUID="{B7D39375-4D9C-4EB9-9AB7-43FA5EB4CF3E}"
+	RootNamespace="Spirit"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -40,10 +40,10 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Modules;$(GLEW_INC_DIR)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="$(BOOST_INC_DIR)"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
-				BasicRuntimeChecks="0"
+				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -61,10 +61,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glew32d.lib"
-				OutputFile="$(MSG_ROOT_DIR)\$(ProjectName)d.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
+				AdditionalLibraryDirectories="$(BOOST_LIB_DIR)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -119,14 +117,12 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\Modules;$(GLEW_INC_DIR)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				MinimalRebuild="true"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="0"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -139,12 +135,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(MSG_ROOT_DIR)\$(ProjectName).exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
-				OptimizeReferences="0"
-				EnableCOMDATFolding="0"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
 				TargetMachine="1"
 			/>
 			<Tool
