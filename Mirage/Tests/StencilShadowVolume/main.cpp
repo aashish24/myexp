@@ -180,9 +180,21 @@ void init()
     std::exit( 0 );
   }
 
+  // Get the path from the environment. 
+  char* msgRootDir = getenv( "MSG_ROOT_DIR" );
+  
+  // If we dont have this environment variable defined then curret directory
+  // if msgRotoDir. 
+  if( !msgRootDir )
+  {
+    msgRootDir = ".";
+  }
+
+  std::string lookUpPath = std::string( msgRootDir );
+
   // Read geometry files. 
   MsgCore::SmartPtr< MsgCore::Node > model1 =  
-    MsgDB::FileRead::readFile( "..//..//Data//Models//cylinder.obj" );
+    MsgDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cylinder.obj" ) );
 
   if( model1.valid() )
   {
@@ -194,7 +206,7 @@ void init()
   }
 
   MsgCore::SmartPtr< MsgCore::Node > model2 =  
-    MsgDB::FileRead::readFile( "..//..//Data//Models//cone.obj" );
+    MsgDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cone.obj" ) );
 
   if( model2.valid() )
   {
@@ -207,7 +219,7 @@ void init()
 
 
   MsgCore::SmartPtr< MsgCore::Node > floor =  
-    MsgDB::FileRead::readFile( "..//..//Data//Models//floor.obj" );
+    MsgDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Floor.obj" ) );
 
   if( floor.valid() )
   {
