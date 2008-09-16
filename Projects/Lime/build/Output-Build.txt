@@ -1,0 +1,6 @@
+1>------ Build started: Project: Lime, Configuration: Debug Win32 ------
+1>Linking...
+1>LINK : fatal error LNK1104: cannot open file 'libjpeg.lib;'
+1>Build log was saved at "file://e:\aashish\src\lime\trunk\build\Debug\BuildLog.htm"
+1>Lime - 1 error(s), 0 warning(s)
+========== Build: 0 succeeded, 1 failed, 0 up-to-date, 0 skipped ==========
