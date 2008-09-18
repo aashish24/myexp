@@ -238,7 +238,15 @@ bool
     {
         pMat   = _pMatMgr->getMaterial(matName);
         
-        retVal = (pMat);
+        //retVal = (pMat);
+        if( pMat )
+        {
+            retVal = true;
+        }
+        else
+        {
+            retVal = false;
+        }
     }
     
     return retVal;

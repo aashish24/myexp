@@ -89,7 +89,7 @@ void
         OSG::FieldContainerRefPtr pAPFC(_pObjCache->getObject("_internal_mModelN"));
         OSG::NodeRefPtr           pAP  ( OSG::dynamic_pointer_cast< OSG::Node >( pAPFC ) );
         
-        if(pAP)
+        if(!pAP)
         {
             vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                 << "ExtrusionManager::apply: Could not find object ["
@@ -127,7 +127,7 @@ void
             OSG::FieldContainerRefPtr pCPFC(_pObjCache->getObject(*cpIt)                 );
             OSG::NodeRefPtr           pCP  (OSG::dynamic_pointer_cast< OSG::Node >(pCPFC));
             
-            if(pCP)
+            if(!pCP)
             {
                 vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                     << "ExtrusionManager::apply: Could not find control point"
@@ -139,7 +139,7 @@ void
             // check if the control point placeholder is a geometry
             OSG::GeometryRefPtr pCPGeo( dynamic_cast<OSG::Geometry *>(pCP->getCore()));
             
-            if(pCPGeo)
+            if(!pCPGeo)
             {
                 vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                     << "ExtrusionManager::apply: Control point is not a"
@@ -152,7 +152,7 @@ void
             OSG::NodeRefPtr      pCPMTrafoN(pCP->getParent());
             OSG::TransformRefPtr pCPMTrafo (dynamic_cast<OSG::Transform *>(pCPMTrafoN->getCore()));
             
-            if(pCPMTrafo)
+            if(!pCPMTrafo)
             {
                 vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                     << "ExtrusionManager::apply: Control point does not have "
@@ -165,7 +165,7 @@ void
             OSG::NodeRefPtr       pCPNTrafoN(pCPMTrafoN->getParent());
             OSG::TransformRefPtr  pCPNTrafo (dynamic_cast<OSG::Transform *>(pCPNTrafoN->getCore()));
             
-            if(pCPNTrafo)
+            if(!pCPNTrafo)
             {
                 vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                     << "ExtrusionManager::apply: Control point does not have "
@@ -400,7 +400,7 @@ void
     OSG::GeoVec3fPropertyRefPtr   pNorm =
         dynamic_cast<OSG::GeoVec3fProperty *>(info._pGeo->getNormals());
 
-    if(pPos || pNorm)
+    if(!pPos || !pNorm)
     {
         vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
             << "ExtrusionManager::updateVertices: Positions or normals for "
