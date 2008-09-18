@@ -5,7 +5,9 @@
 #include <NamedObjectCache.h>
 
 // OpenSG includes
-#include <OpenSG/OSGSimpleAttachments.h>
+//#include <OpenSG/OSGSimpleAttachments.h>
+#include <OpenSG/OSGTypedGeoIntegralProperty.h>
+#include <OpenSG/OSGTypedGeoVectorProperty.h>
 
 // boost includes
 #include <boost/lexical_cast.hpp>
@@ -85,9 +87,9 @@ void
         // find the placeholder object in the scene
 //        OSG::FieldContainerRefPtr pAPFC(_pObjCache->getObject(emIt->first));
         OSG::FieldContainerRefPtr pAPFC(_pObjCache->getObject("_internal_mModelN"));
-        OSG::NodeRefPtr           pAP  (OSG::NodePtr::dcast(pAPFC.get()));
+        OSG::NodeRefPtr           pAP  ( OSG::dynamic_pointer_cast< OSG::Node >( pAPFC ) );
         
-        if(pAP == OSG::NullFC)
+        if(pAP)
         {
             vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                 << "ExtrusionManager::apply: Could not find object ["
@@ -122,10 +124,10 @@ void
         for(; cpIt != cpEnd; ++cpIt)
         {
             // get control point placeholder object
-            OSG::FieldContainerRefPtr pCPFC(_pObjCache->getObject(*cpIt)    );
-            OSG::NodeRefPtr           pCP  (OSG::NodePtr::dcast(pCPFC.get()));
+            OSG::FieldContainerRefPtr pCPFC(_pObjCache->getObject(*cpIt)                 );
+            OSG::NodeRefPtr           pCP  (OSG::dynamic_pointer_cast< OSG::Node >(pCPFC));
             
-            if(pCP == OSG::NullFC)
+            if(pCP)
             {
                 vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                     << "ExtrusionManager::apply: Could not find control point"
@@ -135,9 +137,9 @@ void
             }
             
             // check if the control point placeholder is a geometry
-            OSG::GeometryRefPtr pCPGeo(OSG::GeometryPtr::dcast(pCP->getCore()));
+            OSG::GeometryRefPtr pCPGeo( dynamic_cast<OSG::Geometry *>(pCP->getCore()));
             
-            if(pCPGeo == OSG::NullFC)
+            if(pCPGeo)
             {
                 vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                     << "ExtrusionManager::apply: Control point is not a"
@@ -148,10 +150,9 @@ void
             
             // obtain the mesh transform parent of the control point
             OSG::NodeRefPtr      pCPMTrafoN(pCP->getParent());
-            OSG::TransformRefPtr pCPMTrafo (
-                OSG::TransformPtr::dcast(pCPMTrafoN->getCore()));
+            OSG::TransformRefPtr pCPMTrafo (dynamic_cast<OSG::Transform *>(pCPMTrafoN->getCore()));
             
-            if(pCPMTrafo == OSG::NullFC)
+            if(pCPMTrafo)
             {
                 vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                     << "ExtrusionManager::apply: Control point does not have "
@@ -162,10 +163,9 @@ void
 
             // obtain the node transform parent of the control point
             OSG::NodeRefPtr       pCPNTrafoN(pCPMTrafoN->getParent());
-            OSG::TransformRefPtr  pCPNTrafo (
-                OSG::TransformPtr::dcast(pCPNTrafoN->getCore()));
+            OSG::TransformRefPtr  pCPNTrafo (dynamic_cast<OSG::Transform *>(pCPNTrafoN->getCore()));
             
-            if(pCPNTrafo == OSG::NullFC)
+            if(pCPNTrafo)
             {
                 vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                     << "ExtrusionManager::apply: Control point does not have "
@@ -179,19 +179,19 @@ void
             OSG::TransformRefPtr pBBoxTrafo (OSG::Transform::create());
             
             OSG::Pnt3f bbCenter;
-            pCP->getVolume(true).getCenter(bbCenter);
+            pCP->getVolume().getCenter(bbCenter);
             
-            OSG::beginEditCP(pBBoxTrafo, OSG::Transform::MatrixFieldMask);
-                pBBoxTrafo->getMatrix().setTranslate(bbCenter.subZero());
-            OSG::endEditCP  (pBBoxTrafo, OSG::Transform::MatrixFieldMask);
+            //OSG::beginEditCP(pBBoxTrafo, OSG::Transform::MatrixFieldMask);
+                pBBoxTrafo->editMatrix().setTranslate(bbCenter.subZero());
+            //OSG::endEditCP  (pBBoxTrafo, OSG::Transform::MatrixFieldMask);
             
-            OSG::beginEditCP(pBBoxTrafoN, OSG::Node::ChildrenFieldMask);
+            //OSG::beginEditCP(pBBoxTrafoN, OSG::Node::ChildrenFieldMask);
                 pBBoxTrafoN->setCore(pBBoxTrafo);
-            OSG::endEditCP  (pBBoxTrafoN, OSG::Node::ChildrenFieldMask);
+            //OSG::endEditCP  (pBBoxTrafoN, OSG::Node::ChildrenFieldMask);
             
-            OSG::beginEditCP(pCPMTrafoN, OSG::Node::ChildrenFieldMask);
+            //OSG::beginEditCP(pCPMTrafoN, OSG::Node::ChildrenFieldMask);
                 pCPMTrafoN->addChild(pBBoxTrafoN);
-            OSG::endEditCP  (pCPMTrafoN, OSG::Node::ChildrenFieldMask);
+            //OSG::endEditCP  (pCPMTrafoN, OSG::Node::ChildrenFieldMask);
             
             // store the transforms on top of the cp
             info._cpBBoxTrans.push_back(pBBoxTrafo);
@@ -199,35 +199,36 @@ void
             info._cpNodeTrans.push_back(pCPNTrafo );
             
             // remove the control point geometry
-            OSG::beginEditCP(pCPMTrafoN, OSG::Node::ChildrenFieldMask);
+            //OSG::beginEditCP(pCPMTrafoN, OSG::Node::ChildrenFieldMask);
                 pCPMTrafoN->subChild(pCP);
-            OSG::endEditCP  (pCPMTrafoN, OSG::Node::ChildrenFieldMask);
+            //OSG::endEditCP  (pCPMTrafoN, OSG::Node::ChildrenFieldMask);
         }
         
         // replace attach point geometry
-//        OSG::beginEditCP(pAP, OSG::Node::CoreFieldMask);
+//        //OSG::beginEditCP(pAP, OSG::Node::CoreFieldMask);
 //            pAP->setCore(info._pGeo);
-//        OSG::endEditCP  (pAP, OSG::Node::CoreFieldMask);
+//        //OSG::endEditCP  (pAP, OSG::Node::CoreFieldMask);
 
         OSG::NodeRefPtr pGeoN(OSG::Node::create());
-        OSG::beginEditCP(pGeoN);
+        //OSG::beginEditCP(pGeoN);
             pGeoN->setCore(info._pGeo);
-        OSG::endEditCP  (pGeoN);
+        //OSG::endEditCP  (pGeoN);
 
-        OSG::setName(pGeoN, emIt->first);
+        // @todo: Find Alternate function. 
+        //OSG::setName(pGeoN, emIt->first);
 
-        OSG::beginEditCP(pAP);
+        //OSG::beginEditCP(pAP);
             pAP->addChild(pGeoN);
-        OSG::endEditCP  (pAP);
+        //OSG::endEditCP  (pAP);
 
         // remove placeholder geometry
         OSG::FieldContainerRefPtr pPHFC    (_pObjCache->getObject(emIt->first));
-        OSG::NodeRefPtr           pPH      (OSG::NodePtr::dcast(pPHFC.get()));
+        OSG::NodeRefPtr           pPH      (OSG::dynamic_pointer_cast<OSG::Node>(pPHFC));
         OSG::NodeRefPtr           pPHParent(pPH->getParent());
 
-        OSG::beginEditCP(pPHParent);
+        //OSG::beginEditCP(pPHParent);
             pPHParent->subChild(pPH);
-        OSG::endEditCP  (pPHParent);
+        //OSG::endEditCP  (pPHParent);
     }
 }
 
@@ -269,17 +270,18 @@ void
         if(eiIt == eiEnd)
             continue;
         
-        OSG::GeoPTypesUI8Ptr    pTypes = OSG::GeoPTypesUI8Ptr   ::dcast(eiIt->second._pGeo->getTypes    ());
-        OSG::GeoPLengthsUI32Ptr pLen   = OSG::GeoPLengthsUI32Ptr::dcast(eiIt->second._pGeo->getLengths  ());
-        OSG::GeoIndicesUI32Ptr  pInd   = OSG::GeoIndicesUI32Ptr ::dcast(eiIt->second._pGeo->getIndices  ());
-        OSG::GeoPositions3fPtr  pPos   = OSG::GeoPositions3fPtr ::dcast(eiIt->second._pGeo->getPositions());
-        OSG::GeoNormals3fPtr    pNorms = OSG::GeoNormals3fPtr   ::dcast(eiIt->second._pGeo->getNormals  ());
+        OSG::GeoUInt8PropertyRefPtr  pTypes = dynamic_cast<OSG::GeoUInt8Property *>(eiIt->second._pGeo->getTypes    ());
+        OSG::GeoUInt32PropertyRefPtr pLen   = dynamic_cast<OSG::GeoUInt32Property *>(eiIt->second._pGeo->getLengths  ());
+        OSG::GeoUInt32PropertyRefPtr pInd   = dynamic_cast<OSG::GeoUInt32Property *>(eiIt->second._pGeo->getIndices  ());
+        OSG::GeoPnt3fPropertyRefPtr  pPos   = dynamic_cast<OSG::GeoPnt3fProperty  *>(eiIt->second._pGeo->getPositions());
+        OSG::GeoVec3fPropertyRefPtr  pNorms = dynamic_cast<OSG::GeoVec3fProperty  *>(eiIt->second._pGeo->getNormals  ());
+        //OSG::GeoVec3fPropertyRefPtr pNorms = dynamic_cast<OSG::GeoVec3fProperty *>(
         
-        OSG::GeoPTypesUI8   ::StoredFieldType *pT = pTypes->getFieldPtr();
-        OSG::GeoPLengthsUI32::StoredFieldType *pL = pLen  ->getFieldPtr();
-        OSG::GeoIndicesUI32 ::StoredFieldType *pI = pInd  ->getFieldPtr();
-        OSG::GeoPositions3f ::StoredFieldType *pP = pPos  ->getFieldPtr();
-        OSG::GeoNormals3f   ::StoredFieldType *pN = pNorms->getFieldPtr();
+        OSG::GeoUInt8Property ::StoredFieldType *pT = pTypes->editFieldPtr();
+        OSG::GeoUInt32Property::StoredFieldType *pL = pLen  ->editFieldPtr();
+        OSG::GeoUInt32Property::StoredFieldType *pI = pInd  ->editFieldPtr();
+        OSG::GeoPnt3fProperty ::StoredFieldType *pP = pPos  ->editFieldPtr();
+        OSG::GeoVec3fProperty ::StoredFieldType *pN = pNorms->editFieldPtr();
         
         os << "\n Types [";
         
@@ -326,20 +328,20 @@ void
     ExtrusionManager::constructGeo(
         ExtrusionDesc const &desc, ExtrusionInfo &info)
 {
-    OSG::GeoPTypesUI8Ptr    pTypes = OSG::GeoPTypesUI8   ::create();
-    OSG::GeoPLengthsUI32Ptr pLen   = OSG::GeoPLengthsUI32::create();
-    OSG::GeoIndicesUI32Ptr  pInd   = OSG::GeoIndicesUI32 ::create();
+    OSG::GeoUInt8PropertyRefPtr  pTypes = OSG::GeoPTypesUI8   ::create();
+    OSG::GeoUInt32PropertyRefPtr pLen   = OSG::GeoPLengthsUI32::create();
+    OSG::GeoUInt32PropertyRefPtr pInd   = OSG::GeoIndicesUI32 ::create();
     
     OSG::UInt32 sizeXS    = desc._crossSectionSamples.size();
     OSG::UInt32 sizeSpine = desc._spineSamples       .size();
     
-    OSG::beginEditCP(pTypes);
-    OSG::beginEditCP(pLen  );
-    OSG::beginEditCP(pInd  );
+    //OSG::beginEditCP(pTypes);
+    //OSG::beginEditCP(pLen  );
+    //OSG::beginEditCP(pInd  );
     
-    OSG::GeoPTypesUI8   ::StoredFieldType *pT = pTypes->getFieldPtr();
-    OSG::GeoPLengthsUI32::StoredFieldType *pL = pLen  ->getFieldPtr();
-    OSG::GeoIndicesUI32 ::StoredFieldType *pI = pInd  ->getFieldPtr();
+    OSG::GeoUInt8Property ::StoredFieldType *pT = pTypes->editFieldPtr();
+    OSG::GeoUInt32Property::StoredFieldType *pL = pLen  ->editFieldPtr();
+    OSG::GeoUInt32Property::StoredFieldType *pI = pInd  ->editFieldPtr();
     
     pT->reserve( sizeXS - 1                   );
     pL->reserve( sizeXS - 1                   );
@@ -361,31 +363,31 @@ void
         }
     }
     
-    OSG::endEditCP(pTypes);
-    OSG::endEditCP(pLen  );
-    OSG::endEditCP(pInd  );
+    //OSG::endEditCP(pTypes);
+    //OSG::endEditCP(pLen  );
+    //OSG::endEditCP(pInd  );
     
-    OSG::GeoPositions3fPtr pPos  = OSG::GeoPositions3f::create();
-    OSG::GeoNormals3fPtr   pNorm = OSG::GeoNormals3f  ::create();
+    OSG::GeoPnt3fPropertyRefPtr pPos  = OSG::GeoPnt3fProperty::create();
+    OSG::GeoVec3fPropertyRefPtr pNorm = OSG::GeoVec3fProperty::create();
     
-    OSG::beginEditCP(pPos);
+    //OSG::beginEditCP(pPos);
         pPos->resize(sizeXS * sizeSpine);
-    OSG::endEditCP(pPos);
+    //OSG::endEditCP(pPos);
     
-    OSG::beginEditCP(pNorm);
+    //OSG::beginEditCP(pNorm);
         pNorm->resize(sizeXS * sizeSpine);
-    OSG::endEditCP(pNorm);
+    //OSG::endEditCP(pNorm);
     
     info._pGeo = OSG::Geometry::create();
     
-    OSG::beginEditCP(info._pGeo);
+    //OSG::beginEditCP(info._pGeo);
         info._pGeo->setDlistCache(false);
         info._pGeo->setTypes    (pTypes);
         info._pGeo->setLengths  (pLen  );
         info._pGeo->setPositions(pPos  );
         info._pGeo->setNormals  (pNorm );
         info._pGeo->setIndices  (pInd  );
-    OSG::endEditCP  (info._pGeo);
+    //OSG::endEditCP  (info._pGeo);
 }
 
 void
@@ -393,12 +395,12 @@ void
         ExtrusionDesc const &desc, ExtrusionInfo &info)
 {
     // get the position and normal storage
-    OSG::GeoPositions3fPtr pPos  =
-        OSG::GeoPositions3fPtr::dcast(info._pGeo->getPositions());
-    OSG::GeoNormals3fPtr   pNorm =
-        OSG::GeoNormals3fPtr  ::dcast(info._pGeo->getNormals  ());
+    OSG::GeoPnt3fPropertyRefPtr pPos  =
+        dynamic_cast<OSG::GeoPnt3fProperty *>(info._pGeo->getPositions());
+    OSG::GeoVec3fPropertyRefPtr   pNorm =
+        dynamic_cast<OSG::GeoVec3fProperty *>(info._pGeo->getNormals());
 
-    if(pPos == OSG::NullFC || pNorm == OSG::NullFC)
+    if(pPos || pNorm)
     {
         vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
             << "ExtrusionManager::updateVertices: Positions or normals for "
@@ -407,8 +409,8 @@ void
         return;
     }
 
-    OSG::GeoPositions3f::StoredFieldType *pP = pPos ->getFieldPtr();
-    OSG::GeoNormals3f  ::StoredFieldType *pN = pNorm->getFieldPtr();
+    OSG::GeoPnt3fProperty::StoredFieldType *pP = pPos ->editFieldPtr();
+    OSG::GeoVec3fProperty::StoredFieldType *pN = pNorm->editFieldPtr();
 
     // evaluate the cross section
     std::vector<OSG::Pnt2f> xsPnts (desc._crossSectionSamples.size());
@@ -427,16 +429,16 @@ void
         OSG::Matrix const &bboxMat = info._cpBBoxTrans[i]->getMatrix();
 
         OSG::Pnt3f p(0.0, 0.0, 0.0);
-        bboxMat.mult(p);
-        meshMat.mult(p);
-        nodeMat.mult(p);
+        bboxMat.mult(p,p);
+        meshMat.mult(p,p);
+        nodeMat.mult(p,p);
                
         spineCP.push_back(p);
     }
         
     // calculate positions/normals at spine sample points
-    OSG::beginEditCP(pPos );
-    OSG::beginEditCP(pNorm);
+    //OSG::beginEditCP(pPos );
+    //OSG::beginEditCP(pNorm);
     
     for(OSG::UInt32 i = 0, spSize = desc._spineSamples.size(); i < spSize; ++i)
     {
@@ -465,8 +467,8 @@ void
             OSG::Vec3f xsNorm3(xsTangs[j][1], - xsTangs[j][0], 0.0);
         
             // transform to local coordinate system
-            posMat .mult(xsPnt3 );
-            normMat.mult(xsNorm3);
+            posMat .mult(xsPnt3, xsPnt3);
+            normMat.mult(xsNorm3, xsNorm3);
             
             xsPnt3 += pnt.subZero();
                         
@@ -476,8 +478,8 @@ void
         }
     }
     
-    OSG::endEditCP(pPos );
-    OSG::endEditCP(pNorm);
+    //OSG::endEditCP(pPos );
+    //OSG::endEditCP(pNorm);
 }
 
 

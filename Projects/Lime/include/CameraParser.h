@@ -124,7 +124,7 @@ inline void
     CameraBuilder<IteratorTypeT>::endAnim(
         IteratorTypeT begin, IteratorTypeT end)
 {
-    for(unsigned int i = 0; i < KeyframeAnimationDesc::numTracksDesc; ++i)
+    for(unsigned int i = 0; i < KeyframeAnimationDesc::numTracks; ++i)
     {
         if(_camStore.back()._animTracks[i]._keyFrames.size() > 0)
             return;

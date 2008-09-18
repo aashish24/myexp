@@ -111,7 +111,7 @@ NodePtr OHFSceneFileType::read(std::istream &is, const Char8 *) const
             
         
     OHF::LHierarchyInfo hinfo;
-    for ( unsigned int i=0;i<scene.GetPrimitiveCount();i++)
+    for (uint i=0;i<scene.GetPrimitiveCount();i++)
     {
         hinfo = scene.GetHierarchyInfo(i);    
         short int obj_hierarchy = hinfo.m_hierarchy;

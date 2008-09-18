@@ -6,7 +6,7 @@
 #include <OpenSG/OSGAction.h>
 #include <OpenSG/OSGFieldContainer.h>
 #include <OpenSG/OSGNode.h>
-#include <OpenSG/OSGSimpleAttachments.h>
+//#include <OpenSG/OSGSimpleAttachments.h>
 
 // std library includes
 #include <iosfwd>
@@ -28,8 +28,8 @@ class NamedObjectCache
     /* Setup                                                                 */
     /*=======================================================================*/
              
-    OSG::NodePtr getRoot(void                    ) const;
-    void         setRoot(OSG::NodePtr const &root);
+    OSG::NodeRefPtr           getRoot(void                    ) const;
+    void                      setRoot(OSG::NodeRefPtr const &root);
     
     /*=======================================================================*/
     /* Cache access                                                          */
@@ -49,9 +49,9 @@ class NamedObjectCache
     void dump(std::ostream &os) const;
     
   private:  
-    OSG::Action::ResultE traverseEnter(OSG::NodePtr& node);
+    OSG::Action::ResultE traverseEnter(OSG::NodeRefPtr& node);
     
-    OSG::NodePtr _root;
+    OSG::NodeRefPtr _root;
     ObjectMap    _objMap;
 };
 

@@ -26,21 +26,21 @@ class OpenSGNavigatorAdapter : public NavigatorAdapterBase
     /*=======================================================================*/
     /* Access                                                                */
     
-    OSG::TransformPtr const &getTransform(void) const;
-    void                     setTransform(OSG::TransformPtr const &transform);
+    OSG::TransformRefPtr const &getTransform(void) const;
+    void                     setTransform(OSG::TransformRefPtr const &transform);
     
   private:
-    OSG::TransformPtr mTransform;
+    OSG::TransformRefPtr mTransform;
 };
 
-inline OSG::TransformPtr const &
+inline OSG::TransformRefPtr const &
 OpenSGNavigatorAdapter::getTransform(void) const
 {
     return mTransform;
 }
 
 inline void
-OpenSGNavigatorAdapter::setTransform(OSG::TransformPtr const &transform)
+OpenSGNavigatorAdapter::setTransform(OSG::TransformRefPtr const &transform)
 {
     mTransform = transform;
 }

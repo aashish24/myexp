@@ -84,7 +84,7 @@ void
 void CameraNavigator::setToKeyframeI(unsigned int const keyIndex)
 {
 	if (mAnimDesc){
-		double tvalues[KeyframeAnimationDesc::numTracksDesc];
+		double tvalues[KeyframeAnimationDesc::numTracks];
 
 		//Only do translation and rotation animation
 		for (unsigned int i = 0; i < KeyframeAnimationDesc::TRACK_SCALE_X; i++){			
@@ -121,7 +121,7 @@ void
 {	
 	
 	if (mAnimDesc){
-		double tvalues[KeyframeAnimationDesc::numTracksDesc];
+		double tvalues[KeyframeAnimationDesc::numTracks];
 
 		//Only do translation and rotation animation
 		for (unsigned int i = 0; i < KeyframeAnimationDesc::TRACK_SCALE_X; i++){			

@@ -173,7 +173,7 @@ const TextureDesc&
 /*===========================================================================*/
 /* KeyframeAnimationDesc                                                     */
 
-//unsigned int const KeyframeAnimationDesc::numTracksDesc;
+unsigned int const KeyframeAnimationDesc::numTracks;
 
 void
     KeyframeAnimationDesc::Keyframe::dump(std::ostream &os) const
@@ -187,7 +187,7 @@ void
 
 	KeyframeAnimationDesc::KeyframeAnimationDesc(void)
 {
-	for (unsigned int i=0; i < numTracksDesc; i++){
+	for (unsigned int i=0; i < numTracks; i++){
 		TrackInfo& ttrack =  _animTracks[i];
 		ttrack._name = trackName(static_cast<TrackTypeE>(i));
 		ttrack._lastKeyf = -1;
@@ -208,7 +208,7 @@ void
     
     Inherited::dump(os);
     
-    for (unsigned int i=0; i < numTracksDesc; i++){
+    for (unsigned int i=0; i < numTracks; i++){
     	const TrackInfo& ttrack =  _animTracks[i];
     	os << std::endl << ttrack._name << std::endl;
     	for (unsigned int j=0; j < ttrack._keyFrames.size(); j++){

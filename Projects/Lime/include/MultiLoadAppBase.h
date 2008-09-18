@@ -37,7 +37,8 @@
 #include <iomanip>
 /*-----------------------------Juggler includes-------------------------------*/
 #include <vrj/vrjConfig.h>
-#include <vrj/Draw/OpenSG/OpenSGApp.h>
+#include "OpenSG2App.h"
+//#include <vrj/Draw/OpenSG/OpenSGApp.h>
 #include <vrj/Draw/OGL/GlContextData.h>
 #include <vrj/Kernel/Kernel.h>
 #include <vrj/Display/Projection.h>
@@ -103,10 +104,10 @@ namespace bpo = boost::program_options;
  *  command line.
  *  ===========================================================================
  */
-class MultiLoadAppBase : public vrj::OpenSGApp
+class MultiLoadAppBase : public vrj::OpenSG2App
 {
   public:
-    typedef vrj::OpenSGApp Inherited;
+    typedef vrj::OpenSG2App   Inherited;
     typedef MultiLoadAppBase  Self;
     
     /*=======================================================================*/
@@ -167,9 +168,6 @@ class MultiLoadAppBase : public vrj::OpenSGApp
         OSG::TransformRefPtr    pModelTrans;
     
         OSG::NodeRefPtr         pModelN;
-        OSG::NodeRefPtr         pLight0BeaconN;
-        OSG::TransformRefPtr    pLight0Beacon;
-    
     
         // Lib3ds scene elements and connection to OpenSG
         Lib3dsFile             *pLFile;
@@ -227,8 +225,8 @@ class MultiLoadAppBase : public vrj::OpenSGApp
     /* Scene Handling                                                        */
     /*=======================================================================*/
     
-    virtual OSG::NodePtr getScene    (void);
-    virtual OSG::NodePtr getModelNode(void) const;
+    virtual OSG::Node*      getScene    (void);
+    virtual OSG::NodeRefPtr getModelNode(void) const;
     
     virtual void         switchScene (int index);
     
@@ -316,7 +314,7 @@ class MultiLoadAppBase : public vrj::OpenSGApp
     ShaderManager                     *pShaderManager;
     TextureManager                    *pTexManager;
     std::vector<std::string>           mMatFiles;
-    MaterialManager          		  *pMatManager;   
+    MaterialManager        		        *pMatManager;   
  
     SceneOptionsList                   mSceneOptions;    
     SceneDataList                      mSceneData;
@@ -358,23 +356,23 @@ class MultiLoadAppBase : public vrj::OpenSGApp
 
 /*! Returns the root of the active scene, or OSG::NullFC
  */
-inline OSG::NodePtr
+inline OSG::Node*
     MultiLoadAppBase::getScene(void)
 {
-    OSG::NodePtr pScene;
+    OSG::NodeRefPtr pScene;
     
     if(mActiveSceneData != NULL)
         pScene = mActiveSceneData->pRootN;
     
-    return pScene;
+    return pScene.get();
 }
 
 /*! Returns the root of the model for the active scene, or OSG::NullFC
  */
-inline OSG::NodePtr
+inline OSG::NodeRefPtr
     MultiLoadAppBase::getModelNode(void) const
 {
-    OSG::NodePtr pModel;
+    OSG::NodeRefPtr pModel;
     
     if(mActiveSceneData != NULL)
         pModel = mActiveSceneData->pModelN;

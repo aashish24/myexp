@@ -79,14 +79,16 @@ class MaterialBinder
     void dump(std::ostream &os);
     
   private:
-    void bindMaterialDrawable(std::string const        &objName,
-                              OSG::MaterialDrawablePtr  pMatDraw );
-    void bindMaterialGroup   (std::string const        &objName,
-                              OSG::MaterialGroupPtr     pMatGroup);
-    bool findMaterial        (std::string const        &objName,
-                              OSG::MaterialRefPtr      &pMat,
-                              MaterialDesc const      *&pMatDesc,
-                              std::string              &matName  );
+    void bindMaterialDrawable(std::string const             &objName,
+                              OSG::MaterialDrawableRefPtr  pMatDraw );
+
+    void bindMaterialGroup   (std::string const             &objName,
+                              OSG::MaterialGroupRefPtr      pMatGroup);
+
+    bool findMaterial        (std::string const             &objName,
+                              OSG::MaterialRefPtr           &pMat,
+                              MaterialDesc const            *&pMatDesc,
+                              std::string                   &matName  );
   
     MaterialManager  const *_pMatMgr;
     NamedObjectCache const *_pObjCache;

@@ -53,27 +53,27 @@ void
             << omIt->first << "].\n"
             << vprDEBUG_FLUSH;
     
-        OSG::FieldContainerPtr pObj  = omIt->second;
-        OSG::NodePtr           pNode = OSG::NodePtr    ::dcast(pObj);
-        OSG::NodeCorePtr       pCore = OSG::NodeCorePtr::dcast(pObj);
+        OSG::FieldContainerRefPtr pObj  = omIt->second;
+        OSG::NodeRefPtr           pNode = OSG::dynamic_pointer_cast<OSG::Node>(pObj);
+        OSG::NodeCoreRefPtr       pCore = OSG::dynamic_pointer_cast<OSG::Node>(pObj);
         
-        if(pNode != OSG::NullFC && OSG::getName(pNode->getCore()) == NULL)
+        if(pNode && OSG::getName(pNode->getCore()) == NULL)
             pCore = pNode->getCore();
         
-        if(pCore != OSG::NullFC)
+        if(pCore)
         {
-            OSG::MaterialDrawablePtr pMatDraw  =
-                OSG::MaterialDrawablePtr::dcast(pCore);
-            OSG::MaterialGroupPtr    pMatGroup =
-                OSG::MaterialGroupPtr   ::dcast(pCore);
+            OSG::MaterialDrawableRefPtr pMatDraw  =
+                OSG::dynamic_pointer_cast<OSG::MaterialDrawable>(pCore);
+            OSG::MaterialGroupRefPtr    pMatGroup =
+              OSG::dynamic_pointer_cast<OSG::MaterialGroup>(pCore);
                 
-            if(pMatDraw != OSG::NullFC)
+            if(pMatDraw)
             {
                 bindMaterialDrawable(omIt->first, pMatDraw);
                 
                 continue;
             }   
-            else if(pMatGroup != OSG::NullFC)
+            else if(pMatGroup)
             {
                 bindMaterialGroup(omIt->first, pMatGroup);
                 
@@ -107,23 +107,23 @@ void
             
         OSG::MaterialRefPtr pMat = _pMatMgr->getMaterial(matName);
         
-        if(pMat != OSG::NullFC)
+        if(pMat)
         {
-            OSG::FieldContainerPtr pObj  = omIt->second;
-            OSG::NodePtr           pNode = OSG::NodePtr    ::dcast(pObj);
-            OSG::NodeCorePtr       pCore = OSG::NodeCorePtr::dcast(pObj);
+            OSG::FieldContainerRefPtr pObj  = omIt->second;
+            OSG::NodeRefPtr           pNode = OSG::dynamic_pointer_cast<OSG::Node>(pObj);
+            OSG::NodeCoreRefPtr       pCore = OSG::dynamic_pointer_cast<OSG::NodeCore>(pObj);
             
-            if(pNode != OSG::NullFC && OSG::getName(pNode->getCore()) == NULL)
+            if(pNode && OSG::getName(pNode->getCore()) == NULL)
                 pCore = pNode->getCore();
             
-            if(pCore != OSG::NullFC)
+            if(pCore)
             {
-                OSG::MaterialDrawablePtr pMatDraw  =
-                    OSG::MaterialDrawablePtr::dcast(pObj);
-                OSG::MaterialGroupPtr    pMatGroup =
-                    OSG::MaterialGroupPtr   ::dcast(pObj);
+                OSG::MaterialDrawableRefPtr pMatDraw  =
+                    OSG::dynamic_pointer_cast<OSG::MaterialDrawable>(pObj);
+                OSG::MaterialGroupRefPtr    pMatGroup =
+                    OSG::dynamic_pointer_cast<OSG::MaterialGroup>(pObj);
                     
-                if(pMatDraw != OSG::NullFC)
+                if(pMatDraw)
                 {
                     vprDEBUG(vprDBG_ALL, vprDBG_VERB_LVL)
                         << "MaterialBinder::apply: "
@@ -131,12 +131,12 @@ void
                         << matName << "].\n"
                         << vprDEBUG_FLUSH;
                 
-                    beginEditCP(pMatDraw);
+                    //beginEditCP(pMatDraw);
                         pMatDraw->setMaterial(pMat);
-                    endEditCP  (pMatDraw);
+                    //endEditCP  (pMatDraw);
                 }
                 
-                if(pMatGroup != OSG::NullFC)
+                if(pMatGroup)
                 {
                     vprDEBUG(vprDBG_ALL, vprDBG_VERB_LVL)
                         << "MaterialBinder::apply: "
@@ -144,9 +144,9 @@ void
                         << matName << "].\n"
                         << vprDEBUG_FLUSH;
                 
-                    beginEditCP(pMatGroup);
+                    //beginEditCP(pMatGroup);
                         pMatGroup->setMaterial(pMat);
-                    endEditCP  (pMatGroup);
+                    //endEditCP  (pMatGroup);
                 }
             }
         }
@@ -238,7 +238,7 @@ bool
     {
         pMat   = _pMatMgr->getMaterial(matName);
         
-        retVal = (pMat != OSG::NullFC);
+        retVal = (pMat);
     }
     
     return retVal;
@@ -312,13 +312,13 @@ void
 
 void
     MaterialBinder::bindMaterialDrawable(
-        std::string const &objNameStr, OSG::MaterialDrawablePtr pMatDraw)
+        std::string const &objNameStr, OSG::MaterialDrawableRefPtr pMatDraw)
 {
     OSG::MaterialRefPtr  pMat;
     MaterialDesc const  *pMatDesc;
     std::string          matName;
      
-    if(findMaterial(objNameStr, pMat, pMatDesc, matName) && pMat != OSG::NullFC)
+    if(findMaterial(objNameStr, pMat, pMatDesc, matName) && pMat)
     {
         vprDEBUG(vprDBG_ALL, vprDBG_VERB_LVL)
             << "MaterialBinder::bindMaterialDrawable: "
@@ -355,20 +355,20 @@ void
             OSG::GeoTexCoords2f::StoredFieldType::iterator tcIt  = pTC->begin();
             OSG::GeoTexCoords2f::StoredFieldType::iterator tcEnd = pTC->end  ();
             
-            OSG::beginEditCP(pTexCoords);
+            OSG:://beginEditCP(pTexCoords);
             for(; tcIt != tcEnd; ++tcIt)
             {
                 (*tcIt)[0] = factorX * (*tcIt)[0];
                 (*tcIt)[1] = factorY * (*tcIt)[1];
             }
-            OSG::endEditCP(pTexCoords);
+            OSG:://endEditCP(pTexCoords);
         }
 #endif
         
         // set the material
-        beginEditCP(pMatDraw);
+        //beginEditCP(pMatDraw);
             pMatDraw->setMaterial(pMat);
-        endEditCP  (pMatDraw);
+        //endEditCP  (pMatDraw);
     }
     else
     {
@@ -381,7 +381,7 @@ void
 
 void
     MaterialBinder::bindMaterialGroup(
-        std::string const &objNameStr, OSG::MaterialGroupPtr pMatGroup)
+        std::string const &objNameStr, OSG::MaterialGroupRefPtr pMatGroup)
 {
     OSG::MaterialRefPtr  pMat;
     MaterialDesc const  *pMatDesc;
@@ -395,9 +395,9 @@ void
             << matName << "].\n"
             << vprDEBUG_FLUSH;
     
-        beginEditCP(pMatGroup);
+        //beginEditCP(pMatGroup);
             pMatGroup->setMaterial(pMat);
-        endEditCP  (pMatGroup);
+        //endEditCP  (pMatGroup);
     }
     else
     {
@@ -433,7 +433,7 @@ bool
             pMatDesc = _pMatMgr->getMaterialDesc(bmIt->second);
             matName  = bmIt->second;
             
-            if(pMat != OSG::NullFC)
+            if(pMat)
             {
                 retVal = true;
                 break;

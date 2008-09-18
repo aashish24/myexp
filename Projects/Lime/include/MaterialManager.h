@@ -3,7 +3,7 @@
 #define _MATERIALMANAGER_H_
 
 #include <Descriptors.h>
-#include <OpenSGVectorInput.h>
+//#include <OpenSGVectorInput.h>
 
 #include <map>
 #include <iosfwd>
@@ -141,9 +141,9 @@ inline void
     
     for(; shlIt != shlEnd; ++shlIt)
     {
-        OSG::beginEditCP((*shlIt), OSG::ShaderParameterChunk::ParametersFieldMask);
+        //OSG::beginEditCP((*shlIt), OSG::ShaderParameterChunk::ParametersFieldMask);
             (*shlIt)->setUniformParameter(name.c_str(), val);
-        OSG::endEditCP  ((*shlIt), OSG::ShaderParameterChunk::ParametersFieldMask);
+        //OSG::endEditCP  ((*shlIt), OSG::ShaderParameterChunk::ParametersFieldMask);
     }
 }
 
@@ -156,9 +156,9 @@ inline void
     
     for(; shlIt != shlEnd; ++shlIt)
     {
-        OSG::beginEditCP((*shlIt), OSG::ShaderParameterChunk::ParametersFieldMask);
+        //OSG::beginEditCP((*shlIt), OSG::ShaderParameterChunk::ParametersFieldMask);
             (*shlIt)->setUniformParameter(name.c_str(), val);
-        OSG::endEditCP  ((*shlIt), OSG::ShaderParameterChunk::ParametersFieldMask);
+        //OSG::endEditCP  ((*shlIt), OSG::ShaderParameterChunk::ParametersFieldMask);
     }
 }
 
@@ -180,9 +180,9 @@ inline void
                 << val << "].\n"
                 << vprDEBUG_FLUSH;
                 
-            OSG::beginEditCP(pSHL);
+            //OSG::beginEditCP(pSHL);
                 pSHL->setUniformParameter(pDesc->_name.c_str(), val);
-            OSG::endEditCP(pSHL);
+            //OSG::endEditCP(pSHL);
         } 
         catch(boost::bad_lexical_cast &e)
         {
@@ -232,9 +232,9 @@ inline void
             return;
         }
         
-        OSG::beginEditCP(pSHL);
+        //OSG::beginEditCP(pSHL);
             pSHL->setUniformParameter(pDesc->_name.c_str(), mval);
-        OSG::endEditCP(pSHL);
+        //OSG::endEditCP(pSHL);
     }
 }
 

@@ -139,7 +139,6 @@ void
     
     FileItType fileEnd = fileIt.make_end();
     
-    // @Todo: Why we need to use bs::epsilon parser here?? 
     bs::parse_info<FileItType> info = 
         parse(fileIt, fileEnd, matGrammar >> bs::eps_p, bs::space_p);
         
@@ -224,12 +223,12 @@ OSG::MaterialRefPtr
             << "]\n"
             << vprDEBUG_FLUSH;
     
-        beginEditCP(pSHL);
+        //OSG::beginEditCP(pSHL);
             pSHL->setVertexProgram  (*pVProg);
             pSHL->setFragmentProgram(*pFProg);
             
 //             pSHL->setUnknownParameterWarning(false);
-        endEditCP(pSHL);
+        // OSG::endEditCP(pSHL);
     }
     
     // add textures
@@ -244,7 +243,7 @@ OSG::MaterialRefPtr
         OSG::TextureChunkRefPtr pTex(
             _pTextureManager->getTexture(pDesc->_texNames[i]));
                     
-        if(pTex == OSG::NullFC)
+        if(!pTex)
         {
             vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                 << "MaterialManager::constructMaterial: Failed to obtain "
@@ -253,19 +252,19 @@ OSG::MaterialRefPtr
             continue;
         }
                
-        OSG::beginEditCP(pChunkMat);
+        //OSG:://OSG::beginEditCP(pChunkMat);
             pChunkMat->addChunk(pTex, pDesc->_texSlots[i]);
-        OSG::endEditCP  (pChunkMat);
+       // OSG::// OSG::endEditCP  (pChunkMat);
                 
-        OSG::beginEditCP(pSHL);
+        //OSG:://OSG::beginEditCP(pSHL);
             pSHL->setUniformParameter(pDesc->_texSamplerNames[i].c_str(),
                                       pDesc->_texSlots[i]                );
-        OSG::endEditCP  (pSHL);
+       // OSG::// OSG::endEditCP  (pSHL);
     }
     
     // add the "magic" parameters
     
-    OSG::beginEditCP(pSHL);
+    //OSG:://OSG::beginEditCP(pSHL);
         pSHL->setUniformParameter("keyColor",       OSG::Vec4f(0.0f, 0.0f, 0.0f, 0.0f));
         pSHL->setUniformParameter("antiColor",      OSG::Vec4f(0.0f, 0.0f, 0.0f, 0.0f));
         pSHL->setUniformParameter("fogNearColor",   OSG::Vec4f(0.0f, 0.0f, 0.0f, 0.0f));
@@ -276,7 +275,7 @@ OSG::MaterialRefPtr
         pSHL->setUniformParameter("animTime",       OSG::Real32(0.0)                  );
         pSHL->setUniformParameter("frameTime",      OSG::Real32(0.0)                  );
         pSHL->setUniformParameter("deltaFrameTime", OSG::Real32(0.0)                  );
-    OSG::endEditCP  (pSHL);
+   // OSG::// OSG::endEditCP  (pSHL);
 
     _shlChunks.push_back(pSHL);
     
@@ -307,9 +306,9 @@ OSG::MaterialRefPtr
     }
     
     // store SHL chunk in material
-    OSG::beginEditCP(pChunkMat);
+    //OSG:://OSG::beginEditCP(pChunkMat);
         pChunkMat->addChunk(pSHL);
-    OSG::endEditCP  (pChunkMat);
+   // OSG::// OSG::endEditCP  (pChunkMat);
     
     // add face culling settings
     if(pDesc->_cullFace != "none")
@@ -317,7 +316,7 @@ OSG::MaterialRefPtr
         bool                    addChunk = false;
         OSG::PolygonChunkRefPtr pPoly   (OSG::PolygonChunk::create());
         
-        OSG::beginEditCP(pPoly);
+        //OSG:://OSG::beginEditCP(pPoly);
             if(pDesc->_cullFace == "front")
             {
                 pPoly->setCullFace(GL_FRONT);
@@ -333,13 +332,13 @@ OSG::MaterialRefPtr
                 pPoly->setCullFace(GL_FRONT_AND_BACK);
                 addChunk = true;
             }
-        OSG::endEditCP  (pPoly);
+       // OSG::// OSG::endEditCP  (pPoly);
         
         if(addChunk)
         {
-            OSG::beginEditCP(pChunkMat);
+            //OSG:://OSG::beginEditCP(pChunkMat);
                 pChunkMat->addChunk(pPoly);
-            OSG::endEditCP  (pChunkMat);
+           // OSG::// OSG::endEditCP  (pChunkMat);
         }
     }
     
@@ -348,14 +347,14 @@ OSG::MaterialRefPtr
     {
         OSG::BlendChunkRefPtr pBlend(OSG::BlendChunk::create());
         
-        OSG::beginEditCP(pBlend);
+        //OSG:://OSG::beginEditCP(pBlend);
             pBlend->setSrcFactor (getBlendFactor(pDesc->_blendSource, true ));
             pBlend->setDestFactor(getBlendFactor(pDesc->_blendDest,   false));
-        OSG::endEditCP  (pBlend);
+       // OSG::// OSG::endEditCP  (pBlend);
         
-        OSG::beginEditCP(pChunkMat);
+        //OSG:://OSG::beginEditCP(pChunkMat);
             pChunkMat->addChunk(pBlend);
-        OSG::endEditCP  (pChunkMat);
+       // OSG::// OSG::endEditCP  (pChunkMat);
     }
     
     
@@ -467,8 +466,8 @@ void
     MaterialManager::refreshMaterial(MaterialDesc const *pDesc, OSG::MaterialRefPtr pMat)
 {	
 	
-	OSG::ChunkMaterialRefPtr pChunkMat (OSG::ChunkMaterialPtr::dcast(pMat.get()));	
-	OSG::SHLChunkRefPtr      pSHL      (OSG::SHLChunkPtr::dcast(pChunkMat->find(osg::SHLChunk::getClassType())));
+  OSG::ChunkMaterialRefPtr pChunkMat (OSG::dynamic_pointer_cast<OSG::ChunkMaterial>(pMat));	
+	OSG::SHLChunkRefPtr      pSHL      (dynamic_cast<OSG::SHLChunk *>(pChunkMat->find(OSG::SHLChunk::getClassType())));
 	
     std::string const *pVProg = _pShaderManager->getVertexProg  (pDesc->_vpName);
     std::string const *pFProg = _pShaderManager->getFragmentProg(pDesc->_fpName);
@@ -481,10 +480,10 @@ void
             << "]\n"
             << vprDEBUG_FLUSH;
     
-        beginEditCP(pSHL);
+        //OSG::beginEditCP(pSHL);
             pSHL->setVertexProgram  (*pVProg);
             pSHL->setFragmentProgram(*pFProg);
-        endEditCP(pSHL);
+        // OSG::endEditCP(pSHL);
     }
     else 
     {
@@ -492,10 +491,10 @@ void
             <<  "MaterialManager::refreshMaterial : setting vp and fp to NULL" << std::endl
             << vprDEBUG_FLUSH;
      	
-        beginEditCP(pSHL);
+        //OSG::beginEditCP(pSHL);
             pSHL->setVertexProgram  (NULL);
             pSHL->setFragmentProgram(NULL);
-        endEditCP(pSHL);    	
+        // OSG::endEditCP(pSHL);    	
     }
     
 
@@ -513,7 +512,7 @@ void
         OSG::TextureChunkRefPtr pTex(_pTextureManager->getTexture(pDesc->_texNames[i]));
         pTex = _pTextureManager->getTexture(pDesc->_texNames[i]);
                     
-        if(pTex == OSG::NullFC)
+        if(!pTex)
         {
             vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
                 << "MaterialManager::refreshMaterial : Failed to obtain "
@@ -522,16 +521,16 @@ void
             continue;
         }
                
-        OSG::beginEditCP(pChunkMat);
+        //OSG:://OSG::beginEditCP(pChunkMat);
             pChunkMat->addChunk(pTex, pDesc->_texSlots[i]);
-        OSG::endEditCP  (pChunkMat);
+       // OSG::// OSG::endEditCP  (pChunkMat);
                 
         //TODO
         //delete unused uniform parameters
-        OSG::beginEditCP(pSHL);
+        //OSG:://OSG::beginEditCP(pSHL);
             pSHL->setUniformParameter(pDesc->_texSamplerNames[i].c_str(),
                                       pDesc->_texSlots[i]                );
-        OSG::endEditCP  (pSHL);     
+       // OSG::// OSG::endEditCP  (pSHL);     
         
     }
     
@@ -552,14 +551,14 @@ void
     
     // add the "magic" parameters
     /*
-    OSG::beginEditCP(pSHL);
+    //OSG:://OSG::beginEditCP(pSHL);
         pSHL->getParameters().push_back(_pKeyColorParam );
         pSHL->getParameters().push_back(_pAntiColorParam);
         pSHL->getParameters().push_back(_pFogColorParam );
         pSHL->getParameters().push_back(_pFogNearParam  );
         pSHL->getParameters().push_back(_pFogFarParam   );
         pSHL->getParameters().push_back(_pSpecParam     );
-    OSG::endEditCP  (pSHL);
+   // OSG::// OSG::endEditCP  (pSHL);
 	*/
     //_shlChunks.push_back(pSHL);
 
@@ -582,16 +581,16 @@ void
     // face culling settings
     bool                    addChunk;
     bool                    editChunk = false;       
-    OSG::PolygonChunkRefPtr pPoly (OSG::PolygonChunkPtr::dcast(pChunkMat->find(osg::PolygonChunk::getClassType())));
+    OSG::PolygonChunkRefPtr pPoly (dynamic_cast<OSG::PolygonChunk *>(pChunkMat->find(OSG::PolygonChunk::getClassType())));
     
-    if (pPoly==OSG::NullFC){
+    if (!pPoly){
     	pPoly = OSG::PolygonChunk::create();
     	addChunk = true;
     }
     else
     	addChunk = false;
     
-    OSG::beginEditCP(pPoly);
+    //OSG:://OSG::beginEditCP(pPoly);
         if(pDesc->_cullFace == "front")
         {
             pPoly->setCullFace(GL_FRONT);
@@ -607,43 +606,43 @@ void
             pPoly->setCullFace(GL_FRONT_AND_BACK);
             editChunk = true;
         }
-    OSG::endEditCP  (pPoly);
+   // OSG::// OSG::endEditCP  (pPoly);
     
     if( addChunk && editChunk )
     {
-        OSG::beginEditCP(pChunkMat);
+        //OSG:://OSG::beginEditCP(pChunkMat);
             pChunkMat->addChunk(pPoly);
-        OSG::endEditCP  (pChunkMat);
+       // OSG::// OSG::endEditCP  (pChunkMat);
     }
     else if ( !addChunk && !editChunk ){
-        OSG::beginEditCP(pChunkMat);
+        //OSG:://OSG::beginEditCP(pChunkMat);
             pChunkMat->subChunk(pPoly);
-        OSG::endEditCP  (pChunkMat);
+       // OSG::// OSG::endEditCP  (pChunkMat);
     }
 
     
     //blending settings
-    OSG::BlendChunkRefPtr pBlend(OSG::BlendChunkPtr::dcast(pChunkMat->find(osg::BlendChunk::getClassType())));
+    OSG::BlendChunkRefPtr pBlend(dynamic_cast<OSG::BlendChunk *>(pChunkMat->find(OSG::BlendChunk::getClassType())));
     
     if(pDesc->_blendSource != "" || pDesc->_blendDest != "")
     {
-    	if (pBlend==OSG::NullFC){
+    	if (!pBlend){
     		pBlend = OSG::BlendChunk::create();
-            OSG::beginEditCP(pChunkMat);
+            //OSG:://OSG::beginEditCP(pChunkMat);
                 pChunkMat->addChunk(pBlend);
-            OSG::endEditCP  (pChunkMat);    		
+           // OSG::// OSG::endEditCP  (pChunkMat);    		
     	}
     	
-        OSG::beginEditCP(pBlend);
+        //OSG:://OSG::beginEditCP(pBlend);
             pBlend->setSrcFactor (getBlendFactor(pDesc->_blendSource, true ));
             pBlend->setDestFactor(getBlendFactor(pDesc->_blendDest,   false));
-        OSG::endEditCP  (pBlend);
+       // OSG::// OSG::endEditCP  (pBlend);
         
      }
-    else if (pBlend!=OSG::NullFC){ //delete blending setting if not used
-        OSG::beginEditCP(pChunkMat);
+    else if (pBlend){ //delete blending setting if not used
+        //OSG:://OSG::beginEditCP(pChunkMat);
             pChunkMat->subChunk(pBlend);
-        OSG::endEditCP  (pChunkMat);
+       // OSG::// OSG::endEditCP  (pChunkMat);
     	
     }
     

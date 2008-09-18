@@ -3,7 +3,7 @@
 
 // OpenSG includes
 #include <OpenSG/OSGGroup.h>
-#include <OpenSG/OSGSimpleAttachments.h>
+//#include <OpenSG/OSGSimpleAttachments.h>
 #include <OpenSG/OSGTransform.h>
 
 // VRJuggler includes
@@ -158,7 +158,7 @@ void
 }
 
 void
-    Lib3dsBridge::constructScene(Lib3dsNode *pLNode, OSG::NodePtr pNode)
+    Lib3dsBridge::constructScene(Lib3dsNode *pLNode, OSG::NodeRefPtr pNode)
 {
     if(pLNode->type                          == LIB3DS_OBJECT_NODE && 
        std::strcmp(pLNode->name, "$$$DUMMY") != 0                    )

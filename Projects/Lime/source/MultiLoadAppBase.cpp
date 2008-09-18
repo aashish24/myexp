@@ -36,7 +36,6 @@
 #include "GamepadNavigator.h"
 #include "WandNavigator.h"
 #include "WandFlyNavigator.h"
-#include "OpenSG/OSGSimpleGeometry.h"
 
 /*==========================================================================*/
 /* SceneOptionsBase                                                         */
@@ -169,7 +168,7 @@ MultiLoadAppBase::init(void)
     pMatManager    = new MaterialManager (pShaderManager, pTexManager);
 
     //console, for remote editing
-    pConsole	   = new Console            (this                       );
+    pConsole	   = new Console         (this                       );
     
     //input
     mButtonNextScene       .init("ButtonNextScene");
@@ -241,8 +240,7 @@ void
 MultiLoadAppBase::preFrame(void)
 {
 	Inherited::preFrame();
-
-#if 0 
+	
 	// **************************** Cluster ********************************** /
     // This is needed on the cluster, because it is not fully in sync during
     // the first few frames.
@@ -378,8 +376,6 @@ MultiLoadAppBase::preFrame(void)
     }
 
     pConsole->processCommands();
-
-#endif 
 }
 
 void
@@ -1117,17 +1113,6 @@ MultiLoadAppBase::SceneDataBase *
         << pSO->mModelFile << "] ...\n"
         << vprDEBUG_FLUSH;
     
-    // Test case. 
-
-    /*pSD->pModelN = OSG::makeTorus( 1.0, 2.0, 10, 10 );
-    pSD->pModelTransN = OSG::Node     ::create();
-    pSD->pModelTrans  = OSG::Transform::create();
-
-    OSG::beginEditCP(pSD->pModelTransN);
-    pSD->pModelTransN->setCore (pSD->pModelTrans);
-    pSD->pModelTransN->addChild(pSD->pModelN    );
-    OSG::endEditCP  (pSD->pModelTransN);*/
-
     // load model
     pSD->pLFile  = lib3ds_file_load(pSO->mModelFile.c_str());
     pSD->pBridge = new Lib3dsBridge();
@@ -1170,25 +1155,19 @@ MultiLoadAppBase::SceneDataBase *
     // BEGIN Light 0
     OSG::NodeRefPtr             pLight0N      (OSG::Node::create()            );
     OSG::DirectionalLightRefPtr pLight0       (OSG::DirectionalLight::create());
-    
-    // @Note: These are now member variables as if not we have dangling pointers. 
-    /*OSG::NodePtr                pLight0BeaconN(OSG::Node::create()            );
-    OSG::TransformPtr           pLight0Beacon (OSG::Transform::create()       );    
-    */
-
-    pSD->pLight0BeaconN = OSG::NodeRefPtr( OSG::Node::create() );
-    pSD->pLight0Beacon  = OSG::TransformRefPtr( OSG::Transform::create() );
+    OSG::NodeRefPtr             pLight0BeaconN(OSG::Node::create()            );
+    OSG::TransformRefPtr        pLight0Beacon (OSG::Transform::create()       );
     
     OSG::Matrix light0Pos;
     light0Pos.setTranslate(OSG::Vec3f(0.0f, 10.0f, 0.0f));
     
-    OSG::beginEditCP(pSD->pLight0Beacon, OSG::Transform::MatrixFieldMask);
-        pSD->pLight0Beacon->setMatrix(light0Pos);
-    OSG::endEditCP(pSD->pLight0Beacon, OSG::Transform::MatrixFieldMask);
+    OSG::beginEditCP(pLight0Beacon, OSG::Transform::MatrixFieldMask);
+        pLight0Beacon->setMatrix(light0Pos);
+    OSG::endEditCP(pLight0Beacon, OSG::Transform::MatrixFieldMask);
     
-    OSG::beginEditCP(pSD->pLight0BeaconN, OSG::Node::CoreFieldMask);
-        pSD->pLight0BeaconN->setCore(pSD->pLight0Beacon);
-    OSG::endEditCP(pSD->pLight0BeaconN, OSG::Node::CoreFieldMask);
+    OSG::beginEditCP(pLight0BeaconN, OSG::Node::CoreFieldMask);
+        pLight0BeaconN->setCore(pLight0Beacon);
+    OSG::endEditCP(pLight0BeaconN, OSG::Node::CoreFieldMask);
     
     OSG::beginEditCP(pLight0N);
         pLight0N->setCore(pLight0);
@@ -1199,11 +1178,11 @@ MultiLoadAppBase::SceneDataBase *
         pLight0->setDiffuse  ( 0.3f,  0.3f,  0.3f,  1.0f);
         pLight0->setSpecular ( 0.5f,  0.5f,  0.5f,  1.0f);
         pLight0->setDirection( 0.0f,  0.5f,  0.5f       );
-        pLight0->setBeacon   (pSD->pLight0BeaconN       );
+        pLight0->setBeacon   (pLight0BeaconN            );
     OSG::endEditCP(pLight0N);
     
     OSG::setName(pLight0N,       "_internal_pLight0N"      );
-    OSG::setName(pSD->pLight0BeaconN, "_internal_pLight0BeaconN");
+    OSG::setName(pLight0BeaconN, "_internal_pLight0BeaconN");
     // END Light 0
     
     // assemble scene

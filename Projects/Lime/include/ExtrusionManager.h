@@ -72,15 +72,15 @@ class ExtrusionManager
                           OSG::Pnt3f                    &pos,
                           OSG::Vec3f                    &tang);
     
-    template <class DataTypeT, class StorageTypeT>
+    template <class DataTypeT, OSG::UInt32 StorageTypeT>
     void evalBezier(
-        OSG::PointInterface <DataTypeT, StorageTypeT>       *pPos,
-        OSG::VectorInterface<DataTypeT, StorageTypeT>       *pTang,
+        OSG::Point          <DataTypeT, StorageTypeT>       *pPos,
+        OSG::Vector         <DataTypeT, StorageTypeT>       *pTang,
         DataTypeT const                                     *pT,
         OSG::UInt32 const                                    numT,
-        OSG::PointInterface <DataTypeT, StorageTypeT> const *pCP,
+        OSG::Point          <DataTypeT, StorageTypeT> const *pCP,
         OSG::UInt32 const                                    order,
-        OSG::PointInterface <DataTypeT, StorageTypeT>       *pScratch);
+        OSG::Point          <DataTypeT, StorageTypeT>       *pScratch);
     
   
     NamedObjectCache const *_pObjCache;
@@ -113,16 +113,16 @@ inline ExtrusionManager::ExtrusionMap &
     return _extMap;
 }
 
-template <class DataTypeT, class StorageTypeT>
+template <class DataTypeT, OSG::UInt32 StorageTypeT>
 inline void
     ExtrusionManager::evalBezier(
-        OSG::PointInterface <DataTypeT, StorageTypeT>       *pPos,
-        OSG::VectorInterface<DataTypeT, StorageTypeT>       *pTang,
+        OSG::Point          <DataTypeT, StorageTypeT>       *pPos,
+        OSG::Vector         <DataTypeT, StorageTypeT>       *pTang,
         DataTypeT const                                     *pT,
         OSG::UInt32 const                                    numT,
-        OSG::PointInterface <DataTypeT, StorageTypeT> const *pCP,
+        OSG::Point          <DataTypeT, StorageTypeT> const *pCP,
         OSG::UInt32 const                                    order,
-        OSG::PointInterface <DataTypeT, StorageTypeT>       *pScratch)
+        OSG::Point          <DataTypeT, StorageTypeT>       *pScratch)
 {
     for(OSG::UInt32 i = 0; i < numT; ++i)
     {

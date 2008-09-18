@@ -12,8 +12,8 @@
 //OpenSG includes
 #include <OpenSG/OSGQuaternion.h>
 #include <OpenSG/OSGTransform.h>
-#include <OpenSG/OSGNodePtr.h>
-#include <OpenSG/OSGSimpleAttachments.h>
+//#include <OpenSG/OSGNodePtr.h>
+//#include <OpenSG/OSGSimpleAttachments.h>
 
 
 #include <CameraManager.h>

@@ -180,7 +180,7 @@ struct KeyframeAnimationDesc : public DescBase
     };    
    
     
-    static unsigned int const numTracksDesc = 9;
+    static unsigned int const numTracks = 9;
        
     typedef std::vector<Keyframe>         KeyframeStore;
     typedef KeyframeStore::iterator       KeyframeStoreIt;
@@ -193,15 +193,15 @@ struct KeyframeAnimationDesc : public DescBase
    
     struct TrackInfo
     {
-    	std::string           _name;
-    	AnimationStateE       _state;
-      int 			            _lastKeyf;    //index of the last keyframe played 
-      double		  	        _lastValue;
-      KeyframeStore         _keyFrames;	
-      std::vector<double>   _cSegment;    //current segment in the curve
+    	std::string     _name;
+    	AnimationStateE _state;
+        int 			_lastKeyf;    //index of the last keyframe played 
+        double			_lastValue;
+        KeyframeStore   _keyFrames;	
+        std::vector<double>   _cSegment;  //current segment in the curve
     };       
     
-    TrackInfo   _animTracks[numTracksDesc];
+    TrackInfo   _animTracks[numTracks];
     std::string trackName(TrackTypeE);
         
     void calcSegment(unsigned int trackIndex, unsigned int startKfIndex, double tstep);

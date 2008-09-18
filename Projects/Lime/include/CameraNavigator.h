@@ -105,7 +105,7 @@ inline void CameraNavigator::load(KeyframeAnimationDesc& kfDesc){
 	_justloaded = true;
 	
 	/*
-	for (unsigned int i=0; i< mAnimDesc->numTracksDesc; i++){
+	for (unsigned int i=0; i< mAnimDesc->numTracks; i++){
 		mAnimDesc->calcSegment(i, 0 , _timestep);
 	}
 	*/

@@ -121,7 +121,7 @@ inline void
     AnimationBuilder<IteratorTypeT>::endAnim(
         IteratorTypeT begin, IteratorTypeT end)
 {
-    for(unsigned int i = 0; i < KeyframeAnimationDesc::numTracksDesc; ++i)
+    for(unsigned int i = 0; i < KeyframeAnimationDesc::numTracks; ++i)
     {
         if(_animStore.back()._animTracks[i].size() > 0)
             return;

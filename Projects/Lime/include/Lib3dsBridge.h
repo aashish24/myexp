@@ -22,10 +22,10 @@ class Lib3dsBridge
   
     struct NodeMapEntry
     {
-        NodeMapEntry(Lib3dsNode *pLNode, OSG::NodePtr pNode);
+        NodeMapEntry(Lib3dsNode *pLNode, OSG::NodeRefPtr pNode);
         
-        Lib3dsNode   *_pLNode;
-        OSG::NodePtr  _pNode;
+Lib3dsNode   		*_pLNode;
+        OSG::NodeRefPtr _pNode;
     };
     
     typedef std::vector<NodeMapEntry>             NodeMap;
@@ -33,28 +33,29 @@ class Lib3dsBridge
       
     Lib3dsBridge(void);
 
-    void        setLib3dsFile (Lib3dsFile *pLFile);
-    Lib3dsFile *getLib3dsFile (void              ) const; 
+    void            setLib3dsFile   (Lib3dsFile *pLFile);
+    Lib3dsFile*     getLib3dsFile   (void              ) const; 
     
-    void           setNameMap     (NameMap const     &nameMap );
-    NameMap const &getNameMap     (void                       ) const;
-    NameMap       &editNameMap    (void                       );
-    void           readNameMapFile(std::string const &fileName);
+    void            setNameMap      (NameMap const     &nameMap );
+    NameMap const   &getNameMap     (void                       ) const;
+    NameMap         &editNameMap    (void                       );
+    void            readNameMapFile (std::string const &fileName);
     
-    void           dumpNameMap    (void                       ) const;
+    void            dumpNameMap     (void                       ) const;
     
-    OSG::NodePtr construct(void);
-    void         update   (void);
+    OSG::NodeRefPtr construct       (void);
+    void            update          (void);
     
-    OSG::NodePtr getRoot             (void) const;
+    OSG::NodeRefPtr getRoot         (void) const;
 
   private:
-    void                constructScene   (Lib3dsNode   *pLNode,
-                                          OSG::NodePtr  pNode  );
-    OSG::GeometryRefPtr constructGeometry(Lib3dsMesh   *pLMesh );
+    void                constructScene    (Lib3dsNode   *pLNode,
+                                           OSG::NodeRefPtr  pNode  );
+
+    OSG::GeometryRefPtr constructGeometry (Lib3dsMesh   *pLMesh );
     
-    void                lookupName       (std::string const &oldName,
-                                          std::string       &newName );
+    void                lookupName        (std::string const &oldName,
+                                           std::string       &newName );
     
     NodeMap          _nodeMap;
     NameMap          _nameMap;
@@ -92,7 +93,7 @@ inline Lib3dsBridge::NameMap &
     return _nameMap;
 }
 
-inline OSG::NodePtr
+inline OSG::NodeRefPtr
     Lib3dsBridge::getRoot(void) const
 {
     return _pRoot.get();
@@ -101,7 +102,7 @@ inline OSG::NodePtr
 
 inline
     Lib3dsBridge::NodeMapEntry::NodeMapEntry(
-        Lib3dsNode *pLNode, OSG::NodePtr pNode)
+        Lib3dsNode *pLNode, OSG::NodeRefPtr pNode)
     : _pLNode(pLNode),
       _pNode (pNode )
 {
