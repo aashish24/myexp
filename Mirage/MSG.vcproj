@@ -63,7 +63,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(NoInherit) opengl32.lib glew32d.lib"
-				OutputFile="$(MSG_ROOT_DIR)\$(ProjectName)d.dll"
+				OutputFile="$(MSG_ROOT_DIR)\bin\$(ProjectName)_d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
 				GenerateDebugInformation="true"
@@ -145,7 +145,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(NoInherit) opengl32.lib glew32.lib "
-				OutputFile="$(MSG_ROOT_DIR)\$(ProjectName).dll"
+				OutputFile="$(MSG_ROOT_DIR)\bin\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
 				GenerateDebugInformation="true"
