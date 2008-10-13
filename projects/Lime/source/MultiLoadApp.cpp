@@ -410,9 +410,9 @@ void
 
 void
     MultiLoadApp::updateDynamicParams(void)
-{
+{    
     if(mActiveSceneData == NULL)
-        return;
+        return;    
     
     float         height;
     SceneOptions *pSO    = dynamic_cast<SceneOptions *>(mActiveSceneOptions);
@@ -426,7 +426,7 @@ void
     
         mM.mult(mS);
         mM.invert();
-        mM.mult(p);
+        mM.mult(p,p);
             
         height = p[1];
     }
@@ -438,7 +438,7 @@ void
         
         mM.mult(mS);
         mM.invert();
-        mM.mult(p);
+        mM.mult(p,p);
                 
         height = p[2];
     }

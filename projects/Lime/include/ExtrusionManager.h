@@ -138,19 +138,19 @@ inline void
         {
             for(OSG::UInt32 k = 0; k < order - j; ++k)
             {
-                pScratch[k] =  t1 * pScratch[k  ];
-                pScratch[k] += t0 * pScratch[k+1];
+                pScratch[k] =   t1 * pScratch[k  ];
+                pScratch[k] += (t0 * pScratch[k+1]).subZero();
             }
         }
         
         // store tangent
-        pTang[i] =  pScratch[1];
-        pTang[i] -= pScratch[0];
+        pTang[i] =  (pScratch[1]).subZero();
+        pTang[i] -= (pScratch[0]).subZero();
         pTang[i].normalize();
         
         // store position
-        pPos[i] =  t1 * pScratch[0];
-        pPos[i] += t0 * pScratch[1];
+        pPos[i] =   t1 * pScratch[0];
+        pPos[i] += (t0 * pScratch[1]).subZero();
     }
 }
 

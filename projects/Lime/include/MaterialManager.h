@@ -145,6 +145,8 @@ inline void
             (*shlIt)->setUniformParameter(name.c_str(), val);
         //OSG::endEditCP  ((*shlIt), OSG::ShaderParameterChunk::ParametersFieldMask);
     }
+
+    OSG::commitChanges();
 }
 
 inline void
@@ -160,6 +162,7 @@ inline void
             (*shlIt)->setUniformParameter(name.c_str(), val);
         //OSG::endEditCP  ((*shlIt), OSG::ShaderParameterChunk::ParametersFieldMask);
     }
+    OSG::commitChanges();
 }
 
 template <class SingleTypeT, class MultiTypeT>
@@ -181,8 +184,9 @@ inline void
                 << vprDEBUG_FLUSH;
                 
             //OSG::beginEditCP(pSHL);
-                pSHL->setUniformParameter(pDesc->_name.c_str(), val);
+            pSHL->setUniformParameter(pDesc->_name.c_str(), val);
             //OSG::endEditCP(pSHL);
+            OSG::commitChanges();
         } 
         catch(boost::bad_lexical_cast &e)
         {
@@ -233,7 +237,8 @@ inline void
         }
         
         //OSG::beginEditCP(pSHL);
-            pSHL->setUniformParameter(pDesc->_name.c_str(), mval);
+        pSHL->setUniformParameter(pDesc->_name.c_str(), mval);
+        OSG::commitChanges();
         //OSG::endEditCP(pSHL);
     }
 }

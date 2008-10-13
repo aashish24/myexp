@@ -14,17 +14,17 @@ class SceneGraphPrinter
   public:
     typedef SceneGraphPrinter Self;
       
-    SceneGraphPrinter(OSG::NodePtr root);
+    SceneGraphPrinter(OSG::NodeRefPtr root);
     
     void print(std::ostream &os);
   
   private:
-    OSG::NodePtr  _pRoot;
-    std::ostream *_pStream;
-    OSG::UInt32   _indent;
+    OSG::NodeRefPtr  _pRoot;
+    std::ostream      *_pStream;
+    OSG::UInt32       _indent;
     
-    OSG::Action::ResultE traverseEnter(OSG::NodePtr         &node );
-    OSG::Action::ResultE traverseLeave(OSG::NodePtr         &node,
+    OSG::Action::ResultE traverseEnter(OSG::Node            *node );
+    OSG::Action::ResultE traverseLeave(OSG::Node            *node,
                                        OSG::Action::ResultE  res  );
     
     void          incIndent   (void            );

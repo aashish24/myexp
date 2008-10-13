@@ -49,7 +49,7 @@ class NamedObjectCache
     void dump(std::ostream &os) const;
     
   private:  
-    OSG::Action::ResultE traverseEnter(OSG::NodeRefPtr& node);
+    OSG::Action::ResultE traverseEnter(OSG::Node *node);
     
     OSG::NodeRefPtr _root;
     ObjectMap    _objMap;

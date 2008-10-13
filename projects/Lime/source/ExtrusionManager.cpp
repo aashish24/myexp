@@ -5,7 +5,7 @@
 #include <NamedObjectCache.h>
 
 // OpenSG includes
-//#include <OpenSG/OSGSimpleAttachments.h>
+#include <OpenSG/OSGNameAttachment.h>
 #include <OpenSG/OSGTypedGeoIntegralProperty.h>
 #include <OpenSG/OSGTypedGeoVectorProperty.h>
 
@@ -78,14 +78,14 @@ void
 
 void
     ExtrusionManager::apply(void)
-{
+{    
     ExtrusionMap::const_iterator emIt  = _extMap.begin();
     ExtrusionMap::const_iterator emEnd = _extMap.end  ();
     
     for(; emIt != emEnd; ++emIt)
     {
         // find the placeholder object in the scene
-//        OSG::FieldContainerRefPtr pAPFC(_pObjCache->getObject(emIt->first));
+//         OSG::FieldContainerRefPtr pAPFC(_pObjCache->getObject(emIt->first));
         OSG::FieldContainerRefPtr pAPFC(_pObjCache->getObject("_internal_mModelN"));
         OSG::NodeRefPtr           pAP  ( OSG::dynamic_pointer_cast< OSG::Node >( pAPFC ) );
         
@@ -98,9 +98,9 @@ void
         }
         
         // check if the placeholder is a geometry
-//        OSG::GeometryRefPtr pAPGeo(OSG::GeometryPtr::dcast(pAP->getCore()));
+//        OSG::GeometryRefPtr pAPGeo(dynamic_cast<OSG::Geometry *>(pAP->getCore()));
 //        
-//        if(pAPGeo == OSG::NullFC)
+//        if(!pAPGeo)
 //        {
 //            vprDEBUG(vprDBG_ALL, vprDBG_WARNING_LVL)
 //                << "ExtrusionManager::apply: Attach point is not a"
@@ -179,20 +179,24 @@ void
             OSG::TransformRefPtr pBBoxTrafo (OSG::Transform::create());
             
             OSG::Pnt3f bbCenter;
+            pCP->updateVolume();
             pCP->getVolume().getCenter(bbCenter);
+//             pCP->editVolume(true).getCenter(bbCenter);
             
             //OSG::beginEditCP(pBBoxTrafo, OSG::Transform::MatrixFieldMask);
                 pBBoxTrafo->editMatrix().setTranslate(bbCenter.subZero());
             //OSG::endEditCP  (pBBoxTrafo, OSG::Transform::MatrixFieldMask);
-            
+            OSG::commitChanges();
+  
             //OSG::beginEditCP(pBBoxTrafoN, OSG::Node::ChildrenFieldMask);
                 pBBoxTrafoN->setCore(pBBoxTrafo);
             //OSG::endEditCP  (pBBoxTrafoN, OSG::Node::ChildrenFieldMask);
-            
+            OSG::commitChanges();            
             //OSG::beginEditCP(pCPMTrafoN, OSG::Node::ChildrenFieldMask);
                 pCPMTrafoN->addChild(pBBoxTrafoN);
             //OSG::endEditCP  (pCPMTrafoN, OSG::Node::ChildrenFieldMask);
-            
+            OSG::commitChanges();
+
             // store the transforms on top of the cp
             info._cpBBoxTrans.push_back(pBBoxTrafo);
             info._cpMeshTrans.push_back(pCPMTrafo );
@@ -202,6 +206,8 @@ void
             //OSG::beginEditCP(pCPMTrafoN, OSG::Node::ChildrenFieldMask);
                 pCPMTrafoN->subChild(pCP);
             //OSG::endEditCP  (pCPMTrafoN, OSG::Node::ChildrenFieldMask);
+
+            OSG::commitChanges();
         }
         
         // replace attach point geometry
@@ -213,13 +219,15 @@ void
         //OSG::beginEditCP(pGeoN);
             pGeoN->setCore(info._pGeo);
         //OSG::endEditCP  (pGeoN);
+        OSG::commitChanges();
 
         // @todo: Find Alternate function. 
-        //OSG::setName(pGeoN, emIt->first);
+        OSG::setName(pGeoN, emIt->first);
 
         //OSG::beginEditCP(pAP);
             pAP->addChild(pGeoN);
         //OSG::endEditCP  (pAP);
+        OSG::commitChanges();
 
         // remove placeholder geometry
         OSG::FieldContainerRefPtr pPHFC    (_pObjCache->getObject(emIt->first));
@@ -229,6 +237,8 @@ void
         //OSG::beginEditCP(pPHParent);
             pPHParent->subChild(pPH);
         //OSG::endEditCP  (pPHParent);
+
+        OSG::commitChanges();
     }
 }
 
@@ -363,6 +373,8 @@ void
         }
     }
     
+    OSG::commitChanges();
+
     //OSG::endEditCP(pTypes);
     //OSG::endEditCP(pLen  );
     //OSG::endEditCP(pInd  );
@@ -371,13 +383,15 @@ void
     OSG::GeoVec3fPropertyRefPtr pNorm = OSG::GeoVec3fProperty::create();
     
     //OSG::beginEditCP(pPos);
-        pPos->resize(sizeXS * sizeSpine);
+     pPos->resize(sizeXS * sizeSpine);
     //OSG::endEditCP(pPos);
-    
+    OSG::commitChanges();
+
     //OSG::beginEditCP(pNorm);
-        pNorm->resize(sizeXS * sizeSpine);
-    //OSG::endEditCP(pNorm);
-    
+    pNorm->resize(sizeXS * sizeSpine);
+    //OSG::endEditCP(pNorm);    
+    OSG::commitChanges();
+
     info._pGeo = OSG::Geometry::create();
     
     //OSG::beginEditCP(info._pGeo);
@@ -388,6 +402,7 @@ void
         info._pGeo->setNormals  (pNorm );
         info._pGeo->setIndices  (pInd  );
     //OSG::endEditCP  (info._pGeo);
+    OSG::commitChanges();
 }
 
 void
@@ -432,7 +447,9 @@ void
         bboxMat.mult(p,p);
         meshMat.mult(p,p);
         nodeMat.mult(p,p);
-               
+        
+        //std::cout << "ExtrusionManager::updateVertices: spine cp [" << i << "] << [" << p << "]" << std::endl;
+
         spineCP.push_back(p);
     }
         
@@ -478,6 +495,7 @@ void
         }
     }
     
+    OSG::commitChanges();
     //OSG::endEditCP(pPos );
     //OSG::endEditCP(pNorm);
 }

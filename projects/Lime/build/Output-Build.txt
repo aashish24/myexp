@@ -1,6 +1,462 @@
 1>------ Build started: Project: Lime, Configuration: Debug Win32 ------
-1>Linking...
-1>LINK : fatal error LNK1104: cannot open file 'libjpeg.lib;'
-1>Build log was saved at "file://e:\aashish\src\lime\trunk\build\Debug\BuildLog.htm"
-1>Lime - 1 error(s), 0 warning(s)
-========== Build: 0 succeeded, 1 failed, 0 up-to-date, 0 skipped ==========
+1>Compiling...
+1>MultiLoadAppBase.cpp
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Util/Exception.h(79) : warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'vpr::Exception'
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdexcept(149) : see declaration of 'std::runtime_error'
+1>        E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Util/Exception.h(78) : see declaration of 'vpr::Exception'
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/md/WIN32/Sync/MutexWin32.h(68) : warning C4275: non dll-interface class 'boost::noncopyable_::noncopyable' used as base for dll-interface class 'vpr::MutexWin32'
+1>        E:\aashish\src\boost\boost_1_35_0\install\windows.x86_32.all\include\boost-1_35\boost/noncopyable.hpp(22) : see declaration of 'boost::noncopyable_::noncopyable'
+1>        E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/md/WIN32/Sync/MutexWin32.h(67) : see declaration of 'vpr::MutexWin32'
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Util/GUID.h(56) : warning C4275: non dll-interface class 'vpr::SerializableObject' used as base for dll-interface class 'vpr::GUID'
+1>        E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/IO/SerializableObject.h(132) : see declaration of 'vpr::SerializableObject'
+1>        E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Util/GUID.h(55) : see declaration of 'vpr::GUID'
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Util/Debug.h(378) : warning C4251: 'vpr::Debug::mCategories' : class 'std::map<_Kty,_Ty>' needs to have dll-interface to be used by clients of class 'vpr::Debug'
+1>        with
+1>        [
+1>            _Kty=vpr::GUID,
+1>            _Ty=vpr::Debug::CategoryInfo
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/md/WIN32/Sync/SemaphoreWin32.h(66) : warning C4275: non dll-interface class 'boost::noncopyable_::noncopyable' used as base for dll-interface class 'vpr::SemaphoreWin32'
+1>        E:\aashish\src\boost\boost_1_35_0\install\windows.x86_32.all\include\boost-1_35\boost/noncopyable.hpp(22) : see declaration of 'boost::noncopyable_::noncopyable'
+1>        E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/md/WIN32/Sync/SemaphoreWin32.h(65) : see declaration of 'vpr::SemaphoreWin32'
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Thread/BaseThread.h(135) : warning C4251: 'vpr::BaseThread::sStartSignal' : class 'boost::signal<Signature>' needs to have dll-interface to be used by clients of class 'vpr::BaseThread'
+1>        with
+1>        [
+1>            Signature=void (vpr::Thread *)
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Thread/BaseThread.h(136) : warning C4251: 'vpr::BaseThread::sExitSignal' : class 'boost::signal<Signature>' needs to have dll-interface to be used by clients of class 'vpr::BaseThread'
+1>        with
+1>        [
+1>            Signature=void (vpr::Thread *)
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Thread/BaseThread.h(197) : warning C4251: 'vpr::BaseThread::mTSTable' : class 'vpr::TSTable' needs to have dll-interface to be used by clients of class 'vpr::BaseThread'
+1>        E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Thread/TSTable.h(63) : see declaration of 'vpr::TSTable'
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Thread/BaseThread.h(198) : warning C4251: 'vpr::BaseThread::gTSTable' : class 'vpr::TSTable' needs to have dll-interface to be used by clients of class 'vpr::BaseThread'
+1>        E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Thread/TSTable.h(63) : see declaration of 'vpr::TSTable'
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/md/WIN32/Thread/ThreadKeyWin32.h(172) : warning C4251: 'vpr::ThreadKeyWin32::mDestructor' : class 'boost::function<Signature>' needs to have dll-interface to be used by clients of class 'vpr::ThreadKeyWin32'
+1>        with
+1>        [
+1>            Signature=void (void *)
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/md/WIN32/Sync/CondVarWin32.h(72) : warning C4275: non dll-interface class 'boost::noncopyable_::noncopyable' used as base for dll-interface class 'vpr::CondVarWin32'
+1>        E:\aashish\src\boost\boost_1_35_0\install\windows.x86_32.all\include\boost-1_35\boost/noncopyable.hpp(22) : see declaration of 'boost::noncopyable_::noncopyable'
+1>        E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/md/WIN32/Sync/CondVarWin32.h(71) : see declaration of 'vpr::CondVarWin32'
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/md/WIN32/Thread/ThreadWin32.h(208) : warning C4251: 'vpr::ThreadWin32::mUserThreadFunctor' : class 'boost::function<Signature>' needs to have dll-interface to be used by clients of class 'vpr::ThreadWin32'
+1>        with
+1>        [
+1>            Signature=void (void)
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/md/WIN32/Thread/ThreadWin32.h(335) : warning C4251: 'vpr::ThreadWin32::mStartFunctor' : class 'boost::function<Signature>' needs to have dll-interface to be used by clients of class 'vpr::ThreadWin32'
+1>        with
+1>        [
+1>            Signature=void (void)
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/md/WIN32/Thread/ThreadWin32.h(359) : warning C4251: 'vpr::ThreadWin32::statics' : struct 'vpr::ThreadWin32::staticWrapper' needs to have dll-interface to be used by clients of class 'vpr::ThreadWin32'
+1>        E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/md/WIN32/Thread/ThreadWin32.h(344) : see declaration of 'vpr::ThreadWin32::staticWrapper'
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vpr/Thread/ThreadManager.h(116) : warning C4251: 'vpr::ThreadManager::mThreads' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'vpr::ThreadManager'
+1>        with
+1>        [
+1>            _Ty=vpr::Thread *
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vrj/Draw/OGL/GlUserData.h(104) : warning C4251: 'vrj::GlUserData::mGlWindow' : class 'boost::shared_ptr<T>' needs to have dll-interface to be used by clients of class 'vrj::GlUserData'
+1>        with
+1>        [
+1>            T=vrj::GlWindow
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vrj/Draw/OGL/GlDrawManager.h(225) : warning C4251: 'vrj::GlDrawManager::mWins' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'vrj::GlDrawManager'
+1>        with
+1>        [
+1>            _Ty=vrj::GlWindowPtr
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vrj/Draw/OGL/GlDrawManager.h(226) : warning C4251: 'vrj::GlDrawManager::pipes' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'vrj::GlDrawManager'
+1>        with
+1>        [
+1>            _Ty=vrj::GlPipe *
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vrj/Draw/OGL/GlDrawManager.h(231) : warning C4251: 'vrj::GlDrawManager::mContextId' : class 'vpr::TSObjectProxy<T>' needs to have dll-interface to be used by clients of class 'vrj::GlDrawManager'
+1>        with
+1>        [
+1>            T=int
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vrj/Draw/OGL/GlDrawManager.h(232) : warning C4251: 'vrj::GlDrawManager::mUserData' : class 'vpr::TSObjectProxy<T>' needs to have dll-interface to be used by clients of class 'vrj::GlDrawManager'
+1>        with
+1>        [
+1>            T=vrj::GlUserData
+1>        ]
+1>E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\include\vrj/Draw/OGL/GlDrawManager.h(262) : warning C4251: 'vrj::GlDrawManager::getDrawThreadAffinity' : class 'boost::function<Signature>' needs to have dll-interface to be used by clients of class 'vrj::GlDrawManager'
+1>        with
+1>        [
+1>            Signature=int (unsigned int)
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(302) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(388) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(476) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(559) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(641) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(721) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(813) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(901) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(974) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(995) : warning C4305: 'return' : truncation from 'double' to 'OSG::Real32'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(1053) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(1242) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseTypeTraits.h(1315) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\stdio.h(345) : see declaration of 'sprintf'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseFunctions.h(584) : warning C4275: non dll-interface class 'std::_Iterator_base' used as base for dll-interface struct 'std::iterator<_Category,_Ty>'
+1>        with
+1>        [
+1>            _Category=std::input_iterator_tag,
+1>            _Ty=std::string
+1>        ]
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\xutility(117) : see declaration of 'std::_Iterator_base'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseFunctions.inl(3351) : warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\string.h(252) : see declaration of 'wcscpy'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseFunctions.inl(3396) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+1>        C:\Program Files\Microsoft Visual Studio 8\VC\include\string.h(74) : see declaration of 'strcpy'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseFunctions.inl(3473) : warning C4267: 'return' : conversion from 'size_t' to 'OSG::Int32', possible loss of data
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(146) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(147) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(149) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(150) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(151) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(152) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(153) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(154) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(155) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(156) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(157) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(158) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(159) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(160) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(161) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(162) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(163) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(168) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(169) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(170) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(171) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(172) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(173) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(174) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(175) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(176) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(177) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(178) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(179) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(180) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(181) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(182) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(236) : warning C4251: 'OSG::ExceptionBinaryDataHandler::_readBuffers' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ExceptionBinaryDataHandler'
+1>        with
+1>        [
+1>            _Ty=OSG::ExceptionBinaryDataHandler::MemoryBlock
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(237) : warning C4251: 'OSG::ExceptionBinaryDataHandler::_writeBuffers' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ExceptionBinaryDataHandler'
+1>        with
+1>        [
+1>            _Ty=OSG::ExceptionBinaryDataHandler::MemoryBlock
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(238) : warning C4251: 'OSG::ExceptionBinaryDataHandler::_zeroCopyBuffers' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ExceptionBinaryDataHandler'
+1>        with
+1>        [
+1>            _Ty=OSG::ExceptionBinaryDataHandler::MemoryBlock
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(241) : warning C4251: 'OSG::ExceptionBinaryDataHandler::_freeMem' : class 'std::list<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ExceptionBinaryDataHandler'
+1>        with
+1>        [
+1>            _Ty=OSG::MemoryHandle
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(242) : warning C4251: 'OSG::ExceptionBinaryDataHandler::_currentReadBuffer' : class 'std::_Vector_iterator<_Ty,_Alloc>' needs to have dll-interface to be used by clients of class 'OSG::ExceptionBinaryDataHandler'
+1>        with
+1>        [
+1>            _Ty=OSG::ExceptionBinaryDataHandler::MemoryBlock,
+1>            _Alloc=std::allocator<OSG::ExceptionBinaryDataHandler::MemoryBlock>
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(244) : warning C4251: 'OSG::ExceptionBinaryDataHandler::_currentWriteBuffer' : class 'std::_Vector_iterator<_Ty,_Alloc>' needs to have dll-interface to be used by clients of class 'OSG::ExceptionBinaryDataHandler'
+1>        with
+1>        [
+1>            _Ty=OSG::ExceptionBinaryDataHandler::MemoryBlock,
+1>            _Alloc=std::allocator<OSG::ExceptionBinaryDataHandler::MemoryBlock>
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(264) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.h(299) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(171) : warning C4267: 'initializing' : conversion from 'size_t' to 'OSG::UInt32', possible loss of data
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(453) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(462) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(468) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(476) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(484) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(492) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(498) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(506) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(514) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(522) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(533) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(545) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(553) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(561) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(570) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(607) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(615) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(622) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(639) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(656) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(673) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(680) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(697) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(714) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(731) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(750) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(769) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(786) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(803) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGExceptionBinaryDataHandler.inl(821) : warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseThread.h(572) : warning C4275: non dll-interface class 'OSG::BaseWinThreadBase' used as base for dll-interface class 'OSG::BaseThread'
+1>        e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseThread.h(414) : see declaration of 'OSG::BaseWinThreadBase'
+1>        e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGBaseThread.h(571) : see declaration of 'OSG::BaseThread'
+1>E:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\OpenSG/OSGThread.h(540) : warning C4275: non dll-interface class 'OSG::WinThreadBase' used as base for dll-interface class 'OSG::Thread'
+1>        E:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\OpenSG/OSGThread.h(393) : see declaration of 'OSG::WinThreadBase'
+1>        E:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\OpenSG/OSGThread.h(539) : see declaration of 'OSG::Thread'
+1>E:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\OpenSG/OSGThread.h(664) : warning C4275: non dll-interface class 'OSG::WinThreadBase' used as base for dll-interface class 'OSG::ExternalThread'
+1>        E:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\OpenSG/OSGThread.h(393) : see declaration of 'OSG::WinThreadBase'
+1>        E:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\OpenSG/OSGThread.h(663) : see declaration of 'OSG::ExternalThread'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGLock.inl(226) : warning C4311: '<function-style-cast>' : pointer truncation from 'void *' to 'OSG::LockPool::NumericalKeyType'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGLock.inl(232) : warning C4311: '<function-style-cast>' : pointer truncation from 'void *' to 'OSG::LockPool::NumericalKeyType'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGLock.inl(238) : warning C4311: '<function-style-cast>' : pointer truncation from 'void *' to 'OSG::LockPool::NumericalKeyType'
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGLog.h(213) : warning C4251: 'OSG::LogBuf::_chunkBag' : class 'std::list<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::LogBuf'
+1>        with
+1>        [
+1>            _Ty=OSG::LogBuf::Chunk *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGLog.h(424) : warning C4251: 'OSG::Log::_moduleList' : class 'std::list<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::Log'
+1>        with
+1>        [
+1>            _Ty=OSG::Log::Module
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGPlane.h(165) : warning C4251: 'OSG::Plane::_normalVec' : class 'OSG::Vector<ValueTypeT,SizeI>' needs to have dll-interface to be used by clients of class 'OSG::Plane'
+1>        with
+1>        [
+1>            ValueTypeT=OSG::Real32,
+1>            SizeI=3
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGReflexiveContainerType.h(199) : warning C4251: 'OSG::ReflexiveContainerType::_vInitialDescs' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ReflexiveContainerType'
+1>        with
+1>        [
+1>            _Ty=OSG::FieldDescriptionBase *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGReflexiveContainerType.h(201) : warning C4251: 'OSG::ReflexiveContainerType::_mDescMap' : class 'std::map<_Kty,_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ReflexiveContainerType'
+1>        with
+1>        [
+1>            _Kty=OSG::IDStringLink,
+1>            _Ty=OSG::FieldDescriptionBase *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGReflexiveContainerType.h(202) : warning C4251: 'OSG::ReflexiveContainerType::_vDescVec' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ReflexiveContainerType'
+1>        with
+1>        [
+1>            _Ty=OSG::FieldDescriptionBase *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGReflexiveContainerType.inl(87) : warning C4267: 'return' : conversion from 'size_t' to 'OSG::UInt32', possible loss of data
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGStatElemDesc.inl(62) : warning C4267: 'return' : conversion from 'size_t' to 'OSG::Int32', possible loss of data
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGStatIntOnceElem.h(158) : warning C4251: 'OSG::StatIntOnceElem::_ids' : class 'std::set<_Kty>' needs to have dll-interface to be used by clients of class 'OSG::StatIntOnceElem'
+1>        with
+1>        [
+1>            _Kty=OSG::UInt32
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(141) : warning C4251: 'OSG::ChangeList::statNChangedStoreSize' : class 'OSG::StatElemDesc<Type>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            Type=OSG::StatIntElem
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(142) : warning C4251: 'OSG::ChangeList::statNCreatedStoreSize' : class 'OSG::StatElemDesc<Type>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            Type=OSG::StatIntElem
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(143) : warning C4251: 'OSG::ChangeList::statNUnCommittedStoreSize' : class 'OSG::StatElemDesc<Type>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            Type=OSG::StatIntElem
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(144) : warning C4251: 'OSG::ChangeList::statNPoolSize' : class 'OSG::StatElemDesc<Type>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            Type=OSG::StatIntElem
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(255) : warning C4251: 'OSG::ChangeList::_entryPool' : class 'std::list<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            _Ty=std::vector<OSG::ContainerChangeEntry>
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(257) : warning C4251: 'OSG::ChangeList::_currentPoolElement' : class 'std::list<_Ty>::_Iterator<_Secure_validation>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            _Ty=std::vector<OSG::ContainerChangeEntry>,
+1>            _Secure_validation=true
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(258) : warning C4251: 'OSG::ChangeList::_currentEntry' : class 'std::_Vector_iterator<_Ty,_Alloc>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            _Ty=OSG::ContainerChangeEntry,
+1>            _Alloc=std::allocator<OSG::ContainerChangeEntry>
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(260) : warning C4251: 'OSG::ChangeList::_changedStore' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            _Ty=OSG::ContainerChangeEntry *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(261) : warning C4251: 'OSG::ChangeList::_createdStore' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            _Ty=OSG::ContainerChangeEntry *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(263) : warning C4251: 'OSG::ChangeList::_uncommitedChanges' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            _Ty=OSG::ContainerChangeEntry *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(264) : warning C4251: 'OSG::ChangeList::_workStore' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            _Ty=OSG::ContainerChangeEntry *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(271) : warning C4251: 'OSG::ChangeList::_vDelayedUnrecSubRefs' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            _Ty=OSG::FieldContainer *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(272) : warning C4251: 'OSG::ChangeList::_vDelayedRecSubRefs' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            _Ty=OSG::FieldContainer *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.h(273) : warning C4251: 'OSG::ChangeList::_vDelayedWeakSubRefs' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ChangeList'
+1>        with
+1>        [
+1>            _Ty=OSG::FieldContainer *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGChangeList.inl(169) : warning C4267: 'return' : conversion from 'size_t' to 'OSG::UInt32', possible loss of data
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGFieldConnector.inl(65) : warning C4800: 'OSG::BitVector' : forcing value to bool 'true' or 'false' (performance warning)
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGThreadManager.h(312) : warning C4251: 'OSG::ThreadManager::_sThreadStore' : class 'OSG::MPFieldStore<MPFieldT>' needs to have dll-interface to be used by clients of class 'OSG::ThreadManager'
+1>        with
+1>        [
+1>            MPFieldT=OSG::BaseThread
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGThreadManager.h(313) : warning C4251: 'OSG::ThreadManager::_sBarrierStore' : class 'OSG::MPFieldStore<MPFieldT>' needs to have dll-interface to be used by clients of class 'OSG::ThreadManager'
+1>        with
+1>        [
+1>            MPFieldT=OSG::Barrier
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGThreadManager.h(314) : warning C4251: 'OSG::ThreadManager::_sCondVarStore' : class 'OSG::MPFieldStore<MPFieldT>' needs to have dll-interface to be used by clients of class 'OSG::ThreadManager'
+1>        with
+1>        [
+1>            MPFieldT=OSG::CondVar
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGThreadManager.h(315) : warning C4251: 'OSG::ThreadManager::_sLockStore' : class 'OSG::MPFieldStore<MPFieldT>' needs to have dll-interface to be used by clients of class 'OSG::ThreadManager'
+1>        with
+1>        [
+1>            MPFieldT=OSG::Lock
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGThreadManager.h(316) : warning C4251: 'OSG::ThreadManager::_sLockPoolStore' : class 'OSG::MPFieldStore<MPFieldT>' needs to have dll-interface to be used by clients of class 'OSG::ThreadManager'
+1>        with
+1>        [
+1>            MPFieldT=OSG::LockPool
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGAspectStore.h(120) : warning C4251: 'OSG::AspectStore::_vAspects' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::AspectStore'
+1>        with
+1>        [
+1>            _Ty=OSG::FieldContainer *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGAspectStore.inl(77) : warning C4267: 'argument' : conversion from 'size_t' to 'const OSG::UInt32', possible loss of data
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGAspectStore.inl(96) : warning C4267: 'return' : conversion from 'size_t' to 'OSG::UInt32', possible loss of data
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGAspectStore.inl(156) : warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGFactoryController.h(178) : warning C4251: 'OSG::FactoryControllerBase::_mFactoryMap' : class 'std::map<_Kty,_Ty>' needs to have dll-interface to be used by clients of class 'OSG::FactoryControllerBase'
+1>        with
+1>        [
+1>            _Kty=OSG::IDStringLink,
+1>            _Ty=OSG::FactoryBase *
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGFieldContainerFactory.h(78) : warning C4251: 'OSG::ContainerFactory<DescT>::_mTypeIdMap' : class 'std::map<_Kty,_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ContainerFactory<DescT>'
+1>        with
+1>        [
+1>            DescT=OSG::FieldContainerFactoryDesc
+1>        ]
+1>        and
+1>        [
+1>            _Kty=OSG::UInt32,
+1>            _Ty=OSG::FieldContainerType *
+1>        ]
+1>        and
+1>        [
+1>            DescT=OSG::FieldContainerFactoryDesc
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGFieldContainerFactory.h(78) : warning C4251: 'OSG::ContainerFactory<DescT>::_mTypeNameMap' : class 'std::map<_Kty,_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ContainerFactory<DescT>'
+1>        with
+1>        [
+1>            DescT=OSG::FieldContainerFactoryDesc
+1>        ]
+1>        and
+1>        [
+1>            _Kty=OSG::IDStringLink,
+1>            _Ty=OSG::FieldContainerType *
+1>        ]
+1>        and
+1>        [
+1>            DescT=OSG::FieldContainerFactoryDesc
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGFieldContainerFactory.h(78) : warning C4251: 'OSG::ContainerFactory<DescT>::_mGroupMap' : class 'std::map<_Kty,_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ContainerFactory<DescT>'
+1>        with
+1>        [
+1>            DescT=OSG::FieldContainerFactoryDesc
+1>        ]
+1>        and
+1>        [
+1>            _Kty=OSG::IDStringLink,
+1>            _Ty=OSG::UInt16
+1>        ]
+1>        and
+1>        [
+1>            DescT=OSG::FieldContainerFactoryDesc
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGFieldContainerFactory.h(78) : warning C4251: 'OSG::ContainerFactory<DescT>::_vUnitTypesStore' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ContainerFactory<DescT>'
+1>        with
+1>        [
+1>            DescT=OSG::FieldContainerFactoryDesc
+1>        ]
+1>        and
+1>        [
+1>            _Ty=OSG::FieldContainerType *
+1>        ]
+1>        and
+1>        [
+1>            DescT=OSG::FieldContainerFactoryDesc
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGFieldContainerFactory.h(78) : warning C4251: 'OSG::ContainerFactory<DescT>::_vPostUnitTypes' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::ContainerFactory<DescT>'
+1>        with
+1>        [
+1>            DescT=OSG::FieldContainerFactoryDesc
+1>        ]
+1>        and
+1>        [
+1>            _Ty=OSG::FieldContainerType *
+1>        ]
+1>        and
+1>        [
+1>            DescT=OSG::FieldContainerFactoryDesc
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGFieldContainerFactory.h(203) : warning C4251: 'OSG::FieldContainerFactoryBase::_vContainerStore' : class 'std::deque<_Ty>' needs to have dll-interface to be used by clients of class 'OSG::FieldContainerFactoryBase'
+1>        with
+1>        [
+1>            _Ty=OSG::FieldContainerFactoryBase::ContainerHandlerP
+1>        ]
+1>e:\aashish\src\opensg\r1368\install\windows.x86_32.v80.all.with_collada\include\opensg\OSGFieldContainerFactory.inl(57) : warning C4267: '=' : conversion from 'size_t' to 'OSG::UInt32', possible loss of data

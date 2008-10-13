@@ -60,7 +60,7 @@
 #include <OpenSG/OSGSceneFileHandler.h>
 #include <OpenSG/OSGLineChunk.h>
 #include <OpenSG/OSGSimpleMaterial.h>
-#include <OpenSG/OSGSimpleAttachments.h>
+#include <OpenSG/OSGNameAttachment.h>
 /*------------------------------Boost includes--------------------------------*/
 #include <boost/program_options.hpp>
 namespace bpo = boost::program_options;
@@ -168,6 +168,8 @@ class MultiLoadAppBase : public vrj::OpenSG2App
         OSG::TransformRefPtr    pModelTrans;
     
         OSG::NodeRefPtr         pModelN;
+        OSG::NodeRefPtr         pLight0BeaconN;
+        OSG::TransformRefPtr    pLight0Beacon;
     
         // Lib3ds scene elements and connection to OpenSG
         Lib3dsFile             *pLFile;

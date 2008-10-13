@@ -27,7 +27,7 @@ OSG::GraphOp*
 }
 
 bool
-    ReplaceMatGroupGraphOp::traverse(OSG::NodePtr& root)
+    ReplaceMatGroupGraphOp::traverse(OSG::Node * root)
 {
     if (!Inherited::traverse(root))
     {
@@ -51,34 +51,33 @@ std::string
 }
 
 OSG::Action::ResultE
-    ReplaceMatGroupGraphOp::traverseEnter(OSG::NodePtr& node)
+    ReplaceMatGroupGraphOp::traverseEnter(OSG::Node * const node)
 {
-    if(node == OSG::NullFC)
+    if(!node)
         return OSG::Action::Continue;
         
-    if(node->getCore() == OSG::NullFC)
+    if(node->getCore())
         return OSG::Action::Continue;
         
-    OSG::MaterialGroupPtr pMatGroup =
-        OSG::MaterialGroupPtr::dcast(node->getCore());
+    OSG::MaterialGroupRefPtr pMatGroup = dynamic_cast<OSG::MaterialGroup *>(node->getCore());
         
-    if(pMatGroup != OSG::NullFC)
+    if(pMatGroup)
     {
         _matStack.push_back(pMatGroup->getMaterial());
         
         return OSG::Action::Continue;
     }
     
-    OSG::MaterialDrawablePtr pMatDraw =
-        OSG::MaterialDrawablePtr::dcast(node->getCore());
+    OSG::MaterialDrawableRefPtr pMatDraw =
+       dynamic_cast<OSG::MaterialDrawable *>(node->getCore());
         
-    if(pMatDraw != OSG::NullFC)
+    if(pMatDraw)
     {
         if(pMatDraw->getParents().size() > 1)
         {
-            OSG::NodePtr pCommonMG = findCommonMatGroup(pMatDraw);
+            OSG::NodeRefPtr pCommonMG = findCommonMatGroup(pMatDraw);
             
-            if(pCommonMG == OSG::NullFC)
+            if(!pCommonMG)
             {
                 vprDEBUG(vprDBG_ALL, vprDBG_CRITICAL_LVL)
                     << "ReplaceMatGroupGraphOp::traverseEnter: "
@@ -94,9 +93,11 @@ OSG::Action::ResultE
             << "Pushing Material to MaterialDrawable.\n"
             << vprDEBUG_FLUSH;
             
-        OSG::beginEditCP(pMatDraw);
+        //OSG::beginEditCP(pMatDraw);
             pMatDraw->setMaterial(_matStack.back());
-        OSG::endEditCP  (pMatDraw);
+        //OSG::endEditCP  (pMatDraw);
+
+        OSG::commitChanges();
     }
     
     return OSG::Action::Continue;
@@ -104,42 +105,43 @@ OSG::Action::ResultE
 
 OSG::Action::ResultE
     ReplaceMatGroupGraphOp::traverseLeave(
-        OSG::NodePtr& node, OSG::Action::ResultE res)
+        OSG::Node* const node, OSG::Action::ResultE res)
 {
-    if(node == OSG::NullFC)
+    if(node)
         return OSG::Action::Continue;
         
-    if(node->getCore() == OSG::NullFC)
+    if(node->getCore())
         return OSG::Action::Continue;
         
-    OSG::MaterialGroupPtr pMatGroup =
-        OSG::MaterialGroupPtr::dcast(node->getCore());
+    OSG::MaterialGroupRefPtr pMatGroup =
+        dynamic_cast<OSG::MaterialGroup *>(node->getCore());
         
-    if(pMatGroup != OSG::NullFC)
+    if(pMatGroup)
     {
         _matStack.pop_back();
         
-        OSG::beginEditCP(node, OSG::Node::CoreFieldMask);
+        //OSG::beginEditCP(node, OSG::Node::CoreFieldMask);
             node->setCore(OSG::Group::create());
-        OSG::endEditCP  (node, OSG::Node::CoreFieldMask);
+        //OSG::endEditCP  (node, OSG::Node::CoreFieldMask);
+        OSG::commitChanges();
     }
     
     return OSG::Action::Continue;
 }
 
-OSG::NodePtr
-    ReplaceMatGroupGraphOp::findCommonMatGroup(OSG::NodeCorePtr pCore)
+OSG::NodeRefPtr
+    ReplaceMatGroupGraphOp::findCommonMatGroup(OSG::NodeCoreRefPtr pCore)
 {
-    OSG::NodePtr pNode = pCore->getParents()[0];
+    OSG::NodeRefPtr pNode = dynamic_cast<OSG::Node *>(pCore->getParents()[0]);
     
     while(true)
     {
-        if(pNode == OSG::NullFC)
+        if(!pNode)
             break;
     
-        OSG::NodeCorePtr pCurrCore = pNode->getCore();
+        OSG::NodeCoreRefPtr pCurrCore = pNode->getCore();
         
-        if(OSG::MaterialGroupPtr::dcast(pCurrCore) != OSG::NullFC)
+        if(OSG::dynamic_pointer_cast<OSG::NodeCore>(pCurrCore))
         {
             if(isParent(pNode, pCurrCore->getParents()))
                 return pNode;
@@ -152,11 +154,11 @@ OSG::NodePtr
 }
 
 bool
-    ReplaceMatGroupGraphOp::isParent(OSG::NodePtr pParent, OSG::NodePtr pChild)
+    ReplaceMatGroupGraphOp::isParent(OSG::NodeRefPtr pParent, OSG::NodeRefPtr pChild)
 {
     while(true)
     {
-        if(pChild == OSG::NullFC)
+        if(!pChild)
             return false;
             
         if(pChild == pParent)
@@ -170,16 +172,18 @@ bool
 
 bool
     ReplaceMatGroupGraphOp::isParent(
-        OSG::NodePtr pParent, OSG::MFNodePtr const &nodes)
+        OSG::NodeRefPtr pParent, OSG::MFParentFieldContainerPtr const &nodes)
 {
-    OSG::MFNodePtr::const_iterator nIt  = nodes.begin();
-    OSG::MFNodePtr::const_iterator nEnd = nodes.end  ();
+   // @todo: Ask Carsten.
+    OSG::MFParentFieldContainerPtr::const_iterator nIt  = nodes.begin();
+    OSG::MFParentFieldContainerPtr::const_iterator nEnd = nodes.end  ();
     
     for(; nIt != nEnd; ++nIt)
     {
-        if(!isParent(pParent, *nIt))
+        OSG::NodeRefPtr child = dynamic_cast<OSG::Node *>(*nIt);
+
+        if(!isParent(pParent, child))
             return false;
-    }
-    
+    }    
     return true;
 }

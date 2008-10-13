@@ -11,7 +11,7 @@
 			<DebugSettings
 				Command="$(TargetPath)"
 				WorkingDirectory=""
-				CommandArguments="--config-file=E:\aashish\src\lime\trunk\data\models\test.cfg --vjconfig-file=E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\share\vrjuggler\data\configFiles\simstandalone.jconf"
+				CommandArguments="--config-file=E:\aashish\src\osve\trunk\Projects\Lime\data\models\1200.cfg --vjconfig-file=E:\aashish\src\vrjuggler\vrjuggler-2.2.1\install\windows.x86_32.vc80.all\share\vrjuggler\data\configFiles\simstandalone.jconf"
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"

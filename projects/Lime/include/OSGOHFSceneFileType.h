@@ -42,6 +42,7 @@
 #pragma  once
 #endif
 
+#include <OpenSG/OSGSystemDef.h>
 #include <OpenSG/OSGAction.h>
 #include <OpenSG/OSGBaseTypes.h>
 #include <OpenSG/OSGGeoPositionsFields.h>
@@ -58,7 +59,7 @@ OSG_BEGIN_NAMESPACE
  * \brief InventorSceneFileType
  */
 
-class OSG_SYSTEMLIB_DLLMAPPING OHFSceneFileType : public SceneFileType
+class OSG_SYSTEM_DLLMAPPING OHFSceneFileType : public SceneFileType
 {
 public:
 
@@ -68,7 +69,7 @@ public:
 
     virtual const Char8 *getName(void) const;
 
-    virtual NodePtr read(std::istream &is, const Char8 *fileNameOrExtension) const;
+    virtual NodeRefPtr read(std::istream &is, const Char8 *fileNameOrExtension) const;
 
 protected:
 
@@ -85,11 +86,11 @@ protected:
 
 private:
 
-    NodePtr     createMesh    (OHF::LOHF &scene, OHF::LMesh &mesh) const;
-    MaterialPtr createMaterial(OHF::LOHF &scene, UInt32      id  ) const;
+    NodeRefPtr     createMesh    (OHF::LOHF &scene, OHF::LMesh &mesh) const;
+    MaterialRefPtr createMaterial(OHF::LOHF &scene, UInt32      id  ) const;
 
-    mutable std::map<UInt32, MaterialPtr> _materials;
-    typedef std::map<UInt32, MaterialPtr>::iterator materialIt;
+    mutable std::map<UInt32, MaterialRefPtr> _materials;
+    typedef std::map<UInt32, MaterialRefPtr>::iterator materialIt;
 };
 
 typedef OHFSceneFileType* OHFSceneFileTypeP;

@@ -9,6 +9,7 @@
 
 // OpenSG includes
 #include <OpenSG/OSGGeometry.h>
+#include <OpenSG/OSGNameAttachment.h>
 
 // VRJuggler includes
 #include <vpr/Util/Debug.h>
@@ -55,7 +56,7 @@ void
     
         OSG::FieldContainerRefPtr pObj  = omIt->second;
         OSG::NodeRefPtr           pNode = OSG::dynamic_pointer_cast<OSG::Node>(pObj);
-        OSG::NodeCoreRefPtr       pCore = OSG::dynamic_pointer_cast<OSG::Node>(pObj);
+        OSG::NodeCoreRefPtr       pCore = OSG::dynamic_pointer_cast<OSG::NodeCore>(pObj);
         
         if(pNode && OSG::getName(pNode->getCore()) == NULL)
             pCore = pNode->getCore();
@@ -148,6 +149,8 @@ void
                         pMatGroup->setMaterial(pMat);
                     //endEditCP  (pMatGroup);
                 }
+
+                OSG::commitChanges();
             }
         }
     }
@@ -375,7 +378,8 @@ void
         
         // set the material
         //beginEditCP(pMatDraw);
-            pMatDraw->setMaterial(pMat);
+        pMatDraw->setMaterial(pMat);
+        OSG::commitChanges();
         //endEditCP  (pMatDraw);
     }
     else
@@ -395,7 +399,7 @@ void
     MaterialDesc const  *pMatDesc;
     std::string          matName;
     
-    if(findMaterial(objNameStr, pMat, pMatDesc, matName) && pMat != OSG::NullFC)
+    if(findMaterial(objNameStr, pMat, pMatDesc, matName) && pMat)
     {
         vprDEBUG(vprDBG_ALL, vprDBG_VERB_LVL)
             << "MaterialBinder::bindMaterialGroup: "
@@ -404,7 +408,8 @@ void
             << vprDEBUG_FLUSH;
     
         //beginEditCP(pMatGroup);
-            pMatGroup->setMaterial(pMat);
+        pMatGroup->setMaterial(pMat);
+        OSG::commitChanges();  
         //endEditCP  (pMatGroup);
     }
     else

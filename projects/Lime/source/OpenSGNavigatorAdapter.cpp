@@ -35,7 +35,9 @@ OpenSGNavigatorAdapter::navigate(void)
     	gmtl::mult(newMatrix, newMatrix, matrix);
     }
     
-    OSG::beginEditCP(mTransform);
-        mTransform->getMatrix().setValue(newMatrix.getData());
-    OSG::endEditCP(mTransform);
+    //OSG::beginEditCP(mTransform);
+        mTransform->editMatrix().setValue(newMatrix.getData());
+    //OSG::endEditCP(mTransform);
+    
+    OSG::commitChanges();
 }

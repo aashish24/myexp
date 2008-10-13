@@ -26,8 +26,8 @@ class ObjectRenamer
     void readFile(std::string const &fileName);
     void apply   (void                       );
        
-    OSG::NodePtr getRoot(void              ) const;
-    void         setRoot(OSG::NodePtr pRoot);
+    OSG::NodeRefPtr getRoot(void              ) const;
+    void         setRoot(OSG::NodeRefPtr pRoot);
     
     NameMap const &getNameMap (void) const;
     NameMap       &editNameMap(void);
@@ -35,20 +35,20 @@ class ObjectRenamer
     void dump(std::ostream &os) const;
     
   private:
-    OSG::Action::ResultE traverseEnter(OSG::NodePtr& node);
+    OSG::Action::ResultE traverseEnter(OSG::Node  *node);
     
-    OSG::NodePtr _pRoot;
+    OSG::NodeRefPtr _pRoot;
     NameMap      _nameMap;
 };
 
-inline OSG::NodePtr
+inline OSG::NodeRefPtr
     ObjectRenamer::getRoot(void) const
 {
     return _pRoot;
 }
 
 inline void
-    ObjectRenamer::setRoot(OSG::NodePtr pRoot)
+    ObjectRenamer::setRoot(OSG::NodeRefPtr pRoot)
 {
     _pRoot = pRoot;
 }

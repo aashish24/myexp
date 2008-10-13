@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="CurveDrawing"
+	Name="curve_drawing"
 	ProjectGUID="{31975FCE-ACCE-4988-ABB1-5B66C7CE4F57}"
-	RootNamespace="CurveDrawing"
+	RootNamespace="curve_drawing"
 	Keyword="Win32Proj"
 	>
 	<Platforms>

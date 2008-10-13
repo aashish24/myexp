@@ -4,7 +4,8 @@
 #include <PathHandler.h>
 
 // OpenSG includes
-#include <OpenSG/OSGSimpleAttachments.h>
+//#include <OpenSG/OSGSimpleAttachments.h>
+#include <OpenSG/OSGNameAttachment.h>
 
 // VRJuggler includes
 #include <vpr/Util/Debug.h>
@@ -85,12 +86,16 @@ void
 void 
     ObjectRenamer::apply(void)
 {
+  // @todo: Ask carsten. 
+  /*
     OSG::traverse(
         _pRoot,
         OSG::osgTypedMethodFunctor1ObjPtrCPtrRef<
             OSG::Action::ResultE,
             Self,
             OSG::NodePtr         >(this, &Self::traverseEnter));
+ */
+  OSG::traverse(_pRoot.get(), boost::bind(&Self::traverseEnter, this, _1));
 }
 
 void
@@ -108,9 +113,9 @@ void
 }
 
 OSG::Action::ResultE
-    ObjectRenamer::traverseEnter(OSG::NodePtr& pNode)
+    ObjectRenamer::traverseEnter(OSG::Node *pNode)
 {
-    if(pNode == OSG::NullFC)
+    if(!pNode)
         return OSG::Action::Continue;
 
     if(OSG::getName(pNode) == NULL)
@@ -126,9 +131,9 @@ OSG::Action::ResultE
     }
     
     // rename the core
-    OSG::NodeCorePtr pCore = pNode->getCore();
+    OSG::NodeCoreRefPtr pCore = pNode->getCore();
     
-    if(pCore == OSG::NullFC)
+    if(!pCore)
     {
         vprDEBUG(vprDBG_ALL, vprDBG_CRITICAL_LVL)
             << "ObjectRenamer::traverseEnter: Node without core.\n"

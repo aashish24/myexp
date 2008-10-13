@@ -32,7 +32,7 @@
 
 #include "MultiLoadAppBase.h"
 
-#include "OpenSGVectorInput.h"
+//#include "OpenSGVectorInput.h"
 #include "GamepadNavigator.h"
 #include "WandNavigator.h"
 #include "WandFlyNavigator.h"
@@ -238,7 +238,7 @@ MultiLoadAppBase::draw(void)
 
 void
 MultiLoadAppBase::preFrame(void)
-{
+{  
 	Inherited::preFrame();
 	
 	// **************************** Cluster ********************************** /
@@ -246,6 +246,8 @@ MultiLoadAppBase::preFrame(void)
     // the first few frames.
     // If any navigation happens during that time, the nodes show misaligned
     // images
+    
+    //std::cout << " preFrame 1: " << std::endl;
     static unsigned int frameCount = 0;
     if(frameCount < 10)
     {
@@ -259,15 +261,17 @@ MultiLoadAppBase::preFrame(void)
     }
     // *************************************************************************** /
     
+    //std::cout << " preFrame 2: " << std::endl;
     mCurrTime.setNow();                                     // LOCAL TIME
 //     mCurrTime = mButtonNextScene->getTimeStamp();           // CLUSTER TIME
     
+    //std::cout << " preFrame 3: " << std::endl;
     vprDEBUG(vprDBG_ALL, vprDBG_STATE_LVL) 
                 << "MultiLoadAppBase::preFrame: current time is " << mCurrTime.secf()
                 << std::endl << vprDEBUG_FLUSH;
     updateTime(mCurrTime);
     
-    
+    //std::cout << " preFrame 5: " << std::endl;
     //*************************************************************************** /
     // switch to next scene
     if(mButtonNextScene->getData() == gadget::Digital::TOGGLE_OFF)
@@ -297,11 +301,11 @@ MultiLoadAppBase::preFrame(void)
     if(mButtonRewindSceneAnim->getData() == gadget::Digital::TOGGLE_OFF)
     {
         rewindAnimation();
-    }
+    }    
     
     // switch to/from free camera
-    if(mButtonToggleFreeCamera->getData() == gadget::Digital::TOGGLE_OFF)
-    {
+    if(mButtonToggleFreeCamera->getData() == gadget::Digital::TOGGLE_ON)
+    {     
         if(mActiveSceneData->mFreeCam == true)
         {
             vprDEBUG(vprDBG_ALL, vprDBG_STATE_LVL) 
@@ -312,9 +316,10 @@ MultiLoadAppBase::preFrame(void)
             mActiveSceneData->pCamManager->load(0);
 
             // clear the model transform - animated camera is in correct coord sys
-            OSG::beginEditCP(mActiveSceneData->pModelTrans, OSG::Transform::MatrixFieldMask);
-                mActiveSceneData->pModelTrans->getMatrix().setIdentity();
-            OSG::beginEditCP(mActiveSceneData->pModelTrans, OSG::Transform::MatrixFieldMask);
+            //OSG::beginEditCP(mActiveSceneData->pModelTrans, OSG::Transform::MatrixFieldMask);
+                mActiveSceneData->pModelTrans->editMatrix().setIdentity();
+            //OSG::beginEditCP(mActiveSceneData->pModelTrans, OSG::Transform::MatrixFieldMask);
+             OSG::commitChanges();            
         }
         else
         {
@@ -333,19 +338,22 @@ MultiLoadAppBase::preFrame(void)
             lookAtMatInv.invertFrom(lookAtMat);
 
             // clear the model transform - animated camera is in correct coord sys
-            OSG::beginEditCP(mActiveSceneData->pModelTrans, OSG::Transform::MatrixFieldMask);
+            //OSG::beginEditCP(mActiveSceneData->pModelTrans, OSG::Transform::MatrixFieldMask);
                 mActiveSceneData->pModelTrans->setMatrix(lookAtMatInv);
-            OSG::beginEditCP(mActiveSceneData->pModelTrans, OSG::Transform::MatrixFieldMask);
+            //OSG::beginEditCP(mActiveSceneData->pModelTrans, OSG::Transform::MatrixFieldMask);
+
+            OSG::commitChanges();
 
             OSG::Matrix adjustViewMat;
             adjustViewMat.setRotate(OSG::Quaternion(OSG::Vec3f(1.0, 0.0, 0.0), gmtl::Math::PI_OVER_2));
 
-            OSG::beginEditCP(mActiveSceneData->pSceneTrans, OSG::Transform::MatrixFieldMask);
-                mActiveSceneData->pSceneTrans->getMatrix().multLeft(lookAtMatInv);
-                mActiveSceneData->pSceneTrans->getMatrix().mult    (lookAtMat   );
-                mActiveSceneData->pSceneTrans->getMatrix().multLeft(adjustViewMat);
-            OSG::endEditCP  (mActiveSceneData->pSceneTrans, OSG::Transform::MatrixFieldMask);
-        }
+            //OSG::beginEditCP(mActiveSceneData->pSceneTrans, OSG::Transform::MatrixFieldMask);
+                mActiveSceneData->pSceneTrans->editMatrix().multLeft(lookAtMatInv);
+                mActiveSceneData->pSceneTrans->editMatrix().mult    (lookAtMat   );
+                mActiveSceneData->pSceneTrans->editMatrix().multLeft(adjustViewMat);
+            //OSG::endEditCP  (mActiveSceneData->pSceneTrans, OSG::Transform::MatrixFieldMask);
+             OSG::commitChanges();
+        }       
     }
     
     // play/pause camera animation
@@ -375,7 +383,7 @@ MultiLoadAppBase::preFrame(void)
         mActiveSceneData->mNavigatorAdapter.navigate();
     }
 
-    pConsole->processCommands();
+    //pConsole->processCommands();
 }
 
 void
@@ -489,7 +497,7 @@ MultiLoadAppBase::initScene(void)
     }
     
     /***  Init Console ***/
-    pConsole->init(); 
+    //pConsole->init(); 
     
     /***  Go to first scene ***/
     switchScene(0);
@@ -1064,6 +1072,9 @@ void
     // convert time elapsed time since animation started into frames
     vpr::Interval elapsedTime = 
         mActiveSceneData->mAnimTime - mActiveSceneData->mAnimStartTime;
+
+    // @note: Assumption of 30 FPS?? 
+    // @todo: May need to fix this. 
     float         frame       = 30.0f * elapsedTime.secf();
     float         numFrames   =         mActiveSceneData->pLFile->frames;
     
@@ -1131,11 +1142,12 @@ MultiLoadAppBase::SceneDataBase *
         pSD->pModelTransN = OSG::Node     ::create();
         pSD->pModelTrans  = OSG::Transform::create();
         
-        OSG::beginEditCP(pSD->pModelTransN);
+        //OSG::beginEditCP(pSD->pModelTransN);
             pSD->pModelTransN->setCore (pSD->pModelTrans);
             pSD->pModelTransN->addChild(pSD->pModelN    );
-        OSG::endEditCP  (pSD->pModelTransN);
+        //OSG::endEditCP  (pSD->pModelTransN);
         
+         OSG::commitChanges();
         vprDEBUG(vprDBG_ALL, vprDBG_STATE_LVL)
             << "[MultiLoadAppBase::loadScene()] Loading [" << pSO->mModelFile 
             << "] complete.\n" << vprDEBUG_FLUSH;
@@ -1155,51 +1167,61 @@ MultiLoadAppBase::SceneDataBase *
     // BEGIN Light 0
     OSG::NodeRefPtr             pLight0N      (OSG::Node::create()            );
     OSG::DirectionalLightRefPtr pLight0       (OSG::DirectionalLight::create());
-    OSG::NodeRefPtr             pLight0BeaconN(OSG::Node::create()            );
-    OSG::TransformRefPtr        pLight0Beacon (OSG::Transform::create()       );
-    
+    //OSG::NodeRefPtr             pLight0BeaconN(OSG::Node::create()            );
+    //OSG::TransformRefPtr        pLight0Beacon (OSG::Transform::create()       );
+
+    pSD->pLight0BeaconN = OSG::NodeRefPtr( OSG::Node::create() );
+    pSD->pLight0Beacon  = OSG::TransformRefPtr( OSG::Transform::create() );
+  
     OSG::Matrix light0Pos;
     light0Pos.setTranslate(OSG::Vec3f(0.0f, 10.0f, 0.0f));
     
-    OSG::beginEditCP(pLight0Beacon, OSG::Transform::MatrixFieldMask);
-        pLight0Beacon->setMatrix(light0Pos);
-    OSG::endEditCP(pLight0Beacon, OSG::Transform::MatrixFieldMask);
-    
-    OSG::beginEditCP(pLight0BeaconN, OSG::Node::CoreFieldMask);
-        pLight0BeaconN->setCore(pLight0Beacon);
-    OSG::endEditCP(pLight0BeaconN, OSG::Node::CoreFieldMask);
-    
-    OSG::beginEditCP(pLight0N);
+    //OSG::beginEditCP(pLight0Beacon, OSG::Transform::MatrixFieldMask);
+        pSD->pLight0Beacon->setMatrix(light0Pos);
+    //OSG::endEditCP(pLight0Beacon, OSG::Transform::MatrixFieldMask);
+    OSG::commitChanges();
+    //OSG::beginEditCP(pLight0BeaconN, OSG::Node::CoreFieldMask);
+        pSD->pLight0BeaconN->setCore(pSD->pLight0Beacon);
+    //OSG::endEditCP(pLight0BeaconN, OSG::Node::CoreFieldMask);
+    OSG::commitChanges();
+    //OSG::beginEditCP(pLight0N);
         pLight0N->setCore(pLight0);
-    OSG::endEditCP(pLight0N);
+    //OSG::endEditCP(pLight0N);
+    OSG::commitChanges();
     
-    OSG::beginEditCP(pLight0N);
+    //OSG::beginEditCP(pLight0N);
         pLight0->setAmbient  ( 0.5f,  0.5f,  0.5f,  1.0f);
         pLight0->setDiffuse  ( 0.3f,  0.3f,  0.3f,  1.0f);
         pLight0->setSpecular ( 0.5f,  0.5f,  0.5f,  1.0f);
         pLight0->setDirection( 0.0f,  0.5f,  0.5f       );
-        pLight0->setBeacon   (pLight0BeaconN            );
-    OSG::endEditCP(pLight0N);
-    
+        pLight0->setBeacon   (pSD->pLight0BeaconN            );
+    //OSG::endEditCP(pLight0N);
+    OSG::commitChanges();
+
     OSG::setName(pLight0N,       "_internal_pLight0N"      );
-    OSG::setName(pLight0BeaconN, "_internal_pLight0BeaconN");
+    OSG::setName(pSD->pLight0BeaconN, "_internal_pLight0BeaconN");
+    
+
     // END Light 0
     
     // assemble scene
-    OSG::beginEditCP(pSD->pSceneTransN);
+    //OSG::beginEditCP(pSD->pSceneTransN);
         pSD->pSceneTransN->setCore (pSD->pSceneTrans);
-        pSD->pSceneTransN->addChild(pLight0N        );
-    OSG::endEditCP(pSD->pSceneTransN);
+        pSD->pSceneTransN->addChild(pLight0N        );       
+    //OSG::endEditCP(pSD->pSceneTransN);
+    OSG::commitChanges();
        
-    OSG::beginEditCP(pSD->pRootN);
+    //OSG::beginEditCP(pSD->pRootN);
         pSD->pRootN->setCore (OSG::Group::create());
         pSD->pRootN->addChild(pSD->pSceneTransN   );
-    OSG::endEditCP  (pSD->pRootN);
+    //OSG::endEditCP  (pSD->pRootN);
+    OSG::commitChanges();
 
-    OSG::beginEditCP(pLight0N);
+    //OSG::beginEditCP(pLight0N);
         pLight0N->addChild(pSD->pModelTransN);
-    OSG::endEditCP  (pLight0N);
-    
+    //OSG::endEditCP  (pLight0N);
+    OSG::commitChanges();
+
     // adjust model to match initial position and view
     OSG::Matrix lookAtMatInv;
     OSG::MatrixLookAt(lookAtMatInv, pSO->mStartPos,
@@ -1208,6 +1230,7 @@ MultiLoadAppBase::SceneDataBase *
     lookAtMatInv.invert();
     
     
+     OSG::commitChanges();
     // END SCENE CONSTRUCTION
     
     pSD->pNavigator = createNavigator(pSO->mNavigatorType);
@@ -1220,8 +1243,9 @@ MultiLoadAppBase::SceneDataBase *
     pSD->mNavigatorAdapter.initialize();
     
     //set Object Cache
-    pSD->pObjCache->setRoot(pSD->pRootN);
+    pSD->pObjCache->setRoot(pSD->pRootN);  
     
+
     return pSD;
 }
 

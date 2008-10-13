@@ -26,7 +26,7 @@ class ReplaceMatGroupGraphOp : public OSG::GraphOp
     /*=======================================================================*/
     /* Traversal                                                             */
     
-    virtual bool traverse(OSG::NodePtr& root);
+    virtual bool traverse(OSG::Node *root);
     
     /*=======================================================================*/
     /* Parameters                                                            */
@@ -35,15 +35,16 @@ class ReplaceMatGroupGraphOp : public OSG::GraphOp
     virtual std::string usage    (void                    );
     
   protected:
-    virtual OSG::Action::ResultE traverseEnter(OSG::NodePtr&        node );
-    virtual OSG::Action::ResultE traverseLeave(OSG::NodePtr&        node,
+    virtual OSG::Action::ResultE traverseEnter(OSG::Node*        const node );
+    virtual OSG::Action::ResultE traverseLeave(OSG::Node*        const node,
                                                OSG::Action::ResultE res  );
     
-    OSG::NodePtr findCommonMatGroup(OSG::NodeCorePtr pCore   );
-    bool         isParent(OSG::NodePtr pParent, OSG::NodePtr          pChild);
-    bool         isParent(OSG::NodePtr pParent, OSG::MFNodePtr const &nodes );    
+    OSG::NodeRefPtr findCommonMatGroup(OSG::NodeCoreRefPtr pCore   );
+    bool            isParent(OSG::NodeRefPtr pParent, OSG::NodeRefPtr          pChild);
+    //bool            isParent(OSG::NodeRefPtr pParent, OSG::MFNodeRefPtr const &nodes ); 
+    bool            isParent(OSG::NodeRefPtr pParent, OSG::MFParentFieldContainerPtr const &nodes );   
                              
-    typedef std::vector<OSG::MaterialPtr> MaterialStack;
+    typedef std::vector<OSG::MaterialRefPtr> MaterialStack;
     
     MaterialStack _matStack;
 };

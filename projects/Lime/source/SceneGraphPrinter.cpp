@@ -1,11 +1,13 @@
 
+#include <OpenSG/OSGNameAttachment.h>
 
 #include <SceneGraphPrinter.h>
+#include <boost/bind.hpp>
 
 // OpenSG includes
-#include <OpenSG/OSGSimpleAttachments.h>
+//#include <OpenSG/OSGSimpleAttachments.h>
 
-    SceneGraphPrinter::SceneGraphPrinter(OSG::NodePtr root)
+    SceneGraphPrinter::SceneGraphPrinter(OSG::NodeRefPtr root)
     
     : _pRoot  (root),
       _pStream(NULL),
@@ -19,51 +21,46 @@ void
 {
     _pStream = &os;
     _indent  = 0;
-    
-    OSG::traverse(
-        _pRoot,
-        OSG::osgTypedMethodFunctor1ObjPtrCPtrRef<
-            OSG::Action::ResultE,
-            SceneGraphPrinter,
-            OSG::NodePtr         >(this, &Self::traverseEnter),
-        OSG::osgTypedMethodFunctor2ObjPtrCPtrRef<
-            OSG::Action::ResultE,
-            SceneGraphPrinter,
-            OSG::NodePtr,
-            OSG::Action::ResultE >(this, &Self::traverseLeave));
+
+    OSG::traverse( _pRoot.get(),
+                   boost::bind(&Self::traverseEnter, this, _1    ),
+                   boost::bind(&Self::traverseLeave, this, _1, _2));
 }
 
 OSG::Action::ResultE
-    SceneGraphPrinter::traverseEnter(OSG::NodePtr &node)
+    SceneGraphPrinter::traverseEnter(OSG::Node *node)
 {
-    if(node == OSG::NullFC)
+    if(!node)
         return OSG::Action::Continue;
     
     std::ostream &os = *_pStream;
     incIndent();
     
     indentStream(os)
-        <<   "[" << node.getCPtr()
+        <<   "[" << node
         << "] [" << (OSG::getName(node) ? OSG::getName(node) : "-")
         << "]";
     
-    OSG::NodeCorePtr pCore = node->getCore();
+    OSG::NodeCoreRefPtr pCore = node->getCore();
     
-    if(pCore == OSG::NullFC)
+    if(!pCore)
     {
         os << "\n";
         return OSG::Action::Continue;
     }
     
-    os << " -- [" << pCore.getCPtr() << "]"
+    os << " -- [" << pCore.get() << "]"
        <<    " [" << pCore->getType().getCName() << "]";
     
     os << " [" << (OSG::getName(pCore) ? OSG::getName(pCore) : "-")
        << "]";
     
-    OSG::MFNodePtr::const_iterator pIt  = pCore->getParents().begin();
-    OSG::MFNodePtr::const_iterator pEnd = pCore->getParents().end  ();
+    //OSG::MFNodeRefPtr::const_iterator pIt  = pCore->getParents().begin();
+    //OSG::MFNodeRefPtr::const_iterator pEnd = pCore->getParents().end  ();
     
+    OSG::MFParentFieldContainerPtr::const_iterator pIt  = pCore->getParents().begin();
+    OSG::MFParentFieldContainerPtr::const_iterator pEnd = pCore->getParents().end  ();
+
     os << " -- [" << pCore->getParents().size() << "] parents";
     
 //     for(; pIt != pEnd; ++pIt)
@@ -78,9 +75,9 @@ OSG::Action::ResultE
 }
 
 OSG::Action::ResultE
-    SceneGraphPrinter::traverseLeave(OSG::NodePtr &node, OSG::Action::ResultE res)
+    SceneGraphPrinter::traverseLeave(OSG::Node *node, OSG::Action::ResultE res)
 {
-    if(node == OSG::NullFC)
+    if(!node)
         return OSG::Action::Continue;
     
     decIndent();

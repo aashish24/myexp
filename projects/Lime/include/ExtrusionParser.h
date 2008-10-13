@@ -3,7 +3,10 @@
 #define _EXTRUSIONPARSER_H_
 
 // boost spirit includes
-#define BOOST_SPIRIT_DEBUG
+
+// @note: Lets not define this as at this point its not printing any useful data. 
+//#define BOOST_SPIRIT_DEBUG
+
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility/confix.hpp>
 #include <boost/bind.hpp>
@@ -63,9 +66,7 @@ inline void
     ExtrusionBuilder<IteratorTypeT>::addExtrusion(
         IteratorType begin, IteratorType end)
 {
-    //std::cout << "addExtrusion" << std::endl;
-
-    _extStore.push_back(ExtrusionDesc());
+  _extStore.push_back(ExtrusionDesc());
 }
 
 template <class IteratorTypeT>
@@ -297,6 +298,7 @@ template <class ScannerT   >
 inline bs::rule<ScannerT> const &
     ExtrusionGrammar<ExtBuilderT>::definition<ScannerT>::start(void) const
 {
+    std::cout << "ExtrusionGrammar: " << std::endl;
     return file;
 }
 

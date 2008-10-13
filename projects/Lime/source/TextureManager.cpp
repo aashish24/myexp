@@ -110,7 +110,7 @@ OSG::TextureChunkRefPtr
     
     if(_pPathHandler->findFile(pDesc->_fileName, fullImgPath) == true)
     {
-        pTexImg = OSG::ImageFileHandler::the().read(fullImgPath.c_str());
+        pTexImg = OSG::ImageFileHandler::the()->read(fullImgPath.c_str());
     }
     else
     {
@@ -120,13 +120,15 @@ OSG::TextureChunkRefPtr
             << vprDEBUG_FLUSH;
     }
     
-    if(pTexImg != OSG::NullFC)
+    if(pTexImg)
     {
-        OSG::ImagePtr pTexImage = pTexImg.get();
+        OSG::ImageRefPtr pTexImage = pTexImg.get();
     
-        beginEditCP(pTex);
+        //beginEditCP(pTex);
             pTex->setImage(pTexImage);
-        endEditCP  (pTex);
+        //endEditCP  (pTex);
+
+        OSG::commitChanges();  
     }
     else
     {
@@ -178,7 +180,7 @@ void
     
     if(_pPathHandler->findFile(pDesc->_fileName, fullImgPath) == true)
     {
-        pTexImg = OSG::ImageFileHandler::the().read(fullImgPath.c_str());
+        pTexImg = OSG::ImageFileHandler::the()->read(fullImgPath.c_str());
     }
     else
     {
@@ -188,13 +190,13 @@ void
             << vprDEBUG_FLUSH;
     }
     
-    if(pTexImg != OSG::NullFC)
+    if(pTexImg)
     {
-        OSG::ImagePtr pTexImage = pTexImg.get();
+        OSG::ImageRefPtr pTexImage = pTexImg.get();
     
-        beginEditCP(pTex);
+        //beginEditCP(pTex);
             pTex->setImage(pTexImage);
-        endEditCP  (pTex);
+        //endEditCP  (pTex);
     }
     else
     {

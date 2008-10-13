@@ -5,6 +5,8 @@
 
 #include <AnimationTools.h>
 
+//unsigned int const KeyframeAnimationDesc::numTracks = 9;
+
 /*===========================================================================*/
 /* DescBase                                                                  */
 
@@ -173,7 +175,6 @@ const TextureDesc&
 /*===========================================================================*/
 /* KeyframeAnimationDesc                                                     */
 
-unsigned int const KeyframeAnimationDesc::numTracks;
 
 void
     KeyframeAnimationDesc::Keyframe::dump(std::ostream &os) const

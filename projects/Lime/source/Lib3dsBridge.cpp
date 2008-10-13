@@ -3,8 +3,10 @@
 
 // OpenSG includes
 #include <OpenSG/OSGGroup.h>
-//#include <OpenSG/OSGSimpleAttachments.h>
+#include <OpenSG/OSGNameAttachment.h>
 #include <OpenSG/OSGTransform.h>
+#include <OpenSG/OSGTypedGeoIntegralProperty.h>
+#include <OpenSG/OSGTypedGeoVectorProperty.h>
 
 // VRJuggler includes
 #include <vpr/Util/Debug.h>
@@ -103,7 +105,7 @@ void
 }
 
 
-OSG::NodePtr
+OSG::NodeRefPtr
     Lib3dsBridge::construct(void)
 {
     vprDEBUG_OutputGuard(vprDBG_ALL, vprDBG_DETAILED_LVL,
@@ -113,18 +115,20 @@ OSG::NodePtr
     OSG::NodeRefPtr  pRootN(OSG::Node ::create());
     OSG::GroupRefPtr pRoot (OSG::Group::create());
     
-    OSG::beginEditCP(pRootN, OSG::Node::CoreFieldMask);
+    //OSG::beginEditCP(pRootN, OSG::Node::CoreFieldMask);
         pRootN->setCore(pRoot);
-    OSG::endEditCP(pRootN, OSG::Node::CoreFieldMask);
+    //OSG::endEditCP(pRootN, OSG::Node::CoreFieldMask);
     
+    OSG::commitChanges();
+
     for(Lib3dsNode *pLNode = _pLFile->nodes; pLNode != NULL; pLNode = pLNode->next)
     {
         constructScene(pLNode, pRootN);
     }
     
     _pRoot = pRootN;
-    
-    return pRootN.get();
+
+    return pRootN;
 }
 
 void
@@ -137,9 +141,8 @@ void
     {
         Lib3dsNode       *pLNode   =  nmIt    ->_pLNode;
         Lib3dsObjectData *pData    = &pLNode  ->data.object;
-        OSG::NodePtr      pNTransN =  nmIt    ->_pNode;
-        OSG::TransformPtr pNTrans  =
-            OSG::TransformPtr::dcast(pNTransN->getCore());
+        OSG::NodeRefPtr   pNTransN =  nmIt    ->_pNode;
+        OSG::TransformRefPtr pNTrans  = dynamic_cast<OSG::Transform *>(pNTransN->getCore());
         
         OSG::Matrix nodeMatrix;
         OSG::Matrix pivotMatrix;
@@ -151,9 +154,10 @@ void
         
         nodeMatrix.mult(pivotMatrix);
         
-        OSG::beginEditCP(pNTrans, OSG::Transform::MatrixFieldMask);
+        //OSG::beginEditCP(pNTrans, OSG::Transform::MatrixFieldMask);
             pNTrans->setMatrix(nodeMatrix);
-        OSG::endEditCP  (pNTrans, OSG::Transform::MatrixFieldMask);
+        //OSG::endEditCP  (pNTrans, OSG::Transform::MatrixFieldMask);
+        OSG::commitChanges();
     }
 }
 
@@ -190,20 +194,23 @@ void
             
             OSG::NodeRefPtr      pGeoN   (OSG::Node     ::create());
             
-            OSG::beginEditCP(pNode, OSG::Node::ChildrenFieldMask);
+            //OSG::beginEditCP(pNode, OSG::Node::ChildrenFieldMask);
                 pNode->addChild(pNTransN);
-            OSG::endEditCP  (pNode, OSG::Node::ChildrenFieldMask);
-            
-            OSG::beginEditCP(pNTransN, OSG::Node::ChildrenFieldMask | OSG::Node::CoreFieldMask);
+            //OSG::endEditCP  (pNode, OSG::Node::ChildrenFieldMask);
+            OSG::commitChanges(); 
+
+            //OSG::beginEditCP(pNTransN, OSG::Node::ChildrenFieldMask | OSG::Node::CoreFieldMask);
                 pNTransN->setCore (pNTrans );
                 pNTransN->addChild(pMTransN);
-            OSG::endEditCP  (pNTransN, OSG::Node::ChildrenFieldMask | OSG::Node::CoreFieldMask);
-            
-            OSG::beginEditCP(pMTransN, OSG::Node::ChildrenFieldMask | OSG::Node::CoreFieldMask);
+            //OSG::endEditCP  (pNTransN, OSG::Node::ChildrenFieldMask | OSG::Node::CoreFieldMask);
+            OSG::commitChanges(); 
+
+            //OSG::beginEditCP(pMTransN, OSG::Node::ChildrenFieldMask | OSG::Node::CoreFieldMask);
                 pMTransN->setCore (pMTrans);
                 pMTransN->addChild(pGeoN  );
-            OSG::endEditCP  (pMTransN, OSG::Node::ChildrenFieldMask | OSG::Node::CoreFieldMask);
-            
+            //OSG::endEditCP  (pMTransN, OSG::Node::ChildrenFieldMask | OSG::Node::CoreFieldMask);
+            OSG::commitChanges(); 
+
             // set names
     //         std::string nodeTransName(pLNode->name != NULL ? pLNode->name : "");
     //         std::string meshTransName(pLNode->name != NULL ? pLNode->name : "");
@@ -221,10 +228,11 @@ void
             OSG::Matrix nodeMat;
             nodeMat.setValue(&pLNode->matrix[0][0]);
             
-            OSG::beginEditCP(pNTrans, OSG::Transform::MatrixFieldMask);
+            //OSG::beginEditCP(pNTrans, OSG::Transform::MatrixFieldMask);
                 pNTrans->setMatrix(nodeMat);
-            OSG::endEditCP  (pNTrans, OSG::Transform::MatrixFieldMask);
-            
+            //OSG::endEditCP  (pNTrans, OSG::Transform::MatrixFieldMask);
+            OSG::commitChanges(); 
+
             // mesh matrix
             OSG::Matrix meshMat;
             meshMat.setValue(&pLMesh->matrix[0][0]);
@@ -238,10 +246,11 @@ void
                     << vprDEBUG_FLUSH;
             }        
                 
-            OSG::beginEditCP(pMTrans, OSG::Transform::MatrixFieldMask);
+            //OSG::beginEditCP(pMTrans, OSG::Transform::MatrixFieldMask);
                 pMTrans->setMatrix(meshMat);
-            OSG::endEditCP  (pMTrans, OSG::Transform::MatrixFieldMask);
-            
+            //OSG::endEditCP  (pMTrans, OSG::Transform::MatrixFieldMask);
+            OSG::commitChanges(); 
+
             // geometry
             OSG::GeometryRefPtr pGeo(constructGeometry(pLMesh));
             
@@ -252,13 +261,16 @@ void
                 OSG::setName(pGeoN, meshName);
             }
             
-            OSG::beginEditCP(pGeoN, OSG::Node::CoreFieldMask);
+            //OSG::beginEditCP(pGeoN, OSG::Node::CoreFieldMask);
                 pGeoN->setCore(pGeo);
-            OSG::endEditCP  (pGeoN, OSG::Node::CoreFieldMask);
-            
+            //OSG::endEditCP  (pGeoN, OSG::Node::CoreFieldMask);
+            OSG::commitChanges(); 
+
             // store node mapping
             _nodeMap.push_back(NodeMapEntry(pLNode, pNTransN));
         }
+
+        OSG::commitChanges(); 
     }
     
     // recursively add children
@@ -279,36 +291,48 @@ OSG::GeometryRefPtr
     Lib3dsVector *pLNormals = new Lib3dsVector[3 * pLMesh->faces];
     lib3ds_mesh_calculate_normals(pLMesh, pLNormals);
     
-    if((pLMesh->texels > 0) && (pLMesh->texels == pLMesh->points));
+    if((pLMesh->texels > 0) && (pLMesh->texels == pLMesh->points))
         hasTexCoords = true;
     
     OSG::GeometryRefPtr         pGeo(OSG::Geometry::create());
     
-    OSG::GeoPTypesUI8Ptr    pTypes     = OSG::GeoPTypesUI8   ::create();
-    OSG::GeoPLengthsUI32Ptr pLengths   = OSG::GeoPLengthsUI32::create();
-    OSG::GeoIndicesUI32Ptr  pIndices   = OSG::GeoIndicesUI32 ::create();
-    OSG::GeoPositions3fPtr  pPos       = OSG::GeoPositions3f ::create();
-    OSG::GeoNormals3fPtr    pNorms     = OSG::GeoNormals3f   ::create();
-    OSG::GeoTexCoords2fPtr  pTexCoords = OSG::GeoTexCoords2f ::create();
+    OSG::GeoUInt8PropertyRefPtr  pTypes     = OSG::GeoPTypesUI8   ::create();
+    OSG::GeoUInt32PropertyRefPtr pLengths   = OSG::GeoPLengthsUI32::create();
+
+    // Indices for the vertex.
+    OSG::GeoUInt32PropertyRefPtr pIndices   = OSG::GeoIndicesUI32 ::create();
+    //OSG::GeoUInt32PropertyRefPtr tIndices   = OSG::GeoIndicesUI32 ::create();
+    OSG::GeoUInt32PropertyRefPtr nIndices   = OSG::GeoIndicesUI32 ::create();
+
+    OSG::GeoPnt3fPropertyRefPtr  pPos       = OSG::GeoPositions3f ::create();
+    OSG::GeoVec3fPropertyRefPtr  pNorms     = OSG::GeoNormals3f   ::create();
+    OSG::GeoVec2fPropertyRefPtr  pTexCoords = OSG::GeoTexCoords2f ::create();
     
-    OSG::beginEditCP(pTypes    );
-    OSG::beginEditCP(pLengths  );
-    OSG::beginEditCP(pIndices  );
-    OSG::beginEditCP(pPos      );
-    OSG::beginEditCP(pNorms    );
-    OSG::beginEditCP(pTexCoords);
+    //OSG::beginEditCP(pTypes    );
+    //OSG::beginEditCP(pLengths  );
+    //OSG::beginEditCP(pIndices  );
+    //OSG::beginEditCP(pPos      );
+    //OSG::beginEditCP(pNorms    );
+    //OSG::beginEditCP(pTexCoords);
     {
-        OSG::GeoPTypesUI8   ::StoredFieldType *pT = pTypes    ->getFieldPtr();
-        OSG::GeoPLengthsUI32::StoredFieldType *pL = pLengths  ->getFieldPtr();
-        OSG::GeoIndicesUI32 ::StoredFieldType *pI = pIndices  ->getFieldPtr();
-        OSG::GeoPositions3f ::StoredFieldType *pP = pPos      ->getFieldPtr();
-        OSG::GeoNormals3f   ::StoredFieldType *pN = pNorms    ->getFieldPtr();
-        OSG::GeoTexCoords2f ::StoredFieldType *pX = pTexCoords->getFieldPtr();
+        OSG::GeoUInt8Property ::StoredFieldType *pT = pTypes    ->editFieldPtr();
+        OSG::GeoUInt32Property::StoredFieldType *pL = pLengths  ->editFieldPtr();      
+         
+        OSG::GeoUInt32Property::StoredFieldType *pI = pIndices  ->editFieldPtr();
+        //OSG::GeoUInt32Property::StoredFieldType *tI = tIndices  ->editFieldPtr();
+        OSG::GeoUInt32Property::StoredFieldType *nI = nIndices  ->editFieldPtr();  
+            
+        OSG::GeoPnt3fProperty ::StoredFieldType *pP = pPos      ->editFieldPtr();
+        OSG::GeoVec3fProperty ::StoredFieldType *pN = pNorms    ->editFieldPtr();
+        OSG::GeoVec2fProperty ::StoredFieldType *pX = pTexCoords->editFieldPtr();
                
         pT->push_back(GL_TRIANGLES     );
         pL->push_back(3 * pLMesh->faces);
         
-        pI->reserve(2 * 3 * pLMesh->faces );
+        //pI->reserve(2 * 3 * pLMesh->faces );
+        pI->reserve(3 * pLMesh->faces );
+        nI->reserve(3 * pLMesh->faces );
+
         pP->reserve(        pLMesh->points);
         pN->reserve(    3 * pLMesh->faces );
         pX->reserve(        pLMesh->points);
@@ -320,7 +344,9 @@ OSG::GeometryRefPtr
             for(unsigned int v = 0; v < 3; ++v)
             {
                 pI->push_back(pLFace->points[v]); // vertex index
-                pI->push_back(3 * f + v        ); // normal index
+                //pI->push_back(3 * f + v        ); // normal index
+
+                nI->push_back( 3* f + v            ); // normal index
                 
                 // copy normal
                 OSG::Vec3f norm(pLNormals[3 * f + v][0],
@@ -360,13 +386,15 @@ OSG::GeometryRefPtr
             
 //            std::cout << std::endl;
         }
+
+        OSG::commitChanges();
     }
-    OSG::endEditCP  (pTypes    );
-    OSG::endEditCP  (pLengths  );
-    OSG::endEditCP  (pIndices  );
-    OSG::endEditCP  (pPos      );
-    OSG::endEditCP  (pNorms    );
-    OSG::endEditCP  (pTexCoords);
+    //OSG::endEditCP  (pTypes    );
+    //OSG::endEditCP  (pLengths  );
+    //OSG::endEditCP  (pIndices  );
+    //OSG::endEditCP  (pPos      );
+    //OSG::endEditCP  (pNorms    );
+    //OSG::endEditCP  (pTexCoords);
     
     // free lib3ds data
     vprDEBUG(vprDBG_ALL, vprDBG_STATE_LVL)
@@ -381,27 +409,27 @@ OSG::GeometryRefPtr
     
     delete [] pLNormals;
     
-    OSG::beginEditCP(pGeo);
+    //OSG::beginEditCP(pGeo);
         pGeo->setTypes    (pTypes    );
         pGeo->setLengths  (pLengths  );
-        pGeo->setIndices  (pIndices  );
+        //pGeo->setIndices  (pIndices  );
         pGeo->setPositions(pPos      );
         pGeo->setNormals  (pNorms    );
         
         if(hasTexCoords)
         {
             pGeo->setTexCoords(pTexCoords);
-        
-            pGeo->getIndexMapping().push_back(OSG::Geometry::MapPosition  |
-                                              OSG::Geometry::MapTexCoords  );
-            pGeo->getIndexMapping().push_back(OSG::Geometry::MapNormal     );
+
+            pGeo->setIndex( pIndices, OSG::Geometry::TexCoordsIndex );
+            pGeo->setIndex( pIndices, OSG::Geometry::PositionsIndex );
+            pGeo->setIndex( nIndices, OSG::Geometry::NormalsIndex );
         }
         else
         {
-            pGeo->getIndexMapping().push_back(OSG::Geometry::MapPosition   );
-            pGeo->getIndexMapping().push_back(OSG::Geometry::MapNormal     );
+            pGeo->setIndex( pIndices, OSG::Geometry::PositionsIndex );            
+            pGeo->setIndex( nIndices, OSG::Geometry::NormalsIndex );
         }
-    OSG::endEditCP  (pGeo);
+    //OSG::endEditCP  (pGeo);
     
     return pGeo;
 }

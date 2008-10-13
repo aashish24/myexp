@@ -41,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../include;$(VJ_BASE_DIR)\include;$(OPENSG_INC_DIR);$(BOOST_INC_DIR);$(GMTL_INC_DIR);$(NSPR_INC_DIR);$(CPPDOM_INC_DIR);E:\aashish\src\lib3ds\lib3ds-1.3.0;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;WINVER=0x0400;_WIN32_WINDOWS=0x0410;_WIN32_WINNT=0x0400;_OSG_HAVE_CONFIGURED_H_;OSG_BUILD_DLL;_DEBUG;OSG_DEBUG;OSG_WITH_GLUT;OSG_WITH_GIF;OSG_WITH_TIF;OSG_WITH_JPG"
+				AdditionalIncludeDirectories="$(BOOST_INC_DIR);../include;$(VJ_BASE_DIR)\include;$(OPENSG_INC_DIR);$(BOOST_INC_DIR);$(GMTL_INC_DIR);$(NSPR_INC_DIR);$(CPPDOM_INC_DIR);E:\aashish\src\lib3ds\lib3ds-1.3.0;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;WINVER=0x0400;_WIN32_WINDOWS=0x0410;_WIN32_WINNT=0x0400;_OSG_HAVE_CONFIGURED_H_;_DEBUG;OSG_DEBUG;OSG_WITH_GLUT;OSG_WITH_GIF;OSG_WITH_TIF;OSG_WITH_JPG"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="3"
@@ -63,8 +63,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="OSGBaseD.lib OSGSystemD.lib OSGWindowGLUTD.lib glut32.lib glu32.lib opengl32.lib tif32.lib libjpeg.lib "
-				AdditionalDependencies="lib3ds-1_3d.lib OSGBaseD.lib OSGSystemD.lib OSGWindowGLUTD.lib glut32.lib glu32.lib opengl32.lib tif32.lib libjpeg.lib"
-				LinkIncremental="2"
+				AdditionalDependencies="lib3ds-1_3d.lib OSGBaseD.lib OSGWindowGLUTD.lib OSGSystemD.lib OSGWindowWIN32D.lib OSGUtilD.lib OSGDrawableD.lib OSGFileIOD.lib OSGGroupD.lib OSGStateD.lib OSGWindowD.lib"
+				OutputFile="..\bin\$(ProjectName)_d.exe"
+				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OPENSG_LIB_DIR);E:\aashish\src\opensg\external\lib;E:\aashish\src\opensg\supportlibs\lib;$(VJ_BASE_DIR)\lib;$(BOOST_LIB_DIR);$(CPPDOM_LIB_DIR);E:\aashish\src\lib3ds\lib3ds-1.3.0\msvc8\debug;"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"

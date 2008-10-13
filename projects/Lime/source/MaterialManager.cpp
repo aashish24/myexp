@@ -224,10 +224,11 @@ OSG::MaterialRefPtr
             << vprDEBUG_FLUSH;
     
         //OSG::beginEditCP(pSHL);
-            pSHL->setVertexProgram  (*pVProg);
-            pSHL->setFragmentProgram(*pFProg);
-            
-//             pSHL->setUnknownParameterWarning(false);
+        pSHL->setVertexProgram  (*pVProg);
+        pSHL->setFragmentProgram(*pFProg);
+
+        OSG::commitChanges();
+        // pSHL->setUnknownParameterWarning(false);
         // OSG::endEditCP(pSHL);
     }
     
@@ -253,12 +254,13 @@ OSG::MaterialRefPtr
         }
                
         //OSG:://OSG::beginEditCP(pChunkMat);
-            pChunkMat->addChunk(pTex, pDesc->_texSlots[i]);
+        pChunkMat->addChunk(pTex, pDesc->_texSlots[i]);
        // OSG::// OSG::endEditCP  (pChunkMat);
-                
+        OSG::commitChanges();           
         //OSG:://OSG::beginEditCP(pSHL);
-            pSHL->setUniformParameter(pDesc->_texSamplerNames[i].c_str(),
-                                      pDesc->_texSlots[i]                );
+        pSHL->setUniformParameter(pDesc->_texSamplerNames[i].c_str(),
+                                  pDesc->_texSlots[i]                );
+        OSG::commitChanges();
        // OSG::// OSG::endEditCP  (pSHL);
     }
     
@@ -277,7 +279,9 @@ OSG::MaterialRefPtr
         pSHL->setUniformParameter("deltaFrameTime", OSG::Real32(0.0)                  );
    // OSG::// OSG::endEditCP  (pSHL);
 
-    _shlChunks.push_back(pSHL);
+    OSG::commitChanges();
+
+    _shlChunks.push_back(pSHL);     
     
     // add global shader parameters
     std::size_t numGlobalParams = _globalParamStore.size();
@@ -309,7 +313,7 @@ OSG::MaterialRefPtr
     //OSG:://OSG::beginEditCP(pChunkMat);
         pChunkMat->addChunk(pSHL);
    // OSG::// OSG::endEditCP  (pChunkMat);
-    
+    OSG::commitChanges();
     // add face culling settings
     if(pDesc->_cullFace != "none")
     {
@@ -317,21 +321,23 @@ OSG::MaterialRefPtr
         OSG::PolygonChunkRefPtr pPoly   (OSG::PolygonChunk::create());
         
         //OSG:://OSG::beginEditCP(pPoly);
-            if(pDesc->_cullFace == "front")
-            {
-                pPoly->setCullFace(GL_FRONT);
-                addChunk = true;
-            }   
-            else if(pDesc->_cullFace == "back")
-            {
-                pPoly->setCullFace(GL_BACK);
-                addChunk = true;
-            }   
-            else if(pDesc->_cullFace == "both")
-            {
-                pPoly->setCullFace(GL_FRONT_AND_BACK);
-                addChunk = true;
-            }
+        if(pDesc->_cullFace == "front")
+        {
+            pPoly->setCullFace(GL_FRONT);
+            addChunk = true;
+        }   
+        else if(pDesc->_cullFace == "back")
+        {
+            pPoly->setCullFace(GL_BACK);
+            addChunk = true;
+        }   
+        else if(pDesc->_cullFace == "both")
+        {
+            pPoly->setCullFace(GL_FRONT_AND_BACK);
+            addChunk = true;
+        }
+
+        OSG::commitChanges();
        // OSG::// OSG::endEditCP  (pPoly);
         
         if(addChunk)
@@ -340,6 +346,8 @@ OSG::MaterialRefPtr
                 pChunkMat->addChunk(pPoly);
            // OSG::// OSG::endEditCP  (pChunkMat);
         }
+
+        OSG::commitChanges();
     }
     
     // add blending settings
@@ -349,12 +357,14 @@ OSG::MaterialRefPtr
         
         //OSG:://OSG::beginEditCP(pBlend);
             pBlend->setSrcFactor (getBlendFactor(pDesc->_blendSource, true ));
-            pBlend->setDestFactor(getBlendFactor(pDesc->_blendDest,   false));
+            pBlend->setDestFactor(getBlendFactor(pDesc->_blendDest,   false));            
        // OSG::// OSG::endEditCP  (pBlend);
+       OSG::commitChanges(); 
         
         //OSG:://OSG::beginEditCP(pChunkMat);
-            pChunkMat->addChunk(pBlend);
+            pChunkMat->addChunk(pBlend);        
        // OSG::// OSG::endEditCP  (pChunkMat);
+       OSG::commitChanges(); 
     }
     
     
@@ -481,9 +491,11 @@ void
             << vprDEBUG_FLUSH;
     
         //OSG::beginEditCP(pSHL);
-            pSHL->setVertexProgram  (*pVProg);
-            pSHL->setFragmentProgram(*pFProg);
+        pSHL->setVertexProgram  (*pVProg);
+        pSHL->setFragmentProgram(*pFProg);
         // OSG::endEditCP(pSHL);
+
+        OSG::commitChanges();
     }
     else 
     {
@@ -523,14 +535,15 @@ void
                
         //OSG:://OSG::beginEditCP(pChunkMat);
             pChunkMat->addChunk(pTex, pDesc->_texSlots[i]);
-       // OSG::// OSG::endEditCP  (pChunkMat);
+        // OSG::// OSG::endEditCP  (pChunkMat);
                 
         //TODO
         //delete unused uniform parameters
         //OSG:://OSG::beginEditCP(pSHL);
-            pSHL->setUniformParameter(pDesc->_texSamplerNames[i].c_str(),
-                                      pDesc->_texSlots[i]                );
+        pSHL->setUniformParameter(pDesc->_texSamplerNames[i].c_str(),
+                                pDesc->_texSlots[i]                );
        // OSG::// OSG::endEditCP  (pSHL);     
+       OSG::commitChanges();     
         
     }
     
@@ -560,8 +573,10 @@ void
         pSHL->getParameters().push_back(_pSpecParam     );
    // OSG::// OSG::endEditCP  (pSHL);
 	*/
-    //_shlChunks.push_back(pSHL);
 
+    OSG::commitChanges();
+    //_shlChunks.push_back(pSHL);
+    
     // add shader parameters
     std::size_t numParams = pDesc->_shaderParams.size();
     
@@ -573,6 +588,7 @@ void
             << vprDEBUG_FLUSH;
     
         addUniform(&(pDesc->_shaderParams[i]), pSHL);
+        OSG::commitChanges();
         //TODO
         //delete unused uniforms
     }
@@ -606,6 +622,8 @@ void
             pPoly->setCullFace(GL_FRONT_AND_BACK);
             editChunk = true;
         }
+
+    OSG::commitChanges();
    // OSG::// OSG::endEditCP  (pPoly);
     
     if( addChunk && editChunk )
@@ -645,6 +663,5 @@ void
        // OSG::// OSG::endEditCP  (pChunkMat);
     	
     }
-    
-    
+    OSG::commitChanges();
 }

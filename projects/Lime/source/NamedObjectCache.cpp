@@ -1,9 +1,13 @@
 
 #include <NamedObjectCache.h>
 
+// OpenSG includes. 
+#include <OpenSG/OSGNameAttachment.h>
+
 // VRJuggler includes
 #include <vpr/Util/Debug.h>
 
+#include <boost/bind.hpp>
 
     NamedObjectCache::NamedObjectCache(void)
     
@@ -17,14 +21,14 @@
     // nothing to do
 }
 
-OSG::NodePtr
+OSG::NodeRefPtr
     NamedObjectCache::getRoot(void) const
 {
     return _root;
 }
     
 void
-    NamedObjectCache::setRoot(OSG::NodePtr const &root)
+    NamedObjectCache::setRoot(OSG::NodeRefPtr const &root)
 {
     if(_root != root)
     {
@@ -38,14 +42,18 @@ void
 {
     _objMap.clear();
     
-    if(_root != OSG::NullFC)
+    if(_root)
     {
+        // @todo: Figure out the right functor. 
+        /*
         OSG::traverse(
             _root,
             OSG::osgTypedMethodFunctor1ObjPtrCPtrRef<OSG::Action::ResultE,
                                                      Self,
-                                                     OSG::NodePtr         >(
+                                                     OSG::NodeRefPtr         >(
                 this, &Self::traverseEnter));
+        */
+        OSG::traverse(_root, boost::bind(&Self::traverseEnter, this, _1));
     }
 }
     
@@ -74,9 +82,9 @@ void
         os << "Object [" << omIt->first
            << "] type [" << omIt->second->getType().getCName() << "]";
            
-        OSG::NodePtr pNode = OSG::NodePtr::dcast(omIt->second.get());
+        OSG::NodeRefPtr pNode = OSG::dynamic_pointer_cast<OSG::Node>(omIt->second);
         
-        if(pNode != OSG::NullFC)
+        if(pNode)
         {
             os << " core type [" << pNode->getCore()->getType().getCName()
                << "]";
@@ -87,9 +95,9 @@ void
 }
 
 OSG::Action::ResultE
-    NamedObjectCache::traverseEnter(OSG::NodePtr& node)
+    NamedObjectCache::traverseEnter(OSG::Node *node)
 {
-    if(node == OSG::NullFC)
+    if(!node)
         return OSG::Action::Continue;
         
     std::string nodeName;
@@ -102,9 +110,9 @@ OSG::Action::ResultE
             ObjectMap::value_type(nodeName, OSG::FieldContainerRefPtr(node)));
     }
     
-    OSG::NodeCorePtr pCore = node->getCore();
+    OSG::NodeCoreRefPtr pCore = node->getCore();
     
-    if(pCore == OSG::NullFC)
+    if(!pCore)
     {
         vprDEBUG(vprDBG_ALL, vprDBG_CRITICAL_LVL)
             << "NamedObjectCache::traverseEnter: Node without core.\n"
@@ -115,9 +123,9 @@ OSG::Action::ResultE
     
     std::string coreName;
     
-    if(OSG::getName(pCore) != NULL)
+    if(OSG::getName(pCore.get()) != NULL)
     {
-        coreName = OSG::getName(pCore);
+        coreName = OSG::getName(pCore.get());
         
         _objMap.insert(
             ObjectMap::value_type(coreName, OSG::FieldContainerRefPtr(pCore)));
