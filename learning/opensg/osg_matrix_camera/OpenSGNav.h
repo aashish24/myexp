@@ -9,25 +9,25 @@
 #include <iostream>
 #include <iomanip>
 
+// VRJuggler includes.
+#include "gadget/Type/Position/PositionUnitConversion.h"
+#include "gadget/Type/PositionInterface.h"
+#include "gadget/Type/AnalogInterface.h"
+#include "gadget/Type/DigitalInterface.h"
+#include "vrj/Draw/OGL/GlContextData.h"
 #include <vrj/vrjConfig.h>
 #include <vrj/Draw/OGL/GlApp.h>
-#include "OpenSG2App.h"
 
-#include <gmtl/Matrix.h>
-#include <gmtl/MatrixOps.h>
-#include <gmtl/Generate.h>
+// GMTL includes. 
+#include "gmtl/Matrix.h"
+#include "gmtl/MatrixOps.h"
+#include "gmtl/Generate.h"
 
-#include <gadget/Type/Position/PositionUnitConversion.h>
-#include <gadget/Type/PositionInterface.h>
-#include <gadget/Type/AnalogInterface.h>
-#include <gadget/Type/DigitalInterface.h>
-
-#include <vrj/Draw/OGL/GlContextData.h>
-
+// Lime includes. 
 #include "ILimeCamera.h"
 #include "LimeVrjCamera.h"
 #include "LimeSceneCameraDefault.h"
-
+#include "OpenSG2App.h"
 
 class OpenSGNav : public vrj::OpenSG2App
 {

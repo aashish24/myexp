@@ -66,6 +66,7 @@ void OpenSGNav::preFrame()
   vrj::OpenSG2App::preFrame();
 }
 
+
 void OpenSGNav::exit()
 {
    // Ensure that we release all the OSG::RefPtr<T> objects that we hold so
@@ -79,6 +80,7 @@ void OpenSGNav::exit()
    vrj::OpenSG2App::exit();
 }
 
+
 /** Initialize GL state. Hold over from regular OGL apps */
 void OpenSGNav::initGLState()
 {
@@ -86,6 +88,7 @@ void OpenSGNav::initGLState()
    // that trivial...
    glEnable(GL_NORMALIZE);
 }
+
 
 void OpenSGNav::initScene()
 {
