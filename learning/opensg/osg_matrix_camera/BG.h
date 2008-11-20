@@ -8,17 +8,21 @@ class BG
   public: 
     
                           BG(); 
-                          BG(double bgNS,   double bgEW,  double bgField, 
-                             double bgCrot, double bgPegOffset);
-
+                          BG(double bgAspect, double bgNS,   double bgEW,  
+                             double bgField,  double bgCrot, double bgPegOffset);
       
                          ~BG();
       
     const double& getAspect()     const;
-    const double& getNS()         const;      
+
+    const double& getNS()         const;
+      
     const double& getEW()         const;
+
     const double& getField()      const;
+
     const double& getCrot()       const;
+
     const double& getPegOffset()  const;
 
   
@@ -44,8 +48,9 @@ inline BG::BG() :
 }
 
 
-inline BG::BG(double bgNS,   double bgEW,  double bgField, 
-              double bgCrot, double bgPegOffset) :
+inline BG::BG(double bgAspect, double bgNS,   double bgEW,  
+              double bgField,  double bgCrot, double bgPegOffset) :
+  _bgAspect   (bgAspect),
   _bgNS       (bgNS), 
   _bgEW       (bgEW), 
   _bgField    (bgField), 

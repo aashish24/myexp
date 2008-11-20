@@ -226,6 +226,10 @@ inline void LimeVrjCamera::evaluate()
                   _bg.getNS(),           _bg.getEW(),       _bg.getField(), 
                   _bg.getCrot(),         _bg.getPegOffset(), true); 
   
+  this->v3dSetup(_view.getAspect(),     _view.getNS(),          _view.getEW(),
+                 _view.getPegOffset(),  _setup.getImageWidth(), _setup.getNS(),
+                 _setup.getEW(),        _setup.getField(),      _setup.getLens());
+
   gmtl::preMult(mat, _viewSetupMatrix);
   gmtl::preMult(mat, _3dSetupMatrix);
   gmtl::Matrix44f compMat;

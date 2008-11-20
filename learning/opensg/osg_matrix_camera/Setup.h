@@ -7,19 +7,33 @@ class Setup
   public: 
     
                           Setup(); 
-                          Setup(double setupImageWidth, double setupField, double setupLens, 
-                                double setupNear, double setupFar);
+                          Setup(double setupImageWidth, double setupNS,   double setupEW, 
+                                double setupField,      double setupLens, double setupNear, 
+                                double setupFar);
 
       
                          ~Setup();
   
     const double& getImageWidth()  const;
+
+    const double& getNS()          const;
+
+    const double& getEW()          const;
+
     const double& getField()       const;
-    const double& getLens()        const;      
+
+    const double& getLens()        const;
+      
     const double& getNear()        const;
+
     const double& getFar()         const;
-    
+
+  
+  private:
+  
     double _setupImageWidth;
+    double _setupNS;
+    double _setupEW;
     double _setupField;
     double _setupLens;
     double _setupNear;
@@ -29,6 +43,8 @@ class Setup
 
 inline Setup::Setup() :
   _setupImageWidth(1.0),
+  _setupNS        (5000.0),
+  _setupEW        (5000.0),
   _setupField     (16.0),
   _setupLens      (35.0),
   _setupNear      (0.1),
@@ -37,9 +53,12 @@ inline Setup::Setup() :
 }
 
 
-inline Setup::Setup(double setupImageWidth, double setupField, double setupLens, 
-                    double setupNear, double setupFar) :
+inline Setup::Setup(double setupImageWidth, double setupNS,   double setupEW, 
+                    double setupField,      double setupLens, double setupNear, 
+                    double setupFar) :
   _setupImageWidth(setupImageWidth),
+  _setupNS        (setupNS),
+  _setupEW        (setupEW),
   _setupField     (setupField),
   _setupLens      (setupLens),
   _setupNear      (setupNear),
@@ -56,6 +75,18 @@ inline Setup::~Setup()
 inline const double& Setup::getImageWidth() const
 {
   return _setupImageWidth;
+}
+
+
+inline const double& Setup::getNS() const
+{
+  return _setupNS;
+}
+
+
+inline const double& Setup::getEW() const 
+{
+  return _setupEW;
 }
 
 
