@@ -46,13 +46,17 @@ namespace vrj
         {
           ;
         }
+
+        ~context_data()
+        {          
+        }
   
         OSG::RenderAction*            mRenderAction;    /**< The render action for the scene */
         OSG::PassiveWindowRefPtr      mWin;             /**< passive window to render with (the context) */
         OSG::PassiveViewportRefPtr    mViewport;        /**< passive viewport to render with (the context) */
         OSG::PassiveBackgroundRefPtr  mBackground;      /**< passive background to render with (the context) */
-        OSG::MatrixCameraRefPtr       mCamera;
-  
+        OSG::MatrixCameraRefPtr       mCamera;        
+      
         bool                          mContextThreadInitialized;
         OSG::ExternalThread*          mOsgThread;
       };
@@ -66,8 +70,7 @@ namespace vrj
       }
   
       virtual ~OpenSG2App()
-      {
-        ;
+      {        
       }
   
       /**
@@ -138,7 +141,16 @@ namespace vrj
         glClear(GL_COLOR_BUFFER_BIT);
       }
   
-      
+    protected:
+
+      /**
+       * Optional. Used if the application class manipulating 
+       * projection and modelview matrices using some of its own 
+       * parameters and using existing modelview and projection matrices. 
+       *
+       */
+      virtual void setupCamera(){;}
+
     protected:
       
       vrj::GlContextData<context_data>  mContextData;  /**< OpenSG context data */
@@ -213,7 +225,7 @@ namespace vrj
     c_data->mWin        = OSG::PassiveWindow::create();
     c_data->mViewport   = OSG::PassiveViewport::create();
     c_data->mBackground = OSG::PassiveBackground::create();
-    c_data->mCamera     = OSG::MatrixCamera::create();
+    c_data->mCamera     = OSG::MatrixCamera::create();    
 
     // Set up the viewport.
     c_data->mViewport->setLeft  (0);
@@ -221,7 +233,7 @@ namespace vrj
     c_data->mViewport->setBottom(0);
     c_data->mViewport->setTop   (1);
 
-    c_data->mViewport->setCamera    (c_data->mCamera    );
+    c_data->mViewport->setCamera    (c_data->mCamera);
     c_data->mViewport->setBackground(c_data->mBackground);
 
     // Set up the Window.
@@ -289,6 +301,16 @@ namespace vrj
     c_data->mCamera->setFar (vrj_frustum[vrj::Frustum::VJ_FAR] );
     c_data->mCamera->setProjectionMatrix(frustum_matrix);  // Set projection matrix
     c_data->mCamera->setModelviewMatrix (view_xform_mat);  // Set modelview matrix         
+    
+    /*std::cout << "Juggler Projection values: " << std::endl;
+    std::cout << vrj_frustum[vrj::Frustum::VJ_LEFT]   << std::endl;
+    std::cout << vrj_frustum[vrj::Frustum::VJ_RIGHT]  << std::endl;
+    std::cout << vrj_frustum[vrj::Frustum::VJ_BOTTOM] << std::endl;
+    std::cout << vrj_frustum[vrj::Frustum::VJ_TOP]    << std::endl;*/  
+   
+    
+    // Make sure to call this so that application can do its own setup. 
+    this->setupCamera();
   
     // Set up the viewport.
     c_data->mViewport->setRoot(getScene());

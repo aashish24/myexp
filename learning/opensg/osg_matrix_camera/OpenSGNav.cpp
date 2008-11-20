@@ -28,9 +28,14 @@ void OpenSGNav::init()
 
 /** Called once per context at context creation */
 void OpenSGNav::contextInit()
-{
-   vrj::OpenSG2App::contextInit();
-   initGLState();
+{ 
+  vrj::OpenSG2App::contextInit();
+
+  mAppContextData->mLimeCamera = new LimeVrjCamera();
+  mAppContextData->mLimeCamera->setOSGCamera(mContextData->mCamera);
+  mAppContextData->mLimeCamera->setSceneCamera(mSceneCamera);
+  
+  initGLState();   
 }
 
 void OpenSGNav::draw()
@@ -40,8 +45,25 @@ void OpenSGNav::draw()
 }
 
 void OpenSGNav::preFrame()
-{   
-   vrj::OpenSG2App::preFrame();
+{ 
+  {
+    float data = (mAnalog01->getData() - 0.5 );
+    //std::cout << "data is" << mAnalog01->getData() << std::endl;
+    if(fabs(data) > 0.01)
+    {        
+      mSceneCamera->move(OSG::Vec3d(data, 0.0, 0.0));
+    }   
+  }
+      
+  {
+    float data = (mAnalog02->getData() - 0.5 );
+    if(fabs(data) > 0.01)
+    {
+      mSceneCamera->move(OSG::Vec3d(0.0, 0.0, data));
+    }   
+  }  
+
+  vrj::OpenSG2App::preFrame();
 }
 
 void OpenSGNav::exit()
@@ -110,6 +132,35 @@ void OpenSGNav::initScene()
 #endif
    }
    
+   // --- Light setup --- //
+   // - Add directional light for scene
+   // - Create a beacon for it and connect to that beacon
+   mLightNode   = OSG::Node::create();
+   mLightBeacon = OSG::Node::create();
+   OSG::DirectionalLightRefPtr light_core = OSG::DirectionalLight::create();
+   OSG::TransformRefPtr light_beacon_core = OSG::Transform::create();
+
+   // Setup light beacon
+   OSG::Matrix light_pos;
+   light_pos.setTransform(OSG::Vec3f(2.0f, 5.0f, 4.0f));
+
+   light_beacon_core->setMatrix(light_pos);
+
+   mLightBeacon->setCore(light_beacon_core);
+
+   // Setup light node
+   mLightNode->setCore(light_core);
+   mLightNode->addChild(mLightBeacon);
+
+   light_core->setAmbient  (0.9, 0.8, 0.8, 1);
+   light_core->setDiffuse  (0.6, 0.6, 0.6, 1);
+   light_core->setSpecular (1, 1, 1, 1);
+   light_core->setDirection(0, 0, 1);
+   light_core->setBeacon   (mLightNode);
+
+   // --- Setup Scene -- //
+   // add the loaded scene to the light node, so that it is lit by the light
+   mLightNode->addChild(mModelRoot);
 
    // create the root part of the scene
    mSceneRoot = OSG::Node::create();
@@ -117,5 +168,11 @@ void OpenSGNav::initScene()
 
    // Set up the root node
    mSceneRoot->setCore(mSceneTransform);
-   mSceneRoot->addChild(mModelRoot);
+   mSceneRoot->addChild(mLightNode);
+}
+
+
+void OpenSGNav::setupCamera()
+{
+  mAppContextData->mLimeCamera->evaluate();
 }

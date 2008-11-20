@@ -24,28 +24,54 @@
 
 #include <vrj/Draw/OGL/GlContextData.h>
 
+#include "ILimeCamera.h"
+#include "LimeVrjCamera.h"
+#include "LimeSceneCameraDefault.h"
+
 
 class OpenSGNav : public vrj::OpenSG2App
 {
-public:
-   OpenSGNav(vrj::Kernel* kern)
-      : vrj::OpenSG2App(kern)
-      , mFileToLoad("")
-      , mVelocity(0.0f)
+  public:
+    
+    struct AppContextData
+    {
+      AppContextData() :
+        mLimeCamera(0x00)
+      {
+      }  
+
+     ~AppContextData()
+      {
+        if(mLimeCamera){ delete mLimeCamera; mLimeCamera = 0x00; }
+      }
+
+      LimeVrjCamera* mLimeCamera;
+    };
+      
+    
+
+    OpenSGNav(vrj::Kernel* kern) : vrj::OpenSG2App(kern),
+      mSceneCamera(new LimeSceneCameraDefault()),   
+      mFileToLoad (""),      
+      mVelocity   (0.0f)            
    {
-      std::cout << "OpenSGNav::OpenSGNav() called\n";
+      std::cout << "OpenSGNav::OpenSGNav() called\n";      
    }
+
 
    virtual ~OpenSGNav()
    {
       std::cout << "OpenSGNav::~OpenSGNav() called\n";
    }
 
+
    /** Handles any initialization needed before API. */
    virtual void init();
 
+
    /** Initialize the scene graph. */
    virtual void initScene();
+
 
    /** Returns the scene root for this application. */
    virtual OSG::Node* getScene()
@@ -53,16 +79,21 @@ public:
       return mSceneRoot.get();
    }
 
+
    virtual void draw();
+
 
    virtual void contextInit();
 
+
    virtual void preFrame();
+
 
    virtual float getDrawScaleFactor()
    {
       return gadget::PositionUnitConversion::ConvertToFeet;
    }
+
 
    virtual void exit();
 
@@ -72,6 +103,18 @@ public:
                 << filename << "'\n";
       mFileToLoad = filename;
    }
+
+protected: 
+
+  virtual void setupCamera();
+  
+
+
+protected:  
+
+     vrj::GlContextData<AppContextData>   mAppContextData;
+     
+     LimeSceneCameraDefault*              mSceneCamera; 
 
 private:
    void initGLState();
@@ -90,8 +133,9 @@ private:
    OSG::TransformRefPtr   mSceneTransform;  /**< Transform core */
    OSG::NodeRefPtr        mModelRoot;       /**< Root of the loaded model */
 
-   OSG::NodeRefPtr  mLightNode;       /**< Light node to use */
-   OSG::NodeRefPtr  mLightBeacon;     /**< A beacon for the light */
+   OSG::NodeRefPtr        mLightNode;       /**< Light node to use */
+   OSG::NodeRefPtr        mLightBeacon;     /**< A beacon for the light */
+   
 
 public:
    gadget::DigitalInterface   mButton01; /**< Digital interface for button 1 */
