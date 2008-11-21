@@ -1,0 +1,35 @@
+
+#ifndef __I_NAVIGATOR_H__
+#define __I_NAVIGATOR_H__
+
+
+class INavigator
+{
+  public: 
+
+    virtual                    ~INavigator(){;}
+
+    virtual       void          translate(const gmtl::Vec3d&  dir)                    = 0; 
+    
+    virtual       void          translate(double val1, double val2, double val3)      = 0;
+
+    virtual       void          rotate(const gmtl::Quatd& quat)                       = 0;
+ 
+    virtual       void          rotate(const gmtl::AxisAngled& aAngle)                = 0;
+
+    virtual       void          rotate(double angle, double x, double y, double z)    = 0;  
+
+    virtual       void          rotate(double x, double y, double z)                  = 0;
+
+    virtual       void          setDofRot   (bool val1, bool val2, bool val3)         = 0;
+    virtual       void          setDofTrans (bool val1, bool val2, bool val3)         = 0;
+     
+    virtual       void          yaw(double angle)                                     = 0;
+ 
+    virtual       void          pitch(double angle)                                   = 0;
+
+    virtual       void          roll(double angle)                                    = 0;
+};
+
+#endif // __I_NAVIGATOR_H__
+

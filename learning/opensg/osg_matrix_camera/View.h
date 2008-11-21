@@ -13,17 +13,17 @@ class View
       
                          ~View();
   
-    const double& getAspect()     const;
+    const double&         getAspect()     const;
 
-    const double& getNS()         const;
+    const double&         getNS()         const;
       
-    const double& getEW()         const;
+    const double&         getEW()         const;
 
-    const double& getField()      const;
+    const double&         getField()      const;
 
-    const double& getCrot()       const;
+    const double&         getCrot()       const;
 
-    const double& getPegOffset()  const;  
+    const double&         getPegOffset()  const;  
 
    
  private: 

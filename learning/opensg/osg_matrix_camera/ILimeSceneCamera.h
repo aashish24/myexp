@@ -1,14 +1,14 @@
 
-#ifndef __I_LIME_SCENE_CAMERA_H__
-#define __I_LIME_SCENE_CAMERA_H__
+#ifndef __I_SCENE_CAMERA_H__
+#define __I_SCENE_CAMERA_H__
 
-struct ILimeSceneCamera
+struct ISceneCamera
 {
-  virtual                ~ILimeSceneCamera(){;}
+  virtual                ~ISceneCamera(){;}
   virtual const double*   getXDir()     const   = 0;
   virtual const double*   getUpDir()    const   = 0;
   virtual const double*   getLookDir()  const   = 0;  
   virtual const double*   getPosition() const   = 0;
 };
 
-#endif // __I_LIME_SCENE_CAMERA_H__
+#endif // __I_SCENE_CAMERA_H__

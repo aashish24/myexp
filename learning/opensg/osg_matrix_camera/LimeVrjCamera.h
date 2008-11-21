@@ -4,7 +4,7 @@
 
 // Lime includes. 
 #include "ILimeCamera.h"
-#include "ILimeSceneCamera.h"
+#include "ISceneCamera.h"
 #include "Setup.h"
 #include "View.h"
 #include "BG.h"
@@ -28,8 +28,8 @@ class LimeVrjCamera  : public ILimeCamera
                               LimeVrjCamera(const View& view=View(), const Setup& setup=Setup(), const BG& bg=BG());
     virtual                  ~LimeVrjCamera();    
 
-    ILimeSceneCamera*         getSceneCamera();
-    virtual void              setSceneCamera(ILimeSceneCamera* sCamera);
+    ISceneCamera*             getSceneCamera();
+    virtual void              setSceneCamera(ISceneCamera* sCamera);
 
     virtual void              setOSGCamera(OSG::MatrixCameraRefPtr osgCamera);
 
@@ -60,7 +60,7 @@ class LimeVrjCamera  : public ILimeCamera
   protected:
  
     OSG::MatrixCameraRefPtr _osgCamera;
-    ILimeSceneCamera*       _sceneCamera;
+    ISceneCamera*           _sceneCamera;
 
     gmtl::Matrix44d         _viewSetupMatrix; 
     gmtl::Matrix44d         _3dSetupMatrix;    
@@ -95,14 +95,14 @@ inline LimeVrjCamera::~LimeVrjCamera()
 {  
 }
 
-inline ILimeSceneCamera* LimeVrjCamera::getSceneCamera()  
+inline ISceneCamera* LimeVrjCamera::getSceneCamera()  
 {
   return _sceneCamera;
 }
 
 
 
-inline void LimeVrjCamera::setSceneCamera(ILimeSceneCamera* sCamera)
+inline void LimeVrjCamera::setSceneCamera(ISceneCamera* sCamera)
 { 
   _sceneCamera = sCamera;  
 }
@@ -200,17 +200,17 @@ inline void LimeVrjCamera::v3dSetup(double viewAspect,     double viewNS,       
 inline void LimeVrjCamera::evaluate()
 {
   // Calculate project and modelview matrix here.    
-  gmtl::Vec4d x;    x.set   (_sceneCamera->getXDir());  
-  gmtl::Vec4d up;   up.set  (_sceneCamera->getUpDir());  
-  gmtl::Vec4d look; look.set(_sceneCamera->getLookDir());
-  gmtl::Vec4d pos;  pos.set (_sceneCamera->getPosition());
+  gmtl::Vec4d x   (_sceneCamera->getXDir());  
+  gmtl::Vec4d up  (_sceneCamera->getUpDir());  
+  gmtl::Vec4d look(_sceneCamera->getLookDir());
+  gmtl::Vec4d pos (_sceneCamera->getPosition());
 
   // GMTL set(...) takes row major args. 
   gmtl::Matrix44d mat; 
   mat.set(x[0],    x[1],    x[2],    -((x[0]*pos[0])     - (x[1]*pos[1])     - (x[2]*pos[2])),
-         up[0],   up[1],   up[2],   -((up[0]*pos[0])    - (up[1]*pos[1])    - (up[2]*pos[2])),
-         look[0], look[1], look[2], -((look[0]*pos[0])  - (look[1]*pos[1])  - (look[2]*pos[2])),
-         0.0,     0.0,     0.0,     1.0);  
+          up[0],   up[1],   up[2],   -((up[0]*pos[0])    - (up[1]*pos[1])    - (up[2]*pos[2])),
+          look[0], look[1], look[2], -((look[0]*pos[0])  - (look[1]*pos[1])  - (look[2]*pos[2])),
+          0.0,     0.0,     0.0,     1.0);  
 
   // Hardcoded as of now. 
   //   this->viewSetup(1.7777, 5000.0, 5000.0, 

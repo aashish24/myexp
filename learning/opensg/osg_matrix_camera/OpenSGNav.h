@@ -26,7 +26,7 @@
 // Lime includes. 
 #include "ILimeCamera.h"
 #include "LimeVrjCamera.h"
-#include "LimeSceneCameraDefault.h"
+#include "FlyNavigator.h"
 #include "OpenSG2App.h"
 
 class OpenSGNav : public vrj::OpenSG2App
@@ -51,7 +51,7 @@ class OpenSGNav : public vrj::OpenSG2App
     
 
     OpenSGNav(vrj::Kernel* kern) : vrj::OpenSG2App(kern),
-      mSceneCamera(new LimeSceneCameraDefault()),   
+      mNavigator  (new FlyNavigator()),   
       mFileToLoad (""),      
       mVelocity   (0.0f)            
    {
@@ -62,6 +62,7 @@ class OpenSGNav : public vrj::OpenSG2App
    virtual ~OpenSGNav()
    {
       std::cout << "OpenSGNav::~OpenSGNav() called\n";
+      delete mNavigator; mNavigator = 0x00;
    }
 
 
@@ -114,7 +115,7 @@ protected:
 
      vrj::GlContextData<AppContextData>   mAppContextData;
      
-     LimeSceneCameraDefault*              mSceneCamera; 
+     INavigator*                          mNavigator; 
 
 private:
    void initGLState();

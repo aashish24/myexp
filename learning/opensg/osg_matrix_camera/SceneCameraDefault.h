@@ -1,19 +1,19 @@
 
-#ifndef __SCENE_CAMERA_DEFAULT_H__
-#define __SCENE_CAMERA_DEFAULT_H__
+#ifndef __SCENE_CAMERA_H__
+#define __SCENE_CAMERA_H__
 
-class SceneCameraDefault : public ILimeSceneCamera
+class SceneCamera : public ILimeSceneCamera
 {
   public: 
-                                  SceneCameraDefault();
-    virtual                      ~SceneCameraDefault();
+                                  SceneCamera();
+    virtual                      ~SceneCamera();
     virtual const double*         getXDir()     const;
     virtual const double*         getUpDir()    const;
     virtual const double*         getLookDir()  const;  
     virtual const double*         getPosition() const;
 
-    virtual       void            move  (const OSG::Vec3d dir);
-    virtual       void            rotate(const OSG::Vec3d rot);
+    //virtual       void            move  (const OSG::Vec3d dir);
+    //virtual       void            rotate(const OSG::Vec3d rot);
 
     virtual const OSG::Matrix4d&  getModelViewMatrix() const;
     
@@ -29,7 +29,7 @@ class SceneCameraDefault : public ILimeSceneCamera
 };
 
 
-inline SceneCameraDefault::SceneCameraDefault() : ILimeSceneCamera(),   
+inline SceneCamera::SceneCamera() : ILimeSceneCamera(),   
   _modelViewMatrix(1.0, 0.0, 0.0, 0.0,
                    0.0, 1.0, 0.0, 0.0,
                    0.0, 0.0,-1.0, 5.0,
@@ -47,36 +47,36 @@ inline SceneCameraDefault::SceneCameraDefault() : ILimeSceneCamera(),
 }
 
 
-inline SceneCameraDefault::~SceneCameraDefault()
+inline SceneCamera::~SceneCamera()
 {  
 }
 
 
-inline const double* SceneCameraDefault::getXDir() const
+inline const double* SceneCamera::getXDir() const
 {
   return _modelViewMatrix[0].getValues();
 }
 
 
-inline const double* SceneCameraDefault::getUpDir() const
+inline const double* SceneCamera::getUpDir() const
 {
   return _modelViewMatrix[1].getValues();
 }
 
 
-inline const double* SceneCameraDefault::getLookDir() const
+inline const double* SceneCamera::getLookDir() const
 {
   return _modelViewMatrix[2].getValues();
 }
 
   
-inline const double* SceneCameraDefault::getPosition() const
+inline const double* SceneCamera::getPosition() const
 {  
   return _modelViewMatrix[3].getValues();
 }
 
 
-inline void SceneCameraDefault::move(const OSG::Vec3d dir)
+inline void SceneCamera::move(const OSG::Vec3d dir)
 {
   OSG::Matrix4d transMatrix;
   transMatrix.setTranslate(dir); 
@@ -85,26 +85,26 @@ inline void SceneCameraDefault::move(const OSG::Vec3d dir)
 }
 
 
-inline void SceneCameraDefault::rotate(const OSG::Vec3d rot)
+inline void SceneCamera::rotate(const OSG::Vec3d rot)
 {
 }
 
 
-inline const OSG::Matrix4d& SceneCameraDefault::getModelViewMatrix() const
+inline const OSG::Matrix4d& SceneCamera::getModelViewMatrix() const
 {
   return _modelViewMatrix;
 }
 
-inline void SceneCameraDefault::setBeacon(OSG::NodeRefPtr node)
+inline void SceneCamera::setBeacon(OSG::NodeRefPtr node)
 {
 }
 
 
-inline OSG::NodeRefPtr SceneCameraDefault::getBeacon()
+inline OSG::NodeRefPtr SceneCamera::getBeacon()
 {
   return _beacon;
 }
 
-#endif // __SCENE_CAMERA_DEFAULT_H__
+#endif // __SCENE_CAMERA_H__
 
 

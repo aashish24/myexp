@@ -33,7 +33,7 @@ void OpenSGNav::contextInit()
 
   mAppContextData->mLimeCamera = new LimeVrjCamera();
   mAppContextData->mLimeCamera->setOSGCamera(mContextData->mCamera);
-  mAppContextData->mLimeCamera->setSceneCamera(mSceneCamera);
+  mAppContextData->mLimeCamera->setSceneCamera(dynamic_cast<SceneCamera*>(mNavigator));
   
   initGLState();   
 }
@@ -47,19 +47,34 @@ void OpenSGNav::draw()
 void OpenSGNav::preFrame()
 { 
   {
-    float data = (mAnalog01->getData() - 0.5 );
-    //std::cout << "data is" << mAnalog01->getData() << std::endl;
+    float data = (mAnalog01->getData() - 0.5 );    
     if(fabs(data) > 0.01)
     {        
-      mSceneCamera->move(OSG::Vec3d(data, 0.0, 0.0));
+      mNavigator->translate(gmtl::Vec3d(data * 0.005, 0.0, 0.0));
     }   
   }
       
   {
-    float data = (mAnalog02->getData() - 0.5 );
+    float data = (mAnalog02->getData() - 0.5 );    
     if(fabs(data) > 0.01)
     {
-      mSceneCamera->move(OSG::Vec3d(0.0, 0.0, data));
+      mNavigator->translate(gmtl::Vec3d(0.0, 0.0, -data * 0.005));
+    }
+  }
+
+  {
+    float data = (mAnalog03->getData() - 0.5 );    
+    if(fabs(data) > 0.01)
+    {
+      mNavigator->yaw(-data*0.001);
+    }   
+  }  
+
+  {
+    float data = (mAnalog04->getData() - 0.5 );    
+    if(fabs(data) > 0.01)
+    {
+      mNavigator->pitch(data*0.001);
     }   
   }  
 
