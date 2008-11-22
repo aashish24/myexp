@@ -205,12 +205,17 @@ inline void LimeVrjCamera::evaluate()
   gmtl::Vec4d look(_sceneCamera->getLookDir());
   gmtl::Vec4d pos (_sceneCamera->getPosition());
 
+  //std::cout << "x is"     << x    << std::endl;
+  //std::cout << "up is"    << up   << std::endl;
+  //std::cout << "look is"  << look << std::endl;
+  //std::cout << "pos is"   << pos  << std::endl;
+  
   // GMTL set(...) takes row major args. 
   gmtl::Matrix44d mat; 
-  mat.set(x[0],    x[1],    x[2],    -((x[0]*pos[0])     - (x[1]*pos[1])     - (x[2]*pos[2])),
-          up[0],   up[1],   up[2],   -((up[0]*pos[0])    - (up[1]*pos[1])    - (up[2]*pos[2])),
-          look[0], look[1], look[2], -((look[0]*pos[0])  - (look[1]*pos[1])  - (look[2]*pos[2])),
-          0.0,     0.0,     0.0,     1.0);  
+  mat.set(x[0],    x[1],    x[2],    (-(x[0]*pos[0])     - (x[1]*pos[1])     - (x[2]*pos[2])),
+          up[0],   up[1],   up[2],   (-(up[0]*pos[0])    - (up[1]*pos[1])    - (up[2]*pos[2])),
+          look[0], look[1], look[2], (-(look[0]*pos[0])  - (look[1]*pos[1])  - (look[2]*pos[2])), 
+          0.0,     0.0,     0.0,      1.0);
 
   // Hardcoded as of now. 
   //   this->viewSetup(1.7777, 5000.0, 5000.0, 
@@ -238,6 +243,9 @@ inline void LimeVrjCamera::evaluate()
   
   OSG::Matrix     osgCompMat; 
   osgCompMat.setValue(compMat.mData);
+
+  //std::cout << "mat matrix is: " << mat << std::endl;
+  //std::cout << "pos * look" << pos[2] * look[2] << std::endl;
 
 //   std::cout << "Projection matrix is: " << std::endl;
 //   for(size_t i=0; i < 4; ++i)

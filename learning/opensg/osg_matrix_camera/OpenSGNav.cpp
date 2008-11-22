@@ -50,7 +50,7 @@ void OpenSGNav::preFrame()
     float data = (mAnalog01->getData() - 0.5 );    
     if(fabs(data) > 0.01)
     {        
-      mNavigator->translate(gmtl::Vec3d(data * 0.005, 0.0, 0.0));
+      mNavigator->translate(gmtl::Vec3d(data, 0.0, 0.0));
     }   
   }
       
@@ -58,7 +58,10 @@ void OpenSGNav::preFrame()
     float data = (mAnalog02->getData() - 0.5 );    
     if(fabs(data) > 0.01)
     {
-      mNavigator->translate(gmtl::Vec3d(0.0, 0.0, -data * 0.005));
+      // Translation when we pushforward should move us in the -ve dir.        
+      // (in case of joystick as top most val is 1 and bottom most is 0.
+      //std::cout << "data from analog 2 is: " << mAnalog02->getData() << std::endl; 
+      mNavigator->translate(gmtl::Vec3d(0.0, 0.0, data));
     }
   }
 
@@ -66,6 +69,8 @@ void OpenSGNav::preFrame()
     float data = (mAnalog03->getData() - 0.5 );    
     if(fabs(data) > 0.01)
     {
+      // Rotation is clockwise hence angle should be -ve 
+      // (in case of joystick as left most val is 0 and right most is 1). 
       mNavigator->yaw(-data*0.001);
     }   
   }  

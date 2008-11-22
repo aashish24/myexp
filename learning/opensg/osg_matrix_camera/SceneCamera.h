@@ -31,18 +31,33 @@ class SceneCamera : public ISceneCamera
     // \note Prerequisite that beacon node should contain a transform core. 
     OSG::NodeRefPtr                 _beacon;
 
+    // Camera's X axis.
+    gmtl::Vec4d                     _xDir;
+
+    // Camera's Y axis.
+    gmtl::Vec4d                     _upDir;
+
+    // Camera's Z axis. 
+    gmtl::Vec4d                     _lookDir;
+
+    // Camera's origin. 
+    gmtl::Vec4d                     _position;
+
     gmtl::Matrix44d                 _modelViewMatrix;
 };
 
 
 inline SceneCamera::SceneCamera() : ISceneCamera(),  
-  _beacon         (0x00)  
+  _beacon         (0x00), 
+  _xDir           (1.0, 0.0, 0.0, 0.0), 
+  _upDir          (0.0, 1.0, 0.0, 0.0),
+  _lookDir        (0.0, 0.0, 1.0, 0.0),
+  _position       (1.0, 0.0, 5.0, 0.0)  
 {  
-  _modelViewMatrix.set(1.0, 0.0, 0.0, 0.0,
-                       0.0, 1.0, 0.0, 0.0,
-                       0.0, 0.0,-1.0, 0.0,
-                       0.0, 0.0, 5.0, 1.0);
-
+  _modelViewMatrix.set(_xDir[0],      _xDir[0],     _xDir[0],     _xDir[0], 
+                       _upDir[0],     _upDir[0],    _upDir[0],    _upDir[0],
+                       _lookDir[0],   _lookDir[0],  _lookDir[0],  _lookDir[0],
+                       _position[0],  _position[0], _position[0], _position[0]);
   try
   {    
   }
@@ -62,29 +77,29 @@ inline SceneCamera::~SceneCamera()
 
 inline gmtl::Vec4d SceneCamera::getXDir() const
 {
-  return gmtl::Vec4d(_modelViewMatrix[0][0], _modelViewMatrix[0][1], 
-                     _modelViewMatrix[0][2], _modelViewMatrix[0][3]);   
+  return gmtl::Vec4d(_modelViewMatrix[0][0], _modelViewMatrix[1][0], 
+                     _modelViewMatrix[2][0], _modelViewMatrix[3][0]);   
 }
 
 
 inline gmtl::Vec4d SceneCamera::getUpDir() const
 {
-  return gmtl::Vec4d(_modelViewMatrix[1][0], _modelViewMatrix[1][1], 
-                     _modelViewMatrix[1][2], _modelViewMatrix[1][3]);
+  return gmtl::Vec4d(_modelViewMatrix[0][1], _modelViewMatrix[1][1], 
+                     _modelViewMatrix[2][1], _modelViewMatrix[3][1]);
 }
 
 
 inline gmtl::Vec4d SceneCamera::getLookDir() const
 {
-  return gmtl::Vec4d(_modelViewMatrix[2][0], _modelViewMatrix[2][1], 
-                     _modelViewMatrix[2][2], _modelViewMatrix[2][3]);
+  return gmtl::Vec4d(_modelViewMatrix[0][2], _modelViewMatrix[1][2], 
+                     _modelViewMatrix[2][2], _modelViewMatrix[3][2]);
 }
 
   
 inline gmtl::Vec4d SceneCamera::getPosition() const
 {  
-  return gmtl::Vec4d(_modelViewMatrix[3][0], _modelViewMatrix[3][1], 
-                     _modelViewMatrix[3][2], _modelViewMatrix[3][3]);
+  return gmtl::Vec4d(_modelViewMatrix[0][3], _modelViewMatrix[1][3], 
+                     _modelViewMatrix[2][3], _modelViewMatrix[3][3]);
 }
 
 

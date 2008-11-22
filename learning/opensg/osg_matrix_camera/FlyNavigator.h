@@ -70,7 +70,11 @@ inline FlyNavigator::~FlyNavigator()
 
 inline void FlyNavigator::translate(const gmtl::Vec3d&  dir)
 {  
-  gmtl::preMult(_modelViewMatrix, gmtl::makeTrans<gmtl::Matrix44d>(dir));
+  //std::cout << "mat before mult: " << _modelViewMatrix << std::endl;
+  //std::cout << "calculate mat is : " << gmtl::makeTrans<gmtl::Matrix44d>(dir) << std::endl;
+  //std::cout << "_modelViewMatrix mat is : " << _modelViewMatrix << std::endl;  
+  gmtl::postMult(_modelViewMatrix, gmtl::makeTrans<gmtl::Matrix44d>(dir));
+  //std::cout << "mat after  mult: " << _modelViewMatrix << std::endl;
 } 
  
    
@@ -117,16 +121,18 @@ inline void FlyNavigator::setDofTrans (bool val1, bool val2, bool val3)
 
 inline void FlyNavigator::yaw(double value)
 {
-  gmtl::Vec3d axis      (0.0, 1.0, 0.0);  
-  gmtl::xform(axis, _modelViewMatrix, axis);
-  gmtl::preMult(_modelViewMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled(value, axis)));  
+  gmtl::Vec3d axis      (0.0, 1.0, 0.0);
+  gmtl::Vec3d localAxis;  
+  gmtl::xform(localAxis, _modelViewMatrix, axis);
+  gmtl::normalize(localAxis);
+  gmtl::postMult(_modelViewMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled(value, localAxis)));  
 }
 
 
 inline void FlyNavigator::pitch(double value)
 {
   gmtl::Vec3d axis      (1.0, 0.0, 0.0);
-  gmtl::preMult(_modelViewMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled(value, axis)));
+  gmtl::postMult(_modelViewMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled(value, axis)));
 }
 
 
