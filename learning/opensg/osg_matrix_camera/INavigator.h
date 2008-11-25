@@ -29,6 +29,9 @@ class INavigator
     virtual       void          pitch(double angle)                                   = 0;
 
     virtual       void          roll(double angle)                                    = 0;
+
+    // \note Need to call this before we make call to any transform functions. 
+    virtual       void          updateTimeSec(double val)                              = 0;
 };
 
 #endif // __I_NAVIGATOR_H__

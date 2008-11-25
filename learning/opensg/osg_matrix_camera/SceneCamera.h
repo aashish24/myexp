@@ -12,19 +12,15 @@ class SceneCamera : public ISceneCamera
   public: 
                                           SceneCamera();
     virtual                              ~SceneCamera();
-    virtual       gmtl::Vec4d             getXDir()     const;
-    virtual       gmtl::Vec4d             getUpDir()    const;
-    virtual       gmtl::Vec4d             getLookDir()  const;  
-    virtual       gmtl::Vec4d             getPosition() const;
-
-    //virtual       void            move  (const OSG::Vec3d dir);
-    //virtual       void            rotate(const OSG::Vec3d rot);
+    virtual       gmtl::Vec3d             getXDir()     const;
+    virtual       gmtl::Vec3d             getUpDir()    const;
+    virtual       gmtl::Vec3d             getLookDir()  const;  
+    virtual       gmtl::Vec3d             getPosition() const;    
 
     virtual const gmtl::Matrix44d&        getModelViewMatrix() const;
     
     virtual       void                    setBeacon(OSG::NodeRefPtr node);
-    virtual const OSG::NodeRefPtr         getBeacon() const;
-
+    virtual const OSG::NodeRefPtr         getBeacon() const;     
 
   protected:
 
@@ -32,32 +28,38 @@ class SceneCamera : public ISceneCamera
     OSG::NodeRefPtr                 _beacon;
 
     // Camera's X axis.
-    gmtl::Vec4d                     _xDir;
+    gmtl::Vec3d                     _xDir;
 
     // Camera's Y axis.
-    gmtl::Vec4d                     _upDir;
+    gmtl::Vec3d                     _upDir;
 
     // Camera's Z axis. 
-    gmtl::Vec4d                     _lookDir;
+    gmtl::Vec3d                     _lookDir;
 
     // Camera's origin. 
-    gmtl::Vec4d                     _position;
+    gmtl::Vec3d                     _position;
 
-    gmtl::Matrix44d                 _modelViewMatrix;
+    gmtl::Matrix44d                 _modelViewMatrix;    
 };
 
 
 inline SceneCamera::SceneCamera() : ISceneCamera(),  
   _beacon         (0x00), 
-  _xDir           (1.0, 0.0, 0.0, 0.0), 
-  _upDir          (0.0, 1.0, 0.0, 0.0),
-  _lookDir        (0.0, 0.0, 1.0, 0.0),
-  _position       (1.0, 0.0, 5.0, 0.0)  
+  _xDir           (1.0, 0.0, 0.0), 
+  _upDir          (0.0, 1.0, 0.0),
+  _lookDir        (0.0, 0.0, 1.0),
+  _position       (1.0, 0.0, 5.0)  
 {  
-  _modelViewMatrix.set(_xDir[0],      _xDir[0],     _xDir[0],     _xDir[0], 
+  /*_modelViewMatrix.set(_xDir[0],      _xDir[0],     _xDir[0],     _xDir[0], 
                        _upDir[0],     _upDir[0],    _upDir[0],    _upDir[0],
                        _lookDir[0],   _lookDir[0],  _lookDir[0],  _lookDir[0],
-                       _position[0],  _position[0], _position[0], _position[0]);
+                       _position[0],  _position[0], _position[0], _position[0]);*/
+
+  _modelViewMatrix.set(_xDir[0],  _upDir[0], _lookDir[0], _position[0], 
+                       _xDir[1],  _upDir[1], _lookDir[1], _position[1],
+                       _xDir[2],  _upDir[2], _lookDir[2], _position[2],
+                       0.0,       0.0,       0.0,         1.0);  
+
   try
   {    
   }
@@ -75,31 +77,27 @@ inline SceneCamera::~SceneCamera()
 }
 
 
-inline gmtl::Vec4d SceneCamera::getXDir() const
+inline gmtl::Vec3d SceneCamera::getXDir() const
 {
-  return gmtl::Vec4d(_modelViewMatrix[0][0], _modelViewMatrix[1][0], 
-                     _modelViewMatrix[2][0], _modelViewMatrix[3][0]);   
+  return gmtl::Vec3d(_modelViewMatrix[0][0], _modelViewMatrix[1][0], _modelViewMatrix[2][0]);   
 }
 
 
-inline gmtl::Vec4d SceneCamera::getUpDir() const
+inline gmtl::Vec3d SceneCamera::getUpDir() const
 {
-  return gmtl::Vec4d(_modelViewMatrix[0][1], _modelViewMatrix[1][1], 
-                     _modelViewMatrix[2][1], _modelViewMatrix[3][1]);
+  return gmtl::Vec3d(_modelViewMatrix[0][1], _modelViewMatrix[1][1], _modelViewMatrix[2][1]);
 }
 
 
-inline gmtl::Vec4d SceneCamera::getLookDir() const
+inline gmtl::Vec3d SceneCamera::getLookDir() const
 {
-  return gmtl::Vec4d(_modelViewMatrix[0][2], _modelViewMatrix[1][2], 
-                     _modelViewMatrix[2][2], _modelViewMatrix[3][2]);
+  return gmtl::Vec3d(_modelViewMatrix[0][2], _modelViewMatrix[1][2], _modelViewMatrix[2][2]);
 }
 
   
-inline gmtl::Vec4d SceneCamera::getPosition() const
+inline gmtl::Vec3d SceneCamera::getPosition() const
 {  
-  return gmtl::Vec4d(_modelViewMatrix[0][3], _modelViewMatrix[1][3], 
-                     _modelViewMatrix[2][3], _modelViewMatrix[3][3]);
+  return gmtl::Vec3d(_modelViewMatrix[0][3], _modelViewMatrix[1][3], _modelViewMatrix[2][3]);
 }
 
 

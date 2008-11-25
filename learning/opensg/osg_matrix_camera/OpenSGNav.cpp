@@ -46,8 +46,10 @@ void OpenSGNav::draw()
 
 void OpenSGNav::preFrame()
 { 
+  mNavigator->updateTimeMS(mHead->getTimeStamp().secd());  
+  
   {
-    float data = (mAnalog01->getData() - 0.5 );    
+    float data = (mAnalog01->getData() - 0.5) * 2.0;    
     if(fabs(data) > 0.01)
     {        
       mNavigator->translate(gmtl::Vec3d(data, 0.0, 0.0));
@@ -55,7 +57,7 @@ void OpenSGNav::preFrame()
   }
       
   {
-    float data = (mAnalog02->getData() - 0.5 );    
+    float data = (mAnalog02->getData() - 0.5 ) * 2.0;    
     if(fabs(data) > 0.01)
     {
       // Translation when we pushforward should move us in the -ve dir.        
@@ -66,20 +68,20 @@ void OpenSGNav::preFrame()
   }
 
   {
-    float data = (mAnalog03->getData() - 0.5 );    
+    float data = (mAnalog03->getData() - 0.5 ) * 2.0;    
     if(fabs(data) > 0.01)
     {
       // Rotation is clockwise hence angle should be -ve 
       // (in case of joystick as left most val is 0 and right most is 1). 
-      mNavigator->yaw(-data*0.001);
+      mNavigator->yaw(-data);
     }   
   }  
 
   {
-    float data = (mAnalog04->getData() - 0.5 );    
+    float data = (mAnalog04->getData() - 0.5 ) * 2.0;    
     if(fabs(data) > 0.01)
     {
-      mNavigator->pitch(data*0.001);
+      mNavigator->pitch(data);
     }   
   }  
 
@@ -132,7 +134,9 @@ void OpenSGNav::initScene()
     mAnalog03.init("VJAnalog03");
     mAnalog04.init("VJAnalog04");
     mAnalog05.init("VJAnalog05");
-    mAnalog06.init("VJAnalog06");           
+    mAnalog06.init("VJAnalog06");   
+
+    mHead.init("VJHead");        
 
    // Load the model to use
    if (mFileToLoad ==  std::string("none"))

@@ -156,6 +156,7 @@ public:
    gadget::AnalogInterface    mAnalog05; /**< Analog interface for button 5 */
    gadget::AnalogInterface    mAnalog06; /**< Analog interface for button 6 */          
 
+   gadget::PositionInterface  mHead;
    float mVelocity;
 };
 

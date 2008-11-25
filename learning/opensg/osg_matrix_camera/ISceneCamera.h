@@ -5,10 +5,10 @@
 struct ISceneCamera
 {
   virtual                              ~ISceneCamera(){;}
-  virtual       gmtl::Vec4d             getXDir()             const   = 0;
-  virtual       gmtl::Vec4d             getUpDir()            const   = 0;
-  virtual       gmtl::Vec4d             getLookDir()          const   = 0;  
-  virtual       gmtl::Vec4d             getPosition()         const   = 0;
+  virtual       gmtl::Vec3d             getXDir()             const   = 0;
+  virtual       gmtl::Vec3d             getUpDir()            const   = 0;
+  virtual       gmtl::Vec3d             getLookDir()          const   = 0;  
+  virtual       gmtl::Vec3d             getPosition()         const   = 0;
   virtual const gmtl::Matrix44d&        getModelViewMatrix()  const   = 0;  
 };
 

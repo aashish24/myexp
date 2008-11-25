@@ -200,10 +200,15 @@ inline void LimeVrjCamera::v3dSetup(double viewAspect,     double viewNS,       
 inline void LimeVrjCamera::evaluate()
 {
   // Calculate project and modelview matrix here.    
-  gmtl::Vec4d x   (_sceneCamera->getXDir());  
-  gmtl::Vec4d up  (_sceneCamera->getUpDir());  
-  gmtl::Vec4d look(_sceneCamera->getLookDir());
-  gmtl::Vec4d pos (_sceneCamera->getPosition());
+  gmtl::Vec3d x   (_sceneCamera->getXDir());  
+  gmtl::Vec3d up  (_sceneCamera->getUpDir());  
+  gmtl::Vec3d look(_sceneCamera->getLookDir());
+  gmtl::Vec3d pos (_sceneCamera->getPosition());
+
+  gmtl::normalize(x);
+  gmtl::normalize(up);
+  gmtl::normalize(look);
+ 
 
   //std::cout << "x is"     << x    << std::endl;
   //std::cout << "up is"    << up   << std::endl;
@@ -235,8 +240,8 @@ inline void LimeVrjCamera::evaluate()
                  _view.getPegOffset(),  _setup.getImageWidth(), _setup.getNS(),
                  _setup.getEW(),        _setup.getField(),      _setup.getLens());
 
-  gmtl::preMult(mat, _viewSetupMatrix);
-  gmtl::preMult(mat, _3dSetupMatrix);
+  //gmtl::preMult(mat, _viewSetupMatrix);
+  //gmtl::preMult(mat, _3dSetupMatrix);
   gmtl::Matrix44f compMat;
 
   this->convert(mat, compMat);
@@ -256,7 +261,7 @@ inline void LimeVrjCamera::evaluate()
 //     }
 
   _osgCamera->setModelviewMatrix  (osgCompMat);
-  _osgCamera->setProjectionMatrix (OSG::Matrix());
+  //_osgCamera->setProjectionMatrix (OSG::Matrix());
   _osgCamera->setNear (0.1);
   _osgCamera->setFar  (5000.0);  
 }
