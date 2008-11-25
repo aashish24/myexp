@@ -105,6 +105,7 @@ class OpenSGNav : public vrj::OpenSG2App
       mFileToLoad = filename;
    }
 
+
 protected: 
 
   virtual void setupCamera();
@@ -157,7 +158,7 @@ public:
    gadget::AnalogInterface    mAnalog06; /**< Analog interface for button 6 */          
 
    gadget::PositionInterface  mHead;
-   float mVelocity;
+   float                      mVelocity;
 };
 
 

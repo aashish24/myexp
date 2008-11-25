@@ -7,23 +7,29 @@ class BG
 {
   public: 
     
-                          BG(); 
-                          BG(double bgAspect, double bgNS,   double bgEW,  
+                  BG(); 
+                  BG(double bgAspect, double bgNS,   double bgEW,  
                              double bgField,  double bgCrot, double bgPegOffset);
       
-                         ~BG();
+                 ~BG();
       
-    const double& getAspect()     const;
+    const double& getAspect()                             const;
+          void    setAspect(const double& bgAspect);
 
-    const double& getNS()         const;
+    const double& getNS()                                 const;
+          void    setNS(const double& bsNS);
       
-    const double& getEW()         const;
+    const double& getEW()                                 const;
+          void    setEW(const double& bgEW);
 
-    const double& getField()      const;
+    const double& getField()                              const;
+          void    setField(const double& bgField);
 
-    const double& getCrot()       const;
+    const double& getCrot()                               const;
+          void    setCrot(const double& bgCrot);
 
-    const double& getPegOffset()  const;
+    const double& getPegOffset()                          const;
+          void    setPegOffset(const double& bgPegOffset);
 
   
   private: 
@@ -71,10 +77,22 @@ inline const double& BG::getAspect() const
 }
 
 
+inline void BG::setAspect(const double& bgAspect)
+{
+  _bgAspect = bgAspect;
+}
+
+
 inline const double& BG::getNS() const
 {
   return _bgNS;
 }    
+
+
+inline void BG::setNS(const double& bgNS)
+{
+  _bgNS = bgNS;
+}
 
 
 inline const double& BG::getEW() const
@@ -83,9 +101,21 @@ inline const double& BG::getEW() const
 }
 
 
+inline void BG::setEW(const double& bgEW)
+{
+  _bgEW = bgEW;
+}
+
+ 
 inline const double& BG::getField() const
 {
   return _bgField;
+}
+
+
+inline void BG::setField(const double& bgField)
+{
+  _bgField = bgField;
 }
 
 
@@ -95,10 +125,22 @@ inline const double& BG::getCrot() const
 }
 
 
+inline void BG::setCrot(const double& bgCrot)
+{
+  _bgCrot = bgCrot;
+}
+
+
 inline const double& BG::getPegOffset() const
 {
   return _bgPegOffset;
 }  
+
+
+inline void BG::setPegOffset(const double& bgPegOffset)
+{
+  _bgPegOffset = bgPegOffset;
+}
 
 #endif // __BG_H__
 

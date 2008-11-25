@@ -2,6 +2,7 @@
 #include <OpenSG/OSGMatrix.h>
 #include <OpenSG/OSGSimpleGeometry.h>
 #include <OpenSG/OSGDirectionalLight.h>
+#include <OpenSG/OSGPointLight.h>
 #include <OpenSG/OSGSceneFileHandler.h>
 
 #include <vrj/vrjConfig.h>
@@ -46,7 +47,7 @@ void OpenSGNav::draw()
 
 void OpenSGNav::preFrame()
 { 
-  mNavigator->updateTimeMS(mHead->getTimeStamp().secd());  
+  mNavigator->updateTimeSec(mHead->getTimeStamp().secd());  
   
   {
     float data = (mAnalog01->getData() - 0.5) * 2.0;    
@@ -164,12 +165,12 @@ void OpenSGNav::initScene()
    // - Create a beacon for it and connect to that beacon
    mLightNode   = OSG::Node::create();
    mLightBeacon = OSG::Node::create();
-   OSG::DirectionalLightRefPtr light_core = OSG::DirectionalLight::create();
+   OSG::PointLightRefPtr light_core = OSG::PointLight::create();
    OSG::TransformRefPtr light_beacon_core = OSG::Transform::create();
 
    // Setup light beacon
    OSG::Matrix light_pos;
-   light_pos.setTransform(OSG::Vec3f(2.0f, 5.0f, 4.0f));
+   light_pos.setTransform(OSG::Vec3f(0.0f, 1000.0f, 10000.0f));
 
    light_beacon_core->setMatrix(light_pos);
 
@@ -180,10 +181,10 @@ void OpenSGNav::initScene()
    mLightNode->addChild(mLightBeacon);
 
    light_core->setAmbient  (0.9, 0.8, 0.8, 1);
-   light_core->setDiffuse  (0.6, 0.6, 0.6, 1);
-   light_core->setSpecular (1, 1, 1, 1);
-   light_core->setDirection(0, 0, 1);
-   light_core->setBeacon   (mLightNode);
+   light_core->setDiffuse  (0.8, 0.8, 0.8, 1);
+   light_core->setSpecular (0, 0, 1, 1);
+   //light_core->setDirection(0, 0, -1);
+   light_core->setBeacon   (mLightBeacon);
 
    // --- Setup Scene -- //
    // add the loaded scene to the light node, so that it is lit by the light

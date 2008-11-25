@@ -207,8 +207,7 @@ inline void LimeVrjCamera::evaluate()
 
   gmtl::normalize(x);
   gmtl::normalize(up);
-  gmtl::normalize(look);
- 
+  gmtl::normalize(look); 
 
   //std::cout << "x is"     << x    << std::endl;
   //std::cout << "up is"    << up   << std::endl;
@@ -220,14 +219,7 @@ inline void LimeVrjCamera::evaluate()
   mat.set(x[0],    x[1],    x[2],    (-(x[0]*pos[0])     - (x[1]*pos[1])     - (x[2]*pos[2])),
           up[0],   up[1],   up[2],   (-(up[0]*pos[0])    - (up[1]*pos[1])    - (up[2]*pos[2])),
           look[0], look[1], look[2], (-(look[0]*pos[0])  - (look[1]*pos[1])  - (look[2]*pos[2])), 
-          0.0,     0.0,     0.0,      1.0);
-
-  // Hardcoded as of now. 
-  //   this->viewSetup(1.7777, 5000.0, 5000.0, 
-  //                   16.0,   0.0,    0.0, 
-  //                   1.0,    16.0,   18.0,   
-  //                   0.1,    5000.0, 1.7777, 
-  //                   5000.0, 5000.0, 16.0, 
+          0.0,     0.0,     0.0,      1.0);   
 
   this->viewSetup(_view.getAspect(),     _view.getNS(),     _view.getEW(), 
                   _view.getField(),      _view.getCrot(),   _view.getPegOffset(), 
@@ -238,32 +230,29 @@ inline void LimeVrjCamera::evaluate()
   
   this->v3dSetup(_view.getAspect(),     _view.getNS(),          _view.getEW(),
                  _view.getPegOffset(),  _setup.getImageWidth(), _setup.getNS(),
-                 _setup.getEW(),        _setup.getField(),      _setup.getLens());
-
-  //gmtl::preMult(mat, _viewSetupMatrix);
-  //gmtl::preMult(mat, _3dSetupMatrix);
-  gmtl::Matrix44f compMat;
-
-  this->convert(mat, compMat);
+                 _setup.getEW(),        _setup.getField(),      _setup.getLens());  
   
-  OSG::Matrix     osgCompMat; 
-  osgCompMat.setValue(compMat.mData);
+  gmtl::Matrix44f viewMat;
+  this->convert(mat, viewMat);  
+  OSG::Matrix     osgViewMat; 
+  osgViewMat.setValue(viewMat.mData);  
 
-  //std::cout << "mat matrix is: " << mat << std::endl;
-  //std::cout << "pos * look" << pos[2] * look[2] << std::endl;
+  // Combine view setup and 3dsetup matrices as projection matrix. 
+  gmtl::preMult(_viewSetupMatrix, _3dSetupMatrix);
+  
+  gmtl::Matrix44f projMat;
+  this->convert(_viewSetupMatrix, projMat);
+  OSG::Matrix osgProjMat; 
+  osgProjMat.setValue(projMat.mData);
+  
+  // \note Storing everything in the model view matrix did not work. 
+  //       OSG seems to need projection matrix as separate. 
 
-//   std::cout << "Projection matrix is: " << std::endl;
-//   for(size_t i=0; i < 4; ++i)
-//   {
-//     for(size_t j=0; j < 4; ++j)
-//     {
-//       std::cout << "row " << i << " col " << j << " " << _viewSetupMatrix[i][j] << std::endl;
-//     }
-
-  _osgCamera->setModelviewMatrix  (osgCompMat);
-  //_osgCamera->setProjectionMatrix (OSG::Matrix());
-  _osgCamera->setNear (0.1);
-  _osgCamera->setFar  (5000.0);  
+  // Finally set all the values.
+  _osgCamera->setModelviewMatrix(osgViewMat);  
+  _osgCamera->setProjectionMatrix(osgProjMat);  
+  _osgCamera->setNear (_setup.getNear());
+  _osgCamera->setFar  (_setup.getFar());  
 }
 
 
@@ -277,9 +266,9 @@ inline gmtl::Matrix44d LimeVrjCamera::getPerspective(double fovy, double aspect,
 {
   double depth = far - near;   
 
-  double halfAngle = ( fovy * (3.14159/180.0) ) / 2.0;
+  double halfAngle = (fovy * (3.14159/180.0)) / 2.0;
 
-  double cotHalfAngle = cos( halfAngle ) / sin( halfAngle );
+  double cotHalfAngle = cos(halfAngle) / sin(halfAngle);
 
   gmtl::Matrix44d mat;
 

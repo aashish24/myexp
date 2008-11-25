@@ -23,6 +23,10 @@ class FlyNavigator : public INavigator, public SceneCamera
 {
   public:
                                 FlyNavigator();  
+                                FlyNavigator(const gmtl::Vec3d& xDir, 
+                                             const gmtl::Vec3d& upDir, 
+                                             const gmtl::Vec3d& lookDir, 
+                                             const gmtl::Vec3d& position);
     
     virtual                    ~FlyNavigator();
 
@@ -49,7 +53,11 @@ class FlyNavigator : public INavigator, public SceneCamera
 
     virtual       void          updateTimeSec(double val);
     
+    virtual       void          update(){;}
 
+    virtual       void          reset();
+
+      
   protected:
 
     bool                        _dofRot[3]; 
@@ -78,6 +86,14 @@ inline FlyNavigator::FlyNavigator() : INavigator(), SceneCamera(),
 }
 
 
+inline FlyNavigator::FlyNavigator(const gmtl::Vec3d& xDir, 
+                                  const gmtl::Vec3d& upDir, 
+                                  const gmtl::Vec3d& lookDir, 
+                                  const gmtl::Vec3d& position) : SceneCamera(xDir, upDir, lookDir, position)
+{  
+}
+
+
 inline FlyNavigator::~FlyNavigator() 
 {
 }
@@ -85,11 +101,11 @@ inline FlyNavigator::~FlyNavigator()
 
 inline void FlyNavigator::translate(const gmtl::Vec3d&  dir)
 {  
-  //std::cout << "mat before mult: " << _modelViewMatrix << std::endl;
+  //std::cout << "mat before mult: " << _viewMatrix << std::endl;
   //std::cout << "calculate mat is : " << gmtl::makeTrans<gmtl::Matrix44d>(dir) << std::endl;
-  //std::cout << "_modelViewMatrix mat is : " << _modelViewMatrix << std::endl;  
-  gmtl::postMult(_modelViewMatrix, gmtl::makeTrans<gmtl::Matrix44d>(dir * _transSpeed * _fpsFactor));
-  //std::cout << "mat after  mult: " << _modelViewMatrix << std::endl;
+  //std::cout << "_viewMatrix mat is : " << _viewMatrix << std::endl;  
+  gmtl::postMult(_viewMatrix, gmtl::makeTrans<gmtl::Matrix44d>(dir * _transSpeed * _fpsFactor));
+  //std::cout << "mat after  mult: " << _viewMatrix << std::endl;
 } 
  
    
@@ -137,17 +153,17 @@ inline void FlyNavigator::setDofTrans (bool val1, bool val2, bool val3)
 inline void FlyNavigator::yaw(double value)
 {
   gmtl::Matrix44d invMat;
-  gmtl::invert(invMat, _modelViewMatrix);  
+  gmtl::invert(invMat, _viewMatrix);  
   gmtl::Vec3d localAxis;  
-  gmtl::xform(localAxis, invMat, _upDir);
+  gmtl::xform(localAxis, invMat, _initUpDir);
   gmtl::normalize(localAxis);
-  gmtl::postMult(_modelViewMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled((value * _rotSpeed * _fpsFactor), localAxis)));    
+  gmtl::postMult(_viewMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled((value * _rotSpeed * _fpsFactor), localAxis)));    
 }
 
 
 inline void FlyNavigator::pitch(double value)
 {    
-  gmtl::postMult(_modelViewMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled((value * _rotSpeed * _fpsFactor), _xDir)));  
+  gmtl::postMult(_viewMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled((value * _rotSpeed * _fpsFactor), _initXDir)));  
 }
 
 
@@ -163,6 +179,12 @@ inline void FlyNavigator::updateTimeSec(double val)
   
   //std::cout << "_fpsFactor" << _fpsFactor   << std::endl;
   //std::cout << "_time"      << _time.msec() << std::endl;
+}
+
+
+inline void FlyNavigator::reset()
+{
+  this->constructViewMatrix();  
 }
 
 #endif // __FLY_NAVIGATOR_H__

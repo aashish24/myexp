@@ -6,27 +6,34 @@ class Setup
 {
   public: 
     
-                          Setup(); 
-                          Setup(double setupImageWidth, double setupNS,   double setupEW, 
-                                double setupField,      double setupLens, double setupNear, 
-                                double setupFar);
+                  Setup(); 
+                  Setup(double setupImageWidth, double setupNS,   double setupEW, 
+                        double setupField,      double setupLens, double setupNear, 
+                        double setupFar);
 
       
-                         ~Setup();
+                 ~Setup();
   
     const double& getImageWidth()  const;
+    void          setImageWidth(const double& setupImageWidth);
 
     const double& getNS()          const;
+    void          setNS(const double& setupNS);
 
     const double& getEW()          const;
+    void          setEW(const double& setupEW);
 
     const double& getField()       const;
+    void          setField(const double& setupField);
 
     const double& getLens()        const;
+    void          setLens(const double& setupLens);
       
     const double& getNear()        const;
+    void          setNear(const double& setupNear);
 
     const double& getFar()         const;
+    void          setFar(const double& setupFar);
 
   
   private:
@@ -78,9 +85,21 @@ inline const double& Setup::getImageWidth() const
 }
 
 
+inline void Setup::setImageWidth(const double& setupImageWidth)
+{
+  _setupImageWidth = setupImageWidth;    
+}
+
+
 inline const double& Setup::getNS() const
 {
   return _setupNS;
+}
+
+
+inline void Setup::setNS(const double& setupNS)
+{
+  _setupNS = setupNS;
 }
 
 
@@ -90,15 +109,33 @@ inline const double& Setup::getEW() const
 }
 
 
+inline void Setup::setEW(const double& setupEW)
+{
+  _setupEW = setupEW;
+}
+
+
 inline const double& Setup::getField() const
 {
   return _setupField;
 }    
 
 
+inline void Setup::setField(const double& setupField)
+{
+  _setupField = setupField;
+}
+
+
 inline const double& Setup::getLens() const
 {
   return _setupLens;
+}
+
+
+inline void Setup::setLens(const double& setupLens)
+{
+  _setupLens = setupLens;
 }
 
 
@@ -108,9 +145,21 @@ inline const double& Setup::getNear() const
 }
 
 
+inline void Setup::setNear(const double& setupNear) 
+{
+  _setupNear = setupNear;
+}
+
+
 inline const double& Setup::getFar() const
 {
   return _setupFar;
+}
+
+
+inline void Setup::setFar(const double& setupFar)
+{
+  _setupFar = setupFar;
 }  
 
 #endif // __SETUP_H__
