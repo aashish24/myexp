@@ -100,12 +100,8 @@ inline FlyNavigator::~FlyNavigator()
 
 
 inline void FlyNavigator::translate(const gmtl::Vec3d&  dir)
-{  
-  //std::cout << "mat before mult: " << _viewMatrix << std::endl;
-  //std::cout << "calculate mat is : " << gmtl::makeTrans<gmtl::Matrix44d>(dir) << std::endl;
-  //std::cout << "_viewMatrix mat is : " << _viewMatrix << std::endl;  
-  gmtl::postMult(_viewMatrix, gmtl::makeTrans<gmtl::Matrix44d>(dir * _transSpeed * _fpsFactor));
-  //std::cout << "mat after  mult: " << _viewMatrix << std::endl;
+{   
+  gmtl::postMult(_viewMatrix, gmtl::makeTrans<gmtl::Matrix44d>(dir * _transSpeed * _fpsFactor));  
 } 
  
    
@@ -176,9 +172,6 @@ inline void FlyNavigator::updateTimeSec(double val)
 {
   _fpsFactor = (val - (_time.secd()));  
   _time.setd(val, vpr::Interval::Sec);
-  
-  //std::cout << "_fpsFactor" << _fpsFactor   << std::endl;
-  //std::cout << "_time"      << _time.msec() << std::endl;
 }
 
 

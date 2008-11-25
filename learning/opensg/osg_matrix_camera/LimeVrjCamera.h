@@ -277,16 +277,8 @@ inline gmtl::Matrix44d LimeVrjCamera::getPerspective(double fovy, double aspect,
           0.0,                    0.0,            -(far+near)/depth,   -1.0,
           0.0,                    0.0,            -2.0*far*near/depth,  0.0};
   
-  // P is column major. 
+  // P is column major and gmtl set(Type*) takes column major Type(double, float) array.   
   mat.set(P);
-  
-//   std::cout << "Pespective matrix is: " << std::endl;
-//   for(size_t i=0; i < 4; ++i)
-//   {
-//     for(size_t j=0; j < 4; ++j)
-//     {
-//       std::cout << "row " << i << " col " << j << " " << mat[i][j] << std::endl;
-//     }
 
   return mat;
 }
