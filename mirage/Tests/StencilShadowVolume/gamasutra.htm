@@ -1,0 +1,900 @@
+<html><head><!-- #BeginTemplate "/Templates/printer friendly.dwt" -->
+
+<!-- #BeginEditable "doctitle" --> 
+<title>Gamasutra - Features - "The Mechanics of Robust Stencil Shadows" Printer Friendly</title>
+<link href="gamasutra_files/features.css" rel="stylesheet" type="text/css">
+<!-- #EndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<link href="gamasutra_files/features.css" rel="stylesheet" type="text/css">
+</head><body vlink="#000000" bgcolor="#ffffff" link="#880000">
+<!-- top ad call for 468x60 and 120x60 -->
+  <script src="gamasutra_files/focused_ads.js">
+  
+</script><iframe src="gamasutra_files/sitegameaffiliategamasutrapagepostopgam_poshomeord5365108119.htm" border="0" marginwidth="0" marginheight="0" scrolling="no" width="468" frameborder="no" height="60">&lt;SCRIPT
+LANGUAGE="Javascript1.1"
+SRC="http://as.cmpnet.com/js.ng/Params.richmedia=yes&amp;site=game&amp;affiliate=gamasutra&amp;pagepos=top&amp;gam_pos=home&amp;ord=53651081193655180?"&gt;&lt;/SCRIPT&gt;</iframe>&nbsp; &nbsp;<iframe src="gamasutra_files/sitegameaffiliategamasutrapageposbuttongam_poshomeord5365108.htm" border="0" marginwidth="0" marginheight="0" scrolling="no" width="120" frameborder="no" height="60">&lt;SCRIPT
+LANGUAGE="Javascript1.1"
+SRC="http://as.cmpnet.com/js.ng/Params.richmedia=yes&amp;site=game&amp;affiliate=gamasutra&amp;pagepos=button&amp;gam_pos=home&amp;ord=53651081193655180?"&gt;&lt;/SCRIPT&gt;</iframe>
+
+<br>
+<!-- begin main ad tag -->
+ <font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><i><b>Gama 
+Network Presents:</b></i></font> 
+<p align="left"><img src="gamasutra_files/gama2001logo2.gif" width="552" height="60"><br>
+</p>
+<p align="left"><img src="gamasutra_files/99_body_divider.gif" width="445" height="5"> 
+</p>
+<p><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><!-- #BeginEditable "title" --> 
+      
+<h1>The Mechanics of Robust Stencil Shadows</h1>
+<!-- #EndEditable --></font><br>
+  <font size="-1" face="Arial, Helvetica, sans-serif"><b><i><font face="Verdana, Arial, Helvetica, sans-serif">By</font> 
+  </i></b></font><font font="undefined" size="-1" face="Verdana, Arial, Helvetica, sans-serif"><!-- #BeginEditable "by%20line" --><b><i>Eric 
+Lengyel</i></b><!-- #EndEditable --></font><br>
+  <font size="-1" face="Arial, Helvetica, sans-serif"><b><font face="Verdana, Arial, Helvetica, sans-serif">Gamasutra</font></b></font><br>
+  <font face="Verdana, Arial, Helvetica, sans-serif"><!-- #BeginEditable "issue" --><font size="-1"><i>October 
+11,2002<br>
+</i></font><!-- #EndEditable --><font size="-1"><br>
+  <b>URL:</b></font><b> </b><!-- #BeginEditable "url" --><font size="-1"><b>http://www.gamasutra.com/features/20021011/lengyel_01.htm</b></font><!-- #EndEditable --></font></p>
+<!-- #BeginEditable "main%20content" --> 
+<p>The idea of using the stencil buffer to generate shadows has been around for 
+  over a decade, but only recently has 3D graphics hardware advanced to the point 
+  where using the stencil algorithm on a large scale has become practical. Not 
+  long ago, there existed some unsolved problems pertaining to stencil shadows 
+  that prevented the algorithm from working correctly under various conditions. 
+  Advances have now been made, however, so that stencil shadows can be robustly 
+  implemented to handle arbitrarily positioned point lights and infinite directional 
+  lights having any desired spatial relationship with the camera. This article 
+  presents the intricacies of the entire stencil shadow algorithm and covers every 
+  mathematical detail of its efficient implementation. 
+</p><h2>Algorithm Overview</h2>
+<p>The basic concept of the stencil shadow algorithm is to use the stencil buffer 
+  as a masking mechanism to prevent pixels in shadow from being drawn during the 
+  rendering pass for a particular light source. This is accomplished by rendering 
+  an invisible shadow volume for each shadow-casting object in a scene using stencil 
+  operations that leave nonzero values in the stencil buffer wherever light is 
+  blocked. Once the stencil buffer has been filled with the appropriate mask, 
+  a lighting pass only illuminates pixels where the value in the stencil buffer 
+  is zero. 
+</p><p>As shown in Figure 1, an object&#8217;s shadow volume encloses the region of 
+  space for which light is blocked by the object. This volume is constructed by 
+  finding the edges in the object&#8217;s triangle mesh representing the boundary 
+  between lit triangles and unlit triangles and extruding those edges away from 
+  the light source. Such a collection of edges is called the object&#8217;s silhouette 
+  with respect to the light source. The shadow volume is rendered into the stencil 
+  buffer using operations that modify the stencil value at each pixel depending 
+  on whether the depth test passes or fails. Of course, this requires that the 
+  depth buffer has already been initialized to the correct values by a previous 
+  rendering pass. Thus, the scene is first rendered using a shader that applies 
+  surface attributes that do not depend on any light source, such as ambient illumination, 
+  emission, and environment mapping. 
+<table width="75" align="center" border="0">
+  <tbody><tr> 
+    <td><img src="gamasutra_files/fig_01.gif" width="472" height="315"></td>
+  </tr>
+  <tr> 
+    <td><div align="center"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Figure 
+        1. An object&#8217;s shadow volume encloses the region of space for which light 
+        is blocked by the object.<br>
+        </font></b></font></div></td>
+  </tr>
+</tbody></table>
+</p><p>The original stencil algorithm renders the shadow volume in two stages. In 
+  the first stage, the front faces of the shadow volume (with respect to the camera) 
+  are rendered using a stencil operation that increments the value in the stencil 
+  buffer whenever the depth test passes. In the second stage, the back faces of 
+  the shadow volume are rendered using a stencil operation that decrements the 
+  value in the stencil buffer whenever the depth test passes. As illustrated in 
+  Figure 2, this technique leaves nonzero values in the stencil buffer wherever 
+  the shadow volume intersects any surface in the scene, including the surface 
+  of the object casting the shadow. 
+<table width="75" align="center" border="0">
+  <tbody><tr> 
+    <td><img src="gamasutra_files/fig_02.gif" width="400" height="479"></td>
+  </tr>
+  <tr> 
+    <td><div align="center"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Figure 
+        2. Numbers at the ends of rays emanating from the camera position C represent 
+        the values left in the stencil buffer for a variety of cases. The stencil 
+        value is incremented when front faces of the shadow volume pass the depth 
+        test, and the stencil value is decremented when back faces of the shadow 
+        volume pass the depth test. The stencil value does not change when the 
+        depth test fails.</font></b> </font></b></font></div></td>
+  </tr>
+</tbody></table>
+</p><p>There are two major problems with the method just described. The first is that 
+  no matter what finite distance we extrude an object&#8217;s silhouette away 
+  from a light source, it is still possible that it is not far enough to cast 
+  a shadow on every object in the scene that should intersect the shadow volume. 
+  The example shown in Figure 3 demonstrates how this problem arises when a light 
+  source is very close to a shadow-casting object. Fortunately, this problem can 
+  be elegantly solved by using a special projection matrix and extruding shadow 
+  volumes all the way to infinity. 
+<table width="75" align="center" border="0">
+  <tbody><tr> 
+    <td><img src="gamasutra_files/fig_03.gif" width="150" height="399"></td>
+  </tr>
+  <tr> 
+    <td><div align="center"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Figure 
+        3. No matter what finite distance an object&#8217;s silhouette is extruded away 
+        from a light source, moving the light close enough to the object can result 
+        in a shadow volume that cannot reach other objects in the scene</font></b>.</font></b> 
+        </font></b></font></div></td>
+  </tr>
+</tbody></table>
+</p><p>The second problem shows up when the camera lies inside the shadow volume or 
+  the shadow volume is clipped by the near plane. Either of these occurrences 
+  can leave incorrect values in the stencil buffer causing the wrong surfaces 
+  to be illuminated. The solution to this problem is to add caps to the shadow 
+  volume geometry, making it a closed surface, and using different stencil operations. 
+  The two caps added to the shadow volume are derived from the object&#8217;s 
+  triangle mesh as follows. A front cap is constructed using the unmodified vertices 
+  of triangles facing toward the light source. A back cap is constructed by projecting 
+  the vertices of triangles facing away from the light source to infinity. For 
+  the resulting closed shadow volume, we render back faces (with respect to the 
+  camera) using a stencil operation that increments the stencil value whenever 
+  the depth test fails, and we render front faces using a stencil operation that 
+  decrements the stencil value whenever the depth test fails. As shown in Figure 
+  4, this technique leaves nonzero values in the stencil buffer for any surface 
+  intersecting the shadow volume for arbitrary camera positions. Rendering shadow 
+  volumes in this manner is more expensive than using the original technique, 
+  but we can determine when it&#8217;s safe to use the less-costly depth-pass 
+  method without having to worry about capping our shadow volumes. 
+<table width="75" align="center" border="0">
+  <tbody><tr> 
+    <td><img src="gamasutra_files/fig_04.gif" width="450" height="377"></td>
+  </tr>
+  <tr> 
+    <td><div align="center"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Figure 
+        3. No matter what finite distance an object&#8217;s silhouette is extruded away 
+        from a light source, moving the light close enough to the object can result 
+        in a shadow volume that cannot reach other objects in the scene</font></b>.</font></b> 
+        </font></b> </font></b></font></div></td>
+  </tr>
+</tbody></table>
+</p><p>The details of everything just described are discussed throughout the remainder 
+  of this article. In summary, the rendering algorithm for a single frame runs 
+  through the following steps. 
+</p><blockquote><b>A</b> Clear the frame buffer and perform an ambient rendering pass. 
+  Render the visible scene using any surface shading attribute that does not depend 
+  on any particular light source.</blockquote>
+<blockquote><b>B</b> Choose a light source and determine what objects may cast 
+  shadows into the visible region of the world. If this is not the first light 
+  to be rendered, clear the stencil buffer.</blockquote>
+<blockquote><b>C</b> For each object, calculate the silhouette representing the 
+  boundary between triangles facing toward the light source and triangles facing 
+  away from the light source. Construct a shadow volume by extruding the silhouette 
+  away from the light source.</blockquote>
+<blockquote><b>D</b> Render the shadow volume using specific stencil operations 
+  that leave nonzero values in the stencil buffer where surfaces are in shadow.</blockquote>
+<blockquote><b>E</b> Perform a lighting pass using the stencil test to mask areas 
+  that are not illuminated by the light source.</blockquote>
+<blockquote><b>F</b> Repeat steps B through E for every light source that may 
+  illuminate the visible region of the world.</blockquote>
+<p>For a scene illuminated by <i>n</i> lights, this algorithm requires at least 
+  <i>n</i>+1 rendering passes. More than <i>n</i>+1 passes may be necessary if 
+  surface shading calculations for a single light source cannot be accomplished 
+  in a single pass. To efficiently render a large scene containing many lights, 
+  one must be careful during each pass to render only objects that could potentially 
+  be illuminated by a particular light source. An additional optimization using 
+  the scissor rectangle can also save a significant amount of rasterization work 
+  -- this optimization is discussed in the last section of this article. 
+</p><h2>Infinite View Frustums</h2>
+<p>To ensure that shadow volumes surround every last bit of space for which light 
+  is blocked by an object, we must extrude the object&#8217;s silhouette to infinity. 
+  Using a standard perspective projection matrix would cause such a shadow volume 
+  to be clipped by the far plane. To avoid this unwanted effect, we can actually 
+  place the far plane at an infinite distance from the camera. 
+</p><p>Recall that the projection matrix transforms points from eye space to clip 
+  space. In OpenGL, eye space is the coordinate system in which the camera lies 
+  at the origin, the <i>x</i>-axis points to the right, the <i>y</i>-axis points 
+  upward, and the camera points down the negative <i>z</i>-axis. In clip space, 
+  a 4D homogeneous point <font face="Symbol">&lt;</font><i>x,y,z,w</i><font face="Symbol">&gt;</font> 
+  is inside the view frustum if -<i>w</i><u>&lt;</u><i>x</i><u>&lt;</u><i>w</i>, 
+  -<i>w</i><u>&lt;</u><i>y</i><u>&lt;</u><i>w</i>, and -<i>w</i><u>&lt;</u><i>z</i><u>&lt;</u><i>w</i>. 
+  Once primitives have been clipped, a vertex is transformed into a 3D point in 
+  normalized device coordinates by performing a perspective divide by its <i>w</i>-coordinate. 
+  This results in a point whose <i>x</i>, <i>y</i>, and <i>z</i> coordinates all 
+  lie in the range [-1,1]. In the final transformation before rasterization, these 
+  coordinates are remapped to the dimensions of the viewport and the physical 
+  range of the depth buffer. 
+</p><p>The standard OpenGL perspective projection matrix <b>P</b> has the form 
+</p><p align="center"><img src="gamasutra_files/eq_01.gif" width="388" height="232">(1) 
+</p><p align="left"><br>
+  where <i>n</i> is the distance to the near plane, <i>f</i> is the distance to 
+  the far plane, and <i>l</i>, <i>r</i>, <i>b</i>, and <i>t</i> represent the 
+  left, right, bottom, and top edges of the rectangle carved out of the near plane 
+  by the view frustum. By evaluating the limit as <i>f</i> tends to infinity, 
+  we obtain the matrix 
+</p><p align="center"><img src="gamasutra_files/eq_02.gif" width="500" height="154">(2) 
+</p><p> The matrix <b>P</b><sub><font face="Symbol">¥</font></sub> transforms 
+  a 4D homogeneous eye-space point <b>V</b><sub>eye</sub>=<font face="Symbol">&lt;</font><i>x,y,z,w</i><font face="Symbol">&gt;</font> 
+  to the clip-space point <b>V</b><sub>clip</sub> as follows. 
+</p><p align="center"><img src="gamasutra_files/eq_03.gif" width="400" height="185">(3) 
+</p><p> Assuming <i>w</i>&gt;0 (it is normally the case that <i>w</i>=1), the resulting 
+  <i>z</i>-coordinate of is always less than the resulting <i>w</i>-coordinate 
+  of <b>V</b><sub>clip</sub>, ensuring that projected points are never clipped 
+  by the far plane. A point at infinity is represented by 4D homogeneous vector 
+  having a <i>w</i>-coordinate of zero in eye space. For such a point, (<b>V</b><sub>clip</sub>)<sub><i>z</i></sub> 
+  = (<b>V</b><sub>clip</sub>)<sub><i>w</i></sub>, and the perspective divide produces 
+  a 3D point in normalized device coordinates having the maximal <i>z</i>-value 
+  of one. 
+</p><p>In practice, the limitations of hardware precision can produce points having 
+  a normalized <i>z</i>-coordinate slightly greater than one. This causes severe 
+  problems when the <i>z</i>-coordinate is converted to an integer value to be 
+  used in the depth buffer because the stencil operations that depend on the depth 
+  test to render shadow volumes may no longer function correctly. To circumvent 
+  this undesirable effect, we can map the <i>z</i>-coordinate of a point at infinity 
+  to a value slightly less than one in normalized device coordinates. The <i>z</i>-coordinate 
+  of a 3D point <b>D</b> in normalized device coordinates is mapped from a value 
+  <i>D</i><sub><i>z</i></sub> in the range [-1,1] to a value <i>D'</i><sub><i>z</i></sub> 
+  in the range [-1,1-<font face="Symbol">e</font>], where <font face="Symbol">e</font> 
+  is a small positive constant, using the relation 
+</p><p align="center"><img src="gamasutra_files/eq_04.gif" width="234" height="72">(4) 
+</p><p>We need to find a way to modify the z-coordinate of <b>V</b><sub>clip</sub> 
+  in order to perform this mapping as points are transformed from eye space into 
+  clip space. We can rewrite Equation (4) as an adjustment to (<b>V</b><sub>clip</sub>)<sub><i>z</i></sub> 
+  by replacing <i>D</i><sub><i>z</i></sub> with (<b>V</b><sub>clip</sub>)<sub><i>z</i></sub> 
+  / (<b>V</b><sub>clip</sub>)<sub><i>w</i></sub> and <i>D'</i><sub><i>z</i></sub> 
+  with (<b>V'</b><sub>clip</sub>)<sub><i>z</i></sub> / (<b>V</b><sub>clip</sub>)<sub><i>w</i></sub> 
+  as follows. 
+</p><p align="center"><img src="gamasutra_files/eq_05.gif" width="332" height="94">(5) 
+</p><p> Plugging in the values of and given by equation (3), we have 
+</p><p align="center"><img src="gamasutra_files/eq_06.gif" width="360" height="90">(6) 
+</p><p> Solving for and simplifying yields 
+</p><p align="center"><img src="gamasutra_files/eq_07.gif" width="306" height="54">(7) 
+</p><p> We can incorporate this mapping into the projection matrix <b>P</b><sub><font face="Symbol">¥</font></sub> 
+  given by Equation (2) as follows to arrive at the slightly tweaked matrix <b>P'</b><sub><font face="Symbol">¥ 
+  </font></sub>that we actually use to render a scene. 
+</p><p align="center"><img src="gamasutra_files/eq_08.gif" width="378" height="202">(8) 
+</p><p> If the graphics hardware supports depth clamping, then use of the matrix <b>P'</b><sub><font face="Symbol">¥</font></sub> 
+  given by Equation (8) is not necessary. The <font face="Courier New, Courier, mono">GL_NV_depth_clamp</font> 
+  extension to OpenGL allows a renderer to force depth values in normalized device 
+  coordinates to saturate to the range [-1,1], thus curing the precision problem 
+  at the infinite far plane. When depth clamping is enabled using the function 
+  call </p>
+<blockquote> 
+  <p><font size="-1" face="Courier New, Courier, mono">glEnable(GL_DEPTH_CLAMP_NV);</font></p></blockquote>
+<p>the projection matrix <b>P</b><sub><font face="Symbol">¥</font></sub> 
+  given by Equation (2) can safely be used.</p>
+<p>The question of depth buffer precision arises when using an infinite projection 
+  matrix. It is true that placing the far plane at infinity reduces the number 
+  of discrete depth values that can occur within any finite interval along the 
+  <i>z</i>-axis, but in most situations this effect is small. Consider the function 
+  that uses the matrix <b>P</b> given in Equation (1) to map an eye-space point 
+  <b>V</b>=<font face="Symbol">&lt;</font><i>V<sub>x</sub>,V<sub>y</sub>,V<sub>z</sub>,1</i><font face="Symbol">&gt;</font> 
+  to its corresponding depth in normalized device coordinates:</p>
+<p align="center"><img src="gamasutra_files/eq_09.gif" width="376" height="94">(9)</p>
+<p> We obtain a different dfunction <i>d</i><sub><font face="Symbol">¥</font></sub>(<b>V</b>) 
+  by using the matrix <b>P</b><sub><font face="Symbol">¥</font></sub> given 
+  by Equation (2) to map an eye-space point <b>V</b> to its normalized depth:</p>
+<p align="center"><img src="gamasutra_files/eq_10.gif" width="344" height="86">(10)</p>
+<p> Given two eye-space points <b>V</b><sub>1</sub>and <b>V</b><sub>2</sub>, we 
+  can compare the differences in depth values produced by the functions <i>d</i> 
+  and <i>d</i><sub><font face="Symbol">¥</font></sub> as follows.</p>
+<p align="center"><img src="gamasutra_files/eq_11.gif" width="440" height="176">(11)</p>
+<p> This demonstrates that the standard projection matrix <b>P</b> maps the points 
+  <b>V</b><sub>1</sub>and <b>V</b><sub>2</sub> to a range that is a factor <i>f 
+  /(f-n</i>) larger than the range to which the points are mapped by the infinite 
+  projection matrix , thus equating to greater precision. For practical values 
+  of <i>f</i> and <i>n</i>, where f is much larger than one and n is much smaller 
+  than one, is close to unity, so the loss of precision is not a significant disadvantage.</p>
+<h2>Silhouette Determination</h2>
+<p>The stencil shadow algorithm requires that the models in our world be closed 
+  triangle meshes. In mathematical terms, the surface of any object that casts 
+  a shadow must be a two-dimensional closed manifold. What this boils down to 
+  is that every edge in a mesh must be shared by exactly two triangles, disallowing 
+  any holes that would let us see the interior of the mesh.</p>
+<p>Edge connectivity information must be precomputed so that we can determine 
+  a mesh&#8217;s silhouette for shadow volume rendering. Suppose that we have 
+  an indexed triangle mesh consisting of an array of <i>N</i> vertices <b>V</b><sub>1</sub>,<b>V</b><sub>2</sub>,&#8230;,<b>V</b><sub><i>N</i></sub> 
+  and an array of <i>M</i> triangles <i>T</i><sub>1</sub>,<i>T</i><sub>2</sub>,&#8230;,<i>T</i><sub><i>M</i></sub>. 
+  Each triangle simply indicates which three vertices it uses by storing three 
+  integer indexes <i>i</i><sub>1</sub>, <i>i</i><sub>2</sub>, and <i>i</i><sub>3</sub>. 
+  We say that an index <i>i</i><sub><i>p</i></sub> precedes an index <i>i</i><sub><i>q</i></sub> 
+  if the number <i>p</i> immediately precedes the number <i>q</i> in the cyclic 
+  chain 1<font face="Symbol">®</font>2<font face="Symbol">®</font>3<font face="Symbol">®</font>1. 
+  For instance,<i> i</i><sub>2</sub> precedes <i>i</i><sub>3</sub> and <i>i</i><sub>3</sub> 
+  precedes <i>i</i><sub>1</sub>, but <i>i</i><sub>2</sub> does not precede <i>i</i><sub>1</sub>.</p>
+<p>The indexes <i>i</i><sub><i>1</i></sub>, <i>i</i><sub><i>2</i></sub>, and <i>i</i><sub><i>3</i></sub> 
+  are ordered such that the positions of the vertices <b>V</b><sub><i>i</i><sub>1</sub></sub>, 
+  <b>V</b><sub><i>i</i><sub>2</sub></sub>, and <b>V</b><sub><i>i</i><sub>3</sub></sub> 
+  to which they refer are wound counterclockwise about the triangle&#8217;s normal 
+  vector. Suppose that two triangles share an edge whose endpoints are the vertices 
+  <b>V</b><sub><i>a</i></sub> and <b>V</b><sub><i>b</i></sub> as shown in Figure 
+  5. The consistent winding rule enforces the property that for one of the triangles, 
+  the index referring to <b>V</b><sub><i>a</i></sub> precedes the index referring 
+  to <b>V</b><sub><i>b</i></sub>, and that for the other triangle, the index referring 
+  to <b>V</b><sub><i>b</i></sub> precedes the index referring to <b>V</b><sub><i>a</i></sub>.</p>
+<table width="75" align="center" border="0">
+  <tbody><tr> 
+    <td><img src="gamasutra_files/fig_05.gif" width="225" height="206"></td>
+  </tr>
+  <tr> 
+    <td><div align="center"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Figure 
+        5. When consistent winding is enforced, it is always the <br>
+        </font></b>case that the indexes referring to the vertices V<sub>a</sub> 
+        and V<sub>b</sub> of exactly one of the two triangles sharing an edge 
+        satisfies the property that the index referring to V<sub>a</sub> precedes 
+        the index referring to V<sub>b</sub>.</font></b> </font></b> </font></b></font></div></td>
+  </tr>
+</tbody></table>
+<p>As demonstrated in Listing 1, the edges of a triangle mesh can be identified 
+  by making a single pass through the triangle list. For any triangle having vertex 
+  indexes <i>i</i><sub>1</sub>, <i>i</i><sub>2</sub>, and <i>i</i><sub>3</sub>, 
+  we create an edge record for every instance in which <i>i</i><sub>1</sub>&lt; 
+  <i>i</i><sub>2</sub>, <i>i</i><sub>2</sub>&lt; <i>i</i><sub>3</sub>, or <i>i</i><sub>3</sub>&lt; 
+  <i>i</i><sub>1</sub>and store the index of the current triangle in the edge 
+  record. This procedure creates exactly one edge for every pair of triangles 
+  that share two vertices <b>V</b><sub><i>a</i></sub> and <b>V</b><sub><i>b</i></sub>, 
+  duplicating any edges that are shared by multiple pairs of triangles.</p>
+<p>Once we have identified all the edges, we make a second pass through the triangle 
+  list to find the second triangle that shares each edge. This is done by locating 
+  triangles for which <i>i</i><sub>1</sub>&gt; <i>i</i><sub>2</sub>, <i>i</i><sub>2</sub>&gt; 
+  <i>i</i><sub>3</sub>, or <i>i</i><sub>3</sub>&gt; <i>i</i><sub>1</sub> and matching 
+  it to an edge having the same vertex indexes that has not yet been supplied 
+  with a second triangle index. </p>
+<p>Armed with the edge list for a triangle mesh, we determine the silhou¹ette 
+  by first calculating the dot product between the light position and the plane 
+  of each triangle. For a triangle whose vertex indexes are <i>i</i><sub>1</sub>, 
+  <i>i</i><sub>2</sub>, and <i>i</i><sub>3</sub>, the (unnormalized) outward-pointing 
+  normal direction <b>N</b> is given by</p>
+<p align="center"><img src="gamasutra_files/eq_12.gif" width="276" height="72">(12)</p>
+<p> since the vertices are assumed to be wound counterclockwise. The 4D plane 
+  vector <b>K</b> corresponding to the triangle is then given by</p>
+<p align="center"><img src="gamasutra_files/eq_13.gif" width="288" height="64">(13)</p>
+<p> Let <b>L</b> represent the 4D homogeneous position of the light source. For 
+  point light sources, <i>L<sub>W</sub></i>&#8800;0, and for infinite directional 
+  light sources, <i>L<sub>W</sub></i><font face="Symbol">=</font>0. A triangle 
+  faces the light source if <b>K</b><font face="Symbol">·</font><b>L</b>&gt;0; 
+  otherwise, the triangle faces away from the light source. The silhouette is 
+  equal to the set of edges shared by one triangle facing the light and one triangle 
+  facing away from the light.</p>
+<h2>Shadow Volume Construction</h2>
+<p>Once the set of an object&#8217;s silhouette edges has been determined with 
+  respect to a light source, we must extrude each edge away from the light&#8217;s 
+  position to form the object&#8217;s shadow volume. In this section, we present 
+  methods that perform the extrusion by making use of widely available vertex 
+  programming hardware exposed by the <font face="Courier New, Courier, mono">GL_NV_vertex_program</font> 
+  and <font face="Courier New, Courier, mono">GL_EXT_vertex_shader</font> extensions 
+  to OpenGL.</p>
+<p>For a point light source, the extrusion of the silhouette edges consists of 
+  a set of quads, each of which has the two unmodified vertices belonging to an 
+  edge and two additional vertices corresponding to the extrusion of the same 
+  edge to infinity. For an infinite directional light source, all points project 
+  to the same point at infinity, so the extrusion of the silhouette edges can 
+  be represented by a set of triangles that all share a common vertex. We distinguish 
+  between points that should be treated normally and those that should be extruded 
+  to infinity by using 4D homogeneous coordinates. A <i>w</i>-coordinate of one 
+  is assigned to the unmodified vertices and a <i>w</i>-coordinate of zero is 
+  assigned to the extruded vertices. The extrusion methods that we present utilize 
+  the information stored in the <i>w</i>-coordinate to perform the appropriate 
+  vertex modifications.</p>
+<p>Before we examine the extrusion methods, we must prepare the appropriate quad 
+  list or triangle list (depending on whether we are using a point light or infinite 
+  directional light). We need to make sure that the vertices of each extrusion 
+  primitive are wound so that the face&#8217;s normal direction points out of 
+  the shadow volume. Suppose that a silhouette edge <i>E</i> has endpoints <b>A</b> 
+  and <b>B</b>. The edge-finding code presented in Listing 1 associates the triangle 
+  for which the vertices <b>A</b> and <b>B</b> occur in counterclockwise order 
+  as the first triangle sharing the edge <i>E</i>. Thus, if the first triangle 
+  faces toward the light source, then we want the vertices <b>A</b> and <b>B</b> 
+  to occur in the opposite order for the extruded primitive so that its vertices 
+  are wound counterclockwise. If the first triangle faces away from the light 
+  source, then we use the vertices <b>A</b> and <b>B</b> in the same order for 
+  the extruded primitive. Table 1 lists the vertices of the extrusion of the edge 
+  <i>E</i> for point light sources and infinite directional light sources for 
+  the cases that the first triangle associated with the edge <i>E</i> faces toward 
+  or away from the light source.</p>
+<p><b>Table 1</b>. Given a silhouette edge <i>E</i> having endpoints <b>A</b> 
+  and <b>B</b>, this table lists the object-space vertices of the extruded shadow 
+  volume face corresponding to <i>E</i>. The first triangle associated with the 
+  edge <i>E</i> is the triangle for which the vertices <b>A</b> and <b>B</b> occur 
+  in counterclockwise order.</p>
+<p align="center"><img src="gamasutra_files/table_01.gif" width="550" height="221"></p>
+<p> Using the <font face="Courier New, Courier, mono">GL_NV_vertex_program</font> 
+  extension, we can employ a couple simple vertex programs to perform edge extrusion 
+  and transformation to clip space. In each program, we assume that the product 
+  of the projection matrix and model-view matrix has been tracked into constant 
+  registers c[0]&#8211;c[3] and that the object-space light position has been 
+  stored in constant register c[4]. Vertex programs are enabled and these constants 
+  are loaded using the following function calls, where <font face="Courier New, Courier, mono">lx, 
+  ly, lz</font>, and <font face="Courier New, Courier, mono">lw</font> represent 
+  the light position.</p>
+<blockquote><font face="Courier New, Courier, mono"> glEnable(GL_VERTEX_PROGRAM_NV);<br>
+  glTrackMatrixNV(GL_VERTEX_PROGRAM_NV, 0,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL_MODELVIEW_PROJECTION_NV, GL_IDENTITY_NV);<br>
+  glProgramParameter4fNV(GL_VERTEX_PROGRAM_NV, 4, lx, ly, lz, lw);</font></blockquote>
+<p> For a point light source residing at the point <b>L</b> in object space, a 
+  vertex <b>V</b> from Table 1 is unmodified if its <i>w</i>-coordinate is one 
+  and is extruded if its <i>w</i>-coordinate is zero by using the formula</p>
+<p align="center"><img src="gamasutra_files/eq_14.gif" width="396" height="58">(14)</p>
+<p>The following vertex program applies this formula and then transforms the resulting 
+  vertex position into clip space.</p>
+<blockquote><font face="Courier New, Courier, mono"> !!VP1.0<br>
+  ADD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R0.xyz, v[OPOS], -c[4];<br>
+  MAD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R0, v[OPOS].w, c[4], R0;<br>
+  DP4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o[HPOS].x, c[0], R0;<br>
+  DP4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o[HPOS].y, c[1], R0;<br>
+  DP4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o[HPOS].z, c[2], R0;<br>
+  DP4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o[HPOS].w, c[3], R0;<br>
+  END</font></blockquote>
+<p> In the case that shadow volume caps must be rendered (see the next section), 
+  a vertex program nearly identical to the one above should be used to transform 
+  vertices belonging to triangles that face away from the light source. Such vertices 
+  can be treated as if their <i>w</i>-coordinates are zero, so the <font face="Courier New, Courier, mono">MAD</font> 
+  instruction has no effect and can be removed when projecting a back cap.</p>
+<p>For an infinite light source residing at the point <b>L</b> (having <i>w</i>-coordinate 
+  zero) in object space, a vertex <b>V</b> is unmodified or extruded by using 
+  the formula</p>
+<p align="center"><img src="gamasutra_files/eq_15.gif" width="216" height="50">(15)</p>
+<p> The following vertex program applies this formula and then transforms the 
+  resulting vertex position <b>V'</b> into clip space.</p>
+<blockquote><font face="Courier New, Courier, mono"> !!VP1.0<br>
+  ADD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R0, v[OPOS], c[4];<br>
+  MAD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R0, v[OPOS].w, R0, -c[4];<br>
+  DP4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o[HPOS].x, c[0], R0;<br>
+  DP4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o[HPOS].y, c[1], R0;<br>
+  DP4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o[HPOS].z, c[2], R0;<br>
+  DP4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o[HPOS].w, c[3], R0;<br>
+  END</font></blockquote>
+<p> The formulas given by Equations (14) and (15) can also be implemented using 
+  the <font face="Courier New, Courier, mono">GL_EXT_vertex_shader</font> extension. 
+  Within our vertex shaders, we need to track model-view-projection matrix and 
+  the current vertex position, and we need to define an invariant corresponding 
+  to the object-space light position. Vertex shaders are enabled and these values 
+  are initialized using the following code, where <font face="Courier New, Courier, mono">lpos</font> 
+  points to the first component of the light position.</p>
+<blockquote><font face="Courier New, Courier, mono"> glEnable(GL_VERTEX_SHADER_EXT);<br>
+  GLuint mvp_matrix = glBindParameterEXT(GL_MVP_MATRIX_EXT);<br>
+  GLuint vertex_pos = glBindParameterEXT(GL_CURRENT_VERTEX_EXT);<br>
+  GLuint light_pos = glGenSymbolsEXT(GL_VECTOR_EXT,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL_INVARIANT_EXT, GL_FULL_RANGE_EXT, 1);<br>
+  glSetInvariantEXT(light_pos, GL_FLOAT, &amp;lpos);</font></blockquote>
+<p>For a point light source, Equation (14) can be implemented using the following 
+  vertex shader code, which also performs the transformation into clip space. 
+  We define a few temporary variables to hold intermediate results.</p>
+<blockquote><font face="Courier New, Courier, mono">glBeginVertexShaderEXT();<br>
+  <br>
+  GLuint temp1 = glGenSymbolsEXT(GL_VECTOR_EXT,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL_LOCAL_EXT, GL_FULL_RANGE_EXT, 1);<br>
+  GLuint temp2 = glGenSymbolsEXT(GL_SCALAR_EXT,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL_LOCAL_EXT, GL_FULL_RANGE_EXT, 1);<br>
+  GLuint swiz = glGenSymbolsEXT(GL_VECTOR_EXT,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL_LOCAL_EXT, GL_FULL_RANGE_EXT, 1);<br>
+  <br>
+  glShaderOp2EXT(GL_OP_SUB_EXT, temp1, vertex_pos, light_pos);<br>
+  glExtractComponentEXT(temp2, vertex_pos, 3);<br>
+  glSwizzleEXT(swiz, temp1, GL_X_EXT, GL_Y_EXT,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL_Z_EXT, GL_ZERO_EXT);<br>
+  glShaderOp3EXT(GL_OP_MADD_EXT, temp1, temp2, light_pos, swiz);<br>
+  glShaderOp2EXT(GL_OP_MULTIPLY_MATRIX_EXT,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL_OUTPUT_VERTEX_EXT, mvp_matrix, temp1);<br>
+  <br>
+  glEndVertexShaderEXT();</font></blockquote>
+<p>For an infinite light source, we can replace the operations performed in the 
+  point light case with the following code to implement Equation (15).</p>
+<blockquote><font face="Courier New, Courier, mono"> glShaderOp2EXT(GL_OP_ADD_EXT, 
+  temp1, vertex_pos, light_pos);<br>
+  glExtractComponentEXT(temp2, vertex_pos, 3);<br>
+  glSwizzleEXT(swiz, temp1, GL_NEGATIVE_X_EXT,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL_NEGATIVE_Y_EXT, GL_NEGATIVE_Z_EXT, GL_NEGATIVE_W_EXT);<br>
+  glShaderOp3EXT(GL_OP_MADD_EXT, temp1, temp2, temp1, swiz);<br>
+  glShaderOp2EXT(GL_OP_MULTIPLY_MATRIX_EXT,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL_OUTPUT_VERTEX_EXT, mvp_matrix, temp1);</font></blockquote>
+<h2>Determining Whether Caps are Necessary</h2>
+<p>As mentioned earlier, a completely closed shadow volume having a front cap 
+  and a back cap must be rendered whenever the camera lies inside the shadow volume 
+  or the faces of the silhouette extrusion could potentially be clipped by the 
+  near plane. We wish to render this more expensive shadow volume as infrequently 
+  as possible, so a test for determining when it is not necessary would be useful.</p>
+<p>The <i>near rectangle</i> is the rectangle carved out of the near plane by 
+  the four side planes of the view frustum. As shown in Figure 6, we can devise 
+  a test to determine whether the shadow volume might be clipped by the near plane 
+  by constructing the set of planes that connect the boundary of the near rectangle 
+  to the light source. We call the volume of space bounded by these planes and 
+  by the near plane itself the <i>near-clip</i> <i>volume</i>. Only a point inside 
+  the near-clip volume can have an extrusion away from the light source that intersects 
+  the near rectangle. Thus, if an object is known to lie completely outside the 
+  near-clip volume, then we do not have to render a capped shadow volume.</p>
+<table width="75" align="center" border="0">
+  <tbody><tr> 
+    <td><img src="gamasutra_files/fig_06.gif" width="480" height="384"></td>
+  </tr>
+  <tr> 
+    <td><div align="center"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Figure 
+        6. The near-clip volume is bounded by the planes connecting the near rectangle 
+        to the light position L. If an object lies completely outside the near-clip 
+        volume, then it&#8217;s shadow volume cannot intersect the near rectangle, so 
+        it is safe to render it without caps.<br>
+        </font></b> </font></b></font></div></td>
+  </tr>
+</tbody></table>
+<p>When constructing the near-clip volume, we consider three cases: 1) the light 
+  source lies in front of the near plane, 2) the light source lies behind the 
+  near plane, and 3) the light source is very close to lying in the near plane. 
+  Let <b>W</b> be the transformation matrix that maps eye space to world space, 
+  and suppose that our light source lies at the 4D homogeneous point <b>L</b> 
+  in world space. We consider a point light source (for which <i>L<sub>W</sub></i>=1) 
+  to be lying in the near plane if its distance to the near plane is at most some 
+  small positive value d. For an infinite directional light source (for which 
+  <i>L<sub>W</sub></i>=0), we consider the distance to the near plane to be the 
+  length of the projection of the light&#8217;s normalized direction vector <font face="Symbol">&lt;</font><i>L<sub>x</sub>,L<sub>y</sub>,L<sub>z</sub></i><font face="Symbol">&gt; 
+  </font>onto the near plane&#8217;s normal direction. In either case, we can 
+  obtain a signed distance <i>d</i> from the light source to the near plane by 
+  calculating</p>
+<p align="center"><img src="gamasutra_files/eq_16.gif" width="288" height="54">(17)</p>
+<p> If <i>d</i>&gt;<font face="Symbol">d</font>, then the light source lies in 
+  front of the near plane; if <i>d</i>&lt;-<font face="Symbol">d</font>, then 
+  the light source lies behind the near plane; otherwise, the light source lies 
+  in the near plane.</p>
+<p>In the case that the light source lies in the near plane, the near-clip volume 
+  is defined by the planes <b>K</b><sub>0</sub>=<font face="Symbol">&lt;</font>0,0,-1<i>,-n</i><font face="Symbol">&gt; 
+  </font>and <b>K</b><sub>1</sub>=<font face="Symbol">&lt;</font>0,0,1<i>,n</i><font face="Symbol">&gt;</font>. 
+  These two planes are coincident, but have opposite normal directions. This encloses 
+  a degenerate near-clip volume, so testing whether an object is outside the volume 
+  amounts to determining whether the object intersects the near plane.</p>
+<p>If the light source does not lie in the near plane, we need to calculate the 
+  vertices of the near rectangle. In eye space, the points <b>R</b><sub>0</sub>, 
+  <b>R</b><sub>1</sub>,<b> R</b><sub>2</sub>, and <b>R</b><sub>3</sub> at the 
+  four corners of the near rectangle are given by</p>
+<p align="center"><img src="gamasutra_files/eq_17.gif" width="274" height="162">(18)</p>
+<p> where <i>n</i> is the distance from the camera to the near plane, a is the 
+  aspect ratio of the viewport, equal to its height divided by its width, and 
+  <i>e</i> is the camera&#8217;s focal length, related to the horizontal field-of-view 
+  angle <font face="Symbol">a</font> by the equation <i>e</i>=1/tan (<font face="Symbol">a/2</font>). 
+  These four points are ordered counterclockwise from the camera&#8217;s perspective. 
+  For a light source lying in front of the near plane, the world-space normal 
+  directions <b>N</b><sub>i</sub>, where 0<u>&lt;</u><i>i</i><u>&lt;</u>3, are 
+  given by the cross products</p>
+<p align="center"><img src="gamasutra_files/eq_18.gif" width="432" height="72">(19)</p>
+<p> where each <b>R</b>'<sub><i>i</i></sub> is the world-space vertex of the near 
+  rectangle given by <b>R</b>'<sub><i>i</i></sub>=<b>WR</b><sub><i>i</i></sub>. 
+  For a light source lying behind the near plane, the normal directions are simply 
+  the negation of those given by Equation (19). The corresponding world-space 
+  planes <b>K</b><sub><i>i</i></sub> bounding the near-clip volume are given by</p>
+<p align="center"><img src="gamasutra_files/eq_19.gif" width="418" height="80">(20)</p>
+<p> We close the near-clip volume by adding a fifth plane that is coincident with 
+  the near plane and has a normal pointing toward the light source. For a light 
+  source lying in front on the near plane, the fifth plane <b>K</b><sub>4</sub> 
+  is given by</p>
+<p align="center"><img src="gamasutra_files/eq_21.gif" width="288" height="68">(21)</p>
+<p> and for a light source lying behind the near plane, the fifth plane is given 
+  by the negation of this vector. (Remember that if <b>W</b> is orthogonal, then 
+  (<b>W</b><sup>-1</sup>)<sup>t </sup>=<b>W</b>.)</p>
+<p>We determine whether a shadow-casting object lies completely outside the near-clip 
+  volume by testing the object&#8217;s bounding volume against each of the planes 
+  <b>K</b><i><sub>i</sub></i>. If the bounding volume lies completely on the negative 
+  side of any one plane, then the object&#8217;s shadow volume cannot intersect 
+  the near rectangle. In the case that an object is bounded by a sphere having 
+  center <b>C</b> and radius <i>r</i>, we do not need to render a capped shadow 
+  volume if <b>K</b><sub>i</sub><font face="Symbol">·</font><b>C</b>&lt;-<i>r</i> 
+  for any <i>i</i>.</p>
+<p>Figure 7 demonstrates that for point light sources, bounding volumes lying 
+  behind the light source from the camera&#8217;s perspective may often be mistaken 
+  for those belonging to objects that might cast shadows through the near rectangle. 
+  This happens when the bounding volume lies outside the near-clip volume, but 
+  does not fall completely on the negative side of any one plane. We can improve 
+  this situation substantially by adding an extra plane to the near-clip volume 
+  for point lights. As shown in Figure 7, the extra plane contains the light position 
+  <b>L</b> and has a normal direction that points toward the center of the near 
+  rectangle. The normal direction <b>N</b><sub>5</sub> is given by </p>
+<p align="center"><img src="gamasutra_files/eq_20.gif" width="324" height="72">(22)</p>
+<p> and the corresponding plane <b>K</b><sub>5</sub> is given by</p>
+<p align="center"><img src="gamasutra_files/eq_23.gif" width="400" height="72">(23)</p>
+<p> The plane <b>K</b><sub>5</sub> is added to the near-clip volume boundary for 
+  point light sources regardless of whether the light position is in front of, 
+  behind, or in the near plane.</p>
+<table width="75" align="center" border="0">
+  <tbody><tr> 
+    <td><img src="gamasutra_files/fig_07.gif" width="450" height="321"></td>
+  </tr>
+  <tr> 
+    <td><div align="center"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Figure 
+        7. Adding an extra plane to the near-clip volume for point light sources 
+        enables more objects to be classified as outside the near-clip volume.<br>
+        </font></b><br>
+        </font></b> </font></b></font></div></td>
+  </tr>
+</tbody></table>
+<p>See &#8220;For Further Information&#8221; at the end of this article for methods 
+  that can be used to determine whether other types of bounding volumes, such 
+  as ellipsoids, cylinders, and boxes, intersect the near-clip volume.</p>
+<p> 
+</p><h2>Rendering Shadow Volumes</h2>
+<p>Now that we can determine an object&#8217;s silhouette with respect to a light 
+  source, construct a shadow volume by extruding the silhouette edges away from 
+  the light source, and decide whether front and back caps are necessary, we are 
+  finally ready to render the shadow volume into the stencil buffer. We assume 
+  that the frame buffer has already been cleared and that an ambient rendering 
+  pass has been performed to initialize the depth buffer. This section concentrates 
+  on the operations necessary to illuminate the scene using a single light source, 
+  and these operations should be repeated for all light sources that can affect 
+  the visible region of the world being rendered.</p>
+<p>First, we must clear the stencil buffer, configure the stencil test so that 
+  it always passes, and configure the depth test so that it passes only when fragment 
+  depth values are less than those already in the depth buffer. This is done using 
+  the following function calls. 
+</p><blockquote><font face="Courier New, Courier, mono"> glClear(GL_STENCIL_BUFFER_BIT);<br>
+  glEnable(GL_STENCIL_TEST);<br>
+  glStencilFunc(GL_ALWAYS, 0, ~0);<br>
+  glEnable(GL_DEPTH_TEST);<br>
+  glDepthFunc(GL_LESS);</font></blockquote>
+<p>We are only going to be drawing into the stencil buffer, so we need to disable 
+  writes to the color buffer and depth buffer as follows. 
+</p><blockquote><font face="Courier New, Courier, mono"> glColorMask(GL_FALSE, GL_FALSE, 
+  GL_FALSE, GL_FALSE);<br>
+  glDepthMask(GL_FALSE);</font></blockquote>
+<p>Shadow volume faces are rendered using different stencil operations depending 
+  on whether they face toward or away from the camera, so we need to enable face 
+  culling with the following function call. 
+</p><blockquote><font face="Courier New, Courier, mono"> glEnable(GL_CULL_FACE);</font></blockquote>
+<p> For a shadow volume that does not require capping because it cannot possibly 
+  intersect the near rectangle, we modify the values in the stencil buffer when 
+  the depth test passes. The stencil value is incremented for fragments belonging 
+  to front-facing polygons and is decremented for fragments belonging to back-facing 
+  polygons. These operations are performed by the following function calls, where 
+  the function <font face="Courier New, Courier, mono">DrawShadowVolume()</font> 
+  renders all of the polygons belonging to the shadow volume. 
+</p><blockquote><font face="Courier New, Courier, mono"> glCullFace(GL_BACK);<br>
+  glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);<br>
+  DrawShadowVolume();</font></blockquote>
+<blockquote><font face="Courier New, Courier, mono"> glCullFace(GL_FRONT);<br>
+  glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);<br>
+  DrawShadowVolume();</font></blockquote>
+<p>If a shadow volume does require capping, then we modify the values in the stencil 
+  buffer when the depth test fails. The stencil value is incremented for fragments 
+  belonging to back-facing polygons and is decremented for fragments belonging 
+  to front-facing polygons (the opposite of the depth-pass operations). These 
+  operations are accomplished using the following function calls. In this case, 
+  the <font face="Courier New, Courier, mono">DrawShadowVolume()</font> function 
+  renders the polygons belonging to the shadow volume&#8217;s caps as well as 
+  its extruded silhouette edges. 
+</p><blockquote><font face="Courier New, Courier, mono"> glCullFace(GL_FRONT);<br>
+  glStencilOp(GL_KEEP, GL_INCR, GL_KEEP);<br>
+  DrawShadowVolume();</font></blockquote>
+<blockquote><font face="Courier New, Courier, mono"> glCullFace(GL_BACK);<br>
+  glStencilOp(GL_KEEP, GL_DECR, GL_KEEP);<br>
+  DrawShadowVolume();</font></blockquote>
+<p> Once shadow volumes have been rendered for all objects that could potentially 
+  cast shadows into the visible region of the world, we perform a lighting pass 
+  that illuminates surfaces wherever the stencil value remains zero. We re-enable 
+  writes to the color buffer, change the depth test to pass only when fragment 
+  depth values are equal to those in the depth buffer, and configure the stencil 
+  test to pass only when the value in the stencil buffer is zero using the following 
+  function calls. 
+</p><blockquote><font face="Courier New, Courier, mono"> glColorMask(GL_TRUE, GL_TRUE, 
+  GL_TRUE, GL_TRUE);<br>
+  glDepthFunc(GL_EQUAL);<br>
+  glStencilFunc(GL_EQUAL, 0, ~0);<br>
+  glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);</font></blockquote>
+<p>Since the lighting pass adds to the ambient illumination already present in 
+  the color buffer, we need to configure the blending equation as follows.</p>
+<blockquote><font face="Courier New, Courier, mono"> glEnable(GL_BLEND);<br>
+  glBlendFunc(GL_ONE, GL_ONE);</font></blockquote>
+<p>We also need to make the function call <font face="Courier New, Courier, mono">glCullFace(GL_BACK)</font> 
+  just in case a depth-pass shadow volume was most recently rendered, leaving 
+  the culling state set to <font face="Courier New, Courier, mono">GL_FRONT</font>. 
+  After the lighting pass has been rendered, we clean up by resetting a few rendering 
+  states back to those needed by the ambient pass for the next frame using the 
+  following function calls.</p>
+<blockquote> <font face="Courier New, Courier, mono">glDepthMask(GL_TRUE);<br>
+  glDepthFunc(GL_LEQUAL);<br>
+  glStencilFunc(GL_ALWAYS, 0, ~0);</font></blockquote>
+<p> Because we needed to perform different stencil operations for front-facing 
+  polygons and back-facing polygons in our shadow volumes, we had to render the 
+  shadow volumes twice. Of course, the graphics hardware culled each polygon on 
+  either the first pass or the second, but the vertices still had to be processed 
+  two times. The <font face="Courier New, Courier, mono">GL_EXT_stencil_two_side</font> 
+  extension to OpenGL provides a way to avoid this suboptimal situation by allowing 
+  separate stencil state for front faces and back faces to be specified simultaneously. 
+  When using this extension, we render both front faces and back faces of the 
+  shadow volume at the same time, so face culling should be disabled. We therefore 
+  prepare to render shadow volumes by making the following function calls.</p>
+<blockquote><font face="Courier New, Courier, mono"> glEnable(GL_STENCIL_TWO_SIDE_EXT);<br>
+  glDisable(GL_CULL_FACE);</font></blockquote>
+<p> Using the <font face="Courier New, Courier, mono">GL_EXT_stencil_two_side</font> 
+  extension, an uncapped shadow volume is rendered using the following code, which 
+  uses depth-pass stencil operations.</p>
+<blockquote><font face="Courier New, Courier, mono"> glActiveStencilFaceEXT(GL_FRONT);<br>
+  glStencilOp(GL_KEEP, GL_KEEP, GL_INCR_WRAP_EXT);<br>
+  glActiveStencilFaceEXT(GL_BACK);<br>
+  glStencilOp(GL_KEEP, GL_KEEP, GL_DECR_WRAP_EXT);<br>
+  DrawShadowVolume();</font></blockquote>
+<p>A capped shadow volume is rendered using the depth-fail stencil operations 
+  shown in the code below.</p>
+<blockquote><font face="Courier New, Courier, mono"> glActiveStencilFaceEXT(GL_FRONT);<br>
+  glStencilOp(GL_KEEP, GL_DECR_WRAP_EXT, GL_KEEP);<br>
+  glActiveStencilFaceEXT(GL_BACK);<br>
+  glStencilOp(GL_KEEP, GL_INCR_WRAP_EXT, GL_KEEP);<br>
+  DrawShadowVolume();</font></blockquote>
+<p>Note the use of the <font face="Courier New, Courier, mono">GL_INCR_WRAP_EXT</font> 
+  and <font face="Courier New, Courier, mono">GL_DECR_WRAP_EXT</font> stencil 
+  operations. These are provided by the <font face="Courier New, Courier, mono">GL_EXT_stencil_wrap</font> 
+  extension to OpenGL and allow stencil values to wrap when they exceed the minimum 
+  and maximum stencil values instead of being clamped. These operations are necessary 
+  because we do not know in what order the polygons belonging to the shadow volume 
+  will be rendered and we must account for the possibility that the stencil value 
+  for a particular pixel could be decremented before it is incremented.</p>
+<h2>Scissor Optimization</h2>
+<p>When using an attenuated light source, it is usually convenient to define a 
+  range r beyond which the light source does not contribute any illumination to 
+  the world. Although this is not a physically correct model, using an attenuation 
+  function that vanishes at a distance r from the light&#8217;s position allows 
+  us to quickly cull any light source whose sphere of illumination does not intersect 
+  the view frustum. When a light source&#8217;s sphere of illumination is visible, 
+  the area within the viewport that could possibility be affected by the light 
+  source may not be the entire viewport. By projecting the sphere of illumination 
+  to the image plane and using the scissor rectangle to limit our drawing to the 
+  projected area of influence, we can avoid a significant amount of superfluous 
+  rendering of both shadow volumes and illuminated surfaces.</p>
+<p>Suppose that we have a point light source whose center lies at the point <b>L</b> 
+  in eye space and whose range is <i>r</i>, as shown in Figure 8. We wish to find 
+  four planes, two parallel to the <i>x</i>-axis and two parallel to the <i>y</i>-axis, 
+  that pass through the camera position (the origin in eye space) and are also 
+  tangent to the light source&#8217;s bounding sphere. Once these planes have 
+  been determined, we can locate their intersections with the image plane to find 
+  the rectangular boundary of the projection of the light source&#8217;s bounding 
+  sphere.</p>
+<table width="75" align="center" border="0">
+  <tbody><tr> 
+    <td><img src="gamasutra_files/fig_08.gif" width="400" height="438"></td>
+  </tr>
+  <tr> 
+    <td><div align="center"><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Figure 
+        8. For a point light source at the position L having range r, we calculate 
+        the four planes that pass through the camera position C and are tangent 
+        to the light&#8217;s sphere of illumination. By calculating the intersection 
+        of each tangent plane with the image plane lying at a distance e from 
+        the camera, we can limit our drawing to an area smaller than the full 
+        size of the viewport.</font></b><br>
+        </font></b><br>
+        </font></b> </font></b></font></div></td>
+  </tr>
+</tbody></table>
+<p>We assume that the tangent planes parallel to the <i>y</i>-axis have a unit-length 
+  normal vector <b>N</b> whose <i>y</i>-coordinate is zero. Since the planes pass 
+  through the origin, each can be represented by a 4D vector <b>T</b> = <font face="Symbol">&lt;</font><i>N<sub>x</sub>,O,N<sub>z</sub>,O</i><font face="Symbol">&gt;</font>. 
+  We wish to calculate values of <i>N</i><sub>x</sub> and <i>N</i><sub>z</sub> 
+  such that the following conditions are satisfied.</p>
+<p align="center"><img src="gamasutra_files/eq_24.gif" width="108" height="40">(24)</p>
+<p align="center"><img src="gamasutra_files/eq_25.gif" width="144" height="58">(25)</p>
+<p> By expanding the dot product and rearranging slightly, we can rewrite Equation 
+  (24) as</p>
+<p align="center"><img src="gamasutra_files/eq_26.gif" width="216" height="54">(26)</p>
+<p> Squaring both sides of Equation (26) and making the substitution <i>N</i><sup>2</sup><sub>z</sub>=1-<i>N</i><sup>2</sup><sub>x</sub>, 
+  we have</p>
+<p align="center"><img src="gamasutra_files/eq_27.gif" width="328" height="58">(27)</p>
+<p> This can be rewritten as a quadratic equation <i>N</i><sub>x</sub> in as follows.</p>
+<p align="center"><img src="gamasutra_files/eq_28.gif" width="410" height="68">(28)</p>
+<p> The discriminant <i>D</i> is given by</p>
+<p align="center"><img src="gamasutra_files/eq_29.gif" width="360" height="72">(29)</p>
+<p> <i>D</i><u>&lt;</u>0 precisely when <i>L</i><sup>2</sup><sub>x</sub>+<i>L</i><sup>2</sup><sub>z</sub>&lt;<i>r</i><sup>2</sup> 
+  (i.e., when the origin falls within the projection of the sphere onto the <i>x-z</i> 
+  plane). When this happens, we know the light source&#8217;s bounding sphere 
+  fills the entire viewport and we do not continue.</p>
+<p>If <i>D</i>&gt;0, then we can solve equation (28) using the quadratic formula 
+  to obtain</p>
+<p align="center"><img src="gamasutra_files/eq_30.gif" width="202" height="180">(30)</p>
+<p> This gives us two values for <i>N</i><sub>x</sub>. The corresponding values 
+  for <i>N</i><sub>z</sub> are calculated by making a small adjustment to Equation 
+  (26):</p>
+<p align="center"><img src="gamasutra_files/eq_31.gif" width="184" height="96">(31)</p>
+<p> We only want to consider planes whose point of tangency with the light source&#8217;s 
+  bounding sphere lies in front of the camera. As illustrated in Figure 8, the 
+  point of tangency <b>P</b> lies in the plane <font face="Symbol">&lt;</font><i>N<sub>x</sub>,</i>0<i>,N<sub>z</sub>,</i>0<font face="Symbol">&gt;</font> 
+  at a distance <i>r</i> from the point <b>L</b>, giving us the following two 
+  equations.</p>
+<p align="center"><img src="gamasutra_files/eq_32.gif" width="144" height="60">(32)</p>
+<p align="center"><img src="gamasutra_files/eq_33.gif" width="158" height="52">(33)</p>
+<p> Equation (33) can be expanded to</p>
+<p align="center"><img src="gamasutra_files/eq_34.gif" width="216" height="52">(34)</p>
+<p> Using the Pythagorean theorem, we can replace <i>P</i><sup>2</sup> with <i>L</i><sup>2</sup>-<i>r</i><sup>2</sup> 
+  to obtain</p>
+<p align="center"><img src="gamasutra_files/eq_35.gif" width="180" height="60">(35)</p>
+<p> For the point <b>P</b> to lie in front of the camera, we must require that 
+  <i>P</i><sub>z</sub>&lt;0. Since the tangent plane is parallel to the <i>y</i>-axis, 
+  the values of <i>P</i><sub>y</sub> and <i>L</i><sub>y</sub> are equal and the 
+  quantity <i>L</i><sup>2</sup><sub>y</sub> cancels in Equation (35). By solving 
+  Equation (32) for <i>P</i><sub>x</sub>, we can make the substitution</p>
+<p align="center"><img src="gamasutra_files/eq_36.gif" width="162" height="72">(36)</p>
+<p> in Equation (35) to arrive at the following equation written completely in 
+  terms of the unknown <i>P</i><sub>z</sub>.</p>
+<p align="center"><img src="gamasutra_files/eq_37.gif" width="342" height="94">(37)</p>
+<p> Solving for <i>P</i><sub>z</sub>, we have</p>
+<p align="center"><img src="gamasutra_files/eq_38.gif" width="244" height="90">(38)</p>
+<p> For any tangent plane <font face="Symbol">&lt;</font><i>N<sub>x</sub>,</i>0<i>,N<sub>z</sub>,</i>0<font face="Symbol">&gt;</font> 
+  calculated using Equations (30) and (31), we calculate the corresponding value 
+  of <i>P</i><sub>z</sub> using Equation (38). If <i>P</i><sub>z</sub> &lt; 0, 
+  then we have found a plane that may allow us to shrink the scissor rectangle. 
+  We now need to determine where the tangent plane intersects the image plane.</p>
+<p>As shown in Figure 8, the image plane is perpendicular to the <i>z</i>-axis 
+  and lies at a distance <i>e</i> from the camera. On the image plane, the area 
+  of the viewport corresponds to <i>x</i>-coordinates in the range [-1,1] and 
+  <i>y</i>-coordinates in the range [-<i>a,a</i>], where <i>a</i> is the aspect 
+  ratio given by the height of the viewport divided by its width. Any point <b>Q</b> 
+  lying in the image plane has coordinates <font face="Symbol">&lt;</font><i>x,y,-e</i><font face="Symbol">&gt;</font>. 
+  A point <b>Q</b> lying in the plane tangent to the light source&#8217;s bounding 
+  sphere satisfies <b>N</b> · <b>Q</b> = 0, so we can solve for <i>x</i>:</p>
+<p align="center"><img src="gamasutra_files/eq_39.gif" width="128" height="94">(39)</p>
+<p> This <i>x</i>-coordinate can be mapped to the viewport coordinate <i>x</i>' 
+  using the formula</p>
+<p align="center"><img src="gamasutra_files/eq_40.gif" width="176" height="86">(40)</p>
+<p> where <i>l</i> is the left edge of the viewport and w is the viewport&#8217;s 
+  width, both in pixels.</p>
+<p>Given a value <i>x</i>' calculated using Equation (40), we need to determine 
+  whether it represents a left-side boundary or a right-side boundary. This can 
+  be accomplished by plugging the value <i>P</i><sub>z</sub> given by Equation 
+  (38) into Equation (36) to obtain <i>P</i><sub>x</sub>. If , then represents 
+  a left-side boundary because the point of tangency falls to the left of the 
+  light source. If <i>P</i><sub>x</sub>&gt;<i>L</i><sub>x</sub>, then <i>x</i>' 
+  represents a right-side boundary. Since the value may lie outside the viewport 
+  (if x <font face="Symbol">Ï</font> [-1,1]), we calculate the left and right 
+  edges of the scissor rectangle as follows.</p>
+<p align="center"><img src="gamasutra_files/eq_41.gif" width="288" height="86">(41)</p>
+<p> The two tangent planes parallel to the <i>x</i>-axis are found in an almost 
+  identical manner. Each of these planes is represented by a 4D vector <font face="Symbol">&lt;</font>0<i>,N<sub>y</sub>N<sub>z</sub>,</i>0<font face="Symbol">&gt;</font>, 
+  whose nonzero components are given by the following formulas.</p>
+<p align="center"><img src="gamasutra_files/eq_42.gif" width="432" height="166">(42)</p>
+<p> The <i>z</i>-coordinate of each corresponding tangent point is given by</p>
+<p align="center"><img src="gamasutra_files/eq_43.gif" width="270" height="108">(43)</p>
+<p> If <i>P</i><sub>z</sub>&lt;0, then the <i>y</i>-coordinate where each plane 
+  intersects the image plane is given by</p>
+<p align="center"><img src="gamasutra_files/eq_44.gif" width="180" height="90">(44)</p>
+<p> where the viewport&#8217;s aspect ratio <i>a</i> has been added to the denominator. 
+  Finally, the viewport coordinate <i>y</i>' is calculated using the formula</p>
+<p align="center"><img src="gamasutra_files/eq_45.gif" width="180" height="86">(45)</p>
+<p> where <i>b</i> is the bottom edge of the viewport and <i>h</i> is the viewport&#8217;s 
+  height, both in pixels.</p>
+<p>To determine whether <i>y</i>' represents a bottom-side boundary or a top-side 
+  boundary, we calculate the <i>y</i>-coordinate of the point of tangency using 
+  the formula</p>
+<p align="center"><img src="gamasutra_files/eq_46.gif" width="158" height="90">(46)</p>
+<p>If <i>P</i><sub>y</sub>&lt;<i>L</i><sub>y</sub>, then <i>y</i>' represents 
+  a bottom-side boundary. If <i>P</i><sub>y</sub>&gt;<i>L</i><sub>y</sub>, then 
+  <i>y</i>' represents a top-side boundary. As with the left and right sides, 
+  the values of <i>y</i>' should be clamped to the viewport&#8217;s range as follows.</p>
+<p align="center"><img src="gamasutra_files/eq_47.gif" width="342" height="90">(47)</p>
+<p> Using the values given by Equations (41) and (47), the OpenGL scissor rectangle 
+  is enabled and set to the appropriate values using the following function calls.</p>
+<blockquote><font face="Courier New, Courier, mono"> glEnable(GL_SCISSOR_TEST);<br>
+  glScissor(scissor.left, scissor.bottom,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scissor.right - scissor.left,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scissor.top - scissor.bottom);</font></blockquote>
+<p>The scissor rectangle affects the clear operation as well, so once rendering 
+  has been completed, one should either disable the scissor test or set the scissor 
+  rectangle back to the entire viewport rectangle by making the call <font face="Courier New, Courier, mono">glScissor(l, 
+  b, w, h)</font>.</p>
+<h2>Conclusion</h2>
+<p>The techniques described in this article can be used to efficiently render 
+  the shadow volumes needed to display a fully shadowed scene in real-time using 
+  stencil operations. Future graphics hardware will undoubtedly incorporate greater 
+  shadow volume functionality that will relieve the CPU from some of the work 
+  that it currently has to do, but the ultimate determination of speed will be 
+  innovative methods for minimizing the number of shadow volumes that must be 
+  rendered in the first place. Achieving high frame rates for complex scenes having 
+  multiple light sources is now the goal of larger-scale optimizations, and this 
+  is currently a hot area of 3D graphics research. 
+</p><h2>For Further Information</h2>
+<p>The following is the original paper discussing shadow volume capping and depth-fail 
+  stencil operations 
+</p><blockquote>Everitt, Cass and Kilgard, Mark J., &#8220;Practical and Robust Stenciled 
+  Shadow Volumes for Hardware-Accelerated Rendering&#8221;, NVIDIA Corporation, 
+  2002. </blockquote>
+<blockquote><a href="http://developer.nvidia.com/view.asp?IO=robust_shadow_volumes" target="_blank">http://developer.nvidia.com/view.asp?IO=robust_shadow_volumes</a></blockquote>
+<p>Mathematical derivations of different bounding volume tests that can be used 
+  to determine whether an object&#8217;s shadow volume might intersect the near 
+  rectangle can found in the Visibility Determination chapter of the following 
+  book.</p>
+<blockquote>Lengyel, Eric, <i>Mathematics for 3D Game Programming &amp; Computer 
+  Graphics</i>, Charles River Media, 2002.</blockquote>
+<p>Information about the OpenGL extensions used in this article can be found at 
+  the OpenGL Extension Registry website:</p>
+<blockquote><a href="http://oss.sgi.com/projects/ogl-sample/registry/" target="_blank">http://oss.sgi.com/projects/ogl-sample/registry/</a> 
+  <div align="right"></div></blockquote>
+  
+<!-- #EndEditable -->
+<p><font size="-1" face="Arial, Helvetica, sans-serif"><i><font face="Verdana, Arial, Helvetica, sans-serif">Copyright 
+  © 2003 CMP Media Inc. All rights reserved.</font></i></font></p>
+<!-- #EndTemplate --></body></html>
