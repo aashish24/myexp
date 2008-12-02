@@ -44,10 +44,10 @@ class BG
 
 
 inline BG::BG() :
-  _bgAspect     (1.7777),   
+  _bgAspect     (1.6),   
   _bgNS         (5000.0), 
   _bgEW         (5000.0), 
-  _bgField      (16.0), 
+  _bgField      (10.0), 
   _bgCrot       (0.0),
   _bgPegOffset  (5000.0)
 {

@@ -32,17 +32,84 @@ void OpenSGNav::contextInit()
 { 
   vrj::OpenSG2App::contextInit();
 
-  mAppContextData->mLimeCamera = new LimeVrjCamera();
+  mAppContextData->mLimeCamera = new LimeVrjCamera(mView, mSetup);
   mAppContextData->mLimeCamera->setOSGCamera(mContextData->mCamera);
   mAppContextData->mLimeCamera->setSceneCamera(dynamic_cast<SceneCamera*>(mNavigator));
   
-  initGLState();   
+  initGLState();
+  mQuadObj = gluNewQuadric();
+  gluQuadricDrawStyle( mQuadObj, GLU_FILL );
 }
 
 void OpenSGNav::draw()
 {
-   // Call parent class first to render the scene graph
-   vrj::OpenSG2App::draw();
+  // Call parent class first to render the scene graph
+  vrj::OpenSG2App::draw();
+  
+  // Now draw OpenGL stuff. 
+  glPushAttrib(GL_ALL_ATTRIB_BITS);
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+  
+    glDisable(GL_LIGHTING);    
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();    
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+        
+    glLoadMatrixd(mAppContextData->mLimeCamera->getViewSetupMatrix().mData);
+    draw_field_grid();   
+  
+    draw_cutin();
+
+    glMultMatrixd(mAppContextData->mLimeCamera->get3dSetupMatrix().mData);
+    draw_setup_guide();    
+    
+    glMultMatrixd(mAppContextData->mLimeCamera->getViewMatrix().mData);  
+
+    glPushMatrix();
+      glColor4f( 1.0, 0.0, 0.0, 1.0 );
+      glPushMatrix();
+      glScalef( 0.8, 0.8, 0.8 );
+      gluSphere( mQuadObj, 1.0, 32, 16 );
+      glPopMatrix();
+  
+      glPushMatrix();
+      glTranslatef( 0.0, 0.0, -5.0 );
+      glScalef( 0.8, 0.8, 0.8 );
+      gluSphere( mQuadObj, 1.0, 32, 16 );
+      glPopMatrix();
+  
+      glPushMatrix();
+      glTranslatef( 0.0, 0.0, -10.0 );
+      glScalef( 0.8, 0.8, 0.8 );
+      gluSphere( mQuadObj, 1.0, 32, 16 );
+      glPopMatrix();
+  
+      glColor4f( 0.0, 0.0, 1.0, 1.0 );
+      glPushMatrix();
+      glTranslatef( -2.0, 0.0, 0.0 );
+      glScalef( 1.8, 1.8, 1.8 );
+      gluSphere( mQuadObj, 1.0, 32, 16 );
+      glPopMatrix();
+  
+      glColor4f( 1.0, 1.0, 0.0, 1.0 );
+      glPushMatrix();
+      glTranslatef( 0.0, 2.0, 0.0 );
+      glScalef( 1.3, 1.3, 1.3 );
+      gluSphere( mQuadObj, 1.0, 32, 16 );
+      glPopMatrix();
+    glPopMatrix();
+  glPopAttrib(); 
+
+  static const int buff_size=100000;
+  char filename[buff_size];
+  snprintf(filename, buff_size, "view-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f-setup-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f", 
+  mView.getAspect(), mView.getNS(), mView.getEW(), mView.getField(), mView.getCrot(), mView.getPegOffset(), 
+  mSetup.getImageWidth(), mSetup.getNS(),mSetup.getEW(), mSetup.getField(), mSetup.getLens(), mSetup.getNear(),mSetup.getFar());
+  
+  tgaGrabScreenSeries(filename, 0,0, 1600, 1050);
 }
 
 void OpenSGNav::preFrame()
@@ -109,7 +176,9 @@ void OpenSGNav::initGLState()
 {
    // OpenSG does not handle this yet, being smart about it is not
    // that trivial...
+   glEnable( GL_DEPTH_TEST );
    glEnable(GL_NORMALIZE);
+   glShadeModel(GL_SMOOTH);
 }
 
 
@@ -145,7 +214,7 @@ void OpenSGNav::initScene()
       vprDEBUG(vprDBG_ALL, vprDBG_CRITICAL_LVL)
          << "[OpenSGNav::initScene()] No model specified; creating torus."
          << std::endl << vprDEBUG_FLUSH;
-      mModelRoot = OSG::makeTorus(.5, 2, 16, 16);
+      //mModelRoot = OSG::makeTorus(.5, 2, 16, 16);
    }
    else
    {
@@ -188,7 +257,7 @@ void OpenSGNav::initScene()
 
    // --- Setup Scene -- //
    // add the loaded scene to the light node, so that it is lit by the light
-   mLightNode->addChild(mModelRoot);
+   //mLightNode->addChild(mModelRoot);
 
    // create the root part of the scene
    mSceneRoot = OSG::Node::create();
@@ -203,4 +272,122 @@ void OpenSGNav::initScene()
 void OpenSGNav::setupCamera()
 {
   mAppContextData->mLimeCamera->evaluate();
+}
+
+
+void OpenSGNav::draw_field_grid( void ) {
+    float minx = -(mSetup.getField()/2.0);
+    float maxx =  (mSetup.getField()/2.0);
+    float miny = minx/mView.getAspect();
+    float maxy = maxx/mView.getAspect();
+    float x, y;
+
+    glBegin( GL_LINES );
+    for (x=0.0; x<=maxx; x+=1.0) 
+    {
+      if ( x == 0.0 ) glColor4f( 0.0, 1.0, 0.0, 1.0 );
+      else glColor4f( 0.0, 0.6, 0.0, 0.8 );
+      glVertex2d( x, miny );  glVertex2d( x, maxy );
+    }
+    for (x=-1.0; x>=minx; x-=1.0) 
+    {
+      if ( x == 0.0 ) glColor4f( 0.0, 1.0, 0.0, 1.0 );
+      else glColor4f( 0.0, 0.6, 0.0, 0.8 );
+      glVertex2d( x, miny );  glVertex2d( x, maxy );
+    }
+    for (y=0.0; y<=maxy; y+=1.0) 
+    {
+      if ( y == 0.0 ) glColor4f( 0.0, 1.0, 0.0, 1.0 );
+      else glColor4f( 0.0, 0.6, 0.0, 0.8 );
+      glVertex2d( minx, y );  glVertex2d( maxx, y );
+    }
+    for (y=-1.0; y>=miny; y-=1.0) 
+    {
+      if ( y == 0.0 ) glColor4f( 0.0, 1.0, 0.0, 1.0 );
+      else glColor4f( 0.0, 0.6, 0.0, 0.8 );
+      glVertex2d( minx, y );  glVertex2d( maxx, y );
+    }
+    glEnd();
+}
+
+
+void OpenSGNav::draw_setup_guide( void ) {
+    float rx = mSetup.getField() / 2.0;
+    float ry = rx / mView.getAspect();
+
+    { /* ---- locate vanishing point ---- */
+  float z1 = 0.0, z2 = -10000.0;
+
+  glBegin( GL_LINES );
+  glColor4f( 1.0, 1.0, 0.0, 0.2 );
+  glVertex3d( -rx, -ry,  z1 );    
+  glColor4f( 1.0, 1.0, 0.0, 1.0 );
+  glVertex3d( 0, 0, z2 );
+
+  glColor4f( 1.0, 1.0, 0.0, 0.2 );
+  glVertex3d(  rx, -ry,  z1 );    
+  glColor4f( 1.0, 1.0, 0.0, 1.0 );
+  glVertex3d( 0, 0, z2 );
+
+  glColor4f( 1.0, 1.0, 0.0, 0.2 );
+  glVertex3d(  rx,  ry,  z1 );    
+  glColor4f( 1.0, 1.0, 0.0, 1.0 );
+  glVertex3d( 0, 0, z2 );
+
+  glColor4f( 1.0, 1.0, 0.0, 0.2 );
+  glVertex3d( -rx,  ry,  z1 );    
+  glColor4f( 1.0, 1.0, 0.0, 1.0 );
+  glVertex3d( 0, 0, z2 );
+  glEnd();    
+    }
+
+    { /* ---- setup rectangles ---- */
+  float z[3] = { -10.0, -100.0, -1000.0 };
+  float a[3] = {   1.0,    0.7,     0.4 };
+        int i;
+
+  for ( i=0; i<3; i++ ) {
+      glColor4f( 1.0, 1.0, 0.0, a[i] );
+      glBegin( GL_LINE_LOOP );
+      glVertex3d( -rx, -ry,  z[i] );
+      glVertex3d(  rx, -ry,  z[i] );
+      glVertex3d(  rx,  ry,  z[i] );
+      glVertex3d( -rx,  ry,  z[i] );
+      glEnd();
+  }
+    }
+}
+
+
+void OpenSGNav::draw_cutin( void ) 
+{
+    float minx  = -( mView.getField()/2.0 * 0.9 );    /* video (est) */
+    float maxx  =  ( mView.getField()/2.0 * 0.9 );
+    float miny  = minx / 1.33;
+    float maxy  = maxx / 1.33;
+    float cminx = -(mView.getField()/2.0);
+    float cmaxx =  (mView.getField()/2.0);
+    float cminy = cminx / mView.getAspect();
+    float cmaxy = cmaxx / mView.getAspect();
+
+    glPushMatrix();
+    glTranslatef( ((mView.getEW() - mView.getPegOffset()) / 100.0), 
+      ((mView.getNS() - 5000.0) / 100.0), 0.0);
+    glRotatef( -mView.getCrot(), 0.0, 0.0, 1.0 );
+    glBegin( GL_LINE_LOOP );
+    glColor4f( 0.6, 0.2, 0.0, 0.6 );
+    glVertex2d( minx, miny );  glVertex2d( maxx, miny );
+    glVertex2d( maxx, maxy );  glVertex2d( minx, maxy );
+    glEnd();
+
+    if ( mAppContextData->mLimeCamera->layoutMode() ) 
+    {
+      glBegin( GL_LINE_LOOP );
+      glColor4f( 0.8, 0.3, 0.0, 1.0 );
+      glVertex2d( cminx, cminy );  glVertex2d( cmaxx, cminy );
+      glVertex2d( cmaxx, cmaxy );  glVertex2d( cminx, cmaxy );
+      glEnd();
+    }
+
+    glPopMatrix();
 }

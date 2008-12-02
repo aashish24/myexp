@@ -7,7 +7,7 @@
 #include "ISceneCamera.h"
 #include "Setup.h"
 #include "View.h"
-#include "BG.h"
+#include "UnitConversions.h"
 
 // OpenSG includes. 
 #include "OpenSG/OSGMatrixCamera.h"
@@ -25,7 +25,7 @@
 class LimeVrjCamera  : public ILimeCamera
 {
   public:   
-                              LimeVrjCamera(const View& view=View(), const Setup& setup=Setup(), const BG& bg=BG());
+                              LimeVrjCamera(const View& view=View(), const Setup& setup=Setup());
     virtual                  ~LimeVrjCamera();    
 
     ISceneCamera*             getSceneCamera();
@@ -37,9 +37,7 @@ class LimeVrjCamera  : public ILimeCamera
     virtual void              viewSetup(double viewAspect,      double viewNS,      double viewEW,
                                         double viewField,       double viewCrot,    double viewPegOffset,
                                         double setupImageWidth, double setupField,  double setupLens,
-                                        double setupNear,       double setupFar,    double bgAspect,
-                                        double bgNS,            double bgEW,        double bgField,
-                                        double bgCrot,          double bgPegOffset, bool   cam3dPerspective);
+                                        double setupNear,       double setupFar,    bool   cam3dPerspective);
 
     virtual void              v3dSetup  (double viewAspect,     double viewNS,          double viewEW,
                                          double viewPegOffset,  double setupImageWidth, double setupNS,
@@ -47,9 +45,15 @@ class LimeVrjCamera  : public ILimeCamera
 
     virtual void              evaluate();
     
-    bool                      layoutMode() const;     
+    bool                              layoutMode() const;     
 
-    virtual gmtl::Matrix44d   getPerspective(double fovy, double aspect, double near, double far);
+    virtual gmtl::Matrix44d           getPerspective(double fovy, double aspect, double near, double far);
+
+    virtual const gmtl::Matrix44d&    getViewSetupMatrix() const  { return _viewSetupMatrix; }
+
+    virtual const gmtl::Matrix44d&    get3dSetupMatrix() const    { return _3dSetupMatrix; }
+
+    virtual const gmtl::Matrix44d&    getViewMatrix() const       { return _viewMatrix; }
 
 
   protected: 
@@ -64,30 +68,26 @@ class LimeVrjCamera  : public ILimeCamera
 
     gmtl::Matrix44d         _viewSetupMatrix; 
     gmtl::Matrix44d         _3dSetupMatrix;    
+    gmtl::Matrix44d         _viewMatrix;
 
     bool                    _layoutMode;
 
-    double                  _mmToInch;
-
     View                    _view;
-    
     Setup                   _setup;
-
-    BG                      _bg;
+    
 };
 
 
-inline LimeVrjCamera::LimeVrjCamera(const View& view, const Setup& setup, const BG& bg) : ILimeCamera(),
+inline LimeVrjCamera::LimeVrjCamera(const View& view, const Setup& setup) : ILimeCamera(),
   _osgCamera      (0x00),
   _sceneCamera    (0x00), 
-  _layoutMode     (false), 
-  _mmToInch       (0.0393700787),
+  _layoutMode     (false),
   _view           (view),
-  _setup          (setup), 
-  _bg             (bg)
+  _setup          (setup)
 {  
   gmtl::identity(_viewSetupMatrix);
   gmtl::identity(_3dSetupMatrix);
+  gmtl::identity(_viewMatrix);
 }
 
 
@@ -117,42 +117,45 @@ inline void LimeVrjCamera::setOSGCamera(OSG::MatrixCameraRefPtr osgCamera)
 inline void LimeVrjCamera::viewSetup(double viewAspect,      double viewNS,      double viewEW,
                                      double viewField,       double viewCrot,    double viewPegOffset,
                                      double setupImageWidth, double setupField,  double setupLens,
-                                     double setupNear,       double setupFar,    double bgAspect,
-                                     double bgNS,            double bgEW,        double bgField,
-                                     double bgCrot,          double bgPegOffset, bool   cam3dPerspective)
+                                     double setupNear,       double setupFar,    bool   cam3dPerspective)
 {
-  gmtl::identity(_viewSetupMatrix);
-  if(layoutMode())
+  gmtl::identity(_viewSetupMatrix);  
+  
+  if(layoutMode()) 
   {
-    gmtl::postMult(_viewSetupMatrix, gmtl::makeTrans<gmtl::Matrix44d>(gmtl::Vec3d(
-      (((bgPegOffset - bgEW)/100.0) / (bgField/2.0)), 
-      (((5000.0 - bgNS)/100.0) / (bgField/2.0)) * viewAspect, 
-      0.0)));
+    gmtl::postMult(_viewSetupMatrix, gmtl::makeScale<gmtl::Matrix44d>(gmtl::Vec3d( 1.0 / viewAspect, 1.0, 1.0 )));    
   }
-  else
+  else 
   {
-    gmtl::postMult(_viewSetupMatrix, gmtl::makeScale<gmtl::Matrix44d>(gmtl::Vec3d(
-     -(1.0 / (viewField/bgField)), 
-      (1.0 / (viewField/bgField)), 
-      1.0)));   
+    gmtl::postMult(_viewSetupMatrix, gmtl::makeScale<gmtl::Matrix44d>(
+    gmtl::Vec3d( 
+      (1.0 / (viewField/setupField)) / viewAspect, 
+      (1.0 / (viewField/setupField)), 
+      1.0 )));
+    
+    gmtl::postMult(_viewSetupMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled( -viewCrot, 0.0, 0.0, 1.0 )));
+    
+    gmtl::postMult(_viewSetupMatrix, gmtl::makeTrans<gmtl::Matrix44d>(
+    gmtl::Vec3d(
+      ((viewPegOffset - viewEW)/100.0) / (setupField/2.0) * viewAspect, 
+      ((5000.0 - viewNS)/100.0) / (setupField/2.0) * viewAspect, 
+      0.0 )));
   }
 
-  if(!cam3dPerspective)
-  {
-    // \todo Print some warning message. 
-  }
+  gmtl::postMult(_viewSetupMatrix, getPerspective( 90.0, 1.0, setupNear, setupFar ));
 
-  gmtl::postMult(_viewSetupMatrix, getPerspective(90.0, 1.0, setupNear, setupFar));
+  gmtl::postMult(_viewSetupMatrix, gmtl::makeScale<gmtl::Matrix44d>(
+  gmtl::Vec3d( 
+    UnitConversions::MMToInch(setupLens) *2.0/setupImageWidth, 
+    UnitConversions::MMToInch(setupLens)*2.0/setupImageWidth, 
+    1.0)));
 
-  gmtl::postMult(_viewSetupMatrix, gmtl::makeScale<gmtl::Matrix44d>(gmtl::Vec3d(
-      ((_mmToInch * setupLens * 2.0 ) / setupImageWidth), 
-      ((_mmToInch * setupLens * 2.0 ) / setupImageWidth ) * viewAspect, 
-      1.0 ))); 
-
-  if(!layoutMode())
-  { 
-    gmtl::postMult(_viewSetupMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled(-viewCrot, 0.0, 0.0, 1.0))); 
-  }   
+  gmtl::postMult(_viewSetupMatrix, gmtl::makeTrans<gmtl::Matrix44d>(
+  gmtl::Vec3d( 
+    0.0, 
+    0.0, 
+    (-setupField/setupImageWidth* UnitConversions::MMToInch(setupLens) / viewAspect))));
+   
 }
 
 
@@ -160,25 +163,18 @@ inline void LimeVrjCamera::v3dSetup(double viewAspect,     double viewNS,       
                                     double viewPegOffset,  double setupImageWidth, double setupNS,
                                     double setupEW,        double setupField,      double setupLens)
 {
-  gmtl::identity(_3dSetupMatrix);
-  
+  gmtl::identity(_3dSetupMatrix);  
+ 
   double PRP[3], CW[3], DOP[3];
   double shx, shy;
 
-  if(layoutMode() ) 
-  {
-    CW[0] = CW[1] = CW[2] = 0.0;
-  }
-  else
-  {
-    CW[0] = (viewPegOffset - viewEW) / 100.0;
-    CW[1] = (5000.0 - viewNS) / 100.0;
-    CW[2] = 0.0;
-  }
+  CW[0] = CW[1] = CW[2] = 0.0;
 
   PRP[0] = (5000.0 - setupEW) / 100.0;
   PRP[1] = (5000.0 - setupNS) / 100.0;
-  PRP[2] = -setupField/setupImageWidth* _mmToInch * setupLens;
+
+/*     PRP[2] = -setup_field/setup_imagewidth*MMToInch(setup_lens) / 1.68421; */
+  PRP[2] = -setupField/setupImageWidth * UnitConversions::MMToInch(setupLens) / 1.3714;
 
   DOP[0] = CW[0] - PRP[0];
   DOP[1] = CW[1] - PRP[1];
@@ -214,34 +210,34 @@ inline void LimeVrjCamera::evaluate()
   //std::cout << "look is"  << look << std::endl;
   //std::cout << "pos is"   << pos  << std::endl;
   
-  // GMTL set(...) takes row major args. 
-  gmtl::Matrix44d mat; 
-  mat.set(x[0],    x[1],    x[2],    (-(x[0]*pos[0])     - (x[1]*pos[1])     - (x[2]*pos[2])),
-          up[0],   up[1],   up[2],   (-(up[0]*pos[0])    - (up[1]*pos[1])    - (up[2]*pos[2])),
-          look[0], look[1], look[2], (-(look[0]*pos[0])  - (look[1]*pos[1])  - (look[2]*pos[2])), 
-          0.0,     0.0,     0.0,      1.0);   
+  // GMTL set(...) takes row major args.
+  _viewMatrix.set(x[0],    x[1],    x[2],    (-(x[0]*pos[0])     - (x[1]*pos[1])     - (x[2]*pos[2])),
+                  up[0],   up[1],   up[2],   (-(up[0]*pos[0])    - (up[1]*pos[1])    - (up[2]*pos[2])),
+                  look[0], look[1], look[2], (-(look[0]*pos[0])  - (look[1]*pos[1])  - (look[2]*pos[2])), 
+                  0.0,     0.0,     0.0,      1.0);   
 
   this->viewSetup(_view.getAspect(),     _view.getNS(),     _view.getEW(), 
                   _view.getField(),      _view.getCrot(),   _view.getPegOffset(), 
                   _setup.getImageWidth(),_setup.getField(), _setup.getLens(), 
-                  _setup.getNear(),      _setup.getFar(),   _bg.getAspect(), 
-                  _bg.getNS(),           _bg.getEW(),       _bg.getField(), 
-                  _bg.getCrot(),         _bg.getPegOffset(), true); 
+                  _setup.getNear(),      _setup.getFar(),   true); 
   
   this->v3dSetup(_view.getAspect(),     _view.getNS(),          _view.getEW(),
                  _view.getPegOffset(),  _setup.getImageWidth(), _setup.getNS(),
                  _setup.getEW(),        _setup.getField(),      _setup.getLens());  
   
+  //std::cout << "View matrix is: " << _viewMatrix << std::endl; 
+  
   gmtl::Matrix44f viewMat;
-  this->convert(mat, viewMat);  
+  this->convert(_viewMatrix, viewMat);  
   OSG::Matrix     osgViewMat; 
   osgViewMat.setValue(viewMat.mData);  
 
   // Combine view setup and 3dsetup matrices as projection matrix. 
-  gmtl::preMult(_viewSetupMatrix, _3dSetupMatrix);
+  gmtl::Matrix44d setupMat;
+  gmtl::mult(setupMat, _viewSetupMatrix, _3dSetupMatrix);
   
   gmtl::Matrix44f projMat;
-  this->convert(_viewSetupMatrix, projMat);
+  this->convert(setupMat, projMat);
   OSG::Matrix osgProjMat; 
   osgProjMat.setValue(projMat.mData);
   

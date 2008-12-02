@@ -28,6 +28,16 @@
 #include "LimeVrjCamera.h"
 #include "FlyNavigator.h"
 #include "OpenSG2App.h"
+#include "View.h"
+#include "Setup.h"
+#include "BG.h"
+
+// For screeen capturing. 
+extern "C"
+{
+  #include "tga.h"
+} 
+
 
 class OpenSGNav : public vrj::OpenSG2App
 {
@@ -51,9 +61,12 @@ class OpenSGNav : public vrj::OpenSG2App
     
 
     OpenSGNav(vrj::Kernel* kern) : vrj::OpenSG2App(kern),
-      mNavigator  (new FlyNavigator()),   
+      mNavigator  (new FlyNavigator(gmtl::Vec3d(1.0, 0.0,  0.0),
+                                    gmtl::Vec3d(0.0, 1.0,  0.0),
+                                    gmtl::Vec3d(0.0, 0.0,  1.0), 
+                                    gmtl::Vec3d(0.0, 0.0, 15.0))),   
       mFileToLoad (""),      
-      mVelocity   (0.0f)            
+      mVelocity   (0.0f)
    {
       std::cout << "OpenSGNav::OpenSGNav() called\n";      
    }
@@ -116,10 +129,20 @@ protected:
 
      vrj::GlContextData<AppContextData>   mAppContextData;
      
-     INavigator*                          mNavigator; 
+     INavigator*                          mNavigator;
+
+      View                                mView;
+      Setup                               mSetup;
+      BG                                  mBG; 
 
 private:
    void initGLState();
+
+   void draw_field_grid();   
+
+   void draw_setup_guide(); 
+
+   void draw_cutin( void );
 
 private:
    std::string mFileToLoad;      /**< Filename of the file to load */
@@ -138,6 +161,7 @@ private:
    OSG::NodeRefPtr        mLightNode;       /**< Light node to use */
    OSG::NodeRefPtr        mLightBeacon;     /**< A beacon for the light */
    
+    GLUquadricObj*        mQuadObj;
 
 public:
    gadget::DigitalInterface   mButton01; /**< Digital interface for button 1 */

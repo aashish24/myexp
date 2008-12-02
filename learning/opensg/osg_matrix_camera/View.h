@@ -44,7 +44,7 @@ class View
 
 
 inline View::View() : 
-  _viewAspect   (1.7777), 
+  _viewAspect   (1.6), 
   _viewNS       (5000.0), 
   _viewEW       (5000.0), 
   _viewField    (16.0), 
