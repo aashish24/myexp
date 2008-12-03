@@ -45,7 +45,11 @@ void OpenSGNav::draw()
 {
   // Call parent class first to render the scene graph
   vrj::OpenSG2App::draw();
-  
+
+  // 
+  mAppContextData->mLimeCamera->setView(mView);
+  mAppContextData->mLimeCamera->setSetup(mSetup);  
+
   // Now draw OpenGL stuff. 
   glPushAttrib(GL_ALL_ATTRIB_BITS);
     glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -103,13 +107,18 @@ void OpenSGNav::draw()
     glPopMatrix();
   glPopAttrib(); 
 
-  static const int buff_size=100000;
-  char filename[buff_size];
-  snprintf(filename, buff_size, "view-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f-setup-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f", 
-  mView.getAspect(), mView.getNS(), mView.getEW(), mView.getField(), mView.getCrot(), mView.getPegOffset(), 
-  mSetup.getImageWidth(), mSetup.getNS(),mSetup.getEW(), mSetup.getField(), mSetup.getLens(), mSetup.getNear(),mSetup.getFar());
-  
-  tgaGrabScreenSeries(filename, 0,0, 1600, 1050);
+  if(mGrabScreenShot)
+  {
+    static const int buff_size=100000;
+    char filename[buff_size];
+    snprintf(filename, buff_size, "view-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f-setup-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f", 
+    mView.getAspect(), mView.getNS(), mView.getEW(), mView.getField(), mView.getCrot(), mView.getPegOffset(), 
+    mSetup.getImageWidth(), mSetup.getNS(),mSetup.getEW(), mSetup.getField(), mSetup.getLens(), mSetup.getNear(),mSetup.getFar());
+    
+    tgaGrabScreenSeries(filename, 0,0, 1600, 1050);
+    
+    mGrabScreenShot = false;
+  }
 }
 
 void OpenSGNav::preFrame()
@@ -151,7 +160,38 @@ void OpenSGNav::preFrame()
     {
       mNavigator->pitch(data);
     }   
+  }
+
+  {
+    if(mButton01->getData() == gadget::Digital::TOGGLE_ON)
+    {
+      mGrabScreenShot = true;
+    }
   }  
+
+  {
+    if(mButton02->getData() == gadget::Digital::TOGGLE_ON)
+    {
+      mView.setField(mView.getField()+1);
+    }  
+
+    if(mButton03->getData() == gadget::Digital::TOGGLE_ON)
+    {
+      mView.setField(mView.getField() - 1);
+    }    
+  }  
+
+  {
+    if(mButton04->getData() == gadget::Digital::TOGGLE_ON)
+    {
+      mSetup.setLens(mSetup.getLens() + 5);
+    }  
+
+    if(mButton05->getData() == gadget::Digital::TOGGLE_ON)
+    {
+      mSetup.setLens(mSetup.getLens() - 5);
+    }    
+  }
 
   vrj::OpenSG2App::preFrame();
 }

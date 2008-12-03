@@ -30,7 +30,6 @@
 #include "OpenSG2App.h"
 #include "View.h"
 #include "Setup.h"
-#include "BG.h"
 
 // For screeen capturing. 
 extern "C"
@@ -65,8 +64,9 @@ class OpenSGNav : public vrj::OpenSG2App
                                     gmtl::Vec3d(0.0, 1.0,  0.0),
                                     gmtl::Vec3d(0.0, 0.0,  1.0), 
                                     gmtl::Vec3d(0.0, 0.0, 15.0))),   
-      mFileToLoad (""),      
-      mVelocity   (0.0f)
+      mFileToLoad     (""), 
+      mGrabScreenShot (false),     
+      mVelocity       (0.0f)       
    {
       std::cout << "OpenSGNav::OpenSGNav() called\n";      
    }
@@ -132,8 +132,7 @@ protected:
      INavigator*                          mNavigator;
 
       View                                mView;
-      Setup                               mSetup;
-      BG                                  mBG; 
+      Setup                               mSetup;       
 
 private:
    void initGLState();
@@ -161,7 +160,9 @@ private:
    OSG::NodeRefPtr        mLightNode;       /**< Light node to use */
    OSG::NodeRefPtr        mLightBeacon;     /**< A beacon for the light */
    
-    GLUquadricObj*        mQuadObj;
+   GLUquadricObj*         mQuadObj;
+
+   bool                   mGrabScreenShot;
 
 public:
    gadget::DigitalInterface   mButton01; /**< Digital interface for button 1 */

@@ -55,7 +55,7 @@ inline Setup::Setup() :
   _setupField     (16.0),
   _setupLens      (35.0),
   _setupNear      (0.1),
-  _setupFar       (10000.0)  
+  _setupFar       (5000.0)  
 {
 }
 

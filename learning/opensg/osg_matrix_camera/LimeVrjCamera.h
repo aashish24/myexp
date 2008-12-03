@@ -28,6 +28,12 @@ class LimeVrjCamera  : public ILimeCamera
                               LimeVrjCamera(const View& view=View(), const Setup& setup=Setup());
     virtual                  ~LimeVrjCamera();    
 
+    virtual const View&       getView()  const { return _view; }
+    virtual void              setView(const View& view){ _view = view; }
+
+    virtual const Setup&      getSetup() const { return _setup; }
+    virtual void              setSetup(const Setup& setup){ _setup = setup; }
+
     ISceneCamera*             getSceneCamera();
     virtual void              setSceneCamera(ISceneCamera* sCamera);
 
