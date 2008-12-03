@@ -111,11 +111,11 @@ void OpenSGNav::draw()
   {
     static const int buff_size=100000;
     char filename[buff_size];
-    snprintf(filename, buff_size, "view-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f-setup-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f-%.2f", 
+    snprintf(filename, buff_size, "view-%.3f-%.3f-%.3f-%.3f-%.3f-%.3f-setup-%.3f-%.3f-%.3f-%.3f-%.3f-%.3f-%.3f", 
     mView.getAspect(), mView.getNS(), mView.getEW(), mView.getField(), mView.getCrot(), mView.getPegOffset(), 
     mSetup.getImageWidth(), mSetup.getNS(),mSetup.getEW(), mSetup.getField(), mSetup.getLens(), mSetup.getNear(),mSetup.getFar());
     
-    tgaGrabScreenSeries(filename, 0,0, 1600, 1050);
+    tgaGrabScreen(filename, 0,0, 1600, 1050);
     
     mGrabScreenShot = false;
   }
@@ -167,30 +167,120 @@ void OpenSGNav::preFrame()
     {
       mGrabScreenShot = true;
     }
+
+    if(mButton10->getData() == gadget::Digital::TOGGLE_ON)
+    {
+      mToggleView = !mToggleView;
+      (mToggleView == true) ? 
+        (std::cout << "View mode. "  << std::endl)
+       :(std::cout << "Setup mode. " << std::endl);
+    }
   }  
 
   {
     if(mButton02->getData() == gadget::Digital::TOGGLE_ON)
     {
-      mView.setField(mView.getField()+1);
+      switch(mToggleView)
+      {
+        case 0: 
+          mSetup.setNS(mSetup.getNS() - 50);
+          break; 
+        case 1:
+          mView.setNS(mView.getNS() - 50);
+          break;      
+      }
     }  
 
     if(mButton03->getData() == gadget::Digital::TOGGLE_ON)
     {
-      mView.setField(mView.getField() - 1);
+      switch(mToggleView)
+      {
+        case 0: 
+          mSetup.setNS(mSetup.getNS() + 50);
+          break;
+        case 1:
+          mView.setNS(mView.getNS() + 50);
+          break;      
+      }
     }    
-  }  
 
-  {
     if(mButton04->getData() == gadget::Digital::TOGGLE_ON)
     {
-      mSetup.setLens(mSetup.getLens() + 5);
+      switch(mToggleView)
+      {
+        case 0: 
+          mSetup.setEW(mSetup.getEW() - 50);
+          break;
+        case 1:
+          mView.setEW(mView.getEW() - 50);
+          break;      
+      }  
     }  
 
     if(mButton05->getData() == gadget::Digital::TOGGLE_ON)
     {
-      mSetup.setLens(mSetup.getLens() - 5);
-    }    
+      switch(mToggleView)
+      {
+        case 0: 
+          mSetup.setEW(mSetup.getEW() + 50);
+          break;
+        case 1:
+          mView.setEW(mView.getEW() + 50);
+          break;      
+      }
+    }
+  
+    if(mButton06->getData() == gadget::Digital::TOGGLE_ON)
+    {
+      switch(mToggleView)
+      {
+        case 0: 
+          mSetup.setField(mSetup.getField() - 1);
+          break;
+        case 1:
+          mView.setField(mView.getField() - 1);
+          break;      
+      }    
+    }  
+
+    if(mButton07->getData() == gadget::Digital::TOGGLE_ON)
+    {
+      switch(mToggleView)
+      {
+        case 0: 
+          mSetup.setField(mSetup.getField() + 1);
+          break;    
+        case 1:
+          mView.setField(mView.getField() + 1);
+          break;      
+      }
+    }
+
+    if(mButton08->getData() == gadget::Digital::TOGGLE_ON)
+    {
+      switch(mToggleView)
+      {
+        case 0: 
+          mSetup.setLens(mSetup.getLens() - 5);
+          break;
+        case 1:
+          mView.setCrot(mView.getCrot() - 5);
+          break;      
+      }
+    }
+
+    if(mButton09->getData() == gadget::Digital::TOGGLE_ON)
+    {
+      switch(mToggleView)
+      {
+        case 0: 
+          mSetup.setLens(mSetup.getLens() + 5);
+          break;
+        case 1:
+          mView.setCrot(mView.getCrot() + 5);
+          break;      
+      }
+    }  
   }
 
   vrj::OpenSG2App::preFrame();
@@ -238,6 +328,7 @@ void OpenSGNav::initScene()
     mButton07.init("VJButton07");
     mButton08.init("VJButton08");
     mButton09.init("VJButton09");
+    mButton10.init("VJButton10");
 
     mAnalog01.init("VJAnalog01");
     mAnalog02.init("VJAnalog02");

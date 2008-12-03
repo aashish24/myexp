@@ -66,6 +66,7 @@ class OpenSGNav : public vrj::OpenSG2App
                                     gmtl::Vec3d(0.0, 0.0, 15.0))),   
       mFileToLoad     (""), 
       mGrabScreenShot (false),     
+      mToggleView     (true),  
       mVelocity       (0.0f)       
    {
       std::cout << "OpenSGNav::OpenSGNav() called\n";      
@@ -163,6 +164,7 @@ private:
    GLUquadricObj*         mQuadObj;
 
    bool                   mGrabScreenShot;
+   bool                   mToggleView; 
 
 public:
    gadget::DigitalInterface   mButton01; /**< Digital interface for button 1 */
@@ -174,7 +176,8 @@ public:
    gadget::DigitalInterface   mButton07; /**< Digital interface for button 7 */
    gadget::DigitalInterface   mButton08; /**< Digital interface for button 8 */
    gadget::DigitalInterface   mButton09; /**< Digital interface for button 9 */
-
+   gadget::DigitalInterface   mButton10; /**< Digital interface for button 9 */
+ 
    gadget::AnalogInterface    mAnalog01; /**< Analog interface for button 1 */
    gadget::AnalogInterface    mAnalog02; /**< Analog interface for button 2 */
    gadget::AnalogInterface    mAnalog03; /**< Analog interface for button 3 */

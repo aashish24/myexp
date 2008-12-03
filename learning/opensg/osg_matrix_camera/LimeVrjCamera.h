@@ -139,7 +139,7 @@ inline void LimeVrjCamera::viewSetup(double viewAspect,      double viewNS,     
       (1.0 / (viewField/setupField)), 
       1.0 )));
     
-    gmtl::postMult(_viewSetupMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled( -viewCrot, 0.0, 0.0, 1.0 )));
+    gmtl::postMult(_viewSetupMatrix, gmtl::makeRot<gmtl::Matrix44d>(gmtl::AxisAngled( gmtl::Math::deg2Rad(-viewCrot), 0.0, 0.0, 1.0 )));
     
     gmtl::postMult(_viewSetupMatrix, gmtl::makeTrans<gmtl::Matrix44d>(
     gmtl::Vec3d(
