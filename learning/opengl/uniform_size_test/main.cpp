@@ -23,7 +23,7 @@ void init()
   // Write query function here. 
   glGetIntegerv( GL_MAX_FRAGMENT_UNIFORM_COMPONENTS_ARB, &size_uniforms[0] );
   glGetIntegerv( GL_MAX_VERTEX_UNIFORM_COMPONENTS_ARB,   &size_uniforms[1] );
-  glGetIntegerv( GL_MAX_VARYING_FLOATS, &size_varying );
+  glGetIntegerv( GL_MAX_VARYING_FLOATS_ARB, &size_varying );
 
   // Open a file and write the outout. 
   std::ofstream file( "out.txt" );
