@@ -86,7 +86,7 @@ EXTRA_LD_FLAGS=
 
 # all tutorials in this directory
 
-PROGS := fbotexture
+PROGS := test
 
 # program dependencies
 
