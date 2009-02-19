@@ -2,15 +2,15 @@
 #ifndef __MSG_UTIL_STRING_H__
 #define __MSG_UTIL_STRING_H__
 
-#include "Msg/MsgCore/Referenced.h"
+#include "Mirage/MirageCore/Referenced.h"
 
 #include <string>
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgUtil
+	namespace MirageUtil
 	{
-    class String : public Msg::MsgCore::Referenced
+    class String : public Mirage::MirageCore::Referenced
     {
       ///////////////////////////////////////////////////////////////////////////
       //

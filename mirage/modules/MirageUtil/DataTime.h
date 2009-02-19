@@ -1,15 +1,15 @@
 #ifndef __TIMER_H__
 #define __TIMER_H__
 
-#include "Msg/MsgCore/Referenced.h"
+#include "Mirage/MirageCore/Referenced.h"
 
 #include <time.h>
 
-namespace Msg
+namespace Mirage
 { 
-  namespace MsgUtil
+  namespace MirageUtil
   {
-    class Timer : public Msg::MsgCore::Referenced
+    class Timer : public Mirage::MirageCore::Referenced
 	  {
 		  public:
 

@@ -1,9 +1,9 @@
 
-#include <glCore/GLTextFactory"
+#include <MirageCore/GLTextFactory"
 
 #include <map>
 
-using namespace glCore;
+using namespace MirageCore;
 
 typedef GLTextFactory::tCreatorMap::value_type vt;
 

@@ -2,9 +2,9 @@
 #ifndef __TEXT_H__
 #define __TEXT_H__
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgCore
+	namespace MirageCore
 	{
 		class OGE_EXPORT Text : public Drawable
 		{

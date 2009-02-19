@@ -1,9 +1,9 @@
 
-#include "MsgCore/Referenced.h"
+#include "MirageCore/Referenced.h"
 
 #include <iostream>
 
-using namespace Msg::MsgCore;
+using namespace Mirage::MirageCore;
 
 Referenced::Referenced() :
 	_refCount( 0 )
@@ -11,7 +11,7 @@ Referenced::Referenced() :
 
 }
 
-Referenced::Referenced( const Msg::MsgCore::Referenced &ref ) :
+Referenced::Referenced( const Mirage::MirageCore::Referenced &ref ) :
 	_refCount( 0 )
 {
 

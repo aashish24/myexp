@@ -1,4 +1,4 @@
 
-namespace Msg 
+namespace Mirage 
 {	
 }

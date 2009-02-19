@@ -2,9 +2,9 @@
 #ifndef __MSG_CORE_I_VIEWER_H__
 #define __MSG_CORE_I_VIEWER_H__
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     class IViewer 
     {

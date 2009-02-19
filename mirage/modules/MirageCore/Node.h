@@ -2,14 +2,14 @@
 #ifndef __MSG_CORE_NODE_H__
 #define __MSG_CORE_NODE_H__
 
-#include "MsgCore/Object.h"
-#include "MsgCore/StateSet.h"
+#include "MirageCore/Object.h"
+#include "MirageCore/StateSet.h"
 
 #include <vector>
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgCore
+	namespace MirageCore
 	{		
 		class Group;
     class Geode;

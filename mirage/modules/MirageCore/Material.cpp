@@ -1,12 +1,12 @@
 
-#include "MsgCore/Material.h"
-#include "MsgCore/MirageOpenGL.h"
+#include "MirageCore/Material.h"
+#include "MirageCore/MirageOpenGL.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
-    void Material::getProperty( LightMode mode, MsgMath::Vec4f& val, Face face ) const
+    void Material::getProperty( LightMode mode, MirageMath::Vec4f& val, Face face ) const
     {
       switch( mode )
       {
@@ -108,7 +108,7 @@ namespace Msg
     }   
 
 
-    void	Material::setProperty( LightMode mode, const MsgMath::Vec4f& val, Face face )
+    void	Material::setProperty( LightMode mode, const MirageMath::Vec4f& val, Face face )
     {
       switch( mode )
       {

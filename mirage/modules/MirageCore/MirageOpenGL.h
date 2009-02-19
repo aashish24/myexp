@@ -9,9 +9,9 @@
 #include "GL/glew.h" 
 #include "GL/gl.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     enum OpenGLDrawMethod
     {

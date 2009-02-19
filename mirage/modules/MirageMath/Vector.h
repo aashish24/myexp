@@ -6,9 +6,9 @@
 #include <math.h>
 #include <assert.h>
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgMath
+  namespace MirageMath
   {
 	  template< class DATA_TYPE, unsigned int SIZE >
     class Vector

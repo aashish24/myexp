@@ -1,9 +1,9 @@
 
-#include "MsgCore/StateAttribute.h"
+#include "MirageCore/StateAttribute.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     StateAttribute::StateAttribute( const bool& flag, const int& maskVal ) :
       Object  (),

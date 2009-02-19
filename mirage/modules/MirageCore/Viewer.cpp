@@ -1,9 +1,9 @@
 
-#include "MsgCore/Viewer.h"
+#include "MirageCore/Viewer.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     Viewer::Viewer()  
     {

@@ -4,14 +4,14 @@
 
 #include "Export.h"
 
-#include "MsgCore/Object.h"
-#include "MsgCore/IStateAttribute.h"
+#include "MirageCore/Object.h"
+#include "MirageCore/IStateAttribute.h"
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgCore
+	namespace MirageCore
 	{   
-    class MSG_EXPORT StateAttribute : public MsgCore::IStateAttribute, public MsgCore::Object 
+    class MSG_EXPORT StateAttribute : public MirageCore::IStateAttribute, public MirageCore::Object 
 		{
 			public:                
 

@@ -2,18 +2,18 @@
 #ifndef __MSG_CORE_GLSL_ATTRIBUTE_H__
 #define __MSG_CORE_GLSL_ATTRIBUTE_H__
 
-#include "MsgCore/StateAttribute.h"
+#include "MirageCore/StateAttribute.h"
 
-#include "MsgCore/GLSLProgram.h"
-#include "MsgCore/Uniform.h"
-#include "MsgCore/GLSLShader.h"
+#include "MirageCore/GLSLProgram.h"
+#include "MirageCore/Uniform.h"
+#include "MirageCore/GLSLShader.h"
 
 #include <map>
 #include <vector>
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     ///////////////////////////////////////////////////////////////////////////
     //

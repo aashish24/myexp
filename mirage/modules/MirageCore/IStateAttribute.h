@@ -2,11 +2,11 @@
 #ifndef __MSG_CORE_STATE_I_ATTRIBUTE_H__
 #define __MSG_CORE_STATE_I_ATTRIBUTE_H__
 
-#include "MsgCore/Object.h"
+#include "MirageCore/Object.h"
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgCore
+	namespace MirageCore
 	{
     class Node;
 

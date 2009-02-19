@@ -3,8 +3,8 @@
 #define __MSG_CORE_DRAWABLE_H__
 
 #include "Export.h"
-#include "MsgCore/Object.h"
-#include "MsgCore/StateSet.h"
+#include "MirageCore/Object.h"
+#include "MirageCore/StateSet.h"
 
 #ifdef WIN32
 	#include <windows.h>
@@ -13,18 +13,18 @@
 #include "GL/glew.h"
 #include "GL/gl.h"
 
-#include "MsgCore/Node.h"
+#include "MirageCore/Node.h"
 
 #include <iostream>
 #include <vector>
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgCore
+	namespace MirageCore
 	{
 		class Geode;			
 
-    class MSG_EXPORT Drawable : public Msg::MsgCore::Node
+    class MSG_EXPORT Drawable : public Mirage::MirageCore::Node
 		{
 			public:
 

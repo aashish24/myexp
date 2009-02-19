@@ -3,21 +3,21 @@
 #define __OGE_DB_H__
 
 #include "Export.h"
-#include "MsgCore/Referenced.h"
+#include "MirageCore/Referenced.h"
 
-#include "MsgCore/MirageOpenGL.h"
+#include "MirageCore/MirageOpenGL.h"
 
 #include <string>
 
-using namespace Msg::MsgCore;
+using namespace Mirage::MirageCore;
 
-namespace Msg { namespace MsgCore { class Node; class Image; } }
+namespace Mirage { namespace MirageCore { class Node; class Image; } }
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgDB
+	namespace MirageDB
 	{
-    class MSG_EXPORT FileRead : public Msg::MsgCore::Referenced
+    class MSG_EXPORT FileRead : public Mirage::MirageCore::Referenced
 		{
 			public:
 				
@@ -30,9 +30,9 @@ namespace Msg
 				{
 				}
 
-				static Node*	readFile( const char* fileName, const MsgCore::OpenGLDrawMethod& method = MsgCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
+				static Node*	readFile( const char* fileName, const MirageCore::OpenGLDrawMethod& method = MirageCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
 
-				static Node*	readFile( const std::string& fileName, const MsgCore::OpenGLDrawMethod& method = MsgCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
+				static Node*	readFile( const std::string& fileName, const MirageCore::OpenGLDrawMethod& method = MirageCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
 
 				/*
 					static Image*	readImageFile( const char* fileName );

@@ -1,23 +1,23 @@
 
-#include "MsgDB/ObjReader.h"
+#include "MirageDB/ObjReader.h"
 
-#include "MsgCore/Node.h"
-#include "MsgCore/Geode.h"
-#include "MsgCore/Geometry.h"
-#include "MsgCore/Array.h"
+#include "MirageCore/Node.h"
+#include "MirageCore/Geode.h"
+#include "MirageCore/Geometry.h"
+#include "MirageCore/Array.h"
 
-#include "MsgMath/Vector.h"
+#include "MirageMath/Vector.h"
 
 #include <fstream>
 
-using namespace Msg::MsgCore;
+using namespace Mirage::MirageCore;
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgDB
+  namespace MirageDB
   {
     Node* ObjReader::readFile( std::istream& fin, const char *fileName, 
-                               const MsgCore::OpenGLDrawMethod& method, const bool& ignoreNormals )
+                               const MirageCore::OpenGLDrawMethod& method, const bool& ignoreNormals )
     {
       // Lets dereference all the indices except the vertex indices so that we can use
       // the fast path. 
@@ -58,10 +58,10 @@ namespace Msg
 		      {
 			      // Read all the vertices here. 
 			      unsigned int fieldsRead = sscanf_s( line+2,"%f %f %f %f", &x, &y, &z, &w );
-            if ( fieldsRead==1 ) model->_vertices->push_back( MsgMath::Vec3d( x,0.0f,0.0f ) );
-			      else if ( fieldsRead==2 ) model->_vertices->push_back( MsgMath::Vec3d( x,y,0.0f ) );
-			      else if ( fieldsRead==3 ) model->_vertices->push_back( MsgMath::Vec3d( x,y,z ) );
-			      else if ( fieldsRead>=4 ) model->_vertices->push_back( MsgMath::Vec3d( x/w,y/w,z/w ) );
+            if ( fieldsRead==1 ) model->_vertices->push_back( MirageMath::Vec3d( x,0.0f,0.0f ) );
+			      else if ( fieldsRead==2 ) model->_vertices->push_back( MirageMath::Vec3d( x,y,0.0f ) );
+			      else if ( fieldsRead==3 ) model->_vertices->push_back( MirageMath::Vec3d( x,y,z ) );
+			      else if ( fieldsRead>=4 ) model->_vertices->push_back( MirageMath::Vec3d( x/w,y/w,z/w ) );
 		      }	
 
 		      if( strncmp( line, "f ", 2 ) == 0 )
@@ -145,33 +145,33 @@ namespace Msg
 
             if( counter == 4 )
             {
-              model->_vertexIndices->push_back( MsgMath::Vec3i( vectorIndex[0], vectorIndex[1], vectorIndex[2] ) );
-    			    model->_vertexIndices->push_back( MsgMath::Vec3i( vectorIndex[0], vectorIndex[2], vectorIndex[3] ) );
+              model->_vertexIndices->push_back( MirageMath::Vec3i( vectorIndex[0], vectorIndex[1], vectorIndex[2] ) );
+    			    model->_vertexIndices->push_back( MirageMath::Vec3i( vectorIndex[0], vectorIndex[2], vectorIndex[3] ) );
 
 			        if( !normalIndex.empty() )
 			        {
-                model->_normalIndices->push_back( MsgMath::Vec3i( normalIndex[0], normalIndex[1], normalIndex[2] ) );
-                model->_normalIndices->push_back( MsgMath::Vec3i( normalIndex[0], normalIndex[2], normalIndex[3] ) );
+                model->_normalIndices->push_back( MirageMath::Vec3i( normalIndex[0], normalIndex[1], normalIndex[2] ) );
+                model->_normalIndices->push_back( MirageMath::Vec3i( normalIndex[0], normalIndex[2], normalIndex[3] ) );
 			        }
 
               if( !textureIndex.empty() )
               {
-                model->_texCoordIndices->push_back( MsgMath::Vec3i( textureIndex[0], textureIndex[1], textureIndex[2] ) );
-                model->_texCoordIndices->push_back( MsgMath::Vec3i( textureIndex[0], textureIndex[2], textureIndex[3] ) );
+                model->_texCoordIndices->push_back( MirageMath::Vec3i( textureIndex[0], textureIndex[1], textureIndex[2] ) );
+                model->_texCoordIndices->push_back( MirageMath::Vec3i( textureIndex[0], textureIndex[2], textureIndex[3] ) );
               }
             }
             else
             {
-              model->_vertexIndices->push_back( MsgMath::Vec3i( vectorIndex[0], vectorIndex[1], vectorIndex[2] ) );
+              model->_vertexIndices->push_back( MirageMath::Vec3i( vectorIndex[0], vectorIndex[1], vectorIndex[2] ) );
         			
 			        if( !normalIndex.empty() )
 			        {
-                model->_normalIndices->push_back( MsgMath::Vec3i( normalIndex[0], normalIndex[1], normalIndex[2] ) );
+                model->_normalIndices->push_back( MirageMath::Vec3i( normalIndex[0], normalIndex[1], normalIndex[2] ) );
 			        }
 
               if( !textureIndex.empty() )
               {
-                model->_texCoordIndices->push_back( MsgMath::Vec3i( textureIndex[0], textureIndex[1], textureIndex[2] ) );
+                model->_texCoordIndices->push_back( MirageMath::Vec3i( textureIndex[0], textureIndex[1], textureIndex[2] ) );
               }
             }        
 
@@ -181,19 +181,19 @@ namespace Msg
 		      if( strncmp( line, "vn ", 3 ) == 0 )
 		      {
 			      unsigned int fieldsRead = sscanf_s( line+3 , "%f %f %f %f", &x, &y, &z, &w );
-            if( fieldsRead == 1 ) model->_normals->push_back( MsgMath::Vec3d( x, 0.0, 0.0 ) );
-			      else if( fieldsRead == 1 ) model->_normals->push_back( MsgMath::Vec3d( x, 0.0, 0.0 ) );
-			      else if( fieldsRead == 2 ) model->_normals->push_back( MsgMath::Vec3d( x, y, 0.0 ) );
-			      else if( fieldsRead == 3 ) model->_normals->push_back( MsgMath::Vec3d( x, y, z ) );
+            if( fieldsRead == 1 ) model->_normals->push_back( MirageMath::Vec3d( x, 0.0, 0.0 ) );
+			      else if( fieldsRead == 1 ) model->_normals->push_back( MirageMath::Vec3d( x, 0.0, 0.0 ) );
+			      else if( fieldsRead == 2 ) model->_normals->push_back( MirageMath::Vec3d( x, y, 0.0 ) );
+			      else if( fieldsRead == 3 ) model->_normals->push_back( MirageMath::Vec3d( x, y, z ) );
 		      }
 
           if( strncmp( line, "vt ", 3 ) == 0 )
 		      {
 			      unsigned int fieldsRead = sscanf_s( line+3 , "%f %f %f %f", &x, &y, &z, &w );
-            if( fieldsRead == 1 )       model->_textureCoords->push_back( MsgMath::Vec3d( x, 0.0, 0.0 ) );
-			      else if( fieldsRead == 1 )  model->_textureCoords->push_back( MsgMath::Vec3d( x, 0.0, 0.0 ) );
-			      else if( fieldsRead == 2 )  model->_textureCoords->push_back( MsgMath::Vec3d( x, y, 0.0 ) );
-			      else if( fieldsRead == 3 )  model->_textureCoords->push_back( MsgMath::Vec3d( x, y, 0.0 ) );
+            if( fieldsRead == 1 )       model->_textureCoords->push_back( MirageMath::Vec3d( x, 0.0, 0.0 ) );
+			      else if( fieldsRead == 1 )  model->_textureCoords->push_back( MirageMath::Vec3d( x, 0.0, 0.0 ) );
+			      else if( fieldsRead == 2 )  model->_textureCoords->push_back( MirageMath::Vec3d( x, y, 0.0 ) );
+			      else if( fieldsRead == 3 )  model->_textureCoords->push_back( MirageMath::Vec3d( x, y, 0.0 ) );
 		      }
 	      }      
 
@@ -249,13 +249,13 @@ namespace Msg
 
 
     Node* ObjReader::readFile( std::istream& fin, const std::string &fileName, 
-                               const MsgCore::OpenGLDrawMethod& method, const bool& ignoreNormals )
+                               const MirageCore::OpenGLDrawMethod& method, const bool& ignoreNormals )
     {
 	    return readFile( fin, fileName.c_str(), method );
     }
 
 
-    Node* ObjReader::convertDataIntoNode( ObjReader::Model* model, const MsgCore::OpenGLDrawMethod& method )
+    Node* ObjReader::convertDataIntoNode( ObjReader::Model* model, const MirageCore::OpenGLDrawMethod& method )
     {
       // If NULL. 
       if( !model )
@@ -461,7 +461,7 @@ namespace Msg
 
           for( size_t i=0; i < primSets.size(); ++i )
           {     
-            MsgMath::Vec3i vector;
+            MirageMath::Vec3i vector;
             DrawElementUInt* elem = ( dynamic_cast< DrawElementUInt* > ( primSets[i].get() ) );
             if( elem ) 
             {
@@ -507,7 +507,7 @@ namespace Msg
             geom->textureCoordIndices( model->_texCoordIndices.get() );
           }
         }
-        else if( method == MsgCore::FORCED_VERTEX_ARRAYS )
+        else if( method == MirageCore::FORCED_VERTEX_ARRAYS )
         {
           // Rewrite the whole file to make this happen.s
         }

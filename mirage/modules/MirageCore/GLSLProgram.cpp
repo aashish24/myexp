@@ -1,11 +1,11 @@
 
-#include "MsgCore/GLSLProgram.h"
+#include "MirageCore/GLSLProgram.h"
 
-#include "MsgCore/GLSLShader.h"
+#include "MirageCore/GLSLShader.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     GLSLProgram::GLSLProgram() : 
       Object    (), 

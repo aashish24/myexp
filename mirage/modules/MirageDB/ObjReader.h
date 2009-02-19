@@ -4,22 +4,22 @@
 
 #include <istream>
 
-#include "MsgCore/Referenced.h"
-#include "MsgCore/Array.h"
+#include "MirageCore/Referenced.h"
+#include "MirageCore/Array.h"
 
-#include "MsgCore/MirageOpenGL.h"
+#include "MirageCore/MirageOpenGL.h"
 
 #include "Export.h"
 
-using namespace Msg::MsgCore;
+using namespace Mirage::MirageCore;
 
-namespace Msg { namespace MsgCore { class Node; } }
+namespace Mirage { namespace MirageCore { class Node; } }
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgDB
+	namespace MirageDB
 	{
-    class MSG_EXPORT ObjReader : public MsgCore::Referenced
+    class MSG_EXPORT ObjReader : public MirageCore::Referenced
 		{
 			public:
 
@@ -113,7 +113,7 @@ namespace Msg
         ///////////////////////////////////////////////////////////////////////
 			
         Node*	readFile( std::istream& fin, const char* fileName, 
-                        const MsgCore::OpenGLDrawMethod& method = MsgCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
+                        const MirageCore::OpenGLDrawMethod& method = MirageCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -123,7 +123,7 @@ namespace Msg
         ///////////////////////////////////////////////////////////////////////
 
 				Node*	readFile( std::istream& fin, const std::string& fileName, 
-                        const MsgCore::OpenGLDrawMethod& method = MsgCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
+                        const MirageCore::OpenGLDrawMethod& method = MirageCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
        
 
 			protected:
@@ -145,7 +145,7 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 
-        Node* convertDataIntoNode( Model* model, const MsgCore::OpenGLDrawMethod& method ); 
+        Node* convertDataIntoNode( Model* model, const MirageCore::OpenGLDrawMethod& method ); 
 
 
       protected:

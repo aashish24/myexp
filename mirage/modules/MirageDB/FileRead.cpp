@@ -1,17 +1,17 @@
 
-#include "MsgDB/FileRead.h"
-#include "MsgDB/ObjReader.h"
+#include "MirageDB/FileRead.h"
+#include "MirageDB/ObjReader.h"
 
-#include "MsgCore/Node.h"
-#include "MsgCore/Group.h"
-#include "MsgCore/Image.h"
+#include "MirageCore/Node.h"
+#include "MirageCore/Group.h"
+#include "MirageCore/Image.h"
 
 #include <fstream>
 
-using namespace Msg::MsgDB;
+using namespace Mirage::MirageDB;
 
 Node* FileRead::readFile( const char* fileName, 
-                         const Msg::MsgCore::OpenGLDrawMethod& method, 
+                         const Mirage::MirageCore::OpenGLDrawMethod& method, 
                           const bool& ignoreNormals )
 {
 	std::ifstream fin( fileName, std::ios::in );	
@@ -38,7 +38,7 @@ Node* FileRead::readFile( const char* fileName,
 }
 
 Node* FileRead::readFile( const std::string &fileName, 
-                          const Msg::MsgCore::OpenGLDrawMethod& method, 
+                          const Mirage::MirageCore::OpenGLDrawMethod& method, 
                           const bool& ignoreNormals )
 {
 	return readFile( fileName.c_str(), method, ignoreNormals );

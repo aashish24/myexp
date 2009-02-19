@@ -3,11 +3,11 @@
 #define __MSG_CORE_VIEWER_H__
 
 #include "Export.h"
-#include "MsgCore/NodeVisitor.h"
+#include "MirageCore/NodeVisitor.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     class MSG_EXPORT Viewer : public Referenced
     {

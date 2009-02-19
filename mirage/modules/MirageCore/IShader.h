@@ -7,9 +7,9 @@
 
 #include <string>
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     class Program;
 

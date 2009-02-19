@@ -1,23 +1,23 @@
 
-#include "MsgCore/Text.h"
+#include "MirageCore/Text.h"
 
 
-void MsgCore::Text::setText( std::string text )
+void MirageCore::Text::setText( std::string text )
 {
 	mText = text;
 }
 
-void MsgCore::Text::setPos( Vec3f pos )
+void MirageCore::Text::setPos( Vec3f pos )
 {
 	mPos = pos;
 }
 
-void MsgCore::Text::setRot( Vec4f rot )
+void MirageCore::Text::setRot( Vec4f rot )
 {
 	mRot = rot;
 }
 
-void MsgCore::Text::setScale( Vec3f scale )
+void MirageCore::Text::setScale( Vec3f scale )
 {
 	mScale = scale;
 }

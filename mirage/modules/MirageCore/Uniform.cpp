@@ -1,15 +1,15 @@
 
-#include "MsgCore/Uniform.h"
+#include "MirageCore/Uniform.h"
 
 #ifdef _MSC_VER
   #include <windows.h>
 #endif 
 
-#include "MsgCore/GLSLProgram.h"
+#include "MirageCore/GLSLProgram.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     Uniform::Uniform( const std::string& name, const int& location ) :
         Object      (), 

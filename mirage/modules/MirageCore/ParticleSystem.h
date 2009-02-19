@@ -1,9 +1,9 @@
 #ifndef __PARTICLE_SYSTEM_H__
 #define __PARTICLE_SYSTEM_H__
 
-namespace Msg 
+namespace Mirage 
 {
-	namespace MsgCore
+	namespace MirageCore
 	{
 		class MSG_EXPORT ParticleSystem : public Drawable 
 		{

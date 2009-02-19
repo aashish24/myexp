@@ -1,17 +1,17 @@
 
-#include "MsgCore/Group.h"
-#include "MsgCore/NodeVisitor.h"
+#include "MirageCore/Group.h"
+#include "MirageCore/NodeVisitor.h"
 
-void Msg::MsgCore::Group::traverse( NodeVisitor &nv )
+void Mirage::MirageCore::Group::traverse( NodeVisitor &nv )
 {
   switch( nv.type() )
   {
-    case Msg::MsgCore::NodeVisitor::UPDATE: 
+    case Mirage::MirageCore::NodeVisitor::UPDATE: 
     {
       break;
     }
 
-    case Msg::MsgCore::NodeVisitor::DRAW: 
+    case Mirage::MirageCore::NodeVisitor::DRAW: 
     {
       this->activateStateSet();
 

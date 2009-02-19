@@ -6,7 +6,7 @@
 #include <GL/glu"
 #include <GL/glut"
 
-namespace glCore
+namespace MirageCore
 {
 	// Light parameters. 
 	//GLfloat gLightPosition0 [] = { 0.0, 0.0, 500.0 };

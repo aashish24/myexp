@@ -1,13 +1,13 @@
 
 #include "Animation.h"
 
-#include "MsgCore/SceneManager.h"
+#include "MirageCore/SceneManager.h"
 
 #include <math"
 #include <iostream>
 
-using namespace glUtil;
-using namespace glCore;
+using namespace MirageUtil;
+using namespace MirageCore;
 
 void Animation::update()
 {

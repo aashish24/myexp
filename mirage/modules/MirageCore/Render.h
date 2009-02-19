@@ -2,9 +2,9 @@
 #ifndef __RENDERER_H__
 #define __RENDERER_H__
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgCore
+	namespace MirageCore
 	{
 		class MSG_EXPORT Renderer
 		{

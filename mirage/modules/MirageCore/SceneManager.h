@@ -17,16 +17,16 @@
 
 #include <glMath/Vector"
 
-#include <glCore/Texture"
+#include <MirageCore/Texture"
 
 using namespace glMath;
 
-namespace glCore
+namespace MirageCore
 {
 	class Text;
 }
 
-namespace glCore
+namespace MirageCore
 {
 	class SceneManager
 	{

@@ -8,11 +8,11 @@
 #define __MATERIAL_H__
 
 #include "Export.h"
-#include "MsgCore/Object.h"
-#include "MsgCore/StateAttribute.h"
-#include "MsgCore/MirageOpenGL.h"
+#include "MirageCore/Object.h"
+#include "MirageCore/StateAttribute.h"
+#include "MirageCore/MirageOpenGL.h"
 
-#include "MsgMath/Vector.h"
+#include "MirageMath/Vector.h"
 
 #ifdef _WIN32
 	#include <windows.h>
@@ -21,9 +21,9 @@
 #include "GL/glew.h"
 #include "GL/gl.h"
 
-namespace Msg 
+namespace Mirage 
 {
-	namespace MsgCore
+	namespace MirageCore
 	{
     class MSG_EXPORT Material : public StateAttribute
 		{
@@ -38,13 +38,13 @@ namespace Msg
 
 				Material() : 
           StateAttribute  ( ),
-					mFrontAmbient	  ( MsgMath::Vec4f() ), 
-					mFrontDiffuse	  ( MsgMath::Vec4f() ), 
-					mFrontSpecular	( MsgMath::Vec4f() ), 
+					mFrontAmbient	  ( MirageMath::Vec4f() ), 
+					mFrontDiffuse	  ( MirageMath::Vec4f() ), 
+					mFrontSpecular	( MirageMath::Vec4f() ), 
 					mFrontShininess	( 0.0 ), 
-          mBackAmbient		( MsgMath::Vec4f() ),
-					mBackDiffuse		( MsgMath::Vec4f() ), 
-					mBackSpecular	  ( MsgMath::Vec4f() ),
+          mBackAmbient		( MirageMath::Vec4f() ),
+					mBackDiffuse		( MirageMath::Vec4f() ), 
+					mBackSpecular	  ( MirageMath::Vec4f() ),
 					mBackShininess	( 0.0 ), 
           mFront          ( true ), 
           mBack           ( false )					
@@ -80,8 +80,8 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 
-        void getProperty( LightMode mode, MsgMath::Vec4f& val, Face face=FRONT ) const;
-				void setProperty( LightMode mode, const MsgMath::Vec4f& val, Face face=FRONT );								
+        void getProperty( LightMode mode, MirageMath::Vec4f& val, Face face=FRONT ) const;
+				void setProperty( LightMode mode, const MirageMath::Vec4f& val, Face face=FRONT );								
  
         void getProperty( LightMode mode, float& val, Face face=FRONT ) const;
 				void setProperty( LightMode mode, const float& val, Face face=FRONT );								
@@ -169,14 +169,14 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 
-        MsgMath::Vec4f	    mFrontAmbient;
-				MsgMath::Vec4f	    mFrontDiffuse;
-				MsgMath::Vec4f	    mFrontSpecular;
+        MirageMath::Vec4f	    mFrontAmbient;
+				MirageMath::Vec4f	    mFrontDiffuse;
+				MirageMath::Vec4f	    mFrontSpecular;
 				float	              mFrontShininess;
 
-				MsgMath::Vec4f	    mBackAmbient;
-				MsgMath::Vec4f	    mBackDiffuse;
-				MsgMath::Vec4f	    mBackSpecular;
+				MirageMath::Vec4f	    mBackAmbient;
+				MirageMath::Vec4f	    mBackDiffuse;
+				MirageMath::Vec4f	    mBackSpecular;
 				float	              mBackShininess;
 
         bool                mFront; 

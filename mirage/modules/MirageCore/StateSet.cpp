@@ -1,13 +1,13 @@
 
-#include "MsgCore/StateSet.h"
-#include "MsgCore/Node.h"
-#include "MsgCore/Group.h"
+#include "MirageCore/StateSet.h"
+#include "MirageCore/Node.h"
+#include "MirageCore/Group.h"
 
 #include <list>
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgCore
+	namespace MirageCore
 	{		
     StateSet::StateSet() : 
 					Object(), 
@@ -120,7 +120,7 @@ namespace Msg
       if( node->getOrCreateStateSet()->dirty() )
       {
         // Loop thru all the parents attributes here. 
-        Msg::MsgCore::Node::Parents parents = node->parents();
+        Mirage::MirageCore::Node::Parents parents = node->parents();
         StateSet::Attributes::iterator start, end;
         StateSet::TextureAttributes::iterator tStart, tEnd;
 

@@ -5,9 +5,9 @@
 
 #include "TextFileReadWrite.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgDB
+  namespace MirageDB
   {
     char* TextFileReadWrite::read( char *fn ) 
     {

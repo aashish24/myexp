@@ -1,10 +1,10 @@
 #ifndef __GLUT_TEXT_H__
 #define __GLUT_TEXT_H__
 
-#include<glCore/Text"
-#include<glCore/GLTextFactory"
+#include "MirageCore/Text"
+#include "MirageCore/GLTextFactory"
 
-namespace glCore
+namespace MirageCore
 {
 	class GlutText : public Text
 	{
@@ -34,12 +34,12 @@ namespace glCore
 
 namespace 
 {
-	glCore::Text* create()
+	MirageCore::Text* create()
 	{
-		return new glCore::GlutText();
+		return new MirageCore::GlutText();
 	}
 
-	bool isRegis = glCore::GLTextFactory::instance()->tRegister( "GlutText", create );
+	bool isRegis = MirageCore::GLTextFactory::instance()->tRegister( "GlutText", create );
 }
 
 #endif // __GLUT_TEXT_H__

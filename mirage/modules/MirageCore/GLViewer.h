@@ -13,16 +13,16 @@
 #include <GL/glu"
 #include <GL/glut"
 
-#include <glCore/Navigation"
+#include <MirageCore/Navigation"
 
 #include <glControl/Keys"
 #include <glControl/Action"
 #include <glControl/ActionHandler"
 
-#include <glUtil/AnimationManager"
-#include <glUtil/Animation"
+#include <MirageUtil/AnimationManager"
+#include <MirageUtil/Animation"
 
-#include <glCore/Navigation"
+#include <MirageCore/Navigation"
 
 #include <gmtl/Math"
 #include <gmtl/MatrixOps"
@@ -31,13 +31,13 @@
 #include <gmtl/Vec"
 #include <gmtl/VecOps"
 
-namespace glCore
+namespace MirageCore
 {
 	class SceneManager;
 	class User;	
 }
 
-namespace glUtil
+namespace MirageUtil
 {
 	class Animation ;
 	class Timer;
@@ -45,7 +45,7 @@ namespace glUtil
 
 using namespace glControl;
 
-namespace glCore
+namespace MirageCore
 {
 	class GLViewer
 	{
@@ -101,7 +101,7 @@ namespace glCore
 			 * 
 			 ******************************************************************
 			 */
-			glCore::SceneManager* mSceneManager;
+			MirageCore::SceneManager* mSceneManager;
 
 			/******************************************************************
 			 * 
@@ -109,7 +109,7 @@ namespace glCore
 			 * 
 			 ******************************************************************
 			 */
-			glUtil::AnimationManager* mAnimationMgr;
+			MirageUtil::AnimationManager* mAnimationMgr;
 
 			/******************************************************************
 			 *
@@ -148,7 +148,7 @@ namespace glCore
 			 *
 			 ******************************************************************
 			 */
-			glUtil::Timer* mTimer;
+			MirageUtil::Timer* mTimer;
 
 			/******************************************************************
 			 *

@@ -1,23 +1,23 @@
 
-#include "MsgUtil/GeometryFuncs.h"
+#include "MirageUtil/GeometryFuncs.h"
 
-#include "MsgCore/Geometry.h"
-#include "MsgCore/Array.h"
+#include "MirageCore/Geometry.h"
+#include "MirageCore/Array.h"
 
-void Msg::MsgUtil::GeometryFuncs::generateNormals( Msg::MsgCore::Geometry* geom )
+void Mirage::MirageUtil::GeometryFuncs::generateNormals( Mirage::MirageCore::Geometry* geom )
 {
 }
 
 
-void Msg::MsgUtil::GeometryFuncs::generateTBNs( Msg::MsgCore::Geometry* geom )
+void Mirage::MirageUtil::GeometryFuncs::generateTBNs( Mirage::MirageCore::Geometry* geom )
 {
   try
   {
     // Query data from the geometry node. 
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array >   vertices  = geom->vertexArray();
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3iArray >  indices   = geom->vertexIndices();
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array >   texcoords = geom->textureCoordArray();
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array >   normals   = geom->normalArray();
+    Mirage::MirageCore::SmartPtr< Mirage::MirageCore::Vec3Array >   vertices  = geom->vertexArray();
+    Mirage::MirageCore::SmartPtr< Mirage::MirageCore::Vec3iArray >  indices   = geom->vertexIndices();
+    Mirage::MirageCore::SmartPtr< Mirage::MirageCore::Vec3Array >   texcoords = geom->textureCoordArray();
+    Mirage::MirageCore::SmartPtr< Mirage::MirageCore::Vec3Array >   normals   = geom->normalArray();
 
     // If geometey has missing vertices, texture coordinates or normals we cannot 
     // calculate T B N vectors. 
@@ -29,12 +29,12 @@ void Msg::MsgUtil::GeometryFuncs::generateTBNs( Msg::MsgCore::Geometry* geom )
     }
 
     // Tangent, Binormal, and Normal vectors. 
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > tangentArray( new Msg::MsgCore::Vec3Array() );
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > binormalArray( new Msg::MsgCore::Vec3Array() );
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > normalArray( new Msg::MsgCore::Vec3Array() );
+    Mirage::MirageCore::SmartPtr< Mirage::MirageCore::Vec3Array > tangentArray( new Mirage::MirageCore::Vec3Array() );
+    Mirage::MirageCore::SmartPtr< Mirage::MirageCore::Vec3Array > binormalArray( new Mirage::MirageCore::Vec3Array() );
+    Mirage::MirageCore::SmartPtr< Mirage::MirageCore::Vec3Array > normalArray( new Mirage::MirageCore::Vec3Array() );
 
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > tan1 = new Msg::MsgCore::Vec3Array( vertices->size() );
-    Msg::MsgCore::SmartPtr< Msg::MsgCore::Vec3Array > tan2 = new Msg::MsgCore::Vec3Array( vertices->size() );
+    Mirage::MirageCore::SmartPtr< Mirage::MirageCore::Vec3Array > tan1 = new Mirage::MirageCore::Vec3Array( vertices->size() );
+    Mirage::MirageCore::SmartPtr< Mirage::MirageCore::Vec3Array > tan2 = new Mirage::MirageCore::Vec3Array( vertices->size() );
     
     // For this algorithm see "Mathematics for 3D Game Programming & Computer Graphics", 
     // Section 6.8.3.
@@ -66,11 +66,11 @@ void Msg::MsgUtil::GeometryFuncs::generateTBNs( Msg::MsgCore::Geometry* geom )
       
       if( ( denom > -0.0001 ) && ( denom < 0.0001 ) )
       {        
-        MsgMath::Vec3d T, B, N;
+        MirageMath::Vec3d T, B, N;
 
-        T = MsgMath::Vec3d( 1.0f, 0.0f, 0.0f );
-        B = MsgMath::Vec3d( 0.0f, 1.0f, 0.0f );
-        N = MsgMath::Vec3d( 0.0f, 0.0f, 1.0f );
+        T = MirageMath::Vec3d( 1.0f, 0.0f, 0.0f );
+        B = MirageMath::Vec3d( 0.0f, 1.0f, 0.0f );
+        N = MirageMath::Vec3d( 0.0f, 0.0f, 1.0f );
 
         tan1->at( i1 ) = T;
         tan1->at( i2 ) = T;
@@ -86,10 +86,10 @@ void Msg::MsgUtil::GeometryFuncs::generateTBNs( Msg::MsgCore::Geometry* geom )
       }
       else
       {
-        MsgMath::Vec3d T, B;
+        MirageMath::Vec3d T, B;
       
-        T = MsgMath::Vec3d( ( t2 * x1 - t1 * x2 ) * denom, ( t2 * y1 - t1 * y2 ) * denom, ( t2 * z1 - t1 * z2 ) * denom );
-        B = MsgMath::Vec3d( ( s1 * x2 - s2 * x1 ) * denom, ( s1 * y2 - s2 * y1 ) * denom, ( s1 * z2 - s2 * z1 ) * denom ); 
+        T = MirageMath::Vec3d( ( t2 * x1 - t1 * x2 ) * denom, ( t2 * y1 - t1 * y2 ) * denom, ( t2 * z1 - t1 * z2 ) * denom );
+        B = MirageMath::Vec3d( ( s1 * x2 - s2 * x1 ) * denom, ( s1 * y2 - s2 * y1 ) * denom, ( s1 * z2 - s2 * z1 ) * denom ); 
 
         tan1->at( i1 ) = tan1->at( i1 ) + T;
         tan1->at( i2 ) = tan1->at( i2 ) + T;
@@ -101,34 +101,34 @@ void Msg::MsgUtil::GeometryFuncs::generateTBNs( Msg::MsgCore::Geometry* geom )
       }
     }   
 
-    Msg::MsgCore::Vec3Array* tw = new Msg::MsgCore::Vec3Array(); 
+    Mirage::MirageCore::Vec3Array* tw = new Mirage::MirageCore::Vec3Array(); 
 
     for( size_t i = 0; i < ( vertices->size() ); ++i )
     {
-      MsgMath::Vec3d& n = normals->at( i );
-      MsgMath::Vec3d& t = tan1->at( i );
-      MsgMath::Vec3d& b = tan2->at( i );
+      MirageMath::Vec3d& n = normals->at( i );
+      MirageMath::Vec3d& t = tan1->at( i );
+      MirageMath::Vec3d& b = tan2->at( i );
       
       // We have to make sure that n is normalized. 
       n.normalize();
 
-      MsgMath::Vec3d tan3v = ( ( t - n * n.dot( t ) ) );            
+      MirageMath::Vec3d tan3v = ( ( t - n * n.dot( t ) ) );            
 
       tan3v.normalize();      
       
       double f = ( ( ( n.cross( t ) ).dot( b ) ) < 0.0f ? -1.0f : 1.0f ); 
 
-      tw->push_back( MsgMath::Vec3d( f, 0.0, 0.0 ) );
+      tw->push_back( MirageMath::Vec3d( f, 0.0, 0.0 ) );
 
       tangentArray->push_back( tan3v );
     }      
 
     for( size_t j = 0; j < ( vertices->size() ); ++j )
     {
-      MsgMath::Vec3d& n = normals->at( j );
-      MsgMath::Vec3d& t = tangentArray->at( j );      
+      MirageMath::Vec3d& n = normals->at( j );
+      MirageMath::Vec3d& t = tangentArray->at( j );      
       
-      MsgMath::Vec3d bin3v = n.cross( t ) * tw->at( j )[0];
+      MirageMath::Vec3d bin3v = n.cross( t ) * tw->at( j )[0];
 
       bin3v.normalize();
       
@@ -137,7 +137,7 @@ void Msg::MsgUtil::GeometryFuncs::generateTBNs( Msg::MsgCore::Geometry* geom )
 
     for( size_t j = 0; j < ( vertices->size() ); ++j )
     {      
-      MsgMath::Vec3d norV = normals->at( j );
+      MirageMath::Vec3d norV = normals->at( j );
       norV.normalize();
       normalArray->push_back( norV );     
     }

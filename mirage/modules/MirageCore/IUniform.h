@@ -5,9 +5,9 @@
 #include <string>
 
 // Interface for GLSL uniform data type. 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     struct IUniform
     {

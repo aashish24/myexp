@@ -2,10 +2,10 @@
 #include "AnimationManager.h"
 #include "Animation.h"
 
-#include "MsgCore/SceneManager.h"
+#include "MirageCore/SceneManager.h"
 
 using namespace util;
-using namespace MsgCore;
+using namespace MirageCore;
 
 
 AnimationManager::AnimationManager( SceneManager *sceneManager )

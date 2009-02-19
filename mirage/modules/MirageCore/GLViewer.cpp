@@ -1,17 +1,17 @@
 
 
-#include<glCore/GLViewer"
-#include<glCore/SceneManager"
-#include<glCore/Text"
-#include<glCore/User"
+#include "MirageCore/GLViewer"
+#include "MirageCore/SceneManager"
+#include "MirageCore/Text"
+#include "MirageCore/User"
 
-#include<glUtil/Animation"
-#include<glUtil/Timer"
+#include "MirageUtil/Animation"
+#include "MirageUtil/Timer"
 
 #include <glControl/Action"
 
-using namespace glUtil;
-using namespace glCore;
+using namespace MirageUtil;
+using namespace MirageCore;
 using namespace glControl;
 
 GLViewer::GLViewer() :
@@ -66,7 +66,7 @@ void GLViewer::init()
 	mSceneManager->init();	
 	
 	// Initialize time. 
-	mTimer = new glUtil::Timer();
+	mTimer = new MirageUtil::Timer();
 	mTimer->tick();
 
 	// Initialialize the animantion manager. 

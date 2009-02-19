@@ -1,11 +1,11 @@
 
-#include "MsgCore/Shader.h"
+#include "MirageCore/Shader.h"
 
-#include "MsgDB/TextFileReadWrite.h"
+#include "MirageDB/TextFileReadWrite.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     Shader::Shader( Type type ) : 
       Object    (),
@@ -47,7 +47,7 @@ namespace Msg
 
     void Shader::sourceAsFile( const std::string& fileName )
     {
-      _ss = std::string( MsgDB::TextFileReadWrite::read( const_cast< char* >( fileName.c_str() ) ) );
+      _ss = std::string( MirageDB::TextFileReadWrite::read( const_cast< char* >( fileName.c_str() ) ) );
 
       if( _ss.empty() )
       {

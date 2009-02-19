@@ -4,9 +4,9 @@
 
 #include "Export.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgMath 
+  namespace MirageMath 
   {
     class MatrixVecOps 
     {

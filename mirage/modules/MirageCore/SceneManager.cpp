@@ -1,13 +1,13 @@
 
-#include<glCore/SceneManager"
-#include<glCore/MatDef"
-#include<glCore/GLTextFactory"
-#include<glCore/Text"
-#include<glCore/GlutText"
+#include "MirageCore/SceneManager"
+#include "MirageCore/MatDef"
+#include "MirageCore/GLTextFactory"
+#include "MirageCore/Text"
+#include "MirageCore/GlutText"
 
 #include<math"
 
-using namespace glCore;
+using namespace MirageCore;
 
 bool LoadTGA(Texture *, char *);	
 
@@ -21,8 +21,8 @@ void SceneManager::init()
 	mCarID = createCar( 12.0 );
 	mBoxID = createBox( 30.0 );
 	mStarID = createStarA( 20.0 ); 
-	mAnimeBoxID1 = createFillBox( 50, glCore::Fire );
-	mAnimeBoxID2 = createFillBox( 50, glCore::Cross );
+	mAnimeBoxID1 = createFillBox( 50, MirageCore::Fire );
+	mAnimeBoxID2 = createFillBox( 50, MirageCore::Cross );
 
 	for( unsigned int i=0; i < mNoOfEnemies; ++i )
 	{
@@ -424,15 +424,15 @@ Text* SceneManager::getCtrlText( unsigned int i )
 void SceneManager::draw()
 {
 	// Draw labyrith. 
-	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCore::gMatDiffuse2 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, glCore::gMatSpecular2 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, glCore::gMatShininess2 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, MirageCore::gMatDiffuse2 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, MirageCore::gMatSpecular2 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, MirageCore::gMatShininess2 );
 	glCallList( mLabyrinthID );	
 	
 	// Draw car. 	
-	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCore::gMatDiffuse6 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, glCore::gMatSpecular6 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, glCore::gMatShininess6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, MirageCore::gMatDiffuse6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, MirageCore::gMatSpecular6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, MirageCore::gMatShininess6 );
 	Vec3f vecTrans = getCurrentPos( mCarID );
 	Vec4f vecRot   = getCurrentRot( mCarID );
 	glPushMatrix();
@@ -445,9 +445,9 @@ void SceneManager::draw()
 	glPopMatrix();		
 
 	// Draw enemy cars. 
-	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCore::gMatDiffuse6 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, glCore::gMatSpecular6 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, glCore::gMatShininess6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, MirageCore::gMatDiffuse6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, MirageCore::gMatSpecular6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, MirageCore::gMatShininess6 );
 	for( int i=0; i < mNoOfEnemies; ++i )
 	{
 		Vec3f vecTrans = getCurrentPos( mEnemyCars[i] );
@@ -464,36 +464,36 @@ void SceneManager::draw()
 
 	// Draw start.
 	glDisable( GL_TEXTURE_2D );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCore::gMatDiffuse5 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, glCore::gMatSpecular5 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, glCore::gMatShininess5 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, MirageCore::gMatDiffuse5 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, MirageCore::gMatSpecular5 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, MirageCore::gMatShininess5 );
 	glPushMatrix();
 		glTranslatef( -300.0, 270.0, 0.0 );
 		glCallList( mBoxID );
 	glPopMatrix();
 
 	// Draw end. 
-	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCore::gMatDiffuse3 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, glCore::gMatSpecular3 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, glCore::gMatShininess3 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, MirageCore::gMatDiffuse3 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, MirageCore::gMatSpecular3 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, MirageCore::gMatShininess3 );
 	glPushMatrix();
 		glTranslatef( 300.0, -270.0, 0.0 );
 		glCallList( mBoxID );
 	glPopMatrix();	
 
 	// Draw Pattern. 
-	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCore::gMatDiffuse7 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, glCore::gMatSpecular7 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, glCore::gMatShininess7 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, MirageCore::gMatDiffuse7 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, MirageCore::gMatSpecular7 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, MirageCore::gMatShininess7 );
 	vecTrans = getCurrentPos( mAnimeBoxID1 );
 	glPushMatrix();
 		glTranslatef( vecTrans[0], vecTrans[1], vecTrans[2] );
 		glCallList( mAnimeBoxID1 );
 	glPopMatrix();
 
-	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCore::gMatDiffuse5 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, glCore::gMatSpecular5 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, glCore::gMatShininess5 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, MirageCore::gMatDiffuse5 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, MirageCore::gMatSpecular5 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, MirageCore::gMatShininess5 );
 	vecTrans = getCurrentPos( mAnimeBoxID2 );
 	glPushMatrix();
 		glTranslatef( vecTrans[0], vecTrans[1], vecTrans[2] );
@@ -501,9 +501,9 @@ void SceneManager::draw()
 	glPopMatrix();
 
 	// Draw Star.
-	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCore::gMatDiffuse3 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, glCore::gMatSpecular3 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, glCore::gMatShininess3 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, MirageCore::gMatDiffuse3 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, MirageCore::gMatSpecular3 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, MirageCore::gMatShininess3 );
 	vecTrans = getCurrentPos( mStarID );
 	vecRot   = getCurrentRot( mStarID );
 	glPushMatrix();
@@ -513,9 +513,9 @@ void SceneManager::draw()
 		glCallList( mStarID );
 	glPopMatrix();	
 
-	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCore::gMatDiffuse6 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, glCore::gMatSpecular6 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, glCore::gMatShininess6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, MirageCore::gMatDiffuse6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, MirageCore::gMatSpecular6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, MirageCore::gMatShininess6 );
 	for( size_t i=0; i < mTexts.size(); ++i )
 	{
 		mTexts[i]->draw();
@@ -567,9 +567,9 @@ void SceneManager::draw()
 
 	// Static orbit. 
 	// Draw double orbit. 
-	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCore::gMatDiffuse1 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, glCore::gMatSpecular1 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, glCore::gMatShininess1 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, MirageCore::gMatDiffuse1 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, MirageCore::gMatSpecular1 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, MirageCore::gMatShininess1 );
 	glPushMatrix();
 		glLoadIdentity();
 		glTranslatef( 210.0, -90.0, 0.0 );		
@@ -597,9 +597,9 @@ void SceneManager::draw()
 
 void SceneManager::drawControls()
 {
-	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCore::gMatDiffuse6 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, glCore::gMatSpecular6 );
-	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, glCore::gMatShininess6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, MirageCore::gMatDiffuse6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, MirageCore::gMatSpecular6 );
+	glMaterialfv( GL_FRONT_AND_BACK, GL_SHININESS, MirageCore::gMatShininess6 );
 	for( size_t i=0; i < mCtrlTexts.size(); ++i )
 	{
 		mCtrlTexts[i]->draw();

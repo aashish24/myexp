@@ -3,9 +3,9 @@
 
 #include "Export.h"
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgCore
+	namespace MirageCore
 	{
 		class MSG_EXPORT Image : public Referenced
 		{

@@ -2,13 +2,13 @@
 #ifndef __MSG_CORE_GROUP_H__
 #define __MSG_CORE_GROUP_H__
 
-#include "MsgCore/Node.h"
+#include "MirageCore/Node.h"
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgCore
+	namespace MirageCore
 	{		
-    class MSG_EXPORT Group : public MsgCore::Node 
+    class MSG_EXPORT Group : public MirageCore::Node 
 		{
 			public:
         

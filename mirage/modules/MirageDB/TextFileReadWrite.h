@@ -4,9 +4,9 @@
 
 #include "Export.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgDB
+  namespace MirageDB
   {
     class MSG_EXPORT TextFileReadWrite
     {

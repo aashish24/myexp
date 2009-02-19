@@ -4,12 +4,12 @@
 #include <map>
 #include <string>
 
-namespace glCore
+namespace MirageCore
 {
 	class Text;
 }
 
-namespace glCore
+namespace MirageCore
 {	
 	class GLTextFactory
 	{

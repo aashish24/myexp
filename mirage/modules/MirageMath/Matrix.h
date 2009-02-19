@@ -2,9 +2,9 @@
 #ifndef __MSG_MATH_MATRIX_H__
 #define __MSG_MATH_MATRIX_H__
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgMath
+  namespace MirageMath
   {
     template< class DATA_TYPE, unsigned int ROWS, unsigned int COLS >
     class Matrix 

@@ -2,24 +2,24 @@
 #ifndef __MSG_UTIL_GEOMETRY_FUNCS_H__
 #define __MSG_UTIL_GEOMETRY_FUNCS_H__
 
-#include "MsgCore/Referenced.h"
+#include "MirageCore/Referenced.h"
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
     class Geometry;
   }
 
-  namespace MsgUtil
+  namespace MirageUtil
   {
-    class MSG_EXPORT GeometryFuncs : public Msg::MsgCore::Referenced
+    class MSG_EXPORT GeometryFuncs : public Mirage::MirageCore::Referenced
     {
       public:
 
-        static void generateNormals( Msg::MsgCore::Geometry* geom );
+        static void generateNormals( Mirage::MirageCore::Geometry* geom );
 
-        static void generateTBNs( Msg::MsgCore::Geometry* geom ); 
+        static void generateTBNs( Mirage::MirageCore::Geometry* geom ); 
     };
   }
 }

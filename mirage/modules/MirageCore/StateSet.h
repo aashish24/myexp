@@ -2,19 +2,19 @@
 #ifndef __STATE_SET_H__
 #define __STATE_SET_H__
 
-#include "MsgCore/Object.h"
-#include "MsgCore/StateAttribute.h"
+#include "MirageCore/Object.h"
+#include "MirageCore/StateAttribute.h"
 
 #include <list>
 #include <map>
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgCore
+	namespace MirageCore
 	{
     class Node; 
 
-    class MSG_EXPORT StateSet : public MsgCore::Object 
+    class MSG_EXPORT StateSet : public MirageCore::Object 
 		{
 			public:
 

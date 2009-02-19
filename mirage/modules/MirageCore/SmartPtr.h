@@ -5,9 +5,9 @@
 
 #include <iostream>
 
-namespace Msg
+namespace Mirage
 {
-  namespace MsgCore
+  namespace MirageCore
   {
 	  template< class T >
 	  class SmartPtr 

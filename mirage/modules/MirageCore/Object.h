@@ -6,14 +6,14 @@
 
 #include "Export.h"
 
-#include "MsgCore/SmartPtr.h"
-#include "MsgCore/Referenced.h"
+#include "MirageCore/SmartPtr.h"
+#include "MirageCore/Referenced.h"
 
-namespace Msg
+namespace Mirage
 {
-	namespace MsgCore
+	namespace MirageCore
 	{
-    class MSG_EXPORT Object : public MsgCore::Referenced
+    class MSG_EXPORT Object : public MirageCore::Referenced
 		{
 			public:
 
