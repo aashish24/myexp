@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Msg"
+	Name="Mirage"
 	ProjectGUID="{44940738-98ED-45C6-8943-389ACB8E18C4}"
 	RootNamespace="oge"
 	Keyword="ManagedCProj"
@@ -200,244 +200,270 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<Filter
-				Name="MsgCore"
+				Name="MirageCore"
 				>
 				<File
-					RelativePath=".\Modules\MsgCore\Array.h"
+					RelativePath=".\modules\MirageCore\Array.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Drawable.cpp"
+					RelativePath=".\modules\MirageCore\BoundingBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Drawable.h"
+					RelativePath=".\modules\MirageCore\Drawable.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Geode.cpp"
+					RelativePath=".\modules\MirageCore\Drawable.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Geode.h"
+					RelativePath=".\modules\MirageCore\Geode.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Geometry.cpp"
+					RelativePath=".\modules\MirageCore\Geode.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Geometry.h"
+					RelativePath=".\modules\MirageCore\Geometry.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\GLSLAttribute.cpp"
+					RelativePath=".\modules\MirageCore\Geometry.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\GLSLAttribute.h"
+					RelativePath=".\modules\MirageCore\GLSLAttribute.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\GLSLProgram.cpp"
+					RelativePath=".\modules\MirageCore\GLSLAttribute.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\GLSLProgram.h"
+					RelativePath=".\modules\MirageCore\GLSLProgram.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\GLSLShader.cpp"
+					RelativePath=".\modules\MirageCore\GLSLProgram.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\GLSLShader.h"
+					RelativePath=".\modules\MirageCore\GLSLShader.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Group.cpp"
+					RelativePath=".\modules\MirageCore\GLSLShader.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Group.h"
+					RelativePath=".\modules\MirageCore\Group.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\IShader.h"
+					RelativePath=".\modules\MirageCore\Group.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\IStateAttribute.h"
+					RelativePath=".\modules\MirageCore\Image.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\IUniform.h"
+					RelativePath=".\modules\MirageCore\IShader.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\IViewer.h"
+					RelativePath=".\modules\MirageCore\IStateAttribute.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Material.cpp"
+					RelativePath=".\modules\MirageCore\IUniform.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Material.h"
+					RelativePath=".\modules\MirageCore\IViewer.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\MirageOpenGL.h"
+					RelativePath=".\modules\MirageCore\MatDef.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Node.cpp"
+					RelativePath=".\modules\MirageCore\Material.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Node.h"
+					RelativePath=".\modules\MirageCore\Material.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\NodeVisitor.h"
+					RelativePath=".\modules\MirageCore\MirageOpenGL.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Object.h"
+					RelativePath=".\modules\MirageCore\Navigation.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\PrimitiveSet.h"
+					RelativePath=".\modules\MirageCore\Node.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Referenced.cpp"
+					RelativePath=".\modules\MirageCore\Node.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Referenced.h"
+					RelativePath=".\modules\MirageCore\NodeVisitor.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\SmartPtr.h"
+					RelativePath=".\modules\MirageCore\Object.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\StateAttribute.cpp"
+					RelativePath=".\modules\MirageCore\ParticleSystem.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\StateAttribute.h"
+					RelativePath=".\modules\MirageCore\PrimitiveSet.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\StateSet.cpp"
+					RelativePath=".\modules\MirageCore\Referenced.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\StateSet.h"
+					RelativePath=".\modules\MirageCore\Referenced.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Uniform.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgCore\Uniform.h"
+					RelativePath=".\modules\MirageCore\Render.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Viewer.cpp"
+					RelativePath=".\modules\MirageCore\Shader.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgCore\Viewer.h"
+					RelativePath=".\modules\MirageCore\Shader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\Shaders.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\SmartPtr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\StateAttribute.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\StateAttribute.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\StateSet.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\StateSet.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\Texture.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\Uniform.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\Uniform.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\User.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\Viewer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageCore\Viewer.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="MsgNet"
+				Name="MirageNet"
 				>
 			</Filter>
 			<Filter
-				Name="MsgUtil"
+				Name="MirageUtil"
 				>
 				<File
-					RelativePath=".\Modules\MsgUtil\DataTime.h"
+					RelativePath=".\modules\MirageUtil\DataTime.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgUtil\GeometryFuncs.cpp"
+					RelativePath=".\modules\MirageUtil\GeometryFuncs.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgUtil\GeometryFuncs.h"
+					RelativePath=".\modules\MirageUtil\GeometryFuncs.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgUtil\String.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="MsgDB"
-				>
-				<File
-					RelativePath=".\Modules\MsgDb\FileRead.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgDb\FileRead.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgDb\ObjReader.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgDb\ObjReader.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgDb\TextFileReadWrite.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Modules\MsgDb\TextFileReadWrite.h"
+					RelativePath=".\modules\MirageUtil\String.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="MsgMath"
+				Name="MirageDB"
 				>
 				<File
-					RelativePath=".\Modules\MsgMath\Matrix.h"
+					RelativePath=".\modules\MirageDB\FileRead.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgMath\MatrixVecOps.h"
+					RelativePath=".\modules\MirageDB\FileRead.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MsgMath\Vector.h"
+					RelativePath=".\modules\MirageDB\ObjReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageDB\ObjReader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageDB\TextFileReadWrite.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageDB\TextFileReadWrite.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="MirageMath"
+				>
+				<File
+					RelativePath=".\modules\MirageMath\Matrix.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageMath\MatrixVecOps.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageMath\Vector.h"
 					>
 				</File>
 			</Filter>

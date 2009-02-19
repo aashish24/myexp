@@ -8,18 +8,18 @@
 #include "GL/gl.h"
 
 
-#include "MsgCore/Group.h"
-#include "MsgCore/Node.h"
-#include "MsgCore/Viewer.h"
+#include "MirageCore/Group.h"
+#include "MirageCore/Node.h"
+#include "MirageCore/Viewer.h"
 
-#include "MsgDB/FileRead.h"
-#include "MsgCore/SmartPtr.h"
+#include "MirageDB/FileRead.h"
+#include "MirageCore/SmartPtr.h"
 
 #include <string>
 #include <sstream>
 
-using namespace Msg;
-using namespace Msg::MsgCore;
+using namespace Mirage;
+using namespace Mirage::MirageCore;
 
 static SmartPtr< Group >       _root; 
 static SmartPtr< NodeVisitor > _nv;
@@ -49,7 +49,7 @@ void init( const int& argc, char** argv )
   
   if( argv[1] != 0x00 )
   {
-    SmartPtr< Node > node = MsgDB::FileRead::readFile( argv[1] );
+    SmartPtr< Node > node = MirageDB::FileRead::readFile( argv[1] );
     if( node.valid() )
     {
       _root->addChild( node.get() );
