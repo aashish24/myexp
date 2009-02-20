@@ -142,7 +142,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="opengl32.lib oge.lib"
-				OutputFile="..\bin\TestDraw.exe"
+				OutputFile="$(MSG_ROOT_DIR)\bin\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(GLUT_LIB_DIR);..\bin;"
 				GenerateDebugInformation="true"

@@ -1,13 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Msg", "Mirage\MSG.vcproj", "{44940738-98ED-45C6-8943-389ACB8E18C4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StencilShadowVolume", "Mirage\tests\StencilShadowVolume\StencilShadowVolume.vcproj", "{0C42F1D5-77F4-4A2B-8EAB-163A4376C933}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{44940738-98ED-45C6-8943-389ACB8E18C4} = {44940738-98ED-45C6-8943-389ACB8E18C4}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mirage", "Mirage\Mirage.vcproj", "{44940738-98ED-45C6-8943-389ACB8E18C4}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StencilShadowVolume", "Mirage\Tests\StencilShadowVolume\StencilShadowVolume.vcproj", "{0C42F1D5-77F4-4A2B-8EAB-163A4376C933}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test1", "Mirage\Tests\Test1\Test1.vcproj", "{C968B667-B568-4079-A1AB-76EFE35DE802}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
@@ -22,14 +31,18 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{44940738-98ED-45C6-8943-389ACB8E18C4}.Debug|Win32.ActiveCfg = Debug|Win32
-		{44940738-98ED-45C6-8943-389ACB8E18C4}.Debug|Win32.Build.0 = Debug|Win32
-		{44940738-98ED-45C6-8943-389ACB8E18C4}.Release|Win32.ActiveCfg = Release|Win32
-		{44940738-98ED-45C6-8943-389ACB8E18C4}.Release|Win32.Build.0 = Release|Win32
 		{0C42F1D5-77F4-4A2B-8EAB-163A4376C933}.Debug|Win32.ActiveCfg = Debug|Win32
 		{0C42F1D5-77F4-4A2B-8EAB-163A4376C933}.Debug|Win32.Build.0 = Debug|Win32
 		{0C42F1D5-77F4-4A2B-8EAB-163A4376C933}.Release|Win32.ActiveCfg = Release|Win32
 		{0C42F1D5-77F4-4A2B-8EAB-163A4376C933}.Release|Win32.Build.0 = Release|Win32
+		{44940738-98ED-45C6-8943-389ACB8E18C4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{44940738-98ED-45C6-8943-389ACB8E18C4}.Debug|Win32.Build.0 = Debug|Win32
+		{44940738-98ED-45C6-8943-389ACB8E18C4}.Release|Win32.ActiveCfg = Release|Win32
+		{44940738-98ED-45C6-8943-389ACB8E18C4}.Release|Win32.Build.0 = Release|Win32
+		{C968B667-B568-4079-A1AB-76EFE35DE802}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C968B667-B568-4079-A1AB-76EFE35DE802}.Debug|Win32.Build.0 = Debug|Win32
+		{C968B667-B568-4079-A1AB-76EFE35DE802}.Release|Win32.ActiveCfg = Release|Win32
+		{C968B667-B568-4079-A1AB-76EFE35DE802}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
