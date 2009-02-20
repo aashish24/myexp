@@ -28,7 +28,7 @@ namespace Mirage
 					BIND_PER_VERTEX
 				};
 
-				Geometry( const OpenGLDrawMethod& method = VERTEX_ARRAYS );
+				Geometry( );
 
 				Geometry( const Geometry& geometry );
 

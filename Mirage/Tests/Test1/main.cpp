@@ -1,27 +1,25 @@
 
 #include <iostream>
 
+#if defined( _WIN32  ) || defined( _WIN64 )
 #include <windows.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <glut.h>
+#endif 
 
+#include "MirageCore/SmartPtr.h"
+#include "MirageCore/Group.h"
+#include "MirageCore/NodeVisitor.h"
 
-#include <oge/SmartPtr.h>
+#include "MirageDB/FileRead.h"
 
-#include <oge/core/Node.h>
-#include <oge/core/Group.h>
-#include <oge/core/Geode.h>
-#include <oge/core/Geometry.h>
-#include <oge/core/PrimitiveSet.h>
-#include <oge/core/NodeVisitor.h>
+#include "GL/gl.h"
+#include "GL/glu.h"
+#include "GL/glut.h"
 
-#include <oge/db/OgeDB.h>
+using namespace Mirage;
 
-using namespace oge;
-
-SmartPtr< core::Group > root = new core::Group();
-SmartPtr< core::NodeVisitor > nv = new core::NodeVisitor();
+MirageCore::SmartPtr< MirageCore::Group >       root  = new MirageCore::Group();
+MirageCore::SmartPtr< MirageCore::NodeVisitor > nv    = 
+  new MirageCore::NodeVisitor(MirageCore::NodeVisitor::DRAW);
 
 void init()
 {
@@ -52,19 +50,15 @@ void init()
 	glTranslatef( -1031583, -1950734, 0.0 );
 	glLoadIdentity();		
 
-	SmartPtr< core::Node > node = db::OgeDB::readFile("..//data/maze.obj", true );
+  std::string path = getenv("MSG_ROOT_DIR");
+  MirageCore::SmartPtr< MirageCore::Node > node = 
+    MirageDB::FileRead::readFile( path + std::string( "/data/cube.obj" ) );
 	if( !node.valid() )
 	{
 		std::cerr << " File not found: " << std::endl;
 		std::exit(0);
 	}
 
-	SmartPtr< Material > mat = new Material();
-	mat->setAmbient( Vec4f( 1.0, 0.0, 0.0, 1.0 ) );
-	mat->setDiffuse( Vec4f( 1.0, 0.0, 0.0, 1.0 ) );
-	mat->setSpecular( Vec4f( 0.1, 0.1, 0.1, 1.0 ) );
-
-	node->getStateSet()->setMaterial( mat.get() );
 	root->addChild( node.get() );
 }
 

@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Test1"
+	Name="Loader"
 	ProjectGUID="{C968B667-B568-4079-A1AB-76EFE35DE802}"
 	RootNamespace="Test_Draw"
 	Keyword="Win32Proj"
@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../include;../smtl/include;$(GLUT_INC_DIR)"
+				AdditionalIncludeDirectories="$(GLUT_INC_DIR);..\..\Modules;$(GLEW_INC_DIR);"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -63,7 +63,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="opengl32.lib"
-				OutputFile="../bin/Test1.exe"
+				OutputFile="$(MSG_ROOT_DIR)\bin\$(ProjectName)_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(GLUT_LIB_DIR)"
 				GenerateDebugInformation="true"

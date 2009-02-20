@@ -16,8 +16,7 @@ namespace Mirage
 {
   namespace MirageDB
   {
-    Node* ObjReader::readFile( std::istream& fin, const char *fileName, 
-                               const MirageCore::OpenGLDrawMethod& method, const bool& ignoreNormals )
+    Node* ObjReader::readFile( std::istream& fin, const std::string& fileName )
     {
       // Lets dereference all the indices except the vertex indices so that we can use
       // the fast path. 
@@ -199,7 +198,7 @@ namespace Mirage
 
         model->_useFastPath = _useFastPath;
 
-        return this->convertDataIntoNode( model.get(), method );
+        return this->convertDataIntoNode( model.get() );
 	      //geom->vertexArray( vertices.get() );
   	    //
        // geom->vertexIndices( vIndices.get() );
@@ -245,17 +244,10 @@ namespace Mirage
         std::cerr <<  "Unknown error: "; 
         throw;
       }
-    }
+    }    
 
 
-    Node* ObjReader::readFile( std::istream& fin, const std::string &fileName, 
-                               const MirageCore::OpenGLDrawMethod& method, const bool& ignoreNormals )
-    {
-	    return readFile( fin, fileName.c_str(), method );
-    }
-
-
-    Node* ObjReader::convertDataIntoNode( ObjReader::Model* model, const MirageCore::OpenGLDrawMethod& method )
+    Node* ObjReader::convertDataIntoNode( ObjReader::Model* model )
     {
       // If NULL. 
       if( !model )
@@ -269,7 +261,7 @@ namespace Mirage
         SmartPtr< Geode > geode = new Geode();
 
         // Node that actually holds the data. 
-        SmartPtr< Geometry > geom = new Geometry( method );
+        SmartPtr< Geometry > geom = new Geometry();
 
         if( false )
         {
@@ -506,11 +498,7 @@ namespace Mirage
           {
             geom->textureCoordIndices( model->_texCoordIndices.get() );
           }
-        }
-        else if( method == MirageCore::FORCED_VERTEX_ARRAYS )
-        {
-          // Rewrite the whole file to make this happen.s
-        }
+        }        
         else 
         { 
           // Still we would like to duplicate vertices for which we have more than one texture 

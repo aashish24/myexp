@@ -363,10 +363,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\StateAttribute.h"
-					>
-				</File>
-				<File
 					RelativePath=".\modules\MirageCore\StateSet.cpp"
 					>
 				</File>
@@ -406,22 +402,6 @@
 			<Filter
 				Name="MirageUtil"
 				>
-				<File
-					RelativePath=".\modules\MirageUtil\DataTime.h"
-					>
-				</File>
-				<File
-					RelativePath=".\modules\MirageUtil\GeometryFuncs.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\modules\MirageUtil\GeometryFuncs.h"
-					>
-				</File>
-				<File
-					RelativePath=".\modules\MirageUtil\String.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="MirageDB"

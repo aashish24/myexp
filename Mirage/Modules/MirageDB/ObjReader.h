@@ -110,20 +110,10 @@ namespace Mirage
         //
         // Parse obj file.
         //
-        ///////////////////////////////////////////////////////////////////////
-			
-        Node*	readFile( std::istream& fin, const char* fileName, 
-                        const MirageCore::OpenGLDrawMethod& method = MirageCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
+        ///////////////////////////////////////////////////////////////////////		        
 
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        // Parse obj file.
-        //
-        ///////////////////////////////////////////////////////////////////////
-
-				Node*	readFile( std::istream& fin, const std::string& fileName, 
-                        const MirageCore::OpenGLDrawMethod& method = MirageCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
+				Node*	readFile( std::istream& fin, const std::string& fileName ); 
+                        
        
 
 			protected:
@@ -145,7 +135,7 @@ namespace Mirage
         //
         ///////////////////////////////////////////////////////////////////////
 
-        Node* convertDataIntoNode( Model* model, const MirageCore::OpenGLDrawMethod& method ); 
+        Node* convertDataIntoNode( Model* model );
 
 
       protected:

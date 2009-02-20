@@ -10,11 +10,9 @@
 
 using namespace Mirage::MirageDB;
 
-Node* FileRead::readFile( const char* fileName, 
-                         const Mirage::MirageCore::OpenGLDrawMethod& method, 
-                          const bool& ignoreNormals )
+Node* FileRead::readFile( const std::string& fileName )
 {
-	std::ifstream fin( fileName, std::ios::in );	
+  std::ifstream fin( fileName.c_str(), std::ios::in );	
 
 
 	if( !fin.good() )
@@ -28,20 +26,13 @@ Node* FileRead::readFile( const char* fileName,
 	if( comp == 0 )
 	{
 		SmartPtr< ObjReader > objReader = new ObjReader();
-		return objReader->readFile( fin, file, method ); 
+		return objReader->readFile( fin, file ); 
 	}
 	else
 	{
     std::cerr <<"ERROR 1559475712: File extension not handled for file. " << file << std::endl;
 		return 0x00;
 	}
-}
-
-Node* FileRead::readFile( const std::string &fileName, 
-                          const Mirage::MirageCore::OpenGLDrawMethod& method, 
-                          const bool& ignoreNormals )
-{
-	return readFile( fileName.c_str(), method, ignoreNormals );
 }
 
 /*

@@ -10,9 +10,9 @@
 
 using namespace Mirage::MirageCore;
 
-Geometry::Geometry( const OpenGLDrawMethod& method ) :
+Geometry::Geometry( ) :
   _fastPath       ( true ),
-  _glDrawMethod   ( method ), 
+  _glDrawMethod   ( VERTEX_ARRAYS ), 
   _vertices       ( 0x00 ),
   _normals        ( 0x00 ), 
   _textureCoords  ( 0x00 ),   

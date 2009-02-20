@@ -2,11 +2,13 @@
 #ifndef __MSG_CORE_CONFIG__
 #define __MSG_CORE_CONFIG__
 
-#ifdef WIN32
+#if defined( _WIN32 ) || ( _WIN64 )
   #include <windows.h>
 #endif 
 
+// glew.h needs to be included before gl.h gets included.
 #include "GL/glew.h" 
+
 #include "GL/gl.h"
 
 namespace Mirage

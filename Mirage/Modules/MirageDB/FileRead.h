@@ -30,9 +30,7 @@ namespace Mirage
 				{
 				}
 
-				static Node*	readFile( const char* fileName, const MirageCore::OpenGLDrawMethod& method = MirageCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
-
-				static Node*	readFile( const std::string& fileName, const MirageCore::OpenGLDrawMethod& method = MirageCore::VERTEX_ARRAYS, const bool& ignoreNormals=false );
+				static Node*	readFile( const std::string& fileName );
 
 				/*
 					static Image*	readImageFile( const char* fileName );
