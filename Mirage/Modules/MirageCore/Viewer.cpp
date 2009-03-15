@@ -1,6 +1,9 @@
 
 #include "MirageCore/Viewer.h"
 
+#include "GL/glew.h"
+#include "GL/gl.h"
+
 namespace Mirage
 {
   namespace MirageCore
@@ -51,6 +54,7 @@ namespace Mirage
 
     void  Viewer::draw()
     {
+      glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );
        _root->accept( *_drawNodeVisitor.get() );
     }
   }

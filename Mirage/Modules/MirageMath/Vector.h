@@ -310,7 +310,7 @@ namespace Mirage
 		    {
 			    DATA_TYPE resultVal( 0 );
 			    
-          for( size_t i=0; i < SIZE; ++i )
+          for( unsigned int i=0; i < SIZE; ++i )
 		      { 
             resultVal = _data[i] * vec2[i] + resultVal;
 		      }
@@ -331,7 +331,7 @@ namespace Mirage
         }
 
 
-	    private:
+	    public:
 
 		    DATA_TYPE _data[SIZE];
     };

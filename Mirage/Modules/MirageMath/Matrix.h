@@ -2,6 +2,8 @@
 #ifndef __MSG_MATH_MATRIX_H__
 #define __MSG_MATH_MATRIX_H__
 
+#include <cassert>
+
 namespace Mirage
 {
   namespace MirageMath
@@ -15,15 +17,15 @@ namespace Mirage
 
         Matrix()
         {
-          for( size_t i=0; i < ROWS; ++i )
+          for( unsigned int i=0; i < ROWS; ++i )
           {
-            for( size_t j=0; j < COLS; ++j )
+            for( unsigned j=0; j < COLS; ++j )
             {
               this->operator()( i, j ) = ( DATA_TYPE ) 0.0; 
             } // for( size_t j=0; j < cols; ++j )
           } // for( size_t i=0; i < rows; ++i )
 
-          for( size_t k=0; k < ROWS; ++k )
+          for( unsigned int k=0; k < ROWS; ++k )
           {
             this->operator()( k, k ) = ( DATA_TYPE ) 1.0;
           }
@@ -94,10 +96,10 @@ namespace Mirage
           _data[10] = v22;
           _data[11] = v32;
 
-          _data[12] = v02;
-          _data[13] = v12;
-          _data[14] = v22;
-          _data[15] = v32;
+          _data[12] = v03;
+          _data[13] = v13;
+          _data[14] = v23;
+          _data[15] = v33;
         }
 
 
@@ -121,12 +123,12 @@ namespace Mirage
         {
           if( &rhs == this )
           {
-            return *this;s
+            return *this;
           }
 
           for( size_t i=0; i < ( ROWS * COLS ); ++i )
           {
-            _data[i] = rhs[i];
+            _data[i] = rhs._data[i];
           }
 
           return *this;
@@ -151,7 +153,7 @@ namespace Mirage
         }
 
 
-      private: 
+      public: 
 
         DATA_TYPE _data[ROWS * COLS];
     };

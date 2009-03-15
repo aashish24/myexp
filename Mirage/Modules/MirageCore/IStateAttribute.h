@@ -33,9 +33,9 @@ namespace Mirage
 
         virtual void dirty( const bool& flag )      = 0;
 
-        virtual void mask( const int& maskVal ) = 0;
+        virtual void mask( const int& maskVal )     = 0;
 
-        virtual const int& mask() const        = 0;
+        virtual const int& mask() const             = 0;
 
 				virtual void activate( Node* node )         = 0;
 
