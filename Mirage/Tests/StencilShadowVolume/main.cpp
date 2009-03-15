@@ -320,7 +320,7 @@ void getGeodes( std::vector< MirageCore::SmartPtr< MirageCore::Geode > >& geodes
   if( !group )
     return; 
 
-  for( size_t index = 0; index < group->children().size(); ++index )
+  for( unsigned int index = 0; index < group->children().size(); ++index )
   {
     // If we get a valid node. 
     if( MirageCore::Node* node = group->child( index ) )
@@ -617,7 +617,7 @@ void drawShadowVolume( bool debugMode = false )
 
   for( size_t i=0; i < MAX_LISTS;++i )
   {
-    _shadowVolLists[i] = i;
+    _shadowVolLists[i] = static_cast<GLubyte>(i);
   }
 
   if( !debugMode ) 

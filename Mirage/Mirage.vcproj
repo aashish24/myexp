@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="Mirage"
 	ProjectGUID="{44940738-98ED-45C6-8943-389ACB8E18C4}"
 	RootNamespace="oge"
 	Keyword="ManagedCProj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -65,9 +66,11 @@
 				AdditionalDependencies="$(NoInherit) opengl32.lib glew32d.lib"
 				OutputFile="$(MSG_ROOT_DIR)\bin\$(ProjectName)_d.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
+				AdditionalLibraryDirectories="$(GLEW_LIB_DIR)"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="$(TargetDir)$(TargetName).lib"
 				TargetMachine="1"
 			/>
@@ -91,9 +94,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -104,7 +104,7 @@
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="1"
-			ManagedExtensions="4"
+			ManagedExtensions="0"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -147,9 +147,11 @@
 				AdditionalDependencies="$(NoInherit) opengl32.lib glew32.lib "
 				OutputFile="$(MSG_ROOT_DIR)\bin\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
+				AdditionalLibraryDirectories="$(GLEW_LIB_DIR)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="$(TargetDir)$(TargetName).lib"
 				TargetMachine="1"
 			/>
@@ -172,9 +174,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -183,14 +182,17 @@
 		<AssemblyReference
 			RelativePath="System.dll"
 			AssemblyName="System, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+			MinFrameworkVersion="131072"
 		/>
 		<AssemblyReference
 			RelativePath="System.Data.dll"
 			AssemblyName="System.Data, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86"
+			MinFrameworkVersion="131072"
 		/>
 		<AssemblyReference
 			RelativePath="System.XML.dll"
 			AssemblyName="System.Xml, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+			MinFrameworkVersion="131072"
 		/>
 	</References>
 	<Files>
@@ -271,11 +273,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\modules\MirageCore\IRender.h"
+					>
+				</File>
+				<File
 					RelativePath=".\modules\MirageCore\IShader.h"
 					>
 				</File>
 				<File
 					RelativePath=".\modules\MirageCore\IStateAttribute.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MirageCore\ITransform.h"
 					>
 				</File>
 				<File
@@ -287,15 +297,19 @@
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\MatDef.h"
-					>
-				</File>
-				<File
 					RelativePath=".\modules\MirageCore\Material.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\modules\MirageCore\Material.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MirageCore\MatrixTransform.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MirageCore\MatrixTransform.h"
 					>
 				</File>
 				<File
@@ -336,10 +350,6 @@
 				</File>
 				<File
 					RelativePath=".\modules\MirageCore\Referenced.h"
-					>
-				</File>
-				<File
-					RelativePath=".\modules\MirageCore\Render.h"
 					>
 				</File>
 				<File
