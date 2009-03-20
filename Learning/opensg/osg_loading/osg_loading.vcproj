@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(OPENSG_INC_DIR);$(BOOST_INC_DIR);"
+				AdditionalIncludeDirectories="F:\aashish\src\opensg\supportlibs\include;&quot;$(OPENSG_INC_DIR)&quot;;&quot;$(BOOST_INC_DIR)&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;WINVER=0x0400;_WIN32_WINDOWS=0x0410;_WIN32_WINNT=0x0400;_OSG_HAVE_CONFIGURED_H_;_DEBUG;OSG_DEBUG;OSG_WITH_GLUT;OSG_WITH_GIF;OSG_WITH_TIF;OSG_WITH_JPG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -64,7 +64,7 @@
 				AdditionalOptions="OSGBaseD.lib OSGSystemD.lib OSGWindowGLUTD.lib glut32.lib glu32.lib opengl32.lib tif32.lib libjpeg.lib "
 				AdditionalDependencies="OSGBaseD.lib OSGWindowGLUTD.lib OSGSystemD.lib OSGWindowWIN32D.lib OSGUtilD.lib OSGDrawableD.lib OSGFileIOD.lib OSGGroupD.lib OSGStateD.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(OPENSG_LIB_DIR);E:\aashish\src\opensg\external\lib;$(BOOST_LIB_DIR);"
+				AdditionalLibraryDirectories="$(OPENSG_LIB_DIR);$(BOOST_LIB_DIR);F:\aashish\src\opensg\supportlibs\lib;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
