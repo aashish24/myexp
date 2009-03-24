@@ -12,7 +12,7 @@
 #include "MirageCore/StateAttribute.h"
 #include "MirageCore/MirageOpenGL.h"
 
-#include "MirageMath/Vector.h"
+#include "MirageMath/Vec.h"
 
 #ifdef _WIN32
 	#include <windows.h>

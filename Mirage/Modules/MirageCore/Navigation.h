@@ -2,7 +2,7 @@
 #ifndef __MSG_CORE_NAVIGATION_H__
 #define __MSG_CORE_NAVIGATION_H__
 
-#include <glMath/Vector"
+#include <glMath/Vec"
 
 using namespace glMath;
 

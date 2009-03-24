@@ -96,7 +96,7 @@ namespace Mirage
     };
 
 
-    template< typename DATA_TYPE >
+    template< typename DataTypeT >
     class MSG_EXPORT Uniform1 : public MirageCore::Uniform
     {
       public: 
@@ -108,20 +108,20 @@ namespace Mirage
         }
 
 
-        Uniform1( const std::string& name, const int& location, const DATA_TYPE& value = 0 ) :
+        Uniform1( const std::string& name, const int& location, const DataTypeT& value = 0 ) :
           Uniform( name, location ), 
           _value ( value )
         {
         }
        
 
-        void get( DATA_TYPE& value )
+        void get( DataTypeT& value )
         {
           value = _value;
         }
         
 
-        void set( const DATA_TYPE& value ) 
+        void set( const DataTypeT& value ) 
         {
           _value = value;
         }
@@ -129,7 +129,7 @@ namespace Mirage
 
         void callGL() const
         {
-          GLCall< DATA_TYPE > call( location(), _value );
+          GLCall< DataTypeT > call( location(), _value );
         }
 
 
@@ -142,11 +142,11 @@ namespace Mirage
 
       private:        
 
-        DATA_TYPE             _value;
+        DataTypeT             _value;
     };
 
     
-    template< typename DATA_TYPE >
+    template< typename DataTypeT >
     class MSG_EXPORT Uniform2 : public MirageCore::Uniform
     {
       public: 
@@ -159,7 +159,7 @@ namespace Mirage
         }
 
 
-        Uniform2( const std::string& name, const int& location, const DATA_TYPE& value1 = 0, const DATA_TYPE& value2 = 0 ) :
+        Uniform2( const std::string& name, const int& location, const DataTypeT& value1 = 0, const DataTypeT& value2 = 0 ) :
           Uniform( name, location ), 
           _value1 ( value1 )
           _value2 ( value2 )
@@ -167,14 +167,14 @@ namespace Mirage
         }
        
 
-        void get( DATA_TYPE& value1, DATA_TYPE& value2 )
+        void get( DataTypeT& value1, DataTypeT& value2 )
         {
           value1 = _value1;
           value2 = _value2;
         }
         
 
-        void set( const DATA_TYPE& value1, const DATA_TYPE& value2 ) 
+        void set( const DataTypeT& value1, const DataTypeT& value2 ) 
         {
           _value1 = value1;
           _value2 = value2;
@@ -183,7 +183,7 @@ namespace Mirage
 
         void callGL() const
         {
-          GLCall< DATA_TYPE > call( location(), _value1, _value2 );
+          GLCall< DataTypeT > call( location(), _value1, _value2 );
         }
 
 
@@ -196,8 +196,8 @@ namespace Mirage
 
       private:        
 
-        DATA_TYPE             _value1;
-        DATA_TYPE             _value2;
+        DataTypeT             _value1;
+        DataTypeT             _value2;
     };
 
     

@@ -6,7 +6,7 @@
 #include "MirageCore/Geometry.h"
 #include "MirageCore/Array.h"
 
-#include "MirageMath/Vector.h"
+#include "MirageMath/Vec.h"
 
 #include <fstream>
 

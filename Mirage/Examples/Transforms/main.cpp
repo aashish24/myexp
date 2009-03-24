@@ -12,9 +12,13 @@
 #include "MirageCore/Node.h"
 #include "MirageCore/Viewer.h"
 #include "MirageCore/MatrixTransform.h"
+#include "MirageCore/SmartPtr.h"
 
 #include "MirageDB/FileRead.h"
-#include "MirageCore/SmartPtr.h"
+
+#include "MirageMath/AxisAngle.h"
+#include "MirageMath/Vec.h"
+#include "MirageMath/Utils.h"
 
 #include <string>
 #include <sstream>
@@ -51,14 +55,9 @@ void init( const int& argc, char** argv )
   // Initialize viewer. 
   _viewer->init();  
 
-  // 
-  MirageMath::Matrix44f mat; 
-  
-  mat.set(1, 0, 0, 20, 
-          0, 1, 0, 0, 
-          0, 0, 1, 0, 
-          0, 0, 0, 1);
-
+  // Apply some transformations here. 
+  MirageMath::Matrix44f mat = MirageMath::Utils::makeRot< MirageMath::Matrix44f >
+    ( MirageMath::AxisAnglef( MirageMath::Vec3f( 0.0, 1.0, 0.0 ), 45.0 ) );
   _transform->setMatrix( mat );
 
   _root->addChild( _transform.get() );
@@ -71,7 +70,7 @@ void init( const int& argc, char** argv )
       // Add one to the transform and one directly to the root node. 
       _transform->addChild( node.get() );      
       
-      _root->addChild( node.get() );
+      //_root->addChild( node.get() );
     }
     else
     {

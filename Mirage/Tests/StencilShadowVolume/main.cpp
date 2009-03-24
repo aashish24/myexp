@@ -15,7 +15,7 @@
 
 #include "MirageDB/FileRead.h"
 
-#include "MirageMath/Vector.h"
+#include "MirageMath/Vec.h"
 #include "MirageMath/Matrix.h"
 #include "MirageMath/MatrixVecOps.h"
 

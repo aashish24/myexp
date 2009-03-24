@@ -5,7 +5,7 @@
 #include "Export.h"
 #include "MirageCore/Object.h"
 
-#include "MirageMath/Vector.h"
+#include "MirageMath/Vec.h"
 
 #include "GL/glew.h"
 #include "GL/gl.h"

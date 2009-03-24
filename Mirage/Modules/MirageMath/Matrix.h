@@ -8,7 +8,7 @@ namespace Mirage
 {
   namespace MirageMath
   {
-    template< class DATA_TYPE, unsigned int ROWS, unsigned int COLS >
+    template< class DataTypeT, unsigned int ROWS, unsigned int COLS >
     class Matrix 
     {
       public: 
@@ -21,18 +21,18 @@ namespace Mirage
           {
             for( unsigned j=0; j < COLS; ++j )
             {
-              this->operator()( i, j ) = ( DATA_TYPE ) 0.0; 
+              this->operator()( i, j ) = ( DataTypeT ) 0.0; 
             } // for( size_t j=0; j < cols; ++j )
           } // for( size_t i=0; i < rows; ++i )
 
           for( unsigned int k=0; k < ROWS; ++k )
           {
-            this->operator()( k, k ) = ( DATA_TYPE ) 1.0;
+            this->operator()( k, k ) = ( DataTypeT ) 1.0;
           }
         }
 
 
-        Matrix( const Matrix< DATA_TYPE, ROWS, COLS >& from ) 
+        Matrix( const Matrix< DataTypeT, ROWS, COLS >& from ) 
         {
           for( size_t i=0; i < ( ROWS * COLS ); ++i )
           {
@@ -41,8 +41,8 @@ namespace Mirage
         }
 
 
-        void set( DATA_TYPE v00, DATA_TYPE v01, 
-                  DATA_TYPE v10, DATA_TYPE v11 )
+        void set( DataTypeT v00, DataTypeT v01, 
+                  DataTypeT v10, DataTypeT v11 )
         {
           assert( ROWS == 2 && COLS == 4 );
 
@@ -54,9 +54,9 @@ namespace Mirage
         }
 
 
-        void set( DATA_TYPE v00, DATA_TYPE v01, DATA_TYPE v02, 
-                  DATA_TYPE v10, DATA_TYPE v11, DATA_TYPE v12, 
-                  DATA_TYPE v20, DATA_TYPE v21, DATA_TYPE v22 )
+        void set( DataTypeT v00, DataTypeT v01, DataTypeT v02, 
+                  DataTypeT v10, DataTypeT v11, DataTypeT v12, 
+                  DataTypeT v20, DataTypeT v21, DataTypeT v22 )
         {
           assert( ROWS == 3 && COLS == 3 );
 
@@ -74,10 +74,10 @@ namespace Mirage
         }
 
 
-        void set( DATA_TYPE v00, DATA_TYPE v01, DATA_TYPE v02, DATA_TYPE v03, 
-                  DATA_TYPE v10, DATA_TYPE v11, DATA_TYPE v12, DATA_TYPE v13,  
-                  DATA_TYPE v20, DATA_TYPE v21, DATA_TYPE v22, DATA_TYPE v23, 
-                  DATA_TYPE v30, DATA_TYPE v31, DATA_TYPE v32, DATA_TYPE v33 )
+        void set( DataTypeT v00, DataTypeT v01, DataTypeT v02, DataTypeT v03, 
+                  DataTypeT v10, DataTypeT v11, DataTypeT v12, DataTypeT v13,  
+                  DataTypeT v20, DataTypeT v21, DataTypeT v22, DataTypeT v23, 
+                  DataTypeT v30, DataTypeT v31, DataTypeT v32, DataTypeT v33 )
         {
           assert( ROWS == 4 && COLS == 4 );
 
@@ -104,7 +104,7 @@ namespace Mirage
 
 
         // Input data represent colom major matrix in this case. 
-        void set( DATA_TYPE* data )
+        void set( DataTypeT* data )
         {
           for( size_t i=0; i < ( ROWS * COLS ); ++i )
           {
@@ -113,13 +113,13 @@ namespace Mirage
         }
 
         
-        DATA_TYPE& operator()( unsigned int row, unsigned int col )
+        DataTypeT& operator () ( unsigned int row, unsigned int col )
         {
           return _data[ col * ROWS + row ];
         }
-        
+                
 
-        Matrix< DATA_TYPE, ROWS, COLS >& operator=( const Matrix< DATA_TYPE, ROWS, COLS >& rhs )
+        Matrix< DataTypeT, ROWS, COLS >& operator = ( const Matrix< DataTypeT, ROWS, COLS >& rhs )
         {
           if( &rhs == this )
           {
@@ -132,10 +132,27 @@ namespace Mirage
           }
 
           return *this;
+        }        
+      
+
+        Matrix< DataTypeT, ROWS, COLS >& operator *= ( const Matrix< DataTypeT, ROWS, COLS >& rhs )
+        {
+          for( size_t i=0; i < ( ROWS * COLS ); ++i )
+          {
+            _data[i] = _data[i] * rhs._data[i];
+          }  
+
+          return *this;
+        }
+
+        
+        Matrix< DataTypeT, ROWS, COLS >& operator * ( const Matrix< DataTypeT, ROWS, COLS >& rhs )
+        {
+          return ( *this *= rhs );
         }
 
 
-        DATA_TYPE* data()
+        DataTypeT* data()
         {
           return &_data;  
         }
@@ -153,9 +170,21 @@ namespace Mirage
         }
 
 
+        void preMult( const Matrix< DataTypeT, ROWS, COLS >& mat )
+        {
+          *this = const_cast< Matrix< DataTypeT, ROWS, COLS >& >( mat ) * (*this );
+        }
+
+
+        void postMult( const Matrix< DataTypeT, ROWS, COLS >& mat )
+        {
+          *this *= mat;
+        }
+
+
       public: 
 
-        DATA_TYPE _data[ROWS * COLS];
+        DataTypeT _data[ROWS * COLS];
     };
 
 

@@ -1,9 +1,11 @@
 
-#include "MirageCore/MatrixTransform.h"
-#include "MirageCore/NodeVisitor.h"
-
 #include "GL/glew.h"
 #include "GL/gl.h"
+
+#include "MirageCore/MatrixTransform.h"
+#include "MirageCore/NodeVisitor.h"
+#include "MirageMath/Utils.h"
+#include "MirageMath/Matrix.h"
 
 namespace Mirage
 {
@@ -18,34 +20,24 @@ namespace Mirage
     MatrixTransform::~MatrixTransform()
     {      
     }
-
-
-    const MirageMath::Matrix44f&  MatrixTransform::getMatrix() const
-    {
-      return _matrix;
-    }
-
-
+   
     void MatrixTransform::setMatrix( const MirageMath::Matrix44f& mat )
     {
       _matrix = mat;
     }
 
 
-    const MirageMath::Vec3f& MatrixTransform::getTranslate() const
+    void MatrixTransform::preMult( const Matrix44f& mat )
     {
-      return MirageMath::Vec3f();
+      _matrix.preMult( mat );
     }
 
 
-    void MatrixTransform::setTranslate( const MirageMath::Vec3f trans )
+    void MatrixTransform::postMult( const Matrix44f& mat )
     {
+      _matrix.postMult( mat );
     }
 
-
-    // \todo Add rotate functions. 
-
-    // \todo Add scale functions.        
 
     void MatrixTransform::traverse( NodeVisitor &nv )
     {      

@@ -6,7 +6,10 @@
 #include "MirageCore/Group.h"
 
 #include "MirageMath/Matrix.h"
-#include "MirageMath/Vector.h"
+#include "MirageMath/Vec.h"
+#include "MirageMath/AxisAngle.h"
+
+using namespace Mirage::MirageMath; 
 
 namespace Mirage
 {
@@ -20,22 +23,17 @@ namespace Mirage
       public: 
                                       MatrixTransform();
 
-        const MirageMath::Matrix44f&  getMatrix() const;
-        void                          setMatrix( const MirageMath::Matrix44f& mat );
+        inline const Matrix44f&       getMatrix() const { return _matrix; }
+        void                          setMatrix( const Matrix44f& mat );        
 
-
-        const MirageMath::Vec3f&      getTranslate() const;
-        void                          setTranslate( const MirageMath::Vec3f trans );
-
-        // \todo Add rotate functions. 
-
-        // \todo Add scale functions.        
+        void                          preMult( const Matrix44f& mat ); 
+        void                          postMult( const Matrix44f& mat );
 
         virtual void                  traverse( NodeVisitor &nv );
 
       public: 
      
-        MirageMath::Matrix44f         _matrix;
+        Matrix44f                     _matrix;
 
 
       protected: 

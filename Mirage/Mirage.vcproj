@@ -445,6 +445,10 @@
 				Name="MirageMath"
 				>
 				<File
+					RelativePath=".\Modules\MirageMath\AxisAngle.h"
+					>
+				</File>
+				<File
 					RelativePath=".\modules\MirageMath\Matrix.h"
 					>
 				</File>
@@ -453,7 +457,15 @@
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageMath\Vector.h"
+					RelativePath=".\Modules\MirageMath\Quat.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\MirageMath\Utils.h"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\MirageMath\Vec.h"
 					>
 				</File>
 			</Filter>
