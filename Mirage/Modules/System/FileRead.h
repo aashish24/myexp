@@ -31,12 +31,8 @@ namespace Mirage
 				}
 
 				static Node*	readFile( const std::string& fileName );
-
-				/*
-					static Image*	readImageFile( const char* fileName );
-
-					static Image*	readImageFile( const std::string& fileName );
-				*/
+				
+        static Image*	readImageFile( const std::string& fileName );
 
 			protected:
 

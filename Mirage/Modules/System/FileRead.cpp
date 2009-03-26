@@ -35,14 +35,27 @@ Node* FileRead::readFile( const std::string& fileName )
 	}
 }
 
-/*
-	Image* FileRead::readImageFile( const char *fileName )
+
+Image* FileRead::readImageFile( const std::string &fileName )
+{
+  std::ifstream fin( fileName.c_str(), std::ios::in );	
+
+	if( !fin.good() )
 	{
-		re
+		return 0x00;
 	}
 
-	Image* FileRead::readImageFile( const std::string &fileName )
-	{
-	}
-*/
+	std::string file( fileName );
 
+	int comp = file.compare( ( file.size() - 4 ), 4, ".tga" );
+	if( comp == 0 )
+	{
+		SmartPtr< TgaReader > tgaReader = new TgaReader();
+		return tgaReader->readFile( fin, file ); 
+	}
+	else
+	{
+    std::cerr << "ERROR 1559475712: File extension not handled for file. " << file << std::endl;
+		return 0x00;
+	}
+}
