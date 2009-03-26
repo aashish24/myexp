@@ -8,25 +8,25 @@
 
 namespace Mirage
 {
-  namespace MirageMath
+  namespace Math
   {
-	  template< class DATA_TYPE, unsigned int SIZE >
-    class Vector
+	  template< class DataTypeT, unsigned int SIZE >
+    class Vec
     {
 	    public:
   			
         friend class MatrixVecOps;
 
-        Vector()
+        Vec()
 		    {
 			    for( unsigned int i=0; i < SIZE; ++i )
 			    {
-				    this->_data[i] = ( DATA_TYPE )0 ;
+				    this->_data[i] = ( DataTypeT )0 ;
 			    }
 		    }
 
 
-        Vector( const Vector< DATA_TYPE, SIZE >& from )
+        Vec( const Vec< DataTypeT, SIZE >& from )
         {
           for( unsigned i = 0; i < SIZE; ++i )
 			    {
@@ -35,29 +35,29 @@ namespace Mirage
         }
 
 
-		    Vector( DATA_TYPE val0, DATA_TYPE val1 )
+		    Vec( DataTypeT val0, DataTypeT val1 )
 		    {
-			    Vector();
+			    Vec();
 			    set( val0, val1 );
 		    }
 
 
-		    Vector( DATA_TYPE val0, DATA_TYPE val1, DATA_TYPE val2 )
+		    Vec( DataTypeT val0, DataTypeT val1, DataTypeT val2 )
 		    {
-			    Vector();
+			    Vec();
 			    set( val0, val1, val2 );
 		    }
 
 
-		    Vector( DATA_TYPE val0, DATA_TYPE val1, DATA_TYPE val2, DATA_TYPE val3 )
+		    Vec( DataTypeT val0, DataTypeT val1, DataTypeT val2, DataTypeT val3 )
 		    {
-			    Vector();
+			    Vec();
 			    set( val0, val1, val2, val3 );
 		    }
 
         
         /*template< class TYPE, unsigned int MY_SIZE >
-        Vector( Vector< TYPE, MY_SIZE >& vec )
+        Vec( Vec< TYPE, MY_SIZE >& vec )
         {
           for( size_t i=0; i < vec.size(); ++i )
           {
@@ -71,32 +71,32 @@ namespace Mirage
           {
             for( size_t i= vec.size(); i < SIZE; ++i )
             {
-              this->_data[i] = DATA_TYPE();
+              this->_data[i] = DataTypeT();
             }
           }
         }
 */
 
-		    ~Vector()
+		    ~Vec()
 		    {
         }
 
 
-		    DATA_TYPE& operator[]( unsigned int column )
+		    DataTypeT& operator[]( unsigned int column )
 		    {
 			    assert( column < SIZE );
 			    return _data[column]; 
 		    }
 
 
-		    const DATA_TYPE& operator[]( unsigned int column ) const
+		    const DataTypeT& operator[]( unsigned int column ) const
 		    {
 			    assert( column < SIZE );
 			    return _data[column]; 
 		    }
   			
 
-		    Vector< DATA_TYPE, SIZE >& operator=( const Vector< DATA_TYPE,SIZE >& rhs )
+		    Vec< DataTypeT, SIZE >& operator=( const Vec< DataTypeT,SIZE >& rhs )
 		    {
           if( &rhs == this )
           {
@@ -112,7 +112,7 @@ namespace Mirage
 		    }
 
 
-		    bool operator==( const Vector< DATA_TYPE,SIZE >& rhs )
+		    bool operator==( const Vec< DataTypeT,SIZE >& rhs )
 		    {
 			    bool retVal = true;
 
@@ -128,7 +128,7 @@ namespace Mirage
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE >& operator+=( const Vector< DATA_TYPE,SIZE >& rhs )
+		    Vec< DataTypeT, SIZE >& operator+=( const Vec< DataTypeT,SIZE >& rhs )
 		    {
 			    for( unsigned i = 0; i < SIZE; ++i )
 			    {
@@ -139,7 +139,7 @@ namespace Mirage
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE >& operator-=( const Vector< DATA_TYPE,SIZE >& rhs )
+		    Vec< DataTypeT, SIZE >& operator-=( const Vec< DataTypeT,SIZE >& rhs )
 		    {
 			    for( unsigned i = 0; i < SIZE; ++i )
 			    {
@@ -150,7 +150,7 @@ namespace Mirage
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE >& operator*=( const Vector< DATA_TYPE,SIZE >& rhs )
+		    Vec< DataTypeT, SIZE >& operator*=( const Vec< DataTypeT,SIZE >& rhs )
 		    {
 			    for( unsigned i = 0; i < SIZE; ++i )
 			    {
@@ -161,7 +161,7 @@ namespace Mirage
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE >& operator/=( const Vector< DATA_TYPE,SIZE >& rhs )
+		    Vec< DataTypeT, SIZE >& operator/=( const Vec< DataTypeT,SIZE >& rhs )
 		    {
 			    for( unsigned i = 0; i < SIZE; ++i )
 			    {
@@ -172,9 +172,9 @@ namespace Mirage
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE > operator*( DATA_TYPE val )
+		    Vec< DataTypeT, SIZE > operator*( DataTypeT val )
 		    {
-			    Vector< DATA_TYPE, SIZE > vec;
+			    Vec< DataTypeT, SIZE > vec;
 			    for( unsigned int i = 0; i < SIZE; ++i )
 			    {
 				    vec[i] = _data[i] * val;
@@ -184,9 +184,9 @@ namespace Mirage
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE > operator+( const Vector< DATA_TYPE,SIZE >& rhs )
+		    Vec< DataTypeT, SIZE > operator+( const Vec< DataTypeT,SIZE >& rhs )
 		    {
-			    Vector< DATA_TYPE, SIZE > vec;
+			    Vec< DataTypeT, SIZE > vec;
 			    for( unsigned int i = 0; i < SIZE; ++i )
 			    {
 				    vec[i] = _data[i] + rhs[i];
@@ -196,9 +196,9 @@ namespace Mirage
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE > operator-( const Vector< DATA_TYPE,SIZE >& rhs )
+		    Vec< DataTypeT, SIZE > operator-( const Vec< DataTypeT,SIZE >& rhs )
 		    {
-			    Vector< DATA_TYPE, SIZE > vec;
+			    Vec< DataTypeT, SIZE > vec;
 			    for( unsigned int i=0; i<SIZE; ++i )
 			    {
 				    vec[i] = _data[i] - rhs[i];
@@ -208,9 +208,9 @@ namespace Mirage
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE > operator/( const Vector< DATA_TYPE, SIZE >& rhs )
+		    Vec< DataTypeT, SIZE > operator/( const Vec< DataTypeT, SIZE >& rhs )
 		    {
-			    Vector< DATA_TYPE, SIZE > vec;
+			    Vec< DataTypeT, SIZE > vec;
 			    for( unsigned int i=0; i<SIZE; ++i )
 			    {
 				    vec[i] = _data[i] / rhs[i];
@@ -220,9 +220,9 @@ namespace Mirage
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE > operator-()
+		    Vec< DataTypeT, SIZE > operator-()
 		    {
-			    Vector< DATA_TYPE, SIZE > vec;
+			    Vec< DataTypeT, SIZE > vec;
 			    for( unsigned int i=0; i<SIZE; ++i )
 			    {
 				    vec[i] = -_data[i];
@@ -232,20 +232,20 @@ namespace Mirage
 		    }			
 
 
-		    Vector< DATA_TYPE, SIZE >* operator&( const Vector< DATA_TYPE, SIZE >& rhs )
+		    Vec< DataTypeT, SIZE >* operator&( const Vec< DataTypeT, SIZE >& rhs )
 		    {
 			    return &rhs[0];
 		    }
 
 
-		    void set( DATA_TYPE val0, DATA_TYPE val1 )
+		    void set( DataTypeT val0, DataTypeT val1 )
 		    {
 			    _data[0] = val0;
 			    _data[1] = val1;
 		    }
 
 
-		    void set( DATA_TYPE val0, DATA_TYPE val1, DATA_TYPE val2 )
+		    void set( DataTypeT val0, DataTypeT val1, DataTypeT val2 )
 		    {
 			    _data[0] = val0;
 			    _data[1] = val1;
@@ -253,7 +253,7 @@ namespace Mirage
 		    }
 
 
-		    void set( DATA_TYPE val0, DATA_TYPE val1, DATA_TYPE val2, DATA_TYPE val3 )
+		    void set( DataTypeT val0, DataTypeT val1, DataTypeT val2, DataTypeT val3 )
 		    {
 			    _data[0] = val0;
 			    _data[1] = val1;
@@ -262,9 +262,9 @@ namespace Mirage
 		    }
 
 
-		    DATA_TYPE length()
+		    DataTypeT length()
 		    {
-			    DATA_TYPE mVal( 0 );
+			    DataTypeT mVal( 0 );
 
 			    for( unsigned int i = 0; i < SIZE; ++i )
 			    {
@@ -275,11 +275,11 @@ namespace Mirage
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE >& normalize()
+		    Vec< DataTypeT, SIZE >& normalize()
 		    {
-          DATA_TYPE val = length();          
+          DataTypeT val = length();          
 
-          if( val != DATA_TYPE( 0 ) )
+          if( val != DataTypeT( 0 ) )
           {
             return *this;
           }
@@ -293,9 +293,9 @@ namespace Mirage
 		    }
 
 
-		    Vector< DATA_TYPE, SIZE > cross( Vector< DATA_TYPE, SIZE > vec2 )
+		    Vec< DataTypeT, SIZE > cross( Vec< DataTypeT, SIZE > vec2 )
 		    {
-			    Vector< DATA_TYPE, SIZE > resultVec;
+			    Vec< DataTypeT, SIZE > resultVec;
   				
 			    assert( SIZE == 3 );
 			    resultVec[0] = ( _data[1] * vec2[2] ) - ( _data[2] * vec2[1] );
@@ -306,9 +306,9 @@ namespace Mirage
 		    }
 
 
-		    DATA_TYPE dot( Vector< DATA_TYPE, SIZE > vec2 )
+		    DataTypeT dot( Vec< DataTypeT, SIZE > vec2 )
 		    {
-			    DATA_TYPE resultVal( 0 );
+			    DataTypeT resultVal( 0 );
 			    
           for( unsigned int i=0; i < SIZE; ++i )
 		      { 
@@ -319,7 +319,7 @@ namespace Mirage
 		    }
 
 
-		    const DATA_TYPE* front()
+		    const DataTypeT* front()
 		    {
 			    return &_data[0];
 		    }
@@ -333,24 +333,24 @@ namespace Mirage
 
 	    public:
 
-		    DATA_TYPE _data[SIZE];
+		    DataTypeT _data[SIZE];
     };
 
-    typedef Vector< float, 2 >        Vec2f;
-    typedef Vector< float, 3 >        Vec3f;
-    typedef Vector< float, 4 >        Vec4f;
+    typedef Vec< float, 2 >        Vec2f;
+    typedef Vec< float, 3 >        Vec3f;
+    typedef Vec< float, 4 >        Vec4f;
 
-    typedef Vector< double, 2 >       Vec2d;
-    typedef Vector< double, 3 >       Vec3d;
-    typedef Vector< double, 4 >       Vec4d;
+    typedef Vec< double, 2 >       Vec2d;
+    typedef Vec< double, 3 >       Vec3d;
+    typedef Vec< double, 4 >       Vec4d;
 
-    typedef Vector< unsigned int, 2 > Vec2ui;
-    typedef Vector< unsigned int, 3 > Vec3ui;
-    typedef Vector< unsigned int, 4 > Vec4ui;
+    typedef Vec< unsigned int, 2 > Vec2ui;
+    typedef Vec< unsigned int, 3 > Vec3ui;
+    typedef Vec< unsigned int, 4 > Vec4ui;
 
-    typedef Vector< int, 2 >          Vec2i;
-    typedef Vector< int, 3 >          Vec3i;
-    typedef Vector< int, 4 >          Vec4i;
+    typedef Vec< int, 2 >          Vec2i;
+    typedef Vec< int, 3 >          Vec3i;
+    typedef Vec< int, 4 >          Vec4i;
   }
 }
 
