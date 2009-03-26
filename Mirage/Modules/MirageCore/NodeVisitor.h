@@ -4,12 +4,12 @@
 
 #include "Export.h"
 
-#include "MirageCore/Node.h"
-#include "MirageCore/Group.h"
+#include "Core/Node.h"
+#include "Core/Group.h"
 
 namespace Mirage 
 {
-	namespace MirageCore
+	namespace Core
 	{
 		class Node;
 		class Group;
@@ -77,17 +77,17 @@ namespace Mirage
 	}
 }
 
-inline void Mirage::MirageCore::NodeVisitor::apply( Mirage::MirageCore::Node& node )
+inline void Mirage::Core::NodeVisitor::apply( Mirage::Core::Node& node )
 {
 	traverse( node );
 }
 
 
-inline void Mirage::MirageCore::NodeVisitor::apply( Mirage::MirageCore::Group& group )
+inline void Mirage::Core::NodeVisitor::apply( Mirage::Core::Group& group )
 {
-  Mirage::MirageCore::Group::Children children = group.children();
+  Mirage::Core::Group::Children children = group.children();
 
-  Mirage::MirageCore::Group::Children::const_iterator itr = children.begin();
+  Mirage::Core::Group::Children::const_iterator itr = children.begin();
 
   for( itr; itr != children.end(); ++itr )
   {
@@ -96,25 +96,25 @@ inline void Mirage::MirageCore::NodeVisitor::apply( Mirage::MirageCore::Group& g
 }
 
 
-inline void Mirage::MirageCore::NodeVisitor::apply( Mirage::MirageCore::Geode& geode )
+inline void Mirage::Core::NodeVisitor::apply( Mirage::Core::Geode& geode )
 {
 	apply( ( Node& )geode ); 
 }
 
 
-inline void Mirage::MirageCore::NodeVisitor::traverse( Node& node )
+inline void Mirage::Core::NodeVisitor::traverse( Node& node )
 {
 	node.traverse( *this );
 }
 
 
-inline void Mirage::MirageCore::NodeVisitor::push( Node* node )
+inline void Mirage::Core::NodeVisitor::push( Node* node )
 {
 	_nodePath.push_back( node );
 }
 
 
-inline void Mirage::MirageCore::NodeVisitor::pop()
+inline void Mirage::Core::NodeVisitor::pop()
 {
 	_nodePath.pop_back();
 }

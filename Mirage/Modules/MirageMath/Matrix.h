@@ -6,15 +6,23 @@
 
 namespace Mirage
 {
-  namespace MirageMath
+  namespace Math
   {
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // \c Matrix defines a n x m matrix and related functions. 
+    //
+    /////////////////////////////////////////////////////////////////////////
+
     template< class DataTypeT, unsigned int ROWS, unsigned int COLS >
     class Matrix 
     {
       public: 
 
+        // Operations related to Matrix, Vec are defined in the friend class. 
         friend class MatrixVecOps;
 
+        // Constructor. 
         Matrix()
         {
           for( unsigned int i=0; i < ROWS; ++i )
@@ -32,6 +40,7 @@ namespace Mirage
         }
 
 
+        // Copy constructor. 
         Matrix( const Matrix< DataTypeT, ROWS, COLS >& from ) 
         {
           for( size_t i=0; i < ( ROWS * COLS ); ++i )
@@ -41,6 +50,8 @@ namespace Mirage
         }
 
 
+        
+        //-- Set functions        
         void set( DataTypeT v00, DataTypeT v01, 
                   DataTypeT v10, DataTypeT v11 )
         {
@@ -111,8 +122,11 @@ namespace Mirage
             _data[i] = data[i];
           }
         }
+         
+        //--
 
-        
+
+        // -- Operator overload for convenience. 
         DataTypeT& operator () ( unsigned int row, unsigned int col )
         {
           return _data[ col * ROWS + row ];
@@ -151,31 +165,38 @@ namespace Mirage
           return ( *this *= rhs );
         }
 
+        // --
+    
 
+        // Get raw pointer to data stored. 
         DataTypeT* data()
         {
           return &_data;  
         }
 
 
+        // Get number of rows. 
         const int& rows() const
         {
           return ROWS;
         }
 
 
+        // Get number of cols. 
         const int& cols() const 
         {
           return COLS;
         }
 
 
+        // Multiply passed matrix to the left.
         void preMult( const Matrix< DataTypeT, ROWS, COLS >& mat )
         {
           *this = const_cast< Matrix< DataTypeT, ROWS, COLS >& >( mat ) * (*this );
         }
 
 
+        // Multiply passed matrix to the right. 
         void postMult( const Matrix< DataTypeT, ROWS, COLS >& mat )
         {
           *this *= mat;
@@ -188,6 +209,7 @@ namespace Mirage
     };
 
 
+    // Useful instances. 
     typedef Matrix< int, 2, 2 >     Matrix22i;
     typedef Matrix< int, 3, 3 >     Matrix33i;
     typedef Matrix< int, 4, 4 >     Matrix44i;

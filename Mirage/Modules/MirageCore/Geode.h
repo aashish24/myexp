@@ -4,23 +4,23 @@
 
 #include "Export.h"
 
-#include "MirageCore/BoundingBox.h"
-#include "MirageCore/Node.h"
-#include "MirageCore/Group.h"
-#include "MirageCore/Drawable.h"
+#include "Core/BoundingBox.h"
+#include "Core/Node.h"
+#include "Core/Group.h"
+#include "Core/Drawable.h"
 
 #include <assert.h>
 
 namespace Mirage
 {
-	namespace MirageCore 
+	namespace Core 
 	{
 		class Drawable; 
 
 		// Typedefs. 
 		typedef std::vector< SmartPtr< Drawable > > DrawableList;
 
-    class MSG_EXPORT Geode : public Mirage::MirageCore::Group 
+    class MSG_EXPORT Geode : public Mirage::Core::Group 
 		{
 			public:
 				Geode() :

@@ -1,6 +1,6 @@
 
-#include "MirageCore/Geometry.h"
-#include "MirageCore/PrimitiveSet.h"
+#include "Core/Geometry.h"
+#include "Core/PrimitiveSet.h"
 
 #include "GL/glew.h"
 #include "GL/gl.h"
@@ -8,7 +8,7 @@
 #include <map>
 #include <vector>
 
-using namespace Mirage::MirageCore;
+using namespace Mirage::Core;
 
 Geometry::Geometry( ) :
   _fastPath       ( true ),
@@ -194,7 +194,7 @@ const OpenGLDrawMethod&  Geometry::glDrawMethod() const
 }
 
 
-void Geometry::glDrawMethod( const Mirage::MirageCore::OpenGLDrawMethod& method )
+void Geometry::glDrawMethod( const Mirage::Core::OpenGLDrawMethod& method )
 {
   _glDrawMethod = method;
 }
@@ -221,12 +221,12 @@ void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 
 	for( size_t i=0; i < _vertexIndices->size(); ++i )
 	{
-		MirageMath::Vec3d vec1 = _vertices->at( _vertexIndices->at(i)[1] ) - _vertices->at( _vertexIndices->at(i)[0] );
-		MirageMath::Vec3d vec2 = _vertices->at( _vertexIndices->at(i)[2] ) - _vertices->at( _vertexIndices->at(i)[0] );
-		MirageMath::Vec3d normal = vec1.cross( vec2 );		
+		Math::Vec3d vec1 = _vertices->at( _vertexIndices->at(i)[1] ) - _vertices->at( _vertexIndices->at(i)[0] );
+		Math::Vec3d vec2 = _vertices->at( _vertexIndices->at(i)[2] ) - _vertices->at( _vertexIndices->at(i)[0] );
+		Math::Vec3d normal = vec1.cross( vec2 );		
 		normal.normalize();
 		normals->push_back( normal );
-		nIndices->push_back( MirageMath::Vec3i( i, 0, 0 ) );
+		nIndices->push_back( Math::Vec3i( i, 0, 0 ) );
 	}	
 
 	if( attrBinding == Geometry::BIND_PER_PRIMITIVE )
@@ -263,7 +263,7 @@ void Geometry::generateNormals( Geometry::AttributeBinding attrBinding )
 		MapVertexIDToPrimitiveID::iterator itr = mapVertexIDToPrimitiveID.begin();		
 		for( itr; itr != mapVertexIDToPrimitiveID.end(); ++itr )
 		{
-			MirageMath::Vec3d vertextNormal;
+			Math::Vec3d vertextNormal;
 			for( size_t i = 0; i < itr->second.size(); ++i )
 			{				
 				vertextNormal = vertextNormal + normals->at( ( itr->second.at( i ) ) );

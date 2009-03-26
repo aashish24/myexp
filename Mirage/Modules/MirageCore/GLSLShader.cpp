@@ -1,11 +1,11 @@
 
-#include "MirageCore/GLSLShader.h"
+#include "Core/GLSLShader.h"
 
-#include "MirageDB/TextFileReadWrite.h"
+#include "System/TextFileReadWrite.h"
 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
     GLSLShader::GLSLShader( Type type ) : 
       Object    (),
@@ -49,7 +49,7 @@ namespace Mirage
     {
       try
       {
-        _ss = std::string( MirageDB::TextFileReadWrite::read( const_cast< char* >( fileName.c_str() ) ) );
+        _ss = std::string( System::TextFileReadWrite::read( const_cast< char* >( fileName.c_str() ) ) );
         if( _ss.empty() )
         {
           // Warning??

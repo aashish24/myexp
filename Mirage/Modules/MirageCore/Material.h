@@ -8,11 +8,11 @@
 #define __MATERIAL_H__
 
 #include "Export.h"
-#include "MirageCore/Object.h"
-#include "MirageCore/StateAttribute.h"
-#include "MirageCore/MirageOpenGL.h"
+#include "Core/Object.h"
+#include "Core/StateAttribute.h"
+#include "Core/MirageOpenGL.h"
 
-#include "MirageMath/Vec.h"
+#include "Math/Vec.h"
 
 #ifdef _WIN32
 	#include <windows.h>
@@ -23,7 +23,7 @@
 
 namespace Mirage 
 {
-	namespace MirageCore
+	namespace Core
 	{
     class MSG_EXPORT Material : public StateAttribute
 		{
@@ -38,13 +38,13 @@ namespace Mirage
 
 				Material() : 
           StateAttribute  ( ),
-					mFrontAmbient	  ( MirageMath::Vec4f() ), 
-					mFrontDiffuse	  ( MirageMath::Vec4f() ), 
-					mFrontSpecular	( MirageMath::Vec4f() ), 
+					mFrontAmbient	  ( Math::Vec4f() ), 
+					mFrontDiffuse	  ( Math::Vec4f() ), 
+					mFrontSpecular	( Math::Vec4f() ), 
 					mFrontShininess	( 0.0 ), 
-          mBackAmbient		( MirageMath::Vec4f() ),
-					mBackDiffuse		( MirageMath::Vec4f() ), 
-					mBackSpecular	  ( MirageMath::Vec4f() ),
+          mBackAmbient		( Math::Vec4f() ),
+					mBackDiffuse		( Math::Vec4f() ), 
+					mBackSpecular	  ( Math::Vec4f() ),
 					mBackShininess	( 0.0 ), 
           mFront          ( true ), 
           mBack           ( false )					
@@ -80,8 +80,8 @@ namespace Mirage
         //
         ///////////////////////////////////////////////////////////////////////
 
-        void getProperty( LightMode mode, MirageMath::Vec4f& val, Face face=FRONT ) const;
-				void setProperty( LightMode mode, const MirageMath::Vec4f& val, Face face=FRONT );								
+        void getProperty( LightMode mode, Math::Vec4f& val, Face face=FRONT ) const;
+				void setProperty( LightMode mode, const Math::Vec4f& val, Face face=FRONT );								
  
         void getProperty( LightMode mode, float& val, Face face=FRONT ) const;
 				void setProperty( LightMode mode, const float& val, Face face=FRONT );								
@@ -169,14 +169,14 @@ namespace Mirage
         //
         ///////////////////////////////////////////////////////////////////////
 
-        MirageMath::Vec4f	    mFrontAmbient;
-				MirageMath::Vec4f	    mFrontDiffuse;
-				MirageMath::Vec4f	    mFrontSpecular;
+        Math::Vec4f	    mFrontAmbient;
+				Math::Vec4f	    mFrontDiffuse;
+				Math::Vec4f	    mFrontSpecular;
 				float	              mFrontShininess;
 
-				MirageMath::Vec4f	    mBackAmbient;
-				MirageMath::Vec4f	    mBackDiffuse;
-				MirageMath::Vec4f	    mBackSpecular;
+				Math::Vec4f	    mBackAmbient;
+				Math::Vec4f	    mBackDiffuse;
+				Math::Vec4f	    mBackSpecular;
 				float	              mBackShininess;
 
         bool                mFront; 

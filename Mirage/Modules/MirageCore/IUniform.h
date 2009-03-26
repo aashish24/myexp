@@ -7,7 +7,7 @@
 // Interface for GLSL uniform data type. 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
     struct IUniform
     {

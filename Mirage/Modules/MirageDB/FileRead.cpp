@@ -1,14 +1,14 @@
 
-#include "MirageDB/FileRead.h"
-#include "MirageDB/ObjReader.h"
+#include "System/FileRead.h"
+#include "System/ObjReader.h"
 
-#include "MirageCore/Node.h"
-#include "MirageCore/Group.h"
-#include "MirageCore/Image.h"
+#include "Core/Node.h"
+#include "Core/Group.h"
+#include "Core/Image.h"
 
 #include <fstream>
 
-using namespace Mirage::MirageDB;
+using namespace Mirage::System;
 
 Node* FileRead::readFile( const std::string& fileName )
 {

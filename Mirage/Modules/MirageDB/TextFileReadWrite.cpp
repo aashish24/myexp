@@ -7,7 +7,7 @@
 
 namespace Mirage
 {
-  namespace MirageDB
+  namespace System
   {
     char* TextFileReadWrite::read( char *fn ) 
     {

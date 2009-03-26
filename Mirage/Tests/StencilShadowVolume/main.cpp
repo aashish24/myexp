@@ -7,19 +7,19 @@
 #include "GL/glut.h" 
 #include "GL/gl.h"
 
-#include "MirageCore/GLSLProgram.h"
-#include "MirageCore/GLSLShader.h"
-#include "MirageCore/Viewer.h"
-#include "MirageCore/Geode.h"
-#include "MirageCore/Geometry.h"
+#include "Core/GLSLProgram.h"
+#include "Core/GLSLShader.h"
+#include "Core/Viewer.h"
+#include "Core/Geode.h"
+#include "Core/Geometry.h"
 
-#include "MirageDB/FileRead.h"
+#include "System/FileRead.h"
 
-#include "MirageMath/Vec.h"
-#include "MirageMath/Matrix.h"
-#include "MirageMath/MatrixVecOps.h"
+#include "Math/Vec.h"
+#include "Math/Matrix.h"
+#include "Math/MatrixVecOps.h"
 
-#include "MirageCore/Material.h"
+#include "Core/Material.h"
 
 #include <list>
 #include <limits>
@@ -66,18 +66,18 @@ GLdouble                                  _right;
 GLdouble                                  _near;
 
 
-MirageCore::SmartPtr< MirageCore::Material >    _matBlue          ( new MirageCore::Material() );
-MirageCore::SmartPtr< MirageCore::Material >    _matRed           ( new MirageCore::Material() );
-MirageCore::SmartPtr< MirageCore::Material >    _matShadow        ( new MirageCore::Material() );
+Core::SmartPtr< Core::Material >    _matBlue          ( new Core::Material() );
+Core::SmartPtr< Core::Material >    _matRed           ( new Core::Material() );
+Core::SmartPtr< Core::Material >    _matShadow        ( new Core::Material() );
 
-MirageCore::SmartPtr< MirageCore::GLSLProgram > _extrusionProgram ( new MirageCore::GLSLProgram() );
-MirageCore::SmartPtr< MirageCore::GLSLShader >  _vertShader       ( new MirageCore::GLSLShader( MirageCore::GLSLShader::VERTEX_SHADER ) );
-MirageCore::SmartPtr< MirageCore::GLSLShader >  _fragShader       ( new MirageCore::GLSLShader( MirageCore::GLSLShader::FRAGMENT_SHADER ) );
+Core::SmartPtr< Core::GLSLProgram > _extrusionProgram ( new Core::GLSLProgram() );
+Core::SmartPtr< Core::GLSLShader >  _vertShader       ( new Core::GLSLShader( Core::GLSLShader::VERTEX_SHADER ) );
+Core::SmartPtr< Core::GLSLShader >  _fragShader       ( new Core::GLSLShader( Core::GLSLShader::FRAGMENT_SHADER ) );
 
-MirageCore::SmartPtr< MirageCore::Viewer >      _viewer           ( new MirageCore::Viewer() );
+Core::SmartPtr< Core::Viewer >      _viewer           ( new Core::Viewer() );
 
 // Create scene _root node. 
-MirageCore::SmartPtr< MirageCore::Group >       _root             ( new MirageCore::Group() );
+Core::SmartPtr< Core::Group >       _root             ( new Core::Group() );
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -137,7 +137,7 @@ class compare
 
 struct Triangle
 {
-  MirageMath::Vec3i _faceIndex;
+  Math::Vec3i _faceIndex;
 }; 
 
 
@@ -196,8 +196,8 @@ void init()
   std::string lookUpPath = std::string( msgRootDir );
 
   // Read geometry files. 
-  MirageCore::SmartPtr< MirageCore::Node > model1 =  
-    MirageDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cylinder.obj" ) );
+  Core::SmartPtr< Core::Node > model1 =  
+    System::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cylinder.obj" ) );
 
   if( model1.valid() )
   {
@@ -208,8 +208,8 @@ void init()
     std::cerr << " ERROR: Model not found error: " << std::endl;
   }
 
-  MirageCore::SmartPtr< MirageCore::Node > model2 =  
-    MirageDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cone.obj" ) );
+  Core::SmartPtr< Core::Node > model2 =  
+    System::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cone.obj" ) );
 
   if( model2.valid() )
   {
@@ -221,8 +221,8 @@ void init()
   }
 
 
-  MirageCore::SmartPtr< MirageCore::Node > floor =  
-    MirageDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Floor.obj" ) );
+  Core::SmartPtr< Core::Node > floor =  
+    System::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Floor.obj" ) );
 
   if( floor.valid() )
   {
@@ -238,9 +238,9 @@ void init()
   // Set materials. 
   if( _matBlue.valid() )
   {
-    _matBlue->setProperty( DIFFUSE, MirageMath::Vec4f( 0.0, 0.0, 0.5, 1.0 ) );
-    _matBlue->setProperty( AMBIENT, MirageMath::Vec4f( 0.0, 0.0, 0.0, 1.0 ) );
-    _matBlue->setProperty( SPECULAR, MirageMath::Vec4f( 0.0, 0.0, 0.5, 1.0 ) );
+    _matBlue->setProperty( DIFFUSE, Math::Vec4f( 0.0, 0.0, 0.5, 1.0 ) );
+    _matBlue->setProperty( AMBIENT, Math::Vec4f( 0.0, 0.0, 0.0, 1.0 ) );
+    _matBlue->setProperty( SPECULAR, Math::Vec4f( 0.0, 0.0, 0.5, 1.0 ) );
 
 
     //model->getOrCreateStateSet()->attribute( _matBlue.get() );
@@ -253,9 +253,9 @@ void init()
   // Set materials. 
   if( _matRed.valid() )
   {
-    _matRed->setProperty( DIFFUSE, MirageMath::Vec4f( 0.0, 0.7, 0.1, 1.0 ) );
-    _matRed->setProperty( AMBIENT, MirageMath::Vec4f( 0.0, 0.0, 0.0, 1.0 ) );
-    _matRed->setProperty( SPECULAR, MirageMath::Vec4f( 0.0, 0.7, 0.1, 1.0 ) );
+    _matRed->setProperty( DIFFUSE, Math::Vec4f( 0.0, 0.7, 0.1, 1.0 ) );
+    _matRed->setProperty( AMBIENT, Math::Vec4f( 0.0, 0.0, 0.0, 1.0 ) );
+    _matRed->setProperty( SPECULAR, Math::Vec4f( 0.0, 0.7, 0.1, 1.0 ) );
 
     //floor->getOrCreateStateSet()->attribute( _matRed.get() );
   }
@@ -267,9 +267,9 @@ void init()
    // Set materials. 
   if( _matShadow.valid() )
   {
-    _matShadow->setProperty( DIFFUSE, MirageMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
-    _matShadow->setProperty( AMBIENT, MirageMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
-    _matShadow->setProperty( SPECULAR, MirageMath::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
+    _matShadow->setProperty( DIFFUSE, Math::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
+    _matShadow->setProperty( AMBIENT, Math::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
+    _matShadow->setProperty( SPECULAR, Math::Vec4f( 0.1, 0.1, 0.1, 0.5 ) );
 
     //floor->getOrCreateStateSet()->attribute( _matRed.get() );
   }
@@ -284,9 +284,9 @@ void init()
 
 
 //Convert a openGL Matrix into Matrix44d. 
-MirageMath::Matrix44d convert( GLdouble* matrix ) 
+Math::Matrix44d convert( GLdouble* matrix ) 
 {
-  MirageMath::Matrix44d mat;
+  Math::Matrix44d mat;
   mat.set( matrix );
 
   return mat;
@@ -314,7 +314,7 @@ void addEdgeToSillhouette( std::list< Edge >& edges, Edge& edge, Edge& edgeInv )
 }
 
 
-void getGeodes( std::vector< MirageCore::SmartPtr< MirageCore::Geode > >& geodes, MirageCore::Group* group )
+void getGeodes( std::vector< Core::SmartPtr< Core::Geode > >& geodes, Core::Group* group )
 {
   // If NULL
   if( !group )
@@ -323,13 +323,13 @@ void getGeodes( std::vector< MirageCore::SmartPtr< MirageCore::Geode > >& geodes
   for( unsigned int index = 0; index < group->children().size(); ++index )
   {
     // If we get a valid node. 
-    if( MirageCore::Node* node = group->child( index ) )
+    if( Core::Node* node = group->child( index ) )
     {      
-      if( MirageCore::Geode* geode = node->asGeode() )
+      if( Core::Geode* geode = node->asGeode() )
       {
         geodes.push_back( geode );
       }
-      else if( MirageCore::Group* subGroup = node->asGroup() )
+      else if( Core::Group* subGroup = node->asGroup() )
       {
         // Recursive call. 
         getGeodes( geodes, subGroup );
@@ -352,7 +352,7 @@ void getGeodes( std::vector< MirageCore::SmartPtr< MirageCore::Geode > >& geodes
 void buildShadowVolume()
 {
   // Lets query the vertices. 
-  MirageCore::Node* node = _viewer->sceneData(); 
+  Core::Node* node = _viewer->sceneData(); 
   
   // Check for valid node. 
   if( !node )
@@ -361,41 +361,41 @@ void buildShadowVolume()
     return;
   }
    
-  MirageCore::SmartPtr< MirageCore::Group > gr = node->asGroup();
+  Core::SmartPtr< Core::Group > gr = node->asGroup();
   
   // Now check each child of the _root node. 
   // Grab any geometry. 
   // Construct shadow volume out of it.   
 
   // Now currently checking only at one level ( ignorning group  nodes ). 
-  std::vector< MirageCore::SmartPtr< MirageCore::Geode > > geodes; 
+  std::vector< Core::SmartPtr< Core::Geode > > geodes; 
   
   // Get all the geodes under this group node. 
   getGeodes( geodes, gr.get() ); 
 
   for( size_t index = 0; index < geodes.size(); ++index )
   { 
-    MirageCore::Geode* geode = geodes[index].get();    
+    Core::Geode* geode = geodes[index].get();    
     
     if( geode ) 
     {
-      std::vector< MirageCore::SmartPtr< MirageCore::Drawable > > drawables = geode->getDrawableList();
+      std::vector< Core::SmartPtr< Core::Drawable > > drawables = geode->getDrawableList();
 
       for( size_t i = 0; i < drawables.size(); ++i ) 
       {
-        MirageCore::Geometry* geom = dynamic_cast< MirageCore::Geometry* >( drawables[i].get() );
+        Core::Geometry* geom = dynamic_cast< Core::Geometry* >( drawables[i].get() );
         if( geom )
         {
           std::vector< Triangle > _capTriangles; 
           std::vector< Triangle > _backTriangles; 
           std::list< Edge > _edges;
 
-          MirageCore::SmartPtr< MirageCore::Vec3iArray > indices    = geom->vertexIndices();
-          MirageCore::SmartPtr< MirageCore::Vec3iArray > nIndices   = geom->normalIndices();
-          MirageCore::SmartPtr< MirageCore::Vec3Array >  vertices    = geom->vertexArray();
-          MirageCore::SmartPtr< MirageCore::Vec3Array >  normals     = geom->normalArray();
+          Core::SmartPtr< Core::Vec3iArray > indices    = geom->vertexIndices();
+          Core::SmartPtr< Core::Vec3iArray > nIndices   = geom->normalIndices();
+          Core::SmartPtr< Core::Vec3Array >  vertices    = geom->vertexArray();
+          Core::SmartPtr< Core::Vec3Array >  normals     = geom->normalArray();
           
-          MirageMath::Vec3d lightPos = MirageMath::Vec3d( _lightPosition[0], _lightPosition[1], _lightPosition[2] );
+          Math::Vec3d lightPos = Math::Vec3d( _lightPosition[0], _lightPosition[1], _lightPosition[2] );
 
           for( size_t k = 0; k < indices->size() ; ++k ) 
           {
@@ -408,21 +408,21 @@ void buildShadowVolume()
             int ni2 = nIndices->at( k )[1];
             int ni3 = nIndices->at( k )[2];
               
-            MirageMath::Vec3d vecOrig1 = vertices->at( i1 );
-            MirageMath::Vec3d vecOrig2 = vertices->at( i2 );
-            MirageMath::Vec3d vecOrig3 = vertices->at( i3 );            
+            Math::Vec3d vecOrig1 = vertices->at( i1 );
+            Math::Vec3d vecOrig2 = vertices->at( i2 );
+            Math::Vec3d vecOrig3 = vertices->at( i3 );            
             
-            MirageMath::Vec3d lightDir1 = lightPos - vecOrig1;            
-            MirageMath::Vec3d lightDir2 = lightPos - vecOrig2;            
-            MirageMath::Vec3d lightDir3 = lightPos - vecOrig3;
+            Math::Vec3d lightDir1 = lightPos - vecOrig1;            
+            Math::Vec3d lightDir2 = lightPos - vecOrig2;            
+            Math::Vec3d lightDir3 = lightPos - vecOrig3;
 
             lightDir1.normalize();
             lightDir2.normalize();
             lightDir3.normalize();
             
-            MirageMath::Vec3d normal1 =  normals->at( ni1 );
-            MirageMath::Vec3d normal2 =  normals->at( ni2 );
-            MirageMath::Vec3d normal3 =  normals->at( ni3 );
+            Math::Vec3d normal1 =  normals->at( ni1 );
+            Math::Vec3d normal2 =  normals->at( ni2 );
+            Math::Vec3d normal3 =  normals->at( ni3 );
 
             normal1.normalize();
             normal2.normalize();
@@ -453,14 +453,14 @@ void buildShadowVolume()
               addEdgeToSillhouette( _edges, edge3, edgeInv3 );
 
               Triangle triangle;
-              triangle._faceIndex = MirageMath::Vec3i( i1, i2, i3 );
+              triangle._faceIndex = Math::Vec3i( i1, i2, i3 );
               _capTriangles.push_back( triangle );
             }   
             else
             {
               // This is a back face. 
               Triangle triangle;
-              triangle._faceIndex = MirageMath::Vec3i( i1, i2, i3 );
+              triangle._faceIndex = Math::Vec3i( i1, i2, i3 );
               _backTriangles.push_back( triangle );
             }
           }
@@ -477,14 +477,14 @@ void buildShadowVolume()
           {            
             glPushMatrix();
             glBegin( GL_QUADS );              
-              MirageMath::Vec3d vec3d1 = vertices->at( jItr->_vertex2._vertexIndex );
-              MirageMath::Vec3d vec3d2 = vertices->at( jItr->_vertex1._vertexIndex );
+              Math::Vec3d vec3d1 = vertices->at( jItr->_vertex2._vertexIndex );
+              Math::Vec3d vec3d2 = vertices->at( jItr->_vertex1._vertexIndex );
               
-              MirageMath::Vec4d vec4d1( vec3d1[0], vec3d1[1], vec3d1[2], 0.0 );
-              MirageMath::Vec4d vec4d2( vec3d2[0], vec3d2[1], vec3d2[2], 0.0 );
+              Math::Vec4d vec4d1( vec3d1[0], vec3d1[1], vec3d1[2], 0.0 );
+              Math::Vec4d vec4d2( vec3d2[0], vec3d2[1], vec3d2[2], 0.0 );
               
-              MirageMath::Vec4d vertex41( vec4d1[0] - lightPos[0], vec4d1[1] - lightPos[1], vec4d1[2] - lightPos[2], 0.0 );                          
-              MirageMath::Vec4d vertex42( vec4d2[0] - lightPos[0], vec4d2[1] - lightPos[1], vec4d2[2] - lightPos[2], 0.0 );
+              Math::Vec4d vertex41( vec4d1[0] - lightPos[0], vec4d1[1] - lightPos[1], vec4d1[2] - lightPos[2], 0.0 );                          
+              Math::Vec4d vertex42( vec4d2[0] - lightPos[0], vec4d2[1] - lightPos[1], vec4d2[2] - lightPos[2], 0.0 );
 
               glVertex3dv( vec3d1.front() );              
               glVertex3dv( vec3d2.front() );
@@ -530,9 +530,9 @@ void buildShadowVolume()
 
           for( constItr = _backTriangles.begin(); constItr != _backTriangles.end(); ++constItr )
           {           
-            MirageMath::Vec3d v0 = vertices->at( constItr->_faceIndex[0] );            
-            MirageMath::Vec3d v1 = vertices->at( constItr->_faceIndex[1] );            
-            MirageMath::Vec3d v2 = vertices->at( constItr->_faceIndex[2] );
+            Math::Vec3d v0 = vertices->at( constItr->_faceIndex[0] );            
+            Math::Vec3d v1 = vertices->at( constItr->_faceIndex[1] );            
+            Math::Vec3d v2 = vertices->at( constItr->_faceIndex[2] );
 
             if( !reverse )
             {

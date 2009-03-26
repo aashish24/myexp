@@ -1,9 +1,9 @@
 
-#include "MirageCore/Drawable.h"
+#include "Core/Drawable.h"
 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
     Drawable::Drawable() :
       _useDisplayList( true ), 
@@ -12,7 +12,7 @@ namespace Mirage
     }
 
 
-    Drawable::Drawable( const Mirage::MirageCore::Drawable &drawable )      
+    Drawable::Drawable( const Mirage::Core::Drawable &drawable )      
     {
     }
 

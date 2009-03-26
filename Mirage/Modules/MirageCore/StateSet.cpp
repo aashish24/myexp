@@ -1,13 +1,13 @@
 
-#include "MirageCore/StateSet.h"
-#include "MirageCore/Node.h"
-#include "MirageCore/Group.h"
+#include "Core/StateSet.h"
+#include "Core/Node.h"
+#include "Core/Group.h"
 
 #include <list>
 
 namespace Mirage
 {
-	namespace MirageCore
+	namespace Core
 	{		
     StateSet::StateSet() : 
 					Object(), 
@@ -120,7 +120,7 @@ namespace Mirage
       if( node->getOrCreateStateSet()->dirty() )
       {
         // Loop thru all the parents attributes here. 
-        Mirage::MirageCore::Node::Parents parents = node->parents();
+        Mirage::Core::Node::Parents parents = node->parents();
         StateSet::Attributes::iterator start, end;
         StateSet::TextureAttributes::iterator tStart, tEnd;
 

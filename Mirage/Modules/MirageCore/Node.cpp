@@ -1,14 +1,14 @@
 
-#include "MirageCore/Node.h"
-#include "MirageCore/NodeVisitor.h"
+#include "Core/Node.h"
+#include "Core/NodeVisitor.h"
 
-#include "MirageCore/Group.h"
-#include "MirageCore/Geode.h"
+#include "Core/Group.h"
+#include "Core/Geode.h"
 
-#include "MirageCore/Uniform.h"
+#include "Core/Uniform.h"
 
 using namespace Mirage;
-using namespace MirageCore;
+using namespace Core;
 
 Uniform1i* myUniform = new Uniform1i();
 

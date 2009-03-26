@@ -4,11 +4,11 @@
 
 #include <vector>
 
-#include "MirageCore/Object.h"
+#include "Core/Object.h"
 
 namespace Mirage 
 {
-	namespace MirageCore 
+	namespace Core 
 	{
 		class MSG_EXPORT VectorGLubyte: public std::vector< GLubyte >
 		{

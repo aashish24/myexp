@@ -1,9 +1,9 @@
 
-#include "MirageCore/Referenced.h"
+#include "Core/Referenced.h"
 
 #include <iostream>
 
-using namespace Mirage::MirageCore;
+using namespace Mirage::Core;
 
 Referenced::Referenced() :
 	_refCount( 0 )
@@ -11,7 +11,7 @@ Referenced::Referenced() :
 
 }
 
-Referenced::Referenced( const Mirage::MirageCore::Referenced &ref ) :
+Referenced::Referenced( const Mirage::Core::Referenced &ref ) :
 	_refCount( 0 )
 {
 

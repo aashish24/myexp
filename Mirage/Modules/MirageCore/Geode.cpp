@@ -1,27 +1,27 @@
 
-#include "MirageCore/Geode.h"
-#include "MirageCore/NodeVisitor.h"
+#include "Core/Geode.h"
+#include "Core/NodeVisitor.h"
 
-Mirage::MirageCore::Geode::~Geode()
+Mirage::Core::Geode::~Geode()
 {
 }
 
 
-void Mirage::MirageCore::Geode::compileDrawables()
+void Mirage::Core::Geode::compileDrawables()
 {
 }
 
 
-void Mirage::MirageCore::Geode::traverse( NodeVisitor& nv )
+void Mirage::Core::Geode::traverse( NodeVisitor& nv )
 {
   switch( nv.type() )
   {
-    case Mirage::MirageCore::NodeVisitor::UPDATE: 
+    case Mirage::Core::NodeVisitor::UPDATE: 
     {
       break;
     }
     
-    case Mirage::MirageCore::NodeVisitor::DRAW: 
+    case Mirage::Core::NodeVisitor::DRAW: 
     {      
       this->activateStateSet();
 

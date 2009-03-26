@@ -3,21 +3,21 @@
 #define __MSG_CORE_GEOMETRY_H__
 
 #include "Export.h"
-#include "MirageCore/Drawable.h"
-#include "MirageCore/Array.h"
-#include "MirageCore/PrimitiveSet.h"
+#include "Core/Drawable.h"
+#include "Core/Array.h"
+#include "Core/PrimitiveSet.h"
 
-#include "MirageCore/MirageOpenGL.h"
+#include "Core/MirageOpenGL.h"
 
 #include <vector>
 
 namespace Mirage
 {
-	namespace MirageCore
+	namespace Core
 	{		
 		class PrimitiveSet;
 
-    class MSG_EXPORT Geometry : public MirageCore::Drawable
+    class MSG_EXPORT Geometry : public Core::Drawable
 		{
 			public:
 				typedef std::vector< SmartPtr< PrimitiveSet > >	 PrimitiveSets;

@@ -4,8 +4,8 @@
 
 #include "Export.h"
 
-#include "MirageCore/Object.h"
-#include "MirageCore/IUniform.h"
+#include "Core/Object.h"
+#include "Core/IUniform.h"
 
 #include "GL/glew.h"
 #include "GL/gl.h"
@@ -14,12 +14,12 @@
 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
     // Forward declaration. 
     class GLSLProgram;
 
-    struct MSG_EXPORT Uniform : public IUniform, public MirageCore::Object
+    struct MSG_EXPORT Uniform : public IUniform, public Core::Object
     {
       Uniform( const std::string& name = std::string( "" ), const int& location = -1 );
 
@@ -97,7 +97,7 @@ namespace Mirage
 
 
     template< typename DataTypeT >
-    class MSG_EXPORT Uniform1 : public MirageCore::Uniform
+    class MSG_EXPORT Uniform1 : public Core::Uniform
     {
       public: 
 
@@ -147,7 +147,7 @@ namespace Mirage
 
     
     template< typename DataTypeT >
-    class MSG_EXPORT Uniform2 : public MirageCore::Uniform
+    class MSG_EXPORT Uniform2 : public Core::Uniform
     {
       public: 
 

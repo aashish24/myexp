@@ -2,18 +2,18 @@
 #ifndef __MIRAGE_CORE_MATRIX_TRANSFORM_H__
 #define __MIRAGE_CORE_MATRIX_TRANSFORM_H__
 
-#include "MirageCore/ITransform.h"
-#include "MirageCore/Group.h"
+#include "Core/ITransform.h"
+#include "Core/Group.h"
 
-#include "MirageMath/Matrix.h"
-#include "MirageMath/Vec.h"
-#include "MirageMath/AxisAngle.h"
+#include "Math/Matrix.h"
+#include "Math/Vec.h"
+#include "Math/AxisAngle.h"
 
-using namespace Mirage::MirageMath; 
+using namespace Mirage::Math; 
 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
     // Forward declaration. 
     class NodeVisitor;

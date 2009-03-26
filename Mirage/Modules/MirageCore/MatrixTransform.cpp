@@ -2,14 +2,14 @@
 #include "GL/glew.h"
 #include "GL/gl.h"
 
-#include "MirageCore/MatrixTransform.h"
-#include "MirageCore/NodeVisitor.h"
-#include "MirageMath/Utils.h"
-#include "MirageMath/Matrix.h"
+#include "Core/MatrixTransform.h"
+#include "Core/NodeVisitor.h"
+#include "Math/Utils.h"
+#include "Math/Matrix.h"
 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
     MatrixTransform::MatrixTransform() : Group(), ITransform(), 
       _matrix()
@@ -21,7 +21,7 @@ namespace Mirage
     {      
     }
    
-    void MatrixTransform::setMatrix( const MirageMath::Matrix44f& mat )
+    void MatrixTransform::setMatrix( const Math::Matrix44f& mat )
     {
       _matrix = mat;
     }

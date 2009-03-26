@@ -13,7 +13,7 @@
 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
     enum OpenGLDrawMethod
     {

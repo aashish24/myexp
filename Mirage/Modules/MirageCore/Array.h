@@ -3,9 +3,9 @@
 #define __MSG_CORE_ARRAY_H__
 
 #include "Export.h"
-#include "MirageCore/Object.h"
+#include "Core/Object.h"
 
-#include "MirageMath/Vec.h"
+#include "Math/Vec.h"
 
 #include "GL/glew.h"
 #include "GL/gl.h"
@@ -14,7 +14,7 @@
 
 namespace Mirage
 {
-	namespace MirageCore
+	namespace Core
 	{
 		template< class T, unsigned int SIZE >
 		class Array : public Object, public std::vector< T >
@@ -72,21 +72,21 @@ namespace Mirage
 
 		typedef Array< GLfloat, 1 >		          FloatArray;
 
-    typedef Array< MirageMath::Vec2f, 2 >		  Vec2fArray;
-		typedef Array< MirageMath::Vec3f, 3 >		  Vec3fArray;
-		typedef Array< MirageMath::Vec4f, 4 >		  Vec4fArray;
+    typedef Array< Math::Vec2f, 2 >		  Vec2fArray;
+		typedef Array< Math::Vec3f, 3 >		  Vec3fArray;
+		typedef Array< Math::Vec4f, 4 >		  Vec4fArray;
 
-		typedef Array< MirageMath::Vec2d, 2 >		  Vec2Array;
-		typedef Array< MirageMath::Vec3d, 3 >		  Vec3Array;
-		typedef Array< MirageMath::Vec4d, 4 >		  Vec4Array;
+		typedef Array< Math::Vec2d, 2 >		  Vec2Array;
+		typedef Array< Math::Vec3d, 3 >		  Vec3Array;
+		typedef Array< Math::Vec4d, 4 >		  Vec4Array;
 
-		typedef Array< MirageMath::Vec2i, 2 >		  Vec2iArray;
-		typedef Array< MirageMath::Vec3i, 3 >		  Vec3iArray;
-		typedef Array< MirageMath::Vec4i, 4 >	    Vec4iArray;
+		typedef Array< Math::Vec2i, 2 >		  Vec2iArray;
+		typedef Array< Math::Vec3i, 3 >		  Vec3iArray;
+		typedef Array< Math::Vec4i, 4 >	    Vec4iArray;
 
-		typedef Array< MirageMath::Vec2ui, 2 >		  Vec2uiArray;
-		typedef Array< MirageMath::Vec3ui, 3 >		  Vec3uiArray;
-		typedef Array< MirageMath::Vec4ui, 4 >		  Vec4uiArray;
+		typedef Array< Math::Vec2ui, 2 >		  Vec2uiArray;
+		typedef Array< Math::Vec3ui, 3 >		  Vec3uiArray;
+		typedef Array< Math::Vec4ui, 4 >		  Vec4uiArray;
 	}
 }
 

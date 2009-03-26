@@ -9,7 +9,7 @@
 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
     class Program;
 

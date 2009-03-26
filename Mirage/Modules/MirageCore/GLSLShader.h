@@ -4,15 +4,15 @@
 
 #include "Export.h"
 
-#include "MirageCore/IShader.h"
-#include "MirageCore/Object.h"
+#include "Core/IShader.h"
+#include "Core/Object.h"
 
 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
-    class MSG_EXPORT GLSLShader : public MirageCore::Object, public MirageCore::IShader
+    class MSG_EXPORT GLSLShader : public Core::Object, public Core::IShader
     {
       public: 
 

@@ -3,21 +3,21 @@
 #define __OGE_DB_H__
 
 #include "Export.h"
-#include "MirageCore/Referenced.h"
+#include "Core/Referenced.h"
 
-#include "MirageCore/MirageOpenGL.h"
+#include "Core/MirageOpenGL.h"
 
 #include <string>
 
-using namespace Mirage::MirageCore;
+using namespace Mirage::Core;
 
-namespace Mirage { namespace MirageCore { class Node; class Image; } }
+namespace Mirage { namespace Core { class Node; class Image; } }
 
 namespace Mirage
 {
-	namespace MirageDB
+	namespace System
 	{
-    class MSG_EXPORT FileRead : public Mirage::MirageCore::Referenced
+    class MSG_EXPORT FileRead : public Mirage::Core::Referenced
 		{
 			public:
 				

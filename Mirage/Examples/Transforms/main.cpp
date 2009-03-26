@@ -8,23 +8,23 @@
 #include "GL/gl.h"
 
 
-#include "MirageCore/Group.h"
-#include "MirageCore/Node.h"
-#include "MirageCore/Viewer.h"
-#include "MirageCore/MatrixTransform.h"
-#include "MirageCore/SmartPtr.h"
+#include "Core/Group.h"
+#include "Core/Node.h"
+#include "Core/Viewer.h"
+#include "Core/MatrixTransform.h"
+#include "Core/SmartPtr.h"
 
-#include "MirageDB/FileRead.h"
+#include "System/FileRead.h"
 
-#include "MirageMath/AxisAngle.h"
-#include "MirageMath/Vec.h"
-#include "MirageMath/Utils.h"
+#include "Math/AxisAngle.h"
+#include "Math/Vec.h"
+#include "Math/Utils.h"
 
 #include <string>
 #include <sstream>
 
 using namespace Mirage;
-using namespace Mirage::MirageCore;
+using namespace Mirage::Core;
 
 static SmartPtr< Group >            _root; 
 static SmartPtr< NodeVisitor >      _nv;
@@ -56,15 +56,15 @@ void init( const int& argc, char** argv )
   _viewer->init();  
 
   // Apply some transformations here. 
-  MirageMath::Matrix44f mat = MirageMath::Utils::makeRot< MirageMath::Matrix44f >
-    ( MirageMath::AxisAnglef( MirageMath::Vec3f( 0.0, 1.0, 0.0 ), 45.0 ) );
+  Math::Matrix44f mat = Math::Utils::makeRot< Math::Matrix44f >
+    ( Math::AxisAnglef( Math::Vec3f( 0.0, 1.0, 0.0 ), 45.0 ) );
   _transform->setMatrix( mat );
 
   _root->addChild( _transform.get() );
   
   if( argv[1] != 0x00 )
   {
-    SmartPtr< Node > node = MirageDB::FileRead::readFile( argv[1] );
+    SmartPtr< Node > node = System::FileRead::readFile( argv[1] );
     if( node.valid() )
     {
       // Add one to the transform and one directly to the root node. 

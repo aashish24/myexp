@@ -6,7 +6,7 @@
 
 namespace Mirage
 {
-	namespace MirageCore
+	namespace Core
 	{
 		class MSG_EXPORT BoundingBox
 		{		

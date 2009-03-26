@@ -6,7 +6,7 @@
 
 namespace Mirage
 {
-  namespace MirageDB
+  namespace System
   {
     class MSG_EXPORT TextFileReadWrite
     {

@@ -202,7 +202,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<Filter
-				Name="MirageCore"
+				Name="Core"
 				>
 				<File
 					RelativePath=".\modules\MirageCore\Array.h"
@@ -406,15 +406,15 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="MirageNet"
+				Name="Net"
 				>
 			</Filter>
 			<Filter
-				Name="MirageUtil"
+				Name="Util"
 				>
 			</Filter>
 			<Filter
-				Name="MirageDB"
+				Name="System"
 				>
 				<File
 					RelativePath=".\modules\MirageDB\FileRead.cpp"
@@ -442,7 +442,7 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="MirageMath"
+				Name="Math"
 				>
 				<File
 					RelativePath=".\Modules\MirageMath\AxisAngle.h"

@@ -6,7 +6,7 @@
 
 using namespace glMath;
 
-namespace MirageCore
+namespace Core
 {
 	class Navigation
 	{

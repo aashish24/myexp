@@ -7,7 +7,7 @@
 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
 	  template< class T >
 	  class SmartPtr 

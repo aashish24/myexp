@@ -1,9 +1,9 @@
 
-#include "MirageCore/GLSLAttribute.h"
+#include "Core/GLSLAttribute.h"
 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
     GLSLAttribute::GLSLAttribute() :     
       StateAttribute()
@@ -53,7 +53,7 @@ namespace Mirage
     }
 
 
-    void GLSLAttribute::addShader( MirageCore::GLSLShader* shader )
+    void GLSLAttribute::addShader( Core::GLSLShader* shader )
     {
     }
 

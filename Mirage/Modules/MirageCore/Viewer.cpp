@@ -1,12 +1,12 @@
 
-#include "MirageCore/Viewer.h"
+#include "Core/Viewer.h"
 
 #include "GL/glew.h"
 #include "GL/gl.h"
 
 namespace Mirage
 {
-  namespace MirageCore
+  namespace Core
   {
     Viewer::Viewer()  
     {

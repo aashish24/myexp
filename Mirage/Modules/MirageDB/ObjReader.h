@@ -4,22 +4,22 @@
 
 #include <istream>
 
-#include "MirageCore/Referenced.h"
-#include "MirageCore/Array.h"
+#include "Core/Referenced.h"
+#include "Core/Array.h"
 
-#include "MirageCore/MirageOpenGL.h"
+#include "Core/MirageOpenGL.h"
 
 #include "Export.h"
 
-using namespace Mirage::MirageCore;
+using namespace Mirage::Core;
 
-namespace Mirage { namespace MirageCore { class Node; } }
+namespace Mirage { namespace Core { class Node; } }
 
 namespace Mirage
 {
-	namespace MirageDB
+	namespace System
 	{
-    class MSG_EXPORT ObjReader : public MirageCore::Referenced
+    class MSG_EXPORT ObjReader : public Core::Referenced
 		{
 			public:
 

@@ -8,18 +8,18 @@
 #include "GL/gl.h"
 
 
-#include "MirageCore/Group.h"
-#include "MirageCore/Node.h"
-#include "MirageCore/Viewer.h"
+#include "Core/Group.h"
+#include "Core/Node.h"
+#include "Core/Viewer.h"
 
-#include "MirageDB/FileRead.h"
-#include "MirageCore/SmartPtr.h"
+#include "System/FileRead.h"
+#include "Core/SmartPtr.h"
 
 #include <string>
 #include <sstream>
 
 using namespace Mirage;
-using namespace Mirage::MirageCore;
+using namespace Mirage::Core;
 
 static SmartPtr< Group >       _root; 
 static SmartPtr< NodeVisitor > _nv;
@@ -49,7 +49,7 @@ void init( const int& argc, char** argv )
   
   if( argv[1] != 0x00 )
   {
-    SmartPtr< Node > node = MirageDB::FileRead::readFile( argv[1] );
+    SmartPtr< Node > node = System::FileRead::readFile( argv[1] );
     if( node.valid() )
     {
       _root->addChild( node.get() );

@@ -6,7 +6,7 @@
 
 namespace Mirage
 {
-  namespace MirageMath 
+  namespace Math 
   {
     class MatrixVecOps 
     {
