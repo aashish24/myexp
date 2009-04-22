@@ -117,6 +117,20 @@ void reshape( int w, int h )
 }
 
 
+void idle()
+{
+  static float angle = 0.0; 
+
+  Math::Matrix44f mat = Math::Utils::makeRot< Math::Matrix44f >
+    ( Math::AxisAnglef( Math::Vec3f( 1.0, 0.0, 0.5 ), angle ) );
+  _transform->setMatrix( mat );  
+
+  angle += 1.0;
+
+  glutPostRedisplay();
+}
+
+
 int main( int argc, char** argv )
 {
   glutInit( &argc, argv );
@@ -127,9 +141,9 @@ int main( int argc, char** argv )
 
   init( argc, argv );
 
-  glutDisplayFunc( display );
- 
+  glutDisplayFunc( display ); 
   glutReshapeFunc( reshape );
+  glutIdleFunc   ( idle );
 
   glutMainLoop();
 }

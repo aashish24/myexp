@@ -205,203 +205,207 @@
 				Name="Core"
 				>
 				<File
-					RelativePath=".\modules\MirageCore\Array.h"
+					RelativePath=".\modules\Core\Array.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\BoundingBox.h"
+					RelativePath=".\modules\Core\BoundingBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Drawable.cpp"
+					RelativePath=".\modules\Core\Drawable.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Drawable.h"
+					RelativePath=".\modules\Core\Drawable.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Geode.cpp"
+					RelativePath=".\modules\Core\Geode.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Geode.h"
+					RelativePath=".\modules\Core\Geode.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Geometry.cpp"
+					RelativePath=".\modules\Core\Geometry.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Geometry.h"
+					RelativePath=".\modules\Core\Geometry.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\GLSLAttribute.cpp"
+					RelativePath=".\modules\Core\GLSLAttribute.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\GLSLAttribute.h"
+					RelativePath=".\modules\Core\GLSLAttribute.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\GLSLProgram.cpp"
+					RelativePath=".\modules\Core\GLSLProgram.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\GLSLProgram.h"
+					RelativePath=".\modules\Core\GLSLProgram.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\GLSLShader.cpp"
+					RelativePath=".\modules\Core\GLSLShader.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\GLSLShader.h"
+					RelativePath=".\modules\Core\GLSLShader.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Group.cpp"
+					RelativePath=".\modules\Core\Group.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Group.h"
+					RelativePath=".\modules\Core\Group.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Image.h"
+					RelativePath=".\Modules\Core\Image.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\IRender.h"
+					RelativePath=".\modules\Core\Image.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\IShader.h"
+					RelativePath=".\modules\Core\IRender.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\IStateAttribute.h"
+					RelativePath=".\modules\Core\IShader.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MirageCore\ITransform.h"
+					RelativePath=".\modules\Core\IStateAttribute.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\IUniform.h"
+					RelativePath=".\Modules\Core\ITransform.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\IViewer.h"
+					RelativePath=".\modules\Core\IUniform.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Material.cpp"
+					RelativePath=".\modules\Core\IViewer.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Material.h"
+					RelativePath=".\modules\Core\Material.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MirageCore\MatrixTransform.cpp"
+					RelativePath=".\modules\Core\Material.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MirageCore\MatrixTransform.h"
+					RelativePath=".\Modules\Core\MatrixTransform.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\MirageOpenGL.h"
+					RelativePath=".\Modules\Core\MatrixTransform.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Navigation.h"
+					RelativePath=".\modules\Core\MirageOpenGL.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Node.cpp"
+					RelativePath=".\modules\Core\Navigation.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Node.h"
+					RelativePath=".\modules\Core\Node.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\NodeVisitor.h"
+					RelativePath=".\modules\Core\Node.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Object.h"
+					RelativePath=".\modules\Core\NodeVisitor.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\ParticleSystem.h"
+					RelativePath=".\modules\Core\Object.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\PrimitiveSet.h"
+					RelativePath=".\modules\Core\ParticleSystem.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Referenced.cpp"
+					RelativePath=".\modules\Core\PrimitiveSet.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Referenced.h"
+					RelativePath=".\modules\Core\Referenced.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Shader.cpp"
+					RelativePath=".\modules\Core\Referenced.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Shader.h"
+					RelativePath=".\modules\Core\Shader.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Shaders.h"
+					RelativePath=".\modules\Core\Shader.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\SmartPtr.h"
+					RelativePath=".\modules\Core\Shaders.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\StateAttribute.cpp"
+					RelativePath=".\modules\Core\SmartPtr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\StateSet.cpp"
+					RelativePath=".\modules\Core\StateAttribute.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\StateSet.h"
+					RelativePath=".\modules\Core\StateSet.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Texture.h"
+					RelativePath=".\modules\Core\StateSet.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Uniform.cpp"
+					RelativePath=".\modules\Core\Texture.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Uniform.h"
+					RelativePath=".\modules\Core\Uniform.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\User.h"
+					RelativePath=".\modules\Core\Uniform.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Viewer.cpp"
+					RelativePath=".\modules\Core\User.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageCore\Viewer.h"
+					RelativePath=".\modules\Core\Viewer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\modules\Core\Viewer.h"
 					>
 				</File>
 			</Filter>
@@ -417,27 +421,35 @@
 				Name="System"
 				>
 				<File
-					RelativePath=".\modules\MirageDB\FileRead.cpp"
+					RelativePath=".\modules\System\FileRead.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageDB\FileRead.h"
+					RelativePath=".\modules\System\FileRead.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageDB\ObjReader.cpp"
+					RelativePath=".\modules\System\ObjReader.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageDB\ObjReader.h"
+					RelativePath=".\modules\System\ObjReader.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageDB\TextFileReadWrite.cpp"
+					RelativePath=".\modules\System\TextFileReadWrite.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageDB\TextFileReadWrite.h"
+					RelativePath=".\modules\System\TextFileReadWrite.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\System\TgaReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Modules\System\TgaReader.h"
 					>
 				</File>
 			</Filter>
@@ -445,27 +457,27 @@
 				Name="Math"
 				>
 				<File
-					RelativePath=".\Modules\MirageMath\AxisAngle.h"
+					RelativePath=".\Modules\Math\AxisAngle.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageMath\Matrix.h"
+					RelativePath=".\modules\Math\Matrix.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageMath\MatrixVecOps.h"
+					RelativePath=".\modules\Math\MatrixVecOps.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MirageMath\Quat.h"
+					RelativePath=".\Modules\Math\Quat.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Modules\MirageMath\Utils.h"
+					RelativePath=".\Modules\Math\Utils.h"
 					>
 				</File>
 				<File
-					RelativePath=".\modules\MirageMath\Vec.h"
+					RelativePath=".\modules\Math\Vec.h"
 					>
 				</File>
 			</Filter>

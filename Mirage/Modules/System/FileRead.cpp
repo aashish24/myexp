@@ -37,7 +37,7 @@ Node* FileRead::readFile( const std::string& fileName )
 
 
 Image* FileRead::readImageFile( const std::string &fileName )
-{
+{  
   std::ifstream fin( fileName.c_str(), std::ios::in );	
 
 	if( !fin.good() )
