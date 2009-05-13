@@ -13,6 +13,7 @@
 #include "Core/Viewer.h"
 #include "Core/MatrixTransform.h"
 #include "Core/SmartPtr.h"
+#include "Core/Texture.h"
 
 #include "System/FileRead.h"
 
@@ -65,18 +66,24 @@ void init( const int& argc, char** argv )
   if( argv[1] != 0x00 )
   {
     SmartPtr< Node > node = System::FileRead::readFile( argv[1] );
+    SmartPtr< Image > image = System::FileRead::readImageFile( argv[2] );
     if( node.valid() )
     {
       // Add one to the transform and one directly to the root node. 
       _transform->addChild( node.get() );      
       
-      //_root->addChild( node.get() );
+      if( image.valid() )
+      {
+        SmartPtr< Texture > texture( new Texture() );
+        texture->setImage( image.get() );
+        _transform->getOrCreateStateSet()->textureAttribute( 0, texture.get() );
+      }
     }
     else
     {
       std::cerr << "Invalid node. Exiting." << std::endl;
       std::exit(0);
-    }
+    }   
 
     if( _viewer.valid() )
     {

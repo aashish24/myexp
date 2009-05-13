@@ -389,6 +389,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Core\TextureEnv.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Core\TextureParam.h"
+					>
+				</File>
+				<File
 					RelativePath=".\modules\Core\Uniform.cpp"
 					>
 				</File>

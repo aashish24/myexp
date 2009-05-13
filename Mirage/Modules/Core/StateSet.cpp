@@ -109,9 +109,10 @@ namespace Mirage
     }
 
 
-    void StateSet::textureAttribute( unsigned int unit, StateAttribute* attr, const int& values )
+    void StateSet::textureAttribute( unsigned int unit, StateAttribute* attr, const int& mask )
     {
       // Need to implement this. 
+      _textureAttributes[unit] = std::pair< StateAttribute*, bool >( attr, mask );
     }
 
 
@@ -174,12 +175,12 @@ namespace Mirage
       
       // @Todo: Need to fix this. 
       // Now iterate thru all the texture attributes. 
-      /*tStart = _textureAttributes.begin();
+      tStart = _textureAttributes.begin();
       tEnd = _textureAttributes.end();
       for( tStart; tStart != tEnd; ++tStart )
       {
-        tStart->second.first->activateStateSet( node );
-      }*/
+        tStart->second.first->activate( node );
+      }
     }
 
 

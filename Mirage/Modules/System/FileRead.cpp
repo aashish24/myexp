@@ -1,6 +1,7 @@
 
 #include "System/FileRead.h"
 #include "System/ObjReader.h"
+#include "System/TgaReader.h"
 
 #include "Core/Node.h"
 #include "Core/Group.h"
@@ -36,7 +37,7 @@ Node* FileRead::readFile( const std::string& fileName )
 }
 
 
-Image* FileRead::readImageFile( const std::string &fileName )
+SmartPtr <Image> FileRead::readImageFile( const std::string &fileName )
 {  
   std::ifstream fin( fileName.c_str(), std::ios::in );	
 
@@ -51,7 +52,7 @@ Image* FileRead::readImageFile( const std::string &fileName )
 	if( comp == 0 )
 	{
 		SmartPtr< TgaReader > tgaReader = new TgaReader();
-		return tgaReader->readFile( fin, file ); 
+		return tgaReader->read( file );    
 	}
 	else
 	{

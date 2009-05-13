@@ -4,6 +4,8 @@
 
 #include "Export.h"
 #include "Core/Referenced.h"
+#include "Core/Image.h"
+#include "Core/SmartPtr.h"
 
 #include "Core/MirageOpenGL.h"
 
@@ -32,7 +34,7 @@ namespace Mirage
 
 				static Node*	readFile( const std::string& fileName );
 				
-        static Image*	readImageFile( const std::string& fileName );
+        static SmartPtr<Image>	readImageFile( const std::string& fileName );
 
 			protected:
 

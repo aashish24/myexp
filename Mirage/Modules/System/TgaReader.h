@@ -7,28 +7,25 @@
 
 #include "Core/Image.h"
 #include "Core/SmartPtr.h"
+#include "Core/Object.h"
 
 namespace Mirage
 {
   namespace System
   {
-    class TgaReader
+    class TgaReader : public Core::Object
     {
         public:
         
-          TgaReader( void );
-          explicit TgaReader( const std::string& name );
+          TgaReader( void );          
+          
+          Core::SmartPtr<Core::Image> read( const std::string& name );
+
+
+        protected: 
 
          ~TgaReader();
-          
-          void read( const std::string& name );
 
-          const Core::Image* const getImage() const;
-          Core::Image*             editImage();
-
-      private: 
-
-        Core::SmartPtr< Core::Image > _image;
     };
   }
 }
