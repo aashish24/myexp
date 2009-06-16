@@ -436,54 +436,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath="F:\aashish\src\osg\osg-2.8.1-rc4\OpenSceneGraph-2.8.1-rc4\examples\osgshaders\CMakeLists.txt"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule F:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4/examples/osgshaders/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files\CMake 2.6\bin\cmake.exe&quot; -HF:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4 -BF:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4 --check-stamp-file CMakeFiles/generate.stamp&#x0D;&#x0A;"
-					AdditionalDependencies="F:\aashish\src\osg\osg-2.8.1-rc4\OpenSceneGraph-2.8.1-rc4\examples\osgshaders\CMakeLists.txt;F:\aashish\src\osg\osg-2.8.1-rc4\OpenSceneGraph-2.8.1-rc4\examples\osgshaders\CMakeLists.txt;"
-					Outputs="CMakeFiles\generate.stamp"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule F:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4/examples/osgshaders/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files\CMake 2.6\bin\cmake.exe&quot; -HF:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4 -BF:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4 --check-stamp-file CMakeFiles/generate.stamp&#x0D;&#x0A;"
-					AdditionalDependencies="F:\aashish\src\osg\osg-2.8.1-rc4\OpenSceneGraph-2.8.1-rc4\examples\osgshaders\CMakeLists.txt;F:\aashish\src\osg\osg-2.8.1-rc4\OpenSceneGraph-2.8.1-rc4\examples\osgshaders\CMakeLists.txt;"
-					Outputs="CMakeFiles\generate.stamp"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="MinSizeRel|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule F:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4/examples/osgshaders/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files\CMake 2.6\bin\cmake.exe&quot; -HF:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4 -BF:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4 --check-stamp-file CMakeFiles/generate.stamp&#x0D;&#x0A;"
-					AdditionalDependencies="F:\aashish\src\osg\osg-2.8.1-rc4\OpenSceneGraph-2.8.1-rc4\examples\osgshaders\CMakeLists.txt;F:\aashish\src\osg\osg-2.8.1-rc4\OpenSceneGraph-2.8.1-rc4\examples\osgshaders\CMakeLists.txt;"
-					Outputs="CMakeFiles\generate.stamp"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="RelWithDebInfo|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule F:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4/examples/osgshaders/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files\CMake 2.6\bin\cmake.exe&quot; -HF:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4 -BF:/aashish/src/osg/osg-2.8.1-rc4/OpenSceneGraph-2.8.1-rc4 --check-stamp-file CMakeFiles/generate.stamp&#x0D;&#x0A;"
-					AdditionalDependencies="F:\aashish\src\osg\osg-2.8.1-rc4\OpenSceneGraph-2.8.1-rc4\examples\osgshaders\CMakeLists.txt;F:\aashish\src\osg\osg-2.8.1-rc4\OpenSceneGraph-2.8.1-rc4\examples\osgshaders\CMakeLists.txt;"
-					Outputs="CMakeFiles\generate.stamp"
-				/>
-			</FileConfiguration>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

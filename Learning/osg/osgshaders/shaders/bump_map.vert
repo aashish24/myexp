@@ -1,38 +1,21 @@
-
-// Precalculated binormal and tangent vectors. 
-
-
-// Light direction in tangent space. 
-//varying vec3 lightDir;
-
-// Eye direction in tangent space. 
-//varying vec3 eyeDir;
-
-// Normalized and interpolated tangent, binormal and normal. 
+varying vec3 n;
 varying vec3 t;
 varying vec3 b;
-varying vec3 n;
 
-varying vec3 iv; 
+varying vec3 iv;
 varying vec3 il;
 
-//varying vec3 vForLight; 
-
-// Entry function. 
 void main()
-{
-	// Transformed position of the vertex. 
-	gl_Position = ftransform();	
-	
-	// Store texture coordinate. 
+{	gl_Position = ftransform();	
+
 	gl_TexCoord[0]  = gl_MultiTexCoord0;	
-
-	// Eye direction for each vertex in eye space. 
-	//eyeDir = vec3( gl_ModelViewMatrix * gl_Vertex );
-
+	gl_TexCoord[1]  = gl_MultiTexCoord1;	
+	gl_TexCoord[2]  = gl_MultiTexCoord2;	
+	
+	n = normalize( gl_NormalMatrix * gl_Normal );
+	t = normalize( gl_NormalMatrix * gl_TexCoord[1].xyz );
+	b = normalize( gl_NormalMatrix * gl_TexCoord[2].xyz );
+		
 	iv = vec3( gl_ModelViewMatrix * gl_Vertex );
-	il = gl_LightSource[0].position.xyz;	
+	il = vec3( 0.0, 100.0, 1000.0 );
 }
-
-
-
