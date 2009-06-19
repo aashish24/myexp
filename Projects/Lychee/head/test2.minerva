@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MinervaDocument>
+  <bodies>
+    <element TypeName="Body">
+      <alpha>1.000000</alpha>
+      <cache_tiles>false</cache_tiles>
+      <elevation_group TypeName="ElevationGroup">
+        <alpha>1.000000</alpha>
+        <alphas></alphas>
+        <extents>-180.000000000000000 -90.000000000000000 180.000000000000000 90.000000000000000</extents>
+        <id>392dee05-e134-4a46-8f3c-c1994e60b5d3</id>
+        <layers>
+          <element TypeName="RasterLayerWms">
+            <alpha>1.000000</alpha>
+            <alphas></alphas>
+            <extents>-180.000000000000000 -90.000000000000000 180.000000000000000 90.000000000000000</extents>
+            <id>92c0848b-0844-4962-be1d-b43218e88bd7</id>
+            <level_range>0 4294967295</level_range>
+            <max_num_attempts>5</max_num_attempts>
+            <name>SERV SRTM</name>
+            <options>
+              <element>
+                <key>format</key>
+                <value>image/tiff</value>
+              </element>
+              <element>
+                <key>layers</key>
+                <value>srtmplus</value>
+              </element>
+              <element>
+                <key>request</key>
+                <value>GetMap</value>
+              </element>
+              <element>
+                <key>service</key>
+                <value>WMS</value>
+              </element>
+              <element>
+                <key>srs</key>
+                <value>EPSG:4326</value>
+              </element>
+              <element>
+                <key>styles</key>
+                <value></value>
+              </element>
+              <element>
+                <key>version</key>
+                <value>1.1.1</value>
+              </element>
+            </options>
+            <read_failed_flags>false</read_failed_flags>
+            <targetId></targetId>
+            <url>http://serv.asu.edu/cgi-bin/srtm.cgi</url>
+            <use_network>true</use_network>
+            <visibility>true</visibility>
+            <write_failed_flags>false</write_failed_flags>
+          </element>
+        </layers>
+        <level_range>0 4294967295</level_range>
+        <name>Elevation</name>
+        <targetId></targetId>
+        <use_in_memory_image_cache>false</use_in_memory_image_cache>
+        <visibility>true</visibility>
+      </elevation_group>
+      <image_size>256 256</image_size>
+      <land_model TypeName="LandModelEllipsoid">
+        <radii>6378137.000000000000000 6356752.314199999906123</radii>
+      </land_model>
+      <max_anisotropic_texture_filtering>16.000000</max_anisotropic_texture_filtering>
+      <max_level>50</max_level>
+      <mesh_size>17 17</mesh_size>
+      <name>Body</name>
+      <raster_group TypeName="RasterGroup">
+        <alpha>1.000000</alpha>
+        <alphas></alphas>
+        <extents>-180.000000000000000 -90.000000000000000 180.000000000000000 90.000000000000000</extents>
+        <id>e4f20e43-bf1f-41cb-95eb-cbd18716fa4e</id>
+        <layers>
+          <element TypeName="RasterLayerWms">
+            <alpha>1.000000</alpha>
+            <alphas></alphas>
+            <extents>-180.000000000000000 -90.000000000000000 180.000000000000000 90.000000000000000</extents>
+            <id>00d788df-f948-490f-ba40-6a723251c899</id>
+            <level_range>0 4294967295</level_range>
+            <max_num_attempts>5</max_num_attempts>
+            <name>OpenAerialMap</name>
+            <options>
+              <element>
+                <key>format</key>
+                <value>image/jpeg</value>
+              </element>
+              <element>
+                <key>layers</key>
+                <value>OpenAerialMap</value>
+              </element>
+              <element>
+                <key>request</key>
+                <value>GetMap</value>
+              </element>
+              <element>
+                <key>service</key>
+                <value>WMS</value>
+              </element>
+              <element>
+                <key>srs</key>
+                <value>EPSG:4326</value>
+              </element>
+              <element>
+                <key>styles</key>
+                <value></value>
+              </element>
+              <element>
+                <key>version</key>
+                <value>1.1.1</value>
+              </element>
+            </options>
+            <read_failed_flags>false</read_failed_flags>
+            <targetId></targetId>
+            <url>http://serv.asu.edu/cgi-bin/tilecache-2.03/tilecache.cgi</url>
+            <use_network>true</use_network>
+            <visibility>true</visibility>
+            <write_failed_flags>false</write_failed_flags>
+          </element>
+        </layers>
+        <level_range>0 4294967295</level_range>
+        <name>Rasters</name>
+        <targetId></targetId>
+        <use_in_memory_image_cache>false</use_in_memory_image_cache>
+        <visibility>true</visibility>
+      </raster_group>
+      <scale>1.000000000000000</scale>
+      <split_callback TypeName="PassThrough"></split_callback>
+      <split_distance>19134411.000000000000000</split_distance>
+      <tiles>
+        <element>-180.000000000000000 -90.000000000000000 0.000000000000000 90.000000000000000</element>
+        <element>0.000000000000000 -90.000000000000000 180.000000000000000 90.000000000000000</element>
+      </tiles>
+      <transformation>1.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 1.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 1.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 1.000000000000000</transformation>
+      <use_borders>true</use_borders>
+      <use_skirts>true</use_skirts>
+      <vector_group TypeName="Container">
+        <comments>
+          <element>This comment will get read and written again</element>
+          <element>There can be more than one comment</element>
+        </comments>
+        <extents>0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000</extents>
+        <id>dd510654-449f-4c16-a31e-874864a8381f</id>
+        <layers></layers>
+        <name>Vector</name>
+        <targetId></targetId>
+        <visibility>true</visibility>
+      </vector_group>
+    </element>
+  </bodies>
+  <time_spans></time_spans>
+</MinervaDocument>

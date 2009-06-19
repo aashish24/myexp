@@ -1,0 +1,98 @@
+/****************************************************************************
+** Meta object code from reading C++ file 'LayersTree.h'
+**
+** Created: Thu Apr 30 11:46:41 2009
+**      by: The Qt Meta Object Compiler version 59 (Qt 4.4.2)
+**
+** WARNING! All changes made in this file will be lost!
+*****************************************************************************/
+
+#include "../../../../Minerva/Plugins/LayerManager/LayersTree.h"
+#if !defined(Q_MOC_OUTPUT_REVISION)
+#error "The header file 'LayersTree.h' doesn't include <QObject>."
+#elif Q_MOC_OUTPUT_REVISION != 59
+#error "This file was generated using the moc from 4.4.2. It"
+#error "cannot be used with the include files from this version of Qt."
+#error "(The moc has changed too much.)"
+#endif
+
+QT_BEGIN_MOC_NAMESPACE
+static const uint qt_meta_data_Minerva__LayersTree[] = {
+
+ // content:
+       1,       // revision
+       0,       // classname
+       0,    0, // classinfo
+       7,   10, // methods
+       0,    0, // properties
+       0,    0, // enums/sets
+
+ // signals: signature, parameters, type, tag, flags
+      27,   21,   20,   20, 0x05,
+
+ // slots: signature, parameters, type, tag, flags
+      79,   74,   20,   20, 0x09,
+     109,   74,   20,   20, 0x09,
+     139,  135,   20,   20, 0x09,
+     166,   20,   20,   20, 0x09,
+     189,   20,   20,   20, 0x09,
+     209,   20,   20,   20, 0x09,
+
+       0        // eod
+};
+
+static const char qt_meta_stringdata_Minerva__LayersTree[] = {
+    "Minerva::LayersTree\0\0layer\0"
+    "addLayerFavorites(Usul::Interfaces::IUnknown*)\0"
+    "node\0_onTreeNodeChanged(TreeNode*)\0"
+    "_onDoubleClick(TreeNode*)\0pos\0"
+    "_onContextMenuShow(QPoint)\0"
+    "_onAddLayerFavorites()\0_onSliderReleased()\0"
+    "_onItemSelectionChanged()\0"
+};
+
+const QMetaObject Minerva::LayersTree::staticMetaObject = {
+    { &QWidget::staticMetaObject, qt_meta_stringdata_Minerva__LayersTree,
+      qt_meta_data_Minerva__LayersTree, 0 }
+};
+
+const QMetaObject *Minerva::LayersTree::metaObject() const
+{
+    return &staticMetaObject;
+}
+
+void *Minerva::LayersTree::qt_metacast(const char *_clname)
+{
+    if (!_clname) return 0;
+    if (!strcmp(_clname, qt_meta_stringdata_Minerva__LayersTree))
+        return static_cast<void*>(const_cast< LayersTree*>(this));
+    return QWidget::qt_metacast(_clname);
+}
+
+int Minerva::LayersTree::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+{
+    _id = QWidget::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: addLayerFavorites((*reinterpret_cast< Usul::Interfaces::IUnknown*(*)>(_a[1]))); break;
+        case 1: _onTreeNodeChanged((*reinterpret_cast< TreeNode*(*)>(_a[1]))); break;
+        case 2: _onDoubleClick((*reinterpret_cast< TreeNode*(*)>(_a[1]))); break;
+        case 3: _onContextMenuShow((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 4: _onAddLayerFavorites(); break;
+        case 5: _onSliderReleased(); break;
+        case 6: _onItemSelectionChanged(); break;
+        }
+        _id -= 7;
+    }
+    return _id;
+}
+
+// SIGNAL 0
+void Minerva::LayersTree::addLayerFavorites(Usul::Interfaces::IUnknown * _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+QT_END_MOC_NAMESPACE

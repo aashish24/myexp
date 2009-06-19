@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MinervaDocument>
+  <bodies>
+    <element TypeName="Body">
+      <alpha>1.000000</alpha>
+      <cache_tiles>false</cache_tiles>
+      <elevation_group TypeName="ElevationGroup">
+        <alpha>1.000000</alpha>
+        <alphas></alphas>
+        <extents>0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000</extents>
+        <id>a11aa6a9-5031-426b-907f-e88479286992</id>
+        <layers></layers>
+        <level_range>0 4294967295</level_range>
+        <name>Elevation</name>
+        <targetId></targetId>
+        <use_in_memory_image_cache>false</use_in_memory_image_cache>
+        <visibility>true</visibility>
+      </elevation_group>
+      <image_size>256 256</image_size>
+      <land_model TypeName="LandModelEllipsoid">
+        <radii>6378137.000000000000000 6356752.314199999906123</radii>
+      </land_model>
+      <max_anisotropic_texture_filtering>16.000000</max_anisotropic_texture_filtering>
+      <max_level>50</max_level>
+      <mesh_size>17 17</mesh_size>
+      <name>Body</name>
+      <raster_group TypeName="RasterGroup">
+        <alpha>1.000000</alpha>
+        <alphas></alphas>
+        <extents>-179.995833333333309 -89.995833333326146 179.995833333326146 89.995833333333337</extents>
+        <id>aad0d243-7f3b-4499-8186-0ea063822e75</id>
+        <layers>
+          <element TypeName="RasterLayerOssim">
+            <alpha>1.000000</alpha>
+            <alphas></alphas>
+            <extents>-179.995833333333309 -89.995833333326146 -0.004166666673825 89.995833333333337</extents>
+            <filename>/store/home/aashish/data/gis/blue_marble/earth/land_shallow_topo_west_tiled.tif</filename>
+            <id>cfe29852-6b53-4251-bef4-ec0c667fcd0a</id>
+            <level_range>0 4294967295</level_range>
+            <name>/store/home/aashish/data/gis/blue_marble/earth/land_shallow_topo_west_tiled.tif</name>
+            <targetId></targetId>
+            <visibility>true</visibility>
+          </element>
+          <element TypeName="RasterLayerOssim">
+            <alpha>1.000000</alpha>
+            <alphas></alphas>
+            <extents>0.004166666666667 -89.995833333326146 179.995833333326146 89.995833333333337</extents>
+            <filename>/store/home/aashish/data/gis/blue_marble/earth/land_shallow_topo_east_tiled.tif</filename>
+            <id>9febceb3-f381-4463-8144-71a5d1dea114</id>
+            <level_range>0 4294967295</level_range>
+            <name>/store/home/aashish/data/gis/blue_marble/earth/land_shallow_topo_east_tiled.tif</name>
+            <targetId></targetId>
+            <visibility>true</visibility>
+          </element>
+        </layers>
+        <level_range>0 4294967295</level_range>
+        <name>Rasters</name>
+        <targetId></targetId>
+        <use_in_memory_image_cache>false</use_in_memory_image_cache>
+        <visibility>true</visibility>
+      </raster_group>
+      <scale>1.000000000000000</scale>
+      <split_callback TypeName="PassThrough"></split_callback>
+      <split_distance>19134411.000000000000000</split_distance>
+      <tiles>
+        <element>-180.000000000000000 -90.000000000000000 0.000000000000000 90.000000000000000</element>
+        <element>0.000000000000000 -90.000000000000000 180.000000000000000 90.000000000000000</element>
+      </tiles>
+      <transformation>1.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 1.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 1.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000 1.000000000000000</transformation>
+      <use_borders>true</use_borders>
+      <use_skirts>true</use_skirts>
+      <vector_group TypeName="Container">
+        <comments>
+          <element>This comment will get read and written again</element>
+          <element>There can be more than one comment</element>
+        </comments>
+        <extents>0.000000000000000 0.000000000000000 0.000000000000000 0.000000000000000</extents>
+        <id>101d0607-62c7-4716-a8ad-4c6e78752e92</id>
+        <layers></layers>
+        <name>Vector</name>
+        <targetId></targetId>
+        <visibility>true</visibility>
+      </vector_group>
+    </element>
+  </bodies>
+  <time_spans></time_spans>
+</MinervaDocument>
