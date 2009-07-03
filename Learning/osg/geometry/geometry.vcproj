@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="Examples osgshaders"
+	Name="geometry"
 	ProjectGUID="{BDF67EB0-BEFA-43DB-AF74-D0DC337FB26B}"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="0"
@@ -412,7 +412,7 @@
 			Name="Source Files"
 			>
 			<File
-				RelativePath="..\..\..\..\..\osg\osg-2.8.1-rc4\OpenSceneGraph-2.8.1-rc4\examples\osgshaders\main.cpp"
+				RelativePath=".\main.cpp"
 				>
 			</File>
 		</Filter>
