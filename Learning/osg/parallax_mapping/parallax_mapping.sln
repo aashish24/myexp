@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Examples osgshaders", "example_osgshaders.vcproj", "{BDF67EB0-BEFA-43DB-AF74-D0DC337FB26B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Examples osgshaders", "parallax_mapping.vcproj", "{BDF67EB0-BEFA-43DB-AF74-D0DC337FB26B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

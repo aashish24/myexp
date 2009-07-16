@@ -2,7 +2,10 @@ varying vec3 n;
 varying vec3 t;
 varying vec3 b;
 
+// Vertex position. 
 varying vec3 iv;
+
+// Light position. 
 varying vec3 il;
 
 void main()
@@ -17,5 +20,5 @@ void main()
 	b = normalize( gl_NormalMatrix * gl_TexCoord[2].xyz );
 		
 	iv = vec3( gl_ModelViewMatrix * gl_Vertex );
-	il = vec3( 0.0, 100.0, 1000.0 );
+	il = vec3( 0.0, 10.0, 1.0 );	
 }
