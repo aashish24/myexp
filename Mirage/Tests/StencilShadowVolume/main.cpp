@@ -183,21 +183,9 @@ void init()
     std::exit( 0 );
   }
 
-  // Get the path from the environment. 
-  char* msgRootDir = getenv( "MSG_ROOT_DIR" );
-  
-  // If we dont have this environment variable defined then curret directory
-  // if msgRotoDir. 
-  if( !msgRootDir )
-  {
-    msgRootDir = ".";
-  }
-
-  std::string lookUpPath = std::string( msgRootDir );
-
   // Read geometry files. 
   Core::SmartPtr< Core::Node > model1 =  
-    System::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cylinder.obj" ) );
+    System::FileRead::readFile( std::string( "./../..///Data//Models//Cylinder.obj" ) );
 
   if( model1.valid() )
   {
@@ -209,7 +197,7 @@ void init()
   }
 
   Core::SmartPtr< Core::Node > model2 =  
-    System::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cone.obj" ) );
+    System::FileRead::readFile( std::string( "./../..///Data//Models//Cone.obj" ) );
 
   if( model2.valid() )
   {
@@ -222,7 +210,7 @@ void init()
 
 
   Core::SmartPtr< Core::Node > floor =  
-    System::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Floor.obj" ) );
+    System::FileRead::readFile( std::string( "./../..///Data//Models//Floor.obj" ) );
 
   if( floor.valid() )
   {
