@@ -1,0 +1,54 @@
+VJ_BASE_DIR=/research/tools_gentoo/vrjuggler/vrjuggler.2.2.1/install/x86_64.gcc-4_1_2.debug
+INC_DIR=${VJ_BASE_DIR}/include
+LIB_DIR=${VJ_BASE_DIR}/lib64
+
+GDAL_ROOT=/store/home/dbhattarai/usr
+
+GDAL_INC_DIR=${GDAL_ROOT}/include
+GDAL_LIB_DIR=${GDAL_ROOT}/lib
+CPPDOM_INC_DIR=/research/tools_gentoo/cppdom/cppdom.0.7.10/install/x86_64.gcc-4_1_2.debug/include/cppdom-0.7.10
+
+INC_DIRS=-I${INC_DIR}/gadgeteer-1.2 -I${INC_DIR}/jccl-1.2 -I${INC_DIR}/vrjuggler-2.2 -I${INC_DIR}/vpr-2.0 -I${OPENSG_INC_DIR} -I${GMTL_INC_DIR}/gmtl-0.5.4 -I${GDAL_INC_DIR} -I${CPPDOM_INC_DIR}
+
+LIB_DIRS=-L${LIB_DIR} -L${OPENSG_LIB_DIR} -L${COLLADA_LIB_DIR} -L${BOOST_LIB_DIR} -L${GDAL_LIB_DIR}
+
+LIBS=-lvrj_ogl-2_2 -lGLU -lGL -lXmu -lX11 -lgdal
+#LIBS=-lvrj_ogl-2_2
+
+LIBTYPE ?= dbg
+
+# set the path to the installed osg-config executable here
+# i.e. if you installed in /usr/local it is
+OPENSG_ROOT_DIR=${HOME}/usr
+OSGCONFIG :=  ${OPENSG_ROOT_DIR}/bin/osg2-config
+
+# use osg-config to set the options needs to compile and link
+CCFLAGS = $(shell $(OSGCONFIG) --cflags --$(LIBTYPE) Base System GLUT)
+LDFLAGS = $(shell $(OSGCONFIG) --libs --$(LIBTYPE) Base System Util State Group FileIO ImageFileIO)
+
+CXXFLAGS=-m64 -g -O2
+
+CXX=g++ -g -O2
+
+vpath %.cpp src
+vpath %.h src
+
+all: VRJugglerStub.o TerrainApp.o terrain.o
+	${CXX} ${CXXFLAGS} ${LIB_DIRS} ${LIBS} ${LDFLAGS} -o terrainsg TerrainApp.o VRJugglerStub.o terrain.o
+
+%.o: %.cpp
+	${CXX} ${INC_DIRS} -c $< 
+
+#VRJugglerStub.o: VRJugglerStub.cpp VRJugglerStub.h
+#	${CXX} ${INC_DIRS} -c VRJugglerStub.cpp
+
+#TerrainApp.o: TerrainApp.cpp TerrainApp.h
+#	${CXX} ${INC_DIRS} -c TerrainApp.cpp
+
+#terrain.o: terrain.cpp VRJugglerStub.h TerrainApp.h
+#	${CXX} ${INC_DIRS} -c terrain.cpp
+
+.PHONY: clean
+
+clean:
+	rm -f *.o terrainsg 

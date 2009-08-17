@@ -1,0 +1,37 @@
+INC_DIRS=-I${GMTL_INC_DIR}/gmtl-0.5.4
+CXX=g++
+CXXFLAGS=-m64 -g -O2
+
+all: AsfParser.o Skeleton.o BoneInfo.o testAsfParser.o 
+	${CXX} ${CXXFLAGS} ${LIB_DIRS} ${LIBS} ${LDFLAGS} -o asfparser $?
+
+%.o: %.cpp
+	${CXX} ${CXXFLAGS} ${INC_DIRS} -c $< 
+
+.PHONY: clean
+
+clean:
+	rm -f *.o asfparser 
+
+# File : Makefile
+# Very general use makefile for compiling OpenSG Programs
+# This makefile will compile every programm in this folder
+# with a filename like this 01******.cpp
+# "opt" if you use the optimized library otherwise it is "dbg"
+LIBTYPE ?= dbg
+
+# set the path to the installed osg-config executable here
+# i.e. if you installed in /usr/local it is
+
+OSGDIR= /research/tools/opensg/current/linux.x86_64.gcc.debug
+
+OSGCONFIG := $(OSGDIR)/bin/osg-config
+ 
+# use osg-config to set the options needs to compile and link
+#CC = "$(shell $(OSGCONFIG) --compiler)"
+CC=$(shell $(OSGCONFIG) --compiler)
+CCFLAGS = $(shell $(OSGCONFIG) --cflags --$(LIBTYPE) Base System GLUT)
+LDFLAGS = $(shell $(OSGCONFIG) --libs --$(LIBTYPE) Base System GLUT)
+
+demo: osgdemo.cpp
+	${CC} ${CCFLAGS} ${LDFLAGS} -o osgdemo osgdemo.cpp
