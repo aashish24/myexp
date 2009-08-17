@@ -1,1 +1,0 @@
-Debug version is causing problem... application did not initialized properly
