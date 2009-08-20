@@ -57,11 +57,14 @@ static const GLfloat                      _lightDiffuse[]   = { 5.0f, 0.0f, 0.0f
 static const GLfloat                      _lightSpecular[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 static GLfloat                            _lightPosition[]  = { 0.0f, 0.0f, 0.0f, 1.0 };
+static const double                       _epsilon = 3.0e-5F;
 
 GLdouble                                  _top;
 GLdouble                                  _bottom;
 GLdouble                                  _left;
 GLdouble                                  _right;
+GLdouble                                  _near;
+
 
 MsgCore::SmartPtr< MsgCore::Material >    _matBlue          ( new MsgCore::Material() );
 MsgCore::SmartPtr< MsgCore::Material >    _matRed           ( new MsgCore::Material() );
@@ -180,9 +183,21 @@ void init()
     std::exit( 0 );
   }
 
+  // Get the path from the environment. 
+  char* msgRootDir = getenv( "MSG_ROOT_DIR" );
+  
+  // If we dont have this environment variable defined then curret directory
+  // if msgRotoDir. 
+  if( !msgRootDir )
+  {
+    msgRootDir = ".";
+  }
+
+  std::string lookUpPath = std::string( msgRootDir );
+
   // Read geometry files. 
   MsgCore::SmartPtr< MsgCore::Node > model1 =  
-    MsgDB::FileRead::readFile( std::string( ".//..//..//..//..//Data//Models//Cylinder.obj" ) );
+    MsgDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cylinder.obj" ) );
 
   if( model1.valid() )
   {
@@ -194,7 +209,7 @@ void init()
   }
 
   MsgCore::SmartPtr< MsgCore::Node > model2 =  
-    MsgDB::FileRead::readFile( std::string( ".//..//..//..//..//Data//Models//Cone.obj" ) );
+    MsgDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cone.obj" ) );
 
   if( model2.valid() )
   {
@@ -207,7 +222,7 @@ void init()
 
 
   MsgCore::SmartPtr< MsgCore::Node > floor =  
-    MsgDB::FileRead::readFile( std::string( ".//..//..//..//..//Data//Models//Floor.obj" ) );
+    MsgDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Floor.obj" ) );
 
   if( floor.valid() )
   {
@@ -549,33 +564,34 @@ void pushInfProjection()
 {
   if( _glDepthClampNV )
   {
+    glEnable( GL_DEPTH_CLAMP_NV );
     return;
   }
 
   // We need to use this matrix if NVIDIA GL CLAMP extension is not available.  
   glMatrixMode( GL_PROJECTION );
   glPushMatrix();
-  glLoadIdentity();
+  glLoadIdentity();  
 
-  // Value for the near plane. 
-  double _near = 1.0;
+  GLdouble mat[] = { ( 2.0 * _near ) / ( _right-_left ),
+                      0.0, 
+                      0.0, 
+                      0.0, 
 
-  GLdouble mat[] = { ( 2 * _near ) / ( _right-_left ),
-                      0, 
-                      0, 
-                      0, 
-                      0, 
-                      ( 2 * _near ) / ( _top-_bottom ), 
-                      0, 
-                      0, 
-                      ( _right+_left ) / ( _right-_left ),
-                      ( _top+_bottom ) / ( _top-_bottom ), 
-                      -1,
-                      -1,
-                      0, 
-                      0, 
-                      ( -2 * _near ),
-                      0
+                      0.0, 
+                      ( 2.0 * _near ) / ( _top -_bottom ), 
+                      0.0, 
+                      0.0,
+
+                      ( _right + _left ) / ( _right - _left ),
+                      ( _top + _bottom ) / ( _top - _bottom ), 
+                      _epsilon - 1.0,
+                      -1.0,
+
+                      0.0,
+                      0.0, 
+                      ( _epsilon - 2.0 )* _near,
+                      0.0
                     };
   glMultMatrixd( mat );  
 
@@ -586,6 +602,7 @@ void popInfProjection()
 {
   if( _glDepthClampNV )
   {
+    glDisable( GL_DEPTH_CLAMP_NV );
     return;
   }
 
@@ -754,6 +771,7 @@ void setPerspective( GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zF
   _bottom = -_top;
   _right = aspect*_top;
   _left = -_right;
+  _near = zNear;  
   glMatrixMode( GL_PROJECTION );
   glLoadIdentity();
   glFrustum( _left, _right, _bottom, _top, zNear, zFar );
@@ -871,14 +889,13 @@ int main( int argc, char** argv )
 
   glutCreateWindow( "StencilShadowVolume: Author Aashish Chaudhary" ); 
 
-   // GLEW init for FBOs
   GLenum err = glewInit();
 
   if( GLEW_OK == err ) 
-  {
-    if( glewIsSupported( "GL_DEPTH_CLAMP_NV" ) )
+  { 
+    if(glewIsSupported("GL_NV_depth_clamp"))
     {
-      std::cout << " Nvidia GL_DEPTH_CLAMP_NV is available: " << std::endl;
+      std::cout << " Nvidia GL_NV_depth_clamp extension is available: " << std::endl;
       _glDepthClampNV = true;
     }
     else
