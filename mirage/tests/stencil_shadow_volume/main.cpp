@@ -197,7 +197,7 @@ void init()
 
   // Read geometry files. 
   MsgCore::SmartPtr< MsgCore::Node > model1 =  
-    MsgDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cylinder.obj" ) );
+    MsgDB::FileRead::readFile( std::string("C:\\aashish\\src\\osve\\data\\Models\\Cylinder.obj" ) );
 
   if( model1.valid() )
   {
@@ -209,7 +209,7 @@ void init()
   }
 
   MsgCore::SmartPtr< MsgCore::Node > model2 =  
-    MsgDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Cone.obj" ) );
+    MsgDB::FileRead::readFile( std::string("C:\\aashish\\src\\osve\\data\\Models\\Cone.obj" ) );
 
   if( model2.valid() )
   {
@@ -222,7 +222,7 @@ void init()
 
 
   MsgCore::SmartPtr< MsgCore::Node > floor =  
-    MsgDB::FileRead::readFile( msgRootDir + std::string( "//Data//Models//Floor.obj" ) );
+    MsgDB::FileRead::readFile( std::string("C:\\aashish\\src\\osve\\data\\Models\\Floor.obj" ) );
 
   if( floor.valid() )
   {
