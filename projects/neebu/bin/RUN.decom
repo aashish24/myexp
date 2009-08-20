@@ -1,0 +1,23 @@
+#!/bin/bash
+# File: RUN
+
+source /research/tools/lite/scripts/literc
+source /research/tools/lite/scripts/litepackage vrjuggler 2.2.0
+
+export LD_LIBRARY_PATH="/store/home/carsten/devel/opensg1/cvs-head/OpenSG/Builds/x86_64-unknown-linux-gnu-g++/lib/dbg:/store/home/carsten/software/lib:${LD_LIBRARY_PATH}"
+
+export APP_NAME="OTCLoader"
+export APP_PATH="/store/home/carsten/devel/projects/OTCLoader"
+export APP_BINARY="OTCLoader"
+
+APP_ARGS="${APP_ARGS} --config-file=models/decom.cfg "
+APP_ARGS="${APP_ARGS} --vjconfig-file=vjconfig/display.jconf "
+APP_ARGS="${APP_ARGS} --vjconfig-file=vjconfig/input.jconf "
+APP_ARGS="${APP_ARGS} --vjconfig-file=vjconfig/alias.jconf "
+APP_ARGS="${APP_ARGS} --material-file=mat_otc.txt "
+
+export APP_ARGS
+export VJ_CFG_PATH=\${VJ_CFG_PATH}:\${APP_PATH}
+
+echo "${APP_PATH}/${LITE_BUILD}/${APP_BINARY} ${APP_ARGS}"
+${APP_PATH}/${LITE_BUILD}/${APP_BINARY} ${APP_ARGS} 2>&1 | tee runlog.txt

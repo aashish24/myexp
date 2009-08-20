@@ -1,0 +1,22 @@
+Tags / Branches:
+=====================================================================
+
+Release 
+-------
+	Branches
+		VJCINEMA_RELEASE_VERSIONNAME_BRANCH
+	Tags	
+		VJCINEMA_RELEASE_VERSIONNAME
+
+Development branches
+--------------------
+	Branches
+		VJCINEMA_DEV_VERSIONNAME_BRANCH
+	Tags	
+		VJCINEMA_DEV_VERSIONNAME
+
+
+
+
+
+

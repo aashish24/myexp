@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?org-vrjuggler-jccl-settings configuration.version="3.0"?>
+<configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
+   <include>component/sim/viz.cluster.base.jconf</include>
+   <include>component/sim/viz.cluster.controller.viz0.jconf</include>
+   <include>component/joystick.viz0.jconf</include>
+   <include>component/nodes/viz0.jconf</include>
+   <include>component/nodes/viz1.jconf</include>
+   <include>component/nodes/viz2.jconf</include>
+   <include>component/nodes/viz3.jconf</include>
+   <include>component/nodes/viz4.jconf</include>
+   <include>component/nodes/viz5.jconf</include>
+   <include>component/nodes/viz6.jconf</include>
+   <include>component/viz.cluster.plugins.7_screen.jconf</include>
+   <elements />
+</configuration>
+

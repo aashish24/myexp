@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?org-vrjuggler-jccl-settings configuration.version="3.0"?>
+<configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="/store/toolkit/VRJFiles/final/flex/flex.base.jconf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
+   <elements>
+      <digital_proxy name="VJStopKernel Proxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>0</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01Button0Proxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>1</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01Button1Proxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>2</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01Button2Proxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>3</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01Button3Proxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>4</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01Button4Proxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>5</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01Button5Proxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>6</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01Button6Proxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>7</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01Button7Proxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>8</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01Button8Proxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>9</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01Button9Proxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>10</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonAProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>11</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonBProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>12</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonCProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>13</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonDProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>14</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonEProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>15</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonFProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>16</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonGProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>17</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonHProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>18</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonIProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>19</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonJProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>20</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonKProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>21</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonLProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>22</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonMProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>23</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonNProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>24</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonOProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>25</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonPProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>26</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonQProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>27</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonRProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>28</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonSProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>29</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonTProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>30</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonUProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>31</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonVProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>32</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonWProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>33</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonXProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>34</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonYProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>35</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonZProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>36</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonALTProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>37</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonCTRLProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>38</unit>
+      </digital_proxy>
+      <digital_proxy name="Km01ButtonSHIFTProxy" version="1">
+         <device>DigitalSystemsControlls</device>
+         <unit>39</unit>
+      </digital_proxy>
+      <keyboard_mouse_device name="Keyboard/Mouse Device" version="1">
+         <mouse_sensitivity>1.0</mouse_sensitivity>
+         <device_host>Node(ws6)</device_host>
+      </keyboard_mouse_device>
+      <keyboard_mouse_proxy name="Keyboard Proxy" version="1">
+         <device>Keyboard/Mouse Device</device>
+      </keyboard_mouse_proxy>
+      <simulated_digital_device name="DigitalSystemsControlls" version="2">
+         <keyboard_mouse_proxy>Keyboard Proxy</keyboard_mouse_proxy>
+         <key_pair>
+            <key_modifier_pair name="Exit" version="1">
+               <modifier_key>-1</modifier_key>
+               <key>KEY_ESC</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_0" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_0</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_1" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_1</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_2" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_2</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_3" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_3</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_4" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_4</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_5" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_5</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_6" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_6</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_7" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_7</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_8" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_8</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_9" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_9</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_A" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_A</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_B" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_B</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_C" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_C</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_D" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_D</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_E" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_E</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_F" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_F</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_G" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_G</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_H" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_H</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_I" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_I</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_J" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_J</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_K" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_K</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_L" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_L</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_M" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_M</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_N" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_N</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_O" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_O</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_P" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_P</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_Q" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_Q</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_R" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_R</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_S" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_S</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_T" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_T</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_U" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_U</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_V" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_V</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_W" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_W</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_X" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_X</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_Y" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_Y</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_Z" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_Z</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_ALT" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_ALT</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_CTRL" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_CTRL</key>
+            </key_modifier_pair>
+         </key_pair>
+         <key_pair>
+            <key_modifier_pair name="Key_SHIFT" version="1">
+               <modifier_key>ANY</modifier_key>
+               <key>KEY_SHIFT</key>
+            </key_modifier_pair>
+         </key_pair>
+         <device_host>Node(ws6)</device_host>
+      </simulated_digital_device>
+   </elements>
+</configuration>
+

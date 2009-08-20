@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?org-vrjuggler-jccl-settings configuration.version="3.0"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="Configuration" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
+<include>component/sim/prism.cluster.base.implant.jconf</include>
+<include>component/sim/prism.controller.aristotle.jconf</include>
+<include>component/nodes/aristotle.jconf</include>
+<include>component/nodes/ptolemy.jconf</include>
+<include>component/nodes/euclid.jconf</include>
+<include>component/nodes/thales.jconf</include>
+<include>component/prism-cluster.jconf</include>
+<elements>
+</elements>
+</configuration>

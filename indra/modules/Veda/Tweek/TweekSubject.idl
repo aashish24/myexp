@@ -1,0 +1,19 @@
+
+#ifndef __CORE_TWEEKSUBJECT_IDEL_H__
+#define __CORE_TWEEKSUBJECT_IDEL_H__
+
+#include "tweek/idl/Subject.idl"
+
+module Veda
+{  
+	module ITweek
+	{
+		interface TweekSubject : tweek::Subject
+		{		
+			void setCommand( in string key, in string value );    
+		};
+	};
+};
+
+#endif  // __CORE_TWEEKSUBJECT_IDEL_H__
+
