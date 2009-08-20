@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(GLEW_INC_DIR);.\..\..\modules;"
+				AdditionalIncludeDirectories="$(GLEW_INC_DIR);.\..\..\modules;$(GLUT_INC_DIR);"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="0"
@@ -63,9 +63,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glew32d.lib"
-				OutputFile="$(MSG_ROOT_DIR)\$(ProjectName)d.exe"
+				OutputFile="$(MSG_ROOT_DIR)\bin\$(ProjectName)_d.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(GLEW_BIN_DIR)"
+				AdditionalLibraryDirectories="$(GLEW_LIB_DIR);$(GLUT_LIB_DIR);"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				RandomizedBaseAddress="1"

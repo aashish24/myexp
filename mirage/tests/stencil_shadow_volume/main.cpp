@@ -180,12 +180,9 @@ void init()
     std::exit( 0 );
   }
 
-
-  std::string lookUpPath = std::string( msgRootDir );
-
   // Read geometry files. 
   MsgCore::SmartPtr< MsgCore::Node > model1 =  
-    MsgDB::FileRead::readFile( std::string( ".//..//..//Data//Models//Cylinder.obj" ) );
+    MsgDB::FileRead::readFile( std::string( ".//..//..//..//..//Data//Models//Cylinder.obj" ) );
 
   if( model1.valid() )
   {
@@ -197,7 +194,7 @@ void init()
   }
 
   MsgCore::SmartPtr< MsgCore::Node > model2 =  
-    MsgDB::FileRead::readFile( std::string( ".//..//..//Data//Models//Cone.obj" ) );
+    MsgDB::FileRead::readFile( std::string( ".//..//..//..//..//Data//Models//Cone.obj" ) );
 
   if( model2.valid() )
   {
@@ -210,7 +207,7 @@ void init()
 
 
   MsgCore::SmartPtr< MsgCore::Node > floor =  
-    MsgDB::FileRead::readFile( std::string( ".//..//..//Data//Models//Floor.obj" ) );
+    MsgDB::FileRead::readFile( std::string( ".//..//..//..//..//Data//Models//Floor.obj" ) );
 
   if( floor.valid() )
   {
