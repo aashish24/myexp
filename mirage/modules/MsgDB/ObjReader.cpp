@@ -10,6 +10,11 @@
 
 #include <fstream>
 
+#ifdef WIN32
+#define OS	WINDOWS
+#else
+#define OS OTHER
+#endif
 using namespace Msg::MsgCore;
 
 namespace Msg
@@ -57,7 +62,11 @@ namespace Msg
 		      if( strncmp( line, "v ", 2 ) == 0 )
 		      {
 			      // Read all the vertices here. 
+				  #ifdef WIN32
 			      unsigned int fieldsRead = sscanf_s( line+2,"%f %f %f %f", &x, &y, &z, &w );
+				 #else
+				 unsigned int fieldsRead = sscanf( line+2,"%f %f %f %f", &x, &y, &z, &w );
+				#endif
             if ( fieldsRead==1 ) model->_vertices->push_back( MsgMath::Vec3d( x,0.0f,0.0f ) );
 			      else if ( fieldsRead==2 ) model->_vertices->push_back( MsgMath::Vec3d( x,y,0.0f ) );
 			      else if ( fieldsRead==3 ) model->_vertices->push_back( MsgMath::Vec3d( x,y,z ) );
@@ -82,8 +91,12 @@ namespace Msg
                 ++ptr;
               }
     				 
-              // Read all the indices here. 			
+              // Read all the indices here. 		
+					#ifdef WIN32
 				      if( sscanf_s( ptr, "%d/%d/%d", &vi, &ti, &ni ) == 3 ) 
+					#else
+						   if( sscanf( ptr, "%d/%d/%d", &vi, &ti, &ni ) == 3 ) 
+					#endif
 				      {
                 if( vi != ti || vi != ni )
                 {
@@ -98,7 +111,12 @@ namespace Msg
                 // that we have same number of values for each of them.           
                 //drawUInt->push_back( vi - 1 );					
 				      }
-				      else if( sscanf_s( ptr, "%d//%d", &vi, &ni ) == 2 )
+				      else 
+					#ifdef WIN32
+						  if( sscanf_s( ptr, "%d//%d", &vi, &ni ) == 2 )
+					#else
+							  if( sscanf( ptr, "%d//%d", &vi, &ni ) == 2 )
+					#endif
 				      {
                 if( vi != ni )
                 {
@@ -112,7 +130,12 @@ namespace Msg
                 // that we have same number of values for each of them. 
                 //drawUInt->push_back( vi - 1 );					
 				      }
-				      else if( sscanf_s( ptr, "%d/%d", &vi, &ti ) == 2 )
+				      else 
+						  #ifdef WIN32
+						  if( sscanf_s( ptr, "%d/%d", &vi, &ti ) == 2 )
+						  #else
+						  if( sscanf( ptr, "%d/%d", &vi, &ti ) == 2 )
+						  #endif
 				      {
                 if( vi != ti )
                 {
@@ -125,7 +148,12 @@ namespace Msg
                 // that we have same number of values for each of them. 
                 //drawUInt->push_back( vi - 1 );						
 				      }
-				      else if( sscanf_s( ptr, "%d", &vi ) == 1)
+				      else 
+						  #ifdef WIN32
+						  if( sscanf_s( ptr, "%d", &vi ) == 1)
+						  #else
+						  if( sscanf( ptr, "%d", &vi ) == 1)
+						  #endif
 				      {
 					      vectorIndex.push_back( vi - 1 );
       					
@@ -180,7 +208,11 @@ namespace Msg
 
 		      if( strncmp( line, "vn ", 3 ) == 0 )
 		      {
+				#ifdef WIN32
 			      unsigned int fieldsRead = sscanf_s( line+3 , "%f %f %f %f", &x, &y, &z, &w );
+				#else
+				  unsigned int fieldsRead = sscanf( line+3 , "%f %f %f %f", &x, &y, &z, &w );
+				#endif
             if( fieldsRead == 1 ) model->_normals->push_back( MsgMath::Vec3d( x, 0.0, 0.0 ) );
 			      else if( fieldsRead == 1 ) model->_normals->push_back( MsgMath::Vec3d( x, 0.0, 0.0 ) );
 			      else if( fieldsRead == 2 ) model->_normals->push_back( MsgMath::Vec3d( x, y, 0.0 ) );
@@ -189,7 +221,12 @@ namespace Msg
 
           if( strncmp( line, "vt ", 3 ) == 0 )
 		      {
+				#ifdef WIN32
 			      unsigned int fieldsRead = sscanf_s( line+3 , "%f %f %f %f", &x, &y, &z, &w );
+				#else
+				  unsigned int fieldsRead = sscanf( line+3 , "%f %f %f %f", &x, &y, &z, &w );
+				#endif
+				  
             if( fieldsRead == 1 )       model->_textureCoords->push_back( MsgMath::Vec3d( x, 0.0, 0.0 ) );
 			      else if( fieldsRead == 1 )  model->_textureCoords->push_back( MsgMath::Vec3d( x, 0.0, 0.0 ) );
 			      else if( fieldsRead == 2 )  model->_textureCoords->push_back( MsgMath::Vec3d( x, y, 0.0 ) );

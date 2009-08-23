@@ -8,7 +8,11 @@
 #include "MsgCore/IUniform.h"
 
 #include "GL/glew.h"
+#ifdef __APPLE__
+#include <OpenGL/OpenGL.h>
+#else
 #include "GL/gl.h"
+#endif
 
 #include <typeinfo>
 
@@ -154,14 +158,14 @@ namespace Msg
         Uniform2() : 
           Uniform (), 
           _value1 ( 0 ), 
-          _value2 ( 0 ), 
+          _value2 ( 0 ) 
         {
         }
 
 
         Uniform2( const std::string& name, const int& location, const DATA_TYPE& value1 = 0, const DATA_TYPE& value2 = 0 ) :
           Uniform( name, location ), 
-          _value1 ( value1 )
+          _value1 ( value1 ),
           _value2 ( value2 )
         {
         }

@@ -1,14 +1,14 @@
 
 
-#include<glCore/GLViewer"
-#include<glCore/SceneManager"
-#include<glCore/Text"
-#include<glCore/User"
+#include<glCore/GLViewer>
+#include<glCore/SceneManager>
+#include<glCore/Text>
+#include<glCore/User>
 
-#include<glUtil/Animation"
-#include<glUtil/Timer"
+#include<glUtil/Animation>
+#include<glUtil/Timer>
 
-#include <glControl/Action"
+#include <glControl/Action>
 
 using namespace glUtil;
 using namespace glCore;

@@ -7,7 +7,11 @@
 #endif 
 
 #include "GL/glew.h" 
+#ifdef __APPLE__
+#include <OpenGL/OpenGL.h>
+#else
 #include "GL/gl.h"
+#endif
 
 namespace Msg
 {

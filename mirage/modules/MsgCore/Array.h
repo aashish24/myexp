@@ -8,8 +8,12 @@
 #include "MsgMath/Vector.h"
 
 #include "GL/glew.h"
-#include "GL/gl.h"
 
+#ifdef __APPLE__
+#include <OpenGL/OpenGL.h>
+#else
+#include "GL/gl.h"
+#endif
 #include <vector>
 
 namespace Msg

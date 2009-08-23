@@ -1,8 +1,12 @@
+#ifdef WIN32
+#define OS	"WINDOWS"
+#else
+#define OS "OTHER"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "TextFileReadWrite.h"
 
 namespace Msg
@@ -18,8 +22,11 @@ namespace Msg
 
 	    if (fn != NULL) 
       {
+		  #ifdef WIN32
 		    fopen_s( &fp, fn,"rt" );
-
+		  #else
+			 fp=fopen(fn,"rt" );
+		  #endif
 		    if ( fp != NULL ) 
         {
           
@@ -47,7 +54,11 @@ namespace Msg
 	    int status = 0;
 
 	    if (fn != NULL) {
+		#ifdef WIN32
 		    fopen_s( &fp, fn, "w" );
+		#else
+			fp=fopen(fn, "w" );
+		#endif
 
 		    if (fp != NULL) 
         {    			

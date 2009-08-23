@@ -148,7 +148,7 @@ namespace Msg
 				}
 
 
-				virtual unsigned int getSize() const = 0;
+				virtual size_t getSize() const = 0;
 
 
 			protected:

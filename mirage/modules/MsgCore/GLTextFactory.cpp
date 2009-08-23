@@ -1,5 +1,5 @@
 
-#include <glCore/GLTextFactory"
+#include <glCore/GLTextFactory>
 
 #include <map>
 

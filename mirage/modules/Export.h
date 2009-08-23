@@ -1,7 +1,7 @@
 
 #ifndef __MSG_EXPORT_H__
 #define __MSG_EXPORT_H__
-
+#ifdef WIN32
   #if defined( _MSC_VER )
 	  // Not sure why I am getting this warning. 
 	  #pragma warning( disable : 4251 )
@@ -18,4 +18,8 @@
       #endif    
     #endif
 #endif
+#else
+#define MSG_EXPORT 
+#endif
+
 #endif // __MSG_EXPORT_H__
