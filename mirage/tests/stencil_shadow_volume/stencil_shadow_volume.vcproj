@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(GLEW_INC_DIR);.\..\..\modules;$(GLUT_INC_DIR);"
+				AdditionalIncludeDirectories="$(GLEW_INC_DIR);;$(GLUT_INC_DIR);.\..\..\modules;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="0"

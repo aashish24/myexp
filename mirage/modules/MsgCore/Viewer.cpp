@@ -31,13 +31,13 @@ namespace Msg
     }
 
 
-    Node* Viewer::sceneData()
+    Node* Viewer::getSceneData()
     {
       return _root->child( 0 );
     }
 
 
-    void  Viewer::sceneData( Node* node )
+    void  Viewer::setSceneData( Node* node )
     {
       _root->addChild( node );
     }

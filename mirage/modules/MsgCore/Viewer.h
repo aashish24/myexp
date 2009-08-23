@@ -17,8 +17,8 @@ namespace Msg
         
         virtual void              init();
 
-        virtual Node*             sceneData();
-        virtual void              sceneData( Node* node );
+        virtual Node*             getSceneData();
+        virtual void              setSceneData( Node* node );
 
         // @Todo: Add functions to get and set visitors. 
 

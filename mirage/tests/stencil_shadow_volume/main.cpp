@@ -53,7 +53,7 @@ GLuint                                    _shadowVol;
 GLubyte                                   _shadowVolLists[MAX_LISTS];
 
 static const GLfloat                      _lightAmbient[]   = { 0.1f, 0.1f, 0.1f, 1.0f };
-static const GLfloat                      _lightDiffuse[]   = { 5.0f, 0.0f, 0.0f, 1.0f };
+static const GLfloat                      _lightDiffuse[]   = { 1.0f, 0.0f, 1.0f, 1.0f };
 static const GLfloat                      _lightSpecular[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 static GLfloat                            _lightPosition[]  = { 0.0f, 0.0f, 0.0f, 1.0 };
@@ -233,7 +233,7 @@ void init()
     throw " Model not found error: ";
   }
 
-  _viewer->sceneData( _root.get() );
+  _viewer->setSceneData( _root.get() );
 
   // Set materials. 
   if( _matBlue.valid() )
@@ -352,7 +352,7 @@ void getGeodes( std::vector< MsgCore::SmartPtr< MsgCore::Geode > >& geodes, MsgC
 void buildShadowVolume()
 {
   // Lets query the vertices. 
-  MsgCore::Node* node = _viewer->sceneData(); 
+  MsgCore::Node* node = _viewer->getSceneData(); 
   
   // Check for valid node. 
   if( !node )

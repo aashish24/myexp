@@ -57,7 +57,7 @@ void init( const int& argc, char** argv )
 
     if( _viewer.valid() )
     {
-      _viewer->sceneData( _root.get() );
+      _viewer->setSceneData( _root.get() );
     }
   }
   else

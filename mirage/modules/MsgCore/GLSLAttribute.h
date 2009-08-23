@@ -27,32 +27,32 @@ namespace Msg
 
         GLSLAttribute();
 
-        virtual void                                    init();
+        virtual void init();
 
-        virtual void                                    conextInit();
+        virtual void conextInit();
 
-			  virtual void                                    activate( Node* node );
+		    virtual void activate( Node* node );
 
-        virtual void                                    deActivate( Node* node );
+        virtual void deActivate( Node* node );
 
-        virtual void                                    addShader( GLSLShader* shader );
+        virtual void addShader( GLSLShader* shader );
 
-        virtual void                                    addUniform( Uniform* uniform );
+        virtual void addUniform( Uniform* uniform );
       
       protected:
 
         virtual ~GLSLAttribute();
 
-        void                                            set();
+        void		     set();
 
 
       private:
 
-        SmartPtr< GLSLProgram >                         _glslProgram;
+        SmartPtr< GLSLProgram >                             _glslProgram;
 
         std::map< IShader::Type, SmartPtr< GLSLShader > >   _shaders;
 
-        std::vector< SmartPtr< Uniform > >              _uniforms;
+        std::vector< SmartPtr< Uniform > >                  _uniforms;
     };
   }
 }
