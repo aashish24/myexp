@@ -12,7 +12,7 @@ namespace Msg
 {
   namespace MsgCore
   {
-    class MSG_EXPORT GLSLShader : public MsgCore::Object, public MsgCore::IShader
+    class MSG_EXPORT GLSLShader : public Object, public IShader
     {
       public: 
 
@@ -49,7 +49,7 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 
-        virtual void  source( const std::string& source );
+        virtual void  setSource( const std::string& source );
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ namespace Msg
         //
         ///////////////////////////////////////////////////////////////////////
 
-        virtual void  sourceAsFile( const std::string& fileName );
+        virtual void  setSourceAsFile( const std::string& fileName );
 
         
         ///////////////////////////////////////////////////////////////////////
@@ -68,6 +68,9 @@ namespace Msg
         ///////////////////////////////////////////////////////////////////////
 
         virtual void  compile(); 
+
+
+        Type getType() const { return _type; }
         
       
       protected: 
@@ -78,9 +81,7 @@ namespace Msg
       protected: 
 
         Type          _type;
-
         int           _glObject;
-
         std::string   _ss;
     };
   }

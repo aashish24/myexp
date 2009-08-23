@@ -2,6 +2,8 @@
 #ifndef __MSG_CORE_GLSL_ATTRIBUTE_H__
 #define __MSG_CORE_GLSL_ATTRIBUTE_H__
 
+#include "Export.h"
+
 #include "MsgCore/StateAttribute.h"
 
 #include "MsgCore/GLSLProgram.h"
@@ -21,15 +23,21 @@ namespace Msg
     //
     ///////////////////////////////////////////////////////////////////////////
 
-    class GLSLAttribute : public StateAttribute
+    class MSG_EXPORT GLSLAttribute : public StateAttribute
     {
       public: 
 
+        typedef std::map< IShader::Type, SmartPtr< GLSLShader > > Shaders;
+        typedef Shaders::iterator                                 Iterator;
+        typedef Shaders::const_iterator                           ConstIterator;
+
         GLSLAttribute();
+
+        virtual std::string id() const;
 
         virtual void init();
 
-        virtual void conextInit();
+        virtual void contextInit();
 
 		    virtual void activate( Node* node );
 
@@ -38,6 +46,7 @@ namespace Msg
         virtual void addShader( GLSLShader* shader );
 
         virtual void addUniform( Uniform* uniform );
+
       
       protected:
 
@@ -50,7 +59,7 @@ namespace Msg
 
         SmartPtr< GLSLProgram >                             _glslProgram;
 
-        std::map< IShader::Type, SmartPtr< GLSLShader > >   _shaders;
+        Shaders                                             _shaders;
 
         std::vector< SmartPtr< Uniform > >                  _uniforms;
     };

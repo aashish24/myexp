@@ -21,7 +21,7 @@ namespace Msg
 
     void GLSLProgram::contextInit() 
     {
-
+      _glObject = glCreateProgram();
     }
 
 

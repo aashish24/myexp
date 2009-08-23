@@ -24,13 +24,20 @@ namespace Msg
     { 
     }
 
+
+    // Return id of the attribute. 
+    std::string GLSLAttribute::id() const
+    {
+      return std::string( "GLSLAttribute" );
+    }
+
         
     void GLSLAttribute::init()
     {
     }
 
     
-    void GLSLAttribute::conextInit()
+    void GLSLAttribute::contextInit()
     {
       this->set();
     }
@@ -38,6 +45,11 @@ namespace Msg
 
     void GLSLAttribute::activate( Node* node )
     {
+      if( this->dirty() )
+      {
+        this->contextInit();    
+      }
+
       std::vector< SmartPtr< Uniform > >::iterator itr; 
 
       // Call GL function to set uniform value. 
@@ -45,16 +57,20 @@ namespace Msg
       {       
        ( *itr )->callGL();
       }
+
+      glUseProgram( _glslProgram->glObject() );
     }
 
    
     void GLSLAttribute::deActivate( Node* node )
     {
+      glUseProgram( _glslProgram->glObject() );
     }
 
 
     void GLSLAttribute::addShader( MsgCore::GLSLShader* shader )
     {
+      _shaders[shader->getType()] = shader;
     }
 
 
@@ -78,8 +94,8 @@ namespace Msg
         return;
       }
 
-      if ( _shaders.find( IShader::VERTEX_SHADER ) == _shaders.end() || 
-           _shaders.find( IShader::FRAGMENT_SHADER ) == _shaders.end()  )
+      if ( _shaders.find( IShader::VERTEX ) == _shaders.end() || 
+           _shaders.find( IShader::FRAGMENT ) == _shaders.end()  )
       {
         // WARNING. 
         return;
@@ -88,11 +104,13 @@ namespace Msg
       
       try
       {
-        _shaders[IShader::VERTEX_SHADER]->contextInit();
-        _shaders[IShader::FRAGMENT_SHADER]->contextInit();
+        _glslProgram->contextInit();
 
-        _glslProgram->attach( _shaders[IShader::VERTEX_SHADER].get() );
-        _glslProgram->attach( _shaders[IShader::FRAGMENT_SHADER].get() );
+        _shaders[IShader::VERTEX]->contextInit();
+        _shaders[IShader::FRAGMENT]->contextInit();
+
+        _glslProgram->attach( _shaders[IShader::VERTEX].get() );
+        _glslProgram->attach( _shaders[IShader::FRAGMENT].get() );
         
         _glslProgram->link();
 
@@ -101,8 +119,7 @@ namespace Msg
 
         for( itr = _uniforms.begin(); itr != _uniforms.end(); ++itr )
         {
-          ( *itr )->getAndSetLocation( _glslProgram.get() );        
-          //( *itr )->callGL();
+          ( *itr )->getAndSetLocation( _glslProgram.get() );                  
         }
       }
       catch( std::exception& e )

@@ -34,7 +34,7 @@ namespace Msg
     }
 
 
-    void GLSLShader::source( const std::string& source )
+    void GLSLShader::setSource( const std::string& source )
     {
       if( source.empty() )
       {
@@ -45,7 +45,7 @@ namespace Msg
     }
 
 
-    void GLSLShader::sourceAsFile( const std::string& fileName )
+    void GLSLShader::setSourceAsFile( const std::string& fileName )
     {
       try
       {
@@ -71,6 +71,8 @@ namespace Msg
       const char* ss = _ss.c_str();
 
       glShaderSource( _glObject, 1, &ss, NULL );      
+      
+      glCompileShader( _glObject );
     }
   }
 }

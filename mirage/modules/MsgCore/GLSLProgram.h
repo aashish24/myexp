@@ -16,19 +16,25 @@ namespace Msg
     {
       public: 
         
-        GLSLProgram();         
+        // Constructor. 
+        GLSLProgram();           
+        
+        // Initialize context specific data. 
+        void      contextInit();
 
-        void  contextInit();
+        // Return OpenGL object. 
+        int       glObject() const;
 
-        int   glObject() const;
+        // Attach vertex or fragment shader. 
+        void      attach( GLSLShader* shader ); 
 
-        void  attach( GLSLShader* shader ); 
-
-        void  link(); 
+        // Link shaders. 
+        void      link(); 
 
       
       protected:
 
+        // Destructor. 
         ~GLSLProgram();
 
 

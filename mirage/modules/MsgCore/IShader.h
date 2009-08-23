@@ -14,23 +14,31 @@ namespace Msg
 {
   namespace MsgCore
   {
+    // Forward declaration. 
     class Program;
 
     class IShader
     {
       public: 
 
-        enum Type{ VERTEX_SHADER = GL_VERTEX_SHADER, FRAGMENT_SHADER = GL_FRAGMENT_SHADER };
+        // Types of shaders. 
+        enum Type{ VERTEX    = GL_VERTEX_SHADER, 
+                   FRAGMENT  = GL_FRAGMENT_SHADER };
 
-        virtual void  contextInit() = 0;
+        // Initialize context specific data. 
+        virtual void  contextInit()                                   = 0;
 
-        virtual int   glObject() const = 0;
+        // Return OpenGL object. 
+        virtual int   glObject() const                                = 0;
 
-        virtual void  source( const std::string& source ) = 0;
+        // Set shader source as stream of string. 
+        virtual void  setSource( const std::string& source )          = 0;
 
-        virtual void  sourceAsFile( const std::string& fileName ) = 0;
+        // Set shader source as file. 
+        virtual void  setSourceAsFile( const std::string& fileName )  = 0;
 
-        virtual void  compile() = 0;         
+        // Compile the shader. 
+        virtual void  compile()                                       = 0;         
     };
   }
 }

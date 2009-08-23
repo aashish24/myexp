@@ -71,8 +71,8 @@ MsgCore::SmartPtr< MsgCore::Material >    _matRed           ( new MsgCore::Mater
 MsgCore::SmartPtr< MsgCore::Material >    _matShadow        ( new MsgCore::Material() );
 
 MsgCore::SmartPtr< MsgCore::GLSLProgram > _extrusionProgram ( new MsgCore::GLSLProgram() );
-MsgCore::SmartPtr< MsgCore::GLSLShader >  _vertShader       ( new MsgCore::GLSLShader( MsgCore::GLSLShader::VERTEX_SHADER ) );
-MsgCore::SmartPtr< MsgCore::GLSLShader >  _fragShader       ( new MsgCore::GLSLShader( MsgCore::GLSLShader::FRAGMENT_SHADER ) );
+MsgCore::SmartPtr< MsgCore::GLSLShader >  _vertShader       ( new MsgCore::GLSLShader( MsgCore::GLSLShader::VERTEX ) );
+MsgCore::SmartPtr< MsgCore::GLSLShader >  _fragShader       ( new MsgCore::GLSLShader( MsgCore::GLSLShader::FRAGMENT ) );
 
 MsgCore::SmartPtr< MsgCore::Viewer >      _viewer           ( new MsgCore::Viewer() );
 
