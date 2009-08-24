@@ -71,6 +71,15 @@ namespace Msg
       {
         glUniform3i( location, value1, value2, value3 );
       }
+
+      GLCall( const int& location, 
+              const int& value1, 
+              const int& value2, 
+              const int& value3, 
+              const int& value4 )
+      {
+        glUniform4i( location, value1, value2, value3, value4 );
+      }
     };
 
     
@@ -98,6 +107,15 @@ namespace Msg
               const int& value3 )
       {
         glUniform3i( location, value1, value2, value3 );
+      }
+
+       GLCall( const int& location, 
+              const int& value1, 
+              const int& value2, 
+              const int& value3, 
+              const int& value4 )
+      {
+        glUniform4i( location, value1, value2, value3, value4 );
       }
     };
 
@@ -127,6 +145,15 @@ namespace Msg
       {
         glUniform3f( location, value1, value2, value3 );
       }
+
+      GLCall( const int& location, 
+              const float& value1, 
+              const float& value2, 
+              const float& value3, 
+              const float& value4 )
+      {
+        glUniform4f( location, value1, value2, value3, value4 );
+      }
     };
 
 
@@ -151,7 +178,7 @@ namespace Msg
         }
        
 
-        void get( DATA_TYPE& value )
+        void get( DATA_TYPE& value ) const
         {
           value = _value;
         }
@@ -205,7 +232,7 @@ namespace Msg
         }
        
 
-        void get( DATA_TYPE& value1, DATA_TYPE& value2 )
+        void get( DATA_TYPE& value1, DATA_TYPE& value2 ) const
         {
           value1 = _value1;
           value2 = _value2;
@@ -249,7 +276,8 @@ namespace Msg
         Uniform3() : 
           Uniform (), 
           _value1 ( 0 ), 
-          _value2 ( 0 ) 
+          _value2 ( 0 ), 
+          _value3 ( 0 ) 
         {
         }
 
@@ -267,7 +295,9 @@ namespace Msg
         }
        
 
-        void get( DATA_TYPE& value1, DATA_TYPE& value2, DATA_TYPE& value3 )
+        void get( DATA_TYPE& value1, 
+                  DATA_TYPE& value2, 
+                  DATA_TYPE& value3 ) const
         {
           value1 = _value1;
           value2 = _value2;
@@ -303,6 +333,84 @@ namespace Msg
         DATA_TYPE             _value3;
     };
 
+
+    // Uniform3 defines family of Uniform 's which passes a three values to the
+    // shaders. 
+    template< typename DATA_TYPE >
+    class MSG_EXPORT Uniform4 : public MsgCore::Uniform
+    {
+      public: 
+
+        Uniform4() : 
+          Uniform (), 
+          _value1 ( 0 ), 
+          _value2 ( 0 ), 
+          _value3 ( 0 ), 
+          _value4 ( 0 ) 
+        {
+        }
+
+
+        Uniform4( const std::string& name, 
+                  const int& location, 
+                  const DATA_TYPE& value1 = 0, 
+                  const DATA_TYPE& value2 = 0, 
+                  const DATA_TYPE& value3 = 0, 
+                  const DATA_TYPE& value4 = 0 ) :
+          Uniform( name, location ), 
+          _value1 ( value1 ),
+          _value2 ( value2 ), 
+          _value3 ( value3 ), 
+          _value4 ( value4 )
+        {
+        }
+       
+
+        void get( DATA_TYPE& value1, 
+                  DATA_TYPE& value2, 
+                  DATA_TYPE& value3, 
+                  DATA_TYPE& value4 ) const
+        {
+          value1 = _value1;
+          value2 = _value2;
+          value3 = _value3;
+          value4 = _value4;
+        }
+        
+
+        void set( const DATA_TYPE& value1, 
+                  const DATA_TYPE& value2, 
+                  const DATA_TYPE& value3, 
+                  const DATA_TYPE& value4 ) 
+        {
+          _value1 = value1;
+          _value2 = value2;
+          _value3 = value3;
+          _value4 = value4;
+        }
+
+
+        void callGL() const
+        {
+          GLCall< DATA_TYPE > call( location(), _value1, _value2, _value3, _value4 );
+        }
+
+
+      protected:
+
+        ~Uniform4() 
+        {
+        }
+
+
+      private:        
+
+        DATA_TYPE             _value1;
+        DATA_TYPE             _value2;
+        DATA_TYPE             _value3;
+        DATA_TYPE             _value4;
+    };
+
     
     typedef Uniform1< int >   Uniform1i;
     typedef Uniform1< bool >  Uniform1b;
@@ -315,6 +423,10 @@ namespace Msg
     typedef Uniform3< int >   Uniform3i;
     typedef Uniform3< bool >  Uniform3b;
     typedef Uniform3< float > Uniform3f;
+
+    typedef Uniform4< int >   Uniform4i;
+    typedef Uniform4< bool >  Uniform4b;
+    typedef Uniform4< float > Uniform4f;
   }
 }
 
