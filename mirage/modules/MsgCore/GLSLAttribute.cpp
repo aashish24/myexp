@@ -50,6 +50,8 @@ namespace Msg
         this->contextInit();    
       }
 
+      glUseProgram( _glslProgram->glObject() );
+
       std::vector< SmartPtr< Uniform > >::iterator itr; 
 
       // Call GL function to set uniform value. 
@@ -57,8 +59,6 @@ namespace Msg
       {       
        ( *itr )->callGL();
       }
-
-      glUseProgram( _glslProgram->glObject() );
     }
 
    

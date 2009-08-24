@@ -11,10 +11,6 @@ namespace Msg
   {
     struct IUniform
     {
-      virtual std::string name() const = 0;
-
-      virtual void name( const std::string& name ) = 0;
-
       virtual void callGL() const = 0;
 
 

@@ -12,8 +12,7 @@ namespace Msg
   namespace MsgCore
   {
     Uniform::Uniform( const std::string& name, const int& location ) :
-        Object      (), 
-        _name       ( name ), 
+        Object      ( name ), 
         _location   ( location )
     {
     }
@@ -22,19 +21,6 @@ namespace Msg
     Uniform::~Uniform()
     {
     }
-
-
-    std::string Uniform::name() const 
-    {
-      return _name;
-    }
-
-
-    void Uniform::name( const std::string& name ) 
-    {
-      _name = name;
-    }
-
 
     int Uniform::location() const 
     {
