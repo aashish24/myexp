@@ -85,10 +85,17 @@ void Scene::buildScene()
   glslAttrib->addShader( fragShader.get() );
 
   // Add uniforms. 
-  SmartPtr< Uniform3f > uniform_1 = new Uniform3f();
-  uniform_1->setName( "color" ); 
-  uniform_1->set( 0.0, 1.0, 0.0 );
-  glslAttrib->addUniform( uniform_1.get() );
+  SmartPtr< Uniform4f > lightColor = new Uniform4f();
+  lightColor->setName( "diff_color" ); 
+  lightColor->set( 0.6, 0.6, 0.0, 1.0 );
+  
+  SmartPtr< Uniform4f > lightPos = new Uniform4f();
+  lightPos->setName( "light_pos" ); 
+  lightPos->set( 0.0, 0.0, 0.0, 1.0 );  
+  
+  glslAttrib->addUniform( lightPos.get() );
+  glslAttrib->addUniform( lightColor.get() );
+
 
   _root->getOrCreateStateSet()->attribute( glslAttrib.get() );
 }
