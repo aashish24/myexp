@@ -91,7 +91,7 @@ void Scene::buildScene()
   
   SmartPtr< Uniform4f > lightPos = new Uniform4f();
   lightPos->setName( "light_pos" ); 
-  lightPos->set( 0.0, 100.0, 10.0, 1.0 );  
+  lightPos->set( -20.0, 100.0, -10.0, 1.0 );  
   
   glslAttrib->addUniform( lightPos.get() );
   glslAttrib->addUniform( lightColor.get() );
