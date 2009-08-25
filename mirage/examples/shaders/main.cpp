@@ -91,7 +91,7 @@ void Scene::buildScene()
   
   SmartPtr< Uniform4f > lightPos = new Uniform4f();
   lightPos->setName( "light_pos" ); 
-  lightPos->set( 0.0, 0.0, 0.0, 1.0 );  
+  lightPos->set( 0.0, 100.0, 10.0, 1.0 );  
   
   glslAttrib->addUniform( lightPos.get() );
   glslAttrib->addUniform( lightColor.get() );
@@ -105,15 +105,11 @@ void Scene::buildScene()
 Scene scene;
 SmartPtr< Viewer > _viewer( new Viewer() );
 
-GLfloat lightPos[] = {0.0, 100.0, 0.0, 1.0};
-GLfloat lightColor[] = {0.0, 1.0, 0.0, 1.0};
 
 void init()
 {  
   glEnable( GL_DEPTH_TEST );
-  glEnable( GL_LIGHTING );
-  glEnable( GL_LIGHT0 );
-
+  
   glClearColor( 0.0, 0.0, 0.0, 1.0 );
 
   // Build the scene first. 
