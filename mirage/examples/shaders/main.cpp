@@ -49,7 +49,7 @@ void Scene::buildScene()
 {
   // Read geometry files. 
   SmartPtr< Node > model1 =  
-    FileRead::readFile( std::string("C:\\aashish\\src\\osve\\data\\models\\Box.obj" ) );
+    FileRead::readFile( std::string(".//..//../..//..//data//models//torus.obj" ) );
 
   if( model1.valid() )
   {
@@ -62,7 +62,7 @@ void Scene::buildScene()
   }
 
   SmartPtr< Node > model2 =  
-    FileRead::readFile( std::string(".//..//../..//..//data//Models//Cone.obj" ) );
+    FileRead::readFile( std::string(".//..//../..//..//data//models//cylinder.obj" ) );
   if(model2.valid())
   {
     _root->addChild( model2.get() );
