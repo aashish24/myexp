@@ -119,12 +119,14 @@
 
   var mvMatrix;
 
-  function loadIdentity() {
+  function loadIdentity() 
+  {
     mvMatrix = Matrix.I(4);
   }
 
 
-  function multMatrix(m) {
+  function multMatrix(m) 
+  {
     mvMatrix = mvMatrix.x(m);
   }
 
@@ -201,6 +203,28 @@
     squareVertexColorBuffer.numItems = 4;
   }
 
+  
+  var rVar = 0; 
+  
+  var lastTime = 0;
+  function animate() 
+  {
+    var timeNow = new Date().getTime();
+    if (lastTime != 0) {
+      var elapsed = timeNow - lastTime;
+
+      rVar += (200 * elapsed) / 1000.0;
+    }
+    lastTime = timeNow;
+  }
+  
+  
+  function tick()
+  {
+  	animate();
+  	drawScene();	
+  }				
+  
 
   function drawScene() {
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
@@ -211,6 +235,8 @@
 
     mvTranslate([-1.5, 0.0, -7.0]);
 
+	mvPushMatrix();
+	mvRotate(rVar, [0, 1, 0]);
     gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
     gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, triangleVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
@@ -219,7 +245,7 @@
 
     setMatrixUniforms();
     gl.drawArrays(gl.TRIANGLES, 0, triangleVertexPositionBuffer.numItems);
-
+	mvPopMatrix();
 
     mvTranslate([3.0, 0.0, 0.0]);
     gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
@@ -231,7 +257,6 @@
     setMatrixUniforms();
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, squareVertexPositionBuffer.numItems);
   }
-
 
 
   function webGLStart() {
@@ -247,9 +272,34 @@
     gl.enable(gl.DEPTH_TEST);
     gl.depthFunc(gl.LEQUAL);
 
-    setInterval(drawScene, 15);
+    setInterval(tick, 15);
   }
+ 
+  var mvMatrixStack = [];
 
+  function mvPushMatrix(m) {
+    if (m) {
+      mvMatrixStack.push(m.dup());
+      mvMatrix = m.dup();
+    } else {
+      mvMatrixStack.push(mvMatrix.dup());
+    }
+  }
+  
+  function mvPopMatrix() {
+    if (mvMatrixStack.length == 0) {
+      throw "Invalid popMatrix!";
+    }
+    mvMatrix = mvMatrixStack.pop();
+    return mvMatrix;
+  }
+  
+  function mvRotate(ang, v) 
+  {
+    var arad = ang * Math.PI / 180.0;
+    var m = Matrix.Rotation(arad, $V([v[0], v[1], v[2]])).ensure4x4();
+    multMatrix(m);
+  }
 
 
 </script>
