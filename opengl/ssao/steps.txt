@@ -1,0 +1,8 @@
+Load a obj model
+Use shaders 
+Use render targets to render normal and position buffers 
+Display both of these textures 
+Write ssao shader using these two textures 
+tweak results 
+performance optimization 
+blog? with references and links.
