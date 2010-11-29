@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <style type="text/css">
+      #slider { margin: 10px; }
+  </style>-->
+  <link href="development-bundle/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
+</head>
+
+<body>
+
+<EMBED id="vlc" type="application/x-vlc-plugin" SRC="Clock.avi" width=320 height=310 name="video2" autoplay="no" loop="no" >
+</EMBED>
+    <br />          
+      <script type="text/javascript">
+
+        var vlc = document.getElementById("vlc");
+
+        var isPlaying  = true;
+        var movingSlider = false;
+
+        $(document).ready(function()
+        {
+          $( "#slider" ).slider(
+            {
+              min:0.0,
+              max:1.0,
+              step:0.0001,
+              slide: function(event, ui)
+              {
+                vlc.input.time = vlc.input.length * ui.value;
+              },
+              start: function(event, ui)
+              {
+                movingSlider = true;
+              },
+              stop: function(event, ui)
+              {
+                movingSlider = false;
+              }
+            }
+          );
+          $( "#slider" ).slider('enable');
+        });
+
+        function mute()
+        {
+          vlc.audio.toggleMute();
+        }
+
+        function play()
+        {
+          vlc.playlist.play();
+
+          setInterval ( doSomething, 10 );
+
+          //$( "#slider" ).slider( "value" , vlc.input.position );
+          isPlaying = true;
+        }
+
+        function stop()
+        {
+          vlc.playlist.stop();
+          isPlaying = false;
+          $("#slider").slider( 'value', 0 );
+        }
+
+        function pause()
+        {
+          isPlaying = false;
+          vlc.playlist.togglePause();
+        }
+
+        function a(p) {
+                 $('#box').css('left', p + "%");
+                }
+
+        function doSomething ( )
+        {
+          if(isPlaying && !movingSlider)
+          {            
+            $("#slider").slider( 'value', vlc.input.position );           
+          }
+
+          if(vlc.input.position > 1.0)
+          {
+            isPlaying = false;
+          }
+        }
+
+      </script>
+    <br />
+
+<div id="slider"></div>
+<div id="controls">
+    <input type="button" onClick="play()" value="Play" />
+    <input type="button" onClick="pause()" value="Pause" />
+    <input type="button" onClick="stop()" value="Stop" />
+    <input type="button" onClick="mute()" value="Mute" />
+</div>  
+
+</body>
+</html>
