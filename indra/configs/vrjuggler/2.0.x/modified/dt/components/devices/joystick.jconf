@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?org-vrjuggler-jccl-settings configuration.version="3.0"?>
+<configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
+   <elements>
+      <input_manager name="JoyInput Manager" version="2">
+         <driver_path>${VJ_BASE_DIR}/lib/gadgeteer/drivers</driver_path>
+         <driver_path>${VJ_BASE_DIR}/lib64/gadgeteer/drivers</driver_path>
+         <driver>LinuxJoydev_drv</driver>
+      </input_manager>
+      <linux_joydev name="Joystick" version="1">
+         <port_name>/dev/input/js0</port_name>
+         <min>0.0</min>
+         <max>255.0</max>
+         <device_host/>
+      </linux_joydev>
+      <alias name="VJButtonJS0" version="1">
+         <proxy>VJoyButton0Proxy</proxy>
+      </alias>
+      <alias name="VJButtonJS1" version="1">
+         <proxy>VJoyButton1Proxy</proxy>
+      </alias>
+      <alias name="VJButtonJS2" version="1">
+         <proxy>VJoyButton2Proxy</proxy>
+      </alias>
+      <alias name="VJButtonJS3" version="1">
+         <proxy>VJoyButton3Proxy</proxy>
+      </alias>
+      <alias name="VJButtonJS4" version="1">
+         <proxy>VJoyButton4Proxy</proxy>
+      </alias>
+      <alias name="VJButtonJS5" version="1">
+         <proxy>VJoyButton5Proxy</proxy>
+      </alias>
+      <alias name="VJButtonJS6" version="1">
+         <proxy>VJoyButton6Proxy</proxy>
+      </alias>
+      <alias name="VJButtonJS7" version="1">
+         <proxy>VJoyButton7Proxy</proxy>
+      </alias>
+      <alias name="VJButtonJS8" version="1">
+         <proxy>VJoyButton8Proxy</proxy>
+      </alias>
+      <alias name="VJButtonJS9" version="1">
+         <proxy>VJoyButton9Proxy</proxy>
+      </alias>
+      <alias name="VJAxis0" version="1">
+         <proxy>VJAxis0Proxy</proxy>
+      </alias>
+      <alias name="VJAxis1" version="1">
+         <proxy>VJAxis1Proxy</proxy>
+      </alias>
+      <digital_proxy name="VJoyButton0Proxy" version="1">
+         <device>Joystick</device>
+         <unit>0</unit>
+      </digital_proxy>
+      <digital_proxy name="VJoyButton1Proxy" version="1">
+         <device>Joystick</device>
+         <unit>1</unit>
+      </digital_proxy>
+      <digital_proxy name="VJoyButton2Proxy" version="1">
+         <device>Joystick</device>
+         <unit>2</unit>
+      </digital_proxy>
+      <digital_proxy name="VJoyButton3Proxy" version="1">
+         <device>Joystick</device>
+         <unit>3</unit>
+      </digital_proxy>
+      <digital_proxy name="VJoyButton4Proxy" version="1">
+         <device>Joystick</device>
+         <unit>4</unit>
+      </digital_proxy>
+      <digital_proxy name="VJoyButton5Proxy" version="1">
+         <device>Joystick</device>
+         <unit>5</unit>
+      </digital_proxy>
+      <digital_proxy name="VJoyButton6Proxy" version="1">
+         <device>Joystick</device>
+         <unit>6</unit>
+      </digital_proxy>
+      <digital_proxy name="VJoyButton7Proxy" version="1">
+         <device>Joystick</device>
+         <unit>7</unit>
+      </digital_proxy>
+      <digital_proxy name="VJoyButton8Proxy" version="1">
+         <device>Joystick</device>
+         <unit>8</unit>
+      </digital_proxy>
+      <digital_proxy name="VJoyButton9Proxy" version="1">
+         <device>Joystick</device>
+         <unit>9</unit>
+      </digital_proxy>
+      <analog_proxy name="VJAxis1Proxy" version="1">
+         <device>Joystick</device>
+         <unit>1</unit>
+      </analog_proxy>
+      <analog_proxy name="VJAxis0Proxy" version="1">
+         <device>Joystick</device>
+         <unit>0</unit>
+      </analog_proxy>
+      <alias name="VJAxis2" version="1">
+         <proxy>VJAxis2Proxy</proxy>
+      </alias>
+      <alias name="VJAxis3" version="1">
+         <proxy>VJAxis3Proxy</proxy>
+      </alias>
+	<alias name="VJAxis4" version="1">
+         <proxy>VJAxis3Proxy</proxy>
+      </alias>
+	<alias name="VJAxis5" version="1">
+         <proxy>VJAxis3Proxy</proxy>
+      </alias>
+      <analog_proxy name="VJAxis3Proxy" version="1">
+         <device>Joystick</device>
+         <unit>3</unit>
+      </analog_proxy>
+	<analog_proxy name="VJAxis4Proxy" version="1">
+         <device>Joystick</device>
+         <unit>4</unit>
+      </analog_proxy>
+	<analog_proxy name="VJAxis5Proxy" version="1">
+         <device>Joystick</device>
+         <unit>5</unit>
+      </analog_proxy>
+      <analog_proxy name="VJAxis2Proxy" version="1">
+         <device>Joystick</device>
+         <unit>2</unit>
+      </analog_proxy>
+   </elements>
+</configuration>
+

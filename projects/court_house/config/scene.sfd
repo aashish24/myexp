@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<scene> 
+  <group type="polygon" id="base">
+    <source>../data/base</source>
+  </group>
+  <group type="polygon" id="group1">
+    <source>../data/group1</source>
+  </group>
+  <group type="polygon" id ="group2">
+    <source>../data/group2</source>
+  </group>
+  <group type="polygon" id="group3">
+    <source>../data/group3</source>
+  </group>
+  <group type="polygon" id ="group4">
+    <source>../data/group4</source>
+  </group>
+  <group type="polygon" id ="group5">
+    <source>../data/group5</source>
+  </group>
+  <group type="polygon" id ="group6">
+    <source>../data/group6</source>
+  </group>
+  <group type="polygon" id ="group7">
+    <source>../data/group7</source>
+  </group>
+  <group type="polygon" id ="group8">
+    <source>../data/group8</source>
+  </group>
+</scene>
+
+
+

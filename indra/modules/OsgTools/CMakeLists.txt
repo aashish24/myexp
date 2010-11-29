@@ -1,0 +1,28 @@
+
+INCLUDE( ${CMAKE_MODULES_DIR}/Indra.cmake )
+INCLUDE( ${CMAKE_MODULES_DIR}/FindOSG.cmake )
+
+
+PROJECT( OsgTools )
+
+
+SET( LIB_NAME OsgTools )
+
+
+SET( SOURCES 
+ ./SG/OsgFind.cpp 
+ ./Geom/OsgQuad.cpp 
+ ./Geom/OsgDashboard.cpp )
+
+ 
+INCLUDE_DIRECTORIES(../ $ENV{OSG_INC_DIR}) 
+
+
+ADD_LIBRARY( ${LIB_NAME} SHARED ${SOURCES} )
+
+
+TARGET_LINK_LIBRARIES( ${LIB_NAME} ${OPENSCENEGRAPH_OSG_LIB} )
+
+
+INSTALL( TARGETS ${LIB_NAME}  DESTINATION ${Indra_SOURCE_DIR}/bin )
+

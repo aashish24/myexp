@@ -1,0 +1,47 @@
+# Author: Aashish Chaudhary 
+# Date: January 15, 2008
+
+
+Introduction:
+====================================
+
+You would need following environment variables. 
+
+1. Environment variable for OpenSceneGraph ( http://www.openscenegraph.org ) header and lib files directories.
+OSG_INC_DIR			
+OSG_INC_DIR			
+
+2. Environment variable for VRJuggler ( http://www.vrjuggler.org ) base directory. 
+VJ_BASE_DIR
+
+3. Environment variable for GMTL ( http://ggt.sourceforge.net ) header files directory. 
+GMTL_INC_DIR
+
+4. Environment variable for CppDom ( http://sourceforge.net/projects/xml-cppdom ) header and lib files directories.
+CPPDOM_INC_DIR
+CPPDOM_INC_DIR
+
+5. Environment variable for NSPR ( http://www.mozilla.org/projects/nspr ) header and lib files directories.
+NSPR_INC_DIR
+NSPR_INC_DIR
+
+6. Environment variable for Boost ( http://www.boost.org ) header and lib files directories.
+BOOST_INC_DIR
+BOOST_INC_DIR
+
+
+Build steps for Unix / Linux system: 
+====================================
+
+Requirements:
+----------------
+1. CMake version 2.4.6 or higher ( http://www.cmake.org )	
+
+
+Build steps for Windows system: 
+====================================
+
+Requirements: 
+----------------
+1. VS2005 with SP1 installed. 
+2. DirectX SDK version 9.0 or higher, installed if using gamepad / others ?? as input device. 

@@ -1,0 +1,25 @@
+
+INCLUDE( ${CMAKE_MODULES_DIR}/Indra.cmake )
+
+
+PROJECT( Neiv )
+
+
+SET( LIB_NAME Neiv )
+
+
+SET( SOURCES 
+ ./Base/Referenced.cpp )  
+
+
+INCLUDE_DIRECTORIES( ../ )
+
+
+ADD_LIBRARY( ${LIB_NAME} SHARED ${SOURCES} )
+
+
+TARGET_LINK_LIBRARIES( ${LIB_NAME} )
+
+
+INSTALL( TARGETS ${LIB_NAME}  DESTINATION ${Indra_SOURCE_DIR}/bin )
+

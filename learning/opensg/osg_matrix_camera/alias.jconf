@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?org-vrjuggler-jccl-settings configuration.version="3.0"?>
+<configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" name="Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
+   <elements>
+      <!-- Navigation -->
+      <alias name="VJButton06" version="1">
+         <proxy>Gamepad01Button06Proxy</proxy>
+      </alias>
+      <alias name="VJButton08" version="1">
+         <proxy>Gamepad01Button08Proxy</proxy>
+      </alias>
+      <alias name="VJAnalog01" version="1">
+         <proxy>Gamepad01Analog01Proxy</proxy>
+      </alias>
+      <alias name="VJAnalog02" version="1">
+         <proxy>Gamepad01Analog02Proxy</proxy>
+      </alias>
+      <alias name="VJAnalog03" version="1">
+         <proxy>Gamepad01Analog03Proxy</proxy>
+      </alias>
+      <alias name="VJAnalog04" version="1">
+         <proxy>Gamepad01Analog04Proxy</proxy>
+      </alias>
+      <alias name="VJButton05" version="1">
+         <proxy>Gamepad01Button05Proxy</proxy>
+      </alias>
+      <alias name="VJButton07" version="1">
+         <proxy>Gamepad01Button07Proxy</proxy>
+      </alias>
+      <alias name="VJButton03" version="1">
+          <proxy>Gamepad01Button03Proxy</proxy>
+      </alias>
+      <alias name="VJButton02" version="1">
+          <proxy>Gamepad01Button02Proxy</proxy>
+      </alias>
+      <alias name="VJButton04" version="1">
+          <proxy>Gamepad01Button04Proxy</proxy>
+      </alias>
+      <alias name="VJButton01" version="1">
+          <proxy>Gamepad01Button01Proxy</proxy>
+      </alias>
+      <alias name="VJButton09" version="1">
+          <proxy>Gamepad01Button09Proxy</proxy>
+      </alias>
+      <alias name="VJAnalog01" version="1">
+          <proxy>Gamepad01Analog01Proxy</proxy>
+      </alias>
+      <alias name="VJAnalog02" version="1">
+          <proxy>Gamepad01Analog02Proxy</proxy>
+      </alias>
+      <alias name="VJAnalog03" version="1">
+          <proxy>Gamepad01Analog03Proxy</proxy>
+      </alias>
+      <alias name="VJAnalog04" version="1">
+          <proxy>Gamepad01Analog04Proxy</proxy>
+      </alias>
+      <alias name="VJAnalog05" version="1">
+          <proxy>Gamepad01Analog05Proxy</proxy>
+      </alias>
+      <alias name="VJAnalog06" version="1">
+          <proxy>Gamepad01Analog06Proxy</proxy>
+      </alias>
+   </elements>
+</configuration>
