@@ -1,7 +1,7 @@
 <html>
 
 <head>
-<title>Learning WebGL &mdash; lesson 1</title>
+<title>Learning WebGL &mdash; lesson 3</title>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
 <script type="text/javascript" src="sylvester.js"></script>
@@ -12,26 +12,25 @@
   precision highp float;
   #endif
 
-  varying vec4 color;
-  
-  void main(void)
-  {
-    gl_FragColor = color;
+  varying vec4 vColor;
+
+  void main(void) {
+    gl_FragColor = vColor;
   }
 </script>
 
 <script id="shader-vs" type="x-shader/x-vertex">
   attribute vec3 aVertexPosition;
   attribute vec4 aVertexColor;
-  
+
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
 
-  varying vec4 color;
+  varying vec4 vColor;
 
   void main(void) {
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    color = aVertexColor;
+    vColor = aVertexColor;
   }
 </script>
 
@@ -89,18 +88,16 @@
 
 
   var shaderProgram;
-  function initShaders()
-  {
+  function initShaders() {
     var fragmentShader = getShader(gl, "shader-fs");
-    var vertexShader   = getShader(gl, "shader-vs");
+    var vertexShader = getShader(gl, "shader-vs");
 
     shaderProgram = gl.createProgram();
     gl.attachShader(shaderProgram, vertexShader);
     gl.attachShader(shaderProgram, fragmentShader);
     gl.linkProgram(shaderProgram);
 
-    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS))
-    {
+    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
       alert("Could not initialise shaders");
     }
 
@@ -109,33 +106,53 @@
     shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
     gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
 
-    shaderProgram.pMatrixUniform  = gl.getUniformLocation(shaderProgram, "uPMatrix");
-    shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
-
     shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
     gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
+
+    shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
+    shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
   }
 
 
   var mvMatrix;
+  var mvMatrixStack = [];
 
-  function loadIdentity() 
-  {
+  function mvPushMatrix(m) {
+    if (m) {
+      mvMatrixStack.push(m.dup());
+      mvMatrix = m.dup();
+    } else {
+      mvMatrixStack.push(mvMatrix.dup());
+    }
+  }
+
+  function mvPopMatrix() {
+    if (mvMatrixStack.length == 0) {
+      throw "Invalid popMatrix!";
+    }
+    mvMatrix = mvMatrixStack.pop();
+    return mvMatrix;
+  }
+
+  function loadIdentity() {
     mvMatrix = Matrix.I(4);
   }
 
 
-  function multMatrix(m) 
-  {
+  function multMatrix(m) {
     mvMatrix = mvMatrix.x(m);
   }
-
 
   function mvTranslate(v) {
     var m = Matrix.Translation($V([v[0], v[1], v[2]])).ensure4x4();
     multMatrix(m);
   }
 
+  function mvRotate(ang, v) {
+    var arad = ang * Math.PI / 180.0;
+    var m = Matrix.Rotation(arad, $V([v[0], v[1], v[2]])).ensure4x4();
+    multMatrix(m);
+  }
 
   var pMatrix;
   function perspective(fovy, aspect, znear, zfar) {
@@ -149,25 +166,9 @@
   }
 
 
-
-  var triangleVertexPositionBuffer;
-  var triangleVertexColorBuffer
-
   var squareVertexPositionBuffer;
   var squareVertexColorBuffer;
-  
-  function initBuffers()
-  {
-    triangleVertexPositionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
-    var vertices = [
-         0.0,  1.0,  0.0,
-        -1.0, -1.0,  0.0,
-         1.0, -1.0,  0.0
-    ];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-    triangleVertexPositionBuffer.itemSize = 3;
-    triangleVertexPositionBuffer.numItems = 3;
+  function initBuffers() {
 
     squareVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
@@ -181,17 +182,6 @@
     squareVertexPositionBuffer.itemSize = 3;
     squareVertexPositionBuffer.numItems = 4;
 
-    triangleVertexColorBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);
-    var colors = [
-        1.0, 0.0, 0.0, 1.0,
-        0.0, 1.0, 0.0, 1.0,
-        0.0, 0.0, 1.0, 1.0,
-    ];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
-    triangleVertexColorBuffer.itemSize = 4;
-    triangleVertexColorBuffer.numItems = 3;
-
     squareVertexColorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
     colors = []
@@ -203,29 +193,10 @@
     squareVertexColorBuffer.numItems = 4;
   }
 
-  
-  var rVar = 0; 
-  
-  var lastTime = 0;
-  function animate() 
-  {
-    var timeNow = new Date().getTime();
-    if (lastTime != 0) {
-      var elapsed = timeNow - lastTime;
 
-      rVar += (200 * elapsed) / 1000.0;
-    }
-    lastTime = timeNow;
-  }
-  
-  
-  function tick()
-  {
-  	animate();
-  	drawScene();	
-  }				
-  
 
+  var rTri = 0;
+  var rSquare = 0;
   function drawScene() {
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -233,21 +204,11 @@
     perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0);
     loadIdentity();
 
-    mvTranslate([-1.5, 0.0, -7.0]);
+    mvTranslate([0.0, 0.0, -7.0]);
 
-	mvPushMatrix();
-	mvRotate(rVar, [0, 1, 0]);
-    gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
-    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, triangleVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+    mvPushMatrix();
+    mvRotate(rSquare, [1, 0, 0]);
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);
-    gl.vertexAttribPointer(shaderProgram.vertexColorAttribute,    triangleVertexColorBuffer.itemSize,    gl.FLOAT, false, 0, 0);
-
-    setMatrixUniforms();
-    gl.drawArrays(gl.TRIANGLES, 0, triangleVertexPositionBuffer.numItems);
-	mvPopMatrix();
-
-    mvTranslate([3.0, 0.0, 0.0]);
     gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
     gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, squareVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
@@ -256,16 +217,37 @@
 
     setMatrixUniforms();
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, squareVertexPositionBuffer.numItems);
+
+    mvPopMatrix();
+  }
+
+
+  var lastTime = 0;
+  function animate() {
+    var timeNow = new Date().getTime();
+    if (lastTime != 0) {
+      var elapsed = timeNow - lastTime;
+
+      rTri += (90 * elapsed) / 1000.0;
+      rSquare += (75 * elapsed) / 1000.0;
+    }
+    lastTime = timeNow;
+  }
+
+
+  function tick() {
+    drawScene();
+    animate();
   }
 
 
   function webGLStart() {
-    var canvas = document.getElementById("lesson01-canvas");
+    var canvas = document.getElementById("lesson03-canvas");
     initGL(canvas);
-    initShaders();
+    initShaders()
     initBuffers();
 
-    gl.clearColor(0.5, 0.5, 0.5, 1.0);
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
     gl.clearDepth(1.0);
 
@@ -274,32 +256,7 @@
 
     setInterval(tick, 15);
   }
- 
-  var mvMatrixStack = [];
 
-  function mvPushMatrix(m) {
-    if (m) {
-      mvMatrixStack.push(m.dup());
-      mvMatrix = m.dup();
-    } else {
-      mvMatrixStack.push(mvMatrix.dup());
-    }
-  }
-  
-  function mvPopMatrix() {
-    if (mvMatrixStack.length == 0) {
-      throw "Invalid popMatrix!";
-    }
-    mvMatrix = mvMatrixStack.pop();
-    return mvMatrix;
-  }
-  
-  function mvRotate(ang, v) 
-  {
-    var arad = ang * Math.PI / 180.0;
-    var m = Matrix.Rotation(arad, $V([v[0], v[1], v[2]])).ensure4x4();
-    multMatrix(m);
-  }
 
 
 </script>
@@ -309,24 +266,12 @@
 
 
 <body onload="webGLStart();">
-  <a href="http://learningwebgl.com/blog/?p=28">&lt;&lt; Back to Lesson 1</a><br />
+  <a href="http://learningwebgl.com/blog/?p=239">&lt;&lt; Back to Lesson 3</a><br />
 
-  <canvas id="lesson01-canvas" style="border: none;" width="500" height="500"></canvas>
+  <canvas id="lesson03-canvas" style="border: none;" width="500" height="500"></canvas>
 
   <br/>
-  <a href="http://learningwebgl.com/blog/?p=28">&lt;&lt; Back to Lesson 1</a><br />
-
-<!-- Google Analytics stuff, please ignore - nothing to do with WebGL :-) -->
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-2240015-5");
-pageTracker._trackPageview();
-} catch(err) {}</script>
-
+  <a href="http://learningwebgl.com/blog/?p=239">&lt;&lt; Back to Lesson 3</a><br />
 </body>
 
 </html>
