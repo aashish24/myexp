@@ -12,6 +12,8 @@
 #include<fstream>
 #include<vector>
 #include<string>
+#include<cstring>
+#include<cstdlib>
 #include"objLoader.h"
 #include"TokenStream.h"
 
@@ -46,7 +48,7 @@ bool ObjModel::LoadOBJ(char *fileName)
    int fileSize = 0;
 
    fileStream.open(fileName, std::ifstream::in);
-   
+
    if(fileStream.is_open() == false)
       return false;
 
