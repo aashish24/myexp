@@ -37,5 +37,6 @@ void main()
    vec3 lightVec = normalize(lightPos - position.xyz);
    float diffuse = clamp(dot(norm.xyz, lightVec), 0.0, 1.0);
 
-   gl_FragColor = (col + lightColor) * diffuse;
+   //gl_FragColor = (col + lightColor) * diffuse;
+   gl_FragColor = vec4(norm);
 }
