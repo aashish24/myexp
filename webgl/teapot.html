@@ -12,15 +12,13 @@
   precision highp float;
   #endif
 
-  varying vec4 color;
   varying vec2 texCoord;
   
   uniform sampler2D uSampler;
   
   void main(void)
   {
-    //gl_FragColor = texture2D(uSampler, texCoord);
-	gl_FragColor = color(0.0, 0.0, 1.0, 1.0);
+     gl_FragColor = texture2D(uSampler, vec2(texCoord.s, texCoord.t));	
   }
 </script>
 
@@ -29,15 +27,14 @@
   attribute vec4 aVertexColor;
   attribute vec2 aTextureCoord;
   
+  varying vec2 texCoord;
+  
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
 
-  varying vec4 color;
-
   void main(void) {
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    color = aVertexColor;
-	vTextureCoord = aTextureCoord; 
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);  
+	texCoord = aTextureCoord; 
   }
 </script>
 
@@ -121,7 +118,10 @@
     shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
 	shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, "uSampler");
 	
+	shaderProgram.vertexCoordAttribute = gl.getAttribLocation(shaderProgram, "aTextureCoord");
+	
     gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
+	gl.enableVertexAttribArray(shaderProgram.vertexCoordAttribute);
   }
 
 
@@ -164,6 +164,8 @@
   var squareVertexPositionBuffer;
   var squareVertexColorBuffer;
   
+  var squareTexCoordBuffer;
+  
   function initBuffers()
   {
     triangleVertexPositionBuffer = gl.createBuffer();
@@ -180,10 +182,10 @@
     squareVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
     vertices = [
-         1.0,  1.0,  0.0,
+    	  1.0,  1.0,  0.0,
         -1.0,  1.0,  0.0,
          1.0, -1.0,  0.0,
-        -1.0, -1.0,  0.0
+        -1.0, -1.0,  0.0	   
     ];
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
     squareVertexPositionBuffer.itemSize = 3;
@@ -202,13 +204,25 @@
 
     squareVertexColorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
-    colors = []
+    var colors = []
     for (var i=0; i < 4; i++) {
       colors = colors.concat([0.5, 0.5, 1.0, 1.0]);
     }
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
     squareVertexColorBuffer.itemSize = 4;
     squareVertexColorBuffer.numItems = 4;
+	
+	squareTexCoordBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, squareTexCoordBuffer);
+	var coords = [
+        1.0, 1.0,  
+        0.0, 1.0, 
+		1.0, 0.0,
+		0.0, 0.0
+    ];	
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(coords), gl.STATIC_DRAW);
+    squareTexCoordBuffer.itemSize = 2;
+    squareTexCoordBuffer.numItems = 4;
   }
   
   var texture
@@ -286,6 +300,9 @@
 
     gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
     gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, squareVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+	
+	gl.bindBuffer(gl.ARRAY_BUFFER, squareTexCoordBuffer);
+    gl.vertexAttribPointer(shaderProgram.vertexCoordAttribute, squareTexCoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
 	gl.activeTexture(gl.TEXTURE0);
 	gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -297,9 +314,10 @@
 
   function webGLStart() {
     var canvas = document.getElementById("lesson01-canvas");
-    initGL(canvas);
+    initGL(canvas);	
     initShaders();
-    initBuffers();
+	initAssets();
+    initBuffers();	
 
     gl.clearColor(0.5, 0.5, 0.5, 1.0);
 
