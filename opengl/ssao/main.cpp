@@ -111,13 +111,13 @@ bool InitializeApp()
   glEnable(GL_TEXTURE_2D);
 
    // Load shaders.
-   if(!CreateGLSLShader("../SetRenderTargetsVS.glsl", "../SetRenderTargetsPS.glsl", g_setRTShader))
+   if(!CreateGLSLShader("./SetRenderTargetsVS.glsl", "./SetRenderTargetsPS.glsl", g_setRTShader))
       return false;
 
-   if(!CreateGLSLShader("../ClearRenderTargetsVS.glsl", "../ClearRenderTargetsPS.glsl", g_clearRTShader))
+   if(!CreateGLSLShader("./ClearRenderTargetsVS.glsl", "./ClearRenderTargetsPS.glsl", g_clearRTShader))
       return false;
 
-   if(!CreateGLSLShader("../DirectionalLightVS.glsl", "../DirectionalLightPS.glsl", g_directionalLightDeferredShader))
+   if(!CreateGLSLShader("./DirectionalLightVS.glsl", "./DirectionalLightPS.glsl", g_directionalLightDeferredShader))
       return false;
 
    // Bind our shader variables.
@@ -135,16 +135,16 @@ bool InitializeApp()
 
 
    // Load the model from the file then its generated color data.
-   if(g_stageModel.LoadOBJ("../Box.obj") == false)
+   if(g_stageModel.LoadOBJ("./Box.obj") == false)
       return false;
 
-   if(g_boxModel.LoadOBJ("../Cube.obj") == false)
+   if(g_boxModel.LoadOBJ("./Cube.obj") == false)
       return false;
 
-   if(g_torusA.LoadOBJ("../TorusA.obj") == false)
+   if(g_torusA.LoadOBJ("./TorusA.obj") == false)
       return false;
 
-   if(g_torusB.LoadOBJ("../TorusB.obj") == false)
+   if(g_torusB.LoadOBJ("./TorusB.obj") == false)
       return false;
 
    return true;
