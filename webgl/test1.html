@@ -1,0 +1,291 @@
+<html>
+    <head>
+        <title>OpenGL ES 2.0 Programming Guide - Chapter_8/Simple_VertexShader</title>
+        <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+        <script type="text/javascript" src="./Common/esShader.js">
+        </script>
+        <script type="text/javascript" src="./Common/esShapes.js">
+        </script>
+        <script type="text/javascript" src="./Common/esTransform.js">
+        </script>
+        <script type="text/javascript" src="./Common/esUtil.js">
+        </script>
+        <script type="text/javascript">
+            //
+            // Book:      OpenGL(R) ES 2.0 Programming Guide
+            // Authors:   Aaftab Munshi, Dan Ginsburg, Dave Shreiner
+            // ISBN-10:   0321502795
+            // ISBN-13:   9780321502797
+            // Publisher: Addison-Wesley Professional
+            // URLs:      http://safari.informit.com/9780321563835
+            //            http://www.opengles-book.com
+            //
+            
+            // Simple_VertexShader
+            //
+            //    This is a simple example that draws a rotating cube in perspective
+            //    using a vertex shader to transform the object
+            //
+            UserData = function()
+						{
+                // Handle to a program object
+                this.programObject = 0;
+                
+                // Attribute locations
+                this.positionLoc = 0;
+                this.normalLoc = 0;
+								this.texcoordLoc = 0;
+                
+                // Uniform locations
+                this.mvpLoc = 0;
+                this.nmLoc = 0;
+								this.samplerLoc = 0;
+                
+                // Vertex data
+                this.vertPosObject = 0;
+                this.normPosObject = 0;
+								this.texcoordPosObject = 0;
+                this.indicesObject = 0;
+                this.numIndices = 0;
+                
+                // Rotation angle
+                this.angle = 0.0;
+                
+                // MVP matrix
+                this.mvpMatrix = new ESMatrix();
+                this.normalMatrix = new ESMatrix();
+                
+            }
+            
+            ///
+            // Initialize the shader and program object
+            //
+            function Init(esContext)
+						{
+							  // Load texture. 
+								textureObject = new ESTexture("nehe.gif");								
+							
+                var userData = esContext.userData;
+                var vShaderStr = 'uniform mat4 u_mvpMatrix;\n\
+            			 uniform mat4 u_normalMatrix;\n\
+            			 varying vec3 lightDir;\n\
+                   attribute vec4 a_position;\n\
+            			 attribute vec3 a_normal;\n\
+									 attribute vec2 a_texcoord;\n\
+            			 varying vec3 normal;\n\
+									 varying vec2 texcoord;\n\
+                   void main()\n\
+                   {\n\
+                      gl_Position = u_mvpMatrix * a_position;\n\
+            					lightDir = normalize(vec3(10.0, 10.0, 10000.0) - gl_Position.xyz);\n\
+            					normal = vec4(normalize(u_normalMatrix * vec4(a_normal,1))).xyz;\n\
+											texcoord = a_texcoord;\n\
+                   }\n';
+                
+                var fShaderStr = 'precision mediump float;\n\
+            			 varying vec3 normal;\n\
+            			 varying vec3 lightDir;\n\
+									 uniform sampler2D u_decal;\n\
+									 varying vec2 texcoord;\n\
+            			 vec4 color = vec4(0.8, 0.0, 0.0, 1.0);\n\
+									 vec4 decalColor;\n\
+                   void main()\n\
+                   {\n\
+            			  float diff = max(dot (normalize(normal), normalize(lightDir)), 0.0);\n\
+										decalColor = texture2D(u_decal, vec2(texcoord.s, texcoord.t));\n\
+            				color = (color * 0.40 + decalColor * 0.60) *  diff;\n\
+                    gl_FragColor = color;\n\
+                   }\n';
+                
+                // Load the shaders and get a linked program object
+                userData.programObject = esLoadProgram(vShaderStr, fShaderStr);
+                
+                // Get the attribute locations
+                userData.positionLoc = gl.getAttribLocation(userData.programObject, "a_position");
+                userData.normalLoc = gl.getAttribLocation(userData.programObject, "a_normal");
+								userData.texcoordLoc = gl.getAttribLocation(userData.programObject, "a_texcoord");
+                
+                // Get the uniform locations
+                userData.mvpLoc = gl.getUniformLocation(userData.programObject, "u_mvpMatrix");
+                userData.nmLoc = gl.getUniformLocation(userData.programObject, "u_normalMatrix");
+								userData.samplerLoc = gl.getUniformLocation(userData.programObject, "u_decal");
+                
+                // Generate the vertex data
+                var shape = esGenCube(1, true, true, true, true);
+                userData.numIndices = shape.numIndices;
+                
+                // Starting rotation angle for the cube
+                userData.angle = 45.0;
+                
+                // Generate the VBOs
+                userData.vertPosObject = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, userData.vertPosObject);
+                gl.bufferData(gl.ARRAY_BUFFER, shape.vertices, gl.STATIC_DRAW);
+                
+                userData.normPosObject = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, userData.normPosObject);
+                gl.bufferData(gl.ARRAY_BUFFER, shape.normals, gl.STATIC_DRAW);
+                
+                userData.indicesObject = gl.createBuffer();
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, userData.indicesObject);
+                gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, shape.indices, gl.STATIC_DRAW);
+                
+								userData.texcoordPosObject = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, userData.texcoordPosObject);
+                gl.bufferData(gl.ARRAY_BUFFER, shape.texCoords, gl.STATIC_DRAW);
+								
+                gl.clearColor(0.0, 0.0, 0.0, 1.0);
+                gl.disable(gl.BLEND);
+                gl.enable(gl.DEPTH_TEST);
+                return true;
+            }
+            
+            
+            ///
+            // Update MVP matrix based on time
+            //
+            var modelview;
+            var perspective;
+						
+            function Update(esContext, deltaTime)
+						{
+                userData = esContext.userData;
+                perspective = new ESMatrix();
+                modelview = new ESMatrix();
+                var aspect;
+                
+                // Compute a rotation angle based on time to rotate the cube
+                userData.angle += (deltaTime / 25.0);
+                if (userData.angle >= 360.0) 
+                    userData.angle -= 360.0;
+                
+                // Compute the window aspect ratio
+                aspect = esContext.width / esContext.height;
+                
+                // Generate a perspective matrix with a 60 degree FOV
+                esMatrixLoadIdentity(perspective);
+                esPerspective(perspective, 60.0, aspect, 1.0, 20.0);
+                
+                // Generate a model view matrix to rotate/translate the cube
+                esMatrixLoadIdentity(modelview);
+                esMatrixLoadIdentity(userData.normalMatrix);
+                
+                // Translate away from the viewer
+                esTranslate(modelview, 0.0, 0.0, -2.0);
+                
+                // Rotate the cube
+                esRotate(userData.normalMatrix, userData.angle, 1.0, 0.0, 1.0);
+                
+                esMatrixMultiply(modelview, userData.normalMatrix, modelview);
+                
+                // Compute the final MVP by multiplying the
+                // modevleiw and perspective matrices together
+                esMatrixMultiply(userData.mvpMatrix, modelview, perspective);
+            }            
+					  
+            ///
+            // Draw a triangle using the shader pair created in Init()
+            //
+            function Draw(esContext)
+						{
+                var userData = esContext.userData;
+                
+                // Set the viewport
+                gl.viewport(0, 0, esContext.width, esContext.height);
+                
+                // Clear the color buffer
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                gl.clear(gl.DEPTH_BUFFER_BIT);
+                
+                // Use the program object
+                gl.useProgram(userData.programObject);
+								
+								// Load the texture. 
+								gl.activeTexture(gl.TEXTURE0);
+                gl.bindTexture(gl.TEXTURE_2D, textureObject.texture);
+								
+                gl.uniform1i(userData.samplerLoc, 0);								
+                
+                // Load the vertex position
+                gl.bindBuffer(gl.ARRAY_BUFFER, userData.vertPosObject);
+                gl.vertexAttribPointer(userData.positionLoc, 3, gl.FLOAT, false, 0, 0);
+                gl.enableVertexAttribArray(userData.positionLoc);
+                
+                gl.bindBuffer(gl.ARRAY_BUFFER, userData.normPosObject);
+                gl.vertexAttribPointer(userData.normalLoc, 3, gl.FLOAT, false, 0, 0);
+                gl.enableVertexAttribArray(userData.normalLoc);
+								
+								gl.bindBuffer(gl.ARRAY_BUFFER, userData.texcoordPosObject);
+                gl.vertexAttribPointer(userData.texcoordLoc, 2, gl.FLOAT, false, 0, 0);
+                gl.enableVertexAttribArray(userData.texcoordLoc);
+                
+                // Load the index buffer
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, userData.indicesObject);
+                
+                // Load the MVP matrix
+                gl.uniformMatrix4fv(userData.mvpLoc, false, getAsFloat32Array(userData.mvpMatrix));
+                
+                gl.uniformMatrix4fv(userData.nmLoc, false, getAsFloat32Array(userData.normalMatrix));
+                
+                // Draw the cube
+                gl.drawElements ( gl.TRIANGLES, userData.numIndices, gl.UNSIGNED_SHORT, 0 );
+                
+                // -- Second cube. 
+                var translationMatrix = new ESMatrix();
+								esMatrixLoadIdentity(translationMatrix);
+                
+                // Translate away from the viewer
+                esTranslate(translationMatrix, -1.0, 0.0, -2.0);
+                
+                esMatrixMultiply(translationMatrix, userData.normalMatrix, translationMatrix);
+                
+                esMatrixMultiply(translationMatrix, translationMatrix, modelview);
+                
+                esMatrixMultiply(translationMatrix, translationMatrix, perspective);
+                
+                // Load the vertex position
+                gl.bindBuffer(gl.ARRAY_BUFFER, userData.vertPosObject);
+                gl.vertexAttribPointer(userData.positionLoc, 3, gl.FLOAT, false, 0, 0);
+                gl.enableVertexAttribArray(userData.positionLoc);
+                
+                gl.bindBuffer(gl.ARRAY_BUFFER, userData.normPosObject);
+                gl.vertexAttribPointer(userData.normalLoc, 3, gl.FLOAT, false, 0, 0);
+                gl.enableVertexAttribArray(userData.normalLoc);
+                
+                // Load the index buffer
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, userData.indicesObject);
+                
+                // Load the MVP matrix
+                gl.uniformMatrix4fv(userData.mvpLoc, false, getAsFloat32Array(translationMatrix));
+                
+                gl.uniformMatrix4fv(userData.nmLoc, false, getAsFloat32Array(userData.normalMatrix));
+                
+                // Draw the cube
+                gl.drawElements(gl.TRIANGLES, userData.numIndices, gl.UNSIGNED_SHORT, 0);
+            }            
+												
+            function main()
+						{
+                var canvas = document.getElementById("webgl-canvas");
+                var esContext = new ESContext();
+                var userData = new UserData();
+                
+                esInitContext(esContext, canvas);
+                esContext.userData = userData;
+                
+                if (!Init(esContext)) 
+                    return 0;
+                
+                esRegisterDrawFunc(esContext, Draw);
+                esRegisterUpdateFunc(esContext, Update);
+                
+                esMainLoop(esContext);
+            }
+            
+        </script>
+    </head>
+    <body onload="main();">
+        <canvas id="webgl-canvas" style="border: none;" width="320" height="240">
+        </canvas>
+    </body>
+</html>
