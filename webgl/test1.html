@@ -77,7 +77,7 @@
                    void main()\n\
                    {\n\
                       gl_Position = u_mvpMatrix * a_position;\n\
-            					lightDir = normalize(vec3(10.0, 10.0, 10000.0) - gl_Position.xyz);\n\
+            					lightDir = normalize(vec4(0.0, 10.0, 10.0, 1.0) - gl_Position).xyz;\n\
             					normal = vec4(normalize(u_normalMatrix * vec4(a_normal,1))).xyz;\n\
 											texcoord = a_texcoord;\n\
                    }\n';
@@ -92,8 +92,9 @@
                    void main()\n\
                    {\n\
             			  float diff = max(dot (normalize(normal), normalize(lightDir)), 0.0);\n\
+										diff = min(diff, 1.0);\n\
 										decalColor = texture2D(u_decal, vec2(texcoord.s, texcoord.t));\n\
-            				color = (color * 0.40 + decalColor * 0.60) *  diff;\n\
+            				color = (color * diff) + decalColor * 0.8;\n\
                     gl_FragColor = color;\n\
                    }\n';
                 
