@@ -319,6 +319,13 @@ int vtkOGRReader::RequestData(
       continue;
       }
 
+    if(layer->GetSpatialRef())
+      {
+      char *projStr;
+      layer->GetSpatialRef()->exportToWkt(&projStr);
+      this->LayerProjectionMap[layerIdx] = std::string(projStr);
+      }
+
     vtkPolyData* pd = vtkPolyData::New();
     mbds->SetBlock( layerIdx, pd );
     pd->FastDelete();

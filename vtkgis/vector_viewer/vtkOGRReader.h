@@ -3,6 +3,7 @@
 
 #include <vtkMultiBlockDataSetAlgorithm.h>
 
+#include <map> // STL required.
 
 class vtkOGRReader : public vtkMultiBlockDataSetAlgorithm
 {
@@ -61,6 +62,9 @@ protected:
 
   /// Global variable indicating whether the OGR library has been registered yet or not.
   static int OGRRegistered;
+
+  /// Mapping of layer to projection.
+  std::map<int, std::string> LayerProjectionMap;
   //ETX
 };
 
