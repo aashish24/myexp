@@ -5,6 +5,7 @@
 #include <vtkMultiBlockDataSet.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkPolyDataWriter.h>
 #include <vtkProperty.h>
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
@@ -52,6 +53,13 @@ int main(int argc, char **argv)
     if(vtkSmartPointer<vtkPolyData> polyData = vtkPolyData::SafeDownCast( mbds->GetBlock(i) ))
       {
       std::cout << "Success " << std::endl;
+
+      // Writing data to file as well.
+      vtkSmartPointer<vtkPolyDataWriter> writer (vtkSmartPointer<vtkPolyDataWriter>::New());
+      writer->SetFileName("ShapeVTK");
+      writer->SetInput(polyData);
+      writer->Write();
+
       vtkSmartPointer<vtkPolyDataMapper> mapper =
         vtkSmartPointer<vtkPolyDataMapper>::New();
       mapper->SetInput(polyData);
