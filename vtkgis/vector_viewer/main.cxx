@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 
       // Writing data to file as well.
       vtkSmartPointer<vtkPolyDataWriter> writer (vtkSmartPointer<vtkPolyDataWriter>::New());
-      writer->SetFileName("ShapeVTK");
+      writer->SetFileName("ShapeVTK.vtk");
       writer->SetInput(polyData);
       writer->Write();
 
