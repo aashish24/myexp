@@ -45,56 +45,63 @@ public:
       }
     }
 
-  bool ReadLayer( OGRLayer* layer, vtkPolyData* pd )
+  bool ReadLayer( OGRLayer* layer, vtkMultiBlockDataSet* mbds )
     {
-    vtkPoints* pts = pd->GetPoints();
-    if ( ! pts )
-      {
-      pts = vtkPoints::New();
-      pd->SetPoints( pts );
-      pts->FastDelete();
-      }
-
+    int nTotPoly;
     OGRFeature* feat;
-    OGRFeatureDefn* fdef = layer->GetLayerDefn();
-    int numFields = fdef->GetFieldCount();
-    vtkstd::vector<vtkAbstractArray*> fields;
-    vtkAbstractArray* arr;
-    int f;
-    for ( f = 0; f < numFields; ++f )
-      {
-      OGRFieldDefn* ffdef = fdef->GetFieldDefn( f );
-      switch( ffdef->GetType() )
-        {
-      case OFTInteger:
-        arr = vtkIntArray::New();
-        break;
-      case OFTReal:
-        arr = vtkDoubleArray::New();
-        break;
-      case OFTString:
-      default: // When in doubt, it's a string!
-        arr = vtkStringArray::New();
-        break;
-        }
-      arr->SetName( ffdef->GetNameRef() );
-      fields.push_back( arr );
-      pd->GetCellData()->AddArray( arr );
-      arr->FastDelete();
-      }
-
-    vtkIdType nTotPoly = 0;
-    vtkCellArray* lines (vtkCellArray::New());
-    vtkCellArray* verts (vtkCellArray::New());
-
-    pd->SetLines(lines);
-    pd->SetVerts(verts);
-
-    lines->FastDelete();
-    verts->FastDelete();
-
+    static int layerIdx = 0;
     while ( ( feat = layer->GetNextFeature() ) )
       {
+      vtkPolyData* pd = vtkPolyData::New();
+      mbds->SetBlock( layerIdx, pd );
+      ++layerIdx;
+      pd->FastDelete();
+
+      vtkPoints* pts = pd->GetPoints();
+      if ( ! pts )
+        {
+        pts = vtkPoints::New();
+        pd->SetPoints( pts );
+        pts->FastDelete();
+        }
+
+      OGRFeatureDefn* fdef = layer->GetLayerDefn();
+      int numFields = fdef->GetFieldCount();
+      vtkstd::vector<vtkAbstractArray*> fields;
+      vtkAbstractArray* arr;
+      int f;
+      for ( f = 0; f < numFields; ++f )
+        {
+        OGRFieldDefn* ffdef = fdef->GetFieldDefn( f );
+        switch( ffdef->GetType() )
+          {
+        case OFTInteger:
+          arr = vtkIntArray::New();
+          break;
+        case OFTReal:
+          arr = vtkDoubleArray::New();
+          break;
+        case OFTString:
+        default: // When in doubt, it's a string!
+          arr = vtkStringArray::New();
+          break;
+          }
+        arr->SetName( ffdef->GetNameRef() );
+        fields.push_back( arr );
+        pd->GetCellData()->AddArray( arr );
+        arr->FastDelete();
+        }
+
+      vtkIdType nTotPoly = 0;
+      vtkCellArray* lines (vtkCellArray::New());
+      vtkCellArray* verts (vtkCellArray::New());
+
+      pd->SetPolys(lines);
+      pd->SetVerts(verts);
+
+      lines->FastDelete();
+      verts->FastDelete();
+
       // Insert points and lines to represent the geometry of each feature.
       OGRGeometry* geom = feat->GetGeometryRef();
       vtkIdType nPoly = this->insertGeometryRecursive( geom, pd, pts, lines, verts );
@@ -102,6 +109,18 @@ public:
         {
         continue;
         }
+
+//      double *firstPoint = pts->GetPoint(0);
+//      double *lastPoint  = pts->GetPoint(pts->GetNumberOfPoints() - 1);
+
+//      if(firstPoint[0] == lastPoint[0] &&
+//         firstPoint[1] == lastPoint[1] &&
+//         firstPoint[2] == lastPoint[2])
+//        {
+//        pts->SetNumberOfPoints(pts->GetNumberOfPoints() - 1);
+//        }
+
+
       nTotPoly += nPoly;
 
       // Now insert the field values for this geometry once for each cell created
@@ -326,10 +345,7 @@ int vtkOGRReader::RequestData(
       this->LayerProjectionMap[layerIdx] = std::string(projStr);
       }
 
-    vtkPolyData* pd = vtkPolyData::New();
-    mbds->SetBlock( layerIdx, pd );
-    pd->FastDelete();
-    p->ReadLayer( layer, pd );
+    p->ReadLayer( layer, mbds );
     }
 
   return 1;
