@@ -110,17 +110,6 @@ public:
         continue;
         }
 
-//      double *firstPoint = pts->GetPoint(0);
-//      double *lastPoint  = pts->GetPoint(pts->GetNumberOfPoints() - 1);
-
-//      if(firstPoint[0] == lastPoint[0] &&
-//         firstPoint[1] == lastPoint[1] &&
-//         firstPoint[2] == lastPoint[2])
-//        {
-//        pts->SetNumberOfPoints(pts->GetNumberOfPoints() - 1);
-//        }
-
-
       nTotPoly += nPoly;
 
       // Now insert the field values for this geometry once for each cell created
