@@ -96,7 +96,7 @@ public:
       vtkCellArray* lines (vtkCellArray::New());
       vtkCellArray* verts (vtkCellArray::New());
 
-      pd->SetPolys(lines);
+      pd->SetLines(lines);
       pd->SetVerts(verts);
 
       lines->FastDelete();

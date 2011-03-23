@@ -1,6 +1,7 @@
 
 // VTK includes.
 #include <vtkActor.h>
+#include <vtkCellArray.h>
 #include <vtkInteractorStyleRubberBand3D.h>
 #include <vtkLookupTable.h>
 #include <vtkMapper.h>
@@ -71,22 +72,29 @@ int main(int argc, char **argv)
     {
     if(vtkSmartPointer<vtkPolyData> polyData = vtkPolyData::SafeDownCast( mbds->GetBlock(i) ))
       {
-      vtkSmartPointer<vtkTriangleFilter> tf (vtkSmartPointer<vtkTriangleFilter>::New());
-      tf->SetInput(polyData);
-      tf->Update();
+      vtkSmartPointer<vtkCellArray> polys = polyData->GetPolys();
+      if(polys->GetNumberOfCells() > 1)
+        {
+        std::cout << "Index is " << i << std::endl;
+        std::cout << "Number of cells are " << polys->GetNumberOfCells() << std::endl;
+        }
 
-//      std::cout << polyData->GetNumberOfCells() << std::endl;
+      vtkSmartPointer<vtkPolyData> newPolyData (vtkSmartPointer<vtkPolyData>::New());
+      newPolyData->SetPolys(polyData->GetLines());
+      newPolyData->SetPoints(polyData->GetPoints());
+
+      vtkSmartPointer<vtkTriangleFilter> tf (vtkSmartPointer<vtkTriangleFilter>::New());
+      tf->SetInput(newPolyData);
+      tf->Update();
 
 //      // Writing data to file as well.
 //      vtkSmartPointer<vtkPolyDataWriter> writer (vtkSmartPointer<vtkPolyDataWriter>::New());
-
 //      std::ostringstream oss;
 //      oss << i;
 //      std::string fileName = std::string("/home/aashish/Desktop/output") + oss.str() + ".vtk";
 //      writer->SetFileName(fileName.c_str());
 //      writer->SetInput(tf->GetOutput());
 //      writer->Write();
-
 
       vtkSmartPointer<vtkPolyDataMapper> mapper =
         vtkSmartPointer<vtkPolyDataMapper>::New();
@@ -95,12 +103,9 @@ int main(int argc, char **argv)
       actor->SetMapper(mapper);
       actor->GetProperty()->SetColor(colors[i%4]);
 
-      vtkSmartPointer<vtkPolyData> lineData (vtkSmartPointer<vtkPolyData>::New());
-      lineData->SetLines(polyData->GetPolys());
-      lineData->SetPoints(polyData->GetPoints());
       vtkSmartPointer<vtkPolyDataMapper> lineMapper (vtkSmartPointer<vtkPolyDataMapper>::New());
       vtkSmartPointer<vtkActor> lineActor (vtkSmartPointer<vtkActor>::New());
-      lineMapper->SetInput(lineData);
+      lineMapper->SetInput(polyData);
       lineActor->SetMapper(lineMapper);
       lineActor->GetProperty()->SetColor(0.0, 0.0, 0.0);
       lineActor->GetProperty()->SetLineWidth(2.0);
