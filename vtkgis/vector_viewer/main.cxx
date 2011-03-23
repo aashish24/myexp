@@ -2,6 +2,8 @@
 // VTK includes.
 #include <vtkActor.h>
 #include <vtkCellArray.h>
+#include <vtkGeoProjection.h>
+#include <vtkGeoTransform.h>
 #include <vtkInteractorStyleRubberBand3D.h>
 #include <vtkLookupTable.h>
 #include <vtkMapper.h>
@@ -96,6 +98,15 @@ int main(int argc, char **argv)
 //      writer->SetInput(tf->GetOutput());
 //      writer->Write();
 
+      std::cout << "Layer projection is" << reader->GetLayersProjection()[0] << std::endl;
+      vtkSmartPointer<vtkGeoProjection> dstProjection = vtkSmartPointer<vtkGeoProjection>::New();
+      dstProjection->SetName("merc");
+      vtkSmartPointer<vtkGeoTransform> geoTransform = vtkSmartPointer<vtkGeoTransform>::New();
+      geoTransform->SetDestinationProjection(dstProjection);
+      vtkSmartPointer<vtkPoints> transformedPoints (vtkSmartPointer<vtkPoints>::New());
+      geoTransform->TransformPoints(newPolyData->GetPoints(), transformedPoints);
+      newPolyData->SetPoints(transformedPoints);
+
       vtkSmartPointer<vtkPolyDataMapper> mapper =
         vtkSmartPointer<vtkPolyDataMapper>::New();
       mapper->SetInput(tf->GetOutput());
@@ -105,7 +116,10 @@ int main(int argc, char **argv)
 
       vtkSmartPointer<vtkPolyDataMapper> lineMapper (vtkSmartPointer<vtkPolyDataMapper>::New());
       vtkSmartPointer<vtkActor> lineActor (vtkSmartPointer<vtkActor>::New());
-      lineMapper->SetInput(polyData);
+      vtkSmartPointer<vtkPolyData> lineData (vtkSmartPointer<vtkPolyData>::New());
+      lineData->SetLines(newPolyData->GetPolys());
+      lineData->SetPoints(newPolyData->GetPoints());
+      lineMapper->SetInput(lineData);
       lineActor->SetMapper(lineMapper);
       lineActor->GetProperty()->SetColor(0.0, 0.0, 0.0);
       lineActor->GetProperty()->SetLineWidth(2.0);

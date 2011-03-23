@@ -331,7 +331,7 @@ int vtkOGRReader::RequestData(
       {
       char *projStr;
       layer->GetSpatialRef()->exportToWkt(&projStr);
-      this->LayerProjectionMap[layerIdx] = std::string(projStr);
+      this->LayersProjection[layerIdx] = std::string(projStr);
       }
 
     p->ReadLayer( layer, mbds );

@@ -40,6 +40,13 @@ public:
   vtkSetMacro(ActiveLayer,int);
   vtkGetMacro(ActiveLayer,int);
 
+  // Description:
+  // Return projection string belong to each layer.
+  std::map<int, std::string> GetLayersProjection()
+    {
+    return this->LayersProjection;
+    }
+
 protected:
   vtkOGRReader();
   virtual ~vtkOGRReader();
@@ -64,7 +71,7 @@ protected:
   static int OGRRegistered;
 
   /// Mapping of layer to projection.
-  std::map<int, std::string> LayerProjectionMap;
+  std::map<int, std::string> LayersProjection;
   //ETX
 };
 

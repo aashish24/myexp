@@ -21,6 +21,7 @@ link_directories(${GDAL_CONFIG}/lib)
 add_executable(${PROJECT_NAME} ${SRCS})
 
 target_link_libraries(${PROJECT_NAME}
+  vtkGeovis
   vtkRendering
   gdal
 )
