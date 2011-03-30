@@ -19,13 +19,16 @@ GLfloat positions [] =
   -10.0, 10.0, -100.0, 1.0
 };
 
+
+// Intentionaly creating varying normals.
 GLfloat normals [] =
 {
   0.0, 0.0, 1.0, 1.0,
-  0.0, 0.0, 1.0, 1.0,
+  0.0, 1.0, 1.0, 1.0,
   0.0, 0.0, 1.0, 1.0,
   0.0, 0.0, 1.0, 1.0
 };
+
 
 void Resize(int width, int height)
 {
@@ -35,6 +38,7 @@ void Resize(int width, int height)
   gluPerspective(45, width/height, 1.0, 1000.0);
   glMatrixMode(GL_MODELVIEW);
 }
+
 
 bool InitializeApp()
 {
@@ -46,8 +50,14 @@ bool InitializeApp()
    // Load shaders.
    if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/vbo/per_pixel_phong_shader_vs.glsl",
                         "/home/aashish/tools/mywork/src.git/opengl/vbo/per_pixel_phong_shader_ps.glsl", gPhongShader))
+     {
       return false;
+     }
 
+   // Set index of the attribute in the shader.
+   glBindAttribLocation(gPhongShader, 0, "normals");
+
+   // Bind data to VBO.
    glGenBuffers(1, &oneBuffer);
    glBindBuffer(GL_ARRAY_BUFFER, oneBuffer);
    glBufferData(GL_ARRAY_BUFFER, sizeof(positions) + sizeof(normals), NULL, GL_STATIC_DRAW);
@@ -56,10 +66,13 @@ bool InitializeApp()
    glEnableVertexAttribArray(0);
    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (const GLvoid *)0);
    glEnableVertexAttribArray(1);
-   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid *)sizeof(positions));
+   glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (const GLvoid *)sizeof(positions));
+
+
    return true;
 }
 
+// Render scene.
 void RenderScene()
 {
   glMatrixMode(GL_MODELVIEW);
@@ -76,6 +89,8 @@ void RenderScene()
   glutPostRedisplay();
 }
 
+
+// Main.
 int main(int arg, char **argc)
 {
    glutInitWindowSize(800, 600);
