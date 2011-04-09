@@ -16,6 +16,8 @@
 #include"objLoader.h"
 #include"OpenGLSLHelper.h"
 #include"OpenGLFbo.h"
+#include "TGA.h"
+
 #include<stdio.h>
 
 
@@ -36,7 +38,10 @@ GLuint g_glslOffset;
 GLuint g_glslDecal;
 GLuint g_glslNormals;
 GLuint g_glslDepth;
+GLuint g_glslRandom;
 GLuint g_glslLightColor;
+
+GLuint g_random_texture;
 
 // FBO data.
 OpenGLFBO g_sceneFBO;
@@ -110,6 +115,20 @@ bool InitializeApp()
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_TEXTURE_2D);
 
+  // Load texture.
+  int width = 0, height = 0, comp = 0;
+  unsigned char *image;
+  image = LoadTGA("/home/aashish/tools/mywork/src.git/opengl/ssao/randoms.tga", width, height, comp);
+
+  glGenTextures(1, &g_random_texture);
+  glBindTexture(GL_TEXTURE_2D, g_random_texture);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, width, height,
+               0, GL_RGB, GL_UNSIGNED_BYTE, image);
+
+   delete[] image;
+
  // Load shaders.
  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/SetRenderTargetsVS.glsl", "/home/aashish/tools/mywork/src.git/opengl/ssao/SetRenderTargetsPS.glsl", g_setRTShader))
     return false;
@@ -127,6 +146,8 @@ bool InitializeApp()
   g_glslDecal = glGetUniformLocationARB(g_directionalLightDeferredShader, "colors");
   g_glslNormals = glGetUniformLocationARB(g_directionalLightDeferredShader, "normals");
   g_glslDepth = glGetUniformLocationARB(g_directionalLightDeferredShader, "depths");
+
+  g_glslRandom = glGetUniformLocationARB(g_directionalLightDeferredShader, "randoms");
 
 
   // Create frame buffer objects.
@@ -168,15 +189,15 @@ void ShutdownApp()
 
 void DrawModel(ObjModel &model)
 {
-   glEnableClientState(GL_VERTEX_ARRAY);
-   glVertexPointer(3, GL_FLOAT, 0, model.GetVertices());
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glVertexPointer(3, GL_FLOAT, 0, model.GetVertices());
 
-   glEnableClientState(GL_NORMAL_ARRAY);
-   glNormalPointer(GL_FLOAT, 0, model.GetNormals());
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glNormalPointer(GL_FLOAT, 0, model.GetNormals());
 
-   glDrawArrays(GL_TRIANGLES, 0, model.GetTotalVerts());
+  glDrawArrays(GL_TRIANGLES, 0, model.GetTotalVerts());
 
-   glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
 }
 
@@ -271,10 +292,14 @@ void RenderScene()
    glActiveTexture(GL_TEXTURE2_ARB);
    glBindTexture(GL_TEXTURE_2D, g_sceneFBO.GetColorDest2());
 
+   glActiveTexture(GL_TEXTURE3_ARB);
+   glBindTexture(GL_TEXTURE_2D, g_random_texture);
+
    glUseProgramObjectARB(g_directionalLightDeferredShader);
    glUniform1iARB(g_glslDecal, 0);
    glUniform1iARB(g_glslNormals, 1);
    glUniform1iARB(g_glslDepth, 2);
+   glUniform1iARB(g_glslRandom, 3);
    glUniform3fARB(g_glslLightPos, 0.0f, 20.0f, 15.0f);
    glUniform4fARB(g_glslLightColor, 0.4f, 0.4f, 0.0f, 1.0f);
    glUniform2fARB(g_glslOffset, 1.0f / (float)WIDTH, 1.0f / (float)HEIGHT);

@@ -12,6 +12,7 @@ set(SRCS
   OpenGLSLHelper.cpp
   OpenGLFbo.h
   OpenGLFbo.cpp
+  TGA.cpp
 )
 
 include_directories(/usr/include/GL
