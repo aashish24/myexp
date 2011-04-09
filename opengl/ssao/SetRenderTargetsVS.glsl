@@ -1,9 +1,3 @@
-/*
-   Set Render Targets for Deferred Shading - OpenGL
-   Game Graphics Programming
-   Created by Allen Sherrod
-*/
-
 
 varying vec3 normal;
 varying vec4 color;
@@ -16,7 +10,7 @@ void main()
 
    normal = gl_NormalMatrix * gl_Normal;
    color = gl_Color;
-   
+
    depthPos.x = finalPos.z;
    depthPos.y = finalPos.w;
 

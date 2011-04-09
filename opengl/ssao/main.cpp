@@ -105,49 +105,49 @@ void KeyDownSpecial(int key, int x, int y)
 
 bool InitializeApp()
 {
-   glClearColor(0, 0, 0, 1);
-   glShadeModel(GL_SMOOTH);
+  glClearColor(0, 0, 0, 1);
+  glShadeModel(GL_SMOOTH);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_TEXTURE_2D);
 
-   // Load shaders.
-   if(!CreateGLSLShader("./SetRenderTargetsVS.glsl", "./SetRenderTargetsPS.glsl", g_setRTShader))
-      return false;
+ // Load shaders.
+ if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/SetRenderTargetsVS.glsl", "/home/aashish/tools/mywork/src.git/opengl/ssao/SetRenderTargetsPS.glsl", g_setRTShader))
+    return false;
 
-   if(!CreateGLSLShader("./ClearRenderTargetsVS.glsl", "./ClearRenderTargetsPS.glsl", g_clearRTShader))
-      return false;
+ if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/ClearRenderTargetsVS.glsl", "/home/aashish/tools/mywork/src.git/opengl/ssao/ClearRenderTargetsPS.glsl", g_clearRTShader))
+    return false;
 
-   if(!CreateGLSLShader("./DirectionalLightVS.glsl", "./DirectionalLightPS.glsl", g_directionalLightDeferredShader))
-      return false;
+ if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/DirectionalLightVS.glsl", "/home/aashish/tools/mywork/src.git/opengl/ssao/DirectionalLightPS.glsl", g_directionalLightDeferredShader))
+    return false;
 
-   // Bind our shader variables.
-   g_glslOffset = glGetUniformLocationARB(g_directionalLightDeferredShader, "offset");
-   g_glslLightPos = glGetUniformLocationARB(g_directionalLightDeferredShader, "lightPos");
-   g_glslLightColor = glGetUniformLocationARB(g_directionalLightDeferredShader, "lightColor");
-   g_glslDecal = glGetUniformLocationARB(g_directionalLightDeferredShader, "colors");
-   g_glslNormals = glGetUniformLocationARB(g_directionalLightDeferredShader, "normals");
-   g_glslDepth = glGetUniformLocationARB(g_directionalLightDeferredShader, "depths");
-
-
-   // Create frame buffer objects.
-   if(g_sceneFBO.Create(WIDTH, HEIGHT) == false)
-      return false;
+  // Bind our shader variables.
+  g_glslOffset = glGetUniformLocationARB(g_directionalLightDeferredShader, "offset");
+  g_glslLightPos = glGetUniformLocationARB(g_directionalLightDeferredShader, "lightPos");
+  g_glslLightColor = glGetUniformLocationARB(g_directionalLightDeferredShader, "lightColor");
+  g_glslDecal = glGetUniformLocationARB(g_directionalLightDeferredShader, "colors");
+  g_glslNormals = glGetUniformLocationARB(g_directionalLightDeferredShader, "normals");
+  g_glslDepth = glGetUniformLocationARB(g_directionalLightDeferredShader, "depths");
 
 
-   // Load the model from the file then its generated color data.
-   if(g_stageModel.LoadOBJ("./Box.obj") == false)
-      return false;
+  // Create frame buffer objects.
+  if(g_sceneFBO.Create(WIDTH, HEIGHT) == false)
+    return false;
 
-   if(g_boxModel.LoadOBJ("./Cube.obj") == false)
-      return false;
 
-   if(g_torusA.LoadOBJ("./TorusA.obj") == false)
-      return false;
+  // Load the model from the file then its generated color data.
+  if(g_stageModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/Box.obj") == false)
+    return false;
 
-   if(g_torusB.LoadOBJ("./TorusB.obj") == false)
-      return false;
+  if(g_boxModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/Cube.obj") == false)
+    return false;
 
-   return true;
+  if(g_torusA.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/TorusA.obj") == false)
+    return false;
+
+  if(g_torusB.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/TorusB.obj") == false)
+    return false;
+
+  return true;
 }
 
 
@@ -176,8 +176,8 @@ void DrawModel(ObjModel &model)
 
    glDrawArrays(GL_TRIANGLES, 0, model.GetTotalVerts());
 
-	 glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
+   glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 
@@ -230,12 +230,12 @@ void RenderScreenQuad()
    glDisableClientState(GL_VERTEX_ARRAY);
    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	 glMatrixMode(GL_PROJECTION);
-	 glPopMatrix();
-	 glMatrixMode(GL_MODELVIEW);
-	 glPopMatrix();
+   glMatrixMode(GL_PROJECTION);
+   glPopMatrix();
+   glMatrixMode(GL_MODELVIEW);
+   glPopMatrix();
 
-	 glViewport(0, 0, WIDTH, HEIGHT);
+   glViewport(0, 0, WIDTH, HEIGHT);
 
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
