@@ -1,8 +1,3 @@
-/*
-   OpenGL FBO Header
-   Game Graphics Programming
-   Created by Allen Sherrod
-*/
 
 
 #ifndef _GL_FBO_H_
@@ -14,7 +9,7 @@ class OpenGLFBO
    public:
       OpenGLFBO();
       ~OpenGLFBO();
-      
+
       bool Create(int width, int height);
       void Release();
 

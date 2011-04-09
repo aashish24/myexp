@@ -1,9 +1,3 @@
-/*
-   Deferred Shading Directional Light - OpenGL
-   Game Graphics Programming
-   Created by Allen Sherrod
-*/
-
 
 varying vec2 texCoords;
 
