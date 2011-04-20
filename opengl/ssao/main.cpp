@@ -22,10 +22,10 @@
 
 
 // Scene Model.
-//ObjModel g_stageModel;
-//ObjModel g_boxModel;
-//ObjModel g_torusA;
-//ObjModel g_torusB;
+ObjModel g_stageModel;
+ObjModel g_boxModel;
+ObjModel g_torusA;
+ObjModel g_torusB;
 ObjModel g_model;
 
 // GLSlang objects.
@@ -212,7 +212,7 @@ bool InitializeApp()
   if(g_blurVFBO.Create(WIDTH, HEIGHT) == false)
     return false;
 
-    if(g_model.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/venusm.obj") == false)
+    if(g_model.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/dragon.obj") == false)
       return false;
 
 //  // Load the model from the file then its generated color data.
@@ -278,7 +278,7 @@ void RenderScenePass()
    glClear(GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
 
-   glTranslatef(0, -1400, -6000);
+   glTranslatef(0, 0, -2);
    glRotatef(-g_yRot, 1.0f, 0.0f, 0.0f);
    glRotatef(-g_xRot, 0.0f, 1.0f, 0.0f);
 
@@ -365,20 +365,19 @@ void RenderScene()
 
    glUseProgramObjectARB(g_ssaoShader);
    glActiveTexture(GL_TEXTURE0_ARB);
-   glBindTexture(GL_TEXTURE_2D, g_sceneFBO.GetColorDest0());
-   glActiveTexture(GL_TEXTURE1_ARB);
    glBindTexture(GL_TEXTURE_2D, g_sceneFBO.GetColorDest1());
+   glActiveTexture(GL_TEXTURE1_ARB);
+   glBindTexture(GL_TEXTURE_2D, g_glslRandomTexture);
    glActiveTexture(GL_TEXTURE2_ARB);
    glBindTexture(GL_TEXTURE_2D, g_sceneFBO.GetColorDest2());
    glActiveTexture(GL_TEXTURE3_ARB);
    glBindTexture(GL_TEXTURE_2D, g_glslRandomTexture);
 
-   glUniform1iARB(g_glslSsaoNormals, 1);
+   glUniform1iARB(g_glslSsaoNormals, 0);
+   glUniform1iARB(g_glslSsaoRandom, 1);
    glUniform1iARB(g_glslSsaoDepth, 2);
-   glUniform1iARB(g_glslSsaoRandom, 3);
    glUniform2fARB(g_glslSsaoOffset, 1.0f / (float)WIDTH, 1.0f / (float)HEIGHT);
    RenderScreenQuad();
-
 
    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_blurHFBO.GetFBO());
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

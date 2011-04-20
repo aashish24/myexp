@@ -1,37 +1,27 @@
 varying vec2 texCoords;
 
 uniform sampler2D normals;
-uniform sampler2D depths;
 uniform sampler2D randoms;
+uniform sampler2D depths;
+
 
 vec2 g_screen_size = vec2(800, 600);
 
 float random_size = 64.0;
-float g_sample_rad = 0.06;
-float g_intensity = 1.5;
+float g_sample_rad = 0.3;
+float g_intensity = 3.5;
 float g_scale = 1.0;
-float g_bias = 0.3;
+float g_bias = 0.;
 
 vec4 getPosition(vec2 uv)
 {
-  float depthVal = texture2D(depths, uv).r;
-
-  // Calculate world-space position from depth.
-  vec4 position;
-  position.xy = texCoords * 2.0 - 1.0;
-  position.z = depthVal;
-  position.w = 1.0;
-
-  // Transform position to world space.
-  vec4 newPosition = gl_ProjectionMatrixInverse * position;
-  newPosition /= newPosition.w;
-
-  return newPosition;
+  return texture2D(depths, uv);
 }
 
 vec3 getNormal(vec2 uv)
 {
- return normalize(texture2D(normals, uv).xyz * 2.0 - 1.0);
+  return texture2D(normals, uv).xyz;
+// return normalize(texture2D(normals, uv).xyz * 2.0 - 1.0);
 }
 
 vec2 getRandom(vec2 uv)
@@ -63,10 +53,10 @@ float processAmbientOcclusion()
  float rad = g_sample_rad/p.z;
 
  //**SSAO Calculation**//
- int iterations = 8;
+ int iterations = 4;
  for (int j = 0; j < iterations; ++j)
  {
-  vec2 coord1 = reflect(vec[j % 4],rand)*rad;
+  vec2 coord1 = reflect(vec[j%4],rand)*rad;
   vec2 coord2 = vec2(coord1.x*0.707 - coord1.y*0.707,
               coord1.x*0.707 + coord1.y*0.707);
 
@@ -83,7 +73,12 @@ float processAmbientOcclusion()
 
 void main()
 {
-  float ao = 1 - processAmbientOcclusion();
-
+  float ao =  1 - processAmbientOcclusion();
   gl_FragData[0]  = vec4(ao, ao, ao, 1.0);
+
+  // For testing.
+//  gl_FragColor = vec4(getPosition(texCoords));
+//  gl_FragColor = vec4(getRandom(texCoords), 0.0, 1.0);
+//  gl_FragColor = vec4(getNormal(texCoords), 1.0);
+//  gl_FragColor = ambient;
 }

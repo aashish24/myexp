@@ -25,6 +25,10 @@ class OpenGLFBO
       GLuint m_color1Dest;
       GLuint m_color2Dest;
       GLuint m_depthDest;
+
+      GLuint colorBuffer;
+      GLuint normalBuffer;
+      GLuint positionBuffer;
 };
 
 #endif
