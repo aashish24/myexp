@@ -134,34 +134,34 @@ bool InitializeApp()
    delete[] image;
 
   // Load shaders.
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/SetRenderTargetsVS.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/SetRenderTargetsPS.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/setRenderTargetsVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao/setRenderTargetsPs.glsl",
                       g_setRTShader))
     return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/ClearRenderTargetsVS.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/ClearRenderTargetsPS.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/clearRenderTargetsVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao/clearRenderTargetsPs.glsl",
                       g_clearRTShader))
     return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/SsaoVS.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/SsaoPS.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/ssaoVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao/ssaoPs.glsl",
                       g_ssaoShader))
    return false;
 
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/SetHBlurVS.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/SetHBlurPS.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/hBlurVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao/hBlurPs.glsl",
                       g_hBlurShader))
   return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/SetVBlurVS.glsl",
-                       "/home/aashish/tools/mywork/src.git/opengl/ssao/SetVBlurPS.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/vBlurVs.glsl",
+                       "/home/aashish/tools/mywork/src.git/opengl/ssao/vBlurPs.glsl",
                        g_vBlurShader))
     return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/DirectionalLightVS.glsl",
-                       "/home/aashish/tools/mywork/src.git/opengl/ssao/DirectionalLightPS.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/renderingVs.glsl",
+                       "/home/aashish/tools/mywork/src.git/opengl/ssao/renderingPs.glsl",
                         g_renderShader))
     return false;
 
