@@ -1,15 +1,10 @@
-/*
-   TGA Loading
-   Game Graphics Programming
-   Created by Allen Sherrod
-*/
-
 
 #include"TGA.h"
+
 #include<stdio.h>
 #include<string.h>
 
-
+//-----------------------------------------------------------------------------
 unsigned char* LoadTGAFromMemory(char *data, int length, int &width, int &height, int &components)
 {
    unsigned char tempColor;
@@ -20,9 +15,9 @@ unsigned char* LoadTGAFromMemory(char *data, int length, int &width, int &height
 
    // We only want to read uncompressed tga's at this time.
    if(memcmp(unCompressHeader, ptr, sizeof(unCompressHeader)) != 0)
-	   {
-		   return NULL;
-	   }
+     {
+       return NULL;
+     }
 
    ptr += sizeof(unCompressHeader);
 
@@ -44,16 +39,16 @@ unsigned char* LoadTGAFromMemory(char *data, int length, int &width, int &height
 
    // Convert from BGR(A) to RGB(A) format.
    for(long index = 0; index < tgaSize; index += components)
-	   {
-		   tempColor = image[index];
-		   image[index] = image[index + 2];
-		   image[index + 2] = tempColor;
-	   }
+     {
+       tempColor = image[index];
+       image[index] = image[index + 2];
+       image[index + 2] = tempColor;
+     }
 
    return image;
 }
 
-
+//-----------------------------------------------------------------------------
 unsigned char* LoadTGA(char* file, int &width, int &height, int &components)
 {
    FILE *pfile;
@@ -85,7 +80,7 @@ unsigned char* LoadTGA(char* file, int &width, int &height, int &components)
    return image;
 }
 
-
+//-----------------------------------------------------------------------------
 bool WriteTGA(char *file, int width, int height, int comp,
               unsigned char *outImage)
 {
@@ -107,12 +102,12 @@ bool WriteTGA(char *file, int width, int height, int comp,
    bits = comp * 8;
 
    // Save the width and height.
- 	header[0] = width % 256;
- 	header[1] = width / 256;
- 	header[2] = height % 256;
-	header[3] = height / 256;
-	header[4] = bits;
-	header[5] = 0;
+  header[0] = width % 256;
+  header[1] = width / 256;
+  header[2] = height % 256;
+  header[3] = height / 256;
+  header[4] = bits;
+  header[5] = 0;
 
    // Write the headers to the top of the file.
    fwrite(tgaHeader, sizeof(tgaHeader), 1, pFile);

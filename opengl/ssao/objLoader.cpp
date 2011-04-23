@@ -1,14 +1,3 @@
-/*
-   .obj Loader
-   Game Graphics Programming
-   Created by Allen Sherrod
-
-   Purpose:
-      For reading a OBJ model and preparing it for rendering.
-*/
-
-
-
 #include<fstream>
 #include<vector>
 #include<string>
@@ -17,7 +6,7 @@
 #include"objLoader.h"
 #include"TokenStream.h"
 
-
+//-----------------------------------------------------------------------------
 void ObjModel::Release()
 {
    m_totalVerts = 0;
@@ -41,7 +30,7 @@ void ObjModel::Release()
       }
 }
 
-
+//-----------------------------------------------------------------------------
 bool ObjModel::LoadOBJ(char *fileName)
 {
    std::ifstream fileStream;

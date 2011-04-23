@@ -13,7 +13,7 @@ void main()
   float ao = texture2D(aos, texCoords).x;
 //  ambient.rgb *= ao;
 //  gl_FragColor = ambient;
-  vec4 ambient = vec4(0.5, .5, .5, 1.0);
+  vec4 ambient = vec4(1.0, 1.0, 1.0, 1.0);
   ambient.rgb = ambient.rgb * ao;
   gl_FragColor = ambient;
 }

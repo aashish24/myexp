@@ -1,16 +1,6 @@
-/*
-   Token Stream
-   Game Graphics Programming
-   Created by Allen Sherrod
 
-   Purpose:
-      For reading words from a buffer one at a time using delimiters.
-*/
-
-
-#ifndef _TOKEN_STREAM_H_
-#define _TOKEN_STREAM_H_
-
+#ifndef __TOKEN_STREAM_H__
+#define __TOKEN_STREAM_H__
 
 class TokenStream
 {

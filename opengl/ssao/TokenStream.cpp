@@ -1,18 +1,9 @@
-/*
-   Token Stream
-   Game Graphics Programming
-   Created by Allen Sherrod
-
-   Purpose:
-      For reading words from a buffer one at a time using delimiters.
-*/
-
 
 #include<string>
 #include<cstring>
 #include"TokenStream.h"
 
-
+//-----------------------------------------------------------------------------
 bool isValidIdentifier(char c)
 {
    // Ascii from ! to ~.
@@ -22,32 +13,32 @@ bool isValidIdentifier(char c)
    return false;
 }
 
-
+//-----------------------------------------------------------------------------
 TokenStream::TokenStream()
 {
    ResetStream();
 }
 
-
+//-----------------------------------------------------------------------------
 TokenStream::~TokenStream()
 {
 
 }
 
-
+//-----------------------------------------------------------------------------
 void TokenStream::ResetStream()
 {
    m_startIndex = m_endIndex = 0;
 }
 
-
+//-----------------------------------------------------------------------------
 void TokenStream::SetTokenStream(char *data)
 {
    ResetStream();
    m_data = data;
 }
 
-
+//-----------------------------------------------------------------------------
 bool TokenStream::GetNextToken(std::string *buffer)
 {
    bool inString = false;
@@ -100,7 +91,7 @@ bool TokenStream::GetNextToken(std::string *buffer)
    return false;
 }
 
-
+//-----------------------------------------------------------------------------
 bool TokenStream::GetNextToken(std::string *token, std::string *buffer)
 {
    std::string tok;
@@ -117,7 +108,7 @@ bool TokenStream::GetNextToken(std::string *token, std::string *buffer)
   return false;
 }
 
-
+//-----------------------------------------------------------------------------
 bool TokenStream::MoveToNextLine(std::string *buffer)
 {
    int length = (int)m_data.length();

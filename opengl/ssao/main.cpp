@@ -1,16 +1,3 @@
-/*
-   Deferred Shading - OpenGL
-   Game Graphics Programming
-   Created by Allen Sherrod
-
-   NOTE: This demo creates an FBO that sets the color to output 0,
-         normals to ouptut 1, and depth values to output 2.  Each
-         output target has the same number of bits (32).  The depth
-         target uses a single 32-bit component to keep precision
-         and the shaders use that depth value to re-build the world
-         position.
-*/
-
 
 #include"OpenGL.h"
 #include"objLoader.h"
@@ -19,7 +6,6 @@
 #include "TGA.h"
 
 #include<stdio.h>
-
 
 // Scene Model.
 ObjModel g_stageModel;
@@ -33,38 +19,36 @@ GLhandleARB g_setRTShader;
 GLhandleARB g_clearRTShader;
 GLhandleARB g_renderShader;
 GLhandleARB g_ssaoShader;
-GLhandleARB g_setHBlurShader;
-GLhandleARB g_setVBlurShader;
-
+GLhandleARB g_hBlurShader;
+GLhandleARB g_vBlurShader;
 
 // Shader variables we will bind to.
-GLuint g_glslLightPos;
-GLuint g_glslOffset;
-GLuint g_glslDecal;
-GLuint g_glslNormals;
-GLuint g_glslDepth;
-GLuint g_glslRandom;
-GLuint g_glslLightColor;
-GLuint g_glslAOS;
-GLuint g_glslColors;
+GLuint g_lightPos;
+GLuint g_offset;
+GLuint g_decal;
+GLuint g_normals;
+GLuint g_depth;
+GLuint g_random;
+GLuint g_lightColor;
+GLuint g_aos;
+GLuint g_colors;
 
-GLuint g_glslSsaoOffset;
-GLuint g_glslSsaoDecal;
-GLuint g_glslSsaoNormals;
-GLuint g_glslSsaoDepth;
-GLuint g_glslSsaoRandom;
+GLuint g_ssaoOffset;
+GLuint g_ssaoDecal;
+GLuint g_ssaoNormals;
+GLuint g_ssaoDepth;
+GLuint g_ssaoRandom;
 
-GLuint g_glslBlurh;
-GLuint g_glslBlurv;
+GLuint g_hBlur;
+GLuint g_vBlur;
 
-
-GLuint g_glslRandomTexture;
+GLuint g_randomSampler;
 
 // FBO data.
-OpenGLFBO g_sceneFBO;
-OpenGLFBO g_ssaoFBO;
-OpenGLFBO g_blurHFBO;
-OpenGLFBO g_blurVFBO;
+OpenGLFBO g_sceneFbo;
+OpenGLFBO g_ssaoFbo;
+OpenGLFBO g_hBlurFbo;
+OpenGLFBO g_vBlurFbo;
 
 // Scene rotations.
 float g_xRot = 0.0f;
@@ -140,8 +124,8 @@ bool InitializeApp()
   unsigned char *image;
   image = LoadTGA("/home/aashish/tools/mywork/src.git/opengl/ssao/randoms.tga", width, height, comp);
 
-  glGenTextures(1, &g_glslRandomTexture);
-  glBindTexture(GL_TEXTURE_2D, g_glslRandomTexture);
+  glGenTextures(1, &g_randomSampler);
+  glBindTexture(GL_TEXTURE_2D, g_randomSampler);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, width, height,
@@ -168,12 +152,12 @@ bool InitializeApp()
 
   if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/SetHBlurVS.glsl",
                       "/home/aashish/tools/mywork/src.git/opengl/ssao/SetHBlurPS.glsl",
-                      g_setHBlurShader))
+                      g_hBlurShader))
   return false;
 
   if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/SetVBlurVS.glsl",
                        "/home/aashish/tools/mywork/src.git/opengl/ssao/SetVBlurPS.glsl",
-                       g_setVBlurShader))
+                       g_vBlurShader))
     return false;
 
   if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/DirectionalLightVS.glsl",
@@ -182,34 +166,33 @@ bool InitializeApp()
     return false;
 
   // Bind our shader variables.
-  g_glslOffset = glGetUniformLocationARB(g_renderShader, "offset");
-  g_glslLightPos = glGetUniformLocationARB(g_renderShader, "lightPos");
-  g_glslLightColor = glGetUniformLocationARB(g_renderShader, "lightColor");
-  g_glslAOS = glGetUniformLocationARB(g_renderShader, "aos");
-  g_glslColors = glGetUniformLocationARB(g_renderShader, "colors");
+  g_offset      = glGetUniformLocationARB(g_renderShader, "offset");
+  g_lightPos    = glGetUniformLocationARB(g_renderShader, "lightPos");
+  g_lightColor  = glGetUniformLocationARB(g_renderShader, "lightColor");
+  g_aos         = glGetUniformLocationARB(g_renderShader, "aos");
+  g_colors      = glGetUniformLocationARB(g_renderShader, "colors");
 
-  g_glslSsaoOffset = glGetUniformLocationARB(g_ssaoShader, "offset");
-  g_glslSsaoNormals = glGetUniformLocationARB(g_ssaoShader, "normals");
-  g_glslSsaoDepth = glGetUniformLocationARB(g_ssaoShader, "depths");
-  g_glslSsaoRandom = glGetUniformLocationARB(g_ssaoShader, "randoms");
+  g_ssaoOffset  = glGetUniformLocationARB(g_ssaoShader, "offset");
+  g_ssaoNormals = glGetUniformLocationARB(g_ssaoShader, "normals");
+  g_ssaoDepth   = glGetUniformLocationARB(g_ssaoShader, "depths");
+  g_ssaoRandom  = glGetUniformLocationARB(g_ssaoShader, "randoms");
 
-  g_glslBlurh = glGetUniformLocationARB(g_setHBlurShader, "blurh");
-
-  g_glslBlurv = glGetUniformLocationARB(g_setVBlurShader, "blurv");
+  g_hBlur       = glGetUniformLocationARB(g_hBlurShader, "blurh");
+  g_vBlur       = glGetUniformLocationARB(g_vBlurShader, "blurv");
 
   // Create frame buffer objects.
-  if(g_sceneFBO.Create(WIDTH, HEIGHT) == false)
+  if(g_sceneFbo.Create(WIDTH, HEIGHT) == false)
     return false;
 
   // Create frame buffer objects.
-  if(g_ssaoFBO.Create(WIDTH, HEIGHT) == false)
+  if(g_ssaoFbo.Create(WIDTH, HEIGHT) == false)
     return false;
 
   // Create frame buffer objects.
-  if(g_blurHFBO.Create(WIDTH, HEIGHT) == false)
+  if(g_hBlurFbo.Create(WIDTH, HEIGHT) == false)
     return false;
 
-  if(g_blurVFBO.Create(WIDTH, HEIGHT) == false)
+  if(g_vBlurFbo.Create(WIDTH, HEIGHT) == false)
     return false;
 
     if(g_model.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/dragon.obj") == false)
@@ -238,14 +221,14 @@ void ShutdownApp()
    glDeleteObjectARB(g_clearRTShader);
    glDeleteObjectARB(g_renderShader);
    glDeleteObjectARB(g_ssaoShader);
-   glDeleteObjectARB(g_setHBlurShader);
-   glDeleteObjectARB(g_setVBlurShader);
+   glDeleteObjectARB(g_hBlurShader);
+   glDeleteObjectARB(g_vBlurShader);
 
 
-   g_sceneFBO.Release();
-   g_ssaoFBO.Release();
-   g_blurHFBO.Release();
-   g_blurVFBO.Release();
+   g_sceneFbo.Release();
+   g_ssaoFbo.Release();
+   g_hBlurFbo.Release();
+   g_vBlurFbo.Release();
 
 //   g_stageModel.Release();
 //   g_boxModel.Release();
@@ -338,7 +321,7 @@ void RenderScreenQuad()
 
 void RenderScene()
 {
-   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_sceneFBO.GetFBO());
+   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_sceneFbo.GetFBO());
 
    // Clear each rendering target first before drawing the scene.
    glUseProgramObjectARB(g_clearRTShader);
@@ -359,43 +342,43 @@ void RenderScene()
    // Now draw the final image.
 
    // Draw to the back buffer using deferred shading.
-   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_ssaoFBO.GetFBO());
+   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_ssaoFbo.GetFBO());
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
 
    glUseProgramObjectARB(g_ssaoShader);
    glActiveTexture(GL_TEXTURE0_ARB);
-   glBindTexture(GL_TEXTURE_2D, g_sceneFBO.GetColorDest1());
+   glBindTexture(GL_TEXTURE_2D, g_sceneFbo.GetColorDest1());
    glActiveTexture(GL_TEXTURE1_ARB);
-   glBindTexture(GL_TEXTURE_2D, g_glslRandomTexture);
+   glBindTexture(GL_TEXTURE_2D, g_randomSampler);
    glActiveTexture(GL_TEXTURE2_ARB);
-   glBindTexture(GL_TEXTURE_2D, g_sceneFBO.GetColorDest2());
+   glBindTexture(GL_TEXTURE_2D, g_sceneFbo.GetColorDest2());
    glActiveTexture(GL_TEXTURE3_ARB);
-   glBindTexture(GL_TEXTURE_2D, g_glslRandomTexture);
+   glBindTexture(GL_TEXTURE_2D, g_randomSampler);
 
-   glUniform1iARB(g_glslSsaoNormals, 0);
-   glUniform1iARB(g_glslSsaoRandom, 1);
-   glUniform1iARB(g_glslSsaoDepth, 2);
-   glUniform2fARB(g_glslSsaoOffset, 1.0f / (float)WIDTH, 1.0f / (float)HEIGHT);
+   glUniform1iARB(g_ssaoNormals, 0);
+   glUniform1iARB(g_ssaoRandom, 1);
+   glUniform1iARB(g_ssaoDepth, 2);
+   glUniform2fARB(g_ssaoOffset, 1.0f / (float)WIDTH, 1.0f / (float)HEIGHT);
    RenderScreenQuad();
 
-   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_blurHFBO.GetFBO());
+   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_hBlurFbo.GetFBO());
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
-   glUseProgramObjectARB(g_setHBlurShader);
+   glUseProgramObjectARB(g_hBlurShader);
    glActiveTexture(GL_TEXTURE0_ARB);
-   glBindTexture(GL_TEXTURE_2D, g_ssaoFBO.GetColorDest0());
-   glUniform1iARB(g_glslBlurh, 0);
+   glBindTexture(GL_TEXTURE_2D, g_ssaoFbo.GetColorDest0());
+   glUniform1iARB(g_hBlur, 0);
    RenderScreenQuad();
 
 
-   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_blurVFBO.GetFBO());
+   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_vBlurFbo.GetFBO());
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
-   glUseProgramObjectARB(g_setVBlurShader);
+   glUseProgramObjectARB(g_vBlurShader);
    glActiveTexture(GL_TEXTURE0_ARB);
-   glBindTexture(GL_TEXTURE_2D, g_blurHFBO.GetColorDest0());
-   glUniform1iARB(g_glslBlurv, 0);
+   glBindTexture(GL_TEXTURE_2D, g_hBlurFbo.GetColorDest0());
+   glUniform1iARB(g_vBlur, 0);
    RenderScreenQuad();
 
 
@@ -403,15 +386,15 @@ void RenderScene()
    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
-   glUniform2fARB(g_glslOffset, 1.0f / (float)WIDTH, 1.0f / (float)HEIGHT);
-   glUniform3fARB(g_glslLightPos, 0.0f, 20.0f, 15.0f);
-   glUniform4fARB(g_glslLightColor, 0.4f, 0.4f, 0.4f, 1.0f);
+   glUniform2fARB(g_offset, 1.0f / (float)WIDTH, 1.0f / (float)HEIGHT);
+   glUniform3fARB(g_lightPos, 0.0f, 20.0f, 15.0f);
+   glUniform4fARB(g_lightColor, 0.4f, 0.4f, 0.4f, 1.0f);
    glActiveTexture(GL_TEXTURE0_ARB);
-   glBindTexture(GL_TEXTURE_2D, g_blurVFBO.GetColorDest0());
+   glBindTexture(GL_TEXTURE_2D, g_vBlurFbo.GetColorDest0());
    glActiveTexture(GL_TEXTURE1_ARB);
-   glBindTexture(GL_TEXTURE_2D, g_sceneFBO.GetColorDest0());
-   glUniform1iARB(g_glslAOS, 0);
-   glUniform1iARB(g_glslColors, 1);
+   glBindTexture(GL_TEXTURE_2D, g_sceneFbo.GetColorDest0());
+   glUniform1iARB(g_aos, 0);
+   glUniform1iARB(g_colors, 1);
    RenderScreenQuad();
 
    glutSwapBuffers();

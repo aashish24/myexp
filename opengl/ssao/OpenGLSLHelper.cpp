@@ -1,19 +1,13 @@
-/*
-   OpenGL GLSL Header
-   Game Graphics Programming
-   Created by Allen Sherrod
-*/
-
 
 #include"OpenGL.h"
 #include"OpenGLSLHelper.h"
 #include<stdio.h>
 
-
+//-----------------------------------------------------------------------------
 char* LoadText(char *file)
 {
    FILE *fp = fopen(file, "r");
-   
+
    if(fp == NULL)
       return NULL;
 
@@ -44,7 +38,7 @@ char* LoadText(char *file)
    return source;
 }
 
-
+//-----------------------------------------------------------------------------
 bool LoadShader(char *file, GLenum type, GLhandleARB context)
 {
    // GLSL shader.
@@ -86,7 +80,7 @@ bool LoadShader(char *file, GLenum type, GLhandleARB context)
    return true;
 }
 
-
+//-----------------------------------------------------------------------------
 bool CreateGLSLShader(char *vsFile, char *psFile, GLhandleARB &shader)
 {
    bool ret = false;
