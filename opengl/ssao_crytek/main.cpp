@@ -122,7 +122,7 @@ bool InitializeApp()
   // Load texture.
   int width = 0, height = 0, comp = 0;
   unsigned char *image;
-  image = LoadTGA("/home/aashish/tools/mywork/src.git/opengl/ssao/randoms.tga", width, height, comp);
+  image = LoadTGA("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/randoms.tga", width, height, comp);
 
   glGenTextures(1, &g_randomSampler);
   glBindTexture(GL_TEXTURE_2D, g_randomSampler);
@@ -134,34 +134,34 @@ bool InitializeApp()
    delete[] image;
 
   // Load shaders.
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/setRenderTargetsVs.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/setRenderTargetsPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/setRenderTargetsVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/setRenderTargetsPs.glsl",
                       g_setRTShader))
     return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/clearRenderTargetsVs.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/clearRenderTargetsPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/clearRenderTargetsVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/clearRenderTargetsPs.glsl",
                       g_clearRTShader))
     return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/ssaoVs.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/ssaoPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/ssaoVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/ssaoPs.glsl",
                       g_ssaoShader))
    return false;
 
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/hBlurVs.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/hBlurPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/hBlurVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/hBlurPs.glsl",
                       g_hBlurShader))
   return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/vBlurVs.glsl",
-                       "/home/aashish/tools/mywork/src.git/opengl/ssao/vBlurPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/vBlurVs.glsl",
+                       "/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/vBlurPs.glsl",
                        g_vBlurShader))
     return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/renderingVs.glsl",
-                       "/home/aashish/tools/mywork/src.git/opengl/ssao/renderingPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/renderingVs.glsl",
+                       "/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/renderingPs.glsl",
                         g_renderShader))
     return false;
 
@@ -195,20 +195,20 @@ bool InitializeApp()
   if(g_vBlurFbo.Create(WIDTH, HEIGHT) == false)
     return false;
 
-    if(g_model.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/dragon.obj") == false)
+    if(g_model.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/dragon.obj") == false)
       return false;
 
 //  // Load the model from the file then its generated color data.
-//  if(g_stageModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/Box.obj") == false)
+//  if(g_stageModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/Box.obj") == false)
 //    return false;
 
-//  if(g_boxModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/Cube.obj") == false)
+//  if(g_boxModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/Cube.obj") == false)
 //    return false;
 
-//  if(g_torusA.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/TorusA.obj") == false)
+//  if(g_torusA.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/TorusA.obj") == false)
 //    return false;
 
-//  if(g_torusB.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/TorusB.obj") == false)
+//  if(g_torusB.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/TorusB.obj") == false)
 //    return false;
 
   return true;

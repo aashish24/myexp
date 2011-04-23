@@ -8,10 +8,10 @@ uniform sampler2D depths;
 vec2 g_screen_size = vec2(800, 600);
 
 float random_size = 64.0;
-float g_sample_rad = 0.3;
-float g_intensity = 3.5;
-float g_scale = 1.0;
-float g_bias = 0.;
+float g_sample_rad = .05;
+float g_intensity = 1.5;
+float g_scale = 2.0;
+float g_bias = 0.0;
 
 vec4 getPosition(vec2 uv)
 {
@@ -56,7 +56,10 @@ float processAmbientOcclusion()
  int iterations = 4;
  for (int j = 0; j < iterations; ++j)
  {
-  vec2 coord1 = reflect(vec[j%4],rand)*rad;
+  vec2 coord1 = reflect(vec[j%4],rand).xy *rad;
+
+  coord1 = coord1 * sign(dot(coord1, n));
+
   vec2 coord2 = vec2(coord1.x*0.707 - coord1.y*0.707,
               coord1.x*0.707 + coord1.y*0.707);
 
