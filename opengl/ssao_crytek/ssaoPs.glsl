@@ -63,6 +63,8 @@ float processAmbientOcclusion()
   vec2 coord2 = vec2(coord1.x*0.707 - coord1.y*0.707,
               coord1.x*0.707 + coord1.y*0.707);
 
+  coord2 = coord2 * sign(dot(coord2, n));
+
   ao += doAmbientOcclusion(texCoords,coord1*0.25, p, n);
   ao += doAmbientOcclusion(texCoords,coord2*0.5, p, n);
   ao += doAmbientOcclusion(texCoords,coord1*0.75, p, n);
