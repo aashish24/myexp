@@ -122,7 +122,7 @@ bool InitializeApp()
   // Load texture.
   int width = 0, height = 0, comp = 0;
   unsigned char *image;
-  image = LoadTGA("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/randoms.tga", width, height, comp);
+  image = LoadTGA("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/noise.tga", width, height, comp);
 
   glGenTextures(1, &g_randomSampler);
   glBindTexture(GL_TEXTURE_2D, g_randomSampler);
@@ -195,21 +195,21 @@ bool InitializeApp()
   if(g_vBlurFbo.Create(WIDTH, HEIGHT) == false)
     return false;
 
-    if(g_model.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/dragon.obj") == false)
-      return false;
+//    if(g_model.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/dragon.obj") == false)
+//      return false;
 
-//  // Load the model from the file then its generated color data.
-//  if(g_stageModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/Box.obj") == false)
-//    return false;
+  // Load the model from the file then its generated color data.
+  if(g_stageModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/Box.obj") == false)
+    return false;
 
-//  if(g_boxModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/Cube.obj") == false)
-//    return false;
+  if(g_boxModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/Cube.obj") == false)
+    return false;
 
-//  if(g_torusA.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/TorusA.obj") == false)
-//    return false;
+  if(g_torusA.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/TorusA.obj") == false)
+    return false;
 
-//  if(g_torusB.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/TorusB.obj") == false)
-//    return false;
+  if(g_torusB.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/TorusB.obj") == false)
+    return false;
 
   return true;
 }
@@ -230,11 +230,11 @@ void ShutdownApp()
    g_hBlurFbo.Release();
    g_vBlurFbo.Release();
 
-//   g_stageModel.Release();
-//   g_boxModel.Release();
-//   g_torusA.Release();
-//   g_torusB.Release();
-   g_model.Release();
+   g_stageModel.Release();
+   g_boxModel.Release();
+   g_torusA.Release();
+   g_torusB.Release();
+//   g_model.Release();
 }
 
 
@@ -261,17 +261,17 @@ void RenderScenePass()
    glClear(GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
 
-   glTranslatef(0, 0, -2);
+   glTranslatef(0, 0, -15);
    glRotatef(-g_yRot, 1.0f, 0.0f, 0.0f);
    glRotatef(-g_xRot, 0.0f, 1.0f, 0.0f);
 
    // Draw the objects.
-//   glColor3f(1.0f, 1.0f, 1.0f); DrawModel(g_stageModel);
-//   glColor3f(1.0f, 0.0f, 0.0f); DrawModel(g_boxModel);
-//   glColor3f(0.0f, 1.0f, 0.0f); DrawModel(g_torusA);
-//   glColor3f(0.0f, 0.0f, 1.0f); DrawModel(g_torusB);
+   glColor3f(1.0f, 1.0f, 1.0f); DrawModel(g_stageModel);
+   glColor3f(1.0f, 0.0f, 0.0f); DrawModel(g_boxModel);
+   glColor3f(0.0f, 1.0f, 0.0f); DrawModel(g_torusA);
+   glColor3f(0.0f, 0.0f, 1.0f); DrawModel(g_torusB);
 
-   glColor3f(1.0f, 1.0f, 1.0f); DrawModel(g_model);
+//   glColor3f(1.0f, 1.0f, 1.0f); DrawModel(g_model);
 }
 
 
@@ -313,7 +313,7 @@ void RenderScreenQuad()
 
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   gluPerspective(45, (float)WIDTH/(float)HEIGHT, 1.0, 10000.0);
+   gluPerspective(45, (float)WIDTH/(float)HEIGHT, 1.0, 1000.0);
 
    glMatrixMode(GL_MODELVIEW);
 }
@@ -325,6 +325,8 @@ void RenderScene()
 
    // Clear each rendering target first before drawing the scene.
    glUseProgramObjectARB(g_clearRTShader);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glLoadIdentity();
    RenderScreenQuad();
 
    // Now draw scene once destinations have been cleared.
@@ -342,7 +344,7 @@ void RenderScene()
    // Now draw the final image.
 
    // Draw to the back buffer using deferred shading.
-   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_ssaoFbo.GetFBO());
+   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
 
@@ -361,6 +363,11 @@ void RenderScene()
    glUniform1iARB(g_ssaoDepth, 2);
    glUniform2fARB(g_ssaoOffset, 1.0f / (float)WIDTH, 1.0f / (float)HEIGHT);
    RenderScreenQuad();
+
+   glutSwapBuffers();
+   glutPostRedisplay();
+
+   return;
 
    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_hBlurFbo.GetFBO());
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

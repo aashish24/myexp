@@ -1,89 +1,86 @@
 varying vec2 texCoords;
 
+// Normal sampler.
 uniform sampler2D normals;
+
+// Random normal sampler to general radom direction vector.
 uniform sampler2D randoms;
+
+// Depth sampler.
 uniform sampler2D depths;
 
+float temp = 1.0;
 
-vec2 g_screen_size = vec2(800, 600);
-
-float random_size = 64.0;
-float g_sample_rad = .05;
-float g_intensity = 1.5;
-float g_scale = 2.0;
-float g_bias = 0.0;
-
-vec4 getPosition(vec2 uv)
+float lerp(float a, float b, float w)
 {
-  return texture2D(depths, uv);
+  return (a + w * (b-a));
 }
 
-vec3 getNormal(vec2 uv)
+
+float calculateSsao(vec2 screenTC, vec2 screenSize)
 {
-  return texture2D(normals, uv).xyz;
-// return normalize(texture2D(normals, uv).xyz * 2.0 - 1.0);
+  vec2  rotationTC = (screenTC * screenSize) / 4.0;
+
+  vec3  rotationVector = normalize(2 * texture2D(randoms, rotationTC).xyz - 1.0);
+
+  float screenDepthP = texture2D(depths, screenTC).z * 1000;
+
+  const int numSamples = 16;
+  float offsetScale = 0.01;
+  const float offsetScaleStep = 1 + 1.1/numSamples;
+
+  float ao = 0.0;
+
+  const vec3 kernel[8] =
+  {
+  normalize(vec3(-1, -1, -1)),
+  normalize(vec3(-1, -1, 1)),
+  normalize(vec3(-1, 1, -1)),
+  normalize(vec3(-1, 1, 1)),
+  normalize(vec3( 1, -1, -1)),
+  normalize(vec3( 1, -1, 1)),
+  normalize(vec3( 1, 1, -1)),
+  normalize(vec3( 1, 1, 1))
+  };
+
+ for( int i = 0; i < numSamples; i++ )
+   {
+    vec3 offsetVector = (kernel[i % 8]) * (offsetScale *= offsetScaleStep);
+
+    vec3 rotatedOffsetVector = reflect(offsetVector, rotationVector).xyz;
+
+    vec3 samplePos = vec3(screenTC, screenDepthP);
+
+    samplePos += vec3(rotatedOffsetVector.xy, rotatedOffsetVector.z * screenDepthP * 2.0);
+
+    if(texture2D(depths, samplePos.xy).z == 0.0)
+      {
+      ao += 0.0;
+      temp = 0.0;
+      }
+    else
+      {
+      float screenDepthS = texture2D(depths, samplePos.xy).z * 1000;
+
+      float rangeIsInvalid = clamp( (screenDepthP - screenDepthS)/ (screenDepthS), 0.0, 1.0 );
+
+      ao += lerp(abs(screenDepthS) < abs(samplePos.z), 0.5, rangeIsInvalid);
+
+      temp = samplePos.x;
+      }
+   }
+
+  ao = (ao / numSamples);
+
+  ao = clamp(ao, 0.0, 1.0);
+  return ao;
 }
 
-vec2 getRandom(vec2 uv)
-{
-  return normalize(texture2D(randoms, g_screen_size * uv / random_size).xy * 2.0 - 1.0);
-}
-
-float doAmbientOcclusion(vec2 tcoord, vec2 uv, vec3 p, vec3 cnorm)
-{
-  vec3 diff = vec3(getPosition(tcoord + uv)) - p;
-  vec3 v = normalize(diff);
-  float d = length(diff)*g_scale;
-  return max(0.0,dot(cnorm,v)-g_bias)*(1.0/(1.0+d))*g_intensity;
-}
-
-float processAmbientOcclusion()
-{
-  vec2 vec[4];
-  vec[0] = vec2(1,0);
-  vec[1] = vec2(-1,0);
-  vec[2] = vec2(0,1);
-  vec[3] = vec2(0,-1);
-
-  vec3 p = vec3(getPosition(texCoords));
-  vec3 n = getNormal(texCoords);
-  vec2 rand = getRandom(texCoords);
-
- float ao = 0.0;
- float rad = g_sample_rad/p.z;
-
- //**SSAO Calculation**//
- int iterations = 4;
- for (int j = 0; j < iterations; ++j)
- {
-  vec2 coord1 = reflect(vec[j%4],rand).xy *rad;
-
-  coord1 = coord1 * sign(dot(coord1, n));
-
-  vec2 coord2 = vec2(coord1.x*0.707 - coord1.y*0.707,
-              coord1.x*0.707 + coord1.y*0.707);
-
-  coord2 = coord2 * sign(dot(coord2, n));
-
-  ao += doAmbientOcclusion(texCoords,coord1*0.25, p, n);
-  ao += doAmbientOcclusion(texCoords,coord2*0.5, p, n);
-  ao += doAmbientOcclusion(texCoords,coord1*0.75, p, n);
-  ao += doAmbientOcclusion(texCoords,coord2, p, n);
- }
-
- ao/= iterations*4.0;
-
- return ao;
-}
 
 void main()
 {
-  float ao =  1 - processAmbientOcclusion();
-  gl_FragData[0]  = vec4(ao, ao, ao, 1.0);
-
-  // For testing.
-//  gl_FragColor = vec4(getPosition(texCoords));
-//  gl_FragColor = vec4(getRandom(texCoords), 0.0, 1.0);
-//  gl_FragColor = vec4(getNormal(texCoords), 1.0);
-//  gl_FragColor = ambient;
+//  gl_FragColor = vec4(texture2D(depths, texCoords).xyz, 1.0);
+//  gl_FragColor = vec4(vec3(1 - calculateSsao(texCoords, vec2(800, 600))), 1.0);
+  calculateSsao(texCoords, vec2(800, 600));
+  gl_FragColor = vec4(temp, 0.0, 0.0, 1.0 );
 }

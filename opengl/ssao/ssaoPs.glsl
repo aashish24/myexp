@@ -71,7 +71,7 @@ float processAmbientOcclusion()
 
  ao/= iterations*4.0;
 
- return ao;
+ return (ao * ao + ao);
 }
 
 void main()
