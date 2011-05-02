@@ -43,6 +43,7 @@ float calculateSsao(vec2 screenTC, vec2 screenSize)
   normalize(vec3( 1, 1, 1))
   };
 
+ int actualNumberOfSamples = 0;
  for( int i = 0; i < numSamples; i++ )
    {
     vec3 offsetVector = (kernel[i % 8]) * (offsetScale *= offsetScaleStep);
@@ -53,10 +54,11 @@ float calculateSsao(vec2 screenTC, vec2 screenSize)
 
     samplePos += vec3(rotatedOffsetVector.xy, rotatedOffsetVector.z * screenDepthP * 2.0);
 
-    if(texture2D(depths, samplePos.xy).z == 0.0)
+    if(samplePos.x < 0 || samplePos.x > 1.0 || samplePos.y < 0 || samplePos.y > 1.0 ||
+       texture2D(depths, samplePos.xy).z == 0.0
+       )
       {
       ao += 0.0;
-      temp = 0.0;
       }
     else
       {
@@ -66,11 +68,11 @@ float calculateSsao(vec2 screenTC, vec2 screenSize)
 
       ao += lerp(abs(screenDepthS) < abs(samplePos.z), 0.5, rangeIsInvalid);
 
-      temp = samplePos.x;
+      actualNumberOfSamples++;
       }
    }
 
-  ao = (ao / numSamples);
+  ao = (ao / actualNumberOfSamples);
 
   ao = clamp(ao, 0.0, 1.0);
   return ao;
@@ -80,7 +82,7 @@ float calculateSsao(vec2 screenTC, vec2 screenSize)
 void main()
 {
 //  gl_FragColor = vec4(texture2D(depths, texCoords).xyz, 1.0);
-//  gl_FragColor = vec4(vec3(1 - calculateSsao(texCoords, vec2(800, 600))), 1.0);
-  calculateSsao(texCoords, vec2(800, 600));
-  gl_FragColor = vec4(temp, 0.0, 0.0, 1.0 );
+  gl_FragColor = vec4(vec3(1 - calculateSsao(texCoords, vec2(800, 600))), 1.0);
+//  calculateSsao(texCoords, vec2(800, 600));
+//  gl_FragColor = vec4(temp, 0.0, 0.0, 1.0 );
 }
