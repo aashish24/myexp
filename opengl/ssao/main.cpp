@@ -211,6 +211,8 @@ bool InitializeApp()
 //  if(g_torusB.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao/TorusB.obj") == false)
 //    return false;
 
+
+
   return true;
 }
 

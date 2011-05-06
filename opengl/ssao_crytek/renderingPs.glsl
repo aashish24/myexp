@@ -11,6 +11,6 @@ void main()
 {
   float ao = texture2D(aos, texCoords).x;
   vec4 ambient = vec4(1.0, 1.0, 1.0, 1.0);
-  ambient.rgb = ambient.rgb * ao * 1.1;
+  ambient.rgb = ambient.rgb * ao;
   gl_FragColor = ambient;
 }

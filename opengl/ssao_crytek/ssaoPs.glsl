@@ -1,3 +1,4 @@
+// Per pixel texture coordinates.
 varying vec2 texCoords;
 
 // Normal sampler.
@@ -55,10 +56,9 @@ float calculateSsao(vec2 screenTC, vec2 screenSize)
     samplePos += vec3(rotatedOffsetVector.xy, rotatedOffsetVector.z * screenDepthP * 2.0);
 
     if(samplePos.x < 0 || samplePos.x > 1.0 || samplePos.y < 0 || samplePos.y > 1.0 ||
-       texture2D(depths, samplePos.xy).z == 0.0
-       )
+       texture2D(depths, samplePos.xy).z == 0.0)
       {
-      ao += 0.0;
+      // Do nothing.
       }
     else
       {
@@ -74,7 +74,7 @@ float calculateSsao(vec2 screenTC, vec2 screenSize)
 
   ao = (ao / actualNumberOfSamples);
 
-  ao = clamp(ao, 0.0, 1.0);
+  ao = clamp((ao * ao + ao), 0.0, 1.0);
   return ao;
 }
 
@@ -82,7 +82,7 @@ float calculateSsao(vec2 screenTC, vec2 screenSize)
 void main()
 {
 //  gl_FragColor = vec4(texture2D(depths, texCoords).xyz, 1.0);
-  gl_FragColor = vec4(vec3(1 - calculateSsao(texCoords, vec2(800, 600))), 1.0);
+  gl_FragData[0] = vec4(vec3(1 - calculateSsao(texCoords, vec2(800, 600))), 1.0);
 //  calculateSsao(texCoords, vec2(800, 600));
 //  gl_FragColor = vec4(temp, 0.0, 0.0, 1.0 );
 }

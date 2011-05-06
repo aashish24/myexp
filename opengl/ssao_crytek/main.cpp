@@ -177,8 +177,8 @@ bool InitializeApp()
   g_ssaoDepth   = glGetUniformLocationARB(g_ssaoShader, "depths");
   g_ssaoRandom  = glGetUniformLocationARB(g_ssaoShader, "randoms");
 
-  g_hBlur       = glGetUniformLocationARB(g_hBlurShader, "blurh");
-  g_vBlur       = glGetUniformLocationARB(g_vBlurShader, "blurv");
+  g_hBlur       = glGetUniformLocationARB(g_hBlurShader, "sceneSampler");
+  g_vBlur       = glGetUniformLocationARB(g_vBlurShader, "sceneSampler");
 
   // Create frame buffer objects.
   if(g_sceneFbo.Create(WIDTH, HEIGHT) == false)
@@ -198,7 +198,7 @@ bool InitializeApp()
 //    if(g_model.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/dragon.obj") == false)
 //      return false;
 
-  // Load the model from the file then its generated color data.
+//  // Load the model from the file then its generated color data.
   if(g_stageModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/Box.obj") == false)
     return false;
 
@@ -261,7 +261,7 @@ void RenderScenePass()
    glClear(GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
 
-   glTranslatef(0, 0, -15);
+   glTranslatef(0, 0, -14);
    glRotatef(-g_yRot, 1.0f, 0.0f, 0.0f);
    glRotatef(-g_xRot, 0.0f, 1.0f, 0.0f);
 
@@ -344,7 +344,7 @@ void RenderScene()
    // Now draw the final image.
 
    // Draw to the back buffer using deferred shading.
-   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_ssaoFbo.GetFBO());
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
 
@@ -364,11 +364,6 @@ void RenderScene()
    glUniform2fARB(g_ssaoOffset, 1.0f / (float)WIDTH, 1.0f / (float)HEIGHT);
    RenderScreenQuad();
 
-   glutSwapBuffers();
-   glutPostRedisplay();
-
-   return;
-
    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_hBlurFbo.GetFBO());
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
@@ -378,7 +373,6 @@ void RenderScene()
    glUniform1iARB(g_hBlur, 0);
    RenderScreenQuad();
 
-
    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_vBlurFbo.GetFBO());
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
@@ -387,7 +381,6 @@ void RenderScene()
    glBindTexture(GL_TEXTURE_2D, g_hBlurFbo.GetColorDest0());
    glUniform1iARB(g_vBlur, 0);
    RenderScreenQuad();
-
 
    glUseProgramObjectARB(g_renderShader);
    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
