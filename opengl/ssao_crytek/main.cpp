@@ -195,21 +195,21 @@ bool InitializeApp()
   if(g_vBlurFbo.Create(WIDTH, HEIGHT) == false)
     return false;
 
-//    if(g_model.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/dragon.obj") == false)
-//      return false;
+    if(g_model.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/dragon.obj") == false)
+      return false;
 
 //  // Load the model from the file then its generated color data.
-  if(g_stageModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/Box.obj") == false)
-    return false;
+//  if(g_stageModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/Box.obj") == false)
+//    return false;
 
-  if(g_boxModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/Cube.obj") == false)
-    return false;
+//  if(g_boxModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/Cube.obj") == false)
+//    return false;
 
-  if(g_torusA.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/TorusA.obj") == false)
-    return false;
+//  if(g_torusA.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/TorusA.obj") == false)
+//    return false;
 
-  if(g_torusB.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/TorusB.obj") == false)
-    return false;
+//  if(g_torusB.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/TorusB.obj") == false)
+//    return false;
 
   return true;
 }
@@ -230,11 +230,11 @@ void ShutdownApp()
    g_hBlurFbo.Release();
    g_vBlurFbo.Release();
 
-   g_stageModel.Release();
-   g_boxModel.Release();
-   g_torusA.Release();
-   g_torusB.Release();
-//   g_model.Release();
+//   g_stageModel.Release();
+//   g_boxModel.Release();
+//   g_torusA.Release();
+//   g_torusB.Release();
+   g_model.Release();
 }
 
 
@@ -261,17 +261,17 @@ void RenderScenePass()
    glClear(GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
 
-   glTranslatef(0, 0, -14);
+   glTranslatef(0, 0, -2);
    glRotatef(-g_yRot, 1.0f, 0.0f, 0.0f);
    glRotatef(-g_xRot, 0.0f, 1.0f, 0.0f);
 
    // Draw the objects.
-   glColor3f(1.0f, 1.0f, 1.0f); DrawModel(g_stageModel);
-   glColor3f(1.0f, 0.0f, 0.0f); DrawModel(g_boxModel);
-   glColor3f(0.0f, 1.0f, 0.0f); DrawModel(g_torusA);
-   glColor3f(0.0f, 0.0f, 1.0f); DrawModel(g_torusB);
+//   glColor3f(1.0f, 1.0f, 1.0f); DrawModel(g_stageModel);
+//   glColor3f(1.0f, 0.0f, 0.0f); DrawModel(g_boxModel);
+//   glColor3f(0.0f, 1.0f, 0.0f); DrawModel(g_torusA);
+//   glColor3f(0.0f, 0.0f, 1.0f); DrawModel(g_torusB);
 
-//   glColor3f(1.0f, 1.0f, 1.0f); DrawModel(g_model);
+   glColor3f(1.0f, 1.0f, 1.0f); DrawModel(g_model);
 }
 
 
@@ -381,6 +381,7 @@ void RenderScene()
    glBindTexture(GL_TEXTURE_2D, g_hBlurFbo.GetColorDest0());
    glUniform1iARB(g_vBlur, 0);
    RenderScreenQuad();
+
 
    glUseProgramObjectARB(g_renderShader);
    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
