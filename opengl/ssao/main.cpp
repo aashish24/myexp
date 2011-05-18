@@ -378,9 +378,11 @@ void RenderScene()
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
    glUseProgramObjectARB(g_vBlurShader);
+
    glActiveTexture(GL_TEXTURE0_ARB);
    glBindTexture(GL_TEXTURE_2D, g_hBlurFbo.GetColorDest0());
    glUniform1iARB(g_vBlur, 0);
+
    RenderScreenQuad();
 
 
