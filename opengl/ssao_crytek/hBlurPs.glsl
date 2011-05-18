@@ -18,7 +18,7 @@ float calculateGaussianWeight(float standardDeviation, float distance)
   vec3 normal = texture2D( normals, vTexCoord ).xyz;
   vec3 sampleNormal = texture2D( normals, vec2( vTexCoord.x - distance * blurSize, vTexCoord.y) ).xyz;
 
-  if( abs( depth - sampleDepth ) < 0.1 || dot( normal, sampleNormal ) > 0.8 )
+  if( abs( depth - sampleDepth ) < 0.01 || dot( normal, sampleNormal ) > 0.9 )
   {
     gw = 1.0 / ( sqrt( 2.0f * 3.14f ) * standardDeviation ) *
          exp( -pow( distance, 2.0f ) / ( 2.0f * pow( standardDeviation, 2.0f ) ) );

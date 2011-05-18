@@ -221,7 +221,7 @@ bool InitializeApp()
   if(_gVerticalBlurFbo.Create(WIDTH, HEIGHT) == false)
     return false;
 
-  if(_gModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/dragon.obj") == false)
+  if(_gModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/sponza.obj") == false)
     return false;
 
   return true;
@@ -281,9 +281,10 @@ void RenderScenePass()
    glClear(GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
 
-   glTranslatef(0, 0, -2);
+   glTranslatef(0, 0, -2.5);
    glRotatef(-_gYRot, 1.0f, 0.0f, 0.0f);
    glRotatef(-_gXRot, 0.0f, 1.0f, 0.0f);
+
 
    glColor3f(1.0f, 1.0f, 1.0f); DrawModel(_gModel);
 }
@@ -331,7 +332,7 @@ void RenderScreenQuad()
 
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   gluPerspective(45, (float)WIDTH/(float)HEIGHT, 1.0, 1000.0);
+   gluPerspective(45, (float)WIDTH/(float)HEIGHT, 1.0, 10000.0);
 
    glMatrixMode(GL_MODELVIEW);
 }
