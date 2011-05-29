@@ -217,7 +217,7 @@ bool InitializeApp()
   // Load texture.
   int width = 0, height = 0, comp = 0;
   unsigned char *image;
-  image = LoadTGA("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/noise.tga", width, height, comp);
+  image = LoadTGA("/home/aashish/tools/mywork/src.git/data/noise.tga", width, height, comp);
 
   glGenTextures(1, &_gRandomSampler);
   glBindTexture(GL_TEXTURE_2D, _gRandomSampler);
@@ -297,7 +297,7 @@ bool InitializeApp()
   if(_gVerticalBlurFbo.Create(WIDTH, HEIGHT) == false)
     return false;
 
-  if(_gModel.LoadOBJ("/home/aashish/tools/mywork/src.git/data/sponza.obj") == false)
+  if(_gModel.LoadOBJ("/home/aashish/tools/mywork/src.git/data/dragon.obj") == false)
     return false;
 
   return true;
