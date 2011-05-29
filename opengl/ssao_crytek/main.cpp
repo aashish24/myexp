@@ -4,6 +4,7 @@
 #include"OpenGLSLHelper.h"
 #include"OpenGLFbo.h"
 #include "TGA.h"
+#include "Trackball.h"
 
 #include<stdio.h>
 
@@ -15,6 +16,7 @@ GLhandleARB _gSetRenderTargetShader;
 GLhandleARB _gClearRenderTargetShader;
 GLhandleARB _gRenderShader;
 GLhandleARB _gSsaoShader;
+
 GLhandleARB _gHorizontalBlurShader;
 GLhandleARB _gVerticalBlurShader;
 
@@ -57,6 +59,16 @@ OpenGLFBO _gVerticalBlurFbo;
 float _gXRot = 0.0f;
 float _gYRot = 340.0f;
 
+// Navigation
+int _gSpinning = 0, _gMoving = 0;
+int _gBeginX, _gBeginY;
+float _gCurQuat[4];
+float _gLastQuat[4];
+GLdouble _gBodyWidth = 1.0;
+int _gNewModel = 1;
+int _gScaling;
+float _gScalingFactor = 1.0;
+
 #define WIDTH  800
 #define HEIGHT 600
 
@@ -87,6 +99,70 @@ void KeyDown(unsigned char key, int x, int y)
             exit(0);
             break;
       }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
+void Mouse(int button, int state, int x, int y)
+{
+  if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+    _gSpinning = 0;
+    _gMoving = 1;
+    _gBeginX = x;
+    _gBeginY = y;
+    if (glutGetModifiers() & GLUT_ACTIVE_SHIFT) {
+      _gScaling = 1;
+    } else {
+      _gScaling = 0;
+    }
+  }
+  if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+    _gMoving = 0;
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
+void animate(void)
+{
+  add_quats(_gLastQuat, _gCurQuat, _gCurQuat);
+  _gNewModel = 1;
+  glutPostRedisplay();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
+void Motion(int x, int y)
+{
+  if (_gScaling) {
+    _gScalingFactor = _gScalingFactor * (1.0 + (((float) (_gBeginY - y)) / HEIGHT));
+    _gBeginX = x;
+    _gBeginY = y;
+    _gNewModel = 1;
+    glutPostRedisplay();
+    return;
+  }
+  if (_gMoving) {
+    trackball(_gLastQuat,
+      (2.0 * _gBeginX - WIDTH) / WIDTH,
+      (HEIGHT - 2.0 * _gBeginY) / HEIGHT,
+      (2.0 * x - WIDTH) / WIDTH,
+      (HEIGHT - 2.0 * y) / HEIGHT
+      );
+    _gBeginX = x;
+    _gBeginY = y;
+    _gSpinning = 1;
+    animate();
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -279,14 +355,24 @@ void RenderScenePass()
    // This is done before this function is called.
    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glClear(GL_DEPTH_BUFFER_BIT);
+
    glLoadIdentity();
-
    glTranslatef(0, 0, -2.5);
-   glRotatef(-_gYRot, 1.0f, 0.0f, 0.0f);
-   glRotatef(-_gXRot, 0.0f, 1.0f, 0.0f);
 
+   glPushMatrix();
+   GLfloat m[4][4];
+   build_rotmatrix(m, _gCurQuat);
+   glMultMatrixf(&m[0][0]);
+   if (_gScalingFactor == 1.0) {
+     glDisable(GL_NORMALIZE);
+   } else {
+     glEnable(GL_NORMALIZE);
+   }
+   glScalef(_gScalingFactor, _gScalingFactor, _gScalingFactor);
+   _gNewModel = 0;
 
    glColor3f(1.0f, 1.0f, 1.0f); DrawModel(_gModel);
+   glPopMatrix();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -472,12 +558,14 @@ int main(int arg, char **argc)
    glutInitWindowPosition(100, 100);
    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
    glutInit(&arg, argc);
-
+   trackball(_gCurQuat, 0.0, 0.0, 0.0, 0.0);
    glutCreateWindow("OpenGL Deferred Shading");
 
    glutDisplayFunc(RenderScene);
    glutReshapeFunc(Resize);
    glutKeyboardFunc(KeyDown);
+   glutMouseFunc(Mouse);
+   glutMotionFunc(Motion);
    glutSpecialFunc(KeyDownSpecial);
 
    if(InitializeApp() == true)
