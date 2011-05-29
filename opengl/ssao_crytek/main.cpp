@@ -297,7 +297,7 @@ bool InitializeApp()
   if(_gVerticalBlurFbo.Create(WIDTH, HEIGHT) == false)
     return false;
 
-  if(_gModel.LoadOBJ("/home/aashish/tools/mywork/src.git/opengl/ssao_crytek/sponza.obj") == false)
+  if(_gModel.LoadOBJ("/home/aashish/tools/mywork/src.git/data/sponza.obj") == false)
     return false;
 
   return true;

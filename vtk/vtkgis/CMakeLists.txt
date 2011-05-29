@@ -1,0 +1,2 @@
+add_subdirectory(bug_globe)
+add_subdirectory(vector_viewer)
