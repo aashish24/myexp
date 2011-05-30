@@ -72,7 +72,7 @@ float calculateSsao(vec2 screenTC, vec2 screenSize)
    }
 
   ao = (ao / actualNumberOfSamples);
-//  ao = (ao * ao + ao);
+  ao = (ao * ao + ao);
   ao = clamp(ao, 0.0, 1.0);
   return ao;
 }

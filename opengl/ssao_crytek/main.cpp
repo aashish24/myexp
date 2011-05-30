@@ -21,13 +21,22 @@ GLhandleARB _gHorizontalBlurShader;
 GLhandleARB _gVerticalBlurShader;
 
 // Shader variables we will bind to.
-GLuint _gLightPos;
+GLuint _gLight1Pos;
+GLuint _gLight2Pos;
 GLuint _gOffset;
 GLuint _gDecal;
 GLuint _gNormals;
 GLuint _gDepths;
 GLuint _gRandom;
-GLuint _gLightColor;
+
+GLuint _gLight1AmbientColor;
+GLuint _gLight1DiffuseColor;
+GLuint _gLight1SpecularColor;
+
+GLuint _gLight2AmbientColor;
+GLuint _gLight2DiffuseColor;
+GLuint _gLight2SpecularColor;
+
 GLuint _gAmbientOcclusion;
 GLuint _gSceneColors;
 GLuint _gSceneDepths;
@@ -262,8 +271,17 @@ bool InitializeApp()
 
   // Bind our shader variables.
   _gOffset            = glGetUniformLocationARB(_gRenderShader, "offset");
-  _gLightPos          = glGetUniformLocationARB(_gRenderShader, "lightPos");
-  _gLightColor        = glGetUniformLocationARB(_gRenderShader, "lightColor");
+
+  _gLight1Pos             = glGetUniformLocationARB(_gRenderShader, "light1Pos");
+  _gLight1AmbientColor    = glGetUniformLocationARB(_gRenderShader, "light1AmbientColor");
+  _gLight1DiffuseColor    = glGetUniformLocationARB(_gRenderShader, "light1DiffuseColor");
+  _gLight1SpecularColor   = glGetUniformLocationARB(_gRenderShader, "light1SpecularColor");
+
+  _gLight2Pos             = glGetUniformLocationARB(_gRenderShader, "light2Pos");
+  _gLight2AmbientColor    = glGetUniformLocationARB(_gRenderShader, "light2AmbientColor");
+  _gLight2DiffuseColor    = glGetUniformLocationARB(_gRenderShader, "light2DiffuseColor");
+  _gLight2SpecularColor   = glGetUniformLocationARB(_gRenderShader, "light2SpecularColor");
+
   _gAmbientOcclusion  = glGetUniformLocationARB(_gRenderShader, "aos");
   _gSceneColors       = glGetUniformLocationARB(_gRenderShader, "colors");
   _gSceneDepths       = glGetUniformLocationARB(_gRenderShader, "depths");
@@ -297,7 +315,7 @@ bool InitializeApp()
   if(_gVerticalBlurFbo.Create(WIDTH, HEIGHT) == false)
     return false;
 
-  if(_gModel.LoadOBJ("/home/aashish/tools/mywork/src.git/data/dragon.obj") == false)
+  if(_gModel.LoadOBJ("/home/aashish/tools/mywork/src.git/data/sponza.obj") == false)
     return false;
 
   return true;
@@ -522,8 +540,15 @@ void RenderScene()
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glLoadIdentity();
    glUniform2fARB(_gOffset, 1.0f / (float)WIDTH, 1.0f / (float)HEIGHT);
-   glUniform3fARB(_gLightPos, 0.0f, 20.0f, 15.0f);
-   glUniform4fARB(_gLightColor, 0.4f, 0.4f, 0.4f, 1.0f);
+   glUniform3fARB(_gLight1Pos, 0.0f, 20.0f,  15.0f);
+   glUniform4fARB(_gLight1AmbientColor, 0.4f, 0.4f, 0.4f, 1.0f);
+   glUniform4fARB(_gLight1DiffuseColor, 0.6f, 0.6f, 0.6f, 1.0f);
+   glUniform4fARB(_gLight1SpecularColor, 0.6f, 0.6f, 0.6f, 1.0f);
+
+   glUniform3fARB(_gLight2Pos, 100.0f, 20.0f, 15.0f);
+   glUniform4fARB(_gLight2AmbientColor, 0.2f, 0.2f, 0.2f, 1.0f);
+   glUniform4fARB(_gLight2DiffuseColor, 0.1f, 0.1f, 0.1f, 1.0f);
+   glUniform4fARB(_gLight2SpecularColor, 0.5f, 0.7f, 0.5f, 1.0f);
 
    glActiveTexture(GL_TEXTURE0_ARB);
    glBindTexture(GL_TEXTURE_2D, _gVerticalBlurFbo.GetColorDest0());
