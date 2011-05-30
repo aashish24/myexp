@@ -4,11 +4,10 @@ uniform sampler2D normals;
 uniform sampler2D randoms;
 uniform sampler2D depths;
 
-
 vec2 g_screen_size = vec2(800, 600);
 
-float random_size = 64.0;
-float g_sample_rad = .05;
+float random_size = 4.0;
+float g_sample_rad = 0.4;
 float g_intensity = 1.5;
 float g_scale = 2.0;
 float g_bias = 0.0;
@@ -20,8 +19,7 @@ vec4 getPosition(vec2 uv)
 
 vec3 getNormal(vec2 uv)
 {
-  return texture2D(normals, uv).xyz;
-// return normalize(texture2D(normals, uv).xyz * 2.0 - 1.0);
+  return normalize(texture2D(normals, uv).xyz);
 }
 
 vec2 getRandom(vec2 uv)
@@ -77,11 +75,5 @@ float processAmbientOcclusion()
 void main()
 {
   float ao =  1 - processAmbientOcclusion();
-  gl_FragData[0]  = vec4(ao, ao, ao, 1.0);
-
-  // For testing.
-//  gl_FragColor = vec4(getPosition(texCoords));
-//  gl_FragColor = vec4(getRandom(texCoords), 0.0, 1.0);
-//  gl_FragColor = vec4(getNormal(texCoords), 1.0);
-//  gl_FragColor = ambient;
+  gl_FragData[0]  = vec4(vec3(ao), 1.0);
 }

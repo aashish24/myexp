@@ -13,6 +13,7 @@ set(SRCS
   OpenGLFbo.h
   OpenGLFbo.cpp
   TGA.cpp
+  Trackball.cpp
 )
 
 include_directories(/usr/include/GL
