@@ -41,6 +41,7 @@ GLuint _gAmbientOcclusion;
 GLuint _gSceneColors;
 GLuint _gSceneDepths;
 GLuint _gSceneNormals;
+GLuint _gUseAmbientOcclusion;
 
 GLuint _gSsaoOffset;
 GLuint _gSsaoDecal;
@@ -57,6 +58,9 @@ GLuint _gVerticalBlurSceneDepthSampler;
 GLuint _gVerticalBlurSceneNormalSampler;
 
 GLuint _gRandomSampler;
+
+//
+int _useAmbientOcclusion = 1;
 
 // FBO data.
 OpenGLFBO _gSceneFbo;
@@ -104,10 +108,14 @@ void KeyDown(unsigned char key, int x, int y)
 {
    switch(key)
       {
-         case 27:
-            exit(0);
-            break;
+      case 27:
+        exit(0);
+        break;
+      case 116: // 't'
+        _useAmbientOcclusion = !_useAmbientOcclusion;
+        break;
       }
+   glutPostRedisplay();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -282,10 +290,11 @@ bool InitializeApp()
   _gLight2DiffuseColor    = glGetUniformLocationARB(_gRenderShader, "light2DiffuseColor");
   _gLight2SpecularColor   = glGetUniformLocationARB(_gRenderShader, "light2SpecularColor");
 
-  _gAmbientOcclusion  = glGetUniformLocationARB(_gRenderShader, "aos");
-  _gSceneColors       = glGetUniformLocationARB(_gRenderShader, "colors");
-  _gSceneDepths       = glGetUniformLocationARB(_gRenderShader, "depths");
-  _gSceneNormals      = glGetUniformLocationARB(_gRenderShader, "normals");
+  _gAmbientOcclusion    = glGetUniformLocationARB(_gRenderShader, "aos");
+  _gSceneColors         = glGetUniformLocationARB(_gRenderShader, "colors");
+  _gSceneDepths         = glGetUniformLocationARB(_gRenderShader, "depths");
+  _gSceneNormals        = glGetUniformLocationARB(_gRenderShader, "normals");
+  _gUseAmbientOcclusion = glGetUniformLocationARB(_gRenderShader, "useAmbientOcclusion");
 
   _gSsaoOffset        = glGetUniformLocationARB(_gSsaoShader, "offset");
   _gSsaoNormals       = glGetUniformLocationARB(_gSsaoShader, "normals");
@@ -565,6 +574,8 @@ void RenderScene()
    glActiveTexture(GL_TEXTURE3_ARB);
    glBindTexture(GL_TEXTURE_2D, _gSceneFbo.GetColorDest2());
    glUniform1i(_gSceneDepths, 2);
+
+   glUniform1i(_gUseAmbientOcclusion, _useAmbientOcclusion);
 
    RenderScreenQuad();
 

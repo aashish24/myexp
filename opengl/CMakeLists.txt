@@ -1,2 +1,2 @@
-add_subdirectory(ssao_crytek)
+add_subdirectory(ssao)
 add_subdirectory(vbo)

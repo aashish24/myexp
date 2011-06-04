@@ -16,6 +16,8 @@ uniform sampler2D aos;
 uniform sampler2D depths;
 uniform sampler2D normals;
 
+uniform int useAmbientOcclusion;
+
 void main()
 {
   vec3 color = texture2D(colors, texCoords);
@@ -23,7 +25,11 @@ void main()
 
   // Ambient light.
   vec3 ambient = color * (light1AmbientColor + light2AmbientColor);
-  ambient      = ambient.rgb * ao;
+
+  if(useAmbientOcclusion)
+    {
+    ambient = ambient.rgb * ao;
+    }
 
   // Diffuse light.
   float diffuseComponent1 = dot( normalize( texture2D(normals, texCoords).xyz), normalize(light1Pos) );
