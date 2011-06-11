@@ -4,26 +4,32 @@ project(ssao_crytek)
 
 set(SRCS
   main.cpp
-  objLoader.cpp
-  objLoader.h
-  TokenStream.h
-  TokenStream.cpp
-  OpenGLSLHelper.h
-  OpenGLSLHelper.cpp
-  OpenGLFbo.h
-  OpenGLFbo.cpp
-  TGA.cpp
-  Trackball.cpp
+)
+
+set(COMMON_SRCS
+  ../common/objLoader.cpp
+  ../common/objLoader.h
+  ../common/TokenStream.h
+  ../common/TokenStream.cpp
+  ../common/OpenGLSLHelper.h
+  ../common/OpenGLSLHelper.cpp
+  ../common/OpenGLFbo.h
+  ../common/OpenGLFbo.cpp
+  ../common/TGA.cpp
+  ../common/Trackball.cpp
 )
 
 include_directories(/usr/include/GL
                     /usr/local/include
+                    ../common
 )
 
 link_directories(/usr/local/lib
 )
 
-add_executable(${PROJECT_NAME} ${SRCS}
+add_executable(${PROJECT_NAME}
+  ${SRCS}
+  ${COMMON_SRCS}
 )
 
 target_link_libraries(
@@ -33,5 +39,3 @@ target_link_libraries(
   GLU
   GLee
 )
-
-
