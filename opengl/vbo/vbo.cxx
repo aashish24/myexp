@@ -23,10 +23,10 @@ GLfloat positions [] =
 // Intentionaly creating varying normals.
 GLfloat normals [] =
 {
-  0.0, 0.0, 1.0, 1.0,
-  0.0, 1.0, 1.0, 1.0,
-  0.0, 0.0, 1.0, 1.0,
-  0.0, 0.0, 1.0, 1.0
+  1.0, 1.0, 0.0, 1.0,
+  1.0, 1.0, 0.0, 1.0,
+  1.0, 1.0, 0.0, 1.0,
+  1.0, 1.0, 0.0, 1.0
 };
 
 
@@ -54,20 +54,23 @@ bool InitializeApp()
       return false;
      }
 
-   // Set index of the attribute in the shader.
-   glBindAttribLocation(gPhongShader, 0, "normals");
+   // glBindAttribLocation requires call before glLinkProgram. Since in our code this is not
+   // entirely possible we are getting attribute location and using the locations to glVertexAttribPointer.
+   GLuint positionsLoc = glGetAttribLocation(gPhongShader, "positions");
+   GLuint normalsLoc   = glGetAttribLocation(gPhongShader, "normals");
 
-   // Bind data to VBO.
    glGenBuffers(1, &oneBuffer);
    glBindBuffer(GL_ARRAY_BUFFER, oneBuffer);
    glBufferData(GL_ARRAY_BUFFER, sizeof(positions) + sizeof(normals), NULL, GL_STATIC_DRAW);
    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(positions), positions);
    glBufferSubData(GL_ARRAY_BUFFER, sizeof(positions), sizeof(normals), normals);
-   glEnableVertexAttribArray(0);
-   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (const GLvoid *)0);
-   glEnableVertexAttribArray(1);
-   glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (const GLvoid *)sizeof(positions));
+   glVertexAttribPointer(positionsLoc, 4, GL_FLOAT, GL_FALSE, 0, (const GLvoid *)0);
+   glEnableVertexAttribArray(positionsLoc);
+   glVertexAttribPointer(normalsLoc, 4, GL_FLOAT, GL_FALSE, 0, (const GLvoid *)sizeof(positions));
+   glEnableVertexAttribArray(normalsLoc);
 
+   // Swith back to normal operations.
+   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
    return true;
 }
