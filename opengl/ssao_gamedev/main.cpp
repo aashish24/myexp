@@ -246,34 +246,34 @@ bool InitializeApp()
    delete[] image;
 
   // Load shaders.
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/setRenderTargetsVs.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/setRenderTargetsPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/setRenderTargetsVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/setRenderTargetsPs.glsl",
                       _gSetRenderTargetShader))
     return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/clearRenderTargetsVs.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/clearRenderTargetsPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/clearRenderTargetsVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/clearRenderTargetsPs.glsl",
                       _gClearRenderTargetShader))
     return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/ssaoVs.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/ssaoPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/ssaoVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/ssaoPs.glsl",
                       _gSsaoShader))
    return false;
 
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/hBlurVs.glsl",
-                      "/home/aashish/tools/mywork/src.git/opengl/ssao/hBlurPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/hBlurVs.glsl",
+                      "/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/hBlurPs.glsl",
                       _gHorizontalBlurShader))
   return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/vBlurVs.glsl",
-                       "/home/aashish/tools/mywork/src.git/opengl/ssao/vBlurPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/vBlurVs.glsl",
+                       "/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/vBlurPs.glsl",
                        _gVerticalBlurShader))
     return false;
 
-  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao/renderingVs.glsl",
-                       "/home/aashish/tools/mywork/src.git/opengl/ssao/renderingPs.glsl",
+  if(!CreateGLSLShader("/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/renderingVs.glsl",
+                       "/home/aashish/tools/mywork/src.git/opengl/ssao_gamedev/renderingPs.glsl",
                         _gRenderShader))
     return false;
 
