@@ -8,3 +8,4 @@ endif(VTK_FOUND)
 
 add_subdirectory(vtkgis)
 add_subdirectory(vtk3ds)
+add_subdirectory(vtk-android)
