@@ -1,6 +1,8 @@
 
 #include <vtkCellArray.h>
+#include <vtkCellData.h>
 #include <vtkOBJReader.h>
+#include <vtkPointData.h>
 #include <vtkPolyData.h>
 #include <vtkSmartPointer.h>
 
@@ -20,9 +22,15 @@
 
 // GLSlang objects.
 GLhandleARB gPhongShader;
-GLuint oneBuffer;
+
+GLuint positionBuffer;
+GLuint normalBuffer;
+
 GLuint modelTransformUniform;
 GLuint viewTransformUniform;
+
+GLuint positionsLoc;
+GLuint normalsLoc;
 
 // Global variables.
 int numberOfIndices;
@@ -52,7 +60,7 @@ void Resize(int width, int height)
   glViewport(0, 0, width, height);
 
 //  gluPerspective(45, width/height, 1.0, 1000.0);
-  glm::mat4 viewMatrix = glm::perspective(45.0f, (float)width/height, 1.0f, 1000.0f);
+  glm::mat4 viewMatrix = glm::perspective(45.0f, (float)width/height, 0.1f, 1000.0f);
   glUniformMatrix4fv(viewTransformUniform, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 }
 
@@ -68,9 +76,19 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
   vtkCellArray* polys = polyData->GetPolys();
   int numberOfCells   = polys->GetNumberOfCells();
 
-  double* positions   = new double[numberOfCells * 3 * 3 + 1];
+  int sizeOfPositions = numberOfCells * 3 * 3;
+  int dataSize        = sizeOfPositions * sizeof(double);
 
+  double* positions   = new double[sizeOfPositions];
   vtkIdList *pointIds = vtkIdList::New();
+
+  vtkDataArray *polyNormals = polyData->GetPointData()->GetNormals();
+  double *normals;
+  if(polyNormals)
+    {
+     normals = new double[sizeOfPositions];
+    }
+
 
   for(int i=0; i < numberOfCells; ++i)
   {
@@ -84,10 +102,27 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
       positions[i * 9 + j * 3 + 0] = temp[0];
       positions[i * 9 + j * 3 + 1] = temp[1];
       positions[i * 9 + j * 3 + 2] = temp[2];
+
+      if(polyNormals)
+        {
+        double *normal;
+        normal = polyNormals->GetTuple3(pointIds->GetId(j));
+        normals[i * 9 + j * 3 + 0] = normal[0];
+        normals[i * 9 + j * 3 + 1] = normal[1];
+        normals[i * 9 + j * 3 + 2] = normal[2];
+        }
     }
   }
 
-  numberOfIndices = numberOfCells * 3.0;
+  numberOfIndices = numberOfCells * 3;
+
+  if(polyNormals)
+    {
+    for(int i=0; i < sizeOfPositions / 3; ++i)
+      {
+      std::cout << "normals "  << i << " " << normals[i * 3 + 0] << " " << normals[i * 3 + 1] << " " << normals[i * 3 + 2] << std::endl;
+      }
+    }
 
   pointIds->Delete();
 
@@ -101,19 +136,27 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
 
   // glBindAttribLocation requires call before glLinkProgram. Since in our code this is not
   // entirely possible we are getting attribute location and using the locations to glVertexAttribPointer.
-  GLuint positionsLoc   = glGetAttribLocation(gPhongShader, "positions");
+  positionsLoc   = glGetAttribLocation(gPhongShader, "positions");
+  normalsLoc     = glGetAttribLocation(gPhongShader, "normals");
 
   modelTransformUniform = glGetUniformLocation(gPhongShader, "modelMatrix");
   viewTransformUniform  = glGetUniformLocation(gPhongShader, "viewMatrix");
 
-  glGenBuffers(1, &oneBuffer);
-  glBindBuffer(GL_ARRAY_BUFFER, oneBuffer);
+  glGenBuffers(1, &positionBuffer);
+  glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
+  glBufferData(GL_ARRAY_BUFFER, dataSize * 2, NULL, GL_STATIC_DRAW);
+  glBufferSubData(GL_ARRAY_BUFFER, 0, dataSize, positions);
+  glBufferSubData(GL_ARRAY_BUFFER, dataSize, dataSize, normals);
 
-//  std::cout << "size of positions " << sizeof(positions) << std::endl;
-
-  glBufferData(GL_ARRAY_BUFFER, sizeof(double) * numberOfIndices * 3, positions, GL_STATIC_DRAW);
   glVertexAttribPointer(positionsLoc, 3, GL_DOUBLE, GL_FALSE, 0, (const GLvoid *)0);
-  glEnableVertexAttribArray(positionsLoc);
+
+  glVertexAttribPointer(normalsLoc, 3, GL_DOUBLE, GL_FALSE, 0, (const GLvoid *) (dataSize));
+
+//  glGenBuffers(1, &normalBuffer);
+//  glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+//  glBufferData(GL_ARRAY_BUFFER, sizeof(double) * numberOfIndices * 3, normals, GL_STATIC_DRAW);
+//  glVertexAttribPointer(normalsLoc, 3, GL_DOUBLE, GL_FALSE, 0, (const GLvoid *)0);
+//  glEnableVertexAttribArray(normalsLoc);
 
   // Swith back to normal operations.
   glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -127,17 +170,22 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
 //-----------------------------------------------------------------------------
 void RenderScene()
 {
-  glClearColor(0, 0, 0.2, 1);
+  glClearColor(1.0, 1.0, 1.0, 1);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glShadeModel(GL_SMOOTH);
   glEnable(GL_DEPTH_TEST);
   glDisable(GL_CULL_FACE);
 
   glm::mat4 modelMatrix(1.0f);
-  modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -10.0));
+  modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(-4.0, -1.0, -10.0));
   glUniformMatrix4fv(modelTransformUniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
-  glBindBuffer(GL_ARRAY_BUFFER, oneBuffer);
+  glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
+  glEnableVertexAttribArray(positionsLoc);
+  glEnableVertexAttribArray(normalsLoc);
+
+//  glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+
   glDrawArrays(GL_TRIANGLES, 0, numberOfIndices);
 
   glutSwapBuffers();
