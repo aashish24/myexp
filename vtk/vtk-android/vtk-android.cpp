@@ -10,12 +10,18 @@
 // Library includes.
 #include"OpenGLSLHelper.h"
 
+// C++ includes.
 #include <iostream>
+
+// GLM includes.
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 // GLSlang objects.
 GLhandleARB gPhongShader;
 GLuint oneBuffer;
-
+GLuint modelTransformUniform;
+GLuint viewTransformUniform;
 
 // Global variables.
 int numberOfIndices;
@@ -43,10 +49,10 @@ void printHelp()
 void Resize(int width, int height)
 {
   glViewport(0, 0, width, height);
-  glMatrixMode(GL_PROJECTION);
 
-  gluPerspective(45, width/height, 1.0, 1000.0);
-  glMatrixMode(GL_MODELVIEW);
+//  gluPerspective(45, width/height, 1.0, 1000.0);
+  glm::mat4 viewMatrix = glm::perspective(45.0f, (float)width/height, 1.0f, 1000.0f);
+  glUniformMatrix4fv(viewTransformUniform, 1, GL_FALSE, &viewMatrix[0][0]);
 }
 
 //-----------------------------------------------------------------------------
@@ -96,7 +102,10 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
 
   // glBindAttribLocation requires call before glLinkProgram. Since in our code this is not
   // entirely possible we are getting attribute location and using the locations to glVertexAttribPointer.
-  GLuint positionsLoc = glGetAttribLocation(gPhongShader, "positions");
+  GLuint positionsLoc   = glGetAttribLocation(gPhongShader, "positions");
+
+  modelTransformUniform = glGetUniformLocation(gPhongShader, "modelTransform");
+  viewTransformUniform  = glGetUniformLocation(gPhongShader, "viewTransform");
 
   glGenBuffers(1, &oneBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, oneBuffer);
@@ -123,16 +132,13 @@ void RenderScene()
   glEnable(GL_DEPTH_TEST);
   glDisable(GL_CULL_FACE);
 
-  glMatrixMode(GL_MODELVIEW);
-  glPushMatrix();
-  glLoadIdentity();
-  glTranslatef(0.0, 0.0, -10.0);
+  glm::mat4 modelMatrix(1.0f);
+  modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0, -10.0));
+  glUniformMatrix4fv(modelTransformUniform, 1, GL_FALSE, &modelMatrix[0][0]);
 
   glUseProgram(gPhongShader);
   glBindBuffer(GL_ARRAY_BUFFER, oneBuffer);
   glDrawArrays(GL_TRIANGLES, 0, numberOfIndices);
-
-  glPopMatrix();
 
   glutSwapBuffers();
   glutPostRedisplay();
