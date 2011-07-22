@@ -16,6 +16,7 @@
 // GLM includes.
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // GLSlang objects.
 GLhandleARB gPhongShader;
@@ -52,7 +53,7 @@ void Resize(int width, int height)
 
 //  gluPerspective(45, width/height, 1.0, 1000.0);
   glm::mat4 viewMatrix = glm::perspective(45.0f, (float)width/height, 1.0f, 1000.0f);
-  glUniformMatrix4fv(viewTransformUniform, 1, GL_FALSE, &viewMatrix[0][0]);
+  glUniformMatrix4fv(viewTransformUniform, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 }
 
 //-----------------------------------------------------------------------------
@@ -64,8 +65,6 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
     }
 
   vtkPoints* points   = polyData->GetPoints();
-  int numberOfPoints  = points->GetNumberOfPoints();
-
   vtkCellArray* polys = polyData->GetPolys();
   int numberOfCells   = polys->GetNumberOfCells();
 
@@ -104,8 +103,8 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
   // entirely possible we are getting attribute location and using the locations to glVertexAttribPointer.
   GLuint positionsLoc   = glGetAttribLocation(gPhongShader, "positions");
 
-  modelTransformUniform = glGetUniformLocation(gPhongShader, "modelTransform");
-  viewTransformUniform  = glGetUniformLocation(gPhongShader, "viewTransform");
+  modelTransformUniform = glGetUniformLocation(gPhongShader, "modelMatrix");
+  viewTransformUniform  = glGetUniformLocation(gPhongShader, "viewMatrix");
 
   glGenBuffers(1, &oneBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, oneBuffer);
@@ -118,6 +117,8 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
 
   // Swith back to normal operations.
   glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+  glUseProgram(gPhongShader);
 
   return true;
 }
@@ -133,10 +134,9 @@ void RenderScene()
   glDisable(GL_CULL_FACE);
 
   glm::mat4 modelMatrix(1.0f);
-  modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0, -10.0));
-  glUniformMatrix4fv(modelTransformUniform, 1, GL_FALSE, &modelMatrix[0][0]);
+  modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -10.0));
+  glUniformMatrix4fv(modelTransformUniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
-  glUseProgram(gPhongShader);
   glBindBuffer(GL_ARRAY_BUFFER, oneBuffer);
   glDrawArrays(GL_TRIANGLES, 0, numberOfIndices);
 
