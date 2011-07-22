@@ -146,19 +146,13 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
 
   glGenBuffers(1, &positionBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
-  glBufferData(GL_ARRAY_BUFFER, dataSize * 2, NULL, GL_STATIC_DRAW);
-  glBufferSubData(GL_ARRAY_BUFFER, 0, dataSize, positions);
-  glBufferSubData(GL_ARRAY_BUFFER, dataSize, dataSize, normals);
-
+  glBufferData(GL_ARRAY_BUFFER, dataSize, positions, GL_STATIC_DRAW);
   glVertexAttribPointer(positionsLoc, 3, GL_DOUBLE, GL_FALSE, 0, (const GLvoid *)0);
 
-  glVertexAttribPointer(normalsLoc, 3, GL_DOUBLE, GL_FALSE, 0, (const GLvoid *) (dataSize));
-
-//  glGenBuffers(1, &normalBuffer);
-//  glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
-//  glBufferData(GL_ARRAY_BUFFER, sizeof(double) * numberOfIndices * 3, normals, GL_STATIC_DRAW);
-//  glVertexAttribPointer(normalsLoc, 3, GL_DOUBLE, GL_FALSE, 0, (const GLvoid *)0);
-//  glEnableVertexAttribArray(normalsLoc);
+  glGenBuffers(1, &normalBuffer);
+  glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+  glBufferData(GL_ARRAY_BUFFER, dataSize, normals, GL_STATIC_DRAW);
+  glVertexAttribPointer(normalsLoc, 3, GL_DOUBLE, GL_FALSE, 0, (const GLvoid *)0);
 
   // Swith back to normal operations.
   glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -188,11 +182,11 @@ void RenderScene()
   modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(-offset[0], -offset[1], -offset[2]));
   glUniformMatrix4fv(modelTransformUniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
-  glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
   glEnableVertexAttribArray(positionsLoc);
-  glEnableVertexAttribArray(normalsLoc);
+  glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
 
-//  glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+  glEnableVertexAttribArray(normalsLoc);
+  glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
 
   glDrawArrays(GL_TRIANGLES, 0, numberOfIndices);
 
