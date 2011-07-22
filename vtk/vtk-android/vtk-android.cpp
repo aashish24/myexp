@@ -34,9 +34,11 @@ GLuint normalsLoc;
 
 // Global variables.
 int numberOfIndices;
+double offset[3];
+double bounds[6];
 
 //-----------------------------------------------------------------------------
-vtkSmartPointer<vtkPolyData> readFile(const std::string& filename)
+vtkSmartPointer<vtkPolyData> LoadData(const std::string& filename)
 {
   vtkSmartPointer<vtkOBJReader> objReader (vtkSmartPointer<vtkOBJReader>::New());
   objReader->SetFileName(filename.c_str());
@@ -163,6 +165,12 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
 
   glUseProgram(gPhongShader);
 
+  polyData->GetBounds(bounds);
+
+  offset[0] = (bounds[1] + bounds[0]) / 2.0;
+  offset[1] = (bounds[3] + bounds[2]) / 2.0;
+  offset[2] = (bounds[5] + bounds[4]);
+
   return true;
 }
 
@@ -177,7 +185,7 @@ void RenderScene()
   glDisable(GL_CULL_FACE);
 
   glm::mat4 modelMatrix(1.0f);
-  modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(-4.0, -1.0, -10.0));
+  modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(-offset[0], -offset[1], -offset[2]));
   glUniformMatrix4fv(modelTransformUniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
   glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
@@ -201,7 +209,7 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  vtkSmartPointer<vtkPolyData> polyData ( readFile( std::string(argv[1]) ) ) ;
+  vtkSmartPointer<vtkPolyData> polyData ( LoadData( std::string(argv[1]) ) ) ;
 
   glutInitWindowSize(800, 600);
   glutInitWindowPosition(0, 0);
