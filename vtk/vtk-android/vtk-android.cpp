@@ -2,6 +2,7 @@
 #include <vtkCellArray.h>
 #include <vtkCellData.h>
 #include <vtkOBJReader.h>
+#include <vtkMath.h>
 #include <vtkPointData.h>
 #include <vtkPolyData.h>
 #include <vtkSmartPointer.h>
@@ -57,13 +58,108 @@ void printHelp()
 }
 
 //-----------------------------------------------------------------------------
+void ResetCamera(double bounds[6], double viewAngle, bool useHorizontalViewAngle,
+  double viewAspect[2], double viewPlaneNormal[3], double viewUp[3], double focalPoint[3],
+  double position[3], double &parallelScale)
+{
+  double center[3];
+  double distance;
+
+  center[0] = (bounds[0] + bounds[1])/2.0;
+  center[1] = (bounds[2] + bounds[3])/2.0;
+  center[2] = (bounds[4] + bounds[5])/2.0;
+
+  double w1 = bounds[1] - bounds[0];
+  double w2 = bounds[3] - bounds[2];
+  double w3 = bounds[5] - bounds[4];
+
+  w1 *= w1;
+  w2 *= w2;
+  w3 *= w3;
+  double radius = w1 + w2 + w3;
+
+  // If we have just a single point, pick a radius of 1.0
+  radius = (radius==0)?(1.0):(radius);
+
+  // compute the radius of the enclosing sphere
+  radius = sqrt(radius)*0.5;
+
+  // default so that the bounding sphere fits within the view fustrum
+
+  // compute the distance from the intersection of the view frustum with the
+  // bounding sphere. Basically in 2D draw a circle representing the bounding
+  // sphere in 2D then draw a horizontal line going out from the center of
+  // the circle. That is the camera view. Then draw a line from the camera
+  // position to the point where it intersects the circle. (it will be tangent
+  // to the circle at this point, this is important, only go to the tangent
+  // point, do not draw all the way to the view plane). Then draw the radius
+  // from the tangent point to the center of the circle. You will note that
+  // this forms a right triangle with one side being the radius, another being
+  // the target distance for the camera, then just find the target dist using
+  // a sin.
+  double angle=vtkMath::RadiansFromDegrees(viewAngle);
+  parallelScale=radius;
+
+  if(viewAspect[0]>=1.0) // horizontal window, deal with vertical angle|scale
+    {
+    if(useHorizontalViewAngle)
+      {
+      angle=2.0*atan(tan(angle*0.5)/viewAspect[0]);
+      }
+    }
+  else // vertical window, deal with horizontal angle|scale
+    {
+    if(!useHorizontalViewAngle)
+      {
+      angle=2.0*atan(tan(angle*0.5)*viewAspect[0]);
+      }
+
+    parallelScale=parallelScale/viewAspect[0];
+    }
+
+  distance =radius/sin(angle*0.5);
+
+  // check view-up vector against view plane normal
+  if ( fabs(vtkMath::Dot(viewUp,viewPlaneNormal)) > 0.999 )
+    {
+    // Resetting view-up since view plane normal is parallel.
+    double temp[3] = {viewUp[0], viewUp[1], viewUp[2]};
+    viewUp[0] = -temp[2];
+    viewUp[1] = temp[0];
+    viewUp[2] = temp[1];
+    }
+
+  // update the camera
+  focalPoint[0] = center[0];
+  focalPoint[1] = center[1];
+  focalPoint[2] = center[2];
+
+  position[0] = center[0] + distance* viewPlaneNormal[0];
+  position[1] = center[1] + distance* viewPlaneNormal[1];
+  position[2] = center[2] + distance* viewPlaneNormal[2];
+}
+
+//-----------------------------------------------------------------------------
 void Resize(int width, int height)
 {
+  double viewAspect[2] =      {width, height};
+  double viewPlaneNormal[3] = {0.0, 0.0, 1.0};
+  double viewUp[3] = {0.0, 1.0, 0.0};
+  double focalPoint[3] = {0.0, 0.0, 0.0};
+  double viewAngle = 45.0;
+  double position[3] = {0.0};
+  double parallelScale = 1.0;
+
   glViewport(0, 0, width, height);
 
-//  gluPerspective(45, width/height, 1.0, 1000.0);
-  glm::mat4 viewMatrix = glm::perspective(45.0f, (float)width/height, 0.1f, 1000.0f);
+  ResetCamera(bounds, viewAngle, false, viewAspect, viewPlaneNormal, viewUp, focalPoint, position, parallelScale);
+
+  glm::mat4 viewMatrix  = glm::perspective( (float)viewAngle, (float)(viewAspect[0]/viewAspect[1]), 0.1f, 1000.0f);
+  glm::mat4 modelMatrix = glm::lookAt( glm::vec3(position[0], position[1], position[2]),
+    glm::vec3(focalPoint[0], focalPoint[1], focalPoint[2]), glm::vec3(viewUp[0], viewUp[1], viewUp[2]));
+
   glUniformMatrix4fv(viewTransformUniform, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+  glUniformMatrix4fv(modelTransformUniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 }
 
 //-----------------------------------------------------------------------------
@@ -118,13 +214,6 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
 
   numberOfIndices = numberOfCells * 3;
 
-  if(polyNormals)
-    {
-    for(int i=0; i < sizeOfPositions / 3; ++i)
-      {
-      std::cout << "normals "  << i << " " << normals[i * 3 + 0] << " " << normals[i * 3 + 1] << " " << normals[i * 3 + 2] << std::endl;
-      }
-    }
 
   pointIds->Delete();
 
@@ -161,10 +250,6 @@ bool InitializeApp(vtkSmartPointer<vtkPolyData>& polyData)
 
   polyData->GetBounds(bounds);
 
-  offset[0] = (bounds[1] + bounds[0]) / 2.0;
-  offset[1] = (bounds[3] + bounds[2]) / 2.0;
-  offset[2] = (bounds[5] + bounds[4]);
-
   return true;
 }
 
@@ -178,9 +263,7 @@ void RenderScene()
   glEnable(GL_DEPTH_TEST);
   glDisable(GL_CULL_FACE);
 
-  glm::mat4 modelMatrix(1.0f);
-  modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(-offset[0], -offset[1], -offset[2]));
-  glUniformMatrix4fv(modelTransformUniform, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+  Resize(800, 600);
 
   glEnableVertexAttribArray(positionsLoc);
   glBindBuffer(GL_ARRAY_BUFFER, positionBuffer);
@@ -212,7 +295,6 @@ int main(int argc, char **argv)
 
   glutCreateWindow("OpenGL VBO");
   glutDisplayFunc(RenderScene);
-  glutReshapeFunc(Resize);
 
   if(InitializeApp(polyData) == true)
      glutMainLoop();

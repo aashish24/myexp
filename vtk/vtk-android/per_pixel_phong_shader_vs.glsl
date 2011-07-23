@@ -19,7 +19,7 @@ void main(void)
 
   vPosition = viewMatrix * modelMatrix * position;
   vLightDir = normalize(vec3(lightPosition - vPosition));
-  vNormal   = vec3(modelMatrix * normal);
+//  vNormal   = vec3(modelMatrix * normal);
   vNormal   = normalize(vec3(normal));
 
 }
