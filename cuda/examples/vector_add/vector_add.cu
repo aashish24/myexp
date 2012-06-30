@@ -19,7 +19,7 @@ __global__ void VecAdd(float *A, float *B, float *C)
 int main()
 {
   const long long N = 4096 * 16;
-  dim3 NumberOfThreadsPerBlock (16, 16, 1);
+  dim3 NumberOfThreadsPerBlock (256, 8, 1);
   dim3 NumberOfBlocks  ((N / NumberOfThreadsPerBlock.x), 
                         (N / NumberOfThreadsPerBlock.y), 
                         1);
@@ -63,20 +63,13 @@ int main()
 
   elapsed = ((double)(end-start)) / CLOCKS_PER_SEC;  
 
-  for(long i=0; i < N; ++i)
-  {
-    printf("%f \n", C[i]);
-  }
-
   cstart = clock();
-  printf("clock start %f ", cstart);
   cVecAdd(A, B, C);
   cend = clock();
-  printf("clock end %f ", cend);
   celapsed = ((double)(cend - cstart)) / CLOCKS_PER_SEC;
 
-  printf("Time elapsed %f ", elapsed);
-  printf("Time celapsed %f ", celapsed);
+  printf("Time elapsed %f \n", elapsed);
+  printf("Time celapsed %f \n", celapsed);
 
   cudaFree(D_A);
   cudaFree(D_B);
