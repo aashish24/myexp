@@ -32,8 +32,6 @@ int main(int argc, char** argv)
     out << "/vsimem/tmp_" << &file;
     filename = out.str();
 
-    file.read(raw_data, size);
-
     VSILFILE *fpTemp = VSIFileFromMemBuffer(filename.c_str(),
       (GByte*)raw_data, size, FALSE);
 
@@ -200,6 +198,25 @@ int main(int argc, char** argv)
 
     VSIFCloseL(fpTemp);
     VSIUnlink(filename.c_str());
+
+    // Write the data out
+    const char *pszFormat = "GTiff";
+    GDALDriver *poDriver;
+    GDALRasterBand  *poBand;
+    poDriver = GetGDALDriverManager()->GetDriverByName(pszFormat);
+
+    GDALDataset *poDstDS;
+    char **papszOptions = NULL;
+
+    poDstDS = poDriver->Create( "/tmp/gdaltest.png", dest_width, dest_height, 1, GDT_Byte,
+                                papszOptions );
+
+    poBand = poDstDS->GetRasterBand(1);
+    poBand->RasterIO( GF_Write, 0, 0, dest_width, dest_height,
+                      &rawImageData[0], dest_width, dest_height, GDT_Byte, pixel_space, line_space );
+
+    /* Once we're done, close properly the dataset */
+    GDALClose( (GDALDatasetH) poDstDS );
   }
 }
 
