@@ -1,9 +1,11 @@
+import os
 import cherrypy
 import json
 from pymongo import connection
 
-class geowebio:
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
+class geoweb:
   @cherrypy.expose
   def collections(self):
     result = {}
