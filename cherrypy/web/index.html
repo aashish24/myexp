@@ -1,7 +1,9 @@
 <html>
   <head>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript">
+    <script src="js/bootstrap.js"></script>
+    <script type="text/javascript">    
     $(document).ready(function() {
       $.ajax({
         type: "POST",
@@ -9,13 +11,40 @@
       }).done(function( msg ) {
         var data = jQuery.parseJSON( msg );
         console.log(data);
-        var table = "<table>";
+        var listRoot = document.getElementById("collections");                   
         $.each(data, function(i, item) {
-            table += "<tr><td>" + i +"</td><td>" + item + "</td></tr>";
-        });
-        table += "</table>";
-        console.log(table);
-        $("#data").append(table);
+          $.each(item, function(j, collection) {
+            
+            if (collection === "system.indexes" || 
+                collection === "fs.files" ||
+                collection === "fs.chunks") {
+              return; 
+            }
+            
+            var itemRoot = document.createElement("div");
+            itemRoot.setAttribute("class", "accordion-group");
+            listRoot.appendChild(itemRoot);
+            var itemHeading = document.createElement("div");
+            itemHeading.setAttribute("class", "accordion-heading");
+            itemRoot.appendChild(itemHeading);
+            var itemCollection = document.createElement("a");
+            itemCollection.setAttribute("class", "accordion-toggle");
+            itemCollection.setAttribute("data-toggle", "collapse");
+            itemCollection.setAttribute("data-parent", "#collections");
+            itemCollection.setAttribute("href", "#"+collection);
+            itemCollection.appendChild(document.createTextNode(collection));
+            itemHeading.appendChild(itemCollection);
+            var subItemsRoot = document.createElement("div");
+            subItemsRoot.setAttribute("class", "accordion-body collapse");
+            subItemsRoot.setAttribute("id", collection)
+            itemRoot.appendChild(subItemsRoot);
+            var subItemsList = document.createElement("div");
+            subItemsList.setAttribute("class", "accordion-inner");            
+            subItemsList.appendChild(document.createTextNode("foo"));
+            subItemsRoot.appendChild(subItemsList);
+          }); 
+        });        
+        $("#data").append(listRoot);
       }).fail(function( msg ) {
         alert(msg);
       });
@@ -24,5 +53,7 @@
   </head>
   <body>
     <div id="data"></div>
+    <div class="accordion" id="collections">
+    </div>
   </body>
 </html>

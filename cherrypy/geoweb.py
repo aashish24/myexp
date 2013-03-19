@@ -11,7 +11,8 @@ class geoweb:
     result = {}
     conn = connection.MongoClient()
     for i in conn.database_names():
-      db = eval("conn." + i)
+      #db = eval("conn." + i)
+      db = conn[i]
       result[i] = db.collection_names()
 
     return json.dumps(result)
