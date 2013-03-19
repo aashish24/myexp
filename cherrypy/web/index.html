@@ -4,11 +4,11 @@
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script type="text/javascript">
-    function getCollectionItems(node, name) {
+    function getCollectionItems(node, name) {      
       $.ajax({
         type: "POST",
-        url: "/collections/" + collection 
-      }).done(function( msg ) {
+        url: "/collections/" + name 
+      }).done(function( msg ) {        
         var data = jQuery.parseJSON( msg );
         console.log(data);
         
@@ -19,10 +19,11 @@
           tableRoot.appendChild(row);
           var col = documentCreatre("td");
           col.appendChild(createTextNode(item));
-          row.appendChild(col));        
+          row.appendChild(col);        
         });
     }).fail(function ( msg ) {
-    })};      
+    });
+   };      
     
     $(document).ready(function() {
       $.ajax({
@@ -61,7 +62,8 @@
             var subItemsList = document.createElement("div");
             subItemsList.setAttribute("class", "accordion-inner");            
             subItemsList.appendChild(document.createTextNode("foo"));
-            subItemsRoot.appendChild(subItemsList);
+            subItemsRoot.appendChild(subItemsList);            
+            getCollectionItems(subItemsList, collection);
           }); 
         });        
         $("#data").append(listRoot);

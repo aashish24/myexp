@@ -7,12 +7,21 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 class geoweb:
   @cherrypy.expose
-  def collections(self):
+  def collections(self, *args):
     result = {}
     conn = connection.MongoClient()
-    for i in conn.database_names():
-      #db = eval("conn." + i)
-      db = conn[i]
-      result[i] = db.collection_names()
+    if not args:
+      for i in conn.database_names():
+        db = conn[i]
+        result[i] = db.collection_names()
 
-    return json.dumps(result)
+      return json.dumps(result)
+
+    # Get documents from the collections
+      for i in conn.database_names():
+        db = conn[i]
+        for j in db.collection_names():
+          coll = db[j]
+          result[j] = coll.find()
+
+      return json.dumps(result)
