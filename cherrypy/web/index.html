@@ -35,7 +35,16 @@
         node.appendChild(tableRoot);
     }).fail(function ( msg ) {
     });
-   };      
+   };
+   
+   function addLayer(elem) {     
+     var _id = $(elem).attr("_id");     
+     if (_id !== null) {
+       var layersRoot = $("#layersRoot");
+       var basename = $(elem).attr("name");
+       layersRoot.append("<div><a>" + basename + "</a></div>");
+     }
+   }
     
     $(document).ready(function() {
       $.ajax({
@@ -75,15 +84,26 @@
           subItemsList.setAttribute("class", "accordion-inner");
           subItemsRoot.appendChild(subItemsList);
           var tableRoot = document.createElement("table");
-          //tableRoot.setAttribute("class", "table");
+          //tableRoot.setAttribute("class", "table table-hover");
           subItemsList.appendChild(tableRoot);
           
           $.each(collection, function(j, item) {            
             var row = document.createElement("tr");
+            row.setAttribute("class", "success");
             tableRoot.appendChild(row);
             var col = document.createElement("td");
             col.appendChild(document.createTextNode(item.basename));
             row.appendChild(col);
+            col = document.createElement("td");            
+            var button = document.createElement("button");
+            button.setAttribute("type", "button");
+            button.setAttribute("class", "btn btn-primary");
+            button.setAttribute("_id", item._id);
+            button.setAttribute("name", item.name);
+            button.setAttribute("onclick", "addLayer(this);")
+            button.appendChild(document.createTextNode("Add Layer"));
+            col.appendChild(button);
+            row.appendChild(col);            
           }); 
         });        
         $("#data").append(listRoot);
@@ -93,9 +113,38 @@
     });
     </script>
   </head>
-  <body>
-    <div id="data"></div>
-    <div class="accordion" id="collections">
+  <body>    
+    <div id="layers-container" class="row">
+      <div class="accordion span5" id="layers">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+              Active Layers
+            </a>
+          </div>
+          <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner" id="layersRoot">               
+            </div>
+          </div>     
+        </div>
+      </div>
+    </div>
+    <div id="documents-container" class="row">
+      <div class="accordion span5" id="layers">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#doc-container">
+              Documents
+            </a>
+          </div>
+          <div id="doc-container" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <div id="collections" class="accordion span5">
+              </div>               
+            </div>
+          </div>     
+        </div>
+      </div>
     </div>
   </body>
 </html>

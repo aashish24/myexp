@@ -23,7 +23,7 @@ class geoweb:
     if coll is not None:
       items = list(coll.find().limit(20))
       for di in items:
-        del di["_id"]
+        di["_id"] = str(di["_id"])
       result["data"] =  items
       return json.dumps(result)
     else:
@@ -39,7 +39,7 @@ class geoweb:
         collItems = list(db[coll].find())
         for item in collItems:
           if "_id" in item:
-            del item["_id"]
+            item["_id"] = str(item["_id"])
         result[coll] = collItems
     return json.dumps(result)
 
