@@ -1,7 +1,42 @@
 <html>
   <head>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="js/bootstrap.js"></script>
     <script type="text/javascript">
+    function getItemDisplayString(item) {
+      var displayStr = "[";
+      for (var i in item) {
+        if (item.hasOwnProperty(i)) {
+          displayStr += i + " : " + item[i] + " | "
+        }
+      }
+      displayStr += "]";
+      return displayStr;
+    }
+    
+    function getCollectionItems(node, database, collectionName) {      
+      $.ajax({
+        type: "POST",
+        url: "/collections/" + database + "/" + collectionName   
+      }).done(function( msg ) {
+        console.log(msg);
+        var data = jQuery.parseJSON( msg );                
+        var tableRoot = document.createElement("table");
+        tableRoot.setAttribute("class", "table");
+        console.log(data);
+        $.each(data["data"], function(i, item) {
+          var row = document.createElement("tr");
+          tableRoot.appendChild(row);
+          var col = document.createElement("td");
+          col.appendChild(document.createTextNode(getItemDisplayString(item)));
+          row.appendChild(col);        
+        });
+        node.appendChild(tableRoot);
+    }).fail(function ( msg ) {
+    });
+   };      
+    
     $(document).ready(function() {
       $.ajax({
         type: "POST",
@@ -9,13 +44,40 @@
       }).done(function( msg ) {
         var data = jQuery.parseJSON( msg );
         console.log(data);
-        var table = "<table>";
+        var listRoot = document.getElementById("collections");                   
         $.each(data, function(i, item) {
-            table += "<tr><td>" + i +"</td><td>" + item + "</td></tr>";
-        });
-        table += "</table>";
-        console.log(table);
-        $("#data").append(table);
+          $.each(item, function(j, collection) {
+            
+            if (collection === "system.indexes" || 
+                collection === "fs.files" ||
+                collection === "fs.chunks") {
+              return; 
+            }
+            
+            var itemRoot = document.createElement("div");
+            itemRoot.setAttribute("class", "accordion-group");
+            listRoot.appendChild(itemRoot);
+            var itemHeading = document.createElement("div");
+            itemHeading.setAttribute("class", "accordion-heading");
+            itemRoot.appendChild(itemHeading);
+            var itemCollection = document.createElement("a");
+            itemCollection.setAttribute("class", "accordion-toggle");
+            itemCollection.setAttribute("data-toggle", "collapse");
+            itemCollection.setAttribute("data-parent", "#collections");
+            itemCollection.setAttribute("href", "#"+collection);
+            itemCollection.appendChild(document.createTextNode(collection));
+            itemHeading.appendChild(itemCollection);
+            var subItemsRoot = document.createElement("div");
+            subItemsRoot.setAttribute("class", "accordion-body collapse");
+            subItemsRoot.setAttribute("id", collection)
+            itemRoot.appendChild(subItemsRoot);
+            var subItemsList = document.createElement("div");
+            subItemsList.setAttribute("class", "accordion-inner");
+            subItemsRoot.appendChild(subItemsList);            
+            getCollectionItems(subItemsList, i, collection);
+          }); 
+        });        
+        $("#data").append(listRoot);
       }).fail(function( msg ) {
         alert(msg);
       });
@@ -24,5 +86,7 @@
   </head>
   <body>
     <div id="data"></div>
+    <div class="accordion" id="collections">
+    </div>
   </body>
 </html>
