@@ -28,3 +28,19 @@ class geoweb:
       return json.dumps(result)
     else:
       return json.dumps(result)
+
+  @cherrypy.expose
+  def documents(self):
+    result = {}
+    conn = connection.MongoClient()
+    db = conn["documents"]
+    for coll in db.collection_names():
+      if (coll != "system.indexes"):
+        collItems = list(db[coll].find())
+        for item in collItems:
+          if "_id" in item:
+            del item["_id"]
+        result[coll] = collItems
+    return json.dumps(result)
+
+

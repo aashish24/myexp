@@ -1,6 +1,6 @@
-
 import gridfs
 import pymongo
+import os
 
 class importdb:
   def importData(self, filename, database, collection='fs'):
@@ -12,6 +12,16 @@ class importdb:
     afile.write(bfile.read())
     afile.close()
 
+  def importFile(seff, filename, database='documents', collection='files'):
+    conn = pymongo.Connection()
+    db = conn[database]
+    coll = db[collection]
+    # Get the prefix of the file
+    basename = os.path.basename(filename)
+    fileprefix = os.path.splitext(basename)[0]
+    insertId = coll.insert({"name":fileprefix, "basename":basename})
+    print 'id ', insertId
+
 if __name__ == "__main__":
   import sys
   print sys.argv
@@ -20,7 +30,7 @@ if __name__ == "__main__":
     sys.exit(1)
 
   importdbinst = importdb()
-  importdbinst.importData(sys.argv[1], sys.argv[2])
+  importdbinst.importFile(sys.argv[1], sys.argv[2])
 
 
 
