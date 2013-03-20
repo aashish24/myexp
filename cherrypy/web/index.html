@@ -132,11 +132,15 @@
             
             $(button).on("click", function() {
               addLayer(this);
+              $(button).attr("disabled", "disabled");
+              $(removeButton).removeAttr("disabled");
               $(removeButton).removeClass("disabled");
             });
             
             $(removeButton).on("click", function() {
               removeLayer(this);
+              $(removeButton).attr("disabled", "disabled");
+              $(button).removeAttr("disabled");
               $(button).removeClass("disabled");
             });
             
