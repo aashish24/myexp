@@ -42,6 +42,9 @@
      if (_id !== null) {
        var layersRoot = $("#layersRoot");
        var basename = $(elem).attr("name");
+       $(elem).removeClass("btn-primary");
+       $(elem).addClass("btn-success");
+       $(elem).attr("disabled", "disabled").addClass("disabled");
        layersRoot.append("<div><a>" + basename + "</a></div>");
      }
    }
@@ -101,6 +104,7 @@
             button.setAttribute("_id", item._id);
             button.setAttribute("name", item.name);
             button.setAttribute("onclick", "addLayer(this);")
+            button.setAttribute("data-toggle", "button");
             button.appendChild(document.createTextNode("Add Layer"));
             col.appendChild(button);
             row.appendChild(col);            
@@ -139,7 +143,7 @@
           </div>
           <div id="doc-container" class="accordion-body collapse">
             <div class="accordion-inner">
-              <div id="collections" class="accordion span5">
+              <div id="collections" class="accordion">
               </div>               
             </div>
           </div>     
