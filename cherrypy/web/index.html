@@ -4,23 +4,35 @@
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script type="text/javascript">
-    function getCollectionItems(node, name) {      
+    function getItemDisplayString(item) {
+      var displayStr = "[";
+      for (var i in item) {
+        if (item.hasOwnProperty(i)) {
+          displayStr += i + " : " + item[i] + " | "
+        }
+      }
+      displayStr += "]";
+      return displayStr;
+    }
+    
+    function getCollectionItems(node, database, collectionName) {      
       $.ajax({
         type: "POST",
-        url: "/collections/" + name 
-      }).done(function( msg ) {        
-        var data = jQuery.parseJSON( msg );
-        console.log(data);
-        
+        url: "/collections/" + database + "/" + collectionName   
+      }).done(function( msg ) {
+        console.log(msg);
+        var data = jQuery.parseJSON( msg );                
         var tableRoot = document.createElement("table");
         tableRoot.setAttribute("class", "table");
-        $.each(data, function(i, item) {
-          var row = documentCreate("tr");
+        console.log(data);
+        $.each(data["data"], function(i, item) {
+          var row = document.createElement("tr");
           tableRoot.appendChild(row);
-          var col = documentCreatre("td");
-          col.appendChild(createTextNode(item));
+          var col = document.createElement("td");
+          col.appendChild(document.createTextNode(getItemDisplayString(item)));
           row.appendChild(col);        
         });
+        node.appendChild(tableRoot);
     }).fail(function ( msg ) {
     });
    };      
@@ -60,10 +72,9 @@
             subItemsRoot.setAttribute("id", collection)
             itemRoot.appendChild(subItemsRoot);
             var subItemsList = document.createElement("div");
-            subItemsList.setAttribute("class", "accordion-inner");            
-            subItemsList.appendChild(document.createTextNode("foo"));
+            subItemsList.setAttribute("class", "accordion-inner");
             subItemsRoot.appendChild(subItemsList);            
-            getCollectionItems(subItemsList, collection);
+            getCollectionItems(subItemsList, i, collection);
           }); 
         });        
         $("#data").append(listRoot);

@@ -18,10 +18,13 @@ class geoweb:
       return json.dumps(result)
 
     # Get documents from the collections
-      for i in conn.database_names():
-        db = conn[i]
-        for j in db.collection_names():
-          coll = db[j]
-          result[j] = coll.find()
-
+    db = conn[args[0]]
+    coll = db[args[1]]
+    if coll is not None:
+      items = list(coll.find().limit(20))
+      for di in items:
+        del di["_id"]
+      result["data"] =  items
+      return json.dumps(result)
+    else:
       return json.dumps(result)
