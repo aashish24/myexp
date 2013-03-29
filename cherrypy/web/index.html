@@ -14,14 +14,14 @@
       displayStr += "]";
       return displayStr;
     }
-    
-    function getCollectionItems(node, database, collectionName) {      
+
+    function getCollectionItems(node, database, collectionName) {
       $.ajax({
         type: "POST",
-        url: "/collections/" + database + "/" + collectionName   
+        url: "/collections/" + database + "/" + collectionName
       }).done(function( msg ) {
         console.log(msg);
-        var data = jQuery.parseJSON( msg );                
+        var data = jQuery.parseJSON( msg );
         var tableRoot = document.createElement("table");
         tableRoot.setAttribute("class", "table");
         console.log(data);
@@ -30,34 +30,34 @@
           tableRoot.appendChild(row);
           var col = document.createElement("td");
           col.appendChild(document.createTextNode(getItemDisplayString(item)));
-          row.appendChild(col);        
+          row.appendChild(col);
         });
         node.appendChild(tableRoot);
     }).fail(function ( msg ) {
     });
    };
-   
-   function addLayer(elem) {     
+
+   function addLayer(elem) {
      var _id = $(elem).attr("_id");
      if (_id !== null) {
        var tbody = $("#layersRootTable").find('tbody');
        var basename = $(elem).attr("name");
        $(elem).removeClass("btn-primary");
        $(elem).addClass("btn-success");
-       $(elem).addClass("disabled");       
+       $(elem).addClass("disabled");
        $(tbody).append("<tr id=layer_"+_id+">");
-       $("#layersRootTable tr:last").append("<td>" + basename + "</td>")       
-       $("#layersRootTable tr:last").append("<td><button class='btn btn-warning'> Hide </button></td>");       
+       $("#layersRootTable tr:last").append("<td>" + basename + "</td>")
+       $("#layersRootTable tr:last").append("<td><button class='btn btn-warning'> Hide </button></td>");
      }
    }
-   
+
    function removeLayer(elem) {
      var _id = $(elem).attr("_id");
-     var layerId = "#layer_" + _id;     
+     var layerId = "#layer_" + _id;
      $(layerId).remove();
      return false;
    }
-    
+
     $(document).ready(function() {
       $.ajax({
         type: "POST",
@@ -65,15 +65,15 @@
       }).done(function( msg ) {
         var data = jQuery.parseJSON( msg );
         console.log(data);
-        var listRoot = document.getElementById("collections");                   
+        var listRoot = document.getElementById("collections");
         $.each(data, function(i, collection) {
-          
-          if (collection === "system.indexes" || 
+
+          if (collection === "system.indexes" ||
               collection === "fs.files" ||
               collection === "fs.chunks") {
-            return; 
+            return;
           }
-          
+
           var itemRoot = document.createElement("div");
           itemRoot.setAttribute("class", "accordion-group");
           listRoot.appendChild(itemRoot);
@@ -87,7 +87,7 @@
           itemCollection.setAttribute("href", "#"+i);
           itemCollection.appendChild(document.createTextNode(i));
           itemHeading.appendChild(itemCollection);
-          
+
           var subItemsRoot = document.createElement("div");
           subItemsRoot.setAttribute("class", "accordion-body collapse in");
           subItemsRoot.setAttribute("id", i)
@@ -98,54 +98,54 @@
           var tableRoot = document.createElement("table");
           //tableRoot.setAttribute("class", "table table-hover");
           subItemsList.appendChild(tableRoot);
-          
-          $.each(collection, function(j, item) {            
+
+          $.each(collection, function(j, item) {
             var row = document.createElement("tr");
             row.setAttribute("class", "success");
             tableRoot.appendChild(row);
             var col = document.createElement("td");
             col.appendChild(document.createTextNode(item.basename));
             row.appendChild(col);
-            col = document.createElement("td");            
-            
+            col = document.createElement("td");
+
             var button = document.createElement("button");
             button.setAttribute("type", "button");
             button.setAttribute("class", "btn btn-primary");
             button.setAttribute("_id", item._id);
-            button.setAttribute("name", item.name);            
+            button.setAttribute("name", item.name);
             button.setAttribute("data-toggle", "button");
             button.appendChild(document.createTextNode("Add Layer"));
             col.appendChild(button);
             row.appendChild(col);
-            
-            
+
+
             col = document.createElement("td");
             var removeButton = document.createElement("button");
             removeButton.setAttribute("type", "button");
             removeButton.setAttribute("class", "btn btn-danger disabled");
             removeButton.setAttribute("_id", item._id);
-            removeButton.setAttribute("name", item.name);            
+            removeButton.setAttribute("name", item.name);
             removeButton.setAttribute("data-toggle", "button");
-            removeButton.appendChild(document.createTextNode("Remove Layer"));            
+            removeButton.appendChild(document.createTextNode("Remove Layer"));
             col.appendChild(removeButton);
             row.appendChild(col);
-            
+
             $(button).on("click", function() {
               addLayer(this);
               $(button).attr("disabled", "disabled");
               $(removeButton).removeAttr("disabled");
               $(removeButton).removeClass("disabled");
             });
-            
+
             $(removeButton).on("click", function() {
               removeLayer(this);
               $(removeButton).attr("disabled", "disabled");
               $(button).removeAttr("disabled");
               $(button).removeClass("disabled");
             });
-            
-          }); 
-        });        
+
+          });
+        });
         $("#data").append(listRoot);
       }).fail(function( msg ) {
         alert(msg);
@@ -153,7 +153,7 @@
     });
     </script>
   </head>
-  <body>    
+  <body>
     <div id="layers-container" class="row">
       <div class="accordion span6" id="layers">
         <div class="accordion-group">
@@ -166,9 +166,9 @@
             <div class="accordion-inner" id="layersRoot">
               <table id="layersRootTable">
                 <tbody></tbody>
-              </table>               
+              </table>
             </div>
-          </div>     
+          </div>
         </div>
       </div>
     </div>
@@ -183,9 +183,9 @@
           <div id="doc-container" class="accordion-body collapse in">
             <div class="accordion-inner">
               <div id="collections" class="accordion">
-              </div>               
+              </div>
             </div>
-          </div>     
+          </div>
         </div>
       </div>
     </div>
