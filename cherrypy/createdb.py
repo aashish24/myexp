@@ -20,7 +20,6 @@ class importdb:
     basename = os.path.basename(filename)
     fileprefix = os.path.splitext(basename)[0]
     insertId = coll.insert({"name":fileprefix, "basename":basename})
-    print 'id ', insertId
 
 if __name__ == "__main__":
   import sys
@@ -31,7 +30,3 @@ if __name__ == "__main__":
 
   importdbinst = importdb()
   importdbinst.importFile(sys.argv[1], sys.argv[2])
-
-
-
-
