@@ -11,7 +11,8 @@ class geoweb:
     import sys
     sys.path.append(os.path.join(current_dir))
     import mongo
-    return mongo.run(args, kwargs)
+    pargs = list(args)
+    return mongo.run(*pargs, **kwargs)
 
   @cherrypy.expose
   def collections(self, *args):

@@ -10,7 +10,7 @@ def decode(s, argname, resp):
 
 def run(server, db, coll, method='find', query=None, limit=1000, fields=None, sort=None, fill=None):
     # Create an empty response object.
-    response = {}
+    response = {'error':None}
 
     # Check the requested method.
     if method not in ['find', 'insert']:

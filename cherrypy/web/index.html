@@ -21,7 +21,7 @@
         type: 'POST',
         url: '/mongo/' + mongo.server + '/' + mongo.database + '/' + mongo.collection,
         data: {
-          query: '',
+          query: JSON.stringify({}),
           limit:100,
           fields: JSON.stringify(['name', 'basename'])
         },
