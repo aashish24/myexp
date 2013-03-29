@@ -8,6 +8,8 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 class geoweb:
   @cherrypy.expose
   def mongo(self, *args, **kwargs):
+    import sys
+    sys.path.append(os.path.join(current_dir))
     import mongo
     return mongo.run(args, kwargs)
 
