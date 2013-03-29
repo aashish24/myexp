@@ -6,22 +6,22 @@
     <script type="text/javascript">
     var archive = {};
 
-    archive.getMongoConfig() {
+    archive.getMongoConfig = function() {
       "use strict";
         return {
           server:localStorage.getItem('archive:mongodb-server') || 'localhost',
           database:localStorage.getItem('archive:mongodb-database') || 'documents',
           collection:localStorage.getItem('archive:mongodb-collection') || 'files'
         }
-    }
+    };
 
     function getDocuments() {
       mongo = archive.getMongoConfig();
       $.ajax({
         type: 'POST',
-        url: "/mongo/' + mongo.server + '/' + mongo.database + '/' + mongo.collection,
+        url: '/mongo/' + mongo.server + '/' + mongo.database + '/' + mongo.collection,
         data: {
-          query:
+          query: '',
           limit:100,
           fields: JSON.stringify(['name', 'basename'])
         },
@@ -34,8 +34,8 @@
             console.log(response.result.data);
           }
         }
+      });
     }
-
 
     function getItemDisplayString(item) {
       var displayStr = "[";
@@ -93,7 +93,7 @@
 
    $(function() {
     getDocuments();
-   }
+   });
 
     </script>
   </head>
