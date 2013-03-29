@@ -7,6 +7,11 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 
 class geoweb:
   @cherrypy.expose
+  def mongo(self, *args, **kwargs):
+    import mongo
+    return mongo.run(args, kwargs)
+
+  @cherrypy.expose
   def collections(self, *args):
     result = {}
     conn = connection.MongoClient()
@@ -42,5 +47,3 @@ class geoweb:
             item["_id"] = str(item["_id"])
         result[coll] = collItems
     return json.dumps(result)
-
-
