@@ -31,9 +31,81 @@
               console.log("[error] " + response.error ? response.error : "no results returned from server");
           } else {
             var noOfResults = response.result.data.length;
-            console.log(response.result.data);
+            addAndDisplayDocuments(response.result);
           }
         }
+      });
+    }
+
+    function addAndDisplayDocuments(result) {
+      var listRoot = document.getElementById("collections");
+      var itemRoot = document.createElement("div");
+      itemRoot.setAttribute("class", "accordion-group");
+      listRoot.appendChild(itemRoot);
+
+      var itemHeading = document.createElement("div");
+      itemHeading.setAttribute("class", "accordion-heading");
+      itemRoot.appendChild(itemHeading);
+
+      var itemCollection = document.createElement("a");
+      itemCollection.setAttribute("class", "accordion-toggle");
+      itemCollection.setAttribute("data-toggle", "collapse");
+      itemCollection.setAttribute("data-parent", "#collections");
+      itemHeading.appendChild(itemCollection);
+
+      var subItemsRoot = document.createElement("div");
+      subItemsRoot.setAttribute("class", "accordion-body collapse in");
+      itemRoot.appendChild(subItemsRoot);
+      var subItemsList = document.createElement("div");
+      subItemsList.setAttribute("class", "accordion-inner");
+      subItemsRoot.appendChild(subItemsList);
+      var tableRoot = document.createElement("table");
+      //tableRoot.setAttribute("class", "table table-hover");
+      subItemsList.appendChild(tableRoot);
+
+      $.each(result.data, function(i, item) {
+        var row = document.createElement("tr");
+        row.setAttribute("class", "success");
+        tableRoot.appendChild(row);
+        var col = document.createElement("td");
+        col.appendChild(document.createTextNode(item.basename));
+        row.appendChild(col);
+        col = document.createElement("td");
+
+        var button = document.createElement("button");
+        button.setAttribute("type", "button");
+        button.setAttribute("class", "btn btn-primary");
+        button.setAttribute("_id", item._id);
+        button.setAttribute("name", item.name);
+        button.setAttribute("data-toggle", "button");
+        button.appendChild(document.createTextNode("Add Layer"));
+        col.appendChild(button);
+        row.appendChild(col);
+
+        col = document.createElement("td");
+        var removeButton = document.createElement("button");
+        removeButton.setAttribute("type", "button");
+        removeButton.setAttribute("class", "btn btn-danger disabled");
+        removeButton.setAttribute("_id", item._id);
+        removeButton.setAttribute("name", item.name);
+        removeButton.setAttribute("data-toggle", "button");
+        removeButton.appendChild(document.createTextNode("Remove Layer"));
+        col.appendChild(removeButton);
+        row.appendChild(col);
+
+        $(button).on("click", function() {
+          addLayer(this);
+          $(button).attr("disabled", "disabled");
+          $(removeButton).removeAttr("disabled");
+          $(removeButton).removeClass("disabled");
+        });
+
+        $(removeButton).on("click", function() {
+          removeLayer(this);
+          $(removeButton).attr("disabled", "disabled");
+          $(button).removeAttr("disabled");
+          $(button).removeClass("disabled");
+        });
       });
     }
 
@@ -103,7 +175,7 @@
         <div class="accordion-group">
           <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-              Active Layers
+              Layers
             </a>
           </div>
           <div id="collapseOne" class="accordion-body collapse">
