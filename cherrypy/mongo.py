@@ -1,5 +1,6 @@
 import bson.json_util
 import pymongo
+import geoweb
 
 def decode(s, argname, resp):
     try:
@@ -10,7 +11,7 @@ def decode(s, argname, resp):
 
 def run(server, db, coll, method='find', query=None, limit=1000, fields=None, sort=None, fill=None):
     # Create an empty response object.
-    response = {'error':None}
+    response = geoweb.empty_response();
 
     # Check the requested method.
     if method not in ['find', 'insert']:

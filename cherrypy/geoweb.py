@@ -5,6 +5,10 @@ from pymongo import connection
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
+def empty_response():
+    return {'result' : None,
+            'error' : None}
+
 class geoweb:
   @cherrypy.expose
   def mongo(self, *args, **kwargs):
