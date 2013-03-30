@@ -4,205 +4,216 @@
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script type="text/javascript">
-    var archive = {};
+      var archive = {};
 
-    archive.getMongoConfig = function() {
-      "use strict";
-        return {
-          server:localStorage.getItem('archive:mongodb-server') || 'localhost',
-          database:localStorage.getItem('archive:mongodb-database') || 'documents',
-          collection:localStorage.getItem('archive:mongodb-collection') || 'files'
-        }
-    };
-
-    function getDocuments() {
-      mongo = archive.getMongoConfig();
-      $.ajax({
-        type: 'POST',
-        url: '/mongo/' + mongo.server + '/' + mongo.database + '/' + mongo.collection,
-        data: {
-          query: JSON.stringify({}),
-          limit:100,
-          fields: JSON.stringify(['name', 'basename'])
-        },
-        dataType: 'json',
-        success: function(response) {
-          if (response.error !== null) {
-              console.log("[error] " + response.error ? response.error : "no results returned from server");
-          } else {
-            var noOfResults = response.result.data.length;
-            addAndDisplayDocuments(response.result);
+      archive.getMongoConfig = function() {
+        "use strict";
+          return {
+            server:localStorage.getItem('archive:mongodb-server') || 'localhost',
+            database:localStorage.getItem('archive:mongodb-database') || 'documents',
+            collection:localStorage.getItem('archive:mongodb-collection') || 'files'
           }
-        }
-      });
-    }
+      };
 
-    function addAndDisplayDocuments(result) {
-      var listRoot = document.getElementById("collections");
-      var itemRoot = document.createElement("div");
-      itemRoot.setAttribute("class", "accordion-group");
-      listRoot.appendChild(itemRoot);
-
-      var itemHeading = document.createElement("div");
-      itemHeading.setAttribute("class", "accordion-heading");
-      itemRoot.appendChild(itemHeading);
-
-      var itemCollection = document.createElement("a");
-      itemCollection.setAttribute("class", "accordion-toggle");
-      itemCollection.setAttribute("data-toggle", "collapse");
-      itemCollection.setAttribute("data-parent", "#collections");
-      itemHeading.appendChild(itemCollection);
-
-      var subItemsRoot = document.createElement("div");
-      subItemsRoot.setAttribute("class", "accordion-body collapse in");
-      itemRoot.appendChild(subItemsRoot);
-      var subItemsList = document.createElement("div");
-      subItemsList.setAttribute("class", "accordion-inner");
-      subItemsRoot.appendChild(subItemsList);
-      var tableRoot = document.createElement("table");
-      //tableRoot.setAttribute("class", "table table-hover");
-      subItemsList.appendChild(tableRoot);
-
-      $.each(result.data, function(i, item) {
-        var row = document.createElement("tr");
-        row.setAttribute("class", "success");
-        tableRoot.appendChild(row);
-        var col = document.createElement("td");
-        col.appendChild(document.createTextNode(item.basename));
-        row.appendChild(col);
-        col = document.createElement("td");
-
-        var button = document.createElement("button");
-        button.setAttribute("type", "button");
-        button.setAttribute("class", "btn btn-primary");
-        button.setAttribute("_id", item._id);
-        button.setAttribute("name", item.name);
-        button.setAttribute("data-toggle", "button");
-        button.appendChild(document.createTextNode("Add Layer"));
-        col.appendChild(button);
-        row.appendChild(col);
-
-        col = document.createElement("td");
-        var removeButton = document.createElement("button");
-        removeButton.setAttribute("type", "button");
-        removeButton.setAttribute("class", "btn btn-danger disabled");
-        removeButton.setAttribute("_id", item._id);
-        removeButton.setAttribute("name", item.name);
-        removeButton.setAttribute("data-toggle", "button");
-        removeButton.appendChild(document.createTextNode("Remove Layer"));
-        col.appendChild(removeButton);
-        row.appendChild(col);
-
-        $(button).on("click", function() {
-          addLayer(this);
-          $(button).attr("disabled", "disabled");
-          $(removeButton).removeAttr("disabled");
-          $(removeButton).removeClass("disabled");
+      function getDocuments() {
+        mongo = archive.getMongoConfig();
+        $.ajax({
+          type: 'POST',
+          url: '/mongo/' + mongo.server + '/' + mongo.database + '/' + mongo.collection,
+          data: {
+            query: JSON.stringify({}),
+            limit:100,
+            fields: JSON.stringify(['name', 'basename'])
+          },
+          dataType: 'json',
+          success: function(response) {
+            if (response.error !== null) {
+                console.log("[error] " + response.error ? response.error : "no results returned from server");
+            } else {
+              var noOfResults = response.result.data.length;
+              createGisDataList('documents', 'Documents', 'layers-table', response.result.data);
+            }
+          }
         });
-
-        $(removeButton).on("click", function() {
-          removeLayer(this);
-          $(removeButton).attr("disabled", "disabled");
-          $(button).removeAttr("disabled");
-          $(button).removeClass("disabled");
-        });
-      });
-    }
-
-    function getItemDisplayString(item) {
-      var displayStr = "[";
-      for (var i in item) {
-        if (item.hasOwnProperty(i)) {
-          displayStr += i + " : " + item[i] + " | "
-        }
       }
-      displayStr += "]";
-      return displayStr;
-    }
 
-    function getCollectionItems(node, database, collectionName) {
-      $.ajax({
-        type: "POST",
-        url: "/collections/" + database + "/" + collectionName
-      }).done(function( msg ) {
-        console.log(msg);
-        var data = jQuery.parseJSON( msg );
+      function createGisLayerList(rootId, heading) {
+        var listRoot = document.getElementById(rootId);
+        var itemRoot = document.createElement("div");
+        itemRoot.setAttribute("class", "accordion-group");
+        listRoot.appendChild(itemRoot);
+
+        var itemHeading = document.createElement("div");
+        itemHeading.setAttribute("class", "accordion-heading");
+        itemRoot.appendChild(itemHeading);
+
+        var itemCollection = document.createElement("a");
+        itemCollection.setAttribute("class", "accordion-toggle");
+        itemCollection.setAttribute("data-toggle", "collapse");
+        itemCollection.setAttribute("data-parent", "#"+rootId);
+        itemCollection.setAttribute("href", "#collapse-"+rootId);
+        itemCollection.appendChild(document.createTextNode(heading));
+        itemHeading.appendChild(itemCollection);
+
+        var subItemsRoot = document.createElement("div");
+        subItemsRoot.setAttribute("class", "accordion-body collapse in");
+        subItemsRoot.setAttribute("id", "collapse-"+rootId);
+        itemRoot.appendChild(subItemsRoot);
+        var subItemsList = document.createElement("div");
+        subItemsList.setAttribute("class", "accordion-inner");
+        subItemsRoot.appendChild(subItemsList);
+
         var tableRoot = document.createElement("table");
-        tableRoot.setAttribute("class", "table");
-        console.log(data);
-        $.each(data["data"], function(i, item) {
+        tableRoot.setAttribute("id", rootId + '-table');
+        subItemsList.appendChild(tableRoot);
+
+        var tbody = document.createElement("tbody");
+        tableRoot.appendChild(tbody);
+      }
+
+      function createGisDataList(rootId, heading, layersRootId, data) {
+        var listRoot = document.getElementById(rootId);
+        var itemRoot = document.createElement("div");
+        itemRoot.setAttribute("class", "accordion-group");
+        listRoot.appendChild(itemRoot);
+
+        var itemHeading = document.createElement("div");
+        itemHeading.setAttribute("class", "accordion-heading");
+        itemRoot.appendChild(itemHeading);
+
+        var itemCollection = document.createElement("a");
+        itemCollection.setAttribute("class", "accordion-toggle");
+        itemCollection.setAttribute("data-toggle", "collapse");
+        itemCollection.setAttribute("data-parent", "#"+rootId);
+        itemCollection.setAttribute("href", "#collapse-"+rootId);
+        itemCollection.appendChild(document.createTextNode(heading));
+        itemHeading.appendChild(itemCollection);
+
+        var subItemsRoot = document.createElement("div");
+        subItemsRoot.setAttribute("class", "accordion-body collapse in");
+        subItemsRoot.setAttribute("id", "collapse-"+rootId);
+        itemRoot.appendChild(subItemsRoot);
+        var subItemsList = document.createElement("div");
+        subItemsList.setAttribute("class", "accordion-inner");
+        subItemsRoot.appendChild(subItemsList);
+        var tableRoot = document.createElement("table");
+        subItemsList.appendChild(tableRoot);
+
+        $.each(data, function(i, item) {
           var row = document.createElement("tr");
+          row.setAttribute("class", "success");
           tableRoot.appendChild(row);
           var col = document.createElement("td");
-          col.appendChild(document.createTextNode(getItemDisplayString(item)));
+          col.appendChild(document.createTextNode(item.basename));
           row.appendChild(col);
+          col = document.createElement("td");
+
+          var button = document.createElement("button");
+          button.setAttribute("type", "button");
+          button.setAttribute("class", "btn btn-primary");
+          button.setAttribute("_id", item._id);
+          button.setAttribute("name", item.name);
+          button.setAttribute("data-toggle", "button");
+          button.appendChild(document.createTextNode("Add"));
+          col.appendChild(button);
+          row.appendChild(col);
+
+          /*col = document.createElement("td");
+          var removeButton = document.createElement("button");
+          removeButton.setAttribute("type", "button");
+          removeButton.setAttribute("class", "btn btn-danger disabled");
+          removeButton.setAttribute("_id", item._id);
+          removeButton.setAttribute("name", item.name);
+          removeButton.setAttribute("data-toggle", "button");
+          removeButton.appendChild(document.createTextNode("Remove Layer"));
+          col.appendChild(removeButton);
+          row.appendChild(col);*/
+
+          $(button).on("click", function() {
+            addLayer(layersRootId, this);
+            $(button).attr("disabled", "disabled");
+            /*$(removeButton).removeAttr("disabled");
+            $(removeButton).removeClass("disabled");*/
+          });
+
+          /*$(removeButton).on("click", function() {
+            removeLayer(this);
+            $(removeButton).attr("disabled", "disabled");
+            $(button).removeAttr("disabled");
+            $(button).removeClass("disabled");
+          });*/
         });
-        node.appendChild(tableRoot);
-    }).fail(function ( msg ) {
-    });
-   };
+      }
 
-   function addLayer(elem) {
-     var _id = $(elem).attr("_id");
-     if (_id !== null) {
-       var tbody = $("#layersRootTable").find('tbody');
-       var basename = $(elem).attr("name");
-       $(elem).removeClass("btn-primary");
-       $(elem).addClass("btn-success");
-       $(elem).addClass("disabled");
-       $(tbody).append("<tr id=layer_"+_id+">");
-       $("#layersRootTable tr:last").append("<td>" + basename + "</td>")
-       $("#layersRootTable tr:last").append("<td><button class='btn btn-warning'> Hide </button></td>");
+      function getItemDisplayString(item) {
+        var displayStr = "[";
+        for (var i in item) {
+          if (item.hasOwnProperty(i)) {
+            displayStr += i + " : " + item[i] + " | "
+          }
+        }
+        displayStr += "]";
+        return displayStr;
+      }
+
+      function getCollectionItems(node, database, collectionName) {
+        $.ajax({
+          type: "POST",
+          url: "/collections/" + database + "/" + collectionName
+        }).done(function( msg ) {
+          console.log(msg);
+          var data = jQuery.parseJSON( msg );
+          var tableRoot = document.createElement("table");
+          tableRoot.setAttribute("class", "table");
+          console.log(data);
+          $.each(data["data"], function(i, item) {
+            var row = document.createElement("tr");
+            tableRoot.appendChild(row);
+            var col = document.createElement("td");
+            col.appendChild(document.createTextNode(getItemDisplayString(item)));
+            row.appendChild(col);
+          });
+          node.appendChild(tableRoot);
+      }).fail(function ( msg ) {
+      });
+     };
+
+     function addLayer(layersRootId, elem) {
+       var rootId = "#" + layersRootId;
+       var _id = $(elem).attr("_id");
+       if (_id !== null) {
+         var tbody = $(rootId).find('tbody');
+         var basename = $(elem).attr("name");
+         $(elem).removeClass("btn-primary");
+         $(elem).addClass("btn-success");
+         $(elem).addClass("disabled");
+         $(tbody).append("<tr id=layer_"+_id+">");
+         $(rootId + " tr:last").append("<td>" + basename + "</td>")
+         $(rootId + " tr:last").append("<td><button class='btn btn-warning'> Hide </button></td>");
+       }
      }
-   }
 
-   function removeLayer(elem) {
-     var _id = $(elem).attr("_id");
-     var layerId = "#layer_" + _id;
-     $(layerId).remove();
-     return false;
-   }
+     function removeLayer(elem) {
+       var _id = $(elem).attr("_id");
+       var layerId = "#layer_" + _id;
+       $(layerId).remove();
+       return false;
+     }
 
-   $(function() {
-    getDocuments();
-   });
+     $(function() {
+      createGisLayerList('layers', 'Layers');
+      getDocuments();
+     });
 
     </script>
   </head>
   <body>
     <div id="layers-container" class="row">
       <div class="accordion span6" id="layers">
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-              Layers
-            </a>
-          </div>
-          <div id="collapseOne" class="accordion-body collapse">
-            <div class="accordion-inner" id="layersRoot">
-              <table id="layersRootTable">
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
     <div id="documents-container" class="row">
-      <div class="accordion span6" id="layers">
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#doc-container">
-              Documents
-            </a>
-          </div>
-          <div id="doc-container" class="accordion-body collapse in">
-            <div class="accordion-inner">
-              <div id="collections" class="accordion">
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="accordion span6" id="documents">
       </div>
     </div>
   </body>
