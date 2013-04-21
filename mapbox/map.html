@@ -1,0 +1,71 @@
+<html>
+<head>
+  <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.0/mapbox.css' rel='stylesheet' />
+  <!--[if lte IE 8]>
+    <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.0/mapbox.ie.css' rel='stylesheet' />
+  <![endif]-->
+  <script src='http://api.tiles.mapbox.com/mapbox.js/v1.0.0/mapbox.js'></script>
+</head>
+<body onload="render()">
+  <div id='map' style="width:1600px;height:1200px"></div>
+  <script type='text/javascript'>
+    function saveToDisk(fileURL, fileName) {
+      var save = document.createElement('a');
+      save.href = fileURL;
+      save.target = '_blank';
+      save.download = fileName || 'unknown';
+
+      var event = document.createEvent('Event');
+      event.initEvent('click', true, true);
+      save.dispatchEvent(event);
+
+      // Not sure what this does
+      (window.URL || window.webkitURL).revokeObjectURL(save.href);
+    }
+
+    function render() {
+
+      var bounds = [20, 20.1, 30, 30.1];
+      var zoom = 14;
+
+      var maxNoOfTilesAlongAxis = Math.pow(2, zoom);
+
+      var degCoveredPerTileX = 360.0 / maxNoOfTilesAlongAxis;
+      var degCoveredPerTileY = 180.0 / maxNoOfTilesAlongAxis;
+
+      var noOfTilesAlongX = Math.abs(Math.ceil((bounds[1] - bounds[0]) / degCoveredPerTileX));
+      var noOfTilesAlongY = Math.abs(Math.ceil((bounds[3] - bounds[2]) / degCoveredPerTileY));
+
+      console.log('no of tiles along y ', noOfTilesAlongY);
+      console.log('no of tiles along x ', noOfTilesAlongX);
+
+      var tiles = [];
+      var baseX = Math.floor((bounds[0] + 180.0) / degCoveredPerTileX);
+      var baseY = Math.floor((90.0 - bounds[3]) / degCoveredPerTileY);
+
+      console.log('baseX ', baseX);
+      console.log('baseY ', baseY);
+
+      var map = document.getElementById('map');
+      for (var i = 0; i < noOfTilesAlongY; ++i) {
+        var newRow = document.createElement('div');
+        map.appendChild(newRow);
+        for (var j = 0; j< noOfTilesAlongX; ++j) {
+          // Zoom level, column, then row
+          var tile = [zoom, baseX + j, baseY + i];
+          tiles.push(tile);
+          var newTile = document.createElement('img');
+          newTile.setAttribute('src', 'http://a.tiles.mapbox.com/v3/examples.map-4l7djmvo/' + 
+            tile[0] + '/' + tile[1] + '/' + tile[2] + '.png');
+          newRow.appendChild(newTile);
+
+          var filename = tile[0] + '_' + tile[1] + '_' + tile[2] + '.png';
+          var fileurl = 'http://a.tiles.mapbox.com/v3/examples.map-4l7djmvo/' +
+            tile[0] + '/' + tile[1] + '/' + tile[2] + '.png'
+          saveToDisk(fileurl, filename);
+        }
+      }
+    }
+  </script>
+</body>
+</html>
