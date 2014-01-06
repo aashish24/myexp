@@ -34,6 +34,8 @@ bool CheckIfDepthPeelingIsSupported(vtkRenderWindow* renWin)
       || !extensions->ExtensionSupported("GL_ARB_occlusion_query")
       || !extensions->ExtensionSupported("GL_ARB_multitexture")
       || !extensions->ExtensionSupported("GL_ARB_occlusion_query")
+      || !extensions->ExtensionSupported("GL_ARB_shadow")
+      || !extensions->ExtensionSupported("GL_EXT_shadow_funcs")
       )
     {
     std::cerr << "Required extensions for depth peeling not supported! \n";
